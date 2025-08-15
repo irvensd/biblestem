@@ -247,10 +247,10 @@
         </div>
 
         <!-- Sidebar -->
-        <div class="space-y-6">
+        <div class="space-y-4 sm:space-y-6">
           <!-- Quick Stats -->
-          <div class="card p-6">
-            <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-4">Quick Stats</h3>
+          <div class="card p-4 sm:p-6">
+            <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-3 sm:mb-4 text-sm sm:text-base">Quick Stats</h3>
             <div class="space-y-4">
               <div class="flex justify-between items-center">
                 <span class="text-neutral-600 dark:text-neutral-400">Member since</span>
