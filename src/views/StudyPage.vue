@@ -81,8 +81,8 @@
               v-for="(lesson, index) in study.lessons"
               :key="lesson.id"
               class="card p-6 hover:shadow-medium transition-all duration-200 cursor-pointer"
-              :class="{ 
-                'bg-primary-50 dark:bg-primary-900/20 border-primary-200 dark:border-primary-800': lesson.completed,
+              :class="{
+                'bg-primary-50 dark:bg-primary-900/20 border-primary-200 dark:border-primary-800': progressStore.isLessonCompleted(study.id, lesson.id),
                 'opacity-75': !canAccessLesson(index)
               }"
               @click="openLesson(lesson, index)"
