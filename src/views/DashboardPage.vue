@@ -289,14 +289,14 @@
           </div>
 
           <!-- Action Buttons -->
-          <div class="space-y-3">
-            <button class="w-full btn-primary">
+          <div class="space-y-2 sm:space-y-3">
+            <button class="w-full btn-primary text-sm sm:text-base py-2 sm:py-3">
               Start New Study
             </button>
-            <button class="w-full btn-secondary">
+            <button class="w-full btn-secondary text-sm sm:text-base py-2 sm:py-3">
               View Progress Report
             </button>
-            <button v-if="!authStore.isPremium" class="w-full btn-accent">
+            <button v-if="!authStore.isPremium" class="w-full btn-accent text-sm sm:text-base py-2 sm:py-3">
               Upgrade to Premium
             </button>
           </div>
