@@ -345,7 +345,8 @@ const goToStudy = (studyId: string) => {
 }
 
 onMounted(() => {
-  // Initialize auth state
+  // Initialize stores
   authStore.initializeAuth()
+  progressStore.loadFromStorage()
 })
 </script>
