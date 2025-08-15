@@ -191,12 +191,18 @@
             Join thousands of believers who have discovered the joy of interactive Bible study. Start your journey today with our free trial.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button class="bg-white text-primary-600 hover:bg-primary-50 font-bold py-4 px-8 rounded-lg text-lg transition-all duration-200 shadow-medium hover:shadow-strong">
-              Start Free Trial
-            </button>
-            <button class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-600 font-bold py-4 px-8 rounded-lg text-lg transition-all duration-200">
+            <router-link
+              :to="authStore.isAuthenticated ? '/dashboard' : '/signin'"
+              class="bg-white text-primary-600 hover:bg-primary-50 font-bold py-4 px-8 rounded-lg text-lg transition-all duration-200 shadow-medium hover:shadow-strong inline-block text-center"
+            >
+              {{ authStore.isAuthenticated ? 'Go to Dashboard' : 'Start Free Trial' }}
+            </router-link>
+            <router-link
+              to="/study-series"
+              class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-600 font-bold py-4 px-8 rounded-lg text-lg transition-all duration-200 inline-block text-center"
+            >
               View Study Series
-            </button>
+            </router-link>
           </div>
         </div>
       </div>
