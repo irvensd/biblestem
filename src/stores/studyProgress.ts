@@ -195,7 +195,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
   const getPremiumFeatures = () => {
     return [
       'Video/animation explainers',
-      'Verse-by-verse breakdowns', 
+      'Verse-by-verse breakdowns',
       'Advanced quizzes with leaderboards',
       'Personal notes and journaling',
       'Downloadable study guides',
@@ -205,6 +205,11 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
       'Priority customer support',
       'Offline study access'
     ]
+  }
+
+  const resetStudyProgress = (studyId: string) => {
+    delete progressData.value[studyId]
+    saveToStorage()
   }
 
   return {
