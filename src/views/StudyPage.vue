@@ -323,6 +323,34 @@ const nextLessonInModal = () => {
   }
 }
 
+// Completion celebration methods
+const reviewStudy = () => {
+  // Scroll to lessons section or open first lesson for review
+  if (study.value && study.value.lessons.length > 0) {
+    openLesson(study.value.lessons[0], 0)
+  }
+}
+
+const shareProgress = () => {
+  if (navigator.share) {
+    navigator.share({
+      title: `I completed "${study.value?.title}" on BibleStem!`,
+      text: `Just finished studying "${study.value?.title}" - ${study.value?.lessons.length} lessons of inspiring Bible study. Check out BibleStem for interactive Bible learning!`,
+      url: window.location.origin
+    })
+  } else {
+    // Fallback for browsers without Web Share API
+    const shareText = `I just completed "${study.value?.title}" on BibleStem! ${study.value?.lessons.length} lessons of amazing Bible study. Check it out: ${window.location.origin}`
+    navigator.clipboard.writeText(shareText).then(() => {
+      alert('Share text copied to clipboard!')
+    })
+  }
+}
+
+const exploreMore = () => {
+  router.push('/study-series')
+}
+
 onMounted(() => {
   // Initialize stores
   authStore.initializeAuth()
