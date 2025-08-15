@@ -248,6 +248,15 @@
 
         <!-- Sidebar -->
         <div class="space-y-4 sm:space-y-6">
+          <!-- Achievement Badges -->
+          <AchievementBadges />
+
+          <!-- Scripture Memory Cards -->
+          <MemoryCards />
+
+          <!-- Study Templates -->
+          <StudyTemplates @upgrade="showUpgradeModal = true" />
+
           <!-- Quick Stats -->
           <div class="card p-4 sm:p-6">
             <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-3 sm:mb-4 text-sm sm:text-base">Quick Stats</h3>
@@ -265,25 +274,6 @@
                 <span class="font-medium text-sm" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-600'">
                   {{ authStore.isPremium ? 'Premium' : 'Free' }}
                 </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Upcoming Features -->
-          <div class="card p-4 sm:p-6">
-            <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-3 sm:mb-4 text-sm sm:text-base">Coming Soon</h3>
-            <div class="space-y-3">
-              <div class="flex items-center space-x-3">
-                <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
-                <span class="text-sm text-neutral-600 dark:text-neutral-400">Study Groups</span>
-              </div>
-              <div class="flex items-center space-x-3">
-                <div class="w-2 h-2 bg-secondary-500 rounded-full"></div>
-                <span class="text-sm text-neutral-600 dark:text-neutral-400">Mobile App</span>
-              </div>
-              <div class="flex items-center space-x-3">
-                <div class="w-2 h-2 bg-accent-500 rounded-full"></div>
-                <span class="text-sm text-neutral-600 dark:text-neutral-400">Audio Studies</span>
               </div>
             </div>
           </div>
