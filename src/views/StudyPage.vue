@@ -221,19 +221,18 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useStudyProgressStore } from '../stores/studyProgress'
 import { getStudyById, type Study, type Lesson } from '../data/studies'
 import LessonModal from '../components/LessonModal.vue'
 
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
+const progressStore = useStudyProgressStore()
 
 const study = ref<Study | null>(null)
 const currentLesson = ref<Lesson | null>(null)
 const currentLessonIndex = ref<number>(0)
-
-// Mock progress data - in real app this would come from API/store
-const studyProgress = ref<Record<string, boolean>>({})
 
 const completedLessons = computed(() => 
   study.value ? study.value.lessons.filter(lesson => studyProgress.value[lesson.id]).length : 0
