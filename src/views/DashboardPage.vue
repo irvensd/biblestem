@@ -28,10 +28,10 @@
     </section>
 
     <!-- Dashboard Content -->
-    <div class="container-base py-8">
-      <div class="grid lg:grid-cols-3 gap-8">
+    <div class="container-base py-6 sm:py-8">
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
         <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-8">
+        <div class="xl:col-span-2 space-y-6 sm:space-y-8">
           <!-- Progress Overview -->
           <section class="card p-6">
             <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">Your Progress</h2>
