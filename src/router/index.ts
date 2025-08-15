@@ -109,9 +109,7 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
 
   // Initialize auth state if not already done
-  if (!authStore.user) {
-    authStore.initializeAuth()
-  }
+  authStore.initializeAuth()
 
   // Check if route requires authentication
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
