@@ -457,7 +457,11 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useStudyProgressStore } from '../stores/studyProgress'
+import { useAchievementsStore } from '../stores/achievements'
 import { getFreeStudies, getPremiumStudies, type Study } from '../data/studies'
+import AchievementBadges from '../components/AchievementBadges.vue'
+import MemoryCards from '../components/MemoryCards.vue'
+import StudyTemplates from '../components/StudyTemplates.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
