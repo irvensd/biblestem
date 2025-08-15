@@ -7,6 +7,7 @@ import SignInPage from '../views/SignInPage.vue'
 import SignUpPage from '../views/SignUpPage.vue'
 import DashboardPage from '../views/DashboardPage.vue'
 import DailyDevotionsPage from '../views/DailyDevotionsPage.vue'
+import MyStudiesPage from '../views/MyStudiesPage.vue'
 import PlaceholderPage from '../views/PlaceholderPage.vue'
 
 const router = createRouter({
