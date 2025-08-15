@@ -70,17 +70,17 @@
               <!-- Current Study -->
               <div
                 v-if="currentStudy"
-                class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-6 rounded-xl border border-primary-200 dark:border-primary-800"
+                class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-4 sm:p-6 rounded-xl border border-primary-200 dark:border-primary-800"
               >
-                <div class="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1">{{ currentStudy.title }}</h3>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-4">
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1 text-sm sm:text-base">{{ currentStudy.title }}</h3>
+                    <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
                       {{ currentStudy.nextLesson ? `Next: ${currentStudy.nextLesson.title}` : 'Study Complete!' }}
                     </p>
                   </div>
                   <span
-                    class="text-white text-xs px-2 py-1 rounded-full"
+                    class="text-white text-xs px-2 py-1 rounded-full self-start sm:self-auto flex-shrink-0"
                     :class="currentStudy.progress === 100 ? 'bg-green-500' : 'bg-primary-500'"
                   >
                     {{ currentStudy.progress === 100 ? 'Completed' : 'In Progress' }}
