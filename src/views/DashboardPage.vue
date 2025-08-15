@@ -466,6 +466,7 @@ import StudyTemplates from '../components/StudyTemplates.vue'
 const router = useRouter()
 const authStore = useAuthStore()
 const progressStore = useStudyProgressStore()
+const achievementsStore = useAchievementsStore()
 
 // Modal states
 const showProgressModal = ref(false)
