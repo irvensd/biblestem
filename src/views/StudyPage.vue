@@ -89,15 +89,15 @@
             >
               <div class="flex items-start space-x-4">
                 <div class="flex-shrink-0">
-                  <div 
+                  <div
                     class="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-white"
-                    :class="lesson.completed 
-                      ? 'bg-green-500' 
-                      : canAccessLesson(index) 
-                        ? 'bg-primary-500' 
+                    :class="progressStore.isLessonCompleted(study.id, lesson.id)
+                      ? 'bg-green-500'
+                      : canAccessLesson(index)
+                        ? 'bg-primary-500'
                         : 'bg-neutral-400'"
                   >
-                    <span v-if="lesson.completed" class="text-lg">✓</span>
+                    <span v-if="progressStore.isLessonCompleted(study.id, lesson.id)" class="text-lg">✓</span>
                     <span v-else-if="!canAccessLesson(index)" class="text-lg">🔒</span>
                     <span v-else>{{ index + 1 }}</span>
                   </div>
