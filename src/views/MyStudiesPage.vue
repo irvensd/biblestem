@@ -573,8 +573,15 @@ const shareStudyProgress = (study: Study & { progress: any }) => {
   selectedStudy.value = null
 }
 
-onMounted(() => {
-  authStore.initializeAuth()
-  progressStore.loadFromStorage()
+onMounted(async () => {
+  try {
+    authStore.initializeAuth()
+    progressStore.loadFromStorage()
+
+    // Small delay to show loading state (for better UX)
+    await new Promise(resolve => setTimeout(resolve, 300))
+  } finally {
+    isLoading.value = false
+  }
 })
 </script>
