@@ -12,23 +12,23 @@
         </div>
 
         <!-- Header Content -->
-        <div class="p-6">
+        <div class="p-4 sm:p-6">
           <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-              <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                <span class="text-2xl font-bold">{{ lessonIndex + 1 }}</span>
+            <div class="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-lg sm:text-2xl font-bold">{{ lessonIndex + 1 }}</span>
               </div>
-              <div>
-                <h2 class="text-2xl font-bold">{{ lesson.title }}</h2>
-                <p class="text-primary-100">{{ lesson.scripture }} • {{ lesson.duration }} minutes</p>
+              <div class="min-w-0 flex-1">
+                <h2 class="text-lg sm:text-2xl font-bold truncate">{{ lesson.title }}</h2>
+                <p class="text-primary-100 text-sm sm:text-base truncate">{{ lesson.scripture }} • {{ lesson.duration }} minutes</p>
               </div>
             </div>
             <button
               @click="$emit('close')"
-              class="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors duration-200"
+              class="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors duration-200 flex-shrink-0 ml-2"
               aria-label="Close lesson"
             >
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
               </svg>
             </button>
