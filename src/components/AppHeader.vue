@@ -19,34 +19,69 @@
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-8">
-          <router-link
-            to="/"
-            class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
-            :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/' }"
-          >
-            Home
-          </router-link>
-          <router-link
-            to="/study-series"
-            class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
-            :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
-          >
-            Study Series
-          </router-link>
-          <router-link
-            to="/about"
-            class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
-            :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/about' }"
-          >
-            About
-          </router-link>
-          <router-link
-            to="/contact"
-            class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
-            :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/contact' }"
-          >
-            Contact
-          </router-link>
+          <!-- Authenticated User Navigation -->
+          <template v-if="authStore.isAuthenticated">
+            <router-link
+              to="/dashboard"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/dashboard' }"
+            >
+              Dashboard
+            </router-link>
+            <router-link
+              to="/study-series"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
+            >
+              Study Series
+            </router-link>
+            <router-link
+              to="/my-studies"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/my-studies' }"
+            >
+              My Studies
+            </router-link>
+            <router-link
+              to="/community"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/community' }"
+            >
+              Community
+            </router-link>
+          </template>
+
+          <!-- Guest User Navigation -->
+          <template v-else>
+            <router-link
+              to="/"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/' }"
+            >
+              Home
+            </router-link>
+            <router-link
+              to="/study-series"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
+            >
+              Study Series
+            </router-link>
+            <router-link
+              to="/about"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/about' }"
+            >
+              About
+            </router-link>
+            <router-link
+              to="/contact"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/contact' }"
+            >
+              Contact
+            </router-link>
+          </template>
         </div>
 
         <!-- CTA Buttons / User Menu -->
