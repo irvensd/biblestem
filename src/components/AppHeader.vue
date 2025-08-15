@@ -85,7 +85,7 @@
         </div>
 
         <!-- CTA Buttons / User Menu -->
-        <div class="hidden sm:flex items-center space-x-2 lg:space-x-4">
+        <div class="hidden lg:flex items-center space-x-2 lg:space-x-4">
           <!-- Authenticated User -->
           <div v-if="authStore.isAuthenticated" class="relative">
             <button
