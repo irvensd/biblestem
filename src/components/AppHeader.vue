@@ -149,6 +149,12 @@
             >
               Sign In
             </router-link>
+            <router-link
+              to="/signup"
+              class="btn-secondary"
+            >
+              Sign Up
+            </router-link>
             <router-link to="/signin" class="btn-primary">
               Start Learning
             </router-link>
