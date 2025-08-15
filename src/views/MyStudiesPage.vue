@@ -418,6 +418,9 @@ const currentFilter = ref('all')
 const currentSort = ref('recent')
 const viewMode = ref<'grid' | 'list'>('grid')
 
+// Study options modal
+const selectedStudy = ref<(Study & { progress: any }) | null>(null)
+
 const allStudies = computed(() => [...getFreeStudies(), ...getPremiumStudies()])
 
 // Get studies with progress information
