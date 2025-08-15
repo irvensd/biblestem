@@ -107,7 +107,7 @@
               </div>
 
               <!-- Recommended Studies -->
-              <div class="grid md:grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div
                   v-for="study in recommendedStudies"
                   :key="study.id"
