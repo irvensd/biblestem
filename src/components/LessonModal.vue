@@ -216,13 +216,13 @@
                 </h5>
 
                 <!-- Supporting Scriptures -->
-                <div v-if="section.supportingScriptures && section.supportingScriptures.length > 0" class="mb-4">
-                  <h6 class="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wide mb-2">Supporting Scriptures</h6>
-                  <div class="bg-neutral-50 dark:bg-neutral-700 rounded-lg p-4 space-y-2">
+                <div v-if="section.supportingScriptures && section.supportingScriptures.length > 0" class="mb-3 sm:mb-4">
+                  <h6 class="text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wide mb-2">Supporting Scriptures</h6>
+                  <div class="bg-neutral-50 dark:bg-neutral-700 rounded-lg p-3 sm:p-4 space-y-2">
                     <div
                       v-for="scripture in section.supportingScriptures"
                       :key="scripture"
-                      class="text-sm text-neutral-700 dark:text-neutral-300 italic"
+                      class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 italic leading-relaxed"
                     >
                       {{ scripture }}
                     </div>
