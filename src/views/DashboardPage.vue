@@ -204,10 +204,10 @@
           </section>
 
           <!-- Recent Activity -->
-          <section class="card p-6">
-            <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">Recent Activity</h2>
-            <div class="space-y-4">
-              <div class="flex items-center space-x-4 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
+          <section class="card p-4 sm:p-6">
+            <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 sm:mb-6">Recent Activity</h2>
+            <div class="space-y-3 sm:space-y-4">
+              <div class="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
                 <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
                   <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
