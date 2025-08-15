@@ -224,6 +224,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     getTotalTimeSpent,
     canAccessLesson,
     getPremiumFeatures,
+    resetStudyProgress,
     loadFromStorage,
     initializeDemoData
   }
