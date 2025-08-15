@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-strong max-w-4xl w-full max-h-[90vh] overflow-hidden">
+    <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-strong max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
       <!-- Modal Header -->
       <div class="bg-gradient-to-r from-primary-500 to-secondary-500 p-6 text-white">
         <div class="flex items-center justify-between">
