@@ -449,6 +449,22 @@
 
           <!-- Prayer Section -->
           <section v-if="currentStep === 'prayer'" class="animate-fade-in">
+            <!-- Key Takeaways -->
+            <div v-if="lesson.content.keyTakeaways && lesson.content.keyTakeaways.length > 0" class="mb-8">
+              <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-6 text-center">Key Takeaways</h3>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div
+                  v-for="(takeaway, index) in lesson.content.keyTakeaways"
+                  :key="index"
+                  class="bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-4 border border-primary-200 dark:border-primary-800 text-center"
+                >
+                  <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="text-white font-bold text-sm">{{ index + 1 }}</span>
+                  </div>
+                  <p class="text-sm font-medium text-neutral-800 dark:text-neutral-200">{{ takeaway }}</p>
+                </div>
+              </div>
+            </div>
             <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-6">
               Closing Prayer
             </h3>
