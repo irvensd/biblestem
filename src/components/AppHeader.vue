@@ -145,17 +145,17 @@
           <template v-else>
             <router-link
               to="/signin"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm lg:text-base"
             >
               Sign In
             </router-link>
             <router-link
               to="/signup"
-              class="btn-secondary"
+              class="btn-secondary text-sm lg:text-base py-2 px-3 lg:py-3 lg:px-6 hidden md:inline-block"
             >
               Sign Up
             </router-link>
-            <router-link to="/signin" class="btn-primary">
+            <router-link to="/signin" class="btn-primary text-sm lg:text-base py-2 px-3 lg:py-3 lg:px-6">
               Start Learning
             </router-link>
           </template>
