@@ -1,6 +1,6 @@
 <template>
-  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-strong max-w-5xl w-full max-h-[95vh] overflow-hidden flex flex-col">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-0 sm:p-4">
+    <div class="bg-white dark:bg-neutral-900 rounded-none sm:rounded-2xl shadow-strong max-w-5xl w-full h-full sm:max-h-[95vh] overflow-hidden flex flex-col">
       <!-- Modal Header with Progress Bar -->
       <div class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
         <!-- Progress Bar -->
