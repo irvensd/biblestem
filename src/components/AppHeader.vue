@@ -55,28 +55,28 @@
           <template v-else>
             <router-link
               to="/"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/' }"
             >
               Home
             </router-link>
             <router-link
               to="/study-series"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
             >
               Study Series
             </router-link>
             <router-link
               to="/about"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/about' }"
             >
               About
             </router-link>
             <router-link
               to="/contact"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/contact' }"
             >
               Contact
