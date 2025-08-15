@@ -185,66 +185,75 @@
         v-if="mobileMenuOpen"
         class="md:hidden py-4 border-t border-neutral-200 dark:border-neutral-800 animate-fade-in"
       >
-        <div class="flex flex-col space-y-3">
-          <router-link
-            to="/"
-            @click="closeMobileMenu"
-            class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-            :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/' }"
-          >
-            Home
-          </router-link>
-          <router-link
-            to="/study-series"
-            @click="closeMobileMenu"
-            class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-            :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/study-series' }"
-          >
-            Study Series
-          </router-link>
-          <router-link
-            to="/about"
-            @click="closeMobileMenu"
-            class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-            :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/about' }"
-          >
-            About
-          </router-link>
-          <router-link
-            to="/contact"
-            @click="closeMobileMenu"
-            class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-            :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/contact' }"
-          >
-            Contact
-          </router-link>
-          <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
-            <!-- Authenticated User Mobile -->
-            <div v-if="authStore.isAuthenticated" class="flex flex-col space-y-3">
-              <div class="flex items-center space-x-3 px-4 py-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
-                  <span class="text-white font-bold">{{ authStore.user?.name.charAt(0) }}</span>
-                </div>
-                <div>
-                  <div class="font-medium text-neutral-900 dark:text-neutral-100">{{ authStore.user?.name }}</div>
-                  <div class="text-sm" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'">
-                    {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
-                  </div>
+        <!-- Authenticated User Mobile Menu -->
+        <div v-if="authStore.isAuthenticated">
+          <!-- User Info -->
+          <div class="px-4 mb-4">
+            <div class="flex items-center space-x-3 px-4 py-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
+              <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
+                <span class="text-white font-bold">{{ authStore.user?.name.charAt(0) }}</span>
+              </div>
+              <div>
+                <div class="font-medium text-neutral-900 dark:text-neutral-100">{{ authStore.user?.name }}</div>
+                <div class="text-sm" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'">
+                  {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
                 </div>
               </div>
-              <router-link
-                to="/dashboard"
-                @click="closeMobileMenu"
-                class="w-full text-left px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              >
-                Dashboard
-              </router-link>
+            </div>
+          </div>
+
+          <!-- Navigation Links -->
+          <div class="flex flex-col space-y-3 px-4">
+            <router-link
+              to="/dashboard"
+              @click="closeMobileMenu"
+              class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/dashboard' }"
+            >
+              Dashboard
+            </router-link>
+            <router-link
+              to="/study-series"
+              @click="closeMobileMenu"
+              class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/study-series' }"
+            >
+              Study Series
+            </router-link>
+            <router-link
+              to="/my-studies"
+              @click="closeMobileMenu"
+              class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/my-studies' }"
+            >
+              My Studies
+            </router-link>
+            <router-link
+              to="/community"
+              @click="closeMobileMenu"
+              class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/community' }"
+            >
+              Community
+            </router-link>
+          </div>
+
+          <!-- Account Actions -->
+          <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4">
+            <div class="flex flex-col space-y-3">
               <router-link
                 to="/profile"
                 @click="closeMobileMenu"
-                class="w-full text-left px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+                class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
               >
                 Profile
+              </router-link>
+              <router-link
+                to="/settings"
+                @click="closeMobileMenu"
+                class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              >
+                Settings
               </router-link>
               <button
                 @click="handleSignOut"
@@ -253,13 +262,54 @@
                 Sign Out
               </button>
             </div>
+          </div>
+        </div>
 
-            <!-- Guest User Mobile -->
-            <div v-else class="flex flex-col space-y-3">
+        <!-- Guest User Mobile Menu -->
+        <div v-else>
+          <!-- Navigation Links -->
+          <div class="flex flex-col space-y-3 px-4">
+            <router-link
+              to="/"
+              @click="closeMobileMenu"
+              class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/' }"
+            >
+              Home
+            </router-link>
+            <router-link
+              to="/study-series"
+              @click="closeMobileMenu"
+              class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/study-series' }"
+            >
+              Study Series
+            </router-link>
+            <router-link
+              to="/about"
+              @click="closeMobileMenu"
+              class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/about' }"
+            >
+              About
+            </router-link>
+            <router-link
+              to="/contact"
+              @click="closeMobileMenu"
+              class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/contact' }"
+            >
+              Contact
+            </router-link>
+          </div>
+
+          <!-- Auth Actions -->
+          <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4">
+            <div class="flex flex-col space-y-3">
               <router-link
                 to="/signin"
                 @click="closeMobileMenu"
-                class="w-full text-left px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+                class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
               >
                 Sign In
               </router-link>
