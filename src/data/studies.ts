@@ -195,11 +195,12 @@ export const freeStudies: Study[] = [
         scripture: 'Luke 24:1-12',
         description: 'Jesus conquers death and rises victorious',
         content: {
-          scriptureText: 'On the first day of the week, very early in the morning, the women took the spices they had prepared...',
+          scriptureText: 'On the first day of the week, very early in the morning, the women took the spices they had prepared and went to the tomb. They found the stone rolled away from the tomb, but when they entered, they did not find the body of the Lord Jesus. While they were wondering about this, suddenly two men in clothes that gleamed like lightning stood beside them. In their fright the women bowed down with their faces to the ground, but the men said to them, "Why do you look for the living among the dead? He is not here; he has risen! Remember how he told you, while he was still with you in Galilee: The Son of Man must be delivered over to the hands of sinners, be crucified and on the third day be raised again." Then they remembered his words. When they came back from the tomb, they told all these things to the Eleven and to all the others.',
           commentary: [
-            'The empty tomb proves Jesus victory over death',
-            'The resurrection gives us hope for eternal life',
-            'Jesus appearance to the disciples confirms His promises'
+            'The empty tomb proves Jesus victory over death and validates all His claims about being the Son of God. Death could not hold Him because He is the source of life itself.',
+            'The resurrection gives us hope for eternal life and assures us that everyone who believes in Jesus will also be raised from the dead. Because He lives, we too shall live.',
+            'Jesus appearances to the disciples after His resurrection confirmed all His promises and proved that His death had accomplished its purpose. He showed them His hands and side as evidence of His identity.',
+            'The angels reminder "Remember how he told you" emphasizes that Jesus had predicted His death and resurrection. This was not Plan B, but Gods eternal plan of salvation unfolding exactly as promised.'
           ],
           interactiveElement: {
             type: 'quiz',
