@@ -473,6 +473,10 @@ const router = useRouter()
 const authStore = useAuthStore()
 const progressStore = useStudyProgressStore()
 
+// Modal states
+const showProgressModal = ref(false)
+const showUpgradeModal = ref(false)
+
 const allStudies = computed(() => [...getFreeStudies(), ...getPremiumStudies()])
 
 const currentStudy = computed(() => {
