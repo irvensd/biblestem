@@ -130,11 +130,12 @@ export const freeStudies: Study[] = [
         scripture: 'Matthew 5:1-12',
         description: 'Jesus performs miracles and teaches the Beatitudes',
         content: {
-          scriptureText: 'Now when Jesus saw the crowds, he went up on a mountainside and sat down...',
+          scriptureText: 'Now when Jesus saw the crowds, he went up on a mountainside and sat down. His disciples came to him, and he began to teach them. He said: "Blessed are the poor in spirit, for theirs is the kingdom of heaven. Blessed are those who mourn, for they will be comforted. Blessed are the meek, for they will inherit the earth. Blessed are those who hunger and thirst for righteousness, for they will be filled. Blessed are the merciful, for they will be shown mercy. Blessed are the pure in heart, for they will see God. Blessed are the peacemakers, for they will be called children of God. Blessed are those who are persecuted because of righteousness, for theirs is the kingdom of heaven. Blessed are you when people insult you, persecute you and falsely say all kinds of evil against you because of me. Rejoice and be glad, because great is your reward in heaven."',
           commentary: [
-            'Jesus compassion led to miraculous healings',
-            'The Beatitudes reveal Gods heart for the humble',
-            'Jesus teachings turned worldly wisdom upside down'
+            'Jesus compassion led Him to teach and heal the multitudes. He saw their spiritual hunger and physical needs, responding with both miraculous healings and life-changing teaching that addressed their deepest needs.',
+            'The Beatitudes reveal Gods heart for the humble, broken, and seeking. Each blessing shows that Gods kingdom operates by different values than the world - weakness becomes strength, mourning leads to comfort, and persecution brings reward.',
+            'Jesus teachings turned worldly wisdom upside down. The world says "blessed are the rich, the powerful, the popular" but Jesus says "blessed are the poor in spirit, the meek, the persecuted." Gods kingdom has different priorities.',
+            'Each Beatitude contains both a present reality and a future promise. Those who embrace these attitudes receive both current spiritual blessings and eternal rewards in Gods kingdom.'
           ],
           interactiveElement: {
             type: 'reflection',
