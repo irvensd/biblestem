@@ -17,7 +17,7 @@
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <router-link
-                :to="authStore.isAuthenticated ? '/dashboard' : '/signin'"
+                :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
                 class="btn-primary text-lg px-8 py-4 inline-block text-center"
               >
                 {{ authStore.isAuthenticated ? 'Go to Dashboard' : 'Start Free Study' }}
