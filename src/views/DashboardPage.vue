@@ -270,8 +270,8 @@
           </div>
 
           <!-- Upcoming Features -->
-          <div class="card p-6">
-            <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-4">Coming Soon</h3>
+          <div class="card p-4 sm:p-6">
+            <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-3 sm:mb-4 text-sm sm:text-base">Coming Soon</h3>
             <div class="space-y-3">
               <div class="flex items-center space-x-3">
                 <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
