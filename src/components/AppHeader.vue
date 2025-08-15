@@ -319,6 +319,13 @@
               >
                 Sign In
               </router-link>
+              <router-link
+                to="/signup"
+                @click="closeMobileMenu"
+                class="btn-secondary w-full"
+              >
+                Sign Up
+              </router-link>
               <router-link to="/signin" @click="closeMobileMenu" class="btn-primary w-full">
                 Start Learning
               </router-link>
