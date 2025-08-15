@@ -133,11 +133,21 @@
               <p class="text-neutral-600 dark:text-neutral-400 mb-6">
                 Ready to dive deep into God's Word? This lesson will guide you through Scripture, interactive learning, and practical application.
               </p>
-              <div class="inline-flex items-center space-x-2 text-primary-600 dark:text-primary-400">
+              <div class="inline-flex items-center space-x-2 text-primary-600 dark:text-primary-400 mb-6">
                 <span class="text-sm font-medium">Click "Next" to begin exploring {{ lesson.scripture }}</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                 </svg>
+              </div>
+
+              <!-- Mobile Next Button -->
+              <div class="block sm:hidden">
+                <button
+                  @click="nextStep"
+                  class="btn-primary w-full py-3 text-base font-semibold"
+                >
+                  Start Lesson →
+                </button>
               </div>
             </div>
           </section>
