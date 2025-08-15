@@ -421,6 +421,9 @@ const viewMode = ref<'grid' | 'list'>('grid')
 // Study options modal
 const selectedStudy = ref<(Study & { progress: any }) | null>(null)
 
+// Loading state
+const isLoading = ref(true)
+
 const allStudies = computed(() => [...getFreeStudies(), ...getPremiumStudies()])
 
 // Get studies with progress information
