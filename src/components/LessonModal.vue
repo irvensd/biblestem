@@ -575,4 +575,15 @@ const completeLesson = () => {
     transform: translateY(0);
   }
 }
+
+/* Hebrew and Greek fonts */
+.font-hebrew {
+  font-family: 'SBL Hebrew', 'Ezra SIL', 'Times New Roman', serif;
+  direction: rtl;
+}
+
+.font-greek {
+  font-family: 'SBL Greek', 'Times New Roman', serif;
+  direction: ltr;
+}
 </style>
