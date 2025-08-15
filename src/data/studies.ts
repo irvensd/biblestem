@@ -191,6 +191,85 @@ export const freeStudies: Study[] = [
         description: 'Jesus is baptized and begins His public ministry',
         content: {
           scriptureText: 'At that time Jesus came from Nazareth in Galilee and was baptized by John in the Jordan. Just as Jesus was coming up out of the water, he saw heaven being torn open and the Spirit descending on him like a dove. And a voice came from heaven: "You are my Son, whom I love; with you I am well pleased." At once the Spirit sent him out into the wilderness, and he was in the wilderness forty days, being tempted by Satan. He was with the wild animals, and angels attended him. After John was put in prison, Jesus went into Galilee, proclaiming the good news of God. "The time is fulfilled," he said. "The kingdom of God has come near. Repent and believe the good news!"',
+          taggedScripture: [
+            { type: 'text', text: 'And a voice came from ' },
+            {
+              type: 'word',
+              text: 'heaven',
+              data: {
+                original: 'שָׁמַיִם',
+                transliteration: 'shamayim',
+                gloss: 'heavens, sky, abode of God',
+                lemma: 'שָׁמַיִם',
+                strongs: 'H8064',
+                partOfSpeech: 'Noun',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'Dual form, literally meaning "the two heavens" - referring to visible sky and spiritual realm',
+                  frequency: 'Appears 420 times in the Hebrew Bible',
+                  crossReferences: ['Gen 1:1', 'Ps 19:1', 'Isa 55:11']
+                }
+              }
+            },
+            { type: 'text', text: ': "You are my ' },
+            {
+              type: 'word',
+              text: 'Son',
+              data: {
+                original: 'בֵּן',
+                transliteration: 'ben',
+                gloss: 'son, child, descendant',
+                lemma: 'בֵּן',
+                strongs: 'H1121',
+                partOfSpeech: 'Noun',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'From בָּנָה (banah), meaning "to build" - a son builds the family line',
+                  frequency: 'Appears 4906 times in the Hebrew Bible',
+                  crossReferences: ['Ps 2:7', '2 Sam 7:14', 'Prov 1:8']
+                }
+              }
+            },
+            { type: 'text', text: ', whom I ' },
+            {
+              type: 'word',
+              text: 'love',
+              data: {
+                original: 'אָהַב',
+                transliteration: 'ahav',
+                gloss: 'to love, like, choose',
+                lemma: 'אָהַב',
+                strongs: 'H157',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'Root meaning suggests "to breathe after" or "to desire" - deep affection',
+                  frequency: 'Appears 217 times in the Hebrew Bible',
+                  crossReferences: ['Deut 6:5', 'Hos 11:1', 'Jer 31:3']
+                }
+              }
+            },
+            { type: 'text', text: '; with you I am well pleased." The ' },
+            {
+              type: 'word',
+              text: 'Spirit',
+              data: {
+                original: 'רוּחַ',
+                transliteration: 'ruach',
+                gloss: 'breath, wind, spirit',
+                lemma: 'רוּחַ',
+                strongs: 'H7307',
+                partOfSpeech: 'Noun',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'From root meaning "to breathe" - the breath of life from God',
+                  frequency: 'Appears 378 times in the Hebrew Bible',
+                  crossReferences: ['Gen 1:2', 'Ezek 36:27', 'Joel 2:28']
+                }
+              }
+            },
+            { type: 'text', text: ' sent him into the wilderness.' }
+          ],
           commentary: [
             'Jesus identification with sinful humanity through baptism shows His willingness to fulfill all righteousness. Though sinless, He submitted to baptism to identify with us and set an example of obedience.',
             'The Trinity is beautifully revealed at Jesus baptism - the Son being baptized, the Spirit descending like a dove, and the Father speaking approval from heaven. This is one of the clearest pictures of the three persons of the Trinity working together.',
