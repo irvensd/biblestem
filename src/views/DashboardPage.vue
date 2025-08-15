@@ -563,6 +563,11 @@ const calculateBadges = () => {
   return Math.floor(studies / 3)
 }
 
+const calculateTotalMinutes = () => {
+  // Calculate total minutes from completed studies
+  return completedStudies.value.reduce((total, study) => total + study.totalDuration, 0)
+}
+
 const formatDate = (dateString?: string) => {
   if (!dateString) return 'Unknown'
   return new Date(dateString).toLocaleDateString('en-US', {
