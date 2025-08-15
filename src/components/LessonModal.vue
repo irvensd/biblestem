@@ -1,26 +1,38 @@
 <template>
   <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-strong max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
-      <!-- Modal Header -->
-      <div class="bg-gradient-to-r from-primary-500 to-secondary-500 p-6 text-white">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-              <span class="text-2xl font-bold">{{ lessonIndex + 1 }}</span>
+    <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-strong max-w-5xl w-full max-h-[95vh] overflow-hidden flex flex-col">
+      <!-- Modal Header with Progress Bar -->
+      <div class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
+        <!-- Progress Bar -->
+        <div class="w-full bg-white/20 h-1">
+          <div
+            class="h-1 bg-white transition-all duration-300 ease-out"
+            :style="`width: ${((currentStepIndex + 1) / steps.length) * 100}%`"
+          ></div>
+        </div>
+
+        <!-- Header Content -->
+        <div class="p-6">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-bold">{{ lessonIndex + 1 }}</span>
+              </div>
+              <div>
+                <h2 class="text-2xl font-bold">{{ lesson.title }}</h2>
+                <p class="text-primary-100">{{ lesson.scripture }} • {{ lesson.duration }} minutes</p>
+              </div>
             </div>
-            <div>
-              <h2 class="text-2xl font-bold">{{ lesson.title }}</h2>
-              <p class="text-primary-100">{{ lesson.scripture }} • {{ lesson.duration }} minutes</p>
-            </div>
+            <button
+              @click="$emit('close')"
+              class="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors duration-200"
+              aria-label="Close lesson"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
           </div>
-          <button
-            @click="$emit('close')"
-            class="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors duration-200"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
         </div>
       </div>
 
@@ -434,6 +446,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import type { Lesson, Study } from '../data/studies'
+import ScriptureWordPopover from './ScriptureWordPopover.vue'
 
 interface Props {
   lesson: Lesson
