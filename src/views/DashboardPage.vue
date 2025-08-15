@@ -157,6 +157,52 @@
             </div>
           </section>
 
+          <!-- Completed Studies Section -->
+          <section v-if="completedStudies.length > 0" class="card p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Completed Studies</h2>
+              <div class="flex items-center space-x-2 text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="font-medium">{{ completedStudies.length }} Completed</span>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div
+                v-for="study in completedStudies.slice(0, 6)"
+                :key="study.id"
+                class="card p-4 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 hover:scale-105 transition-transform duration-200 cursor-pointer"
+                @click="goToStudy(study.id)"
+              >
+                <div class="flex items-start space-x-3">
+                  <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-green-800 dark:text-green-200 mb-1 truncate">{{ study.title }}</h4>
+                    <p class="text-sm text-green-600 dark:text-green-400 mb-2">{{ study.lessons.length }} lessons completed</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-green-500">{{ formatDuration(study.totalDuration) }}</span>
+                      <button class="text-green-600 hover:text-green-700 text-xs font-medium">
+                        Review →
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="completedStudies.length > 6" class="mt-4 text-center">
+              <button class="text-primary-600 hover:text-primary-700 font-medium text-sm">
+                View All {{ completedStudies.length }} Completed Studies →
+              </button>
+            </div>
+          </section>
+
           <!-- Recent Activity -->
           <section class="card p-6">
             <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">Recent Activity</h2>
