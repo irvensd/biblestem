@@ -49,11 +49,11 @@
                 <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Day Streak</div>
               </div>
               <div class="text-center">
-                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                  <span class="text-xl sm:text-2xl font-bold text-white">{{ calculateBadges() }}</span>
-                </div>
-                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Badges Earned</div>
+              <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                <span class="text-xl sm:text-2xl font-bold text-white">{{ achievementsStore.totalBadgesEarned }}</span>
               </div>
+              <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Badges Earned</div>
+            </div>
             </div>
           </section>
 
