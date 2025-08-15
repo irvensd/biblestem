@@ -26,16 +26,16 @@ export const useAuthStore = defineStore('auth', () => {
       email: 'demo@biblestem.com',
       avatar: '',
       plan: 'premium' as const,
-      studiesCompleted: 12,
+      studiesCompleted: 15,
       joinDate: '2024-01-15'
     },
     {
-      id: '2', 
+      id: '2',
       name: 'Sarah Johnson',
       email: 'free@biblestem.com',
       avatar: '',
       plan: 'free' as const,
-      studiesCompleted: 3,
+      studiesCompleted: 6, // Updated to reflect 3 completed + 3 in progress studies
       joinDate: '2024-02-20'
     }
   ]
