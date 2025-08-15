@@ -164,7 +164,7 @@
         <!-- Mobile Menu Button -->
         <button
           @click="toggleMobileMenu"
-          class="sm:hidden p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
+          class="lg:hidden p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
           :class="{ 'bg-neutral-100 dark:bg-neutral-800': mobileMenuOpen }"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
