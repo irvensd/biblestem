@@ -4,6 +4,7 @@ import HomePage from '../views/HomePage.vue'
 import StudySeriesPage from '../views/StudySeriesPage.vue'
 import StudyPage from '../views/StudyPage.vue'
 import SignInPage from '../views/SignInPage.vue'
+import SignUpPage from '../views/SignUpPage.vue'
 import DashboardPage from '../views/DashboardPage.vue'
 import PlaceholderPage from '../views/PlaceholderPage.vue'
 
