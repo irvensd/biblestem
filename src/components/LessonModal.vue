@@ -418,6 +418,17 @@
                 </button>
               </div>
             </div>
+
+            <!-- Mobile Next Button -->
+            <div class="block sm:hidden mt-6">
+              <button
+                v-if="currentStepIndex < steps.length - 1"
+                @click="nextStep"
+                class="btn-primary w-full py-3 text-base font-semibold"
+              >
+                Continue to Application →
+              </button>
+            </div>
           </section>
 
           <!-- Life Application Section -->
