@@ -37,7 +37,7 @@
       </div>
 
       <!-- Modal Content -->
-      <div class="flex-1 overflow-y-auto pb-20 sm:pb-0">
+      <div class="flex-1 overflow-y-auto" style="height: 0; min-height: 0;">
         <!-- Debug Navigation Always Visible -->
         <div class="bg-red-100 p-2 m-4 rounded-lg block sm:hidden border border-red-300">
           <div class="text-xs text-red-800 mb-2">Debug Navigation (mobile only)</div>
