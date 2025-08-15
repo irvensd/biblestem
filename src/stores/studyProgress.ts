@@ -52,6 +52,14 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 15
         },
+        'how-to-study-bible': {
+          studyId: 'how-to-study-bible',
+          completedLessons: ['htsb-1', 'htsb-2'], // 2 out of 6 completed
+          currentLesson: 'htsb-3',
+          startedAt: '2024-01-20',
+          lastAccessedAt: new Date().toISOString(),
+          totalTimeSpent: 12
+        },
         'fruit-of-spirit': {
           studyId: 'fruit-of-spirit',
           completedLessons: ['fos-1'], // Just started
