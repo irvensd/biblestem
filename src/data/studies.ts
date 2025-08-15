@@ -62,6 +62,104 @@ export const freeStudies: Study[] = [
         description: 'Discover the miraculous birth of our Savior',
         content: {
           scriptureText: 'In those days Caesar Augustus issued a decree that a census should be taken of the entire Roman world. This was the first census that took place while Quirinius was governor of Syria. And everyone went to their own town to register. So Joseph also went up from the town of Nazareth in Galilee to Judea, to Bethlehem the town of David, because he belonged to the house and line of David. He went there to register with Mary, who was pledged to be married to him and was expecting a child. While they were there, the time came for the baby to be born, and she gave birth to her firstborn, a son. She wrapped him in cloths and placed him in a manger, because there was no guest room available for them. And there were shepherds living out in the fields nearby, keeping watch over their flocks at night. An angel of the Lord appeared to them, and the glory of the Lord shone around them, and they were terrified. But the angel said to them, "Do not be afraid. I bring you good news that will cause great joy for all the people. Today in the town of David a Savior has been born to you; he is the Messiah, the Lord."',
+          taggedScripture: [
+            { type: 'text', text: 'But the ' },
+            {
+              type: 'word',
+              text: 'angel',
+              data: {
+                original: 'ἄγγελος',
+                transliteration: 'angelos',
+                gloss: 'messenger, envoy, one who is sent',
+                lemma: 'ἄγγελος',
+                strongs: 'G32',
+                partOfSpeech: 'Noun',
+                language: 'greek',
+                deeperStudy: {
+                  etymology: 'From ἀγγέλλω (angello), meaning "to announce" or "to bring a message"',
+                  frequency: 'Appears 175 times in the New Testament',
+                  crossReferences: ['Matt 1:20', 'Luke 1:26', 'Heb 1:14']
+                }
+              }
+            },
+            { type: 'text', text: ' said to them, "Do not ' },
+            {
+              type: 'word',
+              text: 'fear',
+              data: {
+                original: 'φοβέω',
+                transliteration: 'phobeo',
+                gloss: 'to fear, be afraid, reverence',
+                lemma: 'φοβέω',
+                strongs: 'G5399',
+                partOfSpeech: 'Verb',
+                language: 'greek',
+                deeperStudy: {
+                  etymology: 'From φόβος (phobos), meaning fear or reverence',
+                  frequency: 'Appears 95 times in the New Testament',
+                  crossReferences: ['Matt 10:28', 'Luke 12:4', '1 John 4:18']
+                }
+              }
+            },
+            { type: 'text', text: '. I bring you good ' },
+            {
+              type: 'word',
+              text: 'news',
+              data: {
+                original: 'εὐαγγέλιον',
+                transliteration: 'euangelion',
+                gloss: 'good news, gospel',
+                lemma: 'εὐαγγέλιον',
+                strongs: 'G2098',
+                partOfSpeech: 'Noun',
+                language: 'greek',
+                deeperStudy: {
+                  etymology: 'From εὖ (eu) meaning "good" and ἀγγέλλω (angello) meaning "to announce"',
+                  frequency: 'Appears 76 times in the New Testament',
+                  crossReferences: ['Mark 1:1', 'Rom 1:16', '1 Cor 15:1']
+                }
+              }
+            },
+            { type: 'text', text: ' that will cause great joy for all the people. Today in the town of David a ' },
+            {
+              type: 'word',
+              text: 'Savior',
+              data: {
+                original: 'σωτήρ',
+                transliteration: 'soter',
+                gloss: 'savior, deliverer',
+                lemma: 'σωτήρ',
+                strongs: 'G4990',
+                partOfSpeech: 'Noun',
+                language: 'greek',
+                deeperStudy: {
+                  etymology: 'From σώζω (sozo), meaning "to save" or "to deliver"',
+                  frequency: 'Appears 24 times in the New Testament',
+                  crossReferences: ['Luke 1:47', 'John 4:42', 'Titus 2:13']
+                }
+              }
+            },
+            { type: 'text', text: ' has been born to you; he is the ' },
+            {
+              type: 'word',
+              text: 'Messiah',
+              data: {
+                original: 'Χριστός',
+                transliteration: 'Christos',
+                gloss: 'anointed one, Christ, Messiah',
+                lemma: 'Χριστός',
+                strongs: 'G5547',
+                partOfSpeech: 'Noun',
+                language: 'greek',
+                deeperStudy: {
+                  etymology: 'From χρίω (chrio), meaning "to anoint" - equivalent to Hebrew משיח (mashiach)',
+                  frequency: 'Appears 529 times in the New Testament',
+                  crossReferences: ['Matt 16:16', 'John 1:41', 'Acts 2:36']
+                }
+              }
+            },
+            { type: 'text', text: ', the Lord."' }
+          ],
           commentary: [
             'The birth of Jesus fulfilled ancient prophecies spoken by the prophets hundreds of years earlier. Micah prophesied that the Messiah would be born in Bethlehem, and Isaiah spoke of a virgin giving birth to a son called Immanuel.',
             'God chose humble circumstances to enter our world - not a palace, but a stable; not announced to kings, but to shepherds. This demonstrates Gods heart for the lowly and His identification with common people.',
