@@ -37,11 +37,54 @@
                 </svg>
               </div>
               <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-4">
-                Let's Begin Our Study
+                {{ lesson.title }}
               </h3>
-              <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+              <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-6">
                 {{ lesson.description }}
               </p>
+              <div class="inline-flex items-center space-x-2 bg-primary-50 dark:bg-primary-900/20 px-4 py-2 rounded-full border border-primary-200 dark:border-primary-800">
+                <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-primary-700 dark:text-primary-300 text-sm font-medium">{{ lesson.duration }} minute lesson • {{ lesson.scripture }}</span>
+              </div>
+            </div>
+
+            <!-- Study Path Preview -->
+            <div class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-6 mb-8 border border-primary-200 dark:border-primary-800">
+              <h4 class="font-bold text-neutral-800 dark:text-neutral-200 mb-4 text-center">Your Study Journey Today</h4>
+              <div class="grid grid-cols-5 gap-4">
+                <div class="text-center">
+                  <div class="w-8 h-8 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white text-sm font-bold">1</span>
+                  </div>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Introduction</span>
+                </div>
+                <div class="text-center">
+                  <div class="w-8 h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white text-sm font-bold">2</span>
+                  </div>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Scripture</span>
+                </div>
+                <div class="text-center">
+                  <div class="w-8 h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white text-sm font-bold">3</span>
+                  </div>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Interactive</span>
+                </div>
+                <div class="text-center">
+                  <div class="w-8 h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white text-sm font-bold">4</span>
+                  </div>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Application</span>
+                </div>
+                <div class="text-center">
+                  <div class="w-8 h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white text-sm font-bold">5</span>
+                  </div>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Prayer</span>
+                </div>
+              </div>
             </div>
 
             <!-- Hook Video/Animation Placeholder -->
@@ -57,6 +100,19 @@
                     {{ isPremium ? 'Intro Video Available' : 'Video Hook (Premium Feature)' }}
                   </p>
                 </div>
+              </div>
+            </div>
+
+            <!-- Getting Started Message -->
+            <div class="text-center">
+              <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                Ready to dive deep into God's Word? This lesson will guide you through Scripture, interactive learning, and practical application.
+              </p>
+              <div class="inline-flex items-center space-x-2 text-primary-600 dark:text-primary-400">
+                <span class="text-sm font-medium">Click "Next" to begin exploring {{ lesson.scripture }}</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
               </div>
             </div>
           </section>
