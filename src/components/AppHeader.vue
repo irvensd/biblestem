@@ -235,12 +235,12 @@
               My Studies
             </router-link>
             <router-link
-              to="/community"
+              to="/daily-devotions"
               @click="closeMobileMenu"
               class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/community' }"
+              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/daily-devotions' }"
             >
-              Community
+              Daily Devotions
             </router-link>
           </div>
 
