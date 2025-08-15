@@ -261,9 +261,58 @@
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { getFreeStudies, getPremiumStudies, type Study } from '../data/studies'
 
+const router = useRouter()
 const authStore = useAuthStore()
+
+// Mock study progress data - in real app this would come from API/store
+const studyProgress = {
+  'life-of-jesus': { completed: 2, total: 5 },
+  'psalm-23': { completed: 1, total: 4 },
+  'lords-prayer': { completed: 0, total: 6 },
+  'fruit-of-spirit': { completed: 3, total: 9 }
+}
+
+const allStudies = computed(() => [...getFreeStudies(), ...getPremiumStudies()])
+
+const currentStudy = computed(() => {
+  // Find the study with highest progress that's not 100%
+  let bestStudy = null
+  let highestProgress = 0
+
+  Object.entries(studyProgress).forEach(([studyId, progress]) => {
+    const study = allStudies.value.find(s => s.id === studyId)
+    const progressPercent = (progress.completed / progress.total) * 100
+
+    if (study && progressPercent > highestProgress && progressPercent < 100) {
+      highestProgress = progressPercent
+      bestStudy = {
+        ...study,
+        progress: progressPercent,
+        nextLesson: study.lessons[progress.completed]
+      }
+    }
+  })
+
+  return bestStudy
+})
+
+const recommendedStudies = computed(() => {
+  const userPlan = authStore.user?.plan || 'free'
+  const completed = Object.keys(studyProgress)
+
+  // Get studies not yet started, prioritizing free studies for free users
+  const available = allStudies.value
+    .filter(study => !completed.includes(study.id))
+    .filter(study => userPlan === 'premium' || study.category === 'free')
+    .slice(0, 4)
+
+  return available
+})
 
 const calculateStreak = () => {
   // Mock calculation - in real app this would come from API
@@ -278,9 +327,25 @@ const calculateBadges = () => {
 
 const formatDate = (dateString?: string) => {
   if (!dateString) return 'Unknown'
-  return new Date(dateString).toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long' 
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long'
   })
 }
+
+const formatDuration = (minutes: number) => {
+  if (minutes < 60) return `${minutes} min`
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
+  return `${hours}h ${mins}m`
+}
+
+const goToStudy = (studyId: string) => {
+  router.push(`/study/${studyId}`)
+}
+
+onMounted(() => {
+  // Initialize auth state
+  authStore.initializeAuth()
+})
 </script>
