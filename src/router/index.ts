@@ -33,6 +33,12 @@ const router = createRouter({
       component: StudySeriesPage
     },
     {
+      path: '/study/:id',
+      name: 'study',
+      component: StudyPage,
+      props: true
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: PlaceholderPage,
