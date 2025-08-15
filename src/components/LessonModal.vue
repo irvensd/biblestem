@@ -154,18 +154,18 @@
             </div>
 
             <!-- Scripture Text with Interactive Words -->
-            <div class="bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-6 sm:p-8 mb-8 border border-primary-200 dark:border-primary-800">
-              <div class="text-center mb-6">
-                <div class="inline-flex items-center px-4 py-2 bg-white dark:bg-neutral-800 rounded-full shadow-sm border border-neutral-200 dark:border-neutral-700">
-                  <svg class="w-4 h-4 text-primary-600 dark:text-primary-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <div class="bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-primary-200 dark:border-primary-800">
+              <div class="text-center mb-4 sm:mb-6">
+                <div class="inline-flex items-center px-3 sm:px-4 py-2 bg-white dark:bg-neutral-800 rounded-full shadow-sm border border-neutral-200 dark:border-neutral-700">
+                  <svg class="w-3 h-3 sm:w-4 sm:h-4 text-primary-600 dark:text-primary-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                   </svg>
-                  <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">{{ lesson.scripture }}</span>
+                  <span class="text-xs sm:text-sm font-medium text-neutral-700 dark:text-neutral-300">{{ lesson.scripture }}</span>
                 </div>
               </div>
 
               <!-- Interactive Scripture Text -->
-              <div class="text-lg sm:text-xl leading-relaxed text-neutral-800 dark:text-neutral-200 text-center max-w-4xl mx-auto">
+              <div class="text-base sm:text-lg lg:text-xl leading-relaxed text-neutral-800 dark:text-neutral-200 text-center max-w-4xl mx-auto px-2">
                 <template v-if="lesson.content.taggedScripture">
                   <template v-for="(segment, index) in lesson.content.taggedScripture" :key="index">
                     <ScriptureWordPopover
