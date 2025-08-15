@@ -370,88 +370,88 @@
     </div>
 
     <!-- Upgrade Modal -->
-    <div v-if="showUpgradeModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click="showUpgradeModal = false">
-      <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-md w-full" @click.stop>
-        <div class="p-6 border-b border-neutral-200 dark:border-neutral-700">
+    <div v-if="showUpgradeModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 sm:p-4" @click="showUpgradeModal = false">
+      <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-sm sm:max-w-md w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto" @click.stop>
+        <div class="p-4 sm:p-6 border-b border-neutral-200 dark:border-neutral-700">
           <div class="flex items-center justify-between">
-            <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Upgrade to Premium</h3>
+            <h3 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100">Upgrade to Premium</h3>
             <button @click="showUpgradeModal = false" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
         </div>
 
-        <div class="p-6">
-          <div class="text-center mb-6">
-            <div class="w-16 h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div class="p-4 sm:p-6">
+          <div class="text-center mb-4 sm:mb-6">
+            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
               </svg>
             </div>
-            <h4 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">Unlock Premium Features</h4>
-            <p class="text-neutral-600 dark:text-neutral-400 text-sm">Access exclusive Bible studies and advanced features</p>
+            <h4 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">Unlock Premium Features</h4>
+            <p class="text-neutral-600 dark:text-neutral-400 text-xs sm:text-sm px-2">Access exclusive Bible studies and advanced features</p>
           </div>
 
-          <div class="space-y-3 mb-6">
-            <div class="flex items-center space-x-3">
-              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+          <div class="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+            <div class="flex items-center space-x-2 sm:space-x-3">
+              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
               </div>
-              <span class="text-sm text-neutral-700 dark:text-neutral-300">Access to 20+ premium Bible studies</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Access to 20+ premium Bible studies</span>
             </div>
-            <div class="flex items-center space-x-3">
-              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div class="flex items-center space-x-2 sm:space-x-3">
+              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
               </div>
-              <span class="text-sm text-neutral-700 dark:text-neutral-300">Extended 15-25 minute lessons</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Extended 15-25 minute lessons</span>
             </div>
-            <div class="flex items-center space-x-3">
-              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div class="flex items-center space-x-2 sm:space-x-3">
+              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
               </div>
-              <span class="text-sm text-neutral-700 dark:text-neutral-300">Video content and visual aids</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Video content and visual aids</span>
             </div>
-            <div class="flex items-center space-x-3">
-              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div class="flex items-center space-x-2 sm:space-x-3">
+              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
               </div>
-              <span class="text-sm text-neutral-700 dark:text-neutral-300">Downloadable study guides</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Downloadable study guides</span>
             </div>
-            <div class="flex items-center space-x-3">
-              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div class="flex items-center space-x-2 sm:space-x-3">
+              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
               </div>
-              <span class="text-sm text-neutral-700 dark:text-neutral-300">Priority support</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Priority support</span>
             </div>
           </div>
 
-          <div class="text-center mb-6">
-            <div class="text-3xl font-bold text-accent-600 dark:text-accent-400 mb-1">$9.99</div>
-            <div class="text-sm text-neutral-600 dark:text-neutral-400">per month</div>
+          <div class="text-center mb-4 sm:mb-6">
+            <div class="text-2xl sm:text-3xl font-bold text-accent-600 dark:text-accent-400 mb-1">$9.99</div>
+            <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">per month</div>
           </div>
 
-          <div class="space-y-3">
-            <button @click="handleUpgrade" class="w-full btn-accent">
+          <div class="space-y-2 sm:space-y-3">
+            <button @click="handleUpgrade" class="w-full btn-accent text-sm sm:text-base py-2.5 sm:py-3">
               Start 7-Day Free Trial
             </button>
-            <button @click="showUpgradeModal = false" class="w-full btn-secondary">
+            <button @click="showUpgradeModal = false" class="w-full btn-secondary text-sm sm:text-base py-2.5 sm:py-3">
               Maybe Later
             </button>
           </div>
 
-          <div class="text-center mt-4">
+          <div class="text-center mt-3 sm:mt-4">
             <p class="text-xs text-neutral-500 dark:text-neutral-400">
               Cancel anytime. No commitment required.
             </p>
