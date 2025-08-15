@@ -113,12 +113,12 @@
                   <p class="text-neutral-600 dark:text-neutral-400 mb-2">{{ lesson.description }}</p>
                   <div class="flex items-center justify-between">
                     <span class="text-sm text-primary-600 font-medium">{{ lesson.scripture }}</span>
-                    <button 
+                    <button
                       v-if="canAccessLesson(index)"
                       class="text-primary-600 hover:text-primary-700 font-medium text-sm"
                       @click.stop="openLesson(lesson, index)"
                     >
-                      {{ lesson.completed ? 'Review' : 'Start' }} →
+                      {{ progressStore.isLessonCompleted(study.id, lesson.id) ? 'Review' : 'Start' }} →
                     </button>
                   </div>
                 </div>
