@@ -201,18 +201,18 @@
             </div>
 
             <!-- Guided Study Sections -->
-            <div v-if="lesson.content.guidedStudy && lesson.content.guidedStudy.length > 0" class="space-y-6 mb-8">
-              <h4 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 text-center">Guided Study</h4>
+            <div v-if="lesson.content.guidedStudy && lesson.content.guidedStudy.length > 0" class="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+              <h4 class="text-lg sm:text-xl font-bold text-neutral-800 dark:text-neutral-200 text-center px-2">Guided Study</h4>
               <div
                 v-for="(section, index) in lesson.content.guidedStudy"
                 :key="index"
-                class="card p-6"
+                class="card p-4 sm:p-6"
               >
-                <h5 class="font-bold text-lg mb-4 text-neutral-800 dark:text-neutral-200 flex items-center">
-                  <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mr-3">
-                    <span class="text-white text-sm font-bold">{{ index + 1 }}</span>
+                <h5 class="font-bold text-base sm:text-lg mb-3 sm:mb-4 text-neutral-800 dark:text-neutral-200 flex items-center">
+                  <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
+                    <span class="text-white text-xs sm:text-sm font-bold">{{ index + 1 }}</span>
                   </div>
-                  {{ section.pointTitle }}
+                  <span class="leading-tight">{{ section.pointTitle }}</span>
                 </h5>
 
                 <!-- Supporting Scriptures -->
