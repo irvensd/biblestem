@@ -38,6 +38,35 @@
 
       <!-- Modal Content -->
       <div class="flex-1 overflow-y-auto pb-20 sm:pb-0">
+        <!-- Debug Navigation Always Visible -->
+        <div class="bg-red-100 p-2 m-4 rounded-lg block sm:hidden border border-red-300">
+          <div class="text-xs text-red-800 mb-2">Debug Navigation (mobile only)</div>
+          <div class="flex space-x-2">
+            <button
+              v-if="currentStepIndex > 0"
+              @click="previousStep"
+              class="bg-red-500 text-white px-3 py-1 rounded text-xs"
+            >
+              ← Prev
+            </button>
+            <button
+              v-if="currentStepIndex < steps.length - 1"
+              @click="nextStep"
+              class="bg-green-500 text-white px-3 py-1 rounded text-xs"
+            >
+              Next →
+            </button>
+            <button
+              v-else
+              @click="completeLesson"
+              class="bg-blue-500 text-white px-3 py-1 rounded text-xs"
+            >
+              Complete
+            </button>
+            <span class="text-xs text-red-800">Step: {{ currentStepIndex + 1 }}/{{ steps.length }}</span>
+          </div>
+        </div>
+
         <div class="p-4 sm:p-6">
           <!-- Hook Section -->
           <section v-if="currentStep === 'hook'" class="animate-fade-in">
