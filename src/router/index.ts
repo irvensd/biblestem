@@ -39,6 +39,18 @@ const router = createRouter({
       props: true
     },
     {
+      path: '/my-studies',
+      name: 'my-studies',
+      component: PlaceholderPage,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/community',
+      name: 'community',
+      component: PlaceholderPage,
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: PlaceholderPage,
