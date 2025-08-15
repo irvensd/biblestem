@@ -527,15 +527,15 @@
       </div>
 
       <!-- Modal Footer -->
-      <div class="bg-neutral-50 dark:bg-neutral-800 p-6 border-t border-neutral-200 dark:border-neutral-700 flex-shrink-0">
-        <div class="flex items-center justify-between">
+      <div class="bg-neutral-50 dark:bg-neutral-800 p-4 sm:p-6 border-t border-neutral-200 dark:border-neutral-700 flex-shrink-0">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
           <!-- Progress Indicator -->
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center space-x-2 sm:space-x-3 order-2 sm:order-1">
             <div class="flex items-center space-x-1">
               <div
                 v-for="(step, index) in steps"
                 :key="step"
-                class="w-3 h-3 rounded-full transition-all duration-300"
+                class="w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300"
                 :class="index === currentStepIndex
                   ? 'bg-primary-500 ring-2 ring-primary-200 ring-opacity-50'
                   : index < currentStepIndex
@@ -543,38 +543,38 @@
                     : 'bg-neutral-300 dark:bg-neutral-600'"
               ></div>
             </div>
-            <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+            <span class="text-xs sm:text-sm font-medium text-neutral-700 dark:text-neutral-300">
               {{ currentStepIndex + 1 }} of {{ steps.length }}
             </span>
-            <span class="text-xs text-neutral-500 dark:text-neutral-400 capitalize">
+            <span class="hidden sm:inline text-xs text-neutral-500 dark:text-neutral-400 capitalize">
               {{ steps[currentStepIndex] }}
             </span>
           </div>
 
           <!-- Navigation Buttons -->
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center space-x-2 sm:space-x-3 order-1 sm:order-2 w-full sm:w-auto">
             <button
               v-if="currentStepIndex > 0"
               @click="previousStep"
-              class="btn-secondary"
+              class="btn-secondary flex-1 sm:flex-none text-sm sm:text-base py-2 sm:py-3"
             >
               ← Previous
             </button>
-            
+
             <button
               v-if="currentStepIndex < steps.length - 1"
               @click="nextStep"
-              class="btn-primary"
+              class="btn-primary flex-1 sm:flex-none text-sm sm:text-base py-2 sm:py-3"
             >
               Next →
             </button>
-            
+
             <button
               v-else
               @click="completeLesson"
-              class="btn-primary"
+              class="btn-primary flex-1 sm:flex-none text-sm sm:text-base py-2 sm:py-3"
             >
-              Complete Lesson ✓
+              Complete ✓
             </button>
           </div>
         </div>
