@@ -189,7 +189,7 @@
       <!-- Mobile Menu -->
       <div
         v-if="mobileMenuOpen"
-        class="sm:hidden py-4 border-t border-neutral-200 dark:border-neutral-800 animate-fade-in"
+        class="lg:hidden py-4 border-t border-neutral-200 dark:border-neutral-800 animate-fade-in"
       >
         <!-- Authenticated User Mobile Menu -->
         <div v-if="authStore.isAuthenticated">
