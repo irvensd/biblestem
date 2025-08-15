@@ -201,16 +201,26 @@
               </div>
             </div>
 
-            <!-- Action Button -->
-            <button
-              @click.stop="goToStudy(study.id)"
-              class="w-full py-2 px-4 rounded-lg font-medium transition-colors duration-200"
-              :class="study.progress.completionPercent === 100
-                ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30'
-                : 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 hover:bg-primary-100 dark:hover:bg-primary-900/30'"
-            >
-              {{ study.progress.completionPercent === 100 ? 'Review Study' : 'Continue Study' }}
-            </button>
+            <!-- Action Buttons -->
+            <div class="flex space-x-2">
+              <button
+                @click.stop="goToStudy(study.id)"
+                class="flex-1 py-2 px-3 rounded-lg font-medium transition-colors duration-200 text-sm"
+                :class="study.progress.completionPercent === 100
+                  ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30'
+                  : 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 hover:bg-primary-100 dark:hover:bg-primary-900/30'"
+              >
+                {{ study.progress.completionPercent === 100 ? 'Review' : 'Continue' }}
+              </button>
+              <button
+                @click.stop="showStudyOptions(study)"
+                class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-colors duration-200"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
