@@ -163,11 +163,12 @@ export const freeStudies: Study[] = [
         scripture: 'John 19:28-30',
         description: 'Jesus sacrificial death for our salvation',
         content: {
-          scriptureText: 'Later, knowing that everything had now been finished, and so that Scripture would be fulfilled...',
+          scriptureText: 'Later, knowing that everything had now been finished, and so that Scripture would be fulfilled, Jesus said, "I am thirsty." A jar of wine vinegar was there, so they soaked a sponge in it, put the sponge on a stalk of the hyssop plant, and lifted it to Jesus lips. When he had received the drink, Jesus said, "It is finished." With that, he bowed his head and gave up his spirit. Now it was the day of Preparation, and the next day was to be a special Sabbath. Because the Jewish leaders did not want the bodies left on the crosses during the Sabbath, they asked Pilate to have the legs broken and the bodies taken down.',
           commentary: [
-            'Jesus willingly gave His life for our sins',
-            'The cross demonstrates Gods love and justice',
-            'Jesus final words reveal His completed mission'
+            'Jesus willingly gave His life for our sins. His death was not an accident or defeat, but a deliberate sacrifice. He had the power to come down from the cross but chose to stay and pay the price for our redemption.',
+            'The cross demonstrates both Gods perfect love and perfect justice. His love motivated Him to provide salvation, while His justice required that sin be punished. Jesus bore our punishment so we could receive His righteousness.',
+            'Jesus final words "It is finished" reveal His completed mission. The Greek word "tetelestai" means "paid in full" - like a receipt stamped when a debt is completely satisfied. Our sin debt has been paid in full.',
+            'The physical details of the crucifixion fulfill numerous Old Testament prophecies, demonstrating that this was Gods plan from eternity past to redeem humanity through the sacrificial death of His Son.'
           ],
           interactiveElement: {
             type: 'reflection',
