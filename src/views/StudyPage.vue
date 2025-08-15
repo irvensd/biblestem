@@ -352,6 +352,12 @@ const exploreMore = () => {
   router.push('/study-series')
 }
 
+const handleUpgrade = () => {
+  // Navigate to upgrade or show upgrade modal
+  // For demo purposes, we'll just alert
+  alert('Demo Mode: In a real app, this would open the upgrade flow. You can sign in with the premium demo account: sarah.johnson@example.com')
+}
+
 onMounted(() => {
   // Initialize stores
   authStore.initializeAuth()
