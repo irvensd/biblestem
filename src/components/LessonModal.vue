@@ -378,17 +378,24 @@
       <div class="bg-neutral-50 dark:bg-neutral-800 p-6 border-t border-neutral-200 dark:border-neutral-700 flex-shrink-0">
         <div class="flex items-center justify-between">
           <!-- Progress Indicator -->
-          <div class="flex items-center space-x-2">
-            <div
-              v-for="(step, index) in steps"
-              :key="step"
-              class="w-3 h-3 rounded-full transition-colors duration-200"
-              :class="index <= currentStepIndex 
-                ? 'bg-primary-500' 
-                : 'bg-neutral-300 dark:bg-neutral-600'"
-            ></div>
-            <span class="text-sm text-neutral-600 dark:text-neutral-400 ml-2">
+          <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-1">
+              <div
+                v-for="(step, index) in steps"
+                :key="step"
+                class="w-3 h-3 rounded-full transition-all duration-300"
+                :class="index === currentStepIndex
+                  ? 'bg-primary-500 ring-2 ring-primary-200 ring-opacity-50'
+                  : index < currentStepIndex
+                    ? 'bg-green-500'
+                    : 'bg-neutral-300 dark:bg-neutral-600'"
+              ></div>
+            </div>
+            <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">
               {{ currentStepIndex + 1 }} of {{ steps.length }}
+            </span>
+            <span class="text-xs text-neutral-500 dark:text-neutral-400 capitalize">
+              {{ steps[currentStepIndex] }}
             </span>
           </div>
 
