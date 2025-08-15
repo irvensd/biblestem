@@ -303,6 +303,162 @@
         </div>
       </div>
     </div>
+
+    <!-- Progress Report Modal -->
+    <div v-if="showProgressModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click="showProgressModal = false">
+      <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" @click.stop>
+        <div class="p-6 border-b border-neutral-200 dark:border-neutral-700">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Your Progress Report</h3>
+            <button @click="showProgressModal = false" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6 space-y-6">
+          <!-- Overall Stats -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="text-center p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
+              <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">{{ completedStudies.length }}</div>
+              <div class="text-sm text-neutral-600 dark:text-neutral-400">Studies Completed</div>
+            </div>
+            <div class="text-center p-4 bg-secondary-50 dark:bg-secondary-900/20 rounded-xl">
+              <div class="text-2xl font-bold text-secondary-600 dark:text-secondary-400">{{ calculateStreak() }}</div>
+              <div class="text-sm text-neutral-600 dark:text-neutral-400">Day Streak</div>
+            </div>
+            <div class="text-center p-4 bg-accent-50 dark:bg-accent-900/20 rounded-xl">
+              <div class="text-2xl font-bold text-accent-600 dark:text-accent-400">{{ calculateTotalMinutes() }}</div>
+              <div class="text-sm text-neutral-600 dark:text-neutral-400">Minutes Studied</div>
+            </div>
+          </div>
+
+          <!-- Study Progress -->
+          <div>
+            <h4 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Study Progress</h4>
+            <div class="space-y-3">
+              <div v-for="study in allStudiesWithProgress" :key="study.id" class="flex items-center space-x-3 p-3 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
+                <div class="flex-1">
+                  <div class="flex justify-between mb-1">
+                    <span class="text-sm font-medium text-neutral-900 dark:text-neutral-100">{{ study.title }}</span>
+                    <span class="text-sm text-neutral-600 dark:text-neutral-400">{{ Math.round(study.progressPercent) }}%</span>
+                  </div>
+                  <div class="w-full bg-neutral-200 dark:bg-neutral-600 rounded-full h-2">
+                    <div class="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-300" :style="`width: ${study.progressPercent}%`"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weekly Activity -->
+          <div>
+            <h4 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">This Week's Activity</h4>
+            <div class="grid grid-cols-7 gap-2">
+              <div v-for="day in weeklyActivity" :key="day.day" class="text-center">
+                <div class="text-xs text-neutral-600 dark:text-neutral-400 mb-1">{{ day.day }}</div>
+                <div class="w-8 h-8 mx-auto rounded-lg flex items-center justify-center text-xs font-bold" :class="day.active ? 'bg-green-500 text-white' : 'bg-neutral-200 dark:bg-neutral-600 text-neutral-500'">
+                  {{ day.active ? '✓' : '-' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upgrade Modal -->
+    <div v-if="showUpgradeModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click="showUpgradeModal = false">
+      <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-md w-full" @click.stop>
+        <div class="p-6 border-b border-neutral-200 dark:border-neutral-700">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Upgrade to Premium</h3>
+            <button @click="showUpgradeModal = false" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <div class="text-center mb-6">
+            <div class="w-16 h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            </div>
+            <h4 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">Unlock Premium Features</h4>
+            <p class="text-neutral-600 dark:text-neutral-400 text-sm">Access exclusive Bible studies and advanced features</p>
+          </div>
+
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center space-x-3">
+              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-sm text-neutral-700 dark:text-neutral-300">Access to 20+ premium Bible studies</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-sm text-neutral-700 dark:text-neutral-300">Extended 15-25 minute lessons</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-sm text-neutral-700 dark:text-neutral-300">Video content and visual aids</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-sm text-neutral-700 dark:text-neutral-300">Downloadable study guides</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-sm text-neutral-700 dark:text-neutral-300">Priority support</span>
+            </div>
+          </div>
+
+          <div class="text-center mb-6">
+            <div class="text-3xl font-bold text-accent-600 dark:text-accent-400 mb-1">$9.99</div>
+            <div class="text-sm text-neutral-600 dark:text-neutral-400">per month</div>
+          </div>
+
+          <div class="space-y-3">
+            <button @click="handleUpgrade" class="w-full btn-accent">
+              Start 7-Day Free Trial
+            </button>
+            <button @click="showUpgradeModal = false" class="w-full btn-secondary">
+              Maybe Later
+            </button>
+          </div>
+
+          <div class="text-center mt-4">
+            <p class="text-xs text-neutral-500 dark:text-neutral-400">
+              Cancel anytime. No commitment required.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
