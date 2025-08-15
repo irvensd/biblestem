@@ -92,11 +92,12 @@ export const freeStudies: Study[] = [
         scripture: 'Mark 1:9-15',
         description: 'Jesus is baptized and begins His public ministry',
         content: {
-          scriptureText: 'At that time Jesus came from Nazareth in Galilee and was baptized by John in the Jordan...',
+          scriptureText: 'At that time Jesus came from Nazareth in Galilee and was baptized by John in the Jordan. Just as Jesus was coming up out of the water, he saw heaven being torn open and the Spirit descending on him like a dove. And a voice came from heaven: "You are my Son, whom I love; with you I am well pleased." At once the Spirit sent him out into the wilderness, and he was in the wilderness forty days, being tempted by Satan. He was with the wild animals, and angels attended him. After John was put in prison, Jesus went into Galilee, proclaiming the good news of God. "The time is fulfilled," he said. "The kingdom of God has come near. Repent and believe the good news!"',
           commentary: [
-            'Jesus identification with sinful humanity through baptism',
-            'The Trinity revealed at Jesus baptism',
-            'Jesus was tempted yet remained sinless'
+            'Jesus identification with sinful humanity through baptism shows His willingness to fulfill all righteousness. Though sinless, He submitted to baptism to identify with us and set an example of obedience.',
+            'The Trinity is beautifully revealed at Jesus baptism - the Son being baptized, the Spirit descending like a dove, and the Father speaking approval from heaven. This is one of the clearest pictures of the three persons of the Trinity working together.',
+            'Jesus was tempted in the wilderness for forty days yet remained completely sinless. This qualified Him to be our perfect sacrifice and shows us that victory over temptation is possible through Gods strength.',
+            'Jesus first proclamation was about the kingdom of God coming near. This meant that Gods reign and rule were breaking into human history through Jesus ministry, death, and resurrection.'
           ],
           interactiveElement: {
             type: 'quiz',
