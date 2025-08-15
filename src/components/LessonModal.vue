@@ -200,8 +200,51 @@
               </div>
             </div>
 
-            <!-- Commentary -->
-            <div class="grid md:grid-cols-2 gap-6">
+            <!-- Guided Study Sections -->
+            <div v-if="lesson.content.guidedStudy && lesson.content.guidedStudy.length > 0" class="space-y-6 mb-8">
+              <h4 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 text-center">Guided Study</h4>
+              <div
+                v-for="(section, index) in lesson.content.guidedStudy"
+                :key="index"
+                class="card p-6"
+              >
+                <h5 class="font-bold text-lg mb-4 text-neutral-800 dark:text-neutral-200 flex items-center">
+                  <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mr-3">
+                    <span class="text-white text-sm font-bold">{{ index + 1 }}</span>
+                  </div>
+                  {{ section.pointTitle }}
+                </h5>
+
+                <!-- Supporting Scriptures -->
+                <div v-if="section.supportingScriptures && section.supportingScriptures.length > 0" class="mb-4">
+                  <h6 class="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wide mb-2">Supporting Scriptures</h6>
+                  <div class="bg-neutral-50 dark:bg-neutral-700 rounded-lg p-4 space-y-2">
+                    <div
+                      v-for="scripture in section.supportingScriptures"
+                      :key="scripture"
+                      class="text-sm text-neutral-700 dark:text-neutral-300 italic"
+                    >
+                      {{ scripture }}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Commentary -->
+                <div v-if="section.commentary" class="mb-4">
+                  <h6 class="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wide mb-2">Commentary</h6>
+                  <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">{{ section.commentary }}</p>
+                </div>
+
+                <!-- Reflection Question -->
+                <div v-if="section.reflectQuestion" class="bg-accent-50 dark:bg-accent-900/20 rounded-lg p-4 border-l-4 border-accent-500">
+                  <h6 class="text-sm font-semibold text-accent-700 dark:text-accent-300 uppercase tracking-wide mb-2">Reflect</h6>
+                  <p class="text-accent-800 dark:text-accent-200 font-medium">{{ section.reflectQuestion }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fallback Commentary (for lessons without guided study) -->
+            <div v-else-if="lesson.content.commentary" class="grid md:grid-cols-2 gap-6">
               <div class="card p-6">
                 <h4 class="font-bold text-lg mb-4 text-neutral-800 dark:text-neutral-200 flex items-center">
                   <svg class="w-5 h-5 mr-2 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
