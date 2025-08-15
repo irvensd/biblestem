@@ -116,14 +116,14 @@
             </div>
 
             <!-- Opening Thought -->
-            <div v-if="lesson.content.openingThought" class="text-center bg-white dark:bg-neutral-800 rounded-xl p-6 border border-neutral-200 dark:border-neutral-700">
-              <div class="w-12 h-12 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div v-if="lesson.content.openingThought" class="text-center bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-6 border border-neutral-200 dark:border-neutral-700">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                 </svg>
               </div>
-              <h4 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-3">Opening Thought</h4>
-              <p class="text-neutral-700 dark:text-neutral-300 italic leading-relaxed">
+              <h4 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-3">Opening Thought</h4>
+              <p class="text-sm sm:text-base text-neutral-700 dark:text-neutral-300 italic leading-relaxed px-2">
                 "{{ lesson.content.openingThought }}"
               </p>
             </div>
