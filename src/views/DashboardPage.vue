@@ -278,16 +278,21 @@ const currentStudy = computed(() => {
   let bestStudy = null
   let highestProgress = 0
 
-  Object.entries(studyProgress).forEach(([studyId, progress]) => {
-    const study = allStudies.value.find(s => s.id === studyId)
-    const progressPercent = (progress.completed / progress.total) * 100
+  const allProgress = progressStore.getAllStudyProgress()
 
-    if (study && progressPercent > highestProgress && progressPercent < 100) {
+  Object.entries(allProgress).forEach(([studyId, progress]) => {
+    const study = allStudies.value.find(s => s.id === studyId)
+    if (!study) return
+
+    const progressPercent = progressStore.getStudyCompletionPercentage(studyId, study.lessons.length)
+
+    if (progressPercent > highestProgress && progressPercent < 100) {
       highestProgress = progressPercent
+      const nextLessonIndex = progress.completedLessons.length
       bestStudy = {
         ...study,
         progress: progressPercent,
-        nextLesson: study.lessons[progress.completed]
+        nextLesson: nextLessonIndex < study.lessons.length ? study.lessons[nextLessonIndex] : null
       }
     }
   })
