@@ -230,15 +230,15 @@
                 </div>
 
                 <!-- Commentary -->
-                <div v-if="section.commentary" class="mb-4">
-                  <h6 class="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wide mb-2">Commentary</h6>
-                  <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">{{ section.commentary }}</p>
+                <div v-if="section.commentary" class="mb-3 sm:mb-4">
+                  <h6 class="text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wide mb-2">Commentary</h6>
+                  <p class="text-sm sm:text-base text-neutral-700 dark:text-neutral-300 leading-relaxed">{{ section.commentary }}</p>
                 </div>
 
                 <!-- Reflection Question -->
-                <div v-if="section.reflectQuestion" class="bg-accent-50 dark:bg-accent-900/20 rounded-lg p-4 border-l-4 border-accent-500">
-                  <h6 class="text-sm font-semibold text-accent-700 dark:text-accent-300 uppercase tracking-wide mb-2">Reflect</h6>
-                  <p class="text-accent-800 dark:text-accent-200 font-medium">{{ section.reflectQuestion }}</p>
+                <div v-if="section.reflectQuestion" class="bg-accent-50 dark:bg-accent-900/20 rounded-lg p-3 sm:p-4 border-l-4 border-accent-500">
+                  <h6 class="text-xs sm:text-sm font-semibold text-accent-700 dark:text-accent-300 uppercase tracking-wide mb-2">Reflect</h6>
+                  <p class="text-sm sm:text-base text-accent-800 dark:text-accent-200 font-medium leading-relaxed">{{ section.reflectQuestion }}</p>
                 </div>
               </div>
             </div>
