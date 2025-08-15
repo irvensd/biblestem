@@ -251,18 +251,18 @@
           <!-- Quick Stats -->
           <div class="card p-4 sm:p-6">
             <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-3 sm:mb-4 text-sm sm:text-base">Quick Stats</h3>
-            <div class="space-y-4">
+            <div class="space-y-3 sm:space-y-4">
               <div class="flex justify-between items-center">
-                <span class="text-neutral-600 dark:text-neutral-400">Member since</span>
-                <span class="font-medium text-neutral-900 dark:text-neutral-100">{{ formatDate(authStore.user?.joinDate) }}</span>
+                <span class="text-neutral-600 dark:text-neutral-400 text-sm">Member since</span>
+                <span class="font-medium text-neutral-900 dark:text-neutral-100 text-sm">{{ formatDate(authStore.user?.joinDate) }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-neutral-600 dark:text-neutral-400">Total studies</span>
-                <span class="font-medium text-neutral-900 dark:text-neutral-100">{{ authStore.user?.studiesCompleted || 0 }}</span>
+                <span class="text-neutral-600 dark:text-neutral-400 text-sm">Total studies</span>
+                <span class="font-medium text-neutral-900 dark:text-neutral-100 text-sm">{{ authStore.user?.studiesCompleted || 0 }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-neutral-600 dark:text-neutral-400">Plan type</span>
-                <span class="font-medium" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-600'">
+                <span class="text-neutral-600 dark:text-neutral-400 text-sm">Plan type</span>
+                <span class="font-medium text-sm" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-600'">
                   {{ authStore.isPremium ? 'Premium' : 'Free' }}
                 </span>
               </div>
