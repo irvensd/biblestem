@@ -240,15 +240,56 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+
+const router = useRouter()
+const authStore = useAuthStore()
 
 const mobileMenuOpen = ref(false)
+const userMenuOpen = ref(false)
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
+  userMenuOpen.value = false
 }
 
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
 }
+
+const toggleUserMenu = () => {
+  userMenuOpen.value = !userMenuOpen.value
+  mobileMenuOpen.value = false
+}
+
+const closeUserMenu = () => {
+  userMenuOpen.value = false
+}
+
+const handleSignOut = () => {
+  authStore.logout()
+  userMenuOpen.value = false
+  mobileMenuOpen.value = false
+  router.push('/')
+}
+
+// Close menus when clicking outside
+const handleClickOutside = (event: Event) => {
+  const target = event.target as Element
+  if (!target.closest('.relative')) {
+    userMenuOpen.value = false
+  }
+}
+
+onMounted(() => {
+  // Initialize auth state
+  authStore.initializeAuth()
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
