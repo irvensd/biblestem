@@ -63,38 +63,38 @@
             </div>
 
             <!-- Study Path Preview -->
-            <div class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-6 mb-8 border border-primary-200 dark:border-primary-800">
-              <h4 class="font-bold text-neutral-800 dark:text-neutral-200 mb-4 text-center">Your Study Journey Today</h4>
-              <div class="grid grid-cols-5 gap-4">
+            <div class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-primary-200 dark:border-primary-800">
+              <h4 class="font-bold text-neutral-800 dark:text-neutral-200 mb-3 sm:mb-4 text-center text-sm sm:text-base">Your Study Journey Today</h4>
+              <div class="grid grid-cols-5 gap-2 sm:gap-4">
                 <div class="text-center">
-                  <div class="w-8 h-8 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span class="text-white text-sm font-bold">1</span>
+                  <div class="w-6 h-6 sm:w-8 sm:h-8 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                    <span class="text-white text-xs sm:text-sm font-bold">1</span>
                   </div>
-                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Introduction</span>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400 leading-tight">Introduction</span>
                 </div>
                 <div class="text-center">
-                  <div class="w-8 h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span class="text-white text-sm font-bold">2</span>
+                  <div class="w-6 h-6 sm:w-8 sm:h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                    <span class="text-white text-xs sm:text-sm font-bold">2</span>
                   </div>
-                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Scripture</span>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400 leading-tight">Scripture</span>
                 </div>
                 <div class="text-center">
-                  <div class="w-8 h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span class="text-white text-sm font-bold">3</span>
+                  <div class="w-6 h-6 sm:w-8 sm:h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                    <span class="text-white text-xs sm:text-sm font-bold">3</span>
                   </div>
-                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Interactive</span>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400 leading-tight">Interactive</span>
                 </div>
                 <div class="text-center">
-                  <div class="w-8 h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span class="text-white text-sm font-bold">4</span>
+                  <div class="w-6 h-6 sm:w-8 sm:h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                    <span class="text-white text-xs sm:text-sm font-bold">4</span>
                   </div>
-                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Application</span>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400 leading-tight">Application</span>
                 </div>
                 <div class="text-center">
-                  <div class="w-8 h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span class="text-white text-sm font-bold">5</span>
+                  <div class="w-6 h-6 sm:w-8 sm:h-8 bg-neutral-300 dark:bg-neutral-600 rounded-full flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                    <span class="text-white text-xs sm:text-sm font-bold">5</span>
                   </div>
-                  <span class="text-xs text-neutral-600 dark:text-neutral-400">Prayer</span>
+                  <span class="text-xs text-neutral-600 dark:text-neutral-400 leading-tight">Prayer</span>
                 </div>
               </div>
             </div>
