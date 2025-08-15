@@ -609,7 +609,7 @@
       </div>
 
       <!-- Modal Footer -->
-      <div class="bg-neutral-50 dark:bg-neutral-800 p-4 sm:p-6 border-t border-neutral-200 dark:border-neutral-700 flex-shrink-0 hidden sm:block">
+      <div class="bg-neutral-50 dark:bg-neutral-800 p-3 sm:p-6 border-t border-neutral-200 dark:border-neutral-700 flex-shrink-0">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
           <!-- Progress Indicator -->
           <div class="flex items-center space-x-2 sm:space-x-3 order-2 sm:order-1">
