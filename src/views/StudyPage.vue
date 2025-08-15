@@ -290,8 +290,11 @@ const closeLesson = () => {
 }
 
 const completeLesson = (lessonId: string) => {
-  studyProgress.value[lessonId] = true
-  // In real app, this would save to API/store
+  if (study.value) {
+    const lesson = study.value.lessons.find(l => l.id === lessonId)
+    const timeSpent = lesson ? lesson.duration : 5
+    progressStore.completeLesson(study.value.id, lessonId, timeSpent)
+  }
   closeLesson()
 }
 
@@ -300,7 +303,7 @@ const nextLessonInModal = () => {
     closeLesson()
     return
   }
-  
+
   const nextIndex = currentLessonIndex.value + 1
   if (canAccessLesson(nextIndex)) {
     openLesson(study.value.lessons[nextIndex], nextIndex)
@@ -308,19 +311,16 @@ const nextLessonInModal = () => {
 }
 
 onMounted(() => {
+  // Initialize stores
+  authStore.initializeAuth()
+  progressStore.loadFromStorage()
+
   const studyId = route.params.id as string
   const foundStudy = getStudyById(studyId)
-  
+
   if (foundStudy) {
     study.value = foundStudy
-    
-    // Mock some completed lessons for demo
-    if (studyId === 'life-of-jesus') {
-      studyProgress.value['loj-1'] = true
-      studyProgress.value['loj-2'] = true
-    } else if (studyId === 'psalm-23') {
-      studyProgress.value['p23-1'] = true
-    }
+    progressStore.startStudy(studyId)
   } else {
     router.push('/study-series')
   }
