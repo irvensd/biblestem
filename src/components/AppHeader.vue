@@ -184,13 +184,53 @@
             Contact
           </router-link>
           <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
-            <div class="flex flex-col space-y-3">
-              <button class="w-full text-left px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200">
+            <!-- Authenticated User Mobile -->
+            <div v-if="authStore.isAuthenticated" class="flex flex-col space-y-3">
+              <div class="flex items-center space-x-3 px-4 py-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
+                <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
+                  <span class="text-white font-bold">{{ authStore.user?.name.charAt(0) }}</span>
+                </div>
+                <div>
+                  <div class="font-medium text-neutral-900 dark:text-neutral-100">{{ authStore.user?.name }}</div>
+                  <div class="text-sm" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'">
+                    {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
+                  </div>
+                </div>
+              </div>
+              <router-link
+                to="/dashboard"
+                @click="closeMobileMenu"
+                class="w-full text-left px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              >
+                Dashboard
+              </router-link>
+              <router-link
+                to="/profile"
+                @click="closeMobileMenu"
+                class="w-full text-left px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              >
+                Profile
+              </router-link>
+              <button
+                @click="handleSignOut"
+                class="w-full text-left px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg font-medium transition-all duration-200"
+              >
+                Sign Out
+              </button>
+            </div>
+
+            <!-- Guest User Mobile -->
+            <div v-else class="flex flex-col space-y-3">
+              <router-link
+                to="/signin"
+                @click="closeMobileMenu"
+                class="w-full text-left px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              >
                 Sign In
-              </button>
-              <button class="btn-primary w-full">
+              </router-link>
+              <router-link to="/signin" @click="closeMobileMenu" class="btn-primary w-full">
                 Start Learning
-              </button>
+              </router-link>
             </div>
           </div>
         </div>
