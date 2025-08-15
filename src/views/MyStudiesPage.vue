@@ -324,6 +324,81 @@
         </router-link>
       </div>
     </div>
+
+    <!-- Study Options Modal -->
+    <div v-if="selectedStudy" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click="selectedStudy = null">
+      <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-md w-full" @click.stop>
+        <div class="p-6 border-b border-neutral-200 dark:border-neutral-700">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">Study Options</h3>
+            <button @click="selectedStudy = null" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <div class="flex items-center space-x-3 mb-6">
+            <div
+              class="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br"
+              :class="selectedStudy.color"
+            >
+              <span class="text-white font-bold text-lg">{{ selectedStudy.title.charAt(0) }}</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-neutral-900 dark:text-neutral-100">{{ selectedStudy.title }}</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">{{ selectedStudy.progress.completedLessons }} / {{ selectedStudy.lessons.length }} lessons completed</p>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <button
+              @click="goToStudy(selectedStudy.id)"
+              class="w-full flex items-center space-x-3 p-3 rounded-lg bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-2-10v8a2 2 0 002 2h8a2 2 0 002-2V6a2 2 0 00-2-2h-8a2 2 0 00-2 2z"/>
+              </svg>
+              <span>View Study Details</span>
+            </button>
+
+            <button
+              v-if="selectedStudy.progress.completedLessons > 0"
+              @click="goToFirstLesson(selectedStudy)"
+              class="w-full flex items-center space-x-3 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-600 transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0019 16V8a1 1 0 00-1.6-.8l-5.333 4zM4.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0011 16V8a1 1 0 00-1.6-.8l-5.334 4z"/>
+              </svg>
+              <span>Start from Beginning</span>
+            </button>
+
+            <button
+              v-if="selectedStudy.progress.completionPercent > 0 && selectedStudy.progress.completionPercent < 100"
+              @click="resetStudyProgress(selectedStudy)"
+              class="w-full flex items-center space-x-3 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+              <span>Reset Progress</span>
+            </button>
+
+            <button
+              @click="shareStudyProgress(selectedStudy)"
+              class="w-full flex items-center space-x-3 p-3 rounded-lg bg-secondary-50 dark:bg-secondary-900/20 text-secondary-600 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-900/30 transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+              </svg>
+              <span>Share Progress</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
