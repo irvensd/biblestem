@@ -53,9 +53,9 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/community',
-      name: 'community',
-      component: PlaceholderPage,
+      path: '/daily-devotions',
+      name: 'daily-devotions',
+      component: DailyDevotionsPage,
       meta: { requiresAuth: true }
     },
     {
