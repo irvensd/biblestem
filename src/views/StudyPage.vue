@@ -1,0 +1,336 @@
+<template>
+  <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+    <div v-if="study" class="container-base py-8">
+      <!-- Study Header -->
+      <div class="mb-8">
+        <nav class="flex items-center space-x-2 text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+          <router-link to="/study-series" class="hover:text-primary-600">Study Series</router-link>
+          <span>/</span>
+          <span class="text-neutral-800 dark:text-neutral-200">{{ study.title }}</span>
+        </nav>
+        
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div class="flex-1">
+            <div class="flex items-center space-x-3 mb-4">
+              <div 
+                class="w-16 h-16 rounded-xl flex items-center justify-center bg-gradient-to-br"
+                :class="study.color"
+              >
+                <span class="text-white font-bold text-2xl">{{ study.title.charAt(0) }}</span>
+              </div>
+              <div>
+                <h1 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200">{{ study.title }}</h1>
+                <p class="text-neutral-600 dark:text-neutral-400">{{ study.description }}</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center space-x-6 text-sm text-neutral-600 dark:text-neutral-400">
+              <span>{{ study.lessons.length }} lessons</span>
+              <span>{{ formatDuration(study.totalDuration) }}</span>
+              <span class="capitalize">{{ study.difficulty }}</span>
+              <span 
+                class="px-3 py-1 rounded-full text-xs font-medium"
+                :class="study.category === 'free' 
+                  ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+                  : 'bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'"
+              >
+                {{ study.category === 'free' ? 'Free' : 'Premium' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <div class="text-right">
+              <div class="text-sm text-neutral-600 dark:text-neutral-400">Progress</div>
+              <div class="text-2xl font-bold text-primary-600">{{ Math.round(progressPercentage) }}%</div>
+            </div>
+            <div class="w-20 h-20">
+              <svg class="transform -rotate-90 w-20 h-20">
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="36"
+                  stroke="currentColor"
+                  stroke-width="8"
+                  fill="none"
+                  class="text-neutral-200 dark:text-neutral-700"
+                />
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="36"
+                  stroke="currentColor"
+                  stroke-width="8"
+                  fill="none"
+                  stroke-dasharray="226"
+                  :stroke-dashoffset="226 - (226 * progressPercentage / 100)"
+                  class="text-primary-500 transition-all duration-300"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lesson List -->
+      <div class="grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+          <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-6">Lessons</h2>
+          <div class="space-y-4">
+            <div
+              v-for="(lesson, index) in study.lessons"
+              :key="lesson.id"
+              class="card p-6 hover:shadow-medium transition-all duration-200 cursor-pointer"
+              :class="{ 
+                'bg-primary-50 dark:bg-primary-900/20 border-primary-200 dark:border-primary-800': lesson.completed,
+                'opacity-75': !canAccessLesson(index)
+              }"
+              @click="openLesson(lesson, index)"
+            >
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                  <div 
+                    class="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-white"
+                    :class="lesson.completed 
+                      ? 'bg-green-500' 
+                      : canAccessLesson(index) 
+                        ? 'bg-primary-500' 
+                        : 'bg-neutral-400'"
+                  >
+                    <span v-if="lesson.completed" class="text-lg">✓</span>
+                    <span v-else-if="!canAccessLesson(index)" class="text-lg">🔒</span>
+                    <span v-else>{{ index + 1 }}</span>
+                  </div>
+                </div>
+                
+                <div class="flex-1">
+                  <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-bold text-lg text-neutral-800 dark:text-neutral-200">
+                      {{ lesson.title }}
+                    </h3>
+                    <span class="text-sm text-neutral-500">{{ lesson.duration }} min</span>
+                  </div>
+                  <p class="text-neutral-600 dark:text-neutral-400 mb-2">{{ lesson.description }}</p>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-primary-600 font-medium">{{ lesson.scripture }}</span>
+                    <button 
+                      v-if="canAccessLesson(index)"
+                      class="text-primary-600 hover:text-primary-700 font-medium text-sm"
+                      @click.stop="openLesson(lesson, index)"
+                    >
+                      {{ lesson.completed ? 'Review' : 'Start' }} →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Study Sidebar -->
+        <div class="space-y-6">
+          <!-- Study Stats -->
+          <div class="card p-6">
+            <h3 class="font-bold text-neutral-800 dark:text-neutral-200 mb-4">Study Overview</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-neutral-600 dark:text-neutral-400">Lessons completed</span>
+                <span class="font-medium">{{ completedLessons }}/{{ study.lessons.length }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-neutral-600 dark:text-neutral-400">Time invested</span>
+                <span class="font-medium">{{ timeSpent }} min</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-neutral-600 dark:text-neutral-400">Estimated remaining</span>
+                <span class="font-medium">{{ timeRemaining }} min</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Study Features -->
+          <div class="card p-6">
+            <h3 class="font-bold text-neutral-800 dark:text-neutral-200 mb-4">Features</h3>
+            <div class="space-y-2">
+              <div
+                v-for="feature in study.features"
+                :key="feature"
+                class="flex items-center space-x-2"
+              >
+                <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-sm text-neutral-600 dark:text-neutral-400">{{ feature }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Study Tags -->
+          <div class="card p-6">
+            <h3 class="font-bold text-neutral-800 dark:text-neutral-200 mb-4">Topics</h3>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="tag in study.tags"
+                :key="tag"
+                class="bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 px-3 py-1 rounded-full text-sm"
+              >
+                {{ tag }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Continue Button -->
+          <button
+            v-if="nextLesson"
+            class="w-full btn-primary"
+            @click="openLesson(nextLesson.lesson, nextLesson.index)"
+          >
+            {{ nextLesson.lesson.completed ? 'Review Next Lesson' : 'Continue Study' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson Modal -->
+    <LessonModal
+      v-if="currentLesson"
+      :lesson="currentLesson"
+      :study="study"
+      :lesson-index="currentLessonIndex"
+      :is-premium="study.category === 'premium'"
+      @close="closeLesson"
+      @complete="completeLesson"
+      @next="nextLessonInModal"
+    />
+
+    <!-- Loading State -->
+    <div v-else class="min-h-screen flex items-center justify-center">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+          <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <p class="text-neutral-600 dark:text-neutral-400">Loading study...</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+import { getStudyById, type Study, type Lesson } from '../data/studies'
+import LessonModal from '../components/LessonModal.vue'
+
+const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
+
+const study = ref<Study | null>(null)
+const currentLesson = ref<Lesson | null>(null)
+const currentLessonIndex = ref<number>(0)
+
+// Mock progress data - in real app this would come from API/store
+const studyProgress = ref<Record<string, boolean>>({})
+
+const completedLessons = computed(() => 
+  study.value ? study.value.lessons.filter(lesson => studyProgress.value[lesson.id]).length : 0
+)
+
+const progressPercentage = computed(() => 
+  study.value ? (completedLessons.value / study.value.lessons.length) * 100 : 0
+)
+
+const timeSpent = computed(() => 
+  study.value ? study.value.lessons
+    .filter(lesson => studyProgress.value[lesson.id])
+    .reduce((total, lesson) => total + lesson.duration, 0) : 0
+)
+
+const timeRemaining = computed(() => 
+  study.value ? study.value.totalDuration - timeSpent.value : 0
+)
+
+const nextLesson = computed(() => {
+  if (!study.value) return null
+  
+  for (let i = 0; i < study.value.lessons.length; i++) {
+    const lesson = study.value.lessons[i]
+    if (!studyProgress.value[lesson.id] && canAccessLesson(i)) {
+      return { lesson, index: i }
+    }
+  }
+  return null
+})
+
+const canAccessLesson = (index: number) => {
+  if (index === 0) return true
+  if (!study.value) return false
+  
+  // For premium studies, check if user has premium access
+  if (study.value.category === 'premium' && !authStore.isPremium) {
+    return false
+  }
+  
+  // Sequential access - previous lesson must be completed
+  const previousLesson = study.value.lessons[index - 1]
+  return studyProgress.value[previousLesson.id] || false
+}
+
+const formatDuration = (minutes: number) => {
+  if (minutes < 60) return `${minutes} min`
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
+  return `${hours}h ${mins}m`
+}
+
+const openLesson = (lesson: Lesson, index: number) => {
+  if (!canAccessLesson(index)) return
+  
+  currentLesson.value = lesson
+  currentLessonIndex.value = index
+}
+
+const closeLesson = () => {
+  currentLesson.value = null
+}
+
+const completeLesson = (lessonId: string) => {
+  studyProgress.value[lessonId] = true
+  // In real app, this would save to API/store
+  closeLesson()
+}
+
+const nextLessonInModal = () => {
+  if (!study.value || currentLessonIndex.value >= study.value.lessons.length - 1) {
+    closeLesson()
+    return
+  }
+  
+  const nextIndex = currentLessonIndex.value + 1
+  if (canAccessLesson(nextIndex)) {
+    openLesson(study.value.lessons[nextIndex], nextIndex)
+  }
+}
+
+onMounted(() => {
+  const studyId = route.params.id as string
+  const foundStudy = getStudyById(studyId)
+  
+  if (foundStudy) {
+    study.value = foundStudy
+    
+    // Mock some completed lessons for demo
+    if (studyId === 'life-of-jesus') {
+      studyProgress.value['loj-1'] = true
+      studyProgress.value['loj-2'] = true
+    } else if (studyId === 'psalm-23') {
+      studyProgress.value['p23-1'] = true
+    }
+  } else {
+    router.push('/study-series')
+  }
+})
+</script>
