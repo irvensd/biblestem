@@ -41,24 +41,24 @@
         <div class="p-4 sm:p-6">
           <!-- Hook Section -->
           <section v-if="currentStep === 'hook'" class="animate-fade-in">
-            <div class="text-center mb-8">
-              <div class="w-20 h-20 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div class="text-center mb-6 sm:mb-8">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
                   <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-4">
+              <h3 class="text-xl sm:text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-3 sm:mb-4 px-2">
                 {{ lesson.title }}
               </h3>
-              <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-6">
+              <p class="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-4 sm:mb-6 px-4">
                 {{ lesson.description }}
               </p>
-              <div class="inline-flex items-center space-x-2 bg-primary-50 dark:bg-primary-900/20 px-4 py-2 rounded-full border border-primary-200 dark:border-primary-800">
+              <div class="inline-flex items-center space-x-2 bg-primary-50 dark:bg-primary-900/20 px-3 sm:px-4 py-2 rounded-full border border-primary-200 dark:border-primary-800 mx-2">
                 <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
-                <span class="text-primary-700 dark:text-primary-300 text-sm font-medium">{{ lesson.duration }} minute lesson • {{ lesson.scripture }}</span>
+                <span class="text-primary-700 dark:text-primary-300 text-xs sm:text-sm font-medium">{{ lesson.duration }} minute lesson • {{ lesson.scripture }}</span>
               </div>
             </div>
 
