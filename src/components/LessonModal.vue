@@ -319,7 +319,7 @@
       </div>
 
       <!-- Modal Footer -->
-      <div class="bg-neutral-50 dark:bg-neutral-800 p-6 border-t border-neutral-200 dark:border-neutral-700">
+      <div class="bg-neutral-50 dark:bg-neutral-800 p-6 border-t border-neutral-200 dark:border-neutral-700 flex-shrink-0">
         <div class="flex items-center justify-between">
           <!-- Progress Indicator -->
           <div class="flex items-center space-x-2">
