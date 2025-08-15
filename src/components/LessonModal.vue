@@ -565,6 +565,16 @@
                 </div>
               </div>
             </div>
+
+            <!-- Mobile Complete Button -->
+            <div class="block sm:hidden mt-6">
+              <button
+                @click="completeLesson"
+                class="btn-primary w-full py-3 text-base font-semibold bg-green-600 hover:bg-green-700"
+              >
+                Complete Lesson ✓
+              </button>
+            </div>
           </section>
         </div>
       </div>
