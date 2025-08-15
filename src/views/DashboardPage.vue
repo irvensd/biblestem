@@ -264,18 +264,12 @@
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useStudyProgressStore } from '../stores/studyProgress'
 import { getFreeStudies, getPremiumStudies, type Study } from '../data/studies'
 
 const router = useRouter()
 const authStore = useAuthStore()
-
-// Mock study progress data - in real app this would come from API/store
-const studyProgress = {
-  'life-of-jesus': { completed: 2, total: 5 },
-  'psalm-23': { completed: 1, total: 4 },
-  'lords-prayer': { completed: 0, total: 6 },
-  'fruit-of-spirit': { completed: 3, total: 9 }
-}
+const progressStore = useStudyProgressStore()
 
 const allStudies = computed(() => [...getFreeStudies(), ...getPremiumStudies()])
 
