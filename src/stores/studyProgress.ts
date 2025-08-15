@@ -13,30 +13,60 @@ export interface StudyProgress {
 export const useStudyProgressStore = defineStore('studyProgress', () => {
   const progressData = ref<Record<string, StudyProgress>>({})
   
-  // Initialize with some demo data
+  // Initialize with some demo data including completed studies
   const initializeDemoData = () => {
     if (Object.keys(progressData.value).length === 0) {
       progressData.value = {
+        // Completed Studies
+        'psalm-23': {
+          studyId: 'psalm-23',
+          completedLessons: ['p23-1', 'p23-2', 'p23-3', 'p23-4'], // All 4 lessons completed
+          currentLesson: 'p23-4',
+          startedAt: '2024-01-10',
+          lastAccessedAt: new Date().toISOString(),
+          totalTimeSpent: 20
+        },
+        'lords-prayer': {
+          studyId: 'lords-prayer',
+          completedLessons: ['lp-1', 'lp-2', 'lp-3', 'lp-4', 'lp-5', 'lp-6'], // All 6 lessons completed
+          currentLesson: 'lp-6',
+          startedAt: '2024-01-05',
+          lastAccessedAt: new Date().toISOString(),
+          totalTimeSpent: 30
+        },
+        'faith-over-fear': {
+          studyId: 'faith-over-fear',
+          completedLessons: ['fof-1', 'fof-2', 'fof-3', 'fof-4', 'fof-5'], // All 5 lessons completed
+          currentLesson: 'fof-5',
+          startedAt: '2024-01-01',
+          lastAccessedAt: new Date().toISOString(),
+          totalTimeSpent: 25
+        },
+
+        // In Progress Studies
         'life-of-jesus': {
           studyId: 'life-of-jesus',
-          completedLessons: ['loj-1', 'loj-2'],
-          currentLesson: 'loj-3',
+          completedLessons: ['loj-1', 'loj-2', 'loj-3'], // 3 out of 5 completed
+          currentLesson: 'loj-4',
           startedAt: '2024-01-15',
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 15
         },
-        'psalm-23': {
-          studyId: 'psalm-23',
-          completedLessons: ['p23-1'],
-          currentLesson: 'p23-2',
-          startedAt: '2024-01-20',
-          lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 8
-        },
         'fruit-of-spirit': {
           studyId: 'fruit-of-spirit',
-          completedLessons: ['fos-1'],
+          completedLessons: ['fos-1'], // Just started
+          currentLesson: 'fos-2',
           startedAt: '2024-01-25',
+          lastAccessedAt: new Date().toISOString(),
+          totalTimeSpent: 5
+        },
+
+        // Started but minimal progress
+        'armor-of-god': {
+          studyId: 'armor-of-god',
+          completedLessons: ['aog-1'], // Just first lesson
+          currentLesson: 'aog-2',
+          startedAt: '2024-01-28',
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 5
         }
