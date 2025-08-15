@@ -2,24 +2,24 @@
   <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
     <!-- Dashboard Header -->
     <section class="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
-      <div class="container-base py-8">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="container-base py-6 sm:py-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+            <h1 class="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
               Welcome back, {{ authStore.user?.name }}!
             </h1>
-            <p class="text-neutral-600 dark:text-neutral-400 mt-2">
+            <p class="text-neutral-600 dark:text-neutral-400 mt-1 sm:mt-2 text-sm sm:text-base">
               Continue your Bible study journey where you left off
             </p>
           </div>
-          <div class="flex items-center space-x-4">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
             <div class="flex items-center space-x-2">
               <div :class="authStore.isPremium ? 'bg-accent-500' : 'bg-neutral-500'" class="w-3 h-3 rounded-full"></div>
               <span class="text-sm font-medium" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-600'">
                 {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
               </span>
             </div>
-            <button v-if="!authStore.isPremium" class="btn-accent text-sm py-2 px-4">
+            <button v-if="!authStore.isPremium" class="btn-accent text-sm py-2 px-4 w-full sm:w-auto">
               Upgrade to Premium
             </button>
           </div>
