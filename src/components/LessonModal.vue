@@ -610,9 +610,9 @@
 
       <!-- Modal Footer -->
       <div class="bg-neutral-50 dark:bg-neutral-800 p-3 sm:p-6 border-t border-neutral-200 dark:border-neutral-700 flex-shrink-0">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
+        <div class="flex flex-col space-y-3 sm:space-y-0 sm:flex-row items-center justify-between">
           <!-- Progress Indicator -->
-          <div class="flex items-center space-x-2 sm:space-x-3 order-2 sm:order-1">
+          <div class="flex items-center space-x-2 order-2 sm:order-1">
             <div class="flex items-center space-x-1">
               <div
                 v-for="(step, index) in steps"
@@ -634,11 +634,11 @@
           </div>
 
           <!-- Navigation Buttons -->
-          <div class="flex items-center space-x-2 sm:space-x-3 order-1 sm:order-2 w-full sm:w-auto">
+          <div class="flex items-center space-x-3 order-1 sm:order-2 w-full sm:w-auto">
             <button
               v-if="currentStepIndex > 0"
               @click="previousStep"
-              class="btn-secondary flex-1 sm:flex-none text-sm sm:text-base py-2 sm:py-3"
+              class="btn-secondary flex-1 sm:flex-none text-sm py-2 sm:py-3 px-4 sm:px-6"
             >
               ← Previous
             </button>
@@ -646,7 +646,7 @@
             <button
               v-if="currentStepIndex < steps.length - 1"
               @click="nextStep"
-              class="btn-primary flex-1 sm:flex-none text-sm sm:text-base py-2 sm:py-3"
+              class="btn-primary flex-1 sm:flex-none text-sm py-2 sm:py-3 px-4 sm:px-6"
             >
               Next →
             </button>
@@ -654,7 +654,7 @@
             <button
               v-else
               @click="completeLesson"
-              class="btn-primary flex-1 sm:flex-none text-sm sm:text-base py-2 sm:py-3"
+              class="btn-primary flex-1 sm:flex-none text-sm py-2 sm:py-3 px-4 sm:px-6"
             >
               Complete ✓
             </button>
