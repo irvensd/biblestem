@@ -234,30 +234,32 @@ const study = ref<Study | null>(null)
 const currentLesson = ref<Lesson | null>(null)
 const currentLessonIndex = ref<number>(0)
 
-const completedLessons = computed(() => 
-  study.value ? study.value.lessons.filter(lesson => studyProgress.value[lesson.id]).length : 0
+const studyProgress = computed(() =>
+  study.value ? progressStore.getStudyProgress(study.value.id) : null
 )
 
-const progressPercentage = computed(() => 
-  study.value ? (completedLessons.value / study.value.lessons.length) * 100 : 0
+const completedLessons = computed(() =>
+  studyProgress.value ? studyProgress.value.completedLessons.length : 0
 )
 
-const timeSpent = computed(() => 
-  study.value ? study.value.lessons
-    .filter(lesson => studyProgress.value[lesson.id])
-    .reduce((total, lesson) => total + lesson.duration, 0) : 0
+const progressPercentage = computed(() =>
+  study.value ? progressStore.getStudyCompletionPercentage(study.value.id, study.value.lessons.length) : 0
 )
 
-const timeRemaining = computed(() => 
+const timeSpent = computed(() =>
+  studyProgress.value ? studyProgress.value.totalTimeSpent : 0
+)
+
+const timeRemaining = computed(() =>
   study.value ? study.value.totalDuration - timeSpent.value : 0
 )
 
 const nextLesson = computed(() => {
   if (!study.value) return null
-  
+
   for (let i = 0; i < study.value.lessons.length; i++) {
     const lesson = study.value.lessons[i]
-    if (!studyProgress.value[lesson.id] && canAccessLesson(i)) {
+    if (!progressStore.isLessonCompleted(study.value.id, lesson.id) && canAccessLesson(i)) {
       return { lesson, index: i }
     }
   }
@@ -265,17 +267,8 @@ const nextLesson = computed(() => {
 })
 
 const canAccessLesson = (index: number) => {
-  if (index === 0) return true
   if (!study.value) return false
-  
-  // For premium studies, check if user has premium access
-  if (study.value.category === 'premium' && !authStore.isPremium) {
-    return false
-  }
-  
-  // Sequential access - previous lesson must be completed
-  const previousLesson = study.value.lessons[index - 1]
-  return studyProgress.value[previousLesson.id] || false
+  return progressStore.canAccessLesson(study.value.id, index, authStore.isPremium, study.value)
 }
 
 const formatDuration = (minutes: number) => {
