@@ -1,0 +1,96 @@
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
+
+export interface User {
+  id: string
+  name: string
+  email: string
+  avatar?: string
+  plan: 'free' | 'premium'
+  studiesCompleted: number
+  joinDate: string
+}
+
+export const useAuthStore = defineStore('auth', () => {
+  const user = ref<User | null>(null)
+  const isLoading = ref(false)
+
+  const isAuthenticated = computed(() => !!user.value)
+  const isPremium = computed(() => user.value?.plan === 'premium')
+
+  // Demo users for login
+  const demoUsers = [
+    {
+      id: '1',
+      name: 'John Smith',
+      email: 'demo@biblestem.com',
+      avatar: '',
+      plan: 'premium' as const,
+      studiesCompleted: 12,
+      joinDate: '2024-01-15'
+    },
+    {
+      id: '2', 
+      name: 'Sarah Johnson',
+      email: 'free@biblestem.com',
+      avatar: '',
+      plan: 'free' as const,
+      studiesCompleted: 3,
+      joinDate: '2024-02-20'
+    }
+  ]
+
+  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    isLoading.value = true
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // Demo login logic
+      if (email === 'demo@biblestem.com' && password === 'demo123') {
+        user.value = demoUsers[0]
+        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
+        return { success: true }
+      } else if (email === 'free@biblestem.com' && password === 'free123') {
+        user.value = demoUsers[1]
+        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
+        return { success: true }
+      } else {
+        return { success: false, error: 'Invalid email or password' }
+      }
+    } catch (error) {
+      return { success: false, error: 'Login failed. Please try again.' }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const logout = () => {
+    user.value = null
+    localStorage.removeItem('biblestem_user')
+  }
+
+  const initializeAuth = () => {
+    const savedUser = localStorage.getItem('biblestem_user')
+    if (savedUser) {
+      try {
+        user.value = JSON.parse(savedUser)
+      } catch (error) {
+        console.error('Error parsing saved user:', error)
+        localStorage.removeItem('biblestem_user')
+      }
+    }
+  }
+
+  return {
+    user,
+    isLoading,
+    isAuthenticated,
+    isPremium,
+    demoUsers,
+    login,
+    logout,
+    initializeAuth
+  }
+})
