@@ -25,7 +25,7 @@
       </div>
 
       <!-- Modal Content -->
-      <div class="overflow-y-auto max-h-[calc(90vh-120px)]">
+      <div class="flex-1 overflow-y-auto">
         <div class="p-6">
           <!-- Hook Section -->
           <section v-if="currentStep === 'hook'" class="animate-fade-in">
