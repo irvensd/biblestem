@@ -58,10 +58,10 @@
           </section>
 
           <!-- Continue Studies -->
-          <section class="card p-6">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Continue Learning</h2>
-              <router-link to="/study-series" class="text-primary-600 hover:text-primary-700 font-medium text-sm">
+          <section class="card p-4 sm:p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-4 sm:mb-6">
+              <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100">Continue Learning</h2>
+              <router-link to="/study-series" class="text-primary-600 hover:text-primary-700 font-medium text-sm self-start sm:self-auto">
                 View All Series →
               </router-link>
             </div>
