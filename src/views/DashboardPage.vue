@@ -597,5 +597,7 @@ onMounted(() => {
   // Initialize stores
   authStore.initializeAuth()
   progressStore.loadFromStorage()
+  achievementsStore.loadFromStorage()
+  achievementsStore.checkAchievements()
 })
 </script>
