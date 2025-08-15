@@ -407,26 +407,28 @@ export const freeStudies: Study[] = [
   },
   {
     id: 'how-to-study-bible',
-    title: 'How to Study the Bible – The Preparation',
-    description: 'Master the foundational principles of Bible study. Learn prayer, humility, obedience, and teaching - essential preparation for effective Scripture study.',
+    title: 'How to Study the Bible: The Preparation',
+    description: 'A 6-part Bible study series designed to prepare the believer to approach God\'s Word with prayer, maturity, humility, obedience, a teaching spirit, and trust in what God has revealed.',
     category: 'free',
     totalDuration: 36, // 6 lessons × 6 minutes each
     difficulty: 'beginner',
     tags: ['Bible Study', 'Preparation', 'Spiritual Growth', 'Learning'],
     image: 'bible-study-prep',
     color: 'from-emerald-500 to-emerald-600',
-    features: ['Interactive word study', 'Practical applications', 'Audio prayers', 'Step-by-step guidance'],
+    features: ['Interactive word study', 'Guided study sections', 'Reflection questions', 'Premium content'],
     lessons: [
       {
         id: 'htsb-1',
         title: 'Prayer',
         duration: 6,
         scripture: 'Psalm 119:18',
-        description: 'Learn to ask God to open your spiritual eyes before studying His Word',
+        description: 'Opening the Bible without prayer is like walking into a dark room without turning on the light',
         content: {
-          scriptureText: 'Open my eyes that I may see wonderful things in your law.',
+          openingThought: 'Opening the Bible without prayer is like walking into a dark room without turning on the light. True understanding is not a product of intellect alone—it\'s a gift from God through the Holy Spirit.',
+          scriptureText: 'Open thou mine eyes, that I may behold wondrous things out of thy law.',
+          mainScriptures: ['Psa 119:18 – Open thou mine eyes, that I may behold wondrous things out of thy law.'],
           taggedScripture: [
-            { type: 'text', text: 'Open my ' },
+            { type: 'text', text: 'Open thou mine ' },
             {
               type: 'word',
               text: 'eyes',
@@ -434,7 +436,7 @@ export const freeStudies: Study[] = [
                 original: 'עֵינַיִם',
                 transliteration: 'ayin',
                 gloss: 'eyes, sight, figurative: mental or spiritual perception',
-                lemma: 'עַי��ן',
+                lemma: 'עַיִן',
                 strongs: 'H5869',
                 partOfSpeech: 'Noun',
                 language: 'hebrew',
@@ -445,7 +447,7 @@ export const freeStudies: Study[] = [
                 }
               }
             },
-            { type: 'text', text: ' that I may see wonderful things in your ' },
+            { type: 'text', text: ', that I may behold wondrous things out of thy ' },
             {
               type: 'word',
               text: 'law',
@@ -466,6 +468,37 @@ export const freeStudies: Study[] = [
             },
             { type: 'text', text: '.' }
           ],
+          guidedStudy: [
+            {
+              pointTitle: 'Prayer',
+              supportingScriptures: [
+                'Psa 119:18 – Open thou mine eyes, that I may behold wondrous things out of thy law.',
+                'Gen 3:7 – And the eyes of them both were opened, and they knew that they were naked; and they sewed fig leaves together, and made themselves aprons.',
+                'Rev 3:17 – Because thou sayest, I am rich, and increased with goods, and have need of nothing; and knowest not that thou art wretched, and miserable, and poor, and blind, and naked:',
+                'Rom 8:7 – Because the carnal mind is enmity against God: for it is not subject to the law of God, neither indeed can be.',
+                'Pro 4:7 – Wisdom is the principal thing; therefore get wisdom: and with all thy getting get understanding.'
+              ],
+              commentary: 'When the Bible says "open my eyes," it is not speaking of the physically blind. It\'s referring to the opening of spiritual understanding. Adam and Eve were not physically blind before Genesis 3:7—their "opened eyes" meant awareness of sin. The Laodicean church in Revelation 3:17 is a picture of people rich in possessions but blind to their spiritual condition. This is a warning for us: we can be textually aware yet spiritually blind. A carnal mind cannot submit to God\'s law without transformation.',
+              reflectQuestion: 'Can you think of a group in Scripture besides Laodicea that was spiritually blind?'
+            },
+            {
+              pointTitle: 'Can Prayer Alone Lead to Wrong Conclusions?',
+              supportingScriptures: [
+                'Mat 15:9 – But in vain they do worship me, teaching for doctrines the commandments of men.'
+              ],
+              commentary: 'Yes. A person can pray but still arrive at the wrong conclusion if led by the wrong spirit. That\'s why we must ensure we are guided by the Spirit of truth.',
+              reflectQuestion: 'How can we be certain we\'re being led by the right Spirit?'
+            },
+            {
+              pointTitle: 'How to Receive the Holy Spirit',
+              supportingScriptures: [
+                'Luk 11:13 – If ye then, being evil, know how to give good gifts unto your children: how much more shall your heavenly Father give the Holy Spirit to them that ask him?',
+                'Joh 16:13 – Howbeit when he, the Spirit of truth, is come, he will guide you into all truth: for he shall not speak of himself; but whatsoever he shall hear, that shall he speak: and he will shew you things to come.'
+              ],
+              commentary: 'Receiving the Holy Spirit is not about emotional displays or human-imposed rituals—it is as simple as asking in faith. The Spirit leads us into truth, never contradicting the Word of God.',
+              reflectQuestion: 'What is one step you can take today to invite the Holy Spirit into your Bible study time?'
+            }
+          ],
           commentary: [
             'Prayer is the essential first step in Bible study. We acknowledge our dependence on God for spiritual understanding.',
             'The psalmist recognizes that spiritual truths are hidden from our natural understanding and require divine revelation.',
@@ -477,29 +510,33 @@ export const freeStudies: Study[] = [
             content: {
               questions: [
                 {
-                  question: 'Why should prayer come before Bible study?',
+                  question: 'In Psalm 119:18, what kind of "eyes" is the psalmist talking about?',
                   options: [
-                    'It\'s a religious tradition',
-                    'We need God\'s help to understand spiritual truth',
-                    'It makes us feel more spiritual'
+                    'Physical vision',
+                    'Spiritual understanding',
+                    'Night vision goggles'
                   ],
                   correct: 1
                 }
               ]
             }
           },
-          lifeApplication: {
-            challenge: 'Begin every Bible study session with prayer, asking God to open your eyes to His truth.',
-            journaling: 'Write a personal prayer asking God to help you understand His Word better.'
-          },
-          prayerPrompt: 'Father, I come to Your Word recognizing my need for Your guidance. Open my spiritual eyes to see the wonderful truths You want to reveal to me. Help me not just to read, but to truly understand and apply Your teachings to my life.',
+          lifeApplication: 'Never open the Bible without first asking God for the Holy Spirit\'s guidance. Make it a daily habit: pray before every study session.',
+          keyTakeaways: [
+            'Spiritual sight is different from physical vision.',
+            'Without the Holy Spirit, even prayer can be misdirected.',
+            'God gives the Spirit freely to those who ask.'
+          ],
+          prayerPrompt: 'Lord, open my spiritual eyes to see Your truth. Give me understanding beyond what I could find on my own, and fill me with Your Spirit so I may walk in obedience.',
           deeperStudy: {
-            pdf: 'Prayer and Bible Study Guide',
+            wordStudy: 'Hebrew "ayin" (H5869 – "eyes") and its figurative use in Scripture.',
+            caseStudy: 'Spiritual blindness in the Pharisees (John 9).',
+            pdf: 'Praying Before You Study: A Step-by-Step Guide.',
             additionalReadings: ['The Practice of Spiritual Reading', 'Opening Scripture with Prayer'],
             discussionQuestions: [
-              'How has prayer changed your experience of reading the Bible?',
-              'What barriers prevent you from praying before studying Scripture?',
-              'How can we cultivate a heart that depends on God for understanding?'
+              'Why is prayer essential before studying the Bible?',
+              'How does the Holy Spirit open our understanding?',
+              'What is the danger of studying without prayer?'
             ]
           }
         }
@@ -509,9 +546,11 @@ export const freeStudies: Study[] = [
         title: 'Mature and Be Weaned Off from Human Dependence',
         duration: 6,
         scripture: '1 Corinthians 13:11',
-        description: 'Move beyond borrowed faith to personal discovery of God\'s truth',
+        description: 'God calls us to grow from milk to meat—to move from relying on others for our spiritual food to feeding ourselves',
         content: {
-          scriptureText: 'When I was a child, I talked like a child, I thought like a child, I reasoned like a child. When I became a man, I put the ways of childhood behind me.',
+          openingThought: 'God calls us to grow from milk to meat—to move from relying on others for our spiritual food to feeding ourselves from His Word. Guidance is good, but dependence on humans for our understanding can leave us vulnerable to deception.',
+          scriptureText: 'When I was a child, I spake as a child, I understood as a child, I thought as a child: but when I became a man, I put away childish things.',
+          mainScriptures: ['1Co 13:11 – When I was a child, I spake as a child, I understood as a child, I thought as a child: but when I became a man, I put away childish things.'],
           taggedScripture: [
             { type: 'text', text: 'When I was a ' },
             {
@@ -532,7 +571,7 @@ export const freeStudies: Study[] = [
                 }
               }
             },
-            { type: 'text', text: ', I talked like a child, I thought like a child, I reasoned like a child. When I became a ' },
+            { type: 'text', text: ', I spake as a child, I understood as a child, I thought as a child: but when I became a ' },
             {
               type: 'word',
               text: 'man',
@@ -551,7 +590,36 @@ export const freeStudies: Study[] = [
                 }
               }
             },
-            { type: 'text', text: ', I put the ways of childhood behind me.' }
+            { type: 'text', text: ', I put away childish things.' }
+          ],
+          guidedStudy: [
+            {
+              pointTitle: 'The Call to Maturity',
+              supportingScriptures: [
+                '1Co 13:11 – When I was a child, I spake as a child, I understood as a child, I thought as a child: but when I became a man, I put away childish things.',
+                'Psa 146:3 – Put not your trust in princes, nor in the son of man, in whom there is no help.',
+                '1Jn 2:27 – But the anointing which ye have received of him abideth in you, and ye need not that any man teach you: but as the same anointing teacheth you of all things, and is truth, and is no lie, and even as it hath taught you, ye shall abide in him.'
+              ],
+              commentary: 'It is natural to begin the Christian walk learning from others, but God desires that we grow to understand His Word personally. Over-reliance on human teachers creates a weak faith that can be easily swayed. Even in the Reformation era, people trusted the priesthood without searching Scripture, leading to widespread deception.',
+              reflectQuestion: 'In what ways might you be leaning too heavily on others for your understanding of Scripture?'
+            },
+            {
+              pointTitle: 'The Parrot Problem',
+              supportingScriptures: [
+                'Heb 5:13 – For every one that useth milk is unskilful in the word of righteousness: for he is a babe.',
+                'Heb 5:14 – But strong meat belongeth to them that are of full age, even those who by reason of use have their senses exercised to discern both good and evil.'
+              ],
+              commentary: 'A parrot repeats what it hears but has no real understanding. In the same way, many believers can recite doctrinal conclusions but cannot explain how those conclusions are reached from Scripture. This reveals spiritual infancy.',
+              reflectQuestion: 'If someone asked you to prove a key belief you hold, could you show them from the Bible step-by-step?'
+            },
+            {
+              pointTitle: 'The Spirit as Our Primary Teacher',
+              supportingScriptures: [
+                'Joh 14:26 – But the Comforter, which is the Holy Ghost, whom the Father will send in my name, he shall teach you all things, and bring all things to your remembrance, whatsoever I have said unto you.'
+              ],
+              commentary: 'Human teachers have a role, but the Spirit is the ultimate Teacher. Every true insight must be tested against Scripture and confirmed by the Spirit\'s leading.',
+              reflectQuestion: 'How often do you confirm a teaching you hear by personally studying the Scriptures?'
+            }
           ],
           commentary: [
             'Spiritual maturity means moving from dependence on others\' faith to developing your own relationship with God.',
@@ -560,29 +628,37 @@ export const freeStudies: Study[] = [
             'Mature believers can discern truth from Scripture rather than simply accepting what others say.'
           ],
           interactiveElement: {
-            type: 'reflection',
+            type: 'quiz',
             content: {
-              question: 'How can you move from borrowed faith to personal discovery?',
-              prompts: [
-                'Study Scripture for yourself rather than only reading commentaries',
-                'Ask questions and seek answers through personal prayer and study',
-                'Test what you hear against Scripture',
-                'Develop your own relationship with God through His Word'
+              questions: [
+                {
+                  question: 'According to Hebrews 5:14, what belongs to those of full age?',
+                  options: [
+                    'Milk',
+                    'Strong meat',
+                    'Water'
+                  ],
+                  correct: 1
+                }
               ]
             }
           },
-          lifeApplication: {
-            challenge: 'This week, study one passage without reading any commentary first. What does God show you directly?',
-            journaling: 'Reflect on areas where you might be too dependent on others\' understanding rather than seeking God yourself.'
-          },
-          prayerPrompt: 'Lord, help me grow in spiritual maturity. While I\'m grateful for teachers You\'ve given me, help me also learn to hear from You directly through Your Word. Give me wisdom to study for myself and discern Your truth.',
+          lifeApplication: 'Listen to sermons and read study guides, but always test them in Scripture. Develop your own study routine so you can confirm truth without relying solely on others.',
+          keyTakeaways: [
+            'Maturity means moving from dependence on others to personal discernment.',
+            'Knowing what you believe is not enough—you must know why.',
+            'The Holy Spirit is your ultimate Teacher.'
+          ],
+          prayerPrompt: 'Father, grow me from milk to meat. Give me the discipline to study Your Word for myself and the discernment to test all things by Your truth.',
           deeperStudy: {
-            pdf: 'Developing Independent Bible Study Skills',
+            caseStudy: 'The Bereans testing Paul\'s teaching (Acts 17:10–12).',
+            wordStudy: 'Greek "teleios" (G5046 – "mature, complete") and its New Testament usage.',
+            pdf: 'From Milk to Meat: A Self-Study Growth Plan.',
             additionalReadings: ['From Dependence to Spiritual Maturity', 'Learning to Study Scripture Personally'],
             discussionQuestions: [
-              'What\'s the difference between childlike faith and childish dependence?',
-              'How can we balance learning from others with personal study?',
-              'What steps can we take to develop spiritual maturity?'
+              'What are signs of spiritual maturity?',
+              'Why is personal Bible study vital for growth?',
+              'How do you balance learning from others with studying for yourself?'
             ]
           }
         }
@@ -592,9 +668,11 @@ export const freeStudies: Study[] = [
         title: 'Must Have a Teachable Spirit',
         duration: 6,
         scripture: 'Psalm 86:11',
-        description: 'Cultivate humility and openness to learn from God\'s Word',
+        description: 'A closed mind cannot receive new truth. If we come to the Bible to prove ourselves right, we\'ve already decided what it can say',
         content: {
-          scriptureText: 'Teach me your way, LORD, that I may rely on your faithfulness; give me an undivided heart, that I may fear your name.',
+          openingThought: 'A closed mind cannot receive new truth. If we come to the Bible to prove ourselves right, we\'ve already decided what it can say. A teachable spirit leaves pride at the door and allows God to correct, guide, and transform us.',
+          scriptureText: 'Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.',
+          mainScriptures: ['Psa 86:11 – Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.'],
           taggedScripture: [
             {
               type: 'word',
@@ -614,10 +692,10 @@ export const freeStudies: Study[] = [
                 }
               }
             },
-            { type: 'text', text: ' me your way, LORD, that I may rely on your faithfulness; give me an ' },
+            { type: 'text', text: ' me thy way, O LORD; I will walk in thy truth: ' },
             {
               type: 'word',
-              text: 'undivided',
+              text: 'unite',
               data: {
                 original: 'יָחַד',
                 transliteration: 'yachad',
@@ -633,7 +711,7 @@ export const freeStudies: Study[] = [
                 }
               }
             },
-            { type: 'text', text: ' heart, that I may ' },
+            { type: 'text', text: ' my heart to ' },
             {
               type: 'word',
               text: 'fear',
@@ -652,7 +730,24 @@ export const freeStudies: Study[] = [
                 }
               }
             },
-            { type: 'text', text: ' your name.' }
+            { type: 'text', text: ' thy name.' }
+          ],
+          guidedStudy: [
+            {
+              pointTitle: 'Approaching as a Student, Not a Teacher',
+              supportingScriptures: [
+                'Psa 86:11 – Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.',
+                'Mat 15:9 – But in vain they do worship me, teaching for doctrines the commandments of men.'
+              ],
+              commentary: 'David didn\'t say, "Confirm that I already know Your way." He said, "Teach me." A teachable spirit means coming to the Bible ready to learn—not with an agenda to prove our point. Many fall into the trap of using Scripture to back up their own ideas instead of letting it shape them.',
+              reflectQuestion: 'Have you ever gone into Bible study looking for verses to support your opinion rather than seeking God\'s perspective?'
+            },
+            {
+              pointTitle: 'Emptying Self to Be Filled',
+              supportingScriptures: [],
+              commentary: 'One reason we may not be filled with the Holy Spirit is that we\'re already full—of self, pride, and preconceived ideas. God\'s truth cannot enter a heart that refuses to yield.',
+              reflectQuestion: 'What personal opinions or attitudes might be blocking you from receiving new insight from God\'s Word?'
+            }
           ],
           commentary: [
             'A teachable spirit begins with recognizing that we don\'t know everything and need God\'s instruction.',
@@ -665,81 +760,105 @@ export const freeStudies: Study[] = [
             content: {
               questions: [
                 {
-                  question: 'What is the biggest barrier to having a teachable spirit?',
+                  question: 'What is one key requirement for having a teachable spirit?',
                   options: [
-                    'Lack of education',
-                    'Pride and thinking we already know',
-                    'Being too busy to study'
+                    'Being stubborn about your beliefs',
+                    'Emptying self to receive God\'s truth',
+                    'Knowing more than everyone else'
                   ],
                   correct: 1
                 }
               ]
             }
           },
-          lifeApplication: {
-            challenge: 'Approach this week\'s Bible study with fresh eyes, as if reading familiar passages for the first time.',
-            journaling: 'Ask God to reveal areas where pride might be hindering your ability to learn from His Word.'
-          },
-          prayerPrompt: 'Father, humble my heart to receive Your instruction. Remove any pride that would keep me from learning. Give me an undivided heart that seeks Your truth above my own opinions. Teach me Your ways.',
+          lifeApplication: 'Begin each study with a surrender prayer: "Lord, teach me Your ways, even if it changes mine." Guard against the temptation to twist Scripture to match personal preference.',
+          keyTakeaways: [
+            'A teachable spirit comes to Scripture ready to learn, not to prove.',
+            'Pride and self-confidence block the Spirit\'s instruction.',
+            'Humility is the gateway to deeper understanding.'
+          ],
+          prayerPrompt: 'Lord, empty me of pride and self. Give me a humble, teachable spirit that welcomes Your correction and rejoices in Your truth.',
           deeperStudy: {
-            pdf: 'Cultivating a Teachable Heart',
+            caseStudy: 'Apollos receiving correction from Priscilla and Aquila (Acts 18:24–28).',
+            wordStudy: 'Hebrew "limmad" (H3925 – "teach, instruct") in Psalms and Proverbs.',
+            pdf: '7 Habits of a Teachable Bible Student.',
             additionalReadings: ['Humility and Scripture Study', 'Overcoming Pride in Bible Study'],
             discussionQuestions: [
-              'How does pride interfere with learning from Scripture?',
-              'What practical steps can we take to maintain a teachable spirit?',
-              'How can we balance confidence in what we know with openness to learn more?'
+              'What does it mean to have a teachable spirit?',
+              'Why is humility essential in Bible study?',
+              'How do you guard against pride in your learning?'
             ]
           }
         }
       },
       {
         id: 'htsb-4',
-        title: 'Must Be Willing to Obey What You\'re Taught',
+        title: 'Be Willing to Obey What You Learn',
         duration: 6,
-        scripture: 'Ezekiel 33:31',
-        description: 'Learn the importance of applying Scripture, not just studying it',
+        scripture: 'John 7:17',
+        description: 'God reveals truth to those who are willing to follow it. Many never grow in Bible understanding because they treat Scripture as information rather than instruction',
         content: {
-          scriptureText: 'My people come to you, as they usually do, and sit before you to hear your words, but they do not put them into practice. Their mouths speak of love, but their hearts are greedy for unjust gain.',
+          openingThought: 'God reveals truth to those who are willing to follow it. Many never grow in Bible understanding because they treat Scripture as information rather than instruction.',
+          scriptureText: 'If any man will do his will, he shall know of the doctrine, whether it be of God, or whether I speak of myself.',
+          mainScriptures: ['Joh 7:17 – If any man will do his will, he shall know of the doctrine, whether it be of God, or whether I speak of myself.'],
           taggedScripture: [
-            { type: 'text', text: 'My people come to you, as they usually do, and sit before you to ' },
+            { type: 'text', text: 'If any man will ' },
             {
               type: 'word',
-              text: 'hear',
+              text: 'do',
               data: {
-                original: 'שָׁמַע',
-                transliteration: 'shama',
-                gloss: 'to hear, listen, understand, obey',
-                lemma: 'שָׁמַע',
-                strongs: 'H8085',
+                original: 'ποιέω',
+                transliteration: 'poieo',
+                gloss: 'to do, make, practice, perform',
+                lemma: 'ποιέω',
+                strongs: 'G4160',
                 partOfSpeech: 'Verb',
-                language: 'hebrew',
+                language: 'greek',
                 deeperStudy: {
-                  etymology: 'Root meaning both "to hear" and "to obey" - true hearing leads to action',
-                  frequency: 'Appears 1165 times in the Hebrew Bible',
-                  crossReferences: ['Deut 6:4', 'Jas 1:22', '1 Sam 15:22']
+                  etymology: 'From root meaning "to make, create, accomplish" - active performance of God\'s will',
+                  frequency: 'Appears 568 times in the New Testament',
+                  crossReferences: ['Matt 7:24', 'Jas 1:22', 'Luke 6:46']
                 }
               }
             },
-            { type: 'text', text: ' your words, but they do not ' },
+            { type: 'text', text: ' his will, he shall ' },
             {
               type: 'word',
-              text: 'practice',
+              text: 'know',
               data: {
-                original: 'עָשָׂה',
-                transliteration: 'asah',
-                gloss: 'to do, make, accomplish, perform',
-                lemma: 'עָשָׂה',
-                strongs: 'H6213',
+                original: 'γινώσκω',
+                transliteration: 'ginosko',
+                gloss: 'to know, understand, perceive',
+                lemma: 'γινώσκω',
+                strongs: 'G1097',
                 partOfSpeech: 'Verb',
-                language: 'hebrew',
+                language: 'greek',
                 deeperStudy: {
-                  etymology: 'Root meaning "to fashion, accomplish" - bringing words into reality through action',
-                  frequency: 'Appears 2632 times in the Hebrew Bible',
-                  crossReferences: ['Matt 7:24', 'Luke 6:46', 'Jas 1:25']
+                  etymology: 'From root meaning "to know by experience" - experiential knowledge through obedience',
+                  frequency: 'Appears 222 times in the New Testament',
+                  crossReferences: ['John 8:32', '1 John 2:3', 'John 14:21']
                 }
               }
             },
-            { type: 'text', text: ' them. Their mouths speak of love, but their hearts are greedy for unjust gain.' }
+            { type: 'text', text: ' of the doctrine, whether it be of God, or whether I speak of myself.' }
+          ],
+          guidedStudy: [
+            {
+              pointTitle: 'Obedience Opens Understanding',
+              supportingScriptures: [
+                'Joh 7:17 – If any man will do his will, he shall know of the doctrine, whether it be of God, or whether I speak of myself.'
+              ],
+              commentary: 'Jesus tied knowing doctrine to the willingness to obey. We cannot expect God to unfold His mysteries to a heart that is unwilling to live by them.',
+              reflectQuestion: 'Have you ever resisted studying a topic because you suspected it might require a change in your life?'
+            },
+            {
+              pointTitle: 'Truth Without Action Is Dead',
+              supportingScriptures: [
+                'Jam 1:22 – But be ye doers of the word, and not hearers only, deceiving your own selves.'
+              ],
+              commentary: 'Knowledge without obedience breeds self-deception. The Pharisees knew the Scriptures yet rejected the Messiah. God\'s goal is transformation, not mere information.',
+              reflectQuestion: 'How can you move from being a "hearer only" to a "doer" of God\'s Word?'
+            }
           ],
           commentary: [
             'Knowledge without obedience is worthless. God doesn\'t give us His Word just to satisfy our curiosity.',
@@ -748,187 +867,222 @@ export const freeStudies: Study[] = [
             'When we refuse to obey what we already know, God may withhold further revelation.'
           ],
           interactiveElement: {
-            type: 'reflection',
-            content: {
-              question: 'What is one truth from Scripture that you know but struggle to obey?',
-              prompts: [
-                'Forgiveness - loving those who have hurt you',
-                'Generosity - trusting God with your finances',
-                'Love - putting others\' needs before your own',
-                'Trust - relying on God instead of worrying'
-              ]
-            }
-          },
-          lifeApplication: {
-            challenge: 'Choose one biblical command you\'ve been avoiding and take a concrete step to obey it this week.',
-            journaling: 'Reflect on how obedience to God\'s Word has deepened your understanding in the past.'
-          },
-          prayerPrompt: 'Lord, help me not just to be a hearer of Your Word, but a doer. Give me courage to obey what You teach me, even when it\'s difficult. Change my heart to desire Your will above my own comfort.',
-          deeperStudy: {
-            pdf: 'From Knowledge to Obedience',
-            additionalReadings: ['The Practice of Biblical Living', 'Why Obedience Matters in Bible Study'],
-            discussionQuestions: [
-              'Why is obedience essential for deeper understanding of Scripture?',
-              'What prevents us from applying what we learn from the Bible?',
-              'How can we move from knowing God\'s will to doing it?'
-            ]
-          }
-        }
-      },
-      {
-        id: 'htsb-5',
-        title: 'Must Teach It to Others',
-        duration: 6,
-        scripture: 'Ezra 7:10',
-        description: 'Discover how teaching others strengthens your own understanding',
-        content: {
-          scriptureText: 'For Ezra had devoted himself to the study and observance of the Law of the LORD, and to teaching its decrees and laws in Israel.',
-          taggedScripture: [
-            { type: 'text', text: 'For Ezra had devoted himself to the ' },
-            {
-              type: 'word',
-              text: 'study',
-              data: {
-                original: 'דָּרַשׁ',
-                transliteration: 'darash',
-                gloss: 'to seek, inquire, investigate, study carefully',
-                lemma: 'דָּרַשׁ',
-                strongs: 'H1875',
-                partOfSpeech: 'Verb',
-                language: 'hebrew',
-                deeperStudy: {
-                  etymology: 'Root meaning "to tread, frequent" - persistent, diligent searching',
-                  frequency: 'Appears 165 times in the Hebrew Bible',
-                  crossReferences: ['2 Chr 15:2', 'Ps 119:2', 'Isa 55:6']
-                }
-              }
-            },
-            { type: 'text', text: ' and observance of the Law of the LORD, and to ' },
-            {
-              type: 'word',
-              text: 'teaching',
-              data: {
-                original: 'לָמַד',
-                transliteration: 'lamad',
-                gloss: 'to learn, teach, train',
-                lemma: 'לָמַד',
-                strongs: 'H3925',
-                partOfSpeech: 'Verb',
-                language: 'hebrew',
-                deeperStudy: {
-                  etymology: 'Root meaning "to goad, prod" - active instruction that motivates learning',
-                  frequency: 'Appears 87 times in the Hebrew Bible',
-                  crossReferences: ['Deut 4:1', 'Ps 119:73', '2 Tim 2:2']
-                }
-              }
-            },
-            { type: 'text', text: ' its decrees and laws in Israel.' }
-          ],
-          commentary: [
-            'Ezra\'s pattern shows the complete cycle: study, obey, then teach. Each step builds on the previous one.',
-            'Teaching forces us to understand Scripture more deeply. When we explain truth to others, we discover gaps in our own knowledge.',
-            'Sharing what we learn helps solidify it in our own hearts and minds.',
-            'We don\'t need to be experts before we teach. We can share what God is teaching us right now.'
-          ],
-          interactiveElement: {
             type: 'quiz',
             content: {
               questions: [
                 {
-                  question: 'According to Ezra\'s example, what should come before teaching others?',
+                  question: 'According to James 1:22, what happens if we are hearers only and not doers?',
                   options: [
-                    'Getting a theology degree',
-                    'Personal study and obedience',
-                    'Being asked by church leadership'
+                    'We grow spiritually',
+                    'We deceive ourselves',
+                    'We impress others'
                   ],
                   correct: 1
                 }
               ]
             }
           },
-          lifeApplication: {
-            challenge: 'Share one insight from your Bible study with a friend, family member, or small group this week.',
-            journaling: 'Think about informal ways you can teach others what God is showing you in His Word.'
-          },
-          prayerPrompt: 'Father, help me not just to learn Your Word for myself, but to be faithful in sharing what You teach me. Give me opportunities and courage to speak Your truth to others with love and humility.',
+          lifeApplication: 'When God shows you a truth, write down the specific step you\'ll take to obey it. Treat each study as a call to action.',
+          keyTakeaways: [
+            'Obedience is the key to deeper understanding.',
+            'God reveals truth to those ready to follow it.',
+            'Information without transformation is dangerous.'
+          ],
+          prayerPrompt: 'Lord, make me willing to obey all You reveal to me. Give me courage to act on truth, even when it is difficult.',
           deeperStudy: {
-            pdf: 'Becoming a Teacher of God\'s Word',
-            additionalReadings: ['The Ministry of Teaching Scripture', 'Informal Ways to Share Biblical Truth'],
+            caseStudy: 'Abraham obeying God\'s command to sacrifice Isaac (Genesis 22).',
+            wordStudy: 'Greek "poieō" (G4160 – "to do, to act") and its link to obedience.',
+            pdf: 'From Hearing to Doing: An Obedience Action Plan.',
+            additionalReadings: ['The Practice of Biblical Living', 'Why Obedience Matters in Bible Study'],
             discussionQuestions: [
-              'How does teaching others strengthen our own understanding?',
-              'What are some natural opportunities to share biblical truth?',
-              'How can we teach others without being preachy or judgmental?'
+              'Why is obedience essential to understanding Scripture?',
+              'How does acting on truth protect against deception?',
+              'What is one area where obedience has deepened your understanding?'
+            ]
+          }
+        }
+      },
+      {
+        id: 'htsb-5',
+        title: 'Approach the Bible with Prayer',
+        duration: 6,
+        scripture: 'Psalm 119:18',
+        description: 'Prayer is not an optional extra in Bible study—it\'s the lifeline. Without the Holy Spirit\'s illumination, the Bible remains a closed book',
+        content: {
+          openingThought: 'Prayer is not an optional extra in Bible study—it\'s the lifeline. Without the Holy Spirit\'s illumination, the Bible remains a closed book.',
+          scriptureText: 'Open thou mine eyes, that I may behold wondrous things out of thy law.',
+          mainScriptures: ['Psa 119:18 – Open thou mine eyes, that I may behold wondrous things out of thy law.'],
+          taggedScripture: [
+            { type: 'text', text: 'Open thou mine ' },
+            {
+              type: 'word',
+              text: 'eyes',
+              data: {
+                original: 'עֵינַיִם',
+                transliteration: 'ayin',
+                gloss: 'eyes, sight, figurative: mental or spiritual perception',
+                lemma: 'עַיִן',
+                strongs: 'H5869',
+                partOfSpeech: 'Noun',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'From root meaning "to look" - represents physical and spiritual sight',
+                  frequency: 'Appears 866 times in the Hebrew Bible',
+                  crossReferences: ['Eph 1:18', '2 Kings 6:17', 'Matt 13:16']
+                }
+              }
+            },
+            { type: 'text', text: ', that I may behold wondrous things out of thy ' },
+            {
+              type: 'word',
+              text: 'law',
+              data: {
+                original: 'תּוֹרָה',
+                transliteration: 'torah',
+                gloss: 'instruction, law, teaching',
+                lemma: 'תּוֹרָה',
+                strongs: 'H8451',
+                partOfSpeech: 'Noun',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'From יָרָה (yarah) meaning "to shoot, direct, teach" - God\'s direction for life',
+                  frequency: 'Appears 220 times in the Hebrew Bible',
+                  crossReferences: ['Ps 1:2', 'Josh 1:8', '2 Tim 3:16']
+                }
+              }
+            },
+            { type: 'text', text: '.' }
+          ],
+          guidedStudy: [
+            {
+              pointTitle: 'Prayer Prepares the Heart',
+              supportingScriptures: [
+                'Psa 119:18 – Open thou mine eyes, that I may behold wondrous things out of thy law.',
+                'Eph 1:17 – That the God of our Lord Jesus Christ, the Father of glory, may give unto you the spirit of wisdom and revelation in the knowledge of him.'
+              ],
+              commentary: 'David prayed for understanding before studying God\'s law. Prayer aligns our heart with God\'s will, making us receptive to His truth.',
+              reflectQuestion: 'How often do you pause to pray before reading the Bible?'
+            },
+            {
+              pointTitle: 'The Spirit Brings Clarity',
+              supportingScriptures: [
+                'Joh 16:13 – Howbeit when he, the Spirit of truth, is come, he will guide you into all truth.'
+              ],
+              commentary: 'The Holy Spirit opens spiritual eyes, revealing depths of meaning we\'d never see otherwise. Without Him, study remains intellectual but powerless.',
+              reflectQuestion: 'Can you recall a time the Spirit made a passage come alive for you?'
+            }
+          ],
+          commentary: [
+            'Prayer is the essential first step in Bible study. We acknowledge our dependence on God for spiritual understanding.',
+            'The psalmist recognizes that spiritual truths are hidden from our natural understanding and require divine revelation.',
+            'Without God\'s illumination, we can read the words but miss the transformative power of Scripture.',
+            'This prayer expresses humility - admitting we need God\'s help to understand His own Word.'
+          ],
+          interactiveElement: {
+            type: 'quiz',
+            content: {
+              questions: [
+                {
+                  question: 'Who guides us into all truth?',
+                  options: [
+                    'The church',
+                    'The Holy Spirit',
+                    'Our own wisdom'
+                  ],
+                  correct: 1
+                }
+              ]
+            }
+          },
+          lifeApplication: 'Begin each study session with prayer for understanding, humility, and application. Keep an ongoing dialogue with God as you read.',
+          keyTakeaways: [
+            'Prayer opens the heart to receive God\'s Word.',
+            'The Holy Spirit is the true Teacher of Scripture.',
+            'Study without prayer risks becoming lifeless knowledge.'
+          ],
+          prayerPrompt: 'Holy Spirit, open my eyes to see the wonders in Your Word. Lead me into all truth and give me the courage to walk in it.',
+          deeperStudy: {
+            caseStudy: 'Daniel seeking God in prayer for understanding of prophecy (Daniel 9).',
+            wordStudy: 'Hebrew "pāthal" (H6605 – "to open, to make clear") in Psalm 119.',
+            pdf: 'Prayers That Transform Bible Study.',
+            additionalReadings: ['The Practice of Spiritual Reading', 'Opening Scripture with Prayer'],
+            discussionQuestions: [
+              'Why is prayer essential for Bible study?',
+              'What role does the Holy Spirit play in understanding?',
+              'How can you develop a habit of prayerful study?'
             ]
           }
         }
       },
       {
         id: 'htsb-6',
-        title: 'Not Everything Is Revealed',
+        title: 'Interpret Scripture with Scripture',
         duration: 6,
-        scripture: 'Deuteronomy 29:29',
-        description: 'Learn to be content with what God chooses to reveal',
+        scripture: 'Isaiah 28:10',
+        description: 'The Bible is its own best interpreter. One verse, taken alone, can be misunderstood—but when compared with the whole, the meaning becomes clear',
         content: {
-          scriptureText: 'The secret things belong to the LORD our God, but the things revealed belong to us and to our children forever, that we may follow all the words of this law.',
+          openingThought: 'The Bible is its own best interpreter. One verse, taken alone, can be misunderstood—but when compared with the whole, the meaning becomes clear.',
+          scriptureText: 'For precept must be upon precept, precept upon precept; line upon line, line upon line; here a little, and there a little.',
+          mainScriptures: ['Isa 28:10 – For precept must be upon precept, precept upon precept; line upon line, line upon line; here a little, and there a little.'],
           taggedScripture: [
-            { type: 'text', text: 'The ' },
+            { type: 'text', text: 'For ' },
             {
               type: 'word',
-              text: 'secret',
+              text: 'precept',
               data: {
-                original: 'נִסְתָּרוֹת',
-                transliteration: 'nistarot',
-                gloss: 'hidden things, secrets, mysteries',
-                lemma: 'סָתַר',
-                strongs: 'H5640',
+                original: 'צַו',
+                transliteration: 'tsav',
+                gloss: 'command, instruction, precept',
+                lemma: 'צַו',
+                strongs: 'H6673',
                 partOfSpeech: 'Noun',
                 language: 'hebrew',
                 deeperStudy: {
-                  etymology: 'From root meaning "to hide, conceal" - things God keeps to Himself',
-                  frequency: 'Appears 81 times in the Hebrew Bible',
-                  crossReferences: ['Job 11:7', 'Rom 11:33', '1 Cor 2:7']
+                  etymology: 'From צָוָה (tsavah) meaning "to command" - divine instruction or order',
+                  frequency: 'Appears 9 times in the Hebrew Bible',
+                  crossReferences: ['Isa 28:10', 'Isa 28:13', 'Hos 5:11']
                 }
               }
             },
-            { type: 'text', text: ' things belong to the LORD our God, but the things ' },
+            { type: 'text', text: ' must be upon precept, precept upon precept; ' },
             {
               type: 'word',
-              text: 'revealed',
+              text: 'line',
               data: {
-                original: 'נִגְלוֹת',
-                transliteration: 'niglot',
-                gloss: 'revealed, uncovered, made known',
-                lemma: 'גָּלָה',
-                strongs: 'H1540',
-                partOfSpeech: 'Verb',
+                original: 'קַו',
+                transliteration: 'qav',
+                gloss: 'line, measuring line, rule',
+                lemma: 'קַו',
+                strongs: 'H6957',
+                partOfSpeech: 'Noun',
                 language: 'hebrew',
                 deeperStudy: {
-                  etymology: 'From root meaning "to uncover, reveal" - what God chooses to make known',
-                  frequency: 'Appears 187 times in the Hebrew Bible',
-                  crossReferences: ['Amos 3:7', '1 Cor 2:10', 'Eph 3:3']
+                  etymology: 'From קָוָה (qavah) meaning "to wait" - a measuring line for building properly',
+                  frequency: 'Appears 25 times in the Hebrew Bible',
+                  crossReferences: ['Isa 34:17', '2 Kgs 21:13', 'Lam 2:8']
                 }
               }
             },
-            { type: 'text', text: ' belong to us and to our children forever, that we may ' },
+            { type: 'text', text: ' upon line, line upon line; here a little, and there a little.' }
+          ],
+          guidedStudy: [
             {
-              type: 'word',
-              text: 'follow',
-              data: {
-                original: 'עָשָׂה',
-                transliteration: 'asah',
-                gloss: 'to do, make, practice, follow',
-                lemma: 'עָשָׂה',
-                strongs: 'H6213',
-                partOfSpeech: 'Verb',
-                language: 'hebrew',
-                deeperStudy: {
-                  etymology: 'Root meaning "to accomplish, fashion" - putting revealed truth into practice',
-                  frequency: 'Appears 2632 times in the Hebrew Bible',
-                  crossReferences: ['John 7:17', 'Jas 1:25', 'Matt 7:24']
-                }
-              }
+              pointTitle: 'Avoiding Isolated Interpretation',
+              supportingScriptures: [
+                'Isa 28:10 – For precept must be upon precept...',
+                '2Pe 1:20 – Knowing this first, that no prophecy of the scripture is of any private interpretation.'
+              ],
+              commentary: 'Pulling a verse out of context can lead to false doctrine. Every teaching must be tested by the weight of Scripture as a whole.',
+              reflectQuestion: 'Have you ever seen a verse misused because it was read in isolation?'
             },
-            { type: 'text', text: ' all the words of this law.' }
+            {
+              pointTitle: 'Let the Bible Explain Itself',
+              supportingScriptures: [
+                'Luk 24:27 – And beginning at Moses and all the prophets, he expounded unto them in all the scriptures the things concerning himself.'
+              ],
+              commentary: 'Jesus showed His disciples how the Old Testament pointed to Him by comparing passages. The harmony of Scripture confirms its truth.',
+              reflectQuestion: 'How might comparing multiple verses on a topic deepen your understanding?'
+            }
           ],
           commentary: [
             'God hasn\'t revealed everything to us, and that\'s okay. He gives us what we need to know to live faithfully.',
@@ -937,29 +1091,37 @@ export const freeStudies: Study[] = [
             'What God has revealed is sufficient for faith and godly living. We can trust Him with the rest.'
           ],
           interactiveElement: {
-            type: 'reflection',
+            type: 'quiz',
             content: {
-              question: 'What are some questions about God or Scripture that you may never fully understand in this life?',
-              prompts: [
-                'How can God be three persons yet one God?',
-                'Why does God allow suffering?',
-                'How do God\'s sovereignty and human free will work together?',
-                'What exactly will heaven be like?'
+              questions: [
+                {
+                  question: 'According to 2 Peter 1:20, what is no prophecy of Scripture of?',
+                  options: [
+                    'Private interpretation',
+                    'Public teaching',
+                    'Divine origin'
+                  ],
+                  correct: 0
+                }
               ]
             }
           },
-          lifeApplication: {
-            challenge: 'Focus this week on obeying what God has clearly revealed rather than worrying about mysteries you can\'t solve.',
-            journaling: 'List three things God has clearly revealed in His Word that you can focus on living out.'
-          },
-          prayerPrompt: 'Lord, help me be content with what You\'ve chosen to reveal. Give me wisdom to focus on obeying the clear teachings of Your Word rather than being frustrated by mysteries. I trust You with what I don\'t understand.',
+          lifeApplication: 'When studying a topic, gather all related verses before forming a conclusion. Use cross-references and Bible tools to connect the dots.',
+          keyTakeaways: [
+            'The Bible interprets itself through harmony of verses.',
+            'Context is essential to avoid false teaching.',
+            'Cross-referencing reveals the fullness of truth.'
+          ],
+          prayerPrompt: 'Lord, teach me to compare Scripture with Scripture. Guard me from forming beliefs based on isolated texts and guide me into balanced truth.',
           deeperStudy: {
-            pdf: 'Dealing with Mystery in Scripture',
+            caseStudy: 'How the prophecy of the Messiah is confirmed by multiple Scriptures (Isaiah 53, Psalm 22, Luke 24).',
+            wordStudy: 'Hebrew "tsav" (H6673 – "command, instruction") in Isaiah 28:10.',
+            pdf: 'Line Upon Line: A Cross-Referencing Study Guide.',
             additionalReadings: ['The Limits of Human Understanding', 'Finding Peace with Biblical Mysteries'],
             discussionQuestions: [
-              'How should we respond when we encounter difficult or mysterious passages in Scripture?',
-              'What are some things God has clearly revealed that we should focus on?',
-              'How can we maintain faith while acknowledging the limits of our understanding?'
+              'Why is it dangerous to base beliefs on a single verse?',
+              'How does comparing verses strengthen doctrine?',
+              'What tools can help you connect related Scriptures?'
             ]
           }
         }
