@@ -43,11 +43,11 @@
               My Studies
             </router-link>
             <router-link
-              to="/community"
+              to="/daily-devotions"
               class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/community' }"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/daily-devotions' }"
             >
-              Community
+              Daily Devotions
             </router-link>
           </template>
 
