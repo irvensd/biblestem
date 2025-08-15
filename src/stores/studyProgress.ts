@@ -155,6 +155,11 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
   }
 
   const loadFromStorage = () => {
+    // Force demo data initialization for testing completed studies
+    // In production, this would load from localStorage normally
+    initializeDemoData()
+
+    /* Normal localStorage loading:
     const saved = localStorage.getItem('biblestem_study_progress')
     if (saved) {
       try {
@@ -166,6 +171,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     } else {
       initializeDemoData()
     }
+    */
   }
 
   // Premium Features
