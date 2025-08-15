@@ -587,6 +587,17 @@ const goToStudy = (studyId: string) => {
   router.push(`/study/${studyId}`)
 }
 
+// Button handlers
+const startNewStudy = () => {
+  router.push('/study-series')
+}
+
+const handleUpgrade = () => {
+  // In a real app, this would integrate with a payment processor
+  alert('Demo Mode: In a real app, this would open the payment flow to upgrade to Premium. For now, you can sign in with the premium demo account: sarah.johnson@example.com')
+  showUpgradeModal.value = false
+}
+
 onMounted(() => {
   // Initialize stores
   authStore.initializeAuth()
