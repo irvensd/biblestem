@@ -3,17 +3,17 @@
     <nav class="container-base">
       <div class="flex items-center justify-between h-16 lg:h-20">
         <!-- Logo -->
-        <router-link to="/" class="flex items-center space-x-3 group">
+        <router-link to="/" class="flex items-center space-x-2 sm:space-x-3 group">
           <div class="relative">
-            <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+              <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z"/>
               </svg>
             </div>
           </div>
           <div class="flex flex-col">
-            <span class="text-xl font-bold gradient-text">BibleStem</span>
-            <span class="text-xs text-neutral-500 -mt-1 hidden sm:block">Interactive Bible Study</span>
+            <span class="text-lg sm:text-xl font-bold gradient-text">BibleStem</span>
+            <span class="text-xs text-neutral-500 -mt-1 hidden lg:block">Interactive Bible Study</span>
           </div>
         </router-link>
 
