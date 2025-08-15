@@ -302,11 +302,12 @@ const currentStudy = computed(() => {
 
 const recommendedStudies = computed(() => {
   const userPlan = authStore.user?.plan || 'free'
-  const completed = Object.keys(studyProgress)
+  const allProgress = progressStore.getAllStudyProgress()
+  const startedStudies = Object.keys(allProgress)
 
   // Get studies not yet started, prioritizing free studies for free users
   const available = allStudies.value
-    .filter(study => !completed.includes(study.id))
+    .filter(study => !startedStudies.includes(study.id))
     .filter(study => userPlan === 'premium' || study.category === 'free')
     .slice(0, 4)
 
