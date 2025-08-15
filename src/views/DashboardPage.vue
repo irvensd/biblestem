@@ -346,6 +346,18 @@ const currentStudy = computed(() => {
   return bestStudy
 })
 
+const completedStudies = computed(() => {
+  const allProgress = progressStore.getAllStudyProgress()
+
+  return allStudies.value.filter(study => {
+    const progress = allProgress[study.id]
+    if (!progress) return false
+
+    const completionPercent = progressStore.getStudyCompletionPercentage(study.id, study.lessons.length)
+    return completionPercent === 100
+  })
+})
+
 const recommendedStudies = computed(() => {
   const userPlan = authStore.user?.plan || 'free'
   const allProgress = progressStore.getAllStudyProgress()
