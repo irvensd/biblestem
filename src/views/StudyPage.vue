@@ -213,6 +213,7 @@
       @close="closeLesson"
       @complete="completeLesson"
       @next="nextLessonInModal"
+      @upgrade="handleUpgrade"
     />
 
     <!-- Loading State -->
