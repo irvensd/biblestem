@@ -552,11 +552,6 @@ const calculateStreak = () => {
   return Math.floor(Math.random() * 30) + 1
 }
 
-const calculateBadges = () => {
-  // Mock calculation based on studies completed
-  const studies = authStore.user?.studiesCompleted || 0
-  return Math.floor(studies / 3)
-}
 
 const calculateTotalMinutes = () => {
   // Calculate total minutes from completed studies
