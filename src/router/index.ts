@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 import HomePage from '../views/HomePage.vue'
 import StudySeriesPage from '../views/StudySeriesPage.vue'
+import SignInPage from '../views/SignInPage.vue'
+import DashboardPage from '../views/DashboardPage.vue'
 import PlaceholderPage from '../views/PlaceholderPage.vue'
 
 const router = createRouter({
@@ -12,9 +15,33 @@ const router = createRouter({
       component: HomePage
     },
     {
+      path: '/signin',
+      name: 'signin',
+      component: SignInPage,
+      meta: { requiresGuest: true }
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardPage,
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/study-series',
       name: 'study-series',
       component: StudySeriesPage
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: PlaceholderPage,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: PlaceholderPage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/about',
@@ -56,6 +83,30 @@ const router = createRouter({
       return { top: 0 }
     }
   }
+})
+
+// Navigation guards
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+
+  // Initialize auth state if not already done
+  if (!authStore.user) {
+    authStore.initializeAuth()
+  }
+
+  // Check if route requires authentication
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next({ name: 'signin', query: { redirect: to.fullPath } })
+    return
+  }
+
+  // Check if route requires guest (not authenticated)
+  if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    next({ name: 'dashboard' })
+    return
+  }
+
+  next()
 })
 
 export default router
