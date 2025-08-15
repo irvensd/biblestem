@@ -65,64 +65,94 @@
                 View All Series →
               </router-link>
             </div>
-            
+
             <div class="space-y-4">
               <!-- Current Study -->
-              <div class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-6 rounded-xl border border-primary-200 dark:border-primary-800">
+              <div
+                v-if="currentStudy"
+                class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-6 rounded-xl border border-primary-200 dark:border-primary-800"
+              >
                 <div class="flex items-start justify-between mb-4">
                   <div>
-                    <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1">Psalms of David</h3>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Lesson 3: The Shepherd's Psalm</p>
+                    <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1">{{ currentStudy.title }}</h3>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                      {{ currentStudy.nextLesson ? `Next: ${currentStudy.nextLesson.title}` : 'Study Complete!' }}
+                    </p>
                   </div>
-                  <span class="bg-primary-500 text-white text-xs px-2 py-1 rounded-full">In Progress</span>
+                  <span
+                    class="text-white text-xs px-2 py-1 rounded-full"
+                    :class="currentStudy.progress === 100 ? 'bg-green-500' : 'bg-primary-500'"
+                  >
+                    {{ currentStudy.progress === 100 ? 'Completed' : 'In Progress' }}
+                  </span>
                 </div>
                 <div class="mb-4">
                   <div class="flex justify-between text-sm text-neutral-600 dark:text-neutral-400 mb-2">
                     <span>Progress</span>
-                    <span>65%</span>
+                    <span>{{ Math.round(currentStudy.progress) }}%</span>
                   </div>
                   <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
-                    <div class="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full" style="width: 65%"></div>
+                    <div
+                      class="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-300"
+                      :style="`width: ${currentStudy.progress}%`"
+                    ></div>
                   </div>
                 </div>
-                <button class="btn-primary w-full md:w-auto">
-                  Continue Study
-                </button>
+                <router-link
+                  :to="`/study/${currentStudy.id}`"
+                  class="btn-primary w-full md:w-auto inline-block text-center"
+                >
+                  {{ currentStudy.progress === 100 ? 'Review Study' : 'Continue Study' }}
+                </router-link>
               </div>
 
               <!-- Recommended Studies -->
               <div class="grid md:grid-cols-2 gap-4">
-                <div class="card p-4 hover:scale-105 transition-transform duration-200">
-                  <div class="aspect-video bg-gradient-to-br from-secondary-200 to-secondary-300 rounded-lg mb-3 flex items-center justify-center">
-                    <span class="text-secondary-700 font-medium text-sm">New Testament</span>
+                <div
+                  v-for="study in recommendedStudies"
+                  :key="study.id"
+                  class="card p-4 hover:scale-105 transition-transform duration-200 cursor-pointer"
+                  @click="goToStudy(study.id)"
+                >
+                  <div
+                    class="aspect-video rounded-lg mb-3 flex items-center justify-center bg-gradient-to-br"
+                    :class="study.color"
+                  >
+                    <span class="text-white font-medium text-sm">{{ study.category === 'premium' ? 'Premium' : 'Free' }}</span>
                   </div>
-                  <h4 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1">Gospel of John</h4>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-3">21 interactive lessons</p>
+                  <h4 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1">{{ study.title }}</h4>
+                  <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-3">{{ study.lessons.length }} lessons • {{ formatDuration(study.totalDuration) }}</p>
                   <div class="flex items-center justify-between">
-                    <span class="text-xs bg-secondary-100 dark:bg-secondary-900/30 text-secondary-600 dark:text-secondary-400 px-2 py-1 rounded">
-                      {{ authStore.isPremium ? 'Premium' : 'Requires Premium' }}
+                    <span
+                      class="text-xs px-2 py-1 rounded"
+                      :class="study.category === 'free'
+                        ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+                        : 'bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'"
+                    >
+                      {{ study.category === 'free' ? 'Free' : authStore.isPremium ? 'Premium' : 'Requires Premium' }}
                     </span>
-                    <button class="text-primary-600 hover:text-primary-700 text-sm font-medium">
+                    <button
+                      class="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                      @click.stop="goToStudy(study.id)"
+                    >
                       Start →
                     </button>
                   </div>
                 </div>
+              </div>
 
-                <div class="card p-4 hover:scale-105 transition-transform duration-200">
-                  <div class="aspect-video bg-gradient-to-br from-accent-200 to-accent-300 rounded-lg mb-3 flex items-center justify-center">
-                    <span class="text-accent-700 font-medium text-sm">Topical Study</span>
-                  </div>
-                  <h4 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1">Faith Foundations</h4>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-3">8 foundational lessons</p>
-                  <div class="flex items-center justify-between">
-                    <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-1 rounded">
-                      Free
-                    </span>
-                    <button class="text-primary-600 hover:text-primary-700 text-sm font-medium">
-                      Start →
-                    </button>
-                  </div>
+              <!-- No Current Study Message -->
+              <div v-if="!currentStudy" class="text-center py-8">
+                <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
                 </div>
+                <h3 class="text-lg font-bold text-neutral-800 dark:text-neutral-200 mb-2">Start Your Bible Study Journey</h3>
+                <p class="text-neutral-600 dark:text-neutral-400 mb-4">Choose a study below to begin learning and growing in your faith.</p>
+                <router-link to="/study-series" class="btn-primary">
+                  Browse Study Series
+                </router-link>
               </div>
             </div>
           </section>
