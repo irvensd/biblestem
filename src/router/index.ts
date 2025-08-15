@@ -23,6 +23,12 @@ const router = createRouter({
       meta: { requiresGuest: true }
     },
     {
+      path: '/signup',
+      name: 'signup',
+      component: SignUpPage,
+      meta: { requiresGuest: true }
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardPage,
