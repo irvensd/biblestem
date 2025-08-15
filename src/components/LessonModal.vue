@@ -131,34 +131,102 @@
 
           <!-- Scripture Exploration Section -->
           <section v-if="currentStep === 'scripture'" class="animate-fade-in">
-            <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-6">
-              Scripture Exploration
-            </h3>
-            
-            <div class="grid lg:grid-cols-2 gap-8">
-              <!-- Scripture Text -->
-              <div class="card p-6 bg-primary-50 dark:bg-primary-900/20 border-primary-200 dark:border-primary-800">
-                <h4 class="font-bold text-primary-800 dark:text-primary-200 mb-4">{{ lesson.scripture }}</h4>
-                <div class="prose dark:prose-invert max-w-none">
-                  <p class="text-lg leading-relaxed text-neutral-700 dark:text-neutral-300 italic">
-                    "{{ lesson.content.scriptureText }}"
-                  </p>
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-2">
+                Scripture Exploration
+              </h3>
+              <p class="text-neutral-600 dark:text-neutral-400">
+                Click on any word to explore its original meaning
+              </p>
+            </div>
+
+            <!-- Scripture Text with Interactive Words -->
+            <div class="bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-6 sm:p-8 mb-8 border border-primary-200 dark:border-primary-800">
+              <div class="text-center mb-6">
+                <div class="inline-flex items-center px-4 py-2 bg-white dark:bg-neutral-800 rounded-full shadow-sm border border-neutral-200 dark:border-neutral-700">
+                  <svg class="w-4 h-4 text-primary-600 dark:text-primary-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <span class="text-sm font-medium text-neutral-700 dark:text-neutral-300">{{ lesson.scripture }}</span>
                 </div>
               </div>
 
-              <!-- Commentary -->
-              <div class="space-y-4">
-                <h4 class="font-bold text-neutral-800 dark:text-neutral-200">Key Insights</h4>
+              <!-- Interactive Scripture Text -->
+              <div class="text-lg sm:text-xl leading-relaxed text-neutral-800 dark:text-neutral-200 text-center max-w-4xl mx-auto">
+                <template v-if="lesson.content.taggedScripture">
+                  <template v-for="(segment, index) in lesson.content.taggedScripture" :key="index">
+                    <ScriptureWordPopover
+                      v-if="segment.type === 'word'"
+                      :word-data="segment.data"
+                      :display-text="segment.text"
+                      :is-premium="isPremium"
+                      @upgrade="$emit('upgrade')"
+                      class="mx-0.5"
+                    />
+                    <span v-else class="mx-0.5">{{ segment.text }}</span>
+                  </template>
+                </template>
+                <template v-else>
+                  <!-- Fallback for lessons without tagged text -->
+                  <span class="italic">"{{ lesson.content.scriptureText }}"</span>
+                </template>
+              </div>
+
+              <!-- Language indicator -->
+              <div class="flex justify-center mt-6">
+                <div class="flex items-center space-x-4 text-xs text-neutral-500 dark:text-neutral-400">
+                  <div class="flex items-center space-x-1">
+                    <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <span>Greek Text Available</span>
+                  </div>
+                  <div class="flex items-center space-x-1">
+                    <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+                    <span>Hebrew Text Available</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Commentary -->
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="card p-6">
+                <h4 class="font-bold text-lg mb-4 text-neutral-800 dark:text-neutral-200 flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  Key Insights
+                </h4>
                 <div class="space-y-3">
                   <div
-                    v-for="(point, index) in lesson.content.commentary"
-                    :key="index"
-                    class="flex items-start space-x-3 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg"
+                    v-for="(point, index) in lesson.content.commentary.slice(0, 2)"
+                    :key="point"
+                    class="flex items-start space-x-3"
+                  >
+                    <div class="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span class="text-white text-xs font-bold">{{ index + 1 }}</span>
+                    </div>
+                    <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed text-sm">{{ point }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card p-6">
+                <h4 class="font-bold text-lg mb-4 text-neutral-800 dark:text-neutral-200 flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-secondary-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                  </svg>
+                  Cultural Context
+                </h4>
+                <div class="space-y-3">
+                  <div
+                    v-for="(point, index) in lesson.content.commentary.slice(2)"
+                    :key="point"
+                    class="flex items-start space-x-3"
                   >
                     <div class="w-6 h-6 bg-secondary-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span class="text-white text-sm font-bold">{{ index + 1 }}</span>
+                      <span class="text-white text-xs font-bold">{{ index + 3 }}</span>
                     </div>
-                    <p class="text-neutral-700 dark:text-neutral-300">{{ point }}</p>
+                    <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed text-sm">{{ point }}</p>
                   </div>
                 </div>
               </div>
