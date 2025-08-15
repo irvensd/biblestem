@@ -19,7 +19,7 @@
                 {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
               </span>
             </div>
-            <button v-if="!authStore.isPremium" class="btn-accent text-sm py-2 px-4 w-full sm:w-auto">
+            <button v-if="!authStore.isPremium" @click="showUpgradeModal = true" class="btn-accent text-sm py-2 px-4 w-full sm:w-auto">
               Upgrade to Premium
             </button>
           </div>
@@ -290,13 +290,13 @@
 
           <!-- Action Buttons -->
           <div class="space-y-2 sm:space-y-3">
-            <button class="w-full btn-primary text-sm sm:text-base py-2 sm:py-3">
+            <button @click="startNewStudy" class="w-full btn-primary text-sm sm:text-base py-2 sm:py-3">
               Start New Study
             </button>
-            <button class="w-full btn-secondary text-sm sm:text-base py-2 sm:py-3">
+            <button @click="showProgressModal = true" class="w-full btn-secondary text-sm sm:text-base py-2 sm:py-3">
               View Progress Report
             </button>
-            <button v-if="!authStore.isPremium" class="w-full btn-accent text-sm sm:text-base py-2 sm:py-3">
+            <button v-if="!authStore.isPremium" @click="showUpgradeModal = true" class="w-full btn-accent text-sm sm:text-base py-2 sm:py-3">
               Upgrade to Premium
             </button>
           </div>
