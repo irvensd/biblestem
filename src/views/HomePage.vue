@@ -16,12 +16,15 @@
               Discover interactive, modern Bible studies designed for individuals who struggle to study Scripture on their own. Join thousands finding their path to deeper faith.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <button class="btn-primary text-lg px-8 py-4">
-                Start Free Study
-              </button>
-              <button class="btn-secondary text-lg px-8 py-4">
+              <router-link
+                :to="authStore.isAuthenticated ? '/dashboard' : '/signin'"
+                class="btn-primary text-lg px-8 py-4 inline-block text-center"
+              >
+                {{ authStore.isAuthenticated ? 'Go to Dashboard' : 'Start Free Study' }}
+              </router-link>
+              <router-link to="/study-series" class="btn-secondary text-lg px-8 py-4 inline-block text-center">
                 Explore Series
-              </button>
+              </router-link>
             </div>
             
             <!-- Stats -->
