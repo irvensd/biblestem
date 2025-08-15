@@ -532,6 +532,26 @@ const recommendedStudies = computed(() => {
   return available
 })
 
+const allStudiesWithProgress = computed(() => {
+  const allProgress = progressStore.getAllStudyProgress()
+
+  return allStudies.value.map(study => {
+    const progressPercent = progressStore.getStudyCompletionPercentage(study.id, study.lessons.length)
+    return {
+      ...study,
+      progressPercent
+    }
+  }).filter(study => study.progressPercent > 0)
+})
+
+const weeklyActivity = computed(() => {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  return days.map((day, index) => ({
+    day,
+    active: Math.random() > 0.3 // Mock activity data
+  }))
+})
+
 const calculateStreak = () => {
   // Mock calculation - in real app this would come from API
   return Math.floor(Math.random() * 30) + 1
