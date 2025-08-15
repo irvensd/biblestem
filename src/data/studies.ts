@@ -406,6 +406,567 @@ export const freeStudies: Study[] = [
     ]
   },
   {
+    id: 'how-to-study-bible',
+    title: 'How to Study the Bible – The Preparation',
+    description: 'Master the foundational principles of Bible study. Learn prayer, humility, obedience, and teaching - essential preparation for effective Scripture study.',
+    category: 'free',
+    totalDuration: 36, // 6 lessons × 6 minutes each
+    difficulty: 'beginner',
+    tags: ['Bible Study', 'Preparation', 'Spiritual Growth', 'Learning'],
+    image: 'bible-study-prep',
+    color: 'from-emerald-500 to-emerald-600',
+    features: ['Interactive word study', 'Practical applications', 'Audio prayers', 'Step-by-step guidance'],
+    lessons: [
+      {
+        id: 'htsb-1',
+        title: 'Prayer',
+        duration: 6,
+        scripture: 'Psalm 119:18',
+        description: 'Learn to ask God to open your spiritual eyes before studying His Word',
+        content: {
+          scriptureText: 'Open my eyes that I may see wonderful things in your law.',
+          taggedScripture: [
+            { type: 'text', text: 'Open my ' },
+            {
+              type: 'word',
+              text: 'eyes',
+              data: {
+                original: 'עֵינַיִם',
+                transliteration: 'ayin',
+                gloss: 'eyes, sight, figurative: mental or spiritual perception',
+                lemma: 'עַי��ן',
+                strongs: 'H5869',
+                partOfSpeech: 'Noun',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'From root meaning "to look" - represents physical and spiritual sight',
+                  frequency: 'Appears 866 times in the Hebrew Bible',
+                  crossReferences: ['Eph 1:18', '2 Kings 6:17', 'Matt 13:16']
+                }
+              }
+            },
+            { type: 'text', text: ' that I may see wonderful things in your ' },
+            {
+              type: 'word',
+              text: 'law',
+              data: {
+                original: 'תּוֹרָה',
+                transliteration: 'torah',
+                gloss: 'instruction, law, teaching',
+                lemma: 'תּוֹרָה',
+                strongs: 'H8451',
+                partOfSpeech: 'Noun',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'From יָרָה (yarah) meaning "to shoot, direct, teach" - God\'s direction for life',
+                  frequency: 'Appears 220 times in the Hebrew Bible',
+                  crossReferences: ['Ps 1:2', 'Josh 1:8', '2 Tim 3:16']
+                }
+              }
+            },
+            { type: 'text', text: '.' }
+          ],
+          commentary: [
+            'Prayer is the essential first step in Bible study. We acknowledge our dependence on God for spiritual understanding.',
+            'The psalmist recognizes that spiritual truths are hidden from our natural understanding and require divine revelation.',
+            'Without God\'s illumination, we can read the words but miss the transformative power of Scripture.',
+            'This prayer expresses humility - admitting we need God\'s help to understand His own Word.'
+          ],
+          interactiveElement: {
+            type: 'quiz',
+            content: {
+              questions: [
+                {
+                  question: 'Why should prayer come before Bible study?',
+                  options: [
+                    'It\'s a religious tradition',
+                    'We need God\'s help to understand spiritual truth',
+                    'It makes us feel more spiritual'
+                  ],
+                  correct: 1
+                }
+              ]
+            }
+          },
+          lifeApplication: {
+            challenge: 'Begin every Bible study session with prayer, asking God to open your eyes to His truth.',
+            journaling: 'Write a personal prayer asking God to help you understand His Word better.'
+          },
+          prayerPrompt: 'Father, I come to Your Word recognizing my need for Your guidance. Open my spiritual eyes to see the wonderful truths You want to reveal to me. Help me not just to read, but to truly understand and apply Your teachings to my life.',
+          deeperStudy: {
+            pdf: 'Prayer and Bible Study Guide',
+            additionalReadings: ['The Practice of Spiritual Reading', 'Opening Scripture with Prayer'],
+            discussionQuestions: [
+              'How has prayer changed your experience of reading the Bible?',
+              'What barriers prevent you from praying before studying Scripture?',
+              'How can we cultivate a heart that depends on God for understanding?'
+            ]
+          }
+        }
+      },
+      {
+        id: 'htsb-2',
+        title: 'Mature and Be Weaned Off from Human Dependence',
+        duration: 6,
+        scripture: '1 Corinthians 13:11',
+        description: 'Move beyond borrowed faith to personal discovery of God\'s truth',
+        content: {
+          scriptureText: 'When I was a child, I talked like a child, I thought like a child, I reasoned like a child. When I became a man, I put the ways of childhood behind me.',
+          taggedScripture: [
+            { type: 'text', text: 'When I was a ' },
+            {
+              type: 'word',
+              text: 'child',
+              data: {
+                original: 'νήπιος',
+                transliteration: 'nepios',
+                gloss: 'infant, child, immature person',
+                lemma: 'νήπιος',
+                strongs: 'G3516',
+                partOfSpeech: 'Noun',
+                language: 'greek',
+                deeperStudy: {
+                  etymology: 'From νη (ne, not) and ἔπος (epos, word) - one who cannot speak clearly',
+                  frequency: 'Appears 15 times in the New Testament',
+                  crossReferences: ['Matt 11:25', 'Eph 4:14', 'Heb 5:13']
+                }
+              }
+            },
+            { type: 'text', text: ', I talked like a child, I thought like a child, I reasoned like a child. When I became a ' },
+            {
+              type: 'word',
+              text: 'man',
+              data: {
+                original: 'ἀνήρ',
+                transliteration: 'aner',
+                gloss: 'man, adult male, mature person',
+                lemma: 'ἀνήρ',
+                strongs: 'G435',
+                partOfSpeech: 'Noun',
+                language: 'greek',
+                deeperStudy: {
+                  etymology: 'From root meaning "to rise up" - one who has reached full stature',
+                  frequency: 'Appears 216 times in the New Testament',
+                  crossReferences: ['1 Cor 14:20', 'Eph 4:13', 'Heb 5:14']
+                }
+              }
+            },
+            { type: 'text', text: ', I put the ways of childhood behind me.' }
+          ],
+          commentary: [
+            'Spiritual maturity means moving from dependence on others\' faith to developing your own relationship with God.',
+            'While teachers and mentors are valuable, we must learn to study and discover truth for ourselves.',
+            'Childlike faith is beautiful, but childish dependence on others\' understanding limits our growth.',
+            'Mature believers can discern truth from Scripture rather than simply accepting what others say.'
+          ],
+          interactiveElement: {
+            type: 'reflection',
+            content: {
+              question: 'How can you move from borrowed faith to personal discovery?',
+              prompts: [
+                'Study Scripture for yourself rather than only reading commentaries',
+                'Ask questions and seek answers through personal prayer and study',
+                'Test what you hear against Scripture',
+                'Develop your own relationship with God through His Word'
+              ]
+            }
+          },
+          lifeApplication: {
+            challenge: 'This week, study one passage without reading any commentary first. What does God show you directly?',
+            journaling: 'Reflect on areas where you might be too dependent on others\' understanding rather than seeking God yourself.'
+          },
+          prayerPrompt: 'Lord, help me grow in spiritual maturity. While I\'m grateful for teachers You\'ve given me, help me also learn to hear from You directly through Your Word. Give me wisdom to study for myself and discern Your truth.',
+          deeperStudy: {
+            pdf: 'Developing Independent Bible Study Skills',
+            additionalReadings: ['From Dependence to Spiritual Maturity', 'Learning to Study Scripture Personally'],
+            discussionQuestions: [
+              'What\'s the difference between childlike faith and childish dependence?',
+              'How can we balance learning from others with personal study?',
+              'What steps can we take to develop spiritual maturity?'
+            ]
+          }
+        }
+      },
+      {
+        id: 'htsb-3',
+        title: 'Must Have a Teachable Spirit',
+        duration: 6,
+        scripture: 'Psalm 86:11',
+        description: 'Cultivate humility and openness to learn from God\'s Word',
+        content: {
+          scriptureText: 'Teach me your way, LORD, that I may rely on your faithfulness; give me an undivided heart, that I may fear your name.',
+          taggedScripture: [
+            {
+              type: 'word',
+              text: 'Teach',
+              data: {
+                original: 'יָרָה',
+                transliteration: 'yarah',
+                gloss: 'to shoot, point out, instruct, teach',
+                lemma: 'יָרָה',
+                strongs: 'H3384',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'Root meaning "to throw, shoot" - like an archer hitting the target with truth',
+                  frequency: 'Appears 84 times in the Hebrew Bible',
+                  crossReferences: ['Isa 2:3', 'Mic 4:2', 'Ps 25:4']
+                }
+              }
+            },
+            { type: 'text', text: ' me your way, LORD, that I may rely on your faithfulness; give me an ' },
+            {
+              type: 'word',
+              text: 'undivided',
+              data: {
+                original: 'יָחַד',
+                transliteration: 'yachad',
+                gloss: 'to be united, joined together',
+                lemma: 'יָחַד',
+                strongs: 'H3161',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'From root meaning "to be one" - complete unity of purpose',
+                  frequency: 'Appears 142 times in the Hebrew Bible',
+                  crossReferences: ['Ps 86:11', 'Jer 32:39', 'Ezek 11:19']
+                }
+              }
+            },
+            { type: 'text', text: ' heart, that I may ' },
+            {
+              type: 'word',
+              text: 'fear',
+              data: {
+                original: 'יָרֵא',
+                transliteration: 'yare',
+                gloss: 'to fear, revere, be in awe of',
+                lemma: 'יָרֵא',
+                strongs: 'H3372',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'Root meaning "to tremble" - healthy reverence and awe of God',
+                  frequency: 'Appears 332 times in the Hebrew Bible',
+                  crossReferences: ['Prov 9:10', 'Eccl 12:13', 'Ps 111:10']
+                }
+              }
+            },
+            { type: 'text', text: ' your name.' }
+          ],
+          commentary: [
+            'A teachable spirit begins with recognizing that we don\'t know everything and need God\'s instruction.',
+            'Pride is the enemy of learning. When we think we already know, we close ourselves to new understanding.',
+            'An undivided heart seeks God\'s truth above personal preferences or preconceived ideas.',
+            'The fear of the Lord is the beginning of wisdom - reverent awe opens us to divine instruction.'
+          ],
+          interactiveElement: {
+            type: 'quiz',
+            content: {
+              questions: [
+                {
+                  question: 'What is the biggest barrier to having a teachable spirit?',
+                  options: [
+                    'Lack of education',
+                    'Pride and thinking we already know',
+                    'Being too busy to study'
+                  ],
+                  correct: 1
+                }
+              ]
+            }
+          },
+          lifeApplication: {
+            challenge: 'Approach this week\'s Bible study with fresh eyes, as if reading familiar passages for the first time.',
+            journaling: 'Ask God to reveal areas where pride might be hindering your ability to learn from His Word.'
+          },
+          prayerPrompt: 'Father, humble my heart to receive Your instruction. Remove any pride that would keep me from learning. Give me an undivided heart that seeks Your truth above my own opinions. Teach me Your ways.',
+          deeperStudy: {
+            pdf: 'Cultivating a Teachable Heart',
+            additionalReadings: ['Humility and Scripture Study', 'Overcoming Pride in Bible Study'],
+            discussionQuestions: [
+              'How does pride interfere with learning from Scripture?',
+              'What practical steps can we take to maintain a teachable spirit?',
+              'How can we balance confidence in what we know with openness to learn more?'
+            ]
+          }
+        }
+      },
+      {
+        id: 'htsb-4',
+        title: 'Must Be Willing to Obey What You\'re Taught',
+        duration: 6,
+        scripture: 'Ezekiel 33:31',
+        description: 'Learn the importance of applying Scripture, not just studying it',
+        content: {
+          scriptureText: 'My people come to you, as they usually do, and sit before you to hear your words, but they do not put them into practice. Their mouths speak of love, but their hearts are greedy for unjust gain.',
+          taggedScripture: [
+            { type: 'text', text: 'My people come to you, as they usually do, and sit before you to ' },
+            {
+              type: 'word',
+              text: 'hear',
+              data: {
+                original: 'שָׁמַע',
+                transliteration: 'shama',
+                gloss: 'to hear, listen, understand, obey',
+                lemma: 'שָׁמַע',
+                strongs: 'H8085',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'Root meaning both "to hear" and "to obey" - true hearing leads to action',
+                  frequency: 'Appears 1165 times in the Hebrew Bible',
+                  crossReferences: ['Deut 6:4', 'Jas 1:22', '1 Sam 15:22']
+                }
+              }
+            },
+            { type: 'text', text: ' your words, but they do not ' },
+            {
+              type: 'word',
+              text: 'practice',
+              data: {
+                original: 'עָשָׂה',
+                transliteration: 'asah',
+                gloss: 'to do, make, accomplish, perform',
+                lemma: 'עָשָׂה',
+                strongs: 'H6213',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'Root meaning "to fashion, accomplish" - bringing words into reality through action',
+                  frequency: 'Appears 2632 times in the Hebrew Bible',
+                  crossReferences: ['Matt 7:24', 'Luke 6:46', 'Jas 1:25']
+                }
+              }
+            },
+            { type: 'text', text: ' them. Their mouths speak of love, but their hearts are greedy for unjust gain.' }
+          ],
+          commentary: [
+            'Knowledge without obedience is worthless. God doesn\'t give us His Word just to satisfy our curiosity.',
+            'Many people enjoy studying Scripture but resist applying its teachings to their daily lives.',
+            'True understanding comes through doing, not just hearing. Obedience deepens our comprehension.',
+            'When we refuse to obey what we already know, God may withhold further revelation.'
+          ],
+          interactiveElement: {
+            type: 'reflection',
+            content: {
+              question: 'What is one truth from Scripture that you know but struggle to obey?',
+              prompts: [
+                'Forgiveness - loving those who have hurt you',
+                'Generosity - trusting God with your finances',
+                'Love - putting others\' needs before your own',
+                'Trust - relying on God instead of worrying'
+              ]
+            }
+          },
+          lifeApplication: {
+            challenge: 'Choose one biblical command you\'ve been avoiding and take a concrete step to obey it this week.',
+            journaling: 'Reflect on how obedience to God\'s Word has deepened your understanding in the past.'
+          },
+          prayerPrompt: 'Lord, help me not just to be a hearer of Your Word, but a doer. Give me courage to obey what You teach me, even when it\'s difficult. Change my heart to desire Your will above my own comfort.',
+          deeperStudy: {
+            pdf: 'From Knowledge to Obedience',
+            additionalReadings: ['The Practice of Biblical Living', 'Why Obedience Matters in Bible Study'],
+            discussionQuestions: [
+              'Why is obedience essential for deeper understanding of Scripture?',
+              'What prevents us from applying what we learn from the Bible?',
+              'How can we move from knowing God\'s will to doing it?'
+            ]
+          }
+        }
+      },
+      {
+        id: 'htsb-5',
+        title: 'Must Teach It to Others',
+        duration: 6,
+        scripture: 'Ezra 7:10',
+        description: 'Discover how teaching others strengthens your own understanding',
+        content: {
+          scriptureText: 'For Ezra had devoted himself to the study and observance of the Law of the LORD, and to teaching its decrees and laws in Israel.',
+          taggedScripture: [
+            { type: 'text', text: 'For Ezra had devoted himself to the ' },
+            {
+              type: 'word',
+              text: 'study',
+              data: {
+                original: 'דָּרַשׁ',
+                transliteration: 'darash',
+                gloss: 'to seek, inquire, investigate, study carefully',
+                lemma: 'דָּרַשׁ',
+                strongs: 'H1875',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'Root meaning "to tread, frequent" - persistent, diligent searching',
+                  frequency: 'Appears 165 times in the Hebrew Bible',
+                  crossReferences: ['2 Chr 15:2', 'Ps 119:2', 'Isa 55:6']
+                }
+              }
+            },
+            { type: 'text', text: ' and observance of the Law of the LORD, and to ' },
+            {
+              type: 'word',
+              text: 'teaching',
+              data: {
+                original: 'לָמַד',
+                transliteration: 'lamad',
+                gloss: 'to learn, teach, train',
+                lemma: 'לָמַד',
+                strongs: 'H3925',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'Root meaning "to goad, prod" - active instruction that motivates learning',
+                  frequency: 'Appears 87 times in the Hebrew Bible',
+                  crossReferences: ['Deut 4:1', 'Ps 119:73', '2 Tim 2:2']
+                }
+              }
+            },
+            { type: 'text', text: ' its decrees and laws in Israel.' }
+          ],
+          commentary: [
+            'Ezra\'s pattern shows the complete cycle: study, obey, then teach. Each step builds on the previous one.',
+            'Teaching forces us to understand Scripture more deeply. When we explain truth to others, we discover gaps in our own knowledge.',
+            'Sharing what we learn helps solidify it in our own hearts and minds.',
+            'We don\'t need to be experts before we teach. We can share what God is teaching us right now.'
+          ],
+          interactiveElement: {
+            type: 'quiz',
+            content: {
+              questions: [
+                {
+                  question: 'According to Ezra\'s example, what should come before teaching others?',
+                  options: [
+                    'Getting a theology degree',
+                    'Personal study and obedience',
+                    'Being asked by church leadership'
+                  ],
+                  correct: 1
+                }
+              ]
+            }
+          },
+          lifeApplication: {
+            challenge: 'Share one insight from your Bible study with a friend, family member, or small group this week.',
+            journaling: 'Think about informal ways you can teach others what God is showing you in His Word.'
+          },
+          prayerPrompt: 'Father, help me not just to learn Your Word for myself, but to be faithful in sharing what You teach me. Give me opportunities and courage to speak Your truth to others with love and humility.',
+          deeperStudy: {
+            pdf: 'Becoming a Teacher of God\'s Word',
+            additionalReadings: ['The Ministry of Teaching Scripture', 'Informal Ways to Share Biblical Truth'],
+            discussionQuestions: [
+              'How does teaching others strengthen our own understanding?',
+              'What are some natural opportunities to share biblical truth?',
+              'How can we teach others without being preachy or judgmental?'
+            ]
+          }
+        }
+      },
+      {
+        id: 'htsb-6',
+        title: 'Not Everything Is Revealed',
+        duration: 6,
+        scripture: 'Deuteronomy 29:29',
+        description: 'Learn to be content with what God chooses to reveal',
+        content: {
+          scriptureText: 'The secret things belong to the LORD our God, but the things revealed belong to us and to our children forever, that we may follow all the words of this law.',
+          taggedScripture: [
+            { type: 'text', text: 'The ' },
+            {
+              type: 'word',
+              text: 'secret',
+              data: {
+                original: 'נִסְתָּרוֹת',
+                transliteration: 'nistarot',
+                gloss: 'hidden things, secrets, mysteries',
+                lemma: 'סָתַר',
+                strongs: 'H5640',
+                partOfSpeech: 'Noun',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'From root meaning "to hide, conceal" - things God keeps to Himself',
+                  frequency: 'Appears 81 times in the Hebrew Bible',
+                  crossReferences: ['Job 11:7', 'Rom 11:33', '1 Cor 2:7']
+                }
+              }
+            },
+            { type: 'text', text: ' things belong to the LORD our God, but the things ' },
+            {
+              type: 'word',
+              text: 'revealed',
+              data: {
+                original: 'נִגְלוֹת',
+                transliteration: 'niglot',
+                gloss: 'revealed, uncovered, made known',
+                lemma: 'גָּלָה',
+                strongs: 'H1540',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'From root meaning "to uncover, reveal" - what God chooses to make known',
+                  frequency: 'Appears 187 times in the Hebrew Bible',
+                  crossReferences: ['Amos 3:7', '1 Cor 2:10', 'Eph 3:3']
+                }
+              }
+            },
+            { type: 'text', text: ' belong to us and to our children forever, that we may ' },
+            {
+              type: 'word',
+              text: 'follow',
+              data: {
+                original: 'עָשָׂה',
+                transliteration: 'asah',
+                gloss: 'to do, make, practice, follow',
+                lemma: 'עָשָׂה',
+                strongs: 'H6213',
+                partOfSpeech: 'Verb',
+                language: 'hebrew',
+                deeperStudy: {
+                  etymology: 'Root meaning "to accomplish, fashion" - putting revealed truth into practice',
+                  frequency: 'Appears 2632 times in the Hebrew Bible',
+                  crossReferences: ['John 7:17', 'Jas 1:25', 'Matt 7:24']
+                }
+              }
+            },
+            { type: 'text', text: ' all the words of this law.' }
+          ],
+          commentary: [
+            'God hasn\'t revealed everything to us, and that\'s okay. He gives us what we need to know to live faithfully.',
+            'Some people become frustrated when they can\'t understand everything in Scripture. This verse teaches contentment with mystery.',
+            'Our focus should be on obeying what God has clearly revealed rather than speculating about hidden things.',
+            'What God has revealed is sufficient for faith and godly living. We can trust Him with the rest.'
+          ],
+          interactiveElement: {
+            type: 'reflection',
+            content: {
+              question: 'What are some questions about God or Scripture that you may never fully understand in this life?',
+              prompts: [
+                'How can God be three persons yet one God?',
+                'Why does God allow suffering?',
+                'How do God\'s sovereignty and human free will work together?',
+                'What exactly will heaven be like?'
+              ]
+            }
+          },
+          lifeApplication: {
+            challenge: 'Focus this week on obeying what God has clearly revealed rather than worrying about mysteries you can\'t solve.',
+            journaling: 'List three things God has clearly revealed in His Word that you can focus on living out.'
+          },
+          prayerPrompt: 'Lord, help me be content with what You\'ve chosen to reveal. Give me wisdom to focus on obeying the clear teachings of Your Word rather than being frustrated by mysteries. I trust You with what I don\'t understand.',
+          deeperStudy: {
+            pdf: 'Dealing with Mystery in Scripture',
+            additionalReadings: ['The Limits of Human Understanding', 'Finding Peace with Biblical Mysteries'],
+            discussionQuestions: [
+              'How should we respond when we encounter difficult or mysterious passages in Scripture?',
+              'What are some things God has clearly revealed that we should focus on?',
+              'How can we maintain faith while acknowledging the limits of our understanding?'
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
     id: 'fruit-of-spirit',
     title: 'Fruit of the Spirit',
     description: 'Short reflections, daily challenges, journaling prompts exploring the nine fruits.',
