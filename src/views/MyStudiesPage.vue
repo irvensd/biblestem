@@ -533,6 +533,43 @@ const goToStudy = (studyId: string) => {
   router.push(`/study/${studyId}`)
 }
 
+const showStudyOptions = (study: Study & { progress: any }) => {
+  selectedStudy.value = study
+}
+
+const goToFirstLesson = (study: Study & { progress: any }) => {
+  // Navigate to study page, it will automatically show the first lesson
+  selectedStudy.value = null
+  router.push(`/study/${study.id}`)
+}
+
+const resetStudyProgress = (study: Study & { progress: any }) => {
+  if (confirm(`Are you sure you want to reset your progress for "${study.title}"? This action cannot be undone.`)) {
+    progressStore.resetStudyProgress(study.id)
+    selectedStudy.value = null
+  }
+}
+
+const shareStudyProgress = (study: Study & { progress: any }) => {
+  const progressText = study.progress.completionPercent === 100
+    ? `I just completed "${study.title}" on BibleStem! 🎉 ${study.lessons.length} lessons of amazing Bible study.`
+    : `I'm studying "${study.title}" on BibleStem! ${study.progress.completedLessons}/${study.lessons.length} lessons completed (${Math.round(study.progress.completionPercent)}%).`
+
+  if (navigator.share) {
+    navigator.share({
+      title: `${study.title} - BibleStem Progress`,
+      text: progressText,
+      url: window.location.origin
+    })
+  } else {
+    const fullText = `${progressText} Check it out: ${window.location.origin}`
+    navigator.clipboard.writeText(fullText).then(() => {
+      alert('Progress shared! Link copied to clipboard.')
+    })
+  }
+  selectedStudy.value = null
+}
+
 onMounted(() => {
   authStore.initializeAuth()
   progressStore.loadFromStorage()
