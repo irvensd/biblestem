@@ -37,22 +37,22 @@
             <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 sm:mb-6">Your Progress</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
               <div class="text-center">
-                <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span class="text-2xl font-bold text-white">{{ authStore.user?.studiesCompleted || 0 }}</span>
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                  <span class="text-xl sm:text-2xl font-bold text-white">{{ authStore.user?.studiesCompleted || 0 }}</span>
                 </div>
-                <div class="text-sm text-neutral-600 dark:text-neutral-400">Studies Completed</div>
+                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Studies Completed</div>
               </div>
               <div class="text-center">
-                <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span class="text-2xl font-bold text-white">{{ calculateStreak() }}</span>
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                  <span class="text-xl sm:text-2xl font-bold text-white">{{ calculateStreak() }}</span>
                 </div>
-                <div class="text-sm text-neutral-600 dark:text-neutral-400">Day Streak</div>
+                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Day Streak</div>
               </div>
               <div class="text-center">
-                <div class="w-16 h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span class="text-2xl font-bold text-white">{{ calculateBadges() }}</span>
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                  <span class="text-xl sm:text-2xl font-bold text-white">{{ calculateBadges() }}</span>
                 </div>
-                <div class="text-sm text-neutral-600 dark:text-neutral-400">Badges Earned</div>
+                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Badges Earned</div>
               </div>
             </div>
           </section>
