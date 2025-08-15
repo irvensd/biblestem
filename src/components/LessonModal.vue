@@ -529,6 +529,7 @@ const emit = defineEmits<{
   close: []
   complete: [lessonId: string]
   next: []
+  upgrade: []
 }>()
 
 const steps = ['hook', 'scripture', 'interactive', 'application', 'prayer']
