@@ -403,6 +403,102 @@ export const freeStudies: Study[] = [
           },
           prayerPrompt: 'Thank God for being your personal Shepherd who knows and cares for you.'
         }
+      },
+      {
+        id: 'p23-2',
+        title: 'Green Pastures and Still Waters',
+        duration: 5,
+        scripture: 'Psalm 23:2',
+        description: 'Finding rest and refreshment in Gods provision',
+        content: {
+          scriptureText: 'He makes me lie down in green pastures, he leads me beside quiet waters.',
+          commentary: [
+            'God provides what we need for spiritual nourishment',
+            'Rest is part of Gods plan for our well-being',
+            'Gods guidance leads us to places of peace'
+          ],
+          interactiveElement: {
+            type: 'reflection',
+            content: {
+              question: 'Where do you find your spiritual rest and refreshment?',
+              prompts: [
+                'In prayer and meditation',
+                'In reading Scripture',
+                'In worship and fellowship',
+                'In nature and quiet moments'
+              ]
+            }
+          },
+          lifeApplication: {
+            challenge: 'Set aside time for rest and spiritual refreshment this week.',
+            journaling: 'Describe what spiritual green pastures look like in your life.'
+          },
+          prayerPrompt: 'Ask God to lead you to places of rest and peace when you feel overwhelmed.'
+        }
+      },
+      {
+        id: 'p23-3',
+        title: 'Through the Valley',
+        duration: 5,
+        scripture: 'Psalm 23:4',
+        description: 'Gods presence in our darkest moments',
+        content: {
+          scriptureText: 'Even though I walk through the darkest valley, I will fear no evil, for you are with me...',
+          commentary: [
+            'God doesnt prevent all difficulties but walks with us through them',
+            'His presence brings comfort and courage in fearful times',
+            'The valley is a place of passage, not a permanent destination'
+          ],
+          interactiveElement: {
+            type: 'reflection',
+            content: {
+              question: 'How has God shown His presence during a difficult time in your life?',
+              prompts: [
+                'Through answered prayer',
+                'Through supportive friends',
+                'Through unexpected provision',
+                'Through inner peace and strength'
+              ]
+            }
+          },
+          lifeApplication: {
+            challenge: 'Reach out to someone who might be walking through a difficult valley.',
+            journaling: 'Write about a time when you felt Gods presence in a dark season.'
+          },
+          prayerPrompt: 'Thank God for His faithfulness in difficult times and ask for His presence in current struggles.'
+        }
+      },
+      {
+        id: 'p23-4',
+        title: 'Goodness and Mercy Forever',
+        duration: 5,
+        scripture: 'Psalm 23:6',
+        description: 'Gods eternal faithfulness and our eternal hope',
+        content: {
+          scriptureText: 'Surely your goodness and love will follow me all the days of my life, and I will dwell in the house of the Lord forever.',
+          commentary: [
+            'Gods goodness and mercy are constant companions throughout our lives',
+            'We have the assurance of eternal fellowship with God',
+            'This verse expresses confident faith in Gods character'
+          ],
+          interactiveElement: {
+            type: 'reflection',
+            content: {
+              question: 'How does the promise of eternal life with God give you hope today?',
+              prompts: [
+                'It provides comfort in loss and grief',
+                'It gives purpose to daily struggles',
+                'It motivates faithful living',
+                'It brings peace about the future'
+              ]
+            }
+          },
+          lifeApplication: {
+            challenge: 'Share the hope of eternal life with someone this week.',
+            journaling: 'Reflect on what dwelling in the house of the Lord forever means to you.'
+          },
+          prayerPrompt: 'Praise God for His goodness and mercy, and thank Him for the hope of eternal life.'
+        }
       }
       // Additional verses would follow...
     ]
