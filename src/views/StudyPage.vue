@@ -75,6 +75,18 @@
       <!-- Lesson List -->
       <div class="grid lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2">
+          <!-- Study Completion Celebration -->
+          <StudyCompletion
+            v-if="progressPercentage === 100"
+            :study-title="study.title"
+            :lessons-completed="study.lessons.length"
+            :total-time="timeSpent"
+            @review-study="reviewStudy"
+            @share-progress="shareProgress"
+            @explore-more="exploreMore"
+            class="mb-8"
+          />
+
           <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-6">Lessons</h2>
           <div class="space-y-4">
             <div
