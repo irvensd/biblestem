@@ -61,11 +61,12 @@ export const freeStudies: Study[] = [
         scripture: 'Luke 2:1-20',
         description: 'Discover the miraculous birth of our Savior',
         content: {
-          scriptureText: 'In those days Caesar Augustus issued a decree that a census should be taken of the entire Roman world...',
+          scriptureText: 'In those days Caesar Augustus issued a decree that a census should be taken of the entire Roman world. This was the first census that took place while Quirinius was governor of Syria. And everyone went to their own town to register. So Joseph also went up from the town of Nazareth in Galilee to Judea, to Bethlehem the town of David, because he belonged to the house and line of David. He went there to register with Mary, who was pledged to be married to him and was expecting a child. While they were there, the time came for the baby to be born, and she gave birth to her firstborn, a son. She wrapped him in cloths and placed him in a manger, because there was no guest room available for them. And there were shepherds living out in the fields nearby, keeping watch over their flocks at night. An angel of the Lord appeared to them, and the glory of the Lord shone around them, and they were terrified. But the angel said to them, "Do not be afraid. I bring you good news that will cause great joy for all the people. Today in the town of David a Savior has been born to you; he is the Messiah, the Lord."',
           commentary: [
-            'The birth of Jesus fulfilled ancient prophecies',
-            'God chose humble circumstances to enter our world',
-            'The angels announced good news of great joy'
+            'The birth of Jesus fulfilled ancient prophecies spoken by the prophets hundreds of years earlier. Micah prophesied that the Messiah would be born in Bethlehem, and Isaiah spoke of a virgin giving birth to a son called Immanuel.',
+            'God chose humble circumstances to enter our world - not a palace, but a stable; not announced to kings, but to shepherds. This demonstrates Gods heart for the lowly and His identification with common people.',
+            'The angels announced "good news of great joy" - the birth of Jesus is the most joyful event in human history because it means God has come to rescue us from sin and death.',
+            'Jesus being placed in a manger foreshadows His entire ministry - He came to feed the spiritually hungry and be the Bread of Life for all who would believe in Him.'
           ],
           interactiveElement: {
             type: 'timeline',
