@@ -123,9 +123,9 @@
         <div class="text-center">
           <p class="text-neutral-600 dark:text-neutral-400">
             Don't have an account?
-            <a href="#" class="text-primary-600 hover:text-primary-500 font-medium">
+            <router-link to="/signup" class="text-primary-600 hover:text-primary-500 font-medium">
               Sign up for free
-            </a>
+            </router-link>
           </p>
         </div>
       </form>
