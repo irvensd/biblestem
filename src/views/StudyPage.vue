@@ -287,6 +287,19 @@ const canAccessLesson = (index: number) => {
   return progressStore.canAccessLesson(study.value.id, index, authStore.isPremium, study.value)
 }
 
+const getLessonAccessReason = (index: number) => {
+  if (!study.value) return 'unavailable'
+  if (!authStore.isAuthenticated) return 'not-authenticated'
+  if (study.value.category === 'premium' && !authStore.isPremium) return 'premium-required'
+  if (index > 0) {
+    const progress = progressStore.getStudyProgress(study.value.id)
+    if (!progress) return 'sequential'
+    const previousLessonId = study.value.lessons[index - 1].id
+    if (!progress.completedLessons.includes(previousLessonId)) return 'sequential'
+  }
+  return 'accessible'
+}
+
 const formatDuration = (minutes: number) => {
   if (minutes < 60) return `${minutes} min`
   const hours = Math.floor(minutes / 60)
