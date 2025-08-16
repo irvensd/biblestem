@@ -302,6 +302,7 @@ import { useStudyProgressStore } from '../stores/studyProgress'
 import { getStudyById, type Study, type Lesson } from '../data/studies'
 import LessonModal from '../components/LessonModal.vue'
 import StudyCompletion from '../components/StudyCompletion.vue'
+import StudyShare from '../components/StudyShare.vue'
 
 const route = useRoute()
 const router = useRouter()
