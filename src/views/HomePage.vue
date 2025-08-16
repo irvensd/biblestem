@@ -151,6 +151,18 @@
             </p>
           </div>
 
+          <!-- Feature 5 -->
+          <div class="card p-8 hover:scale-105 transition-all duration-300 group">
+            <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">Daily Devotions</h3>
+            <p class="text-neutral-600 dark:text-neutral-400">
+              Start each day with purpose through guided devotional content, scripture reflection, and prayer prompts tailored for spiritual growth.
+            </p>
+          </div>
 
           <!-- Feature 6 -->
           <div class="card p-8 hover:scale-105 transition-all duration-300 group">
