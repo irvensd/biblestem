@@ -112,11 +112,11 @@
                     </span>
                     <span class="text-xs text-neutral-500 capitalize">{{ study.difficulty }}</span>
                   </div>
-                  <button 
+                  <button
                     class="text-primary-600 hover:text-primary-700 font-medium text-sm flex items-center space-x-1 group-hover:translate-x-1 transition-transform"
                     @click.stop="goToStudy(study.id)"
                   >
-                    <span>Start</span>
+                    <span>{{ authStore.isAuthenticated ? 'Start' : 'Sign In to Start' }}</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
