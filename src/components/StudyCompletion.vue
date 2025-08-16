@@ -91,6 +91,8 @@
 </template>
 
 <script setup lang="ts">
+import StudyShare from './StudyShare.vue'
+
 interface Props {
   studyTitle: string
   lessonsCompleted: number
