@@ -462,6 +462,10 @@ const viewMode = ref<'grid' | 'list'>('grid')
 // Study options modal
 const selectedStudy = ref<(Study & { progress: any }) | null>(null)
 
+// Reset progress modal
+const showResetModal = ref(false)
+const studyToReset = ref<(Study & { progress: any }) | null>(null)
+
 // Loading state
 const isLoading = ref(true)
 
