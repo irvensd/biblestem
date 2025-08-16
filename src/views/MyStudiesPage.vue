@@ -405,6 +405,8 @@
       v-if="showResetModal"
       class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
       @click.self="cancelReset"
+      @keydown.escape="cancelReset"
+      tabindex="0"
     >
       <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-md w-full p-6">
         <div class="flex items-center space-x-3 mb-4">
