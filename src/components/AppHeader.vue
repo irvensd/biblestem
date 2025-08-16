@@ -341,6 +341,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import GlobalSearch from './GlobalSearch.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
