@@ -576,6 +576,41 @@
               </button>
             </div>
           </section>
+
+          <!-- Notes Section -->
+          <section v-if="currentStep === 'notes'" class="animate-fade-in">
+            <div class="text-center mb-6">
+              <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-3">
+                Your Study Notes
+              </h3>
+              <p class="text-neutral-600 dark:text-neutral-400 text-base max-w-2xl mx-auto">
+                Capture your insights, questions, and reflections from this lesson. Your notes help deepen understanding and create lasting memories of God's Word.
+              </p>
+            </div>
+
+            <!-- Notes Component -->
+            <div class="max-w-4xl mx-auto">
+              <StudyNotes
+                :study-id="study.id"
+                :lesson-id="lesson.id"
+              />
+            </div>
+
+            <!-- Complete Button -->
+            <div class="mt-8 text-center">
+              <button
+                @click="completeLesson"
+                class="btn-primary px-8 py-3 text-base font-semibold bg-green-600 hover:bg-green-700"
+              >
+                Complete Lesson ✓
+              </button>
+            </div>
+          </section>
         </div>
       </div>
 
