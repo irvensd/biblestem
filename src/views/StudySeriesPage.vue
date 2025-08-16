@@ -324,7 +324,7 @@ const handlePremiumStudy = (studyId: string) => {
 
 const upgradeToPremium = () => {
   // TODO: Implement premium upgrade flow
-  alert('Premium upgrade coming soon! For now, use the demo premium account: demo@biblestem.com / demo123')
+  alert('Premium upgrade coming soon! Only $9.99/month with 3-day free trial. For now, use the demo premium account: demo@biblestem.com / demo123')
 }
 
 onMounted(() => {
