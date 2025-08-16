@@ -65,12 +65,13 @@
       >
         📖 Review Study
       </button>
-      <button 
-        @click="$emit('shareProgress')"
-        class="btn-primary"
-      >
-        📱 Share Progress
-      </button>
+      <StudyShare
+        :study="{ id: 'study-id', title: studyTitle }"
+        :progress="{ completedLessons: lessonsCompleted }"
+        share-type="progress"
+        button-text="📱 Share Progress"
+        button-class="btn-primary"
+      />
       <button 
         @click="$emit('exploreMore')"
         class="btn-accent"
