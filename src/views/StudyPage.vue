@@ -405,7 +405,7 @@ const exploreMore = () => {
 const handleUpgrade = () => {
   // Navigate to upgrade or show upgrade modal
   // For demo purposes, we'll just alert
-  alert('Demo Mode: In a real app, this would open the upgrade flow. You can sign in with the premium demo account: sarah.johnson@example.com')
+  alert('Demo Mode: In a real app, this would open the upgrade flow ($9.99/month, 3-day free trial). You can sign in with the premium demo account: demo@biblestem.com / demo123')
 }
 
 onMounted(() => {
