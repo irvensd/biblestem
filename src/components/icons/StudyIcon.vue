@@ -164,6 +164,36 @@
       <line x1="39" y1="78" x2="39" y2="84" stroke="white" stroke-width="0.5"/>
     </svg>
 
+    <!-- Prophecies Icon -->
+    <svg v-else-if="iconType === 'prophecies'" class="w-12 h-12" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ancient scroll with seals -->
+      <rect x="20" y="25" width="60" height="50" rx="5" fill="white" opacity="0.9"/>
+      <circle cx="30" cy="35" r="4" fill="currentColor" opacity="0.8"/>
+      <circle cx="70" cy="35" r="4" fill="currentColor" opacity="0.8"/>
+      <circle cx="30" cy="50" r="4" fill="currentColor" opacity="0.8"/>
+      <circle cx="70" cy="50" r="4" fill="currentColor" opacity="0.8"/>
+      <circle cx="30" cy="65" r="4" fill="currentColor" opacity="0.8"/>
+      <circle cx="70" cy="65" r="4" fill="currentColor" opacity="0.8"/>
+      <!-- Prophecy text -->
+      <line x1="40" y1="35" x2="60" y2="35" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+      <line x1="40" y1="42" x2="55" y2="42" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+      <line x1="40" y1="50" x2="60" y2="50" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+      <line x1="40" y1="57" x2="58" y2="57" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+      <line x1="40" y1="65" x2="60" y2="65" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+      <!-- Divine eye above -->
+      <ellipse cx="50" cy="15" rx="12" ry="8" fill="white" opacity="0.9"/>
+      <circle cx="50" cy="15" r="4" fill="currentColor" opacity="0.8"/>
+      <circle cx="50" cy="15" r="2" fill="white"/>
+      <!-- Rays of light -->
+      <line x1="50" y1="5" x2="50" y2="10" stroke="white" stroke-width="2" opacity="0.8"/>
+      <line x1="38" y1="10" x2="40" y2="12" stroke="white" stroke-width="2" opacity="0.8"/>
+      <line x1="62" y1="10" x2="60" y2="12" stroke="white" stroke-width="2" opacity="0.8"/>
+      <!-- Beast symbols at bottom -->
+      <path d="M25 85 L30 80 L35 85 L30 90 Z" fill="white" opacity="0.7"/>
+      <path d="M45 85 L50 80 L55 85 L50 90 Z" fill="white" opacity="0.7"/>
+      <path d="M65 85 L70 80 L75 85 L70 90 Z" fill="white" opacity="0.7"/>
+    </svg>
+
     <!-- Default fallback - display first letter -->
     <span v-else class="text-white font-bold text-lg">
       {{ fallbackLetter }}
