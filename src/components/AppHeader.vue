@@ -213,6 +213,11 @@
             </div>
           </div>
 
+          <!-- Search Component (Mobile) -->
+          <div class="px-4 mb-4">
+            <GlobalSearch />
+          </div>
+
           <!-- Navigation Links -->
           <div class="flex flex-col space-y-3 px-4">
             <router-link
