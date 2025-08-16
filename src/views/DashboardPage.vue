@@ -584,7 +584,7 @@ const startNewStudy = () => {
 
 const handleUpgrade = () => {
   // In a real app, this would integrate with a payment processor
-  alert('Demo Mode: In a real app, this would open the payment flow to upgrade to Premium. For now, you can sign in with the premium demo account: sarah.johnson@example.com')
+  alert('Demo Mode: In a real app, this would open the payment flow to upgrade to Premium ($9.99/month, 3-day free trial). For now, you can sign in with the premium demo account: demo@biblestem.com / demo123')
   showUpgradeModal.value = false
 }
 
