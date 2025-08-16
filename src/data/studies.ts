@@ -406,23 +406,23 @@ export const freeStudies: Study[] = [
     ]
   },
   {
-    id: 'how-to-study-bible',
-    title: 'How to Study the Bible: The Preparation',
-    description: 'A 6-part Bible study series designed to prepare the believer to approach God\'s Word with prayer, maturity, humility, obedience, a teaching spirit, and trust in what God has revealed.',
+    id: 'life-of-jesus',
+    title: 'Life of Jesus',
+    description: 'Birth, ministry, miracles, parables, cross & resurrection. Interactive timelines and scripture quizzes.',
     category: 'free',
-    totalDuration: 36, // 6 lessons × 6 minutes each
+    totalDuration: 25,
     difficulty: 'beginner',
-    tags: ['Bible Study', 'Preparation', 'Spiritual Growth', 'Learning'],
-    image: 'bible-study-prep',
-    color: 'from-emerald-500 to-emerald-600',
-    features: ['Interactive word study', 'Guided study sections', 'Reflection questions', 'Premium content'],
+    tags: ['Jesus', 'Gospel', 'New Testament'],
+    image: 'life-of-jesus',
+    color: 'from-blue-500 to-blue-600',
+    features: ['Interactive timelines', 'Scripture quizzes', 'Short lessons'],
     lessons: [
       {
-        id: 'htsb-1',
-        title: 'Prayer',
-        duration: 6,
-        scripture: 'Psalm 119:18',
-        description: 'Opening the Bible without prayer is like walking into a dark room without turning on the light',
+        id: 'loj-1',
+        title: 'The Birth of Jesus',
+        duration: 5,
+        scripture: 'Luke 2:1-20',
+        description: 'Discover the miraculous birth of our Savior',
         content: {
           openingThought: 'Opening the Bible without prayer is like walking into a dark room without turning on the light. True understanding is not a product of intellect alone—it\'s a gift from God through the Holy Spirit.',
           scriptureText: 'Open thou mine eyes, that I may behold wondrous things out of thy law.',
