@@ -69,12 +69,15 @@
               @click="goToStudy(study.id)"
             >
               <div class="p-6">
-                <!-- Study Image Placeholder -->
-                <div 
+                <!-- Study Icon -->
+                <div
                   class="aspect-video rounded-lg mb-4 flex items-center justify-center bg-gradient-to-br"
                   :class="study.color"
                 >
-                  <span class="text-white font-bold text-lg">{{ study.title.charAt(0) }}</span>
+                  <StudyIcon
+                    :icon-type="study.image"
+                    :fallback-letter="study.title.charAt(0)"
+                  />
                 </div>
 
                 <!-- Study Info -->
