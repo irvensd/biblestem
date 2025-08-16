@@ -418,14 +418,13 @@ export const freeStudies: Study[] = [
     features: ['Interactive timelines', 'Scripture quizzes', 'Short lessons'],
     lessons: [
       {
-        id: 'htsb-1',
-        title: 'Prayer',
-        duration: 6,
-        scripture: 'Psalm 119:18',
-        description: 'Opening the Bible without prayer is like walking into a dark room without turning on the light',
+        id: 'loj-1',
+        title: 'The Birth of Jesus',
+        duration: 5,
+        scripture: 'Luke 2:1-20',
+        description: 'Discover the miraculous birth of our Savior',
         content: {
-          openingThought: 'Opening the Bible without prayer is like walking into a dark room without turning on the light. True understanding is not a product of intellect alone—it\'s a gift from God through the Holy Spirit.',
-          scriptureText: 'Open thou mine eyes, that I may behold wondrous things out of thy law.',
+          scriptureText: 'In those days Caesar Augustus issued a decree that a census should be taken of the entire Roman world. This was the first census that took place while Quirinius was governor of Syria. And everyone went to their own town to register. So Joseph also went up from the town of Nazareth in Galilee to Judea, to Bethlehem the town of David, because he belonged to the house and line of David. He went there to register with Mary, who was pledged to be married to him and was expecting a child. While they were there, the time came for the baby to be born, and she gave birth to her firstborn, a son. She wrapped him in cloths and placed him in a manger, because there was no guest room available for them. And there were shepherds living out in the fields nearby, keeping watch over their flocks at night. An angel of the Lord appeared to them, and the glory of the Lord shone around them, and they were terrified. But the angel said to them, "Do not be afraid. I bring you good news that will cause great joy for all the people. Today in the town of David a Savior has been born to you; he is the Messiah, the Lord."',
           mainScriptures: ['Psa 119:18 – Open thou mine eyes, that I may behold wondrous things out of thy law.'],
           taggedScripture: [
             { type: 'text', text: 'Open thou mine ' },
@@ -826,7 +825,7 @@ export const freeStudies: Study[] = [
               type: 'word',
               text: 'know',
               data: {
-                original: 'γινώσκω',
+                original: 'γινώσκ��',
                 transliteration: 'ginosko',
                 gloss: 'to know, understand, perceive',
                 lemma: 'γινώσκω',
