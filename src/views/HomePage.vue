@@ -180,6 +180,170 @@
       </div>
     </section>
 
+    <!-- Pricing Section -->
+    <section class="section-padding bg-neutral-50 dark:bg-neutral-800">
+      <div class="container-base">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-neutral-800 dark:text-neutral-200">
+            Choose Your <span class="gradient-text">Study Plan</span>
+          </h2>
+          <p class="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+            Start with our free plan and discover the power of interactive Bible study. Upgrade anytime to unlock premium content and advanced features.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <!-- Free Plan -->
+          <div class="card p-8 hover:scale-105 transition-all duration-300 border-2 border-neutral-200 dark:border-neutral-700">
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-2">Free</h3>
+              <div class="text-4xl font-bold text-neutral-800 dark:text-neutral-200 mb-2">$0</div>
+              <div class="text-sm text-neutral-600 dark:text-neutral-400">Forever</div>
+            </div>
+
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">15+ Free Bible study series</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Interactive lessons & quizzes</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Progress tracking</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Basic achievement badges</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Study templates</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Scripture memory cards</span>
+              </div>
+            </div>
+
+            <router-link
+              :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
+              class="w-full btn-secondary text-center block"
+            >
+              {{ authStore.isAuthenticated ? 'Continue Free' : 'Get Started Free' }}
+            </router-link>
+          </div>
+
+          <!-- Premium Plan -->
+          <div class="card p-8 hover:scale-105 transition-all duration-300 border-2 border-accent-500 relative">
+            <!-- Popular Badge -->
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+              <span class="bg-accent-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Most Popular</span>
+            </div>
+
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-2">Premium</h3>
+              <div class="text-4xl font-bold text-accent-600 mb-2">$9</div>
+              <div class="text-sm text-neutral-600 dark:text-neutral-400">per month</div>
+            </div>
+
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300"><strong>Everything in Free</strong> +</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300"><strong>New study series every month</strong></span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">25+ Premium study series</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Extended 15-25 minute lessons</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Video content & animations</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07 3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Expert commentary & insights</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Downloadable study guides</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Priority support</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-neutral-700 dark:text-neutral-300">Offline study access</span>
+              </div>
+            </div>
+
+            <router-link
+              :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
+              class="w-full btn-accent text-center block"
+            >
+              {{ authStore.isAuthenticated ? 'Upgrade Now' : 'Start 7-Day Trial' }}
+            </router-link>
+          </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="text-center mt-12">
+          <div class="bg-white dark:bg-neutral-900 rounded-xl p-6 shadow-soft border border-neutral-200 dark:border-neutral-700 max-w-2xl mx-auto">
+            <h4 class="font-bold text-lg text-neutral-800 dark:text-neutral-200 mb-3">✨ Fresh Content Every Month</h4>
+            <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
+              Premium subscribers get access to brand new Bible study series every month, featuring seasonal topics,
+              current events through a Biblical lens, and deep dives into specific books of the Bible.
+              Your subscription ensures you'll never run out of meaningful content to explore.
+            </p>
+          </div>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-6">
+            Cancel anytime • No long-term commitment • 7-day free trial for new premium subscribers
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="section-padding bg-gradient-to-r from-primary-600 to-secondary-600">
       <div class="container-base text-center">
