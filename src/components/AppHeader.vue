@@ -84,6 +84,11 @@
           </template>
         </div>
 
+        <!-- Search Component (Desktop) -->
+        <div class="hidden lg:block flex-1 max-w-md mx-6">
+          <GlobalSearch />
+        </div>
+
         <!-- CTA Buttons / User Menu -->
         <div class="hidden lg:flex items-center space-x-2 lg:space-x-4">
           <!-- Authenticated User -->
