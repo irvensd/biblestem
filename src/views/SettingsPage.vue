@@ -228,7 +228,7 @@
                       <p class="text-neutral-600 dark:text-neutral-400">
                         {{
                           authStore.isPremium
-                            ? '$9/month • Unlimited access'
+                            ? '$9.99/month • Unlimited access'
                             : 'Limited access to free studies'
                         }}
                       </p>
