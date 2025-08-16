@@ -658,7 +658,7 @@ const emit = defineEmits<{
   upgrade: []
 }>()
 
-const steps = ['hook', 'scripture', 'interactive', 'application', 'prayer']
+const steps = ['hook', 'scripture', 'interactive', 'application', 'prayer', 'notes']
 const currentStepIndex = ref(0)
 
 const currentStep = computed(() => steps[currentStepIndex.value])
