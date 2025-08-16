@@ -55,7 +55,7 @@ export const freeStudies: Study[] = [
     features: ['Interactive word study', 'Guided study sections', 'Reflection questions', 'Premium content'],
     lessons: [
       {
-        id: 'loj-1',
+        id: 'htsb-1',
         title: 'The Birth of Jesus',
         duration: 5,
         scripture: 'Luke 2:1-20',
@@ -1049,7 +1049,7 @@ export const freeStudies: Study[] = [
               type: 'word',
               text: 'line',
               data: {
-                original: 'קַו',
+                original: 'ק��ו',
                 transliteration: 'qav',
                 gloss: 'line, measuring line, rule',
                 lemma: 'קַו',
