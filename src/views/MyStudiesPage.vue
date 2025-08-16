@@ -592,10 +592,22 @@ const goToFirstLesson = (study: Study & { progress: any }) => {
 }
 
 const resetStudyProgress = (study: Study & { progress: any }) => {
-  if (confirm(`Are you sure you want to reset your progress for "${study.title}"? This action cannot be undone.`)) {
-    progressStore.resetStudyProgress(study.id)
+  studyToReset.value = study
+  showResetModal.value = true
+}
+
+const confirmReset = () => {
+  if (studyToReset.value) {
+    progressStore.resetStudyProgress(studyToReset.value.id)
     selectedStudy.value = null
+    showResetModal.value = false
+    studyToReset.value = null
   }
+}
+
+const cancelReset = () => {
+  showResetModal.value = false
+  studyToReset.value = null
 }
 
 const shareStudyProgress = (study: Study & { progress: any }) => {
