@@ -399,6 +399,47 @@
         </div>
       </div>
     </div>
+
+    <!-- Reset Progress Confirmation Modal -->
+    <div
+      v-if="showResetModal"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+      @click.self="cancelReset"
+    >
+      <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-md w-full p-6">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+            Reset Progress
+          </h3>
+        </div>
+
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+          Are you sure you want to reset your progress for
+          <strong class="text-neutral-900 dark:text-neutral-100">"{{ studyToReset?.title }}"</strong>?
+          This will permanently delete all your progress and cannot be undone.
+        </p>
+
+        <div class="flex space-x-3">
+          <button
+            @click="cancelReset"
+            class="flex-1 px-4 py-2 bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-colors font-medium"
+          >
+            Cancel
+          </button>
+          <button
+            @click="confirmReset"
+            class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
+          >
+            Reset Progress
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
