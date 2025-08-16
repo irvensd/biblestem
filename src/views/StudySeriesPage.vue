@@ -296,6 +296,14 @@ const showPremiumStudies = computed(() =>
 )
 
 const goToStudy = (studyId: string) => {
+  // Require authentication to access any study content
+  if (!authStore.isAuthenticated) {
+    router.push({
+      name: 'signin',
+      query: { redirect: `/study/${studyId}` }
+    })
+    return
+  }
   router.push(`/study/${studyId}`)
 }
 
