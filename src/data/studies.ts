@@ -996,7 +996,7 @@ export const freeStudies: Study[] = [
     difficulty: 'beginner',
     tags: ['Jesus', 'Messiah', 'Prophecy', 'Christ', 'Scripture Center'],
     image: 'jesus-center',
-    color: 'from-gold-500 to-yellow-600',
+    color: 'from-yellow-500 to-yellow-600',
     features: [
       'Messianic prophecies',
       'Christ-centered study',
