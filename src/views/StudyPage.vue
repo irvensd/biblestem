@@ -76,6 +76,14 @@
                 />
               </svg>
             </div>
+
+            <!-- Share Study Button -->
+            <StudyShare
+              :study="study"
+              share-type="study"
+              button-text="Share"
+              button-class="btn-secondary"
+            />
           </div>
         </div>
       </div>
