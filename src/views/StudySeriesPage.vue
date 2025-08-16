@@ -172,12 +172,15 @@
               </div>
 
               <div class="p-6">
-                <!-- Study Image Placeholder -->
-                <div 
+                <!-- Study Icon -->
+                <div
                   class="aspect-video rounded-lg mb-4 flex items-center justify-center bg-gradient-to-br relative"
                   :class="study.color"
                 >
-                  <span class="text-white font-bold text-lg">{{ study.title.charAt(0) }}</span>
+                  <StudyIcon
+                    :icon-type="study.image"
+                    :fallback-letter="study.title.charAt(0)"
+                  />
                   <div class="absolute top-2 right-2 bg-accent-500 text-white px-2 py-1 rounded-full text-xs font-bold">
                     PREMIUM
                   </div>
