@@ -352,7 +352,7 @@
             Ready to Transform Your Bible Study?
           </h2>
           <p class="text-xl text-primary-100 mb-8">
-            Join thousands of believers who have discovered the joy of interactive Bible study. Start your journey today with our free trial.
+            Join thousands of believers who have discovered the joy of interactive Bible study. Start your journey today with our 3-day free trial.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <router-link
