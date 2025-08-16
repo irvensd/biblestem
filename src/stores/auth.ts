@@ -6,6 +6,7 @@ export interface User {
   name: string
   email: string
   avatar?: string
+  bio?: string
   plan: 'free' | 'premium'
   studiesCompleted: number
   joinDate: string
