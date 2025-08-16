@@ -132,6 +132,25 @@
                     >
                       {{ progressStore.isLessonCompleted(study.id, lesson.id) ? 'Review' : 'Start' }} →
                     </button>
+                    <span
+                      v-else-if="getLessonAccessReason(index) === 'not-authenticated'"
+                      class="text-orange-600 dark:text-orange-400 font-medium text-sm cursor-pointer hover:text-orange-700"
+                      @click.stop="openLesson(lesson, index)"
+                    >
+                      Sign In Required →
+                    </span>
+                    <span
+                      v-else-if="getLessonAccessReason(index) === 'premium-required'"
+                      class="text-accent-600 dark:text-accent-400 font-medium text-sm"
+                    >
+                      Premium Only →
+                    </span>
+                    <span
+                      v-else
+                      class="text-neutral-400 dark:text-neutral-500 font-medium text-sm"
+                    >
+                      Complete Previous →
+                    </span>
                   </div>
                 </div>
               </div>
