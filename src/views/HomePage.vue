@@ -359,7 +359,7 @@
               :to="authStore.isAuthenticated ? '/dashboard' : '/signin'"
               class="bg-white text-primary-600 hover:bg-primary-50 font-bold py-4 px-8 rounded-lg text-lg transition-all duration-200 shadow-medium hover:shadow-strong inline-block text-center"
             >
-              {{ authStore.isAuthenticated ? 'Go to Dashboard' : 'Start Free Trial' }}
+              {{ authStore.isAuthenticated ? 'Go to Dashboard' : 'Start 3-Day Free Trial' }}
             </router-link>
             <router-link
               to="/study-series"
