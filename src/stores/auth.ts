@@ -28,7 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
       avatar: '',
       plan: 'premium' as const,
       studiesCompleted: 15,
-      joinDate: '2024-01-15'
+      joinDate: '2024-01-15',
     },
     {
       id: '2',
@@ -37,17 +37,20 @@ export const useAuthStore = defineStore('auth', () => {
       avatar: '',
       plan: 'free' as const,
       studiesCompleted: 7, // Updated to reflect 3 completed + 3 in progress studies
-      joinDate: '2024-02-20'
-    }
+      joinDate: '2024-02-20',
+    },
   ]
 
-  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+  const login = async (
+    email: string,
+    password: string,
+  ): Promise<{ success: boolean; error?: string }> => {
     isLoading.value = true
-    
+
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
       // Demo login logic
       if (email === 'demo@biblestem.com' && password === 'demo123') {
         user.value = demoUsers[0]
@@ -92,6 +95,6 @@ export const useAuthStore = defineStore('auth', () => {
     demoUsers,
     login,
     logout,
-    initializeAuth
+    initializeAuth,
   }
 })

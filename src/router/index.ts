@@ -18,92 +18,92 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomePage
+      component: HomePage,
     },
     {
       path: '/signin',
       name: 'signin',
       component: SignInPage,
-      meta: { requiresGuest: true }
+      meta: { requiresGuest: true },
     },
     {
       path: '/signup',
       name: 'signup',
       component: SignUpPage,
-      meta: { requiresGuest: true }
+      meta: { requiresGuest: true },
     },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardPage,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: '/study-series',
       name: 'study-series',
-      component: StudySeriesPage
+      component: StudySeriesPage,
     },
     {
       path: '/study/:id',
       name: 'study',
       component: StudyPage,
-      props: true
+      props: true,
     },
     {
       path: '/my-studies',
       name: 'my-studies',
       component: MyStudiesPage,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: '/daily-devotions',
       name: 'daily-devotions',
       component: DailyDevotionsPage,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: '/profile',
       name: 'profile',
       component: ProfilePage,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: '/settings',
       name: 'settings',
       component: SettingsPage,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: '/about',
       name: 'about',
-      component: PlaceholderPage
+      component: PlaceholderPage,
     },
     {
       path: '/contact',
       name: 'contact',
-      component: PlaceholderPage
+      component: PlaceholderPage,
     },
     {
       path: '/pricing',
       name: 'pricing',
-      component: PlaceholderPage
+      component: PlaceholderPage,
     },
     {
       path: '/blog',
       name: 'blog',
-      component: PlaceholderPage
+      component: PlaceholderPage,
     },
     {
       path: '/help',
       name: 'help',
-      component: PlaceholderPage
+      component: PlaceholderPage,
     },
     // Catch all route - must be last
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
-      component: PlaceholderPage
-    }
+      component: PlaceholderPage,
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     // Always scroll to top when navigating to a new route
@@ -112,7 +112,7 @@ const router = createRouter({
     } else {
       return { top: 0 }
     }
-  }
+  },
 })
 
 // Navigation guards
