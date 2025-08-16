@@ -1,19 +1,27 @@
 <template>
-  <header class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 sticky top-0 z-50">
+  <header
+    class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 sticky top-0 z-50"
+  >
     <nav class="container-base">
       <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20">
         <!-- Logo -->
         <router-link to="/" class="flex items-center space-x-2 sm:space-x-3 group">
           <div class="relative">
-            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+            <div
+              class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200"
+            >
               <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z"/>
+                <path
+                  d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z"
+                />
               </svg>
             </div>
           </div>
           <div class="flex flex-col">
             <span class="text-lg sm:text-xl font-bold gradient-text">BibleStem</span>
-            <span class="text-xs text-neutral-500 -mt-1 hidden lg:block">Interactive Bible Study</span>
+            <span class="text-xs text-neutral-500 -mt-1 hidden lg:block"
+              >Interactive Bible Study</span
+            >
           </div>
         </router-link>
 
@@ -45,7 +53,9 @@
             <router-link
               to="/daily-devotions"
               class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/daily-devotions' }"
+              :class="{
+                'text-primary-600 dark:text-primary-400': $route.path === '/daily-devotions',
+              }"
             >
               Daily Devotions
             </router-link>
@@ -98,17 +108,36 @@
               class="flex items-center space-x-2 lg:space-x-3 p-1.5 lg:p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
               :class="{ 'bg-neutral-100 dark:bg-neutral-800': userMenuOpen }"
             >
-              <div class="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
-                <span class="text-white text-xs lg:text-sm font-bold">{{ authStore.user?.name.charAt(0) }}</span>
+              <div
+                class="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
+              >
+                <span class="text-white text-xs lg:text-sm font-bold">{{
+                  authStore.user?.name.charAt(0)
+                }}</span>
               </div>
               <div class="text-left hidden md:block">
-                <div class="text-xs lg:text-sm font-medium text-neutral-900 dark:text-neutral-100">{{ authStore.user?.name }}</div>
-                <div class="text-xs text-neutral-500" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'">
+                <div class="text-xs lg:text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                  {{ authStore.user?.name }}
+                </div>
+                <div
+                  class="text-xs text-neutral-500"
+                  :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
+                >
                   {{ authStore.isPremium ? 'Premium' : 'Free' }}
                 </div>
               </div>
-              <svg class="w-3 h-3 lg:w-4 lg:h-4 text-neutral-400 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              <svg
+                class="w-3 h-3 lg:w-4 lg:h-4 text-neutral-400 hidden md:block"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
 
@@ -160,7 +189,10 @@
             >
               Sign Up
             </router-link>
-            <router-link to="/signin" class="btn-primary text-sm lg:text-base py-2 px-3 lg:py-3 lg:px-6">
+            <router-link
+              to="/signin"
+              class="btn-primary text-sm lg:text-base py-2 px-3 lg:py-3 lg:px-6"
+            >
               Start Learning
             </router-link>
           </template>
@@ -173,18 +205,18 @@
           :class="{ 'bg-neutral-100 dark:bg-neutral-800': mobileMenuOpen }"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path 
+            <path
               v-if="!mobileMenuOpen"
-              stroke-linecap="round" 
-              stroke-linejoin="round" 
-              stroke-width="2" 
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
               d="M4 6h16M4 12h16M4 18h16"
             />
-            <path 
+            <path
               v-else
-              stroke-linecap="round" 
-              stroke-linejoin="round" 
-              stroke-width="2" 
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
@@ -200,13 +232,22 @@
         <div v-if="authStore.isAuthenticated">
           <!-- User Info -->
           <div class="px-4 mb-4">
-            <div class="flex items-center space-x-3 px-4 py-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-              <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
+            <div
+              class="flex items-center space-x-3 px-4 py-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg"
+            >
+              <div
+                class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
+              >
                 <span class="text-white font-bold">{{ authStore.user?.name.charAt(0) }}</span>
               </div>
               <div>
-                <div class="font-medium text-neutral-900 dark:text-neutral-100">{{ authStore.user?.name }}</div>
-                <div class="text-sm" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'">
+                <div class="font-medium text-neutral-900 dark:text-neutral-100">
+                  {{ authStore.user?.name }}
+                </div>
+                <div
+                  class="text-sm"
+                  :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
+                >
                   {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
                 </div>
               </div>
@@ -224,7 +265,10 @@
               to="/dashboard"
               @click="closeMobileMenu"
               class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/dashboard' }"
+              :class="{
+                'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                  $route.path === '/dashboard',
+              }"
             >
               Dashboard
             </router-link>
@@ -232,7 +276,10 @@
               to="/study-series"
               @click="closeMobileMenu"
               class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/study-series' }"
+              :class="{
+                'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                  $route.path === '/study-series',
+              }"
             >
               Study Series
             </router-link>
@@ -240,7 +287,10 @@
               to="/my-studies"
               @click="closeMobileMenu"
               class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/my-studies' }"
+              :class="{
+                'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                  $route.path === '/my-studies',
+              }"
             >
               My Studies
             </router-link>
@@ -248,7 +298,10 @@
               to="/daily-devotions"
               @click="closeMobileMenu"
               class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/daily-devotions' }"
+              :class="{
+                'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                  $route.path === '/daily-devotions',
+              }"
             >
               Daily Devotions
             </router-link>
@@ -289,7 +342,10 @@
               to="/"
               @click="closeMobileMenu"
               class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/' }"
+              :class="{
+                'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                  $route.path === '/',
+              }"
             >
               Home
             </router-link>
@@ -297,7 +353,10 @@
               to="/study-series"
               @click="closeMobileMenu"
               class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/study-series' }"
+              :class="{
+                'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                  $route.path === '/study-series',
+              }"
             >
               Study Series
             </router-link>
@@ -305,7 +364,10 @@
               to="/about"
               @click="closeMobileMenu"
               class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/about' }"
+              :class="{
+                'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                  $route.path === '/about',
+              }"
             >
               About
             </router-link>
@@ -313,7 +375,10 @@
               to="/contact"
               @click="closeMobileMenu"
               class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
-              :class="{ 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.path === '/contact' }"
+              :class="{
+                'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                  $route.path === '/contact',
+              }"
             >
               Contact
             </router-link>
@@ -329,11 +394,7 @@
               >
                 Sign In
               </router-link>
-              <router-link
-                to="/signup"
-                @click="closeMobileMenu"
-                class="btn-secondary w-full"
-              >
+              <router-link to="/signup" @click="closeMobileMenu" class="btn-secondary w-full">
                 Sign Up
               </router-link>
               <router-link to="/signin" @click="closeMobileMenu" class="btn-primary w-full">

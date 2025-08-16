@@ -31,14 +31,14 @@ export const useNotesStore = defineStore('notes', () => {
   const createNote = (noteData: Omit<StudyNote, 'id' | 'createdAt' | 'updatedAt'>) => {
     const id = generateNoteId()
     const now = new Date().toISOString()
-    
+
     const note: StudyNote = {
       id,
       ...noteData,
       createdAt: now,
-      updatedAt: now
+      updatedAt: now,
     }
-    
+
     notesData.value[id] = note
     saveToStorage()
     return note
@@ -50,7 +50,7 @@ export const useNotesStore = defineStore('notes', () => {
       notesData.value[noteId] = {
         ...notesData.value[noteId],
         ...updates,
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       }
       saveToStorage()
       return notesData.value[noteId]
@@ -70,47 +70,49 @@ export const useNotesStore = defineStore('notes', () => {
 
   // Get notes for a specific study
   const getStudyNotes = (studyId: string) => {
-    return computed(() => 
+    return computed(() =>
       Object.values(notesData.value)
-        .filter(note => note.studyId === studyId)
-        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+        .filter((note) => note.studyId === studyId)
+        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()),
     )
   }
 
   // Get notes for a specific lesson
   const getLessonNotes = (studyId: string, lessonId: string) => {
-    return computed(() => 
+    return computed(() =>
       Object.values(notesData.value)
-        .filter(note => note.studyId === studyId && note.lessonId === lessonId)
-        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+        .filter((note) => note.studyId === studyId && note.lessonId === lessonId)
+        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()),
     )
   }
 
   // Get all notes
-  const getAllNotes = computed(() => 
-    Object.values(notesData.value)
-      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+  const getAllNotes = computed(() =>
+    Object.values(notesData.value).sort(
+      (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    ),
   )
 
   // Get notes by type
   const getNotesByType = (type: StudyNote['type']) => {
-    return computed(() => 
+    return computed(() =>
       Object.values(notesData.value)
-        .filter(note => note.type === type)
-        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+        .filter((note) => note.type === type)
+        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()),
     )
   }
 
   // Search notes
   const searchNotes = (query: string) => {
     if (!query.trim()) return []
-    
+
     const searchTerm = query.toLowerCase()
     return Object.values(notesData.value)
-      .filter(note => 
-        note.content.toLowerCase().includes(searchTerm) ||
-        note.scripture?.toLowerCase().includes(searchTerm) ||
-        note.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+      .filter(
+        (note) =>
+          note.content.toLowerCase().includes(searchTerm) ||
+          note.scripture?.toLowerCase().includes(searchTerm) ||
+          note.tags.some((tag) => tag.toLowerCase().includes(searchTerm)),
       )
       .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
   }
@@ -126,17 +128,17 @@ export const useNotesStore = defineStore('notes', () => {
     return {
       total: notes.length,
       byType: {
-        general: notes.filter(n => n.type === 'general').length,
-        reflection: notes.filter(n => n.type === 'reflection').length,
-        question: notes.filter(n => n.type === 'question').length,
-        insight: notes.filter(n => n.type === 'insight').length,
-        prayer: notes.filter(n => n.type === 'prayer').length
+        general: notes.filter((n) => n.type === 'general').length,
+        reflection: notes.filter((n) => n.type === 'reflection').length,
+        question: notes.filter((n) => n.type === 'question').length,
+        insight: notes.filter((n) => n.type === 'insight').length,
+        prayer: notes.filter((n) => n.type === 'prayer').length,
       },
-      recentCount: notes.filter(n => {
+      recentCount: notes.filter((n) => {
         const dayAgo = new Date()
         dayAgo.setDate(dayAgo.getDate() - 1)
         return new Date(n.createdAt) > dayAgo
-      }).length
+      }).length,
     }
   })
 
@@ -190,12 +192,12 @@ export const useNotesStore = defineStore('notes', () => {
     // State
     notesData,
     isLoaded,
-    
+
     // Actions
     createNote,
     updateNote,
     deleteNote,
-    
+
     // Getters
     getStudyNotes,
     getLessonNotes,
@@ -204,12 +206,12 @@ export const useNotesStore = defineStore('notes', () => {
     searchNotes,
     getNoteById,
     getNotesStats,
-    
+
     // Storage
     loadFromStorage,
     saveToStorage,
     clearAllNotes,
     exportNotes,
-    importNotes
+    importNotes,
   }
 })

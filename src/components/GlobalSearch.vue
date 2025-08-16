@@ -3,8 +3,18 @@
     <!-- Search Input -->
     <div class="relative">
       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <svg class="h-5 w-5 text-neutral-400 dark:text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <svg
+          class="h-5 w-5 text-neutral-400 dark:text-neutral-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
         </svg>
       </div>
       <input
@@ -22,7 +32,12 @@
           class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
         >
           <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
       </div>
@@ -41,7 +56,9 @@
 
       <!-- No Query - Show Recent Searches -->
       <div v-else-if="!searchQuery.trim() && recentSearches.length > 0" class="p-2">
-        <div class="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-700">
+        <div
+          class="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-700"
+        >
           Recent Searches
         </div>
         <button
@@ -50,8 +67,18 @@
           @click="searchQuery = recent"
           class="w-full text-left px-3 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-700 rounded transition-colors flex items-center space-x-2"
         >
-          <svg class="h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            class="h-4 w-4 text-neutral-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
           <span>{{ recent }}</span>
         </button>
@@ -61,8 +88,18 @@
       <div v-else-if="searchQuery.trim()" class="max-h-80 overflow-y-auto">
         <!-- No Results -->
         <div v-if="searchResults.total === 0" class="p-4 text-center">
-          <svg class="h-12 w-12 text-neutral-400 dark:text-neutral-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          <svg
+            class="h-12 w-12 text-neutral-400 dark:text-neutral-500 mx-auto mb-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
           </svg>
           <p class="text-neutral-500 dark:text-neutral-400 text-sm">
             No results found for "{{ searchQuery }}"
@@ -76,7 +113,9 @@
         <div v-else class="p-2">
           <!-- Studies -->
           <div v-if="searchResults.studies.length > 0" class="mb-4">
-            <div class="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-700 mb-2">
+            <div
+              class="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-700 mb-2"
+            >
               Studies ({{ searchResults.studies.length }})
             </div>
             <button
@@ -86,17 +125,30 @@
               class="w-full text-left px-3 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-700 rounded transition-colors group"
             >
               <div class="flex items-start space-x-3">
-                <div class="w-10 h-10 rounded-lg bg-gradient-to-br flex items-center justify-center flex-shrink-0" :class="study.color">
+                <div
+                  class="w-10 h-10 rounded-lg bg-gradient-to-br flex items-center justify-center flex-shrink-0"
+                  :class="study.color"
+                >
                   <span class="text-white font-bold text-sm">{{ study.title.charAt(0) }}</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <h4 class="font-medium text-neutral-900 dark:text-neutral-100 text-sm group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" v-html="highlightMatch(study.title)"></h4>
-                  <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1 line-clamp-2" v-html="highlightMatch(study.description)"></p>
+                  <h4
+                    class="font-medium text-neutral-900 dark:text-neutral-100 text-sm group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
+                    v-html="highlightMatch(study.title)"
+                  ></h4>
+                  <p
+                    class="text-xs text-neutral-500 dark:text-neutral-400 mt-1 line-clamp-2"
+                    v-html="highlightMatch(study.description)"
+                  ></p>
                   <div class="flex items-center space-x-2 mt-2">
-                    <span class="text-xs bg-neutral-100 dark:bg-neutral-600 text-neutral-600 dark:text-neutral-300 px-2 py-1 rounded">
+                    <span
+                      class="text-xs bg-neutral-100 dark:bg-neutral-600 text-neutral-600 dark:text-neutral-300 px-2 py-1 rounded"
+                    >
                       {{ study.lessons.length }} lessons
                     </span>
-                    <span class="text-xs bg-neutral-100 dark:bg-neutral-600 text-neutral-600 dark:text-neutral-300 px-2 py-1 rounded capitalize">
+                    <span
+                      class="text-xs bg-neutral-100 dark:bg-neutral-600 text-neutral-600 dark:text-neutral-300 px-2 py-1 rounded capitalize"
+                    >
                       {{ study.category }}
                     </span>
                   </div>
@@ -107,7 +159,9 @@
 
           <!-- Lessons -->
           <div v-if="searchResults.lessons.length > 0" class="mb-4">
-            <div class="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-700 mb-2">
+            <div
+              class="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-700 mb-2"
+            >
               Lessons ({{ searchResults.lessons.length }})
             </div>
             <button
@@ -117,20 +171,34 @@
               class="w-full text-left px-3 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-700 rounded transition-colors group"
             >
               <div class="flex items-start space-x-3">
-                <div class="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div
+                  class="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-lg flex items-center justify-center flex-shrink-0"
+                >
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <h4 class="font-medium text-neutral-900 dark:text-neutral-100 text-sm group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" v-html="highlightMatch(lesson.title)"></h4>
-                  <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1" v-html="highlightMatch(lesson.description)"></p>
+                  <h4
+                    class="font-medium text-neutral-900 dark:text-neutral-100 text-sm group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
+                    v-html="highlightMatch(lesson.title)"
+                  ></h4>
+                  <p
+                    class="text-xs text-neutral-500 dark:text-neutral-400 mt-1"
+                    v-html="highlightMatch(lesson.description)"
+                  ></p>
                   <div class="flex items-center space-x-2 mt-2">
-                    <span class="text-xs text-primary-600 dark:text-primary-400 font-medium">{{ lesson.scripture }}</span>
+                    <span class="text-xs text-primary-600 dark:text-primary-400 font-medium">{{
+                      lesson.scripture
+                    }}</span>
                     <span class="text-xs text-neutral-400">•</span>
-                    <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ lesson.duration }} min</span>
+                    <span class="text-xs text-neutral-500 dark:text-neutral-400"
+                      >{{ lesson.duration }} min</span
+                    >
                     <span class="text-xs text-neutral-400">•</span>
-                    <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ lesson.studyTitle }}</span>
+                    <span class="text-xs text-neutral-500 dark:text-neutral-400">{{
+                      lesson.studyTitle
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -139,7 +207,9 @@
 
           <!-- Notes -->
           <div v-if="searchResults.notes.length > 0">
-            <div class="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-700 mb-2">
+            <div
+              class="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-700 mb-2"
+            >
               Your Notes ({{ searchResults.notes.length }})
             </div>
             <button
@@ -149,17 +219,30 @@
               class="w-full text-left px-3 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-700 rounded transition-colors group"
             >
               <div class="flex items-start space-x-3">
-                <div class="w-8 h-8 bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div
+                  class="w-8 h-8 bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400 rounded-lg flex items-center justify-center flex-shrink-0"
+                >
                   <span class="text-sm">{{ getNoteTypeIcon(note.type) }}</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm text-neutral-700 dark:text-neutral-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2" v-html="highlightMatch(note.content)"></p>
+                  <p
+                    class="text-sm text-neutral-700 dark:text-neutral-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2"
+                    v-html="highlightMatch(note.content)"
+                  ></p>
                   <div class="flex items-center space-x-2 mt-2">
-                    <span v-if="note.scripture" class="text-xs text-primary-600 dark:text-primary-400 font-medium">{{ note.scripture }}</span>
+                    <span
+                      v-if="note.scripture"
+                      class="text-xs text-primary-600 dark:text-primary-400 font-medium"
+                      >{{ note.scripture }}</span
+                    >
                     <span v-if="note.scripture" class="text-xs text-neutral-400">•</span>
-                    <span class="text-xs text-neutral-500 dark:text-neutral-400 capitalize">{{ note.type }}</span>
+                    <span class="text-xs text-neutral-500 dark:text-neutral-400 capitalize">{{
+                      note.type
+                    }}</span>
                     <span class="text-xs text-neutral-400">•</span>
-                    <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ formatDate(note.updatedAt) }}</span>
+                    <span class="text-xs text-neutral-500 dark:text-neutral-400">{{
+                      formatDate(note.updatedAt)
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -174,11 +257,21 @@
       v-if="showFullResults"
       class="fixed inset-0 bg-white dark:bg-neutral-900 z-50 overflow-y-auto"
     >
-      <div class="sticky top-0 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700 p-4">
+      <div
+        class="sticky top-0 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700 p-4"
+      >
         <div class="flex items-center space-x-3">
-          <button @click="showFullResults = false" class="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100">
+          <button
+            @click="showFullResults = false"
+            class="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+          >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </button>
           <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
@@ -186,7 +279,7 @@
           </h2>
         </div>
       </div>
-      
+
       <div class="p-4">
         <div class="max-w-2xl mx-auto space-y-6">
           <!-- Full results content here -->
@@ -235,19 +328,19 @@ const searchResults = ref<SearchResults>({
   studies: [],
   lessons: [],
   notes: [],
-  total: 0
+  total: 0,
 })
 
 // All available content
 const allStudies = computed(() => [...getFreeStudies(), ...getPremiumStudies()])
 const allLessons = computed(() => {
   const lessons: LessonSearchResult[] = []
-  allStudies.value.forEach(study => {
-    study.lessons.forEach(lesson => {
+  allStudies.value.forEach((study) => {
+    study.lessons.forEach((lesson) => {
       lessons.push({
         ...lesson,
         studyId: study.id,
-        studyTitle: study.title
+        studyTitle: study.title,
       })
     })
   })
@@ -259,7 +352,7 @@ let searchTimeout: NodeJS.Timeout
 
 watch(searchQuery, (newQuery) => {
   clearTimeout(searchTimeout)
-  
+
   if (!newQuery.trim()) {
     searchResults.value = { studies: [], lessons: [], notes: [], total: 0 }
     isSearching.value = false
@@ -267,7 +360,7 @@ watch(searchQuery, (newQuery) => {
   }
 
   isSearching.value = true
-  
+
   searchTimeout = setTimeout(() => {
     performSearch(newQuery.trim())
     isSearching.value = false
@@ -277,20 +370,22 @@ watch(searchQuery, (newQuery) => {
 // Search function
 const performSearch = (query: string) => {
   const lowerQuery = query.toLowerCase()
-  
+
   // Search studies
-  const matchingStudies = allStudies.value.filter(study => 
-    study.title.toLowerCase().includes(lowerQuery) ||
-    study.description.toLowerCase().includes(lowerQuery) ||
-    study.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+  const matchingStudies = allStudies.value.filter(
+    (study) =>
+      study.title.toLowerCase().includes(lowerQuery) ||
+      study.description.toLowerCase().includes(lowerQuery) ||
+      study.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)),
   )
 
   // Search lessons
-  const matchingLessons = allLessons.value.filter(lesson =>
-    lesson.title.toLowerCase().includes(lowerQuery) ||
-    lesson.description.toLowerCase().includes(lowerQuery) ||
-    lesson.scripture.toLowerCase().includes(lowerQuery) ||
-    lesson.studyTitle.toLowerCase().includes(lowerQuery)
+  const matchingLessons = allLessons.value.filter(
+    (lesson) =>
+      lesson.title.toLowerCase().includes(lowerQuery) ||
+      lesson.description.toLowerCase().includes(lowerQuery) ||
+      lesson.scripture.toLowerCase().includes(lowerQuery) ||
+      lesson.studyTitle.toLowerCase().includes(lowerQuery),
   )
 
   // Search notes
@@ -300,7 +395,7 @@ const performSearch = (query: string) => {
     studies: matchingStudies.slice(0, 5), // Limit for dropdown
     lessons: matchingLessons.slice(0, 5),
     notes: matchingNotes.slice(0, 5),
-    total: matchingStudies.length + matchingLessons.length + matchingNotes.length
+    total: matchingStudies.length + matchingLessons.length + matchingNotes.length,
   }
 
   // Add to recent searches
@@ -326,9 +421,12 @@ const goToNote = (note: StudyNote) => {
 // Utility functions
 const highlightMatch = (text: string) => {
   if (!searchQuery.value.trim()) return text
-  
+
   const regex = new RegExp(`(${searchQuery.value.trim()})`, 'gi')
-  return text.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-800 px-1 rounded">$1</mark>')
+  return text.replace(
+    regex,
+    '<mark class="bg-yellow-200 dark:bg-yellow-800 px-1 rounded">$1</mark>',
+  )
 }
 
 const getNoteTypeIcon = (type: StudyNote['type']) => {
@@ -337,7 +435,7 @@ const getNoteTypeIcon = (type: StudyNote['type']) => {
     reflection: '💭',
     question: '❓',
     insight: '💡',
-    prayer: '🙏'
+    prayer: '🙏',
   }
   return icons[type] || '📝'
 }
@@ -347,17 +445,17 @@ const formatDate = (dateString: string) => {
   const now = new Date()
   const diff = now.getTime() - date.getTime()
   const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  
+
   if (days === 0) return 'Today'
   if (days === 1) return 'Yesterday'
   if (days < 7) return `${days}d ago`
-  
+
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
 // Recent searches management
 const addToRecentSearches = (query: string) => {
-  const searches = recentSearches.value.filter(s => s !== query)
+  const searches = recentSearches.value.filter((s) => s !== query)
   searches.unshift(query)
   recentSearches.value = searches.slice(0, 5)
   saveRecentSearches()

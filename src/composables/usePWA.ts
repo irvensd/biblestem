@@ -15,7 +15,7 @@ export function usePWA() {
   const isOffline = ref(!navigator.onLine)
   const updateAvailable = ref(false)
   const showInstallPrompt = ref(false)
-  
+
   let deferredPrompt: BeforeInstallPromptEvent | null = null
   let registration: ServiceWorkerRegistration | null = null
 
@@ -24,7 +24,7 @@ export function usePWA() {
     if (window.matchMedia('(display-mode: standalone)').matches) {
       isInstalled.value = true
     }
-    
+
     // Check for iOS Safari standalone mode
     if ((window.navigator as any).standalone === true) {
       isInstalled.value = true
@@ -36,11 +36,11 @@ export function usePWA() {
     if ('serviceWorker' in navigator) {
       try {
         registration = await navigator.serviceWorker.register('/sw.js', {
-          scope: '/'
+          scope: '/',
         })
-        
+
         console.log('Service Worker registered successfully:', registration)
-        
+
         // Check for updates
         registration.addEventListener('updatefound', () => {
           const newWorker = registration!.installing
@@ -53,12 +53,11 @@ export function usePWA() {
             })
           }
         })
-        
+
         // Listen for controlling service worker
         navigator.serviceWorker.addEventListener('controllerchange', () => {
           window.location.reload()
         })
-        
       } catch (error) {
         console.error('Service Worker registration failed:', error)
       }
@@ -78,13 +77,13 @@ export function usePWA() {
       try {
         await deferredPrompt.prompt()
         const { outcome } = await deferredPrompt.userChoice
-        
+
         if (outcome === 'accepted') {
           isInstalled.value = true
           showInstallPrompt.value = false
           console.log('PWA installed successfully')
         }
-        
+
         deferredPrompt = null
         isInstallable.value = false
       } catch (error) {
@@ -104,7 +103,7 @@ export function usePWA() {
         return false
       }
     }
-    
+
     // Fallback to clipboard
     if (navigator.clipboard && data.url) {
       try {
@@ -115,7 +114,7 @@ export function usePWA() {
         return false
       }
     }
-    
+
     return false
   }
 
@@ -135,12 +134,12 @@ export function usePWA() {
         return registration.showNotification(title, {
           icon: '/icons/icon-192x192.png',
           badge: '/icons/icon-72x72.png',
-          ...options
+          ...options,
         })
       } else {
         return new Notification(title, {
           icon: '/icons/icon-192x192.png',
-          ...options
+          ...options,
         })
       }
     }
@@ -174,7 +173,7 @@ export function usePWA() {
       e.preventDefault()
       deferredPrompt = e as BeforeInstallPromptEvent
       isInstallable.value = true
-      
+
       // Show install prompt after a delay
       setTimeout(() => {
         if (!isInstalled.value && isInstallable.value) {
@@ -229,7 +228,7 @@ export function usePWA() {
     isOffline,
     updateAvailable,
     showInstallPrompt,
-    
+
     // Methods
     installPWA,
     updateServiceWorker,
@@ -238,8 +237,8 @@ export function usePWA() {
     showNotification,
     scheduleBackgroundSync,
     getAppVersion,
-    
+
     // Utils
-    initializePWA
+    initializePWA,
   }
 }

@@ -1,185 +1,205 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BibleStem - Offline</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    
-    .container {
-      max-width: 400px;
-      padding: 2rem;
-    }
-    
-    .logo {
-      width: 80px;
-      height: 80px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 2rem;
-      backdrop-filter: blur(10px);
-    }
-    
-    .logo svg {
-      width: 40px;
-      height: 40px;
-      fill: white;
-    }
-    
-    h1 {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-    }
-    
-    p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-    
-    .offline-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 1.5rem;
-      opacity: 0.8;
-    }
-    
-    .retry-btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-    
-    .retry-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
-    }
-    
-    .features {
-      margin-top: 3rem;
-      text-align: left;
-    }
-    
-    .feature {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-    
-    .feature svg {
-      width: 20px;
-      height: 20px;
-      margin-right: 0.75rem;
-      flex-shrink: 0;
-    }
-    
-    @media (max-width: 480px) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BibleStem - Offline</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        color: white;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
       .container {
-        padding: 1.5rem;
+        max-width: 400px;
+        padding: 2rem;
       }
-      
+
+      .logo {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .logo svg {
+        width: 40px;
+        height: 40px;
+        fill: white;
+      }
+
       h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
       }
-      
+
       p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .offline-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1.5rem;
+        opacity: 0.8;
+      }
+
+      .retry-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 12px;
         font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="logo">
-      <svg viewBox="0 0 24 24">
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z"/>
-      </svg>
-    </div>
-    
-    <div class="offline-icon">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2v20M2 12h20"/>
-      </svg>
-    </div>
-    
-    <h1>You're Offline</h1>
-    <p>
-      No internet connection detected. Don't worry - when you're back online, 
-      your Bible study progress will sync automatically.
-    </p>
-    
-    <button class="retry-btn" onclick="window.location.reload()">
-      Try Again
-    </button>
-    
-    <div class="features">
-      <div class="feature">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+
+      .retry-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .features {
+        margin-top: 3rem;
+        text-align: left;
+      }
+
+      .feature {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      .feature svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.75rem;
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 1.5rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z"
+          />
         </svg>
-        Your progress is saved locally
       </div>
-      <div class="feature">
+
+      <div class="offline-icon">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2v20M2 12h20"
+          />
         </svg>
-        Notes are available offline
       </div>
-      <div class="feature">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-        </svg>
-        Auto-sync when online
+
+      <h1>You're Offline</h1>
+      <p>
+        No internet connection detected. Don't worry - when you're back online, your Bible study
+        progress will sync automatically.
+      </p>
+
+      <button class="retry-btn" onclick="window.location.reload()">Try Again</button>
+
+      <div class="features">
+        <div class="feature">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          Your progress is saved locally
+        </div>
+        <div class="feature">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+            />
+          </svg>
+          Notes are available offline
+        </div>
+        <div class="feature">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
+          </svg>
+          Auto-sync when online
+        </div>
       </div>
     </div>
-  </div>
-  
-  <script>
-    // Check for connection periodically
-    function checkConnection() {
-      if (navigator.onLine) {
+
+    <script>
+      // Check for connection periodically
+      function checkConnection() {
+        if (navigator.onLine) {
+          window.location.href = '/'
+        }
+      }
+
+      // Check connection every 3 seconds
+      setInterval(checkConnection, 3000)
+
+      // Listen for online event
+      window.addEventListener('online', () => {
         window.location.href = '/'
-      }
-    }
-    
-    // Check connection every 3 seconds
-    setInterval(checkConnection, 3000)
-    
-    // Listen for online event
-    window.addEventListener('online', () => {
-      window.location.href = '/'
-    })
-  </script>
-</body>
+      })
+    </script>
+  </body>
 </html>

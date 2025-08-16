@@ -9,17 +9,17 @@
   --color-primary-dark: 3 105 161; /* sky-700 */
   --color-secondary: 217 70 239; /* fuchsia-500 */
   --color-accent: 245 158 11; /* amber-500 */
-  
+
   /* Background Colors */
   --color-background: 250 250 250; /* neutral-50 */
   --color-background-soft: 245 245 245; /* neutral-100 */
   --color-background-mute: 229 229 229; /* neutral-200 */
-  
+
   /* Text Colors */
   --color-text: 23 23 23; /* neutral-900 */
   --color-text-soft: 64 64 64; /* neutral-700 */
   --color-text-mute: 115 115 115; /* neutral-500 */
-  
+
   /* Border Colors */
   --color-border: 212 212 212; /* neutral-300 */
   --color-border-hover: 163 163 163; /* neutral-400 */
@@ -31,11 +31,11 @@
     --color-background: 23 23 23; /* neutral-900 */
     --color-background-soft: 38 38 38; /* neutral-800 */
     --color-background-mute: 64 64 64; /* neutral-700 */
-    
+
     --color-text: 250 250 250; /* neutral-50 */
     --color-text-soft: 212 212 212; /* neutral-300 */
     --color-text-mute: 163 163 163; /* neutral-400 */
-    
+
     --color-border: 82 82 82; /* neutral-600 */
     --color-border-hover: 115 115 115; /* neutral-500 */
   }
@@ -53,9 +53,23 @@ body {
   min-height: 100vh;
   color: rgb(var(--color-text));
   background: rgb(var(--color-background));
-  transition: color 0.3s ease, background-color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
   line-height: 1.6;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
   font-size: 16px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -85,27 +99,27 @@ body {
   .btn-primary {
     @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 shadow-soft hover:shadow-medium active:scale-[0.98];
   }
-  
+
   .btn-secondary {
     @apply bg-transparent hover:bg-primary-50 text-primary-600 border border-primary-200 hover:border-primary-300 font-medium py-3 px-6 rounded-lg transition-all duration-200;
   }
-  
+
   .btn-accent {
     @apply bg-accent-500 hover:bg-accent-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 shadow-soft hover:shadow-medium active:scale-[0.98];
   }
-  
+
   .card {
     @apply bg-white dark:bg-neutral-800 rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 border border-neutral-200 dark:border-neutral-700;
   }
-  
+
   .gradient-text {
     @apply bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent;
   }
-  
+
   .section-padding {
     @apply py-16 md:py-24 lg:py-32;
   }
-  
+
   .container-base {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
