@@ -798,3 +798,16 @@ export const premiumStudies: Study[] = [
 
 // All studies combined
 export const allStudies: Study[] = [...freeStudies, ...premiumStudies]
+
+// Helper functions for backward compatibility
+export function getFreeStudies(): Study[] {
+  return freeStudies
+}
+
+export function getPremiumStudies(): Study[] {
+  return premiumStudies
+}
+
+export function getStudyById(id: string): Study | undefined {
+  return allStudies.find(study => study.id === id)
+}
