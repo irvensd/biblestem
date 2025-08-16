@@ -257,7 +257,7 @@
 
             <div class="text-center mb-8">
               <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-2">Premium</h3>
-              <div class="text-4xl font-bold text-accent-600 mb-2">$9</div>
+              <div class="text-4xl font-bold text-accent-600 mb-2">$9.99</div>
               <div class="text-sm text-neutral-600 dark:text-neutral-400">per month</div>
             </div>
 
@@ -322,7 +322,7 @@
               :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
               class="w-full btn-accent text-center block"
             >
-              {{ authStore.isAuthenticated ? 'Upgrade Now' : 'Start 7-Day Trial' }}
+              {{ authStore.isAuthenticated ? 'Upgrade Now' : 'Start 3-Day Trial' }}
             </router-link>
           </div>
         </div>
@@ -338,7 +338,7 @@
             </p>
           </div>
           <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-6">
-            Cancel anytime • No long-term commitment • 7-day free trial for new premium subscribers
+            Cancel anytime • No long-term commitment • 3-day free trial for new premium subscribers
           </p>
         </div>
       </div>
