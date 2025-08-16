@@ -279,6 +279,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { getFreeStudies, getPremiumStudies } from '../data/studies'
+import StudyIcon from '@/components/icons/StudyIcon.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
