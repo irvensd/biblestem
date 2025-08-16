@@ -295,8 +295,18 @@ const formatDuration = (minutes: number) => {
 }
 
 const openLesson = (lesson: Lesson, index: number) => {
+  // Check if user is authenticated first
+  if (!authStore.isAuthenticated) {
+    // Redirect to sign-in page with return URL
+    router.push({
+      name: 'signin',
+      query: { redirect: route.fullPath }
+    })
+    return
+  }
+
   if (!canAccessLesson(index)) return
-  
+
   currentLesson.value = lesson
   currentLessonIndex.value = index
 }
