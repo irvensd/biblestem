@@ -418,11 +418,11 @@ export const freeStudies: Study[] = [
     features: ['Interactive timelines', 'Scripture quizzes', 'Short lessons'],
     lessons: [
       {
-        id: 'loj-1',
-        title: 'The Birth of Jesus',
-        duration: 5,
-        scripture: 'Luke 2:1-20',
-        description: 'Discover the miraculous birth of our Savior',
+        id: 'htsb-1',
+        title: 'Prayer',
+        duration: 6,
+        scripture: 'Psalm 119:18',
+        description: 'Opening the Bible without prayer is like walking into a dark room without turning on the light',
         content: {
           openingThought: 'Opening the Bible without prayer is like walking into a dark room without turning on the light. True understanding is not a product of intellect alone—it\'s a gift from God through the Holy Spirit.',
           scriptureText: 'Open thou mine eyes, that I may behold wondrous things out of thy law.',
