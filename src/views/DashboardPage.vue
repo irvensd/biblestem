@@ -434,7 +434,7 @@
 
           <div class="space-y-2 sm:space-y-3">
             <button @click="handleUpgrade" class="w-full btn-accent text-sm sm:text-base py-2.5 sm:py-3">
-              Start 7-Day Free Trial
+              Start 3-Day Free Trial
             </button>
             <button @click="showUpgradeModal = false" class="w-full btn-secondary text-sm sm:text-base py-2.5 sm:py-3">
               Maybe Later
