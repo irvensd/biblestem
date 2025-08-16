@@ -13,18 +13,18 @@
     </button>
 
     <!-- Share Modal -->
-    <div 
-      v-if="showModal" 
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    <div
+      v-if="showModal"
+      class="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
       @click.self="closeModal"
     >
-      <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-md w-full p-6">
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+      <div class="bg-white dark:bg-neutral-800 rounded-t-xl sm:rounded-xl shadow-xl w-full sm:max-w-md sm:w-full p-4 sm:p-6 max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between mb-4 sm:mb-6">
+          <h3 class="text-base sm:text-lg font-semibold text-neutral-900 dark:text-neutral-100 pr-2">
             Share {{ shareType === 'study' ? 'Study' : shareType === 'progress' ? 'Progress' : 'Achievement' }}
           </h3>
-          <button @click="closeModal" class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button @click="closeModal" class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 p-1 -m-1">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
