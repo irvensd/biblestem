@@ -282,6 +282,8 @@ const nextLesson = computed(() => {
 
 const canAccessLesson = (index: number) => {
   if (!study.value) return false
+  // Require authentication to access any study content
+  if (!authStore.isAuthenticated) return false
   return progressStore.canAccessLesson(study.value.id, index, authStore.isPremium, study.value)
 }
 
