@@ -43,16 +43,16 @@ export interface Study {
 // Free Bible Studies
 export const freeStudies: Study[] = [
   {
-    id: 'life-of-jesus',
-    title: 'Life of Jesus',
-    description: 'Birth, ministry, miracles, parables, cross & resurrection. Interactive timelines and scripture quizzes.',
+    id: 'how-to-study-bible',
+    title: 'How to Study the Bible: The Preparation',
+    description: 'A 6-part Bible study series designed to prepare the believer to approach God\'s Word with prayer, maturity, humility, obedience, a teaching spirit, and trust in what God has revealed.',
     category: 'free',
-    totalDuration: 25,
+    totalDuration: 36, // 6 lessons × 6 minutes each
     difficulty: 'beginner',
-    tags: ['Jesus', 'Gospel', 'New Testament'],
-    image: 'life-of-jesus',
-    color: 'from-blue-500 to-blue-600',
-    features: ['Interactive timelines', 'Scripture quizzes', 'Short lessons'],
+    tags: ['Bible Study', 'Preparation', 'Spiritual Growth', 'Learning'],
+    image: 'bible-study-prep',
+    color: 'from-emerald-500 to-emerald-600',
+    features: ['Interactive word study', 'Guided study sections', 'Reflection questions', 'Premium content'],
     lessons: [
       {
         id: 'loj-1',
