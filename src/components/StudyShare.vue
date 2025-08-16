@@ -63,9 +63,9 @@
         </div>
 
         <!-- Quick Share Options -->
-        <div class="mb-6">
+        <div class="mb-4 sm:mb-6">
           <h4 class="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-3">Quick Share</h4>
-          <div class="grid grid-cols-4 gap-3">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             <!-- Native Share -->
             <button
               v-if="canUseNativeShare"
