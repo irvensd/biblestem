@@ -456,12 +456,21 @@ onMounted(() => {
   progressStore.loadFromStorage()
 
   const studyId = route.params.id as string
+
+  // Only proceed if we have a valid study ID
+  if (!studyId) {
+    router.push('/study-series')
+    return
+  }
+
   const foundStudy = getStudyById(studyId)
 
   if (foundStudy) {
     study.value = foundStudy
     progressStore.startStudy(studyId)
   } else {
+    // Log the error for debugging and redirect
+    console.warn('Study not found:', studyId)
     router.push('/study-series')
   }
 })
