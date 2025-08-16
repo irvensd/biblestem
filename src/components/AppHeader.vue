@@ -18,7 +18,7 @@
         </router-link>
 
         <!-- Desktop Navigation -->
-        <div class="hidden lg:flex items-center space-x-6 xl:space-x-8">
+        <div class="hidden lg:flex items-center space-x-6 xl:space-x-8 lg:ml-12 xl:ml-16">
           <!-- Authenticated User Navigation -->
           <template v-if="authStore.isAuthenticated">
             <router-link
