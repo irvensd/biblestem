@@ -151,18 +151,6 @@
             </p>
           </div>
 
-          <!-- Feature 5 -->
-          <div class="card p-8 hover:scale-105 transition-all duration-300 group">
-            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A2.998 2.998 0 0 0 16.89 7c-.87 0-1.66.46-2.1 1.21L12.5 12 15 22h5zM12.5 11.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S11 9.17 11 10s.67 1.5 1.5 1.5zM5.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm2.5 16h5l-2.5-10-2.5 10z"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">Community Support</h3>
-            <p class="text-neutral-600 dark:text-neutral-400">
-              Connect with fellow believers, share insights, and grow together in a supportive online community.
-            </p>
-          </div>
 
           <!-- Feature 6 -->
           <div class="card p-8 hover:scale-105 transition-all duration-300 group">
