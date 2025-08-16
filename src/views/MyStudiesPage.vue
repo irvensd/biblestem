@@ -632,6 +632,17 @@ const shareStudyProgress = (study: Study & { progress: any }) => {
   selectedStudy.value = null
 }
 
+// Watch for modal visibility to handle focus
+watch(showResetModal, (isVisible) => {
+  if (isVisible) {
+    nextTick(() => {
+      // Focus the modal container for keyboard events
+      const modal = document.querySelector('.fixed.inset-0') as HTMLElement
+      modal?.focus()
+    })
+  }
+})
+
 onMounted(async () => {
   try {
     authStore.initializeAuth()
