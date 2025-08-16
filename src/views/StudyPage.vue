@@ -3,36 +3,42 @@
     <div v-if="study" class="container-base py-8">
       <!-- Study Header -->
       <div class="mb-8">
-        <nav class="flex items-center space-x-2 text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+        <nav
+          class="flex items-center space-x-2 text-sm text-neutral-600 dark:text-neutral-400 mb-4"
+        >
           <router-link to="/study-series" class="hover:text-primary-600">Study Series</router-link>
           <span>/</span>
           <span class="text-neutral-800 dark:text-neutral-200">{{ study.title }}</span>
         </nav>
-        
+
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div class="flex-1">
             <div class="flex items-center space-x-3 mb-4">
-              <div 
+              <div
                 class="w-16 h-16 rounded-xl flex items-center justify-center bg-gradient-to-br"
                 :class="study.color"
               >
                 <span class="text-white font-bold text-2xl">{{ study.title.charAt(0) }}</span>
               </div>
               <div>
-                <h1 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200">{{ study.title }}</h1>
+                <h1 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200">
+                  {{ study.title }}
+                </h1>
                 <p class="text-neutral-600 dark:text-neutral-400">{{ study.description }}</p>
               </div>
             </div>
-            
+
             <div class="flex items-center space-x-6 text-sm text-neutral-600 dark:text-neutral-400">
               <span>{{ study.lessons.length }} lessons</span>
               <span>{{ formatDuration(study.totalDuration) }}</span>
               <span class="capitalize">{{ study.difficulty }}</span>
-              <span 
+              <span
                 class="px-3 py-1 rounded-full text-xs font-medium"
-                :class="study.category === 'free' 
-                  ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
-                  : 'bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'"
+                :class="
+                  study.category === 'free'
+                    ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+                    : 'bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'
+                "
               >
                 {{ study.category === 'free' ? 'Free' : 'Premium' }}
               </span>
@@ -42,7 +48,9 @@
           <div class="flex items-center space-x-4">
             <div class="text-right">
               <div class="text-sm text-neutral-600 dark:text-neutral-400">Progress</div>
-              <div class="text-2xl font-bold text-primary-600">{{ Math.round(progressPercentage) }}%</div>
+              <div class="text-2xl font-bold text-primary-600">
+                {{ Math.round(progressPercentage) }}%
+              </div>
             </div>
             <div class="w-20 h-20">
               <svg class="transform -rotate-90 w-20 h-20">
@@ -63,7 +71,7 @@
                   stroke-width="8"
                   fill="none"
                   stroke-dasharray="226"
-                  :stroke-dashoffset="226 - (226 * progressPercentage / 100)"
+                  :stroke-dashoffset="226 - (226 * progressPercentage) / 100"
                   class="text-primary-500 transition-all duration-300"
                 />
               </svg>
@@ -94,8 +102,9 @@
               :key="lesson.id"
               class="card p-6 hover:shadow-medium transition-all duration-200 cursor-pointer"
               :class="{
-                'bg-primary-50 dark:bg-primary-900/20 border-primary-200 dark:border-primary-800': progressStore.isLessonCompleted(study.id, lesson.id),
-                'opacity-75': !canAccessLesson(index)
+                'bg-primary-50 dark:bg-primary-900/20 border-primary-200 dark:border-primary-800':
+                  progressStore.isLessonCompleted(study.id, lesson.id),
+                'opacity-75': !canAccessLesson(index),
               }"
               @click="openLesson(lesson, index)"
             >
@@ -103,24 +112,38 @@
                 <div class="flex-shrink-0">
                   <div
                     class="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-white"
-                    :class="progressStore.isLessonCompleted(study.id, lesson.id)
-                      ? 'bg-green-500'
-                      : canAccessLesson(index)
-                        ? 'bg-primary-500'
-                        : getLessonAccessReason(index) === 'not-authenticated'
-                          ? 'bg-orange-500'
-                          : getLessonAccessReason(index) === 'premium-required'
-                            ? 'bg-accent-500'
-                            : 'bg-neutral-400'"
+                    :class="
+                      progressStore.isLessonCompleted(study.id, lesson.id)
+                        ? 'bg-green-500'
+                        : canAccessLesson(index)
+                          ? 'bg-primary-500'
+                          : getLessonAccessReason(index) === 'not-authenticated'
+                            ? 'bg-orange-500'
+                            : getLessonAccessReason(index) === 'premium-required'
+                              ? 'bg-accent-500'
+                              : 'bg-neutral-400'
+                    "
                   >
-                    <span v-if="progressStore.isLessonCompleted(study.id, lesson.id)" class="text-lg">✓</span>
-                    <span v-else-if="getLessonAccessReason(index) === 'not-authenticated'" class="text-lg">👤</span>
-                    <span v-else-if="getLessonAccessReason(index) === 'premium-required'" class="text-lg">⭐</span>
+                    <span
+                      v-if="progressStore.isLessonCompleted(study.id, lesson.id)"
+                      class="text-lg"
+                      >✓</span
+                    >
+                    <span
+                      v-else-if="getLessonAccessReason(index) === 'not-authenticated'"
+                      class="text-lg"
+                      >👤</span
+                    >
+                    <span
+                      v-else-if="getLessonAccessReason(index) === 'premium-required'"
+                      class="text-lg"
+                      >⭐</span
+                    >
                     <span v-else-if="!canAccessLesson(index)" class="text-lg">🔒</span>
                     <span v-else>{{ index + 1 }}</span>
                   </div>
                 </div>
-                
+
                 <div class="flex-1">
                   <div class="flex items-center justify-between mb-2">
                     <h3 class="font-bold text-lg text-neutral-800 dark:text-neutral-200">
@@ -128,7 +151,9 @@
                     </h3>
                     <span class="text-sm text-neutral-500">{{ lesson.duration }} min</span>
                   </div>
-                  <p class="text-neutral-600 dark:text-neutral-400 mb-2">{{ lesson.description }}</p>
+                  <p class="text-neutral-600 dark:text-neutral-400 mb-2">
+                    {{ lesson.description }}
+                  </p>
                   <div class="flex items-center justify-between">
                     <span class="text-sm text-primary-600 font-medium">{{ lesson.scripture }}</span>
                     <button
@@ -136,7 +161,10 @@
                       class="text-primary-600 hover:text-primary-700 font-medium text-sm"
                       @click.stop="openLesson(lesson, index)"
                     >
-                      {{ progressStore.isLessonCompleted(study.id, lesson.id) ? 'Review' : 'Start' }} →
+                      {{
+                        progressStore.isLessonCompleted(study.id, lesson.id) ? 'Review' : 'Start'
+                      }}
+                      →
                     </button>
                     <span
                       v-else-if="getLessonAccessReason(index) === 'not-authenticated'"
@@ -151,10 +179,7 @@
                     >
                       Premium Only →
                     </span>
-                    <span
-                      v-else
-                      class="text-neutral-400 dark:text-neutral-500 font-medium text-sm"
-                    >
+                    <span v-else class="text-neutral-400 dark:text-neutral-500 font-medium text-sm">
                       Complete Previous →
                     </span>
                   </div>
@@ -195,7 +220,11 @@
                 class="flex items-center space-x-2"
               >
                 <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
                 <span class="text-sm text-neutral-600 dark:text-neutral-400">{{ feature }}</span>
               </div>
@@ -244,9 +273,11 @@
     <!-- Loading State -->
     <div v-else class="min-h-screen flex items-center justify-center">
       <div class="text-center">
-        <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+        <div
+          class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse"
+        >
           <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
         <p class="text-neutral-600 dark:text-neutral-400">Loading study...</p>
@@ -274,23 +305,23 @@ const currentLesson = ref<Lesson | null>(null)
 const currentLessonIndex = ref<number>(0)
 
 const studyProgress = computed(() =>
-  study.value ? progressStore.getStudyProgress(study.value.id) : null
+  study.value ? progressStore.getStudyProgress(study.value.id) : null,
 )
 
 const completedLessons = computed(() =>
-  studyProgress.value ? studyProgress.value.completedLessons.length : 0
+  studyProgress.value ? studyProgress.value.completedLessons.length : 0,
 )
 
 const progressPercentage = computed(() =>
-  study.value ? progressStore.getStudyCompletionPercentage(study.value.id, study.value.lessons.length) : 0
+  study.value
+    ? progressStore.getStudyCompletionPercentage(study.value.id, study.value.lessons.length)
+    : 0,
 )
 
-const timeSpent = computed(() =>
-  studyProgress.value ? studyProgress.value.totalTimeSpent : 0
-)
+const timeSpent = computed(() => (studyProgress.value ? studyProgress.value.totalTimeSpent : 0))
 
 const timeRemaining = computed(() =>
-  study.value ? study.value.totalDuration - timeSpent.value : 0
+  study.value ? study.value.totalDuration - timeSpent.value : 0,
 )
 
 const nextLesson = computed(() => {
@@ -338,7 +369,7 @@ const openLesson = (lesson: Lesson, index: number) => {
     // Redirect to sign-in page with return URL
     router.push({
       name: 'signin',
-      query: { redirect: route.fullPath }
+      query: { redirect: route.fullPath },
     })
     return
   }
@@ -355,7 +386,7 @@ const closeLesson = () => {
 
 const completeLesson = (lessonId: string) => {
   if (study.value) {
-    const lesson = study.value.lessons.find(l => l.id === lessonId)
+    const lesson = study.value.lessons.find((l) => l.id === lessonId)
     const timeSpent = lesson ? lesson.duration : 5
     progressStore.completeLesson(study.value.id, lessonId, timeSpent)
   }
@@ -387,7 +418,7 @@ const shareProgress = () => {
     navigator.share({
       title: `I completed "${study.value?.title}" on BibleStem!`,
       text: `Just finished studying "${study.value?.title}" - ${study.value?.lessons.length} lessons of inspiring Bible study. Check out BibleStem for interactive Bible learning!`,
-      url: window.location.origin
+      url: window.location.origin,
     })
   } else {
     // Fallback for browsers without Web Share API
@@ -405,7 +436,9 @@ const exploreMore = () => {
 const handleUpgrade = () => {
   // Navigate to upgrade or show upgrade modal
   // For demo purposes, we'll just alert
-  alert('Demo Mode: In a real app, this would open the upgrade flow ($9.99/month, 3-day free trial). You can sign in with the premium demo account: demo@biblestem.com / demo123')
+  alert(
+    'Demo Mode: In a real app, this would open the upgrade flow ($9.99/month, 3-day free trial). You can sign in with the premium demo account: demo@biblestem.com / demo123',
+  )
 }
 
 onMounted(() => {

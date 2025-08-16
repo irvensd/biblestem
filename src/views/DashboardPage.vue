@@ -1,7 +1,9 @@
 <template>
   <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
     <!-- Dashboard Header -->
-    <section class="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
+    <section
+      class="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700"
+    >
       <div class="container-base py-6 sm:py-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -14,12 +16,22 @@
           </div>
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
             <div class="flex items-center space-x-2">
-              <div :class="authStore.isPremium ? 'bg-accent-500' : 'bg-neutral-500'" class="w-3 h-3 rounded-full"></div>
-              <span class="text-sm font-medium" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-600'">
+              <div
+                :class="authStore.isPremium ? 'bg-accent-500' : 'bg-neutral-500'"
+                class="w-3 h-3 rounded-full"
+              ></div>
+              <span
+                class="text-sm font-medium"
+                :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-600'"
+              >
                 {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
               </span>
             </div>
-            <button v-if="!authStore.isPremium" @click="showUpgradeModal = true" class="btn-accent text-sm py-2 px-4 w-full sm:w-auto">
+            <button
+              v-if="!authStore.isPremium"
+              @click="showUpgradeModal = true"
+              class="btn-accent text-sm py-2 px-4 w-full sm:w-auto"
+            >
               Upgrade to Premium
             </button>
           </div>
@@ -34,34 +46,63 @@
         <div class="xl:col-span-2 space-y-6 sm:space-y-8">
           <!-- Progress Overview -->
           <section class="card p-4 sm:p-6">
-            <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 sm:mb-6">Your Progress</h2>
+            <h2
+              class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 sm:mb-6"
+            >
+              Your Progress
+            </h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
               <div class="text-center">
-                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                  <span class="text-xl sm:text-2xl font-bold text-white">{{ authStore.user?.studiesCompleted || 0 }}</span>
+                <div
+                  class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                >
+                  <span class="text-xl sm:text-2xl font-bold text-white">{{
+                    authStore.user?.studiesCompleted || 0
+                  }}</span>
                 </div>
-                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Studies Completed</div>
+                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
+                  Studies Completed
+                </div>
               </div>
               <div class="text-center">
-                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                  <span class="text-xl sm:text-2xl font-bold text-white">{{ calculateStreak() }}</span>
+                <div
+                  class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                >
+                  <span class="text-xl sm:text-2xl font-bold text-white">{{
+                    calculateStreak()
+                  }}</span>
                 </div>
-                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Day Streak</div>
+                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
+                  Day Streak
+                </div>
               </div>
               <div class="text-center">
-              <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                <span class="text-xl sm:text-2xl font-bold text-white">{{ achievementsStore.totalBadgesEarned }}</span>
+                <div
+                  class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                >
+                  <span class="text-xl sm:text-2xl font-bold text-white">{{
+                    achievementsStore.totalBadgesEarned
+                  }}</span>
+                </div>
+                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
+                  Badges Earned
+                </div>
               </div>
-              <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Badges Earned</div>
-            </div>
             </div>
           </section>
 
           <!-- Continue Studies -->
           <section class="card p-4 sm:p-6">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-4 sm:mb-6">
-              <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100">Continue Learning</h2>
-              <router-link to="/study-series" class="text-primary-600 hover:text-primary-700 font-medium text-sm self-start sm:self-auto">
+            <div
+              class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-4 sm:mb-6"
+            >
+              <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100">
+                Continue Learning
+              </h2>
+              <router-link
+                to="/study-series"
+                class="text-primary-600 hover:text-primary-700 font-medium text-sm self-start sm:self-auto"
+              >
                 View All Series →
               </router-link>
             </div>
@@ -72,11 +113,21 @@
                 v-if="currentStudy"
                 class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-4 sm:p-6 rounded-xl border border-primary-200 dark:border-primary-800"
               >
-                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-4">
+                <div
+                  class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-4"
+                >
                   <div class="flex-1 min-w-0">
-                    <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1 text-sm sm:text-base">{{ currentStudy.title }}</h3>
+                    <h3
+                      class="font-bold text-neutral-900 dark:text-neutral-100 mb-1 text-sm sm:text-base"
+                    >
+                      {{ currentStudy.title }}
+                    </h3>
                     <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
-                      {{ currentStudy.nextLesson ? `Next: ${currentStudy.nextLesson.title}` : 'Study Complete!' }}
+                      {{
+                        currentStudy.nextLesson
+                          ? `Next: ${currentStudy.nextLesson.title}`
+                          : 'Study Complete!'
+                      }}
                     </p>
                   </div>
                   <span
@@ -87,7 +138,9 @@
                   </span>
                 </div>
                 <div class="mb-4">
-                  <div class="flex justify-between text-sm text-neutral-600 dark:text-neutral-400 mb-2">
+                  <div
+                    class="flex justify-between text-sm text-neutral-600 dark:text-neutral-400 mb-2"
+                  >
                     <span>Progress</span>
                     <span>{{ Math.round(currentStudy.progress) }}%</span>
                   </div>
@@ -118,18 +171,32 @@
                     class="aspect-video rounded-lg mb-3 flex items-center justify-center bg-gradient-to-br"
                     :class="study.color"
                   >
-                    <span class="text-white font-medium text-sm">{{ study.category === 'premium' ? 'Premium' : 'Free' }}</span>
+                    <span class="text-white font-medium text-sm">{{
+                      study.category === 'premium' ? 'Premium' : 'Free'
+                    }}</span>
                   </div>
-                  <h4 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1">{{ study.title }}</h4>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-3">{{ study.lessons.length }} lessons • {{ formatDuration(study.totalDuration) }}</p>
+                  <h4 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1">
+                    {{ study.title }}
+                  </h4>
+                  <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+                    {{ study.lessons.length }} lessons • {{ formatDuration(study.totalDuration) }}
+                  </p>
                   <div class="flex items-center justify-between">
                     <span
                       class="text-xs px-2 py-1 rounded"
-                      :class="study.category === 'free'
-                        ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
-                        : 'bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'"
+                      :class="
+                        study.category === 'free'
+                          ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+                          : 'bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'
+                      "
                     >
-                      {{ study.category === 'free' ? 'Free' : authStore.isPremium ? 'Premium' : 'Requires Premium' }}
+                      {{
+                        study.category === 'free'
+                          ? 'Free'
+                          : authStore.isPremium
+                            ? 'Premium'
+                            : 'Requires Premium'
+                      }}
                     </span>
                     <button
                       class="text-primary-600 hover:text-primary-700 text-sm font-medium"
@@ -143,13 +210,19 @@
 
               <!-- No Current Study Message -->
               <div v-if="!currentStudy" class="text-center py-8">
-                <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div
+                  class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4"
+                >
                   <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 class="text-lg font-bold text-neutral-800 dark:text-neutral-200 mb-2">Start Your Bible Study Journey</h3>
-                <p class="text-neutral-600 dark:text-neutral-400 mb-4">Choose a study below to begin learning and growing in your faith.</p>
+                <h3 class="text-lg font-bold text-neutral-800 dark:text-neutral-200 mb-2">
+                  Start Your Bible Study Journey
+                </h3>
+                <p class="text-neutral-600 dark:text-neutral-400 mb-4">
+                  Choose a study below to begin learning and growing in your faith.
+                </p>
                 <router-link to="/study-series" class="btn-primary">
                   Browse Study Series
                 </router-link>
@@ -159,13 +232,21 @@
 
           <!-- Completed Studies Section -->
           <section v-if="completedStudies.length > 0" class="card p-4 sm:p-6">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-4 sm:mb-6">
-              <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100">Completed Studies</h2>
+            <div
+              class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-4 sm:mb-6"
+            >
+              <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100">
+                Completed Studies
+              </h2>
               <div class="flex items-center space-x-2 text-green-600">
                 <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                  />
                 </svg>
-                <span class="font-medium text-sm sm:text-base">{{ completedStudies.length }} Completed</span>
+                <span class="font-medium text-sm sm:text-base"
+                  >{{ completedStudies.length }} Completed</span
+                >
               </div>
             </div>
 
@@ -177,16 +258,28 @@
                 @click="goToStudy(study.id)"
               >
                 <div class="flex items-start space-x-3">
-                  <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div
+                    class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0"
+                  >
                     <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      />
                     </svg>
                   </div>
                   <div class="flex-1 min-w-0">
-                    <h4 class="font-bold text-green-800 dark:text-green-200 mb-1 truncate">{{ study.title }}</h4>
-                    <p class="text-sm text-green-600 dark:text-green-400 mb-2">{{ study.lessons.length }} lessons completed</p>
+                    <h4 class="font-bold text-green-800 dark:text-green-200 mb-1 truncate">
+                      {{ study.title }}
+                    </h4>
+                    <p class="text-sm text-green-600 dark:text-green-400 mb-2">
+                      {{ study.lessons.length }} lessons completed
+                    </p>
                     <div class="flex items-center justify-between">
-                      <span class="text-xs text-green-500">{{ formatDuration(study.totalDuration) }}</span>
+                      <span class="text-xs text-green-500">{{
+                        formatDuration(study.totalDuration)
+                      }}</span>
                       <button class="text-green-600 hover:text-green-700 text-xs font-medium">
                         Review →
                       </button>
@@ -205,41 +298,93 @@
 
           <!-- Recent Activity -->
           <section class="card p-4 sm:p-6">
-            <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 sm:mb-6">Recent Activity</h2>
+            <h2
+              class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 sm:mb-6"
+            >
+              Recent Activity
+            </h2>
             <div class="space-y-3 sm:space-y-4">
-              <div class="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              <div
+                class="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg"
+              >
+                <div
+                  class="w-8 h-8 sm:w-10 sm:h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0"
+                >
+                  <svg
+                    class="w-4 h-4 sm:w-5 sm:h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    />
                   </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="font-medium text-neutral-900 dark:text-neutral-100 text-sm sm:text-base">Completed Psalm 22 Study</p>
-                  <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">2 hours ago</p>
+                  <p
+                    class="font-medium text-neutral-900 dark:text-neutral-100 text-sm sm:text-base"
+                  >
+                    Completed Psalm 22 Study
+                  </p>
+                  <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
+                    2 hours ago
+                  </p>
                 </div>
               </div>
 
-              <div class="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-accent-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              <div
+                class="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg"
+              >
+                <div
+                  class="w-8 h-8 sm:w-10 sm:h-10 bg-accent-500 rounded-full flex items-center justify-center flex-shrink-0"
+                >
+                  <svg
+                    class="w-4 h-4 sm:w-5 sm:h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    />
                   </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="font-medium text-neutral-900 dark:text-neutral-100 text-sm sm:text-base">Earned "Daily Reader" Badge</p>
+                  <p
+                    class="font-medium text-neutral-900 dark:text-neutral-100 text-sm sm:text-base"
+                  >
+                    Earned "Daily Reader" Badge
+                  </p>
                   <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Yesterday</p>
                 </div>
               </div>
 
-              <div class="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-primary-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+              <div
+                class="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg"
+              >
+                <div
+                  class="w-8 h-8 sm:w-10 sm:h-10 bg-primary-500 rounded-full flex items-center justify-center flex-shrink-0"
+                >
+                  <svg
+                    class="w-4 h-4 sm:w-5 sm:h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"
+                    />
                   </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="font-medium text-neutral-900 dark:text-neutral-100 text-sm sm:text-base">Started Psalms Series</p>
-                  <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">3 days ago</p>
+                  <p
+                    class="font-medium text-neutral-900 dark:text-neutral-100 text-sm sm:text-base"
+                  >
+                    Started Psalms Series
+                  </p>
+                  <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
+                    3 days ago
+                  </p>
                 </div>
               </div>
             </div>
@@ -259,19 +404,30 @@
 
           <!-- Quick Stats -->
           <div class="card p-4 sm:p-6">
-            <h3 class="font-bold text-neutral-900 dark:text-neutral-100 mb-3 sm:mb-4 text-sm sm:text-base">Quick Stats</h3>
+            <h3
+              class="font-bold text-neutral-900 dark:text-neutral-100 mb-3 sm:mb-4 text-sm sm:text-base"
+            >
+              Quick Stats
+            </h3>
             <div class="space-y-3 sm:space-y-4">
               <div class="flex justify-between items-center">
                 <span class="text-neutral-600 dark:text-neutral-400 text-sm">Member since</span>
-                <span class="font-medium text-neutral-900 dark:text-neutral-100 text-sm">{{ formatDate(authStore.user?.joinDate) }}</span>
+                <span class="font-medium text-neutral-900 dark:text-neutral-100 text-sm">{{
+                  formatDate(authStore.user?.joinDate)
+                }}</span>
               </div>
               <div class="flex justify-between items-center">
                 <span class="text-neutral-600 dark:text-neutral-400 text-sm">Total studies</span>
-                <span class="font-medium text-neutral-900 dark:text-neutral-100 text-sm">{{ authStore.user?.studiesCompleted || 0 }}</span>
+                <span class="font-medium text-neutral-900 dark:text-neutral-100 text-sm">{{
+                  authStore.user?.studiesCompleted || 0
+                }}</span>
               </div>
               <div class="flex justify-between items-center">
                 <span class="text-neutral-600 dark:text-neutral-400 text-sm">Plan type</span>
-                <span class="font-medium text-sm" :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-600'">
+                <span
+                  class="font-medium text-sm"
+                  :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-600'"
+                >
                   {{ authStore.isPremium ? 'Premium' : 'Free' }}
                 </span>
               </div>
@@ -280,13 +436,23 @@
 
           <!-- Action Buttons -->
           <div class="space-y-2 sm:space-y-3">
-            <button @click="startNewStudy" class="w-full btn-primary text-sm sm:text-base py-2 sm:py-3">
+            <button
+              @click="startNewStudy"
+              class="w-full btn-primary text-sm sm:text-base py-2 sm:py-3"
+            >
               Start New Study
             </button>
-            <button @click="showProgressModal = true" class="w-full btn-secondary text-sm sm:text-base py-2 sm:py-3">
+            <button
+              @click="showProgressModal = true"
+              class="w-full btn-secondary text-sm sm:text-base py-2 sm:py-3"
+            >
               View Progress Report
             </button>
-            <button v-if="!authStore.isPremium" @click="showUpgradeModal = true" class="w-full btn-accent text-sm sm:text-base py-2 sm:py-3">
+            <button
+              v-if="!authStore.isPremium"
+              @click="showUpgradeModal = true"
+              class="w-full btn-accent text-sm sm:text-base py-2 sm:py-3"
+            >
               Upgrade to Premium
             </button>
           </div>
@@ -295,14 +461,31 @@
     </div>
 
     <!-- Progress Report Modal -->
-    <div v-if="showProgressModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click="showProgressModal = false">
-      <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" @click.stop>
+    <div
+      v-if="showProgressModal"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+      @click="showProgressModal = false"
+    >
+      <div
+        class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        @click.stop
+      >
         <div class="p-6 border-b border-neutral-200 dark:border-neutral-700">
           <div class="flex items-center justify-between">
-            <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Your Progress Report</h3>
-            <button @click="showProgressModal = false" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
+            <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">
+              Your Progress Report
+            </h3>
+            <button
+              @click="showProgressModal = false"
+              class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+            >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -312,31 +495,50 @@
           <!-- Overall Stats -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div class="text-center p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
-              <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">{{ completedStudies.length }}</div>
+              <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                {{ completedStudies.length }}
+              </div>
               <div class="text-sm text-neutral-600 dark:text-neutral-400">Studies Completed</div>
             </div>
             <div class="text-center p-4 bg-secondary-50 dark:bg-secondary-900/20 rounded-xl">
-              <div class="text-2xl font-bold text-secondary-600 dark:text-secondary-400">{{ calculateStreak() }}</div>
+              <div class="text-2xl font-bold text-secondary-600 dark:text-secondary-400">
+                {{ calculateStreak() }}
+              </div>
               <div class="text-sm text-neutral-600 dark:text-neutral-400">Day Streak</div>
             </div>
             <div class="text-center p-4 bg-accent-50 dark:bg-accent-900/20 rounded-xl">
-              <div class="text-2xl font-bold text-accent-600 dark:text-accent-400">{{ calculateTotalMinutes() }}</div>
+              <div class="text-2xl font-bold text-accent-600 dark:text-accent-400">
+                {{ calculateTotalMinutes() }}
+              </div>
               <div class="text-sm text-neutral-600 dark:text-neutral-400">Minutes Studied</div>
             </div>
           </div>
 
           <!-- Study Progress -->
           <div>
-            <h4 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Study Progress</h4>
+            <h4 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">
+              Study Progress
+            </h4>
             <div class="space-y-3">
-              <div v-for="study in allStudiesWithProgress" :key="study.id" class="flex items-center space-x-3 p-3 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
+              <div
+                v-for="study in allStudiesWithProgress"
+                :key="study.id"
+                class="flex items-center space-x-3 p-3 bg-neutral-50 dark:bg-neutral-700 rounded-lg"
+              >
                 <div class="flex-1">
                   <div class="flex justify-between mb-1">
-                    <span class="text-sm font-medium text-neutral-900 dark:text-neutral-100">{{ study.title }}</span>
-                    <span class="text-sm text-neutral-600 dark:text-neutral-400">{{ Math.round(study.progressPercent) }}%</span>
+                    <span class="text-sm font-medium text-neutral-900 dark:text-neutral-100">{{
+                      study.title
+                    }}</span>
+                    <span class="text-sm text-neutral-600 dark:text-neutral-400"
+                      >{{ Math.round(study.progressPercent) }}%</span
+                    >
                   </div>
                   <div class="w-full bg-neutral-200 dark:bg-neutral-600 rounded-full h-2">
-                    <div class="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-300" :style="`width: ${study.progressPercent}%`"></div>
+                    <div
+                      class="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-300"
+                      :style="`width: ${study.progressPercent}%`"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -345,11 +547,20 @@
 
           <!-- Weekly Activity -->
           <div>
-            <h4 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">This Week's Activity</h4>
+            <h4 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">
+              This Week's Activity
+            </h4>
             <div class="grid grid-cols-7 gap-2">
               <div v-for="day in weeklyActivity" :key="day.day" class="text-center">
                 <div class="text-xs text-neutral-600 dark:text-neutral-400 mb-1">{{ day.day }}</div>
-                <div class="w-8 h-8 mx-auto rounded-lg flex items-center justify-center text-xs font-bold" :class="day.active ? 'bg-green-500 text-white' : 'bg-neutral-200 dark:bg-neutral-600 text-neutral-500'">
+                <div
+                  class="w-8 h-8 mx-auto rounded-lg flex items-center justify-center text-xs font-bold"
+                  :class="
+                    day.active
+                      ? 'bg-green-500 text-white'
+                      : 'bg-neutral-200 dark:bg-neutral-600 text-neutral-500'
+                  "
+                >
                   {{ day.active ? '✓' : '-' }}
                 </div>
               </div>
@@ -360,14 +571,36 @@
     </div>
 
     <!-- Upgrade Modal -->
-    <div v-if="showUpgradeModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 sm:p-4" @click="showUpgradeModal = false">
-      <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-sm sm:max-w-md w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto" @click.stop>
+    <div
+      v-if="showUpgradeModal"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 sm:p-4"
+      @click="showUpgradeModal = false"
+    >
+      <div
+        class="bg-white dark:bg-neutral-800 rounded-xl shadow-xl max-w-sm sm:max-w-md w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
+        @click.stop
+      >
         <div class="p-4 sm:p-6 border-b border-neutral-200 dark:border-neutral-700">
           <div class="flex items-center justify-between">
-            <h3 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100">Upgrade to Premium</h3>
-            <button @click="showUpgradeModal = false" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
-              <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <h3 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100">
+              Upgrade to Premium
+            </h3>
+            <button
+              @click="showUpgradeModal = false"
+              class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+            >
+              <svg
+                class="w-4 h-4 sm:w-5 sm:h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -375,68 +608,144 @@
 
         <div class="p-4 sm:p-6">
           <div class="text-center mb-4 sm:mb-6">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+            <div
+              class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4"
+            >
               <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
               </svg>
             </div>
-            <h4 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">Unlock Premium Features</h4>
-            <p class="text-neutral-600 dark:text-neutral-400 text-xs sm:text-sm px-2">Access exclusive Bible studies and advanced features</p>
+            <h4 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+              Unlock Premium Features
+            </h4>
+            <p class="text-neutral-600 dark:text-neutral-400 text-xs sm:text-sm px-2">
+              Access exclusive Bible studies and advanced features
+            </p>
           </div>
 
           <div class="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
             <div class="flex items-center space-x-2 sm:space-x-3">
-              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              <div
+                class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0"
+              >
+                <svg
+                  class="w-2 h-2 sm:w-3 sm:h-3 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
               </div>
-              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Access to 20+ premium Bible studies</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300"
+                >Access to 20+ premium Bible studies</span
+              >
             </div>
             <div class="flex items-center space-x-2 sm:space-x-3">
-              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              <div
+                class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0"
+              >
+                <svg
+                  class="w-2 h-2 sm:w-3 sm:h-3 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
               </div>
-              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Extended 15-25 minute lessons</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300"
+                >Extended 15-25 minute lessons</span
+              >
             </div>
             <div class="flex items-center space-x-2 sm:space-x-3">
-              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              <div
+                class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0"
+              >
+                <svg
+                  class="w-2 h-2 sm:w-3 sm:h-3 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
               </div>
-              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Video content and visual aids</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300"
+                >Video content and visual aids</span
+              >
             </div>
             <div class="flex items-center space-x-2 sm:space-x-3">
-              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              <div
+                class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0"
+              >
+                <svg
+                  class="w-2 h-2 sm:w-3 sm:h-3 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
               </div>
-              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Downloadable study guides</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300"
+                >Downloadable study guides</span
+              >
             </div>
             <div class="flex items-center space-x-2 sm:space-x-3">
-              <div class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              <div
+                class="w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0"
+              >
+                <svg
+                  class="w-2 h-2 sm:w-3 sm:h-3 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
               </div>
-              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">Priority support</span>
+              <span class="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300"
+                >Priority support</span
+              >
             </div>
           </div>
 
           <div class="text-center mb-4 sm:mb-6">
-            <div class="text-2xl sm:text-3xl font-bold text-accent-600 dark:text-accent-400 mb-1">$9.99</div>
+            <div class="text-2xl sm:text-3xl font-bold text-accent-600 dark:text-accent-400 mb-1">
+              $9.99
+            </div>
             <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">per month</div>
           </div>
 
           <div class="space-y-2 sm:space-y-3">
-            <button @click="handleUpgrade" class="w-full btn-accent text-sm sm:text-base py-2.5 sm:py-3">
+            <button
+              @click="handleUpgrade"
+              class="w-full btn-accent text-sm sm:text-base py-2.5 sm:py-3"
+            >
               Start 3-Day Free Trial
             </button>
-            <button @click="showUpgradeModal = false" class="w-full btn-secondary text-sm sm:text-base py-2.5 sm:py-3">
+            <button
+              @click="showUpgradeModal = false"
+              class="w-full btn-secondary text-sm sm:text-base py-2.5 sm:py-3"
+            >
               Maybe Later
             </button>
           </div>
@@ -482,10 +791,13 @@ const currentStudy = computed(() => {
   const allProgress = progressStore.getAllStudyProgress()
 
   Object.entries(allProgress).forEach(([studyId, progress]) => {
-    const study = allStudies.value.find(s => s.id === studyId)
+    const study = allStudies.value.find((s) => s.id === studyId)
     if (!study) return
 
-    const progressPercent = progressStore.getStudyCompletionPercentage(studyId, study.lessons.length)
+    const progressPercent = progressStore.getStudyCompletionPercentage(
+      studyId,
+      study.lessons.length,
+    )
 
     if (progressPercent > highestProgress && progressPercent < 100) {
       highestProgress = progressPercent
@@ -493,7 +805,7 @@ const currentStudy = computed(() => {
       bestStudy = {
         ...study,
         progress: progressPercent,
-        nextLesson: nextLessonIndex < study.lessons.length ? study.lessons[nextLessonIndex] : null
+        nextLesson: nextLessonIndex < study.lessons.length ? study.lessons[nextLessonIndex] : null,
       }
     }
   })
@@ -504,11 +816,14 @@ const currentStudy = computed(() => {
 const completedStudies = computed(() => {
   const allProgress = progressStore.getAllStudyProgress()
 
-  return allStudies.value.filter(study => {
+  return allStudies.value.filter((study) => {
     const progress = allProgress[study.id]
     if (!progress) return false
 
-    const completionPercent = progressStore.getStudyCompletionPercentage(study.id, study.lessons.length)
+    const completionPercent = progressStore.getStudyCompletionPercentage(
+      study.id,
+      study.lessons.length,
+    )
     return completionPercent === 100
   })
 })
@@ -520,8 +835,8 @@ const recommendedStudies = computed(() => {
 
   // Get studies not yet started, prioritizing free studies for free users
   const available = allStudies.value
-    .filter(study => !startedStudies.includes(study.id))
-    .filter(study => userPlan === 'premium' || study.category === 'free')
+    .filter((study) => !startedStudies.includes(study.id))
+    .filter((study) => userPlan === 'premium' || study.category === 'free')
     .slice(0, 4)
 
   return available
@@ -530,20 +845,25 @@ const recommendedStudies = computed(() => {
 const allStudiesWithProgress = computed(() => {
   const allProgress = progressStore.getAllStudyProgress()
 
-  return allStudies.value.map(study => {
-    const progressPercent = progressStore.getStudyCompletionPercentage(study.id, study.lessons.length)
-    return {
-      ...study,
-      progressPercent
-    }
-  }).filter(study => study.progressPercent > 0)
+  return allStudies.value
+    .map((study) => {
+      const progressPercent = progressStore.getStudyCompletionPercentage(
+        study.id,
+        study.lessons.length,
+      )
+      return {
+        ...study,
+        progressPercent,
+      }
+    })
+    .filter((study) => study.progressPercent > 0)
 })
 
 const weeklyActivity = computed(() => {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   return days.map((day, index) => ({
     day,
-    active: Math.random() > 0.3 // Mock activity data
+    active: Math.random() > 0.3, // Mock activity data
   }))
 })
 
@@ -551,7 +871,6 @@ const calculateStreak = () => {
   // Mock calculation - in real app this would come from API
   return Math.floor(Math.random() * 30) + 1
 }
-
 
 const calculateTotalMinutes = () => {
   // Calculate total minutes from completed studies
@@ -562,7 +881,7 @@ const formatDate = (dateString?: string) => {
   if (!dateString) return 'Unknown'
   return new Date(dateString).toLocaleDateString('en-US', {
     year: 'numeric',
-    month: 'long'
+    month: 'long',
   })
 }
 
@@ -584,7 +903,9 @@ const startNewStudy = () => {
 
 const handleUpgrade = () => {
   // In a real app, this would integrate with a payment processor
-  alert('Demo Mode: In a real app, this would open the payment flow to upgrade to Premium ($9.99/month, 3-day free trial). For now, you can sign in with the premium demo account: demo@biblestem.com / demo123')
+  alert(
+    'Demo Mode: In a real app, this would open the payment flow to upgrade to Premium ($9.99/month, 3-day free trial). For now, you can sign in with the premium demo account: demo@biblestem.com / demo123',
+  )
   showUpgradeModal.value = false
 }
 
