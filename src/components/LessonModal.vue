@@ -640,6 +640,7 @@
 import { ref, computed } from 'vue'
 import type { Lesson, Study } from '../data/studies'
 import ScriptureWordPopover from './ScriptureWordPopover.vue'
+import StudyNotes from './StudyNotes.vue'
 
 interface Props {
   lesson: Lesson
