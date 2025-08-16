@@ -107,9 +107,15 @@
                       ? 'bg-green-500'
                       : canAccessLesson(index)
                         ? 'bg-primary-500'
-                        : 'bg-neutral-400'"
+                        : getLessonAccessReason(index) === 'not-authenticated'
+                          ? 'bg-orange-500'
+                          : getLessonAccessReason(index) === 'premium-required'
+                            ? 'bg-accent-500'
+                            : 'bg-neutral-400'"
                   >
                     <span v-if="progressStore.isLessonCompleted(study.id, lesson.id)" class="text-lg">✓</span>
+                    <span v-else-if="getLessonAccessReason(index) === 'not-authenticated'" class="text-lg">👤</span>
+                    <span v-else-if="getLessonAccessReason(index) === 'premium-required'" class="text-lg">⭐</span>
                     <span v-else-if="!canAccessLesson(index)" class="text-lg">🔒</span>
                     <span v-else>{{ index + 1 }}</span>
                   </div>
