@@ -132,7 +132,7 @@
                 @click.stop="handleAnswer(true)"
                 class="p-3 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors font-medium"
               >
-                ��� Perfect!
+                🎯 Perfect!
               </button>
             </div>
           </div>
@@ -375,5 +375,27 @@ watch(
 
 .card-container.flipped:hover {
   transform: rotateY(180deg) scale(1.05);
+}
+
+/* Touch interactions */
+.card-container.touch-active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+.card-container.touch-active.flipped {
+  transform: rotateY(180deg) scale(0.98);
+}
+
+/* Better mobile touch target */
+@media (max-width: 768px) {
+  .card-container {
+    min-height: 280px;
+    touch-action: manipulation;
+  }
+
+  .card-face {
+    padding: 1.5rem;
+  }
 }
 </style>
