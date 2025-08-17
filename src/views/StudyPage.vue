@@ -615,9 +615,9 @@ cleanup.addWatcher(
 )
 
 const loadStudy = async (studyId: string) => {
-  try {
+  const result = await safeAsync(async () => {
     loadingStore.setLoading('study-page', true)
-    error.value = ''
+    safeSet(error, '')
 
     // Wait for auth to be ready
     if (!authStore.isInitialized) {
@@ -629,37 +629,56 @@ const loadStudy = async (studyId: string) => {
 
     // Only proceed if we have a valid study ID
     if (!studyId) {
-      error.value = 'Invalid study ID'
-      router.push('/study-series')
+      safeSet(error, 'Invalid study ID')
+      if (isMounted.value) {
+        router.push('/study-series')
+      }
       return
     }
 
     const foundStudy = getStudyById(studyId)
 
-    if (foundStudy) {
-      study.value = foundStudy
+    if (foundStudy && isMounted.value) {
+      safeSet(study, foundStudy)
       progressStore.startStudy(studyId)
 
       // Track study access
       progressStore.updateStudyAccess(studyId)
-    } else {
-      error.value = `Study "${studyId}" not found`
+    } else if (isMounted.value) {
+      safeSet(error, `Study "${studyId}" not found`)
       errorStore.addError('Study not found', { type: 'warning' })
 
       // Delay redirect to show error
-      setTimeout(() => {
-        router.push('/study-series')
+      const timeoutId = setTimeout(() => {
+        if (isMounted.value) {
+          router.push('/study-series')
+        }
       }, 2000)
+      cleanup.addTimeout(timeoutId)
     }
-  } catch (err) {
-    console.error('Error loading study:', err)
-    error.value = 'Failed to load study'
-    errorStore.handleError(err, 'Study Loading')
+  })
 
-    setTimeout(() => {
-      router.push('/study-series')
-    }, 2000)
-  } finally {
+  if (result === null && !isMounted.value) {
+    // Component was unmounted during async operation
+    return
+  }
+
+  if (result instanceof Error) {
+    console.error('Error loading study:', result)
+    safeSet(error, 'Failed to load study')
+    if (isMounted.value) {
+      errorStore.handleError(result, 'Study Loading')
+
+      const timeoutId = setTimeout(() => {
+        if (isMounted.value) {
+          router.push('/study-series')
+        }
+      }, 2000)
+      cleanup.addTimeout(timeoutId)
+    }
+  }
+
+  if (isMounted.value) {
     loadingStore.clearLoading('study-page')
   }
 }
