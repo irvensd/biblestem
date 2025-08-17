@@ -1,3 +1,12 @@
+export interface GreekHebrewWord {
+  word: string
+  language: 'Greek' | 'Hebrew' | 'Aramaic'
+  transliteration: string
+  meaning: string
+  context: string
+  references: string[]
+}
+
 export interface Lesson {
   id: string
   title: string
@@ -9,9 +18,10 @@ export interface Lesson {
     scriptureText: string
     commentary: string[]
     interactiveElement: {
-      type: 'quiz' | 'timeline' | 'reflection' | 'drag-drop' | 'tracker'
+      type: 'quiz' | 'timeline' | 'reflection' | 'drag-drop' | 'tracker' | 'diagram' | 'comparison' | 'checklist'
       content: any
     }
+    hebrewGreekWords?: GreekHebrewWord[]
     lifeApplication: {
       challenge: string
       journaling?: string
