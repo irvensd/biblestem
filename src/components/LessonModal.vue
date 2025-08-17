@@ -590,24 +590,141 @@
               v-else-if="lesson.content.interactiveElement.type === 'timeline'"
               class="space-y-6"
             >
+              <ProphecyTimeline :timeline="lesson.content.interactiveElement.content" />
+            </div>
+
+            <!-- Diagram -->
+            <div
+              v-else-if="lesson.content.interactiveElement.type === 'diagram'"
+              class="space-y-6"
+            >
               <div class="card p-6">
                 <h4 class="font-bold text-lg mb-6 text-neutral-800 dark:text-neutral-200">
-                  Timeline
+                  {{ lesson.content.interactiveElement.content.title }}
                 </h4>
+                <p v-if="lesson.content.interactiveElement.content.description" class="text-neutral-600 dark:text-neutral-400 mb-6">
+                  {{ lesson.content.interactiveElement.content.description }}
+                </p>
+
+                <!-- Interactive Diagram Elements -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div
+                    v-for="element in lesson.content.interactiveElement.content.elements"
+                    :key="element.name"
+                    class="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-600 transition-colors cursor-pointer group"
+                  >
+                    <div class="flex items-center justify-between mb-2">
+                      <h5 class="font-semibold text-neutral-900 dark:text-neutral-100">{{ element.name }}</h5>
+                      <span class="text-xs px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded">
+                        {{ element.location }}
+                      </span>
+                    </div>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">{{ element.meaning }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comparison -->
+            <div
+              v-else-if="lesson.content.interactiveElement.type === 'comparison'"
+              class="space-y-6"
+            >
+              <div class="card p-6">
+                <h4 class="font-bold text-lg mb-6 text-neutral-800 dark:text-neutral-200 text-center">
+                  {{ lesson.content.interactiveElement.content.title }}
+                </h4>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <!-- Left Side -->
+                  <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                    <h5 class="font-semibold text-green-800 dark:text-green-200 mb-3 text-center">
+                      {{ lesson.content.interactiveElement.content.leftSide.title }}
+                    </h5>
+                    <ul class="space-y-2">
+                      <li
+                        v-for="point in lesson.content.interactiveElement.content.leftSide.points"
+                        :key="point"
+                        class="flex items-start space-x-2 text-sm text-green-700 dark:text-green-300"
+                      >
+                        <svg class="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>{{ point }}</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <!-- Right Side -->
+                  <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
+                    <h5 class="font-semibold text-red-800 dark:text-red-200 mb-3 text-center">
+                      {{ lesson.content.interactiveElement.content.rightSide.title }}
+                    </h5>
+                    <ul class="space-y-2">
+                      <li
+                        v-for="point in lesson.content.interactiveElement.content.rightSide.points"
+                        :key="point"
+                        class="flex items-start space-x-2 text-sm text-red-700 dark:text-red-300"
+                      >
+                        <svg class="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        <span>{{ point }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Checklist -->
+            <div
+              v-else-if="lesson.content.interactiveElement.type === 'checklist'"
+              class="space-y-6"
+            >
+              <div class="card p-6">
+                <h4 class="font-bold text-lg mb-6 text-neutral-800 dark:text-neutral-200">
+                  {{ lesson.content.interactiveElement.content.title }}
+                </h4>
+
                 <div class="space-y-4">
                   <div
-                    v-for="event in lesson.content.interactiveElement.content.events"
-                    :key="event.event"
-                    class="flex items-center space-x-4"
+                    v-for="category in lesson.content.interactiveElement.content.categories"
+                    :key="category.name"
                   >
-                    <div class="w-3 h-3 bg-primary-500 rounded-full"></div>
-                    <div
-                      class="flex-1 border-l-2 border-neutral-200 dark:border-neutral-700 pl-4 pb-4"
-                    >
-                      <div class="font-bold text-primary-600">
-                        {{ event.year || event.day || event.period }}
+                    <h5 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3">
+                      {{ category.name }}
+                    </h5>
+                    <div class="space-y-2">
+                      <div
+                        v-for="item in category.items"
+                        :key="item.sign"
+                        class="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg"
+                      >
+                        <div class="flex items-center space-x-3">
+                          <div
+                            class="w-6 h-6 rounded-full flex items-center justify-center"
+                            :class="item.status === 'fulfilled' ? 'bg-green-500' : item.status === 'fulfilling' ? 'bg-yellow-500' : 'bg-blue-500'"
+                          >
+                            <svg v-if="item.status === 'fulfilled'" class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span v-else class="text-xs text-white font-bold">•</span>
+                          </div>
+                          <span class="text-sm text-neutral-900 dark:text-neutral-100">{{ item.sign }}</span>
+                        </div>
+                        <div class="text-right">
+                          <span class="text-xs text-neutral-600 dark:text-neutral-400">{{ item.reference }}</span>
+                          <div class="text-xs">
+                            <span
+                              class="px-2 py-1 rounded"
+                              :class="item.status === 'fulfilled' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' : item.status === 'fulfilling' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'"
+                            >
+                              {{ item.status }}
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                      <div class="text-neutral-700 dark:text-neutral-300">{{ event.event }}</div>
                     </div>
                   </div>
                 </div>
