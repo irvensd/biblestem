@@ -146,25 +146,25 @@ router.beforeEach(async (to, from, next) => {
     }
 
     // Check if route requires authentication
-    if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-      errorStore.addError('Please sign in to access this page', { type: 'info' })
+    if (to.meta.requiresAuth && !authStore?.isAuthenticated) {
+      errorStore?.addError?.('Please sign in to access this page', { type: 'info' })
       next({ name: 'signin', query: { redirect: to.fullPath } })
       return
     }
 
     // Check if route requires guest (not authenticated)
-    if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    if (to.meta.requiresGuest && authStore?.isAuthenticated) {
       next({ name: 'dashboard' })
       return
     }
 
     // Check premium access for studies
-    if (to.meta.checkPremium && to.params.id) {
+    if (to.meta.checkPremium && to.params.id && authStore) {
       const studyId = to.params.id as string
       const isPremiumStudy = await checkIfPremiumStudy(studyId)
 
       if (isPremiumStudy && !authStore.isPremium) {
-        errorStore.addError('Premium subscription required for this study', { type: 'warning' })
+        errorStore?.addError?.('Premium subscription required for this study', { type: 'warning' })
         next({ name: 'study-series', query: { premium: 'required' } })
         return
       }
@@ -174,7 +174,7 @@ router.beforeEach(async (to, from, next) => {
     if (to.name === 'study' && to.params.id) {
       const studyExists = await validateStudyExists(to.params.id as string)
       if (!studyExists) {
-        errorStore.addError('Study not found', { type: 'warning' })
+        errorStore?.addError?.('Study not found', { type: 'warning' })
         next({ name: 'study-series' })
         return
       }
@@ -183,10 +183,10 @@ router.beforeEach(async (to, from, next) => {
     next()
   } catch (error) {
     console.error('Navigation guard error:', error)
-    errorStore.handleError(error, 'Navigation')
+    errorStore?.handleError?.(error, 'Navigation')
     next({ name: 'home' })
   } finally {
-    loadingStore.clearLoading('navigation')
+    loadingStore?.clearLoading?.('navigation')
   }
 })
 
