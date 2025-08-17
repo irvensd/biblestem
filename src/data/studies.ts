@@ -1934,7 +1934,7 @@ export const premiumStudies: Study[] = [
     totalDuration: 180, // 6 lessons × 30 minutes each
     difficulty: 'intermediate',
     tags: ['sanctuary', 'prophecy', 'salvation', 'priesthood', 'judgment'],
-    image: '/images/sanctuary.jpg',
+    image: 'sanctuary',
     color: 'from-purple-500 to-indigo-600',
     features: [
       'Greek/Hebrew word studies',
