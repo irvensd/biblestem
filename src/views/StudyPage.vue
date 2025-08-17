@@ -278,35 +278,7 @@
       @upgrade="handleUpgrade"
     />
 
-    <!-- Loading State - TEMPORARILY DISABLED -->
-    <!--
-    <div v-else-if="isLoading" class="min-h-screen flex items-center justify-center">
-      <div class="text-center">
-        <div
-          class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse"
-        >
-          <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <p class="text-neutral-600 dark:text-neutral-400">DEBUGGING: Study is loading...</p>
-      </div>
-    </div>
-    -->
-
-    <!-- Study Not Found State -->
-    <div v-else class="min-h-screen flex items-center justify-center">
-      <div class="text-center">
-        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-          </svg>
-        </div>
-        <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Study Not Found</h2>
-        <p class="text-neutral-600 dark:text-neutral-400 mb-4">The requested study could not be found.</p>
-        <router-link to="/study-series" class="btn-primary">Back to Study Series</router-link>
-      </div>
-    </div>
+    <!-- No loading state - removed completely -->
   </div>
 </template>
 
