@@ -2124,7 +2124,7 @@ export const premiumStudies: Study[] = [
     totalDuration: 150, // 5 lessons × 30 minutes each
     difficulty: 'intermediate',
     tags: ['angels', 'messages', 'judgment', 'Babylon', 'mark-of-beast', 'remnant'],
-    image: '/images/three-angels.jpg',
+    image: 'three-angels',
     color: 'from-blue-500 to-cyan-600',
     features: [
       'Interactive message breakdown',
