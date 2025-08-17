@@ -1,5 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { supabase, type Database } from '@/lib/supabase'
+import type { User as SupabaseUser } from '@supabase/supabase-js'
 
 export interface User {
   id: string
@@ -125,12 +127,15 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const supabaseLogin = async (email: string, password: string) => {
-    // TODO: Implement Supabase authentication
-    // const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    // if (error) throw error
-    // user.value = transformSupabaseUser(data.user)
-    // return { success: true }
-    throw new Error('Supabase authentication not yet implemented')
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) throw error
+
+    if (data.user) {
+      user.value = await transformSupabaseUser(data.user)
+      return { success: true }
+    }
+
+    throw new Error('Login failed: No user data returned')
   }
 
   const signUp = async (
@@ -183,8 +188,24 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const supabaseSignUp = async (email: string, password: string, name: string) => {
-    // TODO: Implement Supabase sign up
-    throw new Error('Supabase sign up not yet implemented')
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name: name
+        }
+      }
+    })
+
+    if (error) throw error
+
+    if (data.user) {
+      user.value = await transformSupabaseUser(data.user)
+      return { success: true }
+    }
+
+    throw new Error('Sign up failed: No user data returned')
   }
 
   const logout = async () => {
@@ -212,8 +233,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const supabaseLogout = async () => {
-    // TODO: Implement Supabase logout
-    // await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut()
+    if (error) throw error
   }
 
   const refreshSession = async () => {
@@ -224,9 +245,11 @@ export const useAuthStore = defineStore('auth', () => {
         // Mock session is always valid
         return
       } else {
-        // TODO: Implement Supabase session refresh
-        // const { data, error } = await supabase.auth.refreshSession()
-        // if (error) throw error
+        const { data, error } = await supabase.auth.refreshSession()
+        if (error) throw error
+        if (data.user) {
+          user.value = await transformSupabaseUser(data.user)
+        }
       }
     } catch (err) {
       console.error('Session refresh failed:', err)
@@ -269,11 +292,19 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const initializeSupabaseAuth = async () => {
-    // TODO: Implement Supabase auth initialization
-    // const { data: { session } } = await supabase.auth.getSession()
-    // if (session?.user) {
-    //   user.value = transformSupabaseUser(session.user)
-    // }
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session?.user) {
+      user.value = await transformSupabaseUser(session.user)
+    }
+
+    // Listen for auth changes
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        user.value = await transformSupabaseUser(session.user)
+      } else if (event === 'SIGNED_OUT') {
+        user.value = null
+      }
+    })
   }
 
   const saveUserToStorage = (userData: User) => {
@@ -322,8 +353,37 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const supabaseUpdateProfile = async (updates: Partial<User>) => {
-    // TODO: Implement Supabase profile update
-    throw new Error('Supabase profile update not yet implemented')
+    if (!user.value) throw new Error('User not authenticated')
+
+    // Update auth metadata if name or email changed
+    if (updates.name || updates.email) {
+      const authUpdates: any = {}
+      if (updates.email) authUpdates.email = updates.email
+      if (updates.name) authUpdates.data = { name: updates.name }
+
+      const { error: authError } = await supabase.auth.updateUser(authUpdates)
+      if (authError) throw authError
+    }
+
+    // Update profile table
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({
+        name: updates.name,
+        bio: updates.bio,
+        avatar_url: updates.avatar,
+        plan: updates.plan,
+        studies_completed: updates.studiesCompleted
+      })
+      .eq('id', user.value.id)
+      .select()
+      .single()
+
+    if (error) throw error
+
+    // Update local user state
+    user.value = { ...user.value, ...updates }
+    return { success: true }
   }
 
   return {
