@@ -540,17 +540,49 @@ const handleUpgrade = () => {
   )
 }
 
-onMounted(async () => {
-  try {
-    // Initialize stores
-    authStore.initializeAuth()
-    progressStore.loadFromStorage()
+// Keyboard navigation
+const handleKeyboard = (event: KeyboardEvent) => {
+  if (!currentLesson.value) return
 
-    const studyId = route.params.id as string
+  if (event.key === 'Escape') {
+    closeLesson()
+  } else if (event.key === 'ArrowRight' && event.ctrlKey) {
+    nextLessonInModal()
+  } else if (event.key === 'ArrowLeft' && event.ctrlKey) {
+    // Previous lesson logic
+    if (currentLessonIndex.value > 0) {
+      const prevIndex = currentLessonIndex.value - 1
+      const prevLesson = study.value?.lessons[prevIndex]
+      if (prevLesson && canAccessLesson(prevIndex)) {
+        openLesson(prevLesson, prevIndex)
+      }
+    }
+  }
+}
+
+// Route parameter watcher
+watch(() => route.params.id, async (newStudyId) => {
+  if (newStudyId && newStudyId !== study.value?.id) {
+    await loadStudy(newStudyId as string)
+  }
+})
+
+const loadStudy = async (studyId: string) => {
+  try {
+    loadingStore.setLoading('study-page', true)
+    error.value = ''
+
+    // Wait for auth to be ready
+    if (!authStore.isInitialized) {
+      await authStore.initializeAuth()
+    }
+
+    // Load progress data
+    progressStore.loadFromStorage()
 
     // Only proceed if we have a valid study ID
     if (!studyId) {
-      isLoading.value = false
+      error.value = 'Invalid study ID'
       router.push('/study-series')
       return
     }
@@ -560,22 +592,45 @@ onMounted(async () => {
     if (foundStudy) {
       study.value = foundStudy
       progressStore.startStudy(studyId)
-      isLoading.value = false
+
+      // Track study access
+      progressStore.updateStudyAccess(studyId)
     } else {
-      // Log the error for debugging and redirect
-      console.warn('Study not found:', studyId)
-      isLoading.value = false
-      // Don't redirect immediately, let user see the "not found" state
+      error.value = `Study "${studyId}" not found`
+      errorStore.addError('Study not found', { type: 'warning' })
+
+      // Delay redirect to show error
       setTimeout(() => {
         router.push('/study-series')
       }, 2000)
     }
-  } catch (error) {
-    console.error('Error loading study:', error)
-    isLoading.value = false
+  } catch (err) {
+    console.error('Error loading study:', err)
+    error.value = 'Failed to load study'
+    errorStore.handleError(err, 'Study Loading')
+
     setTimeout(() => {
       router.push('/study-series')
     }, 2000)
+  } finally {
+    loadingStore.clearLoading('study-page')
   }
+}
+
+onMounted(async () => {
+  const studyId = route.params.id as string
+  if (studyId) {
+    await loadStudy(studyId)
+  }
+
+  // Add keyboard navigation
+  document.addEventListener('keydown', handleKeyboard)
+})
+
+onUnmounted(() => {
+  // Cleanup
+  document.removeEventListener('keydown', handleKeyboard)
+  loadingStore.clearAllLoading()
+  closeLesson()
 })
 </script>
