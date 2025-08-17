@@ -1149,6 +1149,7 @@ import type { Lesson, Study } from '../data/studies'
 import ScriptureWordPopover from './ScriptureWordPopover.vue'
 import ProphecyTimeline from './ProphecyTimeline.vue'
 import PDFWorkbook from './PDFWorkbook.vue'
+import JournalingTemplates from './JournalingTemplates.vue'
 import StudyNotes from './StudyNotes.vue'
 
 interface Props {
