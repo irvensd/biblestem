@@ -722,45 +722,193 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
 
   const initializeDefaultDecks = () => {
     const defaultDecks: MemoryDeck[] = [
+      // BEGINNER DECKS
       {
-        id: 'bible-study-basics',
-        title: 'Bible Study Basics',
-        description: 'Key verses about studying God\'s Word',
-        category: 'Bible Study',
-        cardIds: ['psalm-119-18', '1cor-13-11', 'psalm-86-11', 'john-7-17'],
+        id: 'first-verses',
+        title: 'My First Verses',
+        description: 'Perfect starting verses for new memorizers',
+        category: 'Beginner',
+        cardIds: ['jesus-wept', 'god-is-love', '1thessalonians-5-17', 'psalm-118-24', 'psalm-23-1', 'philippians-4-13'],
         isDefault: true,
-        color: 'from-emerald-500 to-emerald-600',
-        icon: '📖'
+        color: 'from-green-400 to-emerald-500',
+        icon: '🌱'
       },
       {
-        id: 'essential-verses',
-        title: 'Essential Verses',
-        description: 'Must-know Bible verses for every Christian',
-        category: 'Foundation',
-        cardIds: ['john-3-16', 'romans-8-28', 'philippians-4-13', 'psalm-23-1'],
+        id: 'children-favorites',
+        title: 'Children\'s Favorites',
+        description: 'Simple, powerful verses kids love to memorize',
+        category: 'Children',
+        cardIds: ['jesus-wept', 'be-kind', 'god-is-love', 'children-obey', 'psalm-150-6'],
         isDefault: true,
-        color: 'from-blue-500 to-blue-600',
-        icon: '⭐'
+        color: 'from-yellow-400 to-orange-400',
+        icon: '👶'
+      },
+
+      // CORE CHRISTIAN DOCTRINES
+      {
+        id: 'salvation-essentials',
+        title: 'Salvation Essentials',
+        description: 'Core verses about salvation and God\'s love',
+        category: 'Salvation',
+        cardIds: ['john-3-16', 'romans-6-23', 'ephesians-2-8-9', 'romans-10-9', '1john-4-8', 'romans-3-23'],
+        isDefault: true,
+        color: 'from-red-500 to-pink-500',
+        icon: '✝️'
       },
       {
-        id: 'comfort-promises',
-        title: 'Comfort & Promises',
-        description: 'Verses for difficult times and God\'s promises',
+        id: 'forgiveness-grace',
+        title: 'Forgiveness & Grace',
+        description: 'Understanding God\'s forgiveness and grace',
+        category: 'Forgiveness',
+        cardIds: ['1john-1-9', 'romans-3-23', 'psalm-103-12', 'ephesians-2-8-9'],
+        isDefault: true,
+        color: 'from-blue-400 to-indigo-500',
+        icon: '🕊️'
+      },
+      {
+        id: 'faith-trust',
+        title: 'Faith & Trust',
+        description: 'Building and understanding faith',
+        category: 'Faith',
+        cardIds: ['hebrews-11-1', 'romans-10-17', 'ephesians-2-10', 'proverbs-3-5-6'],
+        isDefault: true,
+        color: 'from-indigo-500 to-purple-500',
+        icon: '🙏'
+      },
+
+      // COMFORT & ENCOURAGEMENT
+      {
+        id: 'comfort-peace',
+        title: 'Comfort & Peace',
+        description: 'Verses for difficult times and anxiety',
         category: 'Comfort',
-        cardIds: ['romans-8-28', 'psalm-23-1', 'jeremiah-29-11', 'isaiah-41-10'],
+        cardIds: ['psalm-23-1', 'psalm-23-4', 'isaiah-41-10', 'john-14-27', 'romans-8-28', 'matthew-11-28'],
         isDefault: true,
-        color: 'from-teal-500 to-teal-600',
+        color: 'from-teal-400 to-cyan-500',
         icon: '🤗'
+      },
+      {
+        id: 'strength-courage',
+        title: 'Strength & Courage',
+        description: 'Verses for when you need God\'s strength',
+        category: 'Strength',
+        cardIds: ['philippians-4-13', 'joshua-1-9', '2timothy-1-7', 'isaiah-40-31'],
+        isDefault: true,
+        color: 'from-orange-500 to-red-500',
+        icon: '💪'
+      },
+      {
+        id: 'hope-future',
+        title: 'Hope & Future',
+        description: 'Verses about eternal hope and God\'s promises',
+        category: 'Hope',
+        cardIds: ['jeremiah-29-11', 'romans-8-18', 'revelation-21-4', '1peter-1-3'],
+        isDefault: true,
+        color: 'from-purple-400 to-pink-400',
+        icon: '🌅'
+      },
+
+      // SPIRITUAL GROWTH
+      {
+        id: 'prayer-worship',
+        title: 'Prayer & Worship',
+        description: 'Verses about communicating with God',
+        category: 'Prayer',
+        cardIds: ['psalm-119-18', 'philippians-4-6-7', '1thessalonians-5-17', 'psalm-100-4'],
+        isDefault: true,
+        color: 'from-violet-500 to-purple-600',
+        icon: '🙌'
+      },
+      {
+        id: 'bible-study-growth',
+        title: 'Bible Study & Growth',
+        description: 'Verses about studying God\'s Word',
+        category: 'Bible Study',
+        cardIds: ['psalm-119-18', '2timothy-3-16', 'hebrews-4-12', 'psalm-1-2-3', 'psalm-119-105'],
+        isDefault: true,
+        color: 'from-emerald-500 to-teal-600',
+        icon: '📖'
       },
       {
         id: 'guidance-wisdom',
         title: 'Guidance & Wisdom',
         description: 'Verses about seeking God\'s direction',
         category: 'Guidance',
-        cardIds: ['proverbs-3-5-6', 'psalm-86-11', 'matthew-6-33'],
+        cardIds: ['proverbs-3-5-6', 'psalm-119-105', 'james-1-5', 'jeremiah-29-11'],
         isDefault: true,
-        color: 'from-purple-500 to-purple-600',
+        color: 'from-amber-500 to-orange-600',
         icon: '🧭'
+      },
+
+      // CHRISTIAN LIVING
+      {
+        id: 'love-relationships',
+        title: 'Love & Relationships',
+        description: 'Verses about loving God and others',
+        category: 'Love',
+        cardIds: ['1john-4-19', 'john-13-35', 'ephesians-4-32', '1corinthians-13-4-5'],
+        isDefault: true,
+        color: 'from-pink-500 to-rose-500',
+        icon: '❤️'
+      },
+      {
+        id: 'christian-priorities',
+        title: 'Christian Priorities',
+        description: 'Verses about living for Christ',
+        category: 'Priorities',
+        cardIds: ['matthew-6-33', 'galatians-2-20', 'romans-12-1', '1corinthians-10-31'],
+        isDefault: true,
+        color: 'from-slate-500 to-gray-600',
+        icon: '🎯'
+      },
+      {
+        id: 'obedience-discipleship',
+        title: 'Obedience & Discipleship',
+        description: 'Verses about following Jesus daily',
+        category: 'Obedience',
+        cardIds: ['john-7-17', 'luke-9-23', 'james-1-22'],
+        isDefault: true,
+        color: 'from-stone-500 to-neutral-600',
+        icon: '🚶'
+      },
+
+      // JOY & CELEBRATION
+      {
+        id: 'joy-praise',
+        title: 'Joy & Praise',
+        description: 'Verses to lift your spirit and praise God',
+        category: 'Joy',
+        cardIds: ['nehemiah-8-10', 'psalm-118-24', 'psalm-150-6'],
+        isDefault: true,
+        color: 'from-yellow-500 to-amber-500',
+        icon: '🎉'
+      },
+
+      // COMPREHENSIVE COLLECTIONS
+      {
+        id: 'top-50-verses',
+        title: 'Top 50 Bible Verses',
+        description: 'The most beloved and quoted verses',
+        category: 'Popular',
+        cardIds: [
+          'john-3-16', 'psalm-23-1', 'philippians-4-13', 'jeremiah-29-11', 'romans-8-28',
+          'proverbs-3-5-6', 'isaiah-41-10', 'matthew-6-33', 'ephesians-2-8-9', 'john-14-27',
+          'romans-6-23', 'psalm-119-105', 'hebrews-11-1', 'philippians-4-6-7', '1john-4-8',
+          'matthew-11-28', 'joshua-1-9', '2timothy-3-16', 'romans-10-9', 'james-1-5'
+        ],
+        isDefault: true,
+        color: 'from-gradient-to-r from-blue-600 to-purple-600',
+        icon: '⭐'
+      },
+      {
+        id: 'short-powerful',
+        title: 'Short & Powerful',
+        description: 'Impactful verses that are easy to memorize',
+        category: 'Quick',
+        cardIds: ['jesus-wept', 'god-is-love', '1thessalonians-5-17', 'psalm-150-6', 'be-kind', 'psalm-118-24'],
+        isDefault: true,
+        color: 'from-lime-400 to-emerald-500',
+        icon: '⚡'
       }
     ]
 
