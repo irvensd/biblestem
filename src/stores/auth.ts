@@ -188,6 +188,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const supabaseSignUp = async (email: string, password: string, name: string) => {
+    console.log('Attempting Supabase signup for:', email)
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -198,11 +200,33 @@ export const useAuthStore = defineStore('auth', () => {
       }
     })
 
-    if (error) throw error
+    if (error) {
+      console.error('Supabase signup error:', error)
+      throw error
+    }
+
+    console.log('Supabase signup response:', data)
 
     if (data.user) {
-      user.value = await transformSupabaseUser(data.user)
-      return { success: true }
+      try {
+        user.value = await transformSupabaseUser(data.user)
+        console.log('User successfully transformed and set:', user.value)
+        return { success: true }
+      } catch (transformError) {
+        console.error('Error transforming user:', transformError)
+        // Fallback: create basic user object
+        user.value = {
+          id: data.user.id,
+          name: name,
+          email: email,
+          plan: 'free',
+          studiesCompleted: 0,
+          joinDate: new Date().toISOString(),
+          createdAt: data.user.created_at,
+          emailVerified: data.user.email_confirmed_at ? true : false
+        }
+        return { success: true }
+      }
     }
 
     throw new Error('Sign up failed: No user data returned')
