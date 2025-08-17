@@ -293,6 +293,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useMemoryCardsStore } from '../stores/memoryCards'
+import { useSafeState } from '../composables/useCleanup'
 import type { MemoryCard, MemoryDeck } from '../stores/memoryCards'
 import StudyFlashcard from './StudyFlashcard.vue'
 
