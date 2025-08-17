@@ -76,33 +76,115 @@ export const useAuthStore = defineStore('auth', () => {
     },
   ]
 
+  const clearError = () => {
+    error.value = null
+  }
+
+  const setError = (message: string, code?: string) => {
+    error.value = { message, code }
+  }
+
   const login = async (
     email: string,
     password: string,
   ): Promise<{ success: boolean; error?: string }> => {
     isLoading.value = true
+    clearError()
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // Demo login logic
-      if (email === 'demo@biblestem.com' && password === 'demo123') {
-        user.value = demoUsers[0]
-        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
-        return { success: true }
-      } else if (email === 'free@biblestem.com' && password === 'free123') {
-        user.value = demoUsers[1]
-        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
-        return { success: true }
+      if (config.value.useMockAuth) {
+        return await mockLogin(email, password)
       } else {
-        return { success: false, error: 'Invalid email or password' }
+        return await supabaseLogin(email, password)
       }
-    } catch (error) {
-      return { success: false, error: 'Login failed. Please try again.' }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Login failed. Please try again.'
+      setError(errorMessage)
+      return { success: false, error: errorMessage }
     } finally {
       isLoading.value = false
     }
+  }
+
+  const mockLogin = async (email: string, password: string) => {
+    // Simulate API call delay
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    // Demo login logic
+    if (email === 'demo@biblestem.com' && password === 'demo123') {
+      user.value = demoUsers[0]
+      saveUserToStorage(user.value)
+      return { success: true }
+    } else if (email === 'free@biblestem.com' && password === 'free123') {
+      user.value = demoUsers[1]
+      saveUserToStorage(user.value)
+      return { success: true }
+    } else {
+      return { success: false, error: 'Invalid email or password' }
+    }
+  }
+
+  const supabaseLogin = async (email: string, password: string) => {
+    // TODO: Implement Supabase authentication
+    // const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    // if (error) throw error
+    // user.value = transformSupabaseUser(data.user)
+    // return { success: true }
+    throw new Error('Supabase authentication not yet implemented')
+  }
+
+  const signUp = async (
+    email: string,
+    password: string,
+    name: string
+  ): Promise<{ success: boolean; error?: string }> => {
+    isLoading.value = true
+    clearError()
+
+    try {
+      if (config.value.useMockAuth) {
+        return await mockSignUp(email, password, name)
+      } else {
+        return await supabaseSignUp(email, password, name)
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Sign up failed. Please try again.'
+      setError(errorMessage)
+      return { success: false, error: errorMessage }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const mockSignUp = async (email: string, password: string, name: string) => {
+    // Simulate API call delay
+    await new Promise((resolve) => setTimeout(resolve, 1200))
+
+    // Check if user already exists
+    if (email === 'demo@biblestem.com' || email === 'free@biblestem.com') {
+      return { success: false, error: 'An account with this email already exists' }
+    }
+
+    // Create new mock user
+    const newUser: User = {
+      id: Date.now().toString(),
+      name,
+      email,
+      plan: 'free',
+      studiesCompleted: 0,
+      joinDate: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      emailVerified: true
+    }
+
+    user.value = newUser
+    saveUserToStorage(newUser)
+    return { success: true }
+  }
+
+  const supabaseSignUp = async (email: string, password: string, name: string) => {
+    // TODO: Implement Supabase sign up
+    throw new Error('Supabase sign up not yet implemented')
   }
 
   const logout = () => {
