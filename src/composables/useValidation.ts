@@ -31,7 +31,7 @@ export const validationRules = {
       if (typeof value === 'string') return value.trim().length > 0
       return value !== null && value !== undefined && value !== ''
     },
-    message
+    message,
   }),
 
   email: (message = 'Please enter a valid email address'): ValidationRule => ({
@@ -40,7 +40,7 @@ export const validationRules = {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       return emailRegex.test(value)
     },
-    message
+    message,
   }),
 
   minLength: (min: number, message?: string): ValidationRule => ({
@@ -48,7 +48,7 @@ export const validationRules = {
       if (!value) return true
       return value.length >= min
     },
-    message: message || `Must be at least ${min} characters`
+    message: message || `Must be at least ${min} characters`,
   }),
 
   maxLength: (max: number, message?: string): ValidationRule => ({
@@ -56,26 +56,28 @@ export const validationRules = {
       if (!value) return true
       return value.length <= max
     },
-    message: message || `Must be no more than ${max} characters`
+    message: message || `Must be no more than ${max} characters`,
   }),
 
-  password: (message = 'Password must be at least 8 characters with uppercase, lowercase, and number'): ValidationRule => ({
+  password: (
+    message = 'Password must be at least 8 characters with uppercase, lowercase, and number',
+  ): ValidationRule => ({
     test: (value) => {
       if (!value) return true
-      return value.length >= 8 && 
-             /[a-z]/.test(value) && 
-             /[A-Z]/.test(value) && 
-             /\d/.test(value)
+      return value.length >= 8 && /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value)
     },
-    message
+    message,
   }),
 
-  confirmPassword: (passwordRef: Ref<string>, message = 'Passwords do not match'): ValidationRule => ({
+  confirmPassword: (
+    passwordRef: Ref<string>,
+    message = 'Passwords do not match',
+  ): ValidationRule => ({
     test: (value) => {
       if (!value || !passwordRef.value) return true
       return value === passwordRef.value
     },
-    message
+    message,
   }),
 
   pattern: (regex: RegExp, message: string): ValidationRule => ({
@@ -83,60 +85,63 @@ export const validationRules = {
       if (!value) return true
       return regex.test(value)
     },
-    message
+    message,
   }),
 
   custom: (testFn: (value: any) => boolean, message: string): ValidationRule => ({
     test: testFn,
-    message
-  })
+    message,
+  }),
 }
 
-export function useFieldValidation(initialValue: any = '', rules: ValidationRule[] = []): FieldValidation {
+export function useFieldValidation(
+  initialValue: any = '',
+  rules: ValidationRule[] = [],
+): FieldValidation {
   const value = ref(initialValue)
   const error = ref('')
-  
+
   const isValid = computed(() => !error.value)
-  
+
   const validate = (): boolean => {
     error.value = ''
-    
+
     for (const rule of rules) {
       if (!rule.test(value.value)) {
         error.value = rule.message
         return false
       }
     }
-    
+
     return true
   }
-  
+
   const clear = () => {
     error.value = ''
   }
-  
+
   return {
     value,
     rules,
     error,
     isValid,
     validate,
-    clear
+    clear,
   }
 }
 
 export function useFormValidation(fields: Record<string, ValidationRule[]>): FormValidation {
   const fieldValidations: Record<string, FieldValidation> = {}
-  
+
   // Create field validations
   for (const [fieldName, rules] of Object.entries(fields)) {
     fieldValidations[fieldName] = useFieldValidation('', rules)
   }
-  
+
   const isValid = computed(() => {
-    return Object.values(fieldValidations).every(field => field.isValid.value)
+    return Object.values(fieldValidations).every((field) => field.isValid.value)
   })
-  
+
   const errors = computed(() => {
     const errorMap: Record<string, string> = {}
     for (const [fieldName, field] of Object.entries(fieldValidations)) {
@@ -146,20 +151,20 @@ export function useFormValidation(fields: Record<string, ValidationRule[]>): For
     }
     return errorMap
   })
-  
+
   const validate = (): boolean => {
     let allValid = true
-    
+
     for (const field of Object.values(fieldValidations)) {
       const fieldValid = field.validate()
       if (!fieldValid) {
         allValid = false
       }
     }
-    
+
     return allValid
   }
-  
+
   const validateField = (fieldName: string): boolean => {
     const field = fieldValidations[fieldName]
     if (field) {
@@ -167,20 +172,20 @@ export function useFormValidation(fields: Record<string, ValidationRule[]>): For
     }
     return true
   }
-  
+
   const clear = () => {
     for (const field of Object.values(fieldValidations)) {
       field.clear()
     }
   }
-  
+
   const clearField = (fieldName: string) => {
     const field = fieldValidations[fieldName]
     if (field) {
       field.clear()
     }
   }
-  
+
   return {
     fields: fieldValidations,
     isValid,
@@ -188,25 +193,25 @@ export function useFormValidation(fields: Record<string, ValidationRule[]>): For
     validate,
     validateField,
     clear,
-    clearField
+    clearField,
   }
 }
 
 // Utility function for real-time validation
 export function useRealtimeValidation(fieldValidation: FieldValidation, delay = 500) {
   let timeoutId: ReturnType<typeof setTimeout> | null = null
-  
+
   const validateWithDelay = () => {
     if (timeoutId) {
       clearTimeout(timeoutId)
     }
-    
+
     timeoutId = setTimeout(() => {
       fieldValidation.validate()
     }, delay)
   }
-  
+
   return {
-    validateWithDelay
+    validateWithDelay,
   }
 }

@@ -184,7 +184,7 @@ async function checkIfPremiumStudy(studyId: string): Promise<boolean> {
     // Import dynamically to avoid circular dependencies
     const { getPremiumStudies } = await import('../data/studies')
     const premiumStudies = getPremiumStudies()
-    return premiumStudies.some(study => study.id === studyId)
+    return premiumStudies.some((study) => study.id === studyId)
   } catch {
     return false
   }

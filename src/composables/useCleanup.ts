@@ -9,12 +9,14 @@ export function useCleanup() {
   const watchers = ref<WatchStopHandle[]>([])
   const intervals = ref<ReturnType<typeof setInterval>[]>([])
   const timeouts = ref<ReturnType<typeof setTimeout>[]>([])
-  const eventListeners = ref<{
-    target: EventTarget
-    event: string
-    handler: EventListener
-    options?: boolean | AddEventListenerOptions
-  }[]>([])
+  const eventListeners = ref<
+    {
+      target: EventTarget
+      event: string
+      handler: EventListener
+      options?: boolean | AddEventListenerOptions
+    }[]
+  >([])
 
   // Add a generic cleanup function
   const addCleanup = (fn: CleanupFunction) => {
@@ -44,7 +46,7 @@ export function useCleanup() {
     target: EventTarget,
     event: string,
     handler: EventListener,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ) => {
     target.addEventListener(event, handler, options)
     eventListeners.value.push({ target, event, handler, options })
@@ -59,7 +61,7 @@ export function useCleanup() {
         console.error('Watcher error:', error)
       }
     }, options)
-    
+
     addWatcher(stopHandle)
     return stopHandle
   }
@@ -73,7 +75,7 @@ export function useCleanup() {
         console.error('Interval error:', error)
       }
     }, delay)
-    
+
     addInterval(intervalId)
     return intervalId
   }
@@ -87,7 +89,7 @@ export function useCleanup() {
         console.error('Timeout error:', error)
       }
     }, delay)
-    
+
     addTimeout(timeoutId)
     return timeoutId
   }
@@ -95,7 +97,7 @@ export function useCleanup() {
   // Cleanup all resources
   const cleanup = () => {
     // Stop all watchers
-    watchers.value.forEach(stopHandle => {
+    watchers.value.forEach((stopHandle) => {
       try {
         stopHandle()
       } catch (error) {
@@ -105,7 +107,7 @@ export function useCleanup() {
     watchers.value = []
 
     // Clear all intervals
-    intervals.value.forEach(intervalId => {
+    intervals.value.forEach((intervalId) => {
       try {
         clearInterval(intervalId)
       } catch (error) {
@@ -115,7 +117,7 @@ export function useCleanup() {
     intervals.value = []
 
     // Clear all timeouts
-    timeouts.value.forEach(timeoutId => {
+    timeouts.value.forEach((timeoutId) => {
       try {
         clearTimeout(timeoutId)
       } catch (error) {
@@ -135,7 +137,7 @@ export function useCleanup() {
     eventListeners.value = []
 
     // Execute all cleanup functions
-    cleanupFunctions.value.forEach(fn => {
+    cleanupFunctions.value.forEach((fn) => {
       try {
         fn()
       } catch (error) {
@@ -157,7 +159,7 @@ export function useCleanup() {
     safeWatch,
     safeInterval,
     safeTimeout,
-    cleanup
+    cleanup,
   }
 }
 
@@ -165,7 +167,11 @@ export function useCleanup() {
 export function useDOMEvents() {
   const cleanup = useCleanup()
 
-  const onClick = (element: HTMLElement | Window | Document, handler: EventListener, options?: boolean | AddEventListenerOptions) => {
+  const onClick = (
+    element: HTMLElement | Window | Document,
+    handler: EventListener,
+    options?: boolean | AddEventListenerOptions,
+  ) => {
     cleanup.addEventListener(element, 'click', handler, options)
   }
 
@@ -173,15 +179,27 @@ export function useDOMEvents() {
     cleanup.addEventListener(window, 'resize', handler, options)
   }
 
-  const onScroll = (element: HTMLElement | Window | Document, handler: EventListener, options?: boolean | AddEventListenerOptions) => {
+  const onScroll = (
+    element: HTMLElement | Window | Document,
+    handler: EventListener,
+    options?: boolean | AddEventListenerOptions,
+  ) => {
     cleanup.addEventListener(element, 'scroll', handler, options)
   }
 
-  const onKeydown = (element: HTMLElement | Window | Document, handler: EventListener, options?: boolean | AddEventListenerOptions) => {
+  const onKeydown = (
+    element: HTMLElement | Window | Document,
+    handler: EventListener,
+    options?: boolean | AddEventListenerOptions,
+  ) => {
     cleanup.addEventListener(element, 'keydown', handler, options)
   }
 
-  const onKeyup = (element: HTMLElement | Window | Document, handler: EventListener, options?: boolean | AddEventListenerOptions) => {
+  const onKeyup = (
+    element: HTMLElement | Window | Document,
+    handler: EventListener,
+    options?: boolean | AddEventListenerOptions,
+  ) => {
     cleanup.addEventListener(element, 'keyup', handler, options)
   }
 
@@ -191,7 +209,7 @@ export function useDOMEvents() {
     onScroll,
     onKeydown,
     onKeyup,
-    cleanup: cleanup.cleanup
+    cleanup: cleanup.cleanup,
   }
 }
 
@@ -228,6 +246,6 @@ export function useSafeState() {
     isMounted,
     safeSet,
     safeAsync,
-    cleanup: cleanup.cleanup
+    cleanup: cleanup.cleanup,
   }
 }

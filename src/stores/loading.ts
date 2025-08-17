@@ -9,7 +9,7 @@ export const useLoadingStore = defineStore('loading', () => {
   const loadingStates = ref<LoadingState>({})
 
   const isLoading = computed(() => {
-    return Object.values(loadingStates.value).some(state => state)
+    return Object.values(loadingStates.value).some((state) => state)
   })
 
   const isLoadingKey = (key: string) => {
@@ -33,10 +33,7 @@ export const useLoadingStore = defineStore('loading', () => {
   }
 
   // Helper function for wrapping async operations
-  const withLoading = async <T>(
-    key: string,
-    operation: () => Promise<T>
-  ): Promise<T> => {
+  const withLoading = async <T>(key: string, operation: () => Promise<T>): Promise<T> => {
     setLoading(key, true)
     try {
       const result = await operation()
@@ -53,6 +50,6 @@ export const useLoadingStore = defineStore('loading', () => {
     setLoading,
     clearLoading,
     clearAllLoading,
-    withLoading
+    withLoading,
   }
 })

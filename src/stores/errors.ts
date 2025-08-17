@@ -21,7 +21,7 @@ export const useErrorStore = defineStore('errors', () => {
       details?: any
       type?: 'error' | 'warning' | 'info'
       persistent?: boolean
-    } = {}
+    } = {},
   ) => {
     const error: AppError = {
       id: Date.now().toString() + Math.random(),
@@ -30,7 +30,7 @@ export const useErrorStore = defineStore('errors', () => {
       details: options.details,
       timestamp: new Date().toISOString(),
       type: options.type || 'error',
-      persistent: options.persistent || false
+      persistent: options.persistent || false,
     }
 
     errors.value.push(error)
@@ -46,7 +46,7 @@ export const useErrorStore = defineStore('errors', () => {
   }
 
   const removeError = (id: string) => {
-    const index = errors.value.findIndex(error => error.id === id)
+    const index = errors.value.findIndex((error) => error.id === id)
     if (index !== -1) {
       errors.value.splice(index, 1)
     }
@@ -57,7 +57,7 @@ export const useErrorStore = defineStore('errors', () => {
   }
 
   const clearErrorsByType = (type: 'error' | 'warning' | 'info') => {
-    errors.value = errors.value.filter(error => error.type !== type)
+    errors.value = errors.value.filter((error) => error.type !== type)
   }
 
   // Helper functions for different error types
@@ -70,10 +70,10 @@ export const useErrorStore = defineStore('errors', () => {
   }
 
   const addValidationError = (message: string, field?: string) => {
-    return addError(message, { 
-      code: 'VALIDATION_ERROR', 
+    return addError(message, {
+      code: 'VALIDATION_ERROR',
       type: 'warning',
-      details: { field }
+      details: { field },
     })
   }
 
@@ -81,7 +81,7 @@ export const useErrorStore = defineStore('errors', () => {
     return addError(message, {
       code: 'API_ERROR',
       type: 'error',
-      details: { status }
+      details: { status },
     })
   }
 
@@ -128,6 +128,6 @@ export const useErrorStore = defineStore('errors', () => {
     addAuthError,
     addValidationError,
     addApiError,
-    handleError
+    handleError,
   }
 })

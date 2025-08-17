@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
   const config = ref<AuthConfig>({
     useMockAuth: true, // Set to false when ready for Supabase
     supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
-    supabaseKey: import.meta.env.VITE_SUPABASE_ANON_KEY
+    supabaseKey: import.meta.env.VITE_SUPABASE_ANON_KEY,
   })
 
   const isAuthenticated = computed(() => !!user.value)
@@ -136,7 +136,7 @@ export const useAuthStore = defineStore('auth', () => {
   const signUp = async (
     email: string,
     password: string,
-    name: string
+    name: string,
   ): Promise<{ success: boolean; error?: string }> => {
     isLoading.value = true
     clearError()
@@ -174,7 +174,7 @@ export const useAuthStore = defineStore('auth', () => {
       studiesCompleted: 0,
       joinDate: new Date().toISOString(),
       createdAt: new Date().toISOString(),
-      emailVerified: true
+      emailVerified: true,
     }
 
     user.value = newUser
@@ -350,6 +350,6 @@ export const useAuthStore = defineStore('auth', () => {
     initializeAuth,
     updateUserProfile,
     clearError,
-    setError
+    setError,
   }
 })
