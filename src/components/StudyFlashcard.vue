@@ -269,6 +269,7 @@ const emit = defineEmits(['answer', 'skip', 'end-session'])
 
 const isFlipped = ref(false)
 const showSessionComplete = ref(false)
+const isTouching = ref(false)
 
 const flipCard = () => {
   isFlipped.value = !isFlipped.value
