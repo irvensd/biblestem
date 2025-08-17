@@ -847,8 +847,13 @@
                 <button class="btn-secondary w-full">Accept Challenge</button>
               </div>
 
-              <!-- Journaling -->
-              <div v-if="lesson.content.lifeApplication.journaling" class="card p-6">
+              <!-- Enhanced Journaling Templates (Premium) -->
+              <div v-if="isPremium">
+                <JournalingTemplates :lesson="lesson" />
+              </div>
+
+              <!-- Simple Journaling (Free) -->
+              <div v-else-if="lesson.content.lifeApplication.journaling" class="card p-6">
                 <div class="flex items-center space-x-3 mb-4">
                   <div
                     class="w-10 h-10 bg-secondary-500 rounded-lg flex items-center justify-center"
@@ -876,6 +881,23 @@
                   class="w-full h-24 p-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100"
                   placeholder="Write your thoughts here..."
                 ></textarea>
+
+                <!-- Premium Upsell -->
+                <div class="mt-4 p-3 bg-accent-50 dark:bg-accent-900/20 rounded-lg border border-accent-200 dark:border-accent-800">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-sm font-medium text-accent-800 dark:text-accent-200">
+                        Unlock Advanced Journaling Templates
+                      </p>
+                      <p class="text-xs text-accent-600 dark:text-accent-400">
+                        Get guided templates for deeper reflection and study
+                      </p>
+                    </div>
+                    <button @click="$emit('upgrade')" class="btn-accent text-sm">
+                      Upgrade
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
