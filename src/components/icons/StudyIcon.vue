@@ -403,6 +403,11 @@
 </template>
 
 <script setup lang="ts">
+import SanctuaryIcon from './SanctuaryIcon.vue'
+import ProphecyIcon from './ProphecyIcon.vue'
+import ThreeAngelsIcon from './ThreeAngelsIcon.vue'
+import SabbathIcon from './SabbathIcon.vue'
+
 interface Props {
   iconType: string
   fallbackLetter?: string
