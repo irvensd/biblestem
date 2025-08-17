@@ -1136,15 +1136,32 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
   const initializeDemoData = () => {
     initializeDefaultCards()
     initializeDefaultDecks()
-    
-    // Add some demo progress
+
+    // Add some demo progress across various verses
     updateCardProgress('john-3-16', true)
     updateCardProgress('john-3-16', true)
+    updateCardProgress('john-3-16', true)
+    updateCardProgress('psalm-23-1', true)
     updateCardProgress('psalm-23-1', true)
     updateCardProgress('philippians-4-13', true)
     updateCardProgress('philippians-4-13', true)
     updateCardProgress('philippians-4-13', true)
-    
+    updateCardProgress('philippians-4-13', true)
+    updateCardProgress('philippians-4-13', true) // Mark as memorized
+    updateCardProgress('jesus-wept', true)
+    updateCardProgress('jesus-wept', true)
+    updateCardProgress('jesus-wept', true)
+    updateCardProgress('jesus-wept', true)
+    updateCardProgress('jesus-wept', true) // Mark as memorized
+    updateCardProgress('god-is-love', true)
+    updateCardProgress('god-is-love', true)
+    updateCardProgress('god-is-love', true)
+    updateCardProgress('1thessalonians-5-17', true)
+    updateCardProgress('romans-8-28', true)
+    updateCardProgress('proverbs-3-5-6', true)
+    updateCardProgress('isaiah-41-10', false) // Show some struggle
+    updateCardProgress('isaiah-41-10', true)
+
     saveToStorage()
   }
 
