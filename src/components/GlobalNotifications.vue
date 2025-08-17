@@ -94,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useErrorStore } from '../stores/errors'
 import { useLoadingStore } from '../stores/loading'
 
@@ -106,8 +106,26 @@ withDefaults(defineProps<Props>(), {
   showGlobalLoader: true,
 })
 
-const errorStore = useErrorStore()
-const loadingStore = useLoadingStore()
+// Safe store initialization
+const errorStore = ref<any>({
+  errors: [],
+  clearError: () => {}
+})
+
+const loadingStore = ref<any>({
+  isLoading: computed(() => false),
+  loadingKeys: []
+})
+
+// Initialize stores when component mounts
+onMounted(() => {
+  try {
+    errorStore.value = useErrorStore()
+    loadingStore.value = useLoadingStore()
+  } catch (error) {
+    console.warn('Failed to initialize stores in GlobalNotifications:', error)
+  }
+})
 
 const getErrorClasses = (type: 'error' | 'warning' | 'info') => {
   switch (type) {
