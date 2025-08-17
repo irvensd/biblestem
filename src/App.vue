@@ -102,13 +102,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import AppHeader from './components/AppHeader.vue'
 import MobileNavigation from './components/MobileNavigation.vue'
 import ErrorBoundary from './components/ErrorBoundary.vue'
 import GlobalNotifications from './components/GlobalNotifications.vue'
 import { usePWA } from './composables/usePWA'
 import { useAuthStore } from './stores/auth'
+
+// App readiness state
+const isAppReady = ref(false)
 
 const {
   isInstallable,
@@ -120,10 +123,22 @@ const {
   updateServiceWorker,
 } = usePWA()
 
-// Initialize authentication on app start
+// Initialize app when mounted
 onMounted(async () => {
-  const authStore = useAuthStore()
-  await authStore.initializeAuth()
+  try {
+    // Small delay to ensure Pinia is fully ready
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    const authStore = useAuthStore()
+    await authStore.initializeAuth()
+
+    // Mark app as ready to render router-view
+    isAppReady.value = true
+  } catch (error) {
+    console.error('App initialization error:', error)
+    // Still mark as ready to prevent infinite loading
+    isAppReady.value = true
+  }
 })
 </script>
 
