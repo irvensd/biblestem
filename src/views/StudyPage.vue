@@ -197,13 +197,19 @@
                     <span class="text-sm text-primary-600 font-medium">{{ lesson.scripture }}</span>
                     <button
                       v-if="canAccessLesson(index)"
-                      class="text-primary-600 hover:text-primary-700 font-medium text-sm"
+                      class="text-primary-600 hover:text-primary-700 font-medium text-sm flex items-center space-x-1"
+                      :class="{ 'opacity-50 cursor-not-allowed': isNavigating }"
+                      :disabled="isNavigating"
                       @click.stop="openLesson(lesson, index)"
                     >
-                      {{
+                      <span>{{
                         progressStore.isLessonCompleted(study.id, lesson.id) ? 'Review' : 'Start'
-                      }}
-                      →
+                      }}</span>
+                      <svg v-if="isNavigating" class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      <span v-else>→</span>
                     </button>
                     <span
                       v-else-if="getLessonAccessReason(index) === 'not-authenticated'"
