@@ -348,6 +348,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const transformSupabaseUser = async (supabaseUser: SupabaseUser): Promise<User> => {
+    console.log('Transforming Supabase user:', supabaseUser.id)
+
     // Get user profile from profiles table
     const { data: profile, error } = await supabase
       .from('profiles')
@@ -356,7 +358,8 @@ export const useAuthStore = defineStore('auth', () => {
       .single()
 
     if (error) {
-      console.error('Error fetching user profile:', error)
+      console.error('Error fetching user profile from database:', error)
+      console.log('Using fallback user data')
       // Fallback to basic user data if profile fetch fails
       return {
         id: supabaseUser.id,
@@ -369,6 +372,8 @@ export const useAuthStore = defineStore('auth', () => {
         emailVerified: supabaseUser.email_confirmed_at ? true : false
       }
     }
+
+    console.log('Successfully fetched user profile:', profile)
 
     return {
       id: profile.id,
