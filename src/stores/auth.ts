@@ -32,9 +32,27 @@ export interface AuthConfig {
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const isLoading = ref(false)
+  const error = ref<AuthError | null>(null)
+  const isInitialized = ref(false)
+
+  // Configuration for auth mode (mock vs real)
+  const config = ref<AuthConfig>({
+    useMockAuth: true, // Set to false when ready for Supabase
+    supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
+    supabaseKey: import.meta.env.VITE_SUPABASE_ANON_KEY
+  })
 
   const isAuthenticated = computed(() => !!user.value)
   const isPremium = computed(() => user.value?.plan === 'premium')
+  const hasValidSubscription = computed(() => {
+    if (!user.value) return false
+    if (user.value.plan === 'free') return true
+    if (user.value.plan === 'premium') {
+      // In the future, check subscription status and trial period
+      return true
+    }
+    return false
+  })
 
   // Demo users for login
   const demoUsers = [
