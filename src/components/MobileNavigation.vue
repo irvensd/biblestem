@@ -360,7 +360,24 @@ import { useAuthStore } from '@/stores/auth'
 import GlobalSearch from './GlobalSearch.vue'
 
 const route = useRoute()
-const authStore = useAuthStore()
+
+// Initialize authStore safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+  logout: () => Promise.resolve()
+})
+
+// Initialize the real store when component mounts
+onMounted(async () => {
+  try {
+    const realAuthStore = useAuthStore()
+    authStore.value = realAuthStore
+  } catch (error) {
+    console.warn('Failed to initialize auth store in MobileNavigation:', error)
+  }
+})
 
 const showSearch = ref(false)
 const showProfile = ref(false)
