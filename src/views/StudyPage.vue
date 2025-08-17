@@ -465,28 +465,42 @@ const handleUpgrade = () => {
   )
 }
 
-onMounted(() => {
-  // Initialize stores
-  authStore.initializeAuth()
-  progressStore.loadFromStorage()
+onMounted(async () => {
+  try {
+    // Initialize stores
+    authStore.initializeAuth()
+    progressStore.loadFromStorage()
 
-  const studyId = route.params.id as string
+    const studyId = route.params.id as string
 
-  // Only proceed if we have a valid study ID
-  if (!studyId) {
-    router.push('/study-series')
-    return
-  }
+    // Only proceed if we have a valid study ID
+    if (!studyId) {
+      isLoading.value = false
+      router.push('/study-series')
+      return
+    }
 
-  const foundStudy = getStudyById(studyId)
+    const foundStudy = getStudyById(studyId)
 
-  if (foundStudy) {
-    study.value = foundStudy
-    progressStore.startStudy(studyId)
-  } else {
-    // Log the error for debugging and redirect
-    console.warn('Study not found:', studyId)
-    router.push('/study-series')
+    if (foundStudy) {
+      study.value = foundStudy
+      progressStore.startStudy(studyId)
+      isLoading.value = false
+    } else {
+      // Log the error for debugging and redirect
+      console.warn('Study not found:', studyId)
+      isLoading.value = false
+      // Don't redirect immediately, let user see the "not found" state
+      setTimeout(() => {
+        router.push('/study-series')
+      }, 2000)
+    }
+  } catch (error) {
+    console.error('Error loading study:', error)
+    isLoading.value = false
+    setTimeout(() => {
+      router.push('/study-series')
+    }, 2000)
   }
 })
 </script>
