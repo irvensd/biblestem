@@ -106,16 +106,13 @@ withDefaults(defineProps<Props>(), {
   showGlobalLoader: true,
 })
 
-// Safe store initialization
-const errorStore = ref<any>({
-  errors: [],
-  clearError: () => {}
-})
+// Safe store initialization with refs
+const errorStore = ref<any>(null)
+const loadingStore = ref<any>(null)
 
-const loadingStore = ref<any>({
-  isLoading: computed(() => false),
-  loadingKeys: []
-})
+// Safe computed properties for accessing store data
+const safeErrors = computed(() => errorStore.value?.errors || [])
+const safeIsLoading = computed(() => loadingStore.value?.isLoading?.value || false)
 
 // Initialize stores when component mounts
 onMounted(() => {
