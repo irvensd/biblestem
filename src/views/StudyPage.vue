@@ -463,7 +463,7 @@ const openLesson = async (lesson: Lesson, index: number) => {
 const closeLesson = () => {
   try {
     // Save any progress before closing
-    if (study.value && currentLesson.value) {
+    if (study.value && currentLesson.value && isMounted.value) {
       const sessionDuration = Math.max(1, Math.floor(Math.random() * 5) + 1) // Mock session time
       progressStore.updateLessonProgress(study.value.id, currentLesson.value.id, {
         timeSpent: sessionDuration,
@@ -471,11 +471,13 @@ const closeLesson = () => {
       })
     }
 
-    currentLesson.value = null
-    currentLessonIndex.value = 0
+    safeSet(currentLesson, null)
+    safeSet(currentLessonIndex, 0)
   } catch (err) {
     console.error('Error closing lesson:', err)
-    errorStore.handleError(err, 'Lesson Close')
+    if (isMounted.value) {
+      errorStore.handleError(err, 'Lesson Close')
+    }
   }
 }
 
