@@ -65,7 +65,6 @@
 <script setup lang="ts">
 import { ref, onErrorCaptured, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import { useErrorStore } from '../stores/errors'
 
 const router = useRouter()
 
@@ -73,7 +72,7 @@ const hasError = ref(false)
 const errorMessage = ref('')
 const showDetails = ref(false)
 
-onErrorCaptured((error, instance, info) => {
+onErrorCaptured(async (error, instance, info) => {
   console.error('Error boundary caught error:', error)
   console.error('Component info:', info)
 
@@ -82,6 +81,8 @@ onErrorCaptured((error, instance, info) => {
 
   // Report error to error store (only if Pinia is available)
   try {
+    // Dynamic import to avoid Pinia timing issues
+    const { useErrorStore } = await import('../stores/errors')
     const errorStore = useErrorStore()
     errorStore.handleError(error, `Component: ${info}`)
   } catch (storeError) {
