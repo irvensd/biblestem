@@ -107,8 +107,6 @@ import GlobalNotifications from './components/GlobalNotifications.vue'
 import { usePWA } from './composables/usePWA'
 import { useAuthStore } from './stores/auth'
 
-const authStore = useAuthStore()
-
 const {
   isInstallable,
   isInstalled,
@@ -121,6 +119,7 @@ const {
 
 // Initialize authentication on app start
 onMounted(async () => {
+  const authStore = useAuthStore()
   await authStore.initializeAuth()
 })
 </script>
