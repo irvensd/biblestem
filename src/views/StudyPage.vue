@@ -323,6 +323,7 @@ const router = useRouter()
 const authStore = useAuthStore()
 const progressStore = useStudyProgressStore()
 
+const isLoading = ref(true)
 const study = ref<Study | null>(null)
 const currentLesson = ref<Lesson | null>(null)
 const currentLessonIndex = ref<number>(0)
