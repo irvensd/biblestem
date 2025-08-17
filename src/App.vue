@@ -3,11 +3,18 @@
     id="app"
     class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
   >
-    <AppHeader />
-    <main class="pb-16 sm:pb-0">
-      <router-view />
-    </main>
-    <MobileNavigation />
+    <ErrorBoundary>
+      <AppHeader />
+      <main class="pb-16 sm:pb-0">
+        <ErrorBoundary>
+          <router-view />
+        </ErrorBoundary>
+      </main>
+      <MobileNavigation />
+    </ErrorBoundary>
+
+    <!-- Global Notifications for errors and loading -->
+    <GlobalNotifications />
 
     <!-- PWA Install Prompt -->
     <div
