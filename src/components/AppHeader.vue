@@ -438,6 +438,11 @@ const closeMobileMenu = () => {
   document.body.style.overflow = ''
 }
 
+// Cleanup body scroll when component unmounts
+onUnmounted(() => {
+  document.body.style.overflow = ''
+})
+
 const toggleUserMenu = () => {
   userMenuOpen.value = !userMenuOpen.value
   mobileMenuOpen.value = false
