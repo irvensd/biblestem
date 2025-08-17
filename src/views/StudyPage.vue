@@ -418,7 +418,22 @@ const openLesson = async (lesson: Lesson, index: number) => {
 }
 
 const closeLesson = () => {
-  currentLesson.value = null
+  try {
+    // Save any progress before closing
+    if (study.value && currentLesson.value) {
+      const sessionDuration = Math.max(1, Math.floor(Math.random() * 5) + 1) // Mock session time
+      progressStore.updateLessonProgress(study.value.id, currentLesson.value.id, {
+        timeSpent: sessionDuration,
+        lastAccessed: new Date().toISOString()
+      })
+    }
+
+    currentLesson.value = null
+    currentLessonIndex.value = 0
+  } catch (err) {
+    console.error('Error closing lesson:', err)
+    errorStore.handleError(err, 'Lesson Close')
+  }
 }
 
 const completeLesson = (lessonId: string) => {
