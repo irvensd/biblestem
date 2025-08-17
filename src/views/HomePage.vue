@@ -582,9 +582,24 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 
-const authStore = useAuthStore()
+// Safe auth store initialization
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false
+})
+
+// Initialize store when component mounts
+onMounted(() => {
+  try {
+    authStore.value = useAuthStore()
+  } catch (error) {
+    console.warn('Failed to initialize auth store in HomePage:', error)
+  }
+})
 </script>
 
 <style scoped>
