@@ -369,10 +369,12 @@ onMounted(() => {
     route = useRoute()
     routePath.value = route?.path || ''
 
-    // Watch for route changes
-    watch(() => route?.path, (newPath) => {
-      routePath.value = newPath || ''
-    })
+    // Watch for route changes only if route exists
+    if (route) {
+      watch(() => route.path, (newPath) => {
+        routePath.value = newPath || ''
+      })
+    }
   } catch (error) {
     console.warn('Failed to initialize route in MobileNavigation:', error)
   }
