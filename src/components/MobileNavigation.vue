@@ -10,7 +10,7 @@
         v-if="authStore.value.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/dashboard'
+          routePath === '/dashboard'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -32,7 +32,7 @@
         v-if="!authStore.value.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/'
+          routePath === '/'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -53,7 +53,7 @@
         to="/study-series"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/study-series'
+          routePath === '/study-series'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -72,7 +72,7 @@
         v-if="authStore.value.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/my-studies'
+          routePath === '/my-studies'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -93,7 +93,7 @@
         to="/daily-devotions"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/daily-devotions'
+          routePath === '/daily-devotions'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
