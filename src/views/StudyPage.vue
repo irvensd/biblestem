@@ -436,13 +436,39 @@ const closeLesson = () => {
   }
 }
 
-const completeLesson = (lessonId: string) => {
-  if (study.value) {
+const completeLesson = async (lessonId: string) => {
+  try {
+    if (!study.value) return
+
+    loadingStore.setLoading('lesson-completion', true)
+
     const lesson = study.value.lessons.find((l) => l.id === lessonId)
     const timeSpent = lesson ? lesson.duration : 5
+
+    // Complete the lesson with proper tracking
     progressStore.completeLesson(study.value.id, lessonId, timeSpent)
+
+    // Check if study is completed
+    const completionPercentage = progressStore.getStudyCompletionPercentage(
+      study.value.id,
+      study.value.lessons.length
+    )
+
+    if (completionPercentage === 100) {
+      // Add celebration notification
+      errorStore.addError(`🎉 Congratulations! You completed "${study.value.title}"!`, {
+        type: 'info',
+        persistent: true
+      })
+    }
+
+    closeLesson()
+  } catch (err) {
+    console.error('Error completing lesson:', err)
+    errorStore.handleError(err, 'Lesson Completion')
+  } finally {
+    loadingStore.clearLoading('lesson-completion')
   }
-  closeLesson()
 }
 
 const nextLessonInModal = () => {
