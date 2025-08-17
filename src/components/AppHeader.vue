@@ -489,9 +489,6 @@ const handleClickOutside = (event: Event) => {
   }
 }
 
-// Removed duplicate initialization - now handled above
-  document.addEventListener('click', handleClickOutside)
-})
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
