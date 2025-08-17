@@ -28,7 +28,7 @@
         <!-- Desktop Navigation -->
         <div class="hidden lg:flex items-center space-x-6 xl:space-x-8 lg:ml-12 xl:ml-16">
           <!-- Authenticated User Navigation -->
-          <template v-if="authStore.value.isAuthenticated">
+          <template v-if="authStore.isAuthenticated">
             <router-link
               to="/dashboard"
               class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
@@ -102,7 +102,7 @@
         <!-- CTA Buttons / User Menu -->
         <div class="hidden lg:flex items-center space-x-2 lg:space-x-4">
           <!-- Authenticated User -->
-          <div v-if="authStore.value.isAuthenticated" class="relative">
+          <div v-if="authStore.isAuthenticated" class="relative">
             <button
               @click="toggleUserMenu"
               class="flex items-center space-x-2 lg:space-x-3 p-1.5 lg:p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
@@ -112,18 +112,18 @@
                 class="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
               >
                 <span class="text-white text-xs lg:text-sm font-bold">{{
-                  authStore.value.user?.name.charAt(0)
+                  authStore.user?.name.charAt(0)
                 }}</span>
               </div>
               <div class="text-left hidden md:block">
                 <div class="text-xs lg:text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                  {{ authStore.value.user?.name }}
+                  {{ authStore.user?.name }}
                 </div>
                 <div
                   class="text-xs text-neutral-500"
-                  :class="authStore.value.isPremium ? 'text-accent-600' : 'text-neutral-500'"
+                  :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
                 >
-                  {{ authStore.value.isPremium ? 'Premium' : 'Free' }}
+                  {{ authStore.isPremium ? 'Premium' : 'Free' }}
                 </div>
               </div>
               <svg
@@ -230,7 +230,7 @@
         @touchmove.stop
       >
         <!-- Authenticated User Mobile Menu -->
-        <div v-if="authStore.value.isAuthenticated" class="py-4">
+        <div v-if="authStore.isAuthenticated" class="py-4">
           <!-- User Info -->
           <div class="px-4 mb-4">
             <div
@@ -239,17 +239,17 @@
               <div
                 class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
               >
-                <span class="text-white font-bold">{{ authStore.value.user?.name.charAt(0) }}</span>
+                <span class="text-white font-bold">{{ authStore.user?.name.charAt(0) }}</span>
               </div>
               <div>
                 <div class="font-medium text-neutral-900 dark:text-neutral-100">
-                  {{ authStore.value.user?.name }}
+                  {{ authStore.user?.name }}
                 </div>
                 <div
                   class="text-sm"
-                  :class="authStore.value.isPremium ? 'text-accent-600' : 'text-neutral-500'"
+                  :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
                 >
-                  {{ authStore.value.isPremium ? 'Premium' : 'Free' }} Plan
+                  {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
                 </div>
               </div>
             </div>
@@ -472,7 +472,7 @@ const closeUserMenu = () => {
 }
 
 const handleSignOut = () => {
-  authStore.value.logout()
+  authStore.logout()
   userMenuOpen.value = false
   mobileMenuOpen.value = false
   router.push('/')
@@ -486,9 +486,7 @@ const handleClickOutside = (event: Event) => {
   }
 }
 
-onMounted(() => {
-  // Initialize auth state
-  authStore.value.initializeAuth()
+// Removed duplicate initialization - now handled above
   document.addEventListener('click', handleClickOutside)
 })
 
