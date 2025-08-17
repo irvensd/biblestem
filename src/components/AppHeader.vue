@@ -417,18 +417,23 @@ import GlobalSearch from './GlobalSearch.vue'
 
 const router = useRouter()
 
-// Use computed to safely access auth store
-const authStore = computed(() => {
+// Initialize authStore safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+  logout: () => Promise.resolve(),
+  initializeAuth: () => Promise.resolve()
+})
+
+// Initialize the real store when component mounts
+onMounted(async () => {
   try {
-    return useAuthStore()
+    const realAuthStore = useAuthStore()
+    authStore.value = realAuthStore
+    await realAuthStore.initializeAuth()
   } catch (error) {
-    // Return a mock store if Pinia isn't ready yet
-    return {
-      isAuthenticated: false,
-      user: null,
-      isPremium: false,
-      logout: () => Promise.resolve()
-    }
+    console.warn('Failed to initialize auth store:', error)
   }
 })
 
