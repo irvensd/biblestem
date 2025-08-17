@@ -298,11 +298,17 @@ const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 const progressStore = useStudyProgressStore()
+const loadingStore = useLoadingStore()
+const errorStore = useErrorStore()
 
-const isLoading = ref(true)
 const study = ref<Study | null>(null)
 const currentLesson = ref<Lesson | null>(null)
 const currentLessonIndex = ref<number>(0)
+const error = ref<string>('')
+
+// Loading states
+const isLoading = computed(() => loadingStore.isLoadingKey('study-page').value)
+const isNavigating = computed(() => loadingStore.isLoadingKey('lesson-navigation').value)
 
 const studyProgress = computed(() =>
   study.value ? progressStore.getStudyProgress(study.value.id) : null,
