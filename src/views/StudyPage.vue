@@ -1,6 +1,37 @@
 <template>
   <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
-    <div v-if="study" class="container-base py-8">
+    <!-- Loading State -->
+    <div v-if="isLoading" class="container-base py-8">
+      <div class="animate-pulse">
+        <div class="h-8 bg-neutral-200 dark:bg-neutral-700 rounded w-1/3 mb-6"></div>
+        <div class="h-12 bg-neutral-200 dark:bg-neutral-700 rounded w-3/4 mb-4"></div>
+        <div class="h-6 bg-neutral-200 dark:bg-neutral-700 rounded w-1/2 mb-8"></div>
+        <div class="space-y-4">
+          <div class="h-20 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+          <div class="h-20 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+          <div class="h-20 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div v-else-if="error" class="container-base py-8">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Study Not Found</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">{{ error }}</p>
+        <router-link to="/study-series" class="btn-primary">
+          Browse Study Series
+        </router-link>
+      </div>
+    </div>
+
+    <!-- Study Content -->
+    <div v-else-if="study" class="container-base py-8">
       <!-- Study Header -->
       <div class="mb-8">
         <nav
