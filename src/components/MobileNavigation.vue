@@ -396,8 +396,8 @@ const handleUpgrade = () => {
   closeProfile()
 }
 
-const signOut = () => {
-  authStore.signOut()
+const signOut = async () => {
+  await authStore.logout()
   closeProfile()
 }
 
