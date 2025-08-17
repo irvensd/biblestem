@@ -963,6 +963,7 @@
 import { ref, computed } from 'vue'
 import type { Lesson, Study } from '../data/studies'
 import ScriptureWordPopover from './ScriptureWordPopover.vue'
+import ProphecyTimeline from './ProphecyTimeline.vue'
 import StudyNotes from './StudyNotes.vue'
 
 interface Props {
