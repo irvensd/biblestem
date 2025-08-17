@@ -685,18 +685,13 @@ const loadStudy = async (studyId: string) => {
 
 onMounted(async () => {
   const studyId = route.params.id as string
-  if (studyId) {
+  if (studyId && isMounted.value) {
     await loadStudy(studyId)
   }
 
-  // Add keyboard navigation
-  document.addEventListener('keydown', handleKeyboard)
+  // Add keyboard navigation with proper cleanup
+  domEvents.onKeydown(document, handleKeyboard)
 })
 
-onUnmounted(() => {
-  // Cleanup
-  document.removeEventListener('keydown', handleKeyboard)
-  loadingStore.clearAllLoading()
-  closeLesson()
-})
+// Cleanup is handled automatically by the cleanup composable
 </script>
