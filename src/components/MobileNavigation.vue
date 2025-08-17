@@ -378,12 +378,22 @@ onMounted(() => {
   }
 })
 
-// Initialize authStore safely
+// Initialize authStore safely with guaranteed defaults
 const authStore = ref({
   isAuthenticated: false,
   user: null,
   isPremium: false,
   logout: () => Promise.resolve()
+})
+
+// Safe auth store access with fallback
+const safeAuthStore = computed(() => {
+  return authStore.value || {
+    isAuthenticated: false,
+    user: null,
+    isPremium: false,
+    logout: () => Promise.resolve()
+  }
 })
 
 // Initialize the real store when component mounts
