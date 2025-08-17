@@ -950,27 +950,17 @@
               </div>
             </div>
 
+            <!-- PDF Workbook (Premium) -->
+            <div v-if="isPremium && lesson.content.deeperStudy" class="mt-8">
+              <PDFWorkbook :lesson="lesson" :pdf-url="lesson.content.deeperStudy.pdf" />
+            </div>
+
             <!-- Deeper Study (Premium) -->
             <div v-if="isPremium && lesson.content.deeperStudy" class="mt-8">
               <h4 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-4">
-                Deeper Study Resources
+                Additional Study Resources
               </h4>
-              <div class="grid md:grid-cols-3 gap-4">
-                <div v-if="lesson.content.deeperStudy.pdf" class="card p-4 text-center">
-                  <svg
-                    class="w-8 h-8 text-red-500 mx-auto mb-2"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <p class="text-sm font-medium">Study Guide PDF</p>
-                  <button class="text-primary-600 text-xs mt-1">Download</button>
-                </div>
+              <div class="grid md:grid-cols-2 gap-4">
 
                 <div
                   v-if="lesson.content.deeperStudy.additionalReadings"
