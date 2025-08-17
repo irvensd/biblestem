@@ -288,7 +288,7 @@
             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <p class="text-neutral-600 dark:text-neutral-400">Loading study...</p>
+        <p class="text-neutral-600 dark:text-neutral-400">DEBUGGING: Study is loading...</p>
       </div>
     </div>
 
