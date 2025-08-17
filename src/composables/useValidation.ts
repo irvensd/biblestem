@@ -1,4 +1,4 @@
-import { ref, computed, Ref } from 'vue'
+import { ref, computed, type Ref } from 'vue'
 
 export interface ValidationRule {
   test: (value: any) => boolean
