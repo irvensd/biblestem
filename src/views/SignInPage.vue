@@ -162,21 +162,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useErrorStore } from '../stores/errors'
+import { useFormValidation, useFieldValidation, validationRules } from '../composables/useValidation'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const errorStore = useErrorStore()
 
-const form = reactive({
-  email: '',
-  password: '',
-  remember: false
+// Form validation
+const emailField = useFieldValidation('', [
+  validationRules.required('Email is required'),
+  validationRules.email()
+])
+
+const passwordField = useFieldValidation('', [
+  validationRules.required('Password is required'),
+  validationRules.minLength(3, 'Password must be at least 3 characters') // Relaxed for demo
+])
+
+const formValidation = useFormValidation({
+  email: emailField.rules,
+  password: passwordField.rules
 })
 
 const showPassword = ref(false)
 const error = ref('')
+const remember = ref(false)
 
 const handleSignIn = async () => {
   error.value = ''
