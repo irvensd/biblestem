@@ -298,6 +298,7 @@ import type { MemoryCard, MemoryDeck } from '../stores/memoryCards'
 import StudyFlashcard from './StudyFlashcard.vue'
 
 const memoryStore = useMemoryCardsStore()
+const { isMounted, safeSet } = useSafeState()
 
 const showMemorySystem = ref(false)
 const selectedDeck = ref<MemoryDeck | null>(null)
