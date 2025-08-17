@@ -359,10 +359,24 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import GlobalSearch from './GlobalSearch.vue'
 
-const route = useRoute()
+// Safe route access with fallback
+let route: any = null
+const routePath = ref('')
 
-// Safe route path access
-const routePath = computed(() => route?.path || '')
+// Initialize route safely
+onMounted(() => {
+  try {
+    route = useRoute()
+    routePath.value = route?.path || ''
+
+    // Watch for route changes
+    watch(() => route?.path, (newPath) => {
+      routePath.value = newPath || ''
+    })
+  } catch (error) {
+    console.warn('Failed to initialize route in MobileNavigation:', error)
+  }
+})
 
 // Initialize authStore safely
 const authStore = ref({
