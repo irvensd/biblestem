@@ -48,12 +48,17 @@
           </label>
           <input
             id="email"
-            v-model="form.email"
+            v-model="emailField.value.value"
             type="email"
-            required
-            class="w-full px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+            :class="emailField.error.value ? 'border-red-500 dark:border-red-500' : 'border-neutral-300 dark:border-neutral-600'"
             placeholder="Enter your email"
+            @blur="emailField.validate()"
+            @input="emailField.clear()"
           />
+          <p v-if="emailField.error.value" class="text-red-500 text-sm mt-1">
+            {{ emailField.error.value }}
+          </p>
         </div>
 
         <div>
