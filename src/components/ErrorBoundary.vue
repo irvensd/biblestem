@@ -68,7 +68,6 @@ import { useRouter } from 'vue-router'
 import { useErrorStore } from '../stores/errors'
 
 const router = useRouter()
-const errorStore = useErrorStore()
 
 const hasError = ref(false)
 const errorMessage = ref('')
@@ -81,8 +80,13 @@ onErrorCaptured((error, instance, info) => {
   hasError.value = true
   errorMessage.value = error.message || 'Unknown error occurred'
 
-  // Report error to error store
-  errorStore.handleError(error, `Component: ${info}`)
+  // Report error to error store (only if Pinia is available)
+  try {
+    const errorStore = useErrorStore()
+    errorStore.handleError(error, `Component: ${info}`)
+  } catch (storeError) {
+    console.warn('Could not report error to store - Pinia not ready:', storeError)
+  }
 
   // Prevent error from propagating
   return false
