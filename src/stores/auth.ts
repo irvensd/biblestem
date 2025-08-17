@@ -323,6 +323,46 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const transformSupabaseUser = async (supabaseUser: SupabaseUser): Promise<User> => {
+    // Get user profile from profiles table
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', supabaseUser.id)
+      .single()
+
+    if (error) {
+      console.error('Error fetching user profile:', error)
+      // Fallback to basic user data if profile fetch fails
+      return {
+        id: supabaseUser.id,
+        name: supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || 'User',
+        email: supabaseUser.email || '',
+        plan: 'free',
+        studiesCompleted: 0,
+        joinDate: supabaseUser.created_at || new Date().toISOString(),
+        createdAt: supabaseUser.created_at,
+        emailVerified: supabaseUser.email_confirmed_at ? true : false
+      }
+    }
+
+    return {
+      id: profile.id,
+      name: profile.name,
+      email: profile.email,
+      avatar: profile.avatar_url,
+      bio: profile.bio,
+      plan: profile.plan,
+      studiesCompleted: profile.studies_completed,
+      joinDate: profile.join_date,
+      createdAt: profile.created_at,
+      updatedAt: profile.updated_at,
+      emailVerified: profile.email_verified,
+      subscriptionId: profile.subscription_id,
+      trialEndsAt: profile.trial_ends_at
+    }
+  }
+
   const updateUserProfile = async (updates: Partial<User>) => {
     if (!user.value) return { success: false, error: 'User not authenticated' }
 
