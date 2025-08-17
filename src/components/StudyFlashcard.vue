@@ -29,9 +29,12 @@
     <!-- Flashcard -->
     <div class="relative perspective-1000">
       <div
-        class="card-container relative w-full min-h-[300px] cursor-pointer"
-        :class="{ flipped: isFlipped }"
+        class="card-container relative w-full min-h-[300px] cursor-pointer touch-manipulation"
+        :class="{ flipped: isFlipped, 'touch-active': isTouching }"
         @click="flipCard"
+        @touchstart="handleTouchStart"
+        @touchend="handleTouchEnd"
+        @touchcancel="handleTouchEnd"
       >
         <!-- Front Side (Reference) -->
         <div
