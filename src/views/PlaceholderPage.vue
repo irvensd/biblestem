@@ -44,13 +44,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
+// Safe route path access
+const routePath = ref('')
 
+// Safe page title computed
 const pageTitle = computed(() => {
-  const routeName = route.path.slice(1) || 'page'
+  const routeName = routePath.value.slice(1) || 'page'
   return routeName.charAt(0).toUpperCase() + routeName.slice(1).replace('-', ' ')
+})
+
+// Initialize route safely
+onMounted(() => {
+  try {
+    const route = useRoute()
+    routePath.value = route.path || ''
+  } catch (error) {
+    console.warn('Failed to initialize route in PlaceholderPage:', error)
+    routePath.value = ''
+  }
 })
 </script>
