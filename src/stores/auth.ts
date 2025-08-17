@@ -10,6 +10,23 @@ export interface User {
   plan: 'free' | 'premium'
   studiesCompleted: number
   joinDate: string
+  // Supabase fields for future use
+  createdAt?: string
+  updatedAt?: string
+  emailVerified?: boolean
+  subscriptionId?: string
+  trialEndsAt?: string
+}
+
+export interface AuthError {
+  message: string
+  code?: string
+}
+
+export interface AuthConfig {
+  useMockAuth: boolean
+  supabaseUrl?: string
+  supabaseKey?: string
 }
 
 export const useAuthStore = defineStore('auth', () => {
