@@ -327,6 +327,61 @@
                 </div>
               </div>
 
+              <!-- Greek/Hebrew Words Section -->
+              <div v-if="lesson.content.hebrewGreekWords && lesson.content.hebrewGreekWords.length > 0" class="mt-8">
+                <h4 class="text-lg font-bold text-neutral-800 dark:text-neutral-200 text-center mb-6">
+                  Original Language Insights
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div
+                    v-for="word in lesson.content.hebrewGreekWords"
+                    :key="word.word"
+                    class="bg-white dark:bg-neutral-800 p-4 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:border-primary-300 dark:hover:border-primary-600 transition-colors"
+                  >
+                    <div class="flex items-center justify-between mb-2">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+                        :class="word.language === 'Greek' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : word.language === 'Hebrew' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300' : 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300'"
+                      >
+                        {{ word.language }}
+                      </span>
+                    </div>
+
+                    <div class="space-y-2">
+                      <div>
+                        <div class="text-lg font-bold text-neutral-900 dark:text-neutral-100" :dir="word.language === 'Hebrew' ? 'rtl' : 'ltr'">
+                          {{ word.word }}
+                        </div>
+                        <div class="text-sm text-neutral-600 dark:text-neutral-400 italic">
+                          {{ word.transliteration }}
+                        </div>
+                      </div>
+
+                      <div class="text-sm text-neutral-800 dark:text-neutral-200">
+                        {{ word.meaning }}
+                      </div>
+
+                      <div class="text-xs text-neutral-600 dark:text-neutral-400">
+                        {{ word.context }}
+                      </div>
+
+                      <div v-if="word.references.length > 0" class="flex flex-wrap gap-1 mt-2">
+                        <span
+                          v-for="reference in word.references.slice(0, 3)"
+                          :key="reference"
+                          class="inline-block px-2 py-1 text-xs bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded"
+                        >
+                          {{ reference }}
+                        </span>
+                        <span v-if="word.references.length > 3" class="text-xs text-neutral-500">
+                          +{{ word.references.length - 3 }} more
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- Mobile Next Button -->
               <div class="block sm:hidden mt-6">
                 <button
