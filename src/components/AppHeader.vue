@@ -226,10 +226,11 @@
       <!-- Mobile Menu -->
       <div
         v-if="mobileMenuOpen"
-        class="lg:hidden py-4 border-t border-neutral-200 dark:border-neutral-800 animate-fade-in"
+        class="lg:hidden border-t border-neutral-200 dark:border-neutral-800 animate-fade-in max-h-[calc(100vh-200px)] overflow-y-auto overscroll-contain"
+        @touchmove.stop
       >
         <!-- Authenticated User Mobile Menu -->
-        <div v-if="authStore.isAuthenticated">
+        <div v-if="authStore.isAuthenticated" class="py-4">
           <!-- User Info -->
           <div class="px-4 mb-4">
             <div
@@ -335,7 +336,7 @@
         </div>
 
         <!-- Guest User Mobile Menu -->
-        <div v-else>
+        <div v-else class="py-4">
           <!-- Navigation Links -->
           <div class="flex flex-col space-y-3 px-4">
             <router-link
@@ -423,10 +424,18 @@ const userMenuOpen = ref(false)
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
   userMenuOpen.value = false
+
+  // Prevent body scroll when mobile menu is open
+  if (mobileMenuOpen.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
 }
 
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
+  document.body.style.overflow = ''
 }
 
 const toggleUserMenu = () => {
