@@ -605,12 +605,14 @@ const handleKeyboard = (event: KeyboardEvent) => {
   }
 }
 
-// Route parameter watcher
-watch(() => route.params.id, async (newStudyId) => {
-  if (newStudyId && newStudyId !== study.value?.id) {
-    await loadStudy(newStudyId as string)
-  }
-})
+// Route parameter watcher with cleanup
+cleanup.addWatcher(
+  watch(() => route.params.id, async (newStudyId) => {
+    if (newStudyId && newStudyId !== study.value?.id && isMounted.value) {
+      await loadStudy(newStudyId as string)
+    }
+  }, { immediate: false })
+)
 
 const loadStudy = async (studyId: string) => {
   try {
