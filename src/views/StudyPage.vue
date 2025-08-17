@@ -278,7 +278,8 @@
       @upgrade="handleUpgrade"
     />
 
-    <!-- Loading State -->
+    <!-- Loading State - TEMPORARILY DISABLED -->
+    <!--
     <div v-else-if="isLoading" class="min-h-screen flex items-center justify-center">
       <div class="text-center">
         <div
@@ -291,6 +292,7 @@
         <p class="text-neutral-600 dark:text-neutral-400">DEBUGGING: Study is loading...</p>
       </div>
     </div>
+    -->
 
     <!-- Study Not Found State -->
     <div v-else class="min-h-screen flex items-center justify-center">
