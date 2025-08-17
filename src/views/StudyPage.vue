@@ -339,6 +339,11 @@ const progressStore = useStudyProgressStore()
 const loadingStore = useLoadingStore()
 const errorStore = useErrorStore()
 
+// Cleanup composables
+const cleanup = useCleanup()
+const domEvents = useDOMEvents()
+const { isMounted, safeSet, safeAsync } = useSafeState()
+
 const study = ref<Study | null>(null)
 const currentLesson = ref<Lesson | null>(null)
 const currentLessonIndex = ref<number>(0)
