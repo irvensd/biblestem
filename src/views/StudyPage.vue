@@ -369,21 +369,52 @@ const formatDuration = (minutes: number) => {
   return `${hours}h ${mins}m`
 }
 
-const openLesson = (lesson: Lesson, index: number) => {
-  // Check if user is authenticated first
-  if (!authStore.isAuthenticated) {
-    // Redirect to sign-in page with return URL
-    router.push({
-      name: 'signin',
-      query: { redirect: route.fullPath },
-    })
-    return
+const openLesson = async (lesson: Lesson, index: number) => {
+  try {
+    loadingStore.setLoading('lesson-navigation', true)
+
+    // Check if user is authenticated first
+    if (!authStore.isAuthenticated) {
+      errorStore.addError('Please sign in to access lessons', { type: 'info' })
+      router.push({
+        name: 'signin',
+        query: { redirect: route.fullPath },
+      })
+      return
+    }
+
+    // Check access permissions
+    if (!canAccessLesson(index)) {
+      const reason = getLessonAccessReason(index)
+      switch (reason) {
+        case 'premium-required':
+          errorStore.addError('Premium subscription required for this lesson', { type: 'warning' })
+          break
+        case 'sequential':
+          errorStore.addError('Complete the previous lesson first', { type: 'info' })
+          break
+        default:
+          errorStore.addError('Cannot access this lesson', { type: 'warning' })
+      }
+      return
+    }
+
+    // Track lesson start
+    if (study.value) {
+      progressStore.startLesson(study.value.id, lesson.id)
+    }
+
+    currentLesson.value = lesson
+    currentLessonIndex.value = index
+
+    // Clear any previous errors
+    error.value = ''
+  } catch (err) {
+    console.error('Error opening lesson:', err)
+    errorStore.handleError(err, 'Lesson Navigation')
+  } finally {
+    loadingStore.clearLoading('lesson-navigation')
   }
-
-  if (!canAccessLesson(index)) return
-
-  currentLesson.value = lesson
-  currentLessonIndex.value = index
 }
 
 const closeLesson = () => {
