@@ -119,9 +119,9 @@
 
         <button
           type="submit"
-          :disabled="authStore.isLoading"
+          :disabled="authStore.isLoading || !formValidation.isValid.value"
           class="w-full btn-primary flex items-center justify-center space-x-2"
-          :class="{ 'opacity-50 cursor-not-allowed': authStore.isLoading }"
+          :class="{ 'opacity-50 cursor-not-allowed': authStore.isLoading || !formValidation.isValid.value }"
         >
           <svg v-if="authStore.isLoading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
