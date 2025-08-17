@@ -1875,57 +1875,6 @@ export const freeStudies: Study[] = [
 // Premium Bible Studies
 export const premiumStudies: Study[] = [
   {
-    id: 'daniel-revelation',
-    title: 'Prophecies of Daniel & Revelation',
-    description: 'Historicist perspective, prophecy charts, interactive timeline maps.',
-    category: 'premium',
-    totalDuration: 350,
-    difficulty: 'advanced',
-    tags: ['Prophecy', 'Daniel', 'Revelation', 'End Times'],
-    image: 'prophecies',
-    color: 'from-purple-600 to-indigo-600',
-    features: [
-      'Prophecy charts',
-      'Interactive timelines',
-      'Historicist perspective',
-      'Video explainers',
-    ],
-    lessons: [
-      {
-        id: 'dr-1',
-        title: 'Introduction to Biblical Prophecy',
-        duration: 25,
-        scripture: 'Daniel 2:20-22',
-        description: 'Understanding Gods method of revealing future events',
-        content: {
-          scriptureText:
-            'Daniel said: "Praise be to the name of God for ever and ever; wisdom and power are his..."',
-          commentary: [
-            'God reveals the future to prepare and encourage His people',
-            'Biblical prophecy uses symbolic language that requires careful study',
-            'The historicist method sees prophecy as a continuous timeline',
-          ],
-          interactiveElement: {
-            type: 'timeline',
-            content: {
-              events: [
-                { period: '605 BC', event: 'Daniel taken to Babylon' },
-                { period: '553 BC', event: 'Vision of four beasts' },
-                { period: '95 AD', event: 'John receives Revelation' },
-              ],
-            },
-          },
-          lifeApplication: {
-            challenge:
-              'Study one prophetic passage this week and look for its historical fulfillment.',
-            journaling: 'Reflect on how studying prophecy strengthens your faith.',
-          },
-          prayerPrompt: 'Thank God for revealing the future to give us hope and guidance.',
-        },
-      },
-    ],
-  },
-  {
     id: 'heavenly-sanctuary',
     title: "The Heavenly Sanctuary: Christ's Ministry Above",
     description:
