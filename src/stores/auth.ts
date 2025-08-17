@@ -187,21 +187,143 @@ export const useAuthStore = defineStore('auth', () => {
     throw new Error('Supabase sign up not yet implemented')
   }
 
-  const logout = () => {
-    user.value = null
-    localStorage.removeItem('biblestem_user')
+  const logout = async () => {
+    isLoading.value = true
+    clearError()
+
+    try {
+      if (config.value.useMockAuth) {
+        await mockLogout()
+      } else {
+        await supabaseLogout()
+      }
+    } catch (err) {
+      console.error('Logout error:', err)
+    } finally {
+      user.value = null
+      clearUserFromStorage()
+      isLoading.value = false
+    }
   }
 
-  const initializeAuth = () => {
+  const mockLogout = async () => {
+    // Simulate API call delay
+    await new Promise((resolve) => setTimeout(resolve, 500))
+  }
+
+  const supabaseLogout = async () => {
+    // TODO: Implement Supabase logout
+    // await supabase.auth.signOut()
+  }
+
+  const refreshSession = async () => {
+    if (!isAuthenticated.value) return
+
+    try {
+      if (config.value.useMockAuth) {
+        // Mock session is always valid
+        return
+      } else {
+        // TODO: Implement Supabase session refresh
+        // const { data, error } = await supabase.auth.refreshSession()
+        // if (error) throw error
+      }
+    } catch (err) {
+      console.error('Session refresh failed:', err)
+      await logout()
+    }
+  }
+
+  const initializeAuth = async () => {
+    if (isInitialized.value) return
+
+    isLoading.value = true
+    clearError()
+
+    try {
+      if (config.value.useMockAuth) {
+        await initializeMockAuth()
+      } else {
+        await initializeSupabaseAuth()
+      }
+    } catch (err) {
+      console.error('Auth initialization failed:', err)
+      setError('Failed to initialize authentication')
+    } finally {
+      isInitialized.value = true
+      isLoading.value = false
+    }
+  }
+
+  const initializeMockAuth = async () => {
     const savedUser = localStorage.getItem('biblestem_user')
     if (savedUser) {
       try {
-        user.value = JSON.parse(savedUser)
+        const userData = JSON.parse(savedUser)
+        user.value = userData
       } catch (error) {
         console.error('Error parsing saved user:', error)
-        localStorage.removeItem('biblestem_user')
+        clearUserFromStorage()
       }
     }
+  }
+
+  const initializeSupabaseAuth = async () => {
+    // TODO: Implement Supabase auth initialization
+    // const { data: { session } } = await supabase.auth.getSession()
+    // if (session?.user) {
+    //   user.value = transformSupabaseUser(session.user)
+    // }
+  }
+
+  const saveUserToStorage = (userData: User) => {
+    try {
+      localStorage.setItem('biblestem_user', JSON.stringify(userData))
+    } catch (error) {
+      console.error('Failed to save user to storage:', error)
+    }
+  }
+
+  const clearUserFromStorage = () => {
+    try {
+      localStorage.removeItem('biblestem_user')
+    } catch (error) {
+      console.error('Failed to clear user from storage:', error)
+    }
+  }
+
+  const updateUserProfile = async (updates: Partial<User>) => {
+    if (!user.value) return { success: false, error: 'User not authenticated' }
+
+    isLoading.value = true
+    clearError()
+
+    try {
+      if (config.value.useMockAuth) {
+        return await mockUpdateProfile(updates)
+      } else {
+        return await supabaseUpdateProfile(updates)
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to update profile'
+      setError(errorMessage)
+      return { success: false, error: errorMessage }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const mockUpdateProfile = async (updates: Partial<User>) => {
+    await new Promise((resolve) => setTimeout(resolve, 800))
+
+    user.value = { ...user.value!, ...updates, updatedAt: new Date().toISOString() }
+    saveUserToStorage(user.value)
+    return { success: true }
+  }
+
+  const supabaseUpdateProfile = async (updates: Partial<User>) => {
+    // TODO: Implement Supabase profile update
+    throw new Error('Supabase profile update not yet implemented')
   }
 
   return {
