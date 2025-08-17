@@ -132,7 +132,7 @@
                 @click.stop="handleAnswer(true)"
                 class="p-3 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors font-medium"
               >
-                🎯 Perfect!
+                ��� Perfect!
               </button>
             </div>
           </div>
@@ -273,6 +273,20 @@ const isTouching = ref(false)
 
 const flipCard = () => {
   isFlipped.value = !isFlipped.value
+}
+
+const handleTouchStart = (event: TouchEvent) => {
+  isTouching.value = true
+  // Prevent default to avoid conflicts with click
+  event.preventDefault()
+}
+
+const handleTouchEnd = (event: TouchEvent) => {
+  isTouching.value = false
+  // Only flip if this was a tap (not a scroll or swipe)
+  if (event.type === 'touchend') {
+    flipCard()
+  }
 }
 
 const handleAnswer = (wasCorrect: boolean) => {
