@@ -118,6 +118,11 @@ const {
   installPWA,
   updateServiceWorker,
 } = usePWA()
+
+// Initialize authentication on app start
+onMounted(async () => {
+  await authStore.initializeAuth()
+})
 </script>
 
 <style>
