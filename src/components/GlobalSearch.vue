@@ -311,7 +311,17 @@ interface SearchResults {
 }
 
 const router = useRouter()
-const notesStore = useNotesStore()
+
+// Initialize notes store safely
+const notesStore = ref<any>(null)
+
+onMounted(() => {
+  try {
+    notesStore.value = useNotesStore()
+  } catch (error) {
+    console.warn('Notes store not available:', error)
+  }
+})
 
 // Component state
 const searchQuery = ref('')
