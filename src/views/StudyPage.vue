@@ -320,12 +320,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useStudyProgressStore } from '../stores/studyProgress'
 import { useLoadingStore } from '../stores/loading'
 import { useErrorStore } from '../stores/errors'
+import { useCleanup, useDOMEvents, useSafeState } from '../composables/useCleanup'
 import { getStudyById, type Study, type Lesson } from '../data/studies'
 import LessonModal from '../components/LessonModal.vue'
 import StudyCompletion from '../components/StudyCompletion.vue'
