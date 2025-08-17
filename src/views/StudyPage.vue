@@ -471,15 +471,36 @@ const completeLesson = async (lessonId: string) => {
   }
 }
 
-const nextLessonInModal = () => {
-  if (!study.value || currentLessonIndex.value >= study.value.lessons.length - 1) {
-    closeLesson()
-    return
-  }
+const nextLessonInModal = async () => {
+  try {
+    if (!study.value || currentLessonIndex.value >= study.value.lessons.length - 1) {
+      closeLesson()
+      return
+    }
 
-  const nextIndex = currentLessonIndex.value + 1
-  if (canAccessLesson(nextIndex)) {
-    openLesson(study.value.lessons[nextIndex], nextIndex)
+    const nextIndex = currentLessonIndex.value + 1
+    const nextLesson = study.value.lessons[nextIndex]
+
+    if (canAccessLesson(nextIndex)) {
+      await openLesson(nextLesson, nextIndex)
+    } else {
+      // Show why next lesson can't be accessed
+      const reason = getLessonAccessReason(nextIndex)
+      switch (reason) {
+        case 'premium-required':
+          errorStore.addError('Premium subscription required for next lesson', { type: 'warning' })
+          break
+        case 'sequential':
+          errorStore.addError('Complete current lesson to unlock the next one', { type: 'info' })
+          break
+        default:
+          errorStore.addError('Next lesson is not available yet', { type: 'info' })
+      }
+      closeLesson()
+    }
+  } catch (err) {
+    console.error('Error navigating to next lesson:', err)
+    errorStore.handleError(err, 'Next Lesson Navigation')
   }
 }
 
