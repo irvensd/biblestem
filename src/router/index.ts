@@ -119,25 +119,93 @@ const router = createRouter({
 })
 
 // Navigation guards
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+  const errorStore = useErrorStore()
+  const loadingStore = useLoadingStore()
 
-  // Initialize auth state if not already done
-  authStore.initializeAuth()
+  try {
+    // Show loading for navigation
+    loadingStore.setLoading('navigation', true)
 
-  // Check if route requires authentication
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    next({ name: 'signin', query: { redirect: to.fullPath } })
-    return
+    // Wait for auth initialization if not ready
+    if (!authStore.isInitialized) {
+      await authStore.initializeAuth()
+    }
+
+    // Check if route requires authentication
+    if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+      errorStore.addError('Please sign in to access this page', { type: 'info' })
+      next({ name: 'signin', query: { redirect: to.fullPath } })
+      return
+    }
+
+    // Check if route requires guest (not authenticated)
+    if (to.meta.requiresGuest && authStore.isAuthenticated) {
+      next({ name: 'dashboard' })
+      return
+    }
+
+    // Check premium access for studies
+    if (to.meta.checkPremium && to.params.id) {
+      const studyId = to.params.id as string
+      const isPremiumStudy = await checkIfPremiumStudy(studyId)
+
+      if (isPremiumStudy && !authStore.isPremium) {
+        errorStore.addError('Premium subscription required for this study', { type: 'warning' })
+        next({ name: 'study-series', query: { premium: 'required' } })
+        return
+      }
+    }
+
+    // Validate study exists
+    if (to.name === 'study' && to.params.id) {
+      const studyExists = await validateStudyExists(to.params.id as string)
+      if (!studyExists) {
+        errorStore.addError('Study not found', { type: 'warning' })
+        next({ name: 'study-series' })
+        return
+      }
+    }
+
+    next()
+  } catch (error) {
+    console.error('Navigation guard error:', error)
+    errorStore.handleError(error, 'Navigation')
+    next({ name: 'home' })
+  } finally {
+    loadingStore.clearLoading('navigation')
   }
+})
 
-  // Check if route requires guest (not authenticated)
-  if (to.meta.requiresGuest && authStore.isAuthenticated) {
-    next({ name: 'dashboard' })
-    return
+// Helper function to check if study is premium
+async function checkIfPremiumStudy(studyId: string): Promise<boolean> {
+  try {
+    // Import dynamically to avoid circular dependencies
+    const { getPremiumStudies } = await import('../data/studies')
+    const premiumStudies = getPremiumStudies()
+    return premiumStudies.some(study => study.id === studyId)
+  } catch {
+    return false
   }
+}
 
-  next()
+// Helper function to validate study exists
+async function validateStudyExists(studyId: string): Promise<boolean> {
+  try {
+    const { getStudyById } = await import('../data/studies')
+    const study = getStudyById(studyId)
+    return !!study
+  } catch {
+    return false
+  }
+}
+
+// Global error handler for navigation
+router.onError((error) => {
+  console.error('Router error:', error)
+  const errorStore = useErrorStore()
+  errorStore.handleError(error, 'Router')
 })
 
 export default router
