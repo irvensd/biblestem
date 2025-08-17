@@ -120,17 +120,29 @@ const router = createRouter({
 
 // Navigation guards
 router.beforeEach(async (to, from, next) => {
-  const authStore = useAuthStore()
-  const errorStore = useErrorStore()
-  const loadingStore = useLoadingStore()
-
   try {
-    // Show loading for navigation
-    loadingStore.setLoading('navigation', true)
+    // Try to access stores, but handle gracefully if Pinia isn't ready
+    let authStore: any = null
+    let errorStore: any = null
+    let loadingStore: any = null
 
-    // Wait for auth initialization if not ready
-    if (!authStore.isInitialized) {
-      await authStore.initializeAuth()
+    try {
+      authStore = useAuthStore()
+      errorStore = useErrorStore()
+      loadingStore = useLoadingStore()
+
+      // Show loading for navigation
+      loadingStore.setLoading('navigation', true)
+
+      // Wait for auth initialization if not ready
+      if (!authStore.isInitialized) {
+        await authStore.initializeAuth()
+      }
+    } catch (storeError) {
+      console.warn('Stores not ready during navigation, proceeding without auth check:', storeError)
+      // Continue with navigation if stores aren't ready
+      next()
+      return
     }
 
     // Check if route requires authentication
