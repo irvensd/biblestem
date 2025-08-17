@@ -276,7 +276,44 @@ watch(() => props.card, () => {
 </script>
 
 <style scoped>
-.rotate-y-180 {
+/* 3D Card Flip Animation */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.card-container {
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+}
+
+.card-container.flipped {
   transform: rotateY(180deg);
+}
+
+.card-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-front {
+  transform: rotateY(0deg);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Hover effect for non-flipped state */
+.card-container:not(.flipped):hover {
+  transform: scale(1.05);
+}
+
+.card-container.flipped:hover {
+  transform: rotateY(180deg) scale(1.05);
 }
 </style>
