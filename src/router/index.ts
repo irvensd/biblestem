@@ -50,6 +50,7 @@ const router = createRouter({
       name: 'study',
       component: StudyPage,
       props: true,
+      meta: { requiresAuth: true, checkPremium: true },
     },
     {
       path: '/my-studies',
