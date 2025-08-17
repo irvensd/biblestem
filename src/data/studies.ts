@@ -2026,7 +2026,7 @@ export const premiumStudies: Study[] = [
     totalDuration: 210, // 7 lessons × 30 minutes each
     difficulty: 'advanced',
     tags: ['prophecy', 'apocalyptic', 'end-times', 'beasts', 'judgment'],
-    image: '/images/daniel-revelation.jpg',
+    image: 'prophecies',
     color: 'from-red-500 to-orange-600',
     features: [
       'Prophecy timeline charts',
