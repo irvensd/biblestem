@@ -361,6 +361,9 @@ import GlobalSearch from './GlobalSearch.vue'
 
 const route = useRoute()
 
+// Safe route path access
+const routePath = computed(() => route?.path || '')
+
 // Initialize authStore safely
 const authStore = ref({
   isAuthenticated: false,
