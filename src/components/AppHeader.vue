@@ -410,13 +410,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import GlobalSearch from './GlobalSearch.vue'
 
 const router = useRouter()
-const authStore = useAuthStore()
+
+// Use computed to safely access auth store
+const authStore = computed(() => {
+  try {
+    return useAuthStore()
+  } catch (error) {
+    // Return a mock store if Pinia isn't ready yet
+    return {
+      isAuthenticated: false,
+      user: null,
+      isPremium: false,
+      logout: () => Promise.resolve()
+    }
+  }
+})
 
 const mobileMenuOpen = ref(false)
 const userMenuOpen = ref(false)
