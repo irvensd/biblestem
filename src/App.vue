@@ -7,7 +7,10 @@
       <AppHeader />
       <main class="pb-16 sm:pb-0">
         <ErrorBoundary>
-          <router-view />
+          <router-view v-if="isAppReady" />
+          <div v-else class="flex items-center justify-center min-h-[400px]">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+          </div>
         </ErrorBoundary>
       </main>
       <MobileNavigation />
