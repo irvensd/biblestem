@@ -435,6 +435,9 @@ onMounted(async () => {
   } catch (error) {
     console.warn('Failed to initialize auth store:', error)
   }
+
+  // Set up click handler
+  document.addEventListener('click', handleClickOutside)
 })
 
 const mobileMenuOpen = ref(false)
