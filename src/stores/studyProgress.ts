@@ -94,7 +94,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     return progress ? progress.completedLessons.includes(lessonId) : false
   }
 
-  const completeLesson = (studyId: string, lessonId: string, timeSpent: number = 0) => {
+  const completeLesson = async (studyId: string, lessonId: string, timeSpent: number = 0) => {
     if (!progressData.value[studyId]) {
       progressData.value[studyId] = {
         studyId,
@@ -115,10 +115,13 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     progress.totalTimeSpent += timeSpent
 
     saveToStorage()
-    await saveProgressToSupabase(studyId)
+    // Fire and forget Supabase sync - don't block UI
+    saveProgressToSupabase(studyId).catch(error =>
+      console.error('Failed to sync progress to Supabase:', error)
+    )
   }
 
-  const startStudy = (studyId: string, lessonId?: string) => {
+  const startStudy = async (studyId: string, lessonId?: string) => {
     if (!progressData.value[studyId]) {
       progressData.value[studyId] = {
         studyId,
@@ -136,7 +139,10 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     }
 
     saveToStorage()
-    await saveProgressToSupabase(studyId)
+    // Fire and forget Supabase sync - don't block UI
+    saveProgressToSupabase(studyId).catch(error =>
+      console.error('Failed to sync progress to Supabase:', error)
+    )
   }
 
   const getStudyCompletionPercentage = (studyId: string, totalLessons: number): number => {
