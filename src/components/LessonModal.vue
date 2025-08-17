@@ -328,8 +328,13 @@
               </div>
 
               <!-- Greek/Hebrew Words Section -->
-              <div v-if="lesson.content.hebrewGreekWords && lesson.content.hebrewGreekWords.length > 0" class="mt-8">
-                <h4 class="text-lg font-bold text-neutral-800 dark:text-neutral-200 text-center mb-6">
+              <div
+                v-if="lesson.content.hebrewGreekWords && lesson.content.hebrewGreekWords.length > 0"
+                class="mt-8"
+              >
+                <h4
+                  class="text-lg font-bold text-neutral-800 dark:text-neutral-200 text-center mb-6"
+                >
                   Original Language Insights
                 </h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -341,7 +346,13 @@
                     <div class="flex items-center justify-between mb-2">
                       <span
                         class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
-                        :class="word.language === 'Greek' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : word.language === 'Hebrew' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300' : 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300'"
+                        :class="
+                          word.language === 'Greek'
+                            ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                            : word.language === 'Hebrew'
+                              ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300'
+                              : 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300'
+                        "
                       >
                         {{ word.language }}
                       </span>
@@ -349,7 +360,10 @@
 
                     <div class="space-y-2">
                       <div>
-                        <div class="text-lg font-bold text-neutral-900 dark:text-neutral-100" :dir="word.language === 'Hebrew' ? 'rtl' : 'ltr'">
+                        <div
+                          class="text-lg font-bold text-neutral-900 dark:text-neutral-100"
+                          :dir="word.language === 'Hebrew' ? 'rtl' : 'ltr'"
+                        >
                           {{ word.word }}
                         </div>
                         <div class="text-sm text-neutral-600 dark:text-neutral-400 italic">
@@ -649,15 +663,15 @@
             </div>
 
             <!-- Diagram -->
-            <div
-              v-else-if="lesson.content.interactiveElement.type === 'diagram'"
-              class="space-y-6"
-            >
+            <div v-else-if="lesson.content.interactiveElement.type === 'diagram'" class="space-y-6">
               <div class="card p-6">
                 <h4 class="font-bold text-lg mb-6 text-neutral-800 dark:text-neutral-200">
                   {{ lesson.content.interactiveElement.content.title }}
                 </h4>
-                <p v-if="lesson.content.interactiveElement.content.description" class="text-neutral-600 dark:text-neutral-400 mb-6">
+                <p
+                  v-if="lesson.content.interactiveElement.content.description"
+                  class="text-neutral-600 dark:text-neutral-400 mb-6"
+                >
                   {{ lesson.content.interactiveElement.content.description }}
                 </p>
 
@@ -669,12 +683,18 @@
                     class="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-600 transition-colors cursor-pointer group"
                   >
                     <div class="flex items-center justify-between mb-2">
-                      <h5 class="font-semibold text-neutral-900 dark:text-neutral-100">{{ element.name }}</h5>
-                      <span class="text-xs px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded">
+                      <h5 class="font-semibold text-neutral-900 dark:text-neutral-100">
+                        {{ element.name }}
+                      </h5>
+                      <span
+                        class="text-xs px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded"
+                      >
                         {{ element.location }}
                       </span>
                     </div>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">{{ element.meaning }}</p>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                      {{ element.meaning }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -686,13 +706,17 @@
               class="space-y-6"
             >
               <div class="card p-6">
-                <h4 class="font-bold text-lg mb-6 text-neutral-800 dark:text-neutral-200 text-center">
+                <h4
+                  class="font-bold text-lg mb-6 text-neutral-800 dark:text-neutral-200 text-center"
+                >
                   {{ lesson.content.interactiveElement.content.title }}
                 </h4>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <!-- Left Side -->
-                  <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                  <div
+                    class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800"
+                  >
                     <h5 class="font-semibold text-green-800 dark:text-green-200 mb-3 text-center">
                       {{ lesson.content.interactiveElement.content.leftSide.title }}
                     </h5>
@@ -702,8 +726,16 @@
                         :key="point"
                         class="flex items-start space-x-2 text-sm text-green-700 dark:text-green-300"
                       >
-                        <svg class="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        <svg
+                          class="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"
+                          />
                         </svg>
                         <span>{{ point }}</span>
                       </li>
@@ -711,7 +743,9 @@
                   </div>
 
                   <!-- Right Side -->
-                  <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
+                  <div
+                    class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800"
+                  >
                     <h5 class="font-semibold text-red-800 dark:text-red-200 mb-3 text-center">
                       {{ lesson.content.interactiveElement.content.rightSide.title }}
                     </h5>
@@ -721,8 +755,16 @@
                         :key="point"
                         class="flex items-start space-x-2 text-sm text-red-700 dark:text-red-300"
                       >
-                        <svg class="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        <svg
+                          class="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"
+                          />
                         </svg>
                         <span>{{ point }}</span>
                       </li>
@@ -759,21 +801,46 @@
                         <div class="flex items-center space-x-3">
                           <div
                             class="w-6 h-6 rounded-full flex items-center justify-center"
-                            :class="item.status === 'fulfilled' ? 'bg-green-500' : item.status === 'fulfilling' ? 'bg-yellow-500' : 'bg-blue-500'"
+                            :class="
+                              item.status === 'fulfilled'
+                                ? 'bg-green-500'
+                                : item.status === 'fulfilling'
+                                  ? 'bg-yellow-500'
+                                  : 'bg-blue-500'
+                            "
                           >
-                            <svg v-if="item.status === 'fulfilled'" class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            <svg
+                              v-if="item.status === 'fulfilled'"
+                              class="w-4 h-4 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"
+                              />
                             </svg>
                             <span v-else class="text-xs text-white font-bold">•</span>
                           </div>
-                          <span class="text-sm text-neutral-900 dark:text-neutral-100">{{ item.sign }}</span>
+                          <span class="text-sm text-neutral-900 dark:text-neutral-100">{{
+                            item.sign
+                          }}</span>
                         </div>
                         <div class="text-right">
-                          <span class="text-xs text-neutral-600 dark:text-neutral-400">{{ item.reference }}</span>
+                          <span class="text-xs text-neutral-600 dark:text-neutral-400">{{
+                            item.reference
+                          }}</span>
                           <div class="text-xs">
                             <span
                               class="px-2 py-1 rounded"
-                              :class="item.status === 'fulfilled' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' : item.status === 'fulfilling' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'"
+                              :class="
+                                item.status === 'fulfilled'
+                                  ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+                                  : item.status === 'fulfilling'
+                                    ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400'
+                                    : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                              "
                             >
                               {{ item.status }}
                             </span>
@@ -883,7 +950,9 @@
                 ></textarea>
 
                 <!-- Premium Upsell -->
-                <div class="mt-4 p-3 bg-accent-50 dark:bg-accent-900/20 rounded-lg border border-accent-200 dark:border-accent-800">
+                <div
+                  class="mt-4 p-3 bg-accent-50 dark:bg-accent-900/20 rounded-lg border border-accent-200 dark:border-accent-800"
+                >
                   <div class="flex items-center justify-between">
                     <div>
                       <p class="text-sm font-medium text-accent-800 dark:text-accent-200">
@@ -893,9 +962,7 @@
                         Get guided templates for deeper reflection and study
                       </p>
                     </div>
-                    <button @click="$emit('upgrade')" class="btn-accent text-sm">
-                      Upgrade
-                    </button>
+                    <button @click="$emit('upgrade')" class="btn-accent text-sm">Upgrade</button>
                   </div>
                 </div>
               </div>
@@ -983,7 +1050,6 @@
                 Additional Study Resources
               </h4>
               <div class="grid md:grid-cols-2 gap-4">
-
                 <div
                   v-if="lesson.content.deeperStudy.additionalReadings"
                   class="card p-4 text-center"

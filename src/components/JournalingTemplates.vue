@@ -17,16 +17,20 @@
         :key="template.id"
         @click="selectedTemplate = template.id"
         class="px-3 py-2 text-sm rounded-full transition-colors"
-        :class="selectedTemplate === template.id 
-          ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400' 
-          : 'bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-600'"
+        :class="
+          selectedTemplate === template.id
+            ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
+            : 'bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-600'
+        "
       >
         {{ template.icon }} {{ template.name }}
       </button>
     </div>
 
     <!-- Active Template -->
-    <div class="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
+    <div
+      class="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden"
+    >
       <div class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white p-4">
         <div class="flex items-center space-x-3">
           <div class="text-2xl">{{ currentTemplate.icon }}</div>
@@ -45,7 +49,9 @@
           class="space-y-3"
         >
           <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+            <div
+              class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white text-sm font-bold"
+            >
               {{ index + 1 }}
             </div>
             <h5 class="font-semibold text-neutral-900 dark:text-neutral-100">
@@ -66,7 +72,7 @@
               :placeholder="section.placeholder"
               @input="saveEntry(section.id)"
             ></textarea>
-            
+
             <!-- Character count -->
             <div class="flex justify-between items-center mt-2 text-xs text-neutral-500">
               <span>{{ (journalEntries[section.id] || '').length }} characters</span>
@@ -107,18 +113,42 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-neutral-200 dark:border-neutral-700">
+        <div
+          class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-neutral-200 dark:border-neutral-700"
+        >
           <button
             @click="saveToCloud"
             :disabled="isSaving"
             class="flex items-center justify-center space-x-2 bg-primary-600 hover:bg-primary-700 disabled:bg-primary-400 text-white px-4 py-3 rounded-lg font-medium transition-colors"
           >
-            <svg v-if="!isSaving" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            <svg
+              v-if="!isSaving"
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              />
             </svg>
             <svg v-else class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
             </svg>
             <span>{{ isSaving ? 'Saving...' : 'Save to Account' }}</span>
           </button>
@@ -128,7 +158,12 @@
             class="flex items-center justify-center space-x-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-600 px-4 py-3 rounded-lg font-medium transition-colors"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
             </svg>
             <span>Export as PDF</span>
           </button>
@@ -138,7 +173,12 @@
             class="flex items-center justify-center space-x-2 bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-3 rounded-lg font-medium transition-colors"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
+              />
             </svg>
             <span>Share with Group</span>
           </button>
@@ -214,7 +254,9 @@ const journalEntries = ref<Record<string, string>>({})
 const expandedSections = ref<string[]>([])
 const isSaving = ref(false)
 const lastSaved = ref<Date | null>(null)
-const previousEntries = ref<Array<{id: string, lessonTitle: string, date: Date, preview: string}>>([])
+const previousEntries = ref<
+  Array<{ id: string; lessonTitle: string; date: Date; preview: string }>
+>([])
 
 // Journal Templates
 const journalTemplates: JournalTemplate[] = [
@@ -228,27 +270,27 @@ const journalTemplates: JournalTemplate[] = [
         id: 'key-insights',
         title: 'Key Insights',
         prompt: 'What key insights did you gain from this lesson? What stood out to you most?',
-        placeholder: 'Share the most important things you learned...'
+        placeholder: 'Share the most important things you learned...',
       },
       {
         id: 'personal-application',
         title: 'Personal Application',
         prompt: 'How can you apply these biblical principles to your daily life?',
-        placeholder: 'Describe specific ways you will apply this...'
+        placeholder: 'Describe specific ways you will apply this...',
       },
       {
         id: 'challenges',
         title: 'Areas of Challenge',
         prompt: 'What areas of your life does this lesson challenge you to grow in?',
-        placeholder: 'Be honest about areas where you need to grow...'
+        placeholder: 'Be honest about areas where you need to grow...',
       },
       {
         id: 'prayer-requests',
         title: 'Prayer Requests',
         prompt: 'What would you like to pray about based on this lesson?',
-        placeholder: 'Share your prayer requests and concerns...'
-      }
-    ]
+        placeholder: 'Share your prayer requests and concerns...',
+      },
+    ],
   },
   {
     id: 'inductive',
@@ -261,21 +303,21 @@ const journalTemplates: JournalTemplate[] = [
         title: 'Observation',
         prompt: 'What does the text say? List key facts, people, places, and events.',
         placeholder: 'Record what you observe in the passage...',
-        rows: 5
+        rows: 5,
       },
       {
         id: 'interpretation',
         title: 'Interpretation',
         prompt: 'What does the text mean? Consider context, culture, and original meaning.',
         placeholder: 'Explain what the passage means...',
-        rows: 5
+        rows: 5,
       },
       {
         id: 'application',
         title: 'Application',
         prompt: 'How does this apply to my life today? What action will you take?',
         placeholder: 'Describe how you will apply this to your life...',
-        rows: 4
+        rows: 4,
       },
       {
         id: 'correlation',
@@ -283,9 +325,9 @@ const journalTemplates: JournalTemplate[] = [
         prompt: 'What other Bible passages relate to this topic?',
         placeholder: 'List related verses and how they connect...',
         rows: 3,
-        scriptureReferences: ['Romans 8:28', '1 Corinthians 10:13', 'Philippians 4:13']
-      }
-    ]
+        scriptureReferences: ['Romans 8:28', '1 Corinthians 10:13', 'Philippians 4:13'],
+      },
+    ],
   },
   {
     id: 'devotional',
@@ -296,28 +338,29 @@ const journalTemplates: JournalTemplate[] = [
       {
         id: 'praise',
         title: 'Praise & Worship',
-        prompt: 'How does this lesson inspire you to praise God? What attributes of God do you see?',
-        placeholder: 'Express your praise and worship...'
+        prompt:
+          'How does this lesson inspire you to praise God? What attributes of God do you see?',
+        placeholder: 'Express your praise and worship...',
       },
       {
         id: 'confession',
         title: 'Confession',
         prompt: 'Is there anything in your life that needs to be confessed before God?',
-        placeholder: 'Be honest with God about your struggles...'
+        placeholder: 'Be honest with God about your struggles...',
       },
       {
         id: 'thanksgiving',
         title: 'Thanksgiving',
         prompt: 'What are you thankful for based on this lesson?',
-        placeholder: 'List things you are grateful for...'
+        placeholder: 'List things you are grateful for...',
       },
       {
         id: 'supplication',
         title: 'Prayer Requests',
         prompt: 'What do you want to ask God for? What are your needs and concerns?',
-        placeholder: 'Share your prayer requests...'
-      }
-    ]
+        placeholder: 'Share your prayer requests...',
+      },
+    ],
   },
   {
     id: 'character-study',
@@ -329,32 +372,32 @@ const journalTemplates: JournalTemplate[] = [
         id: 'character-traits',
         title: 'Character Traits',
         prompt: 'What character traits do you observe in the people mentioned in this lesson?',
-        placeholder: 'Describe the positive and negative traits you see...'
+        placeholder: 'Describe the positive and negative traits you see...',
       },
       {
         id: 'choices-consequences',
         title: 'Choices & Consequences',
         prompt: 'What choices did they make and what were the consequences?',
-        placeholder: 'Analyze the decisions made and their outcomes...'
+        placeholder: 'Analyze the decisions made and their outcomes...',
       },
       {
         id: 'lessons-learned',
         title: 'Lessons for Today',
         prompt: 'What can you learn from their example? What would you do differently?',
-        placeholder: 'Reflect on the lessons for your own life...'
+        placeholder: 'Reflect on the lessons for your own life...',
       },
       {
         id: 'character-growth',
         title: 'Personal Character Growth',
         prompt: 'What character qualities do you want to develop in your own life?',
-        placeholder: 'Identify areas where you want to grow...'
-      }
-    ]
-  }
+        placeholder: 'Identify areas where you want to grow...',
+      },
+    ],
+  },
 ]
 
 const currentTemplate = computed(() => {
-  return journalTemplates.find(t => t.id === selectedTemplate.value) || journalTemplates[0]
+  return journalTemplates.find((t) => t.id === selectedTemplate.value) || journalTemplates[0]
 })
 
 const saveEntry = (sectionId: string) => {
@@ -382,16 +425,16 @@ const saveToCloud = async () => {
   isSaving.value = true
   try {
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+
     // In a real app, this would save to the backend
     console.log('Saving journal entry to cloud:', {
       lessonId: props.lesson.id,
       template: selectedTemplate.value,
       entries: journalEntries.value,
-      timestamp: new Date()
+      timestamp: new Date(),
     })
-    
+
     lastSaved.value = new Date()
   } catch (error) {
     console.error('Error saving to cloud:', error)
@@ -405,14 +448,14 @@ const exportEntry = () => {
   const content = createExportContent()
   const blob = new Blob([content], { type: 'text/plain' })
   const url = URL.createObjectURL(blob)
-  
+
   const link = document.createElement('a')
   link.href = url
   link.download = `${props.lesson.title}-journal-${selectedTemplate.value}.txt`
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
-  
+
   URL.revokeObjectURL(url)
 }
 
@@ -422,14 +465,14 @@ const createExportContent = () => {
   content += `Scripture: ${props.lesson.scripture}\n`
   content += `Template: ${currentTemplate.value.name}\n`
   content += `Date: ${new Date().toLocaleDateString()}\n\n`
-  
-  currentTemplate.value.sections.forEach(section => {
+
+  currentTemplate.value.sections.forEach((section) => {
     content += `${section.title.toUpperCase()}\n`
     content += `${section.prompt}\n\n`
     content += `${journalEntries.value[section.id] || '[No entry]'}\n\n`
     content += '-'.repeat(50) + '\n\n'
   })
-  
+
   return content
 }
 
@@ -448,7 +491,8 @@ const shareEntry = () => {
 }
 
 const createShareText = () => {
-  const keyInsights = journalEntries.value['key-insights'] || journalEntries.value['observation'] || ''
+  const keyInsights =
+    journalEntries.value['key-insights'] || journalEntries.value['observation'] || ''
   return `Studying "${props.lesson.title}" (${props.lesson.scripture})\n\nKey insights: ${keyInsights.substring(0, 200)}${keyInsights.length > 200 ? '...' : ''}\n\n#BibleStudy #Faith`
 }
 
@@ -467,43 +511,43 @@ const formatLastSaved = (date: Date) => {
   const now = new Date()
   const diff = now.getTime() - date.getTime()
   const minutes = Math.floor(diff / 60000)
-  
+
   if (minutes < 1) return 'Just now'
   if (minutes < 60) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`
-  
+
   const hours = Math.floor(minutes / 60)
   if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`
-  
+
   return date.toLocaleDateString()
 }
 
 const formatDate = (date: Date) => {
-  return date.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'short', 
-    day: 'numeric' 
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   })
 }
 
 // Load saved entries on mount
 onMounted(() => {
-  currentTemplate.value.sections.forEach(section => {
+  currentTemplate.value.sections.forEach((section) => {
     const key = `journal-${props.lesson.id}-${selectedTemplate.value}-${section.id}`
     const saved = localStorage.getItem(key)
     if (saved) {
       journalEntries.value[section.id] = saved
     }
   })
-  
+
   // Load previous entries from localStorage
-  const keys = Object.keys(localStorage).filter(key => key.startsWith('journal-'))
+  const keys = Object.keys(localStorage).filter((key) => key.startsWith('journal-'))
   // This would be replaced with actual data loading in a real app
 })
 
 // Watch template changes and load saved data
 watch(selectedTemplate, (newTemplate) => {
   journalEntries.value = {}
-  currentTemplate.value.sections.forEach(section => {
+  currentTemplate.value.sections.forEach((section) => {
     const key = `journal-${props.lesson.id}-${newTemplate}-${section.id}`
     const saved = localStorage.getItem(key)
     if (saved) {

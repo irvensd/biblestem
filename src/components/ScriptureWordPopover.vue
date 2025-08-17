@@ -22,8 +22,18 @@
         @click="hidePopover"
         class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors sm:hidden"
       >
-        <svg class="w-4 h-4 text-neutral-600 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <svg
+          class="w-4 h-4 text-neutral-600 dark:text-neutral-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
         </svg>
       </button>
 
@@ -35,14 +45,19 @@
         >
           {{ word.language }}
         </span>
-        
+
         <!-- Audio pronunciation button -->
         <button
           @click="playPronunciation"
           class="flex items-center space-x-1 px-2 py-1 text-xs text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M9 12a3 3 0 106 0 3 3 0 00-6 0zm-7 0a13 13 0 0113-13 13 13 0 01-13 13 13 13 0 010-26z" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M9 12a3 3 0 106 0 3 3 0 00-6 0zm-7 0a13 13 0 0113-13 13 13 0 01-13 13 13 13 0 010-26z"
+            />
           </svg>
           <span>Listen</span>
         </button>
@@ -55,7 +70,10 @@
           <div class="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
             Original Word
           </div>
-          <div class="text-lg font-bold text-neutral-900 dark:text-neutral-100" :dir="word.language === 'Hebrew' ? 'rtl' : 'ltr'">
+          <div
+            class="text-lg font-bold text-neutral-900 dark:text-neutral-100"
+            :dir="word.language === 'Hebrew' ? 'rtl' : 'ltr'"
+          >
             {{ word.word }}
           </div>
         </div>
@@ -72,9 +90,7 @@
 
         <!-- Meaning -->
         <div>
-          <div class="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
-            Meaning
-          </div>
+          <div class="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Meaning</div>
           <div class="text-sm text-neutral-800 dark:text-neutral-200">
             {{ word.meaning }}
           </div>
@@ -82,9 +98,7 @@
 
         <!-- Context -->
         <div>
-          <div class="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
-            Context
-          </div>
+          <div class="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Context</div>
           <div class="text-sm text-neutral-600 dark:text-neutral-400">
             {{ word.context }}
           </div>
@@ -133,7 +147,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  position: 'top'
+  position: 'top',
 })
 
 const isVisible = ref(false)
@@ -217,7 +231,7 @@ const playPronunciation = () => {
   // In a real app, this would play audio pronunciation
   // For demo purposes, we'll just show a message
   console.log(`Playing pronunciation for: ${props.word.transliteration}`)
-  
+
   // You could integrate with a text-to-speech API or audio files here
   if ('speechSynthesis' in window) {
     const utterance = new SpeechSynthesisUtterance(props.word.transliteration)
@@ -238,7 +252,7 @@ document.addEventListener('click', (event) => {
 
 <style scoped>
 /* Custom styling for Hebrew text direction */
-[dir="rtl"] {
+[dir='rtl'] {
   font-family: 'SBL Hebrew', 'Times New Roman', serif;
 }
 </style>
