@@ -52,11 +52,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.',
         category: 'Salvation',
         difficulty: 'medium',
-        theme: 'God\'s Love',
+        theme: "God's Love",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'romans-6-23',
@@ -68,7 +68,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'ephesians-2-8-9',
@@ -80,7 +80,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'romans-10-9',
@@ -92,7 +92,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: '1john-4-8',
@@ -100,11 +100,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'He that loveth not knoweth not God; for God is love.',
         category: 'Salvation',
         difficulty: 'easy',
-        theme: 'God\'s Love',
+        theme: "God's Love",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // COMFORT & PEACE
@@ -114,11 +114,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'The LORD is my shepherd; I shall not want.',
         category: 'Comfort',
         difficulty: 'easy',
-        theme: 'God\'s Care',
+        theme: "God's Care",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'psalm-23-4',
@@ -130,7 +130,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'isaiah-41-10',
@@ -142,7 +142,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'john-14-27',
@@ -154,7 +154,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'romans-8-28',
@@ -162,11 +162,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.',
         category: 'Comfort',
         difficulty: 'medium',
-        theme: 'God\'s Sovereignty',
+        theme: "God's Sovereignty",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'matthew-11-28',
@@ -178,7 +178,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // STRENGTH & COURAGE
@@ -188,11 +188,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'I can do all things through Christ which strengtheneth me.',
         category: 'Strength',
         difficulty: 'easy',
-        theme: 'God\'s Power',
+        theme: "God's Power",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'joshua-1-9',
@@ -204,7 +204,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: '2timothy-1-7',
@@ -216,7 +216,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'isaiah-40-31',
@@ -228,7 +228,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // GUIDANCE & WISDOM
@@ -242,7 +242,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'psalm-119-105',
@@ -250,11 +250,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'Thy word is a lamp unto my feet, and a light unto my path.',
         category: 'Guidance',
         difficulty: 'easy',
-        theme: 'God\'s Word',
+        theme: "God's Word",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'james-1-5',
@@ -266,7 +266,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'jeremiah-29-11',
@@ -274,11 +274,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.',
         category: 'Guidance',
         difficulty: 'medium',
-        theme: 'God\'s Plans',
+        theme: "God's Plans",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // PRAYER & WORSHIP
@@ -294,7 +294,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'philippians-4-6-7',
@@ -306,7 +306,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: '1thessalonians-5-17',
@@ -318,7 +318,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'psalm-100-4',
@@ -330,7 +330,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // PRIORITIES & CHRISTIAN LIVING
@@ -340,11 +340,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you.',
         category: 'Priorities',
         difficulty: 'medium',
-        theme: 'God\'s Kingdom',
+        theme: "God's Kingdom",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'galatians-2-20',
@@ -356,7 +356,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'romans-12-1',
@@ -368,7 +368,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: '1corinthians-10-31',
@@ -376,11 +376,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.',
         category: 'Priorities',
         difficulty: 'medium',
-        theme: 'God\'s Glory',
+        theme: "God's Glory",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // LOVE & RELATIONSHIPS
@@ -390,11 +390,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'We love him, because he first loved us.',
         category: 'Love',
         difficulty: 'easy',
-        theme: 'God\'s Love',
+        theme: "God's Love",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'john-13-35',
@@ -406,19 +406,19 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'ephesians-4-32',
         reference: 'Ephesians 4:32',
-        text: 'And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ\'s sake hath forgiven you.',
+        text: "And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ's sake hath forgiven you.",
         category: 'Love',
         difficulty: 'medium',
         theme: 'Forgiveness',
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: '1corinthians-13-4-5',
@@ -430,7 +430,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // BIBLE STUDY & WORD OF GOD
@@ -440,11 +440,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness.',
         category: 'Bible Study',
         difficulty: 'medium',
-        theme: 'Scripture\'s Authority',
+        theme: "Scripture's Authority",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'hebrews-4-12',
@@ -452,11 +452,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.',
         category: 'Bible Study',
         difficulty: 'hard',
-        theme: 'God\'s Word Power',
+        theme: "God's Word Power",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'psalm-1-2-3',
@@ -468,7 +468,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // FORGIVENESS & SIN
@@ -482,7 +482,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'romans-3-23',
@@ -494,7 +494,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'psalm-103-12',
@@ -502,11 +502,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'As far as the east is from the west, so far hath he removed our transgressions from us.',
         category: 'Forgiveness',
         difficulty: 'medium',
-        theme: 'God\'s Forgiveness',
+        theme: "God's Forgiveness",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // FAITH & TRUST
@@ -520,7 +520,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'romans-10-17',
@@ -532,7 +532,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'ephesians-2-10',
@@ -544,7 +544,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // HOPE & FUTURE
@@ -558,7 +558,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'revelation-21-4',
@@ -570,7 +570,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: '1peter-1-3',
@@ -582,7 +582,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // JOY & PRAISE
@@ -592,11 +592,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'Then he said unto them, Go your way, eat the fat, and drink the sweet, and send portions unto them for whom nothing is prepared: for this day is holy unto our Lord: neither be ye sorry; for the joy of the LORD is your strength.',
         category: 'Joy',
         difficulty: 'hard',
-        theme: 'God\'s Joy',
+        theme: "God's Joy",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'psalm-118-24',
@@ -608,7 +608,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'psalm-150-6',
@@ -620,7 +620,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // OBEDIENCE & DISCIPLESHIP
@@ -636,7 +636,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'luke-9-23',
@@ -648,7 +648,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'james-1-22',
@@ -660,7 +660,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
 
       // CHILDREN'S VERSES (Easy to memorize)
@@ -670,11 +670,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'Jesus wept.',
         category: 'Children',
         difficulty: 'easy',
-        theme: 'Jesus\' Humanity',
+        theme: "Jesus' Humanity",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'be-kind',
@@ -686,7 +686,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'god-is-love',
@@ -694,11 +694,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'God is love.',
         category: 'Children',
         difficulty: 'easy',
-        theme: 'God\'s Love',
+        theme: "God's Love",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
+        dateAdded: new Date().toISOString(),
       },
       {
         id: 'children-obey',
@@ -710,12 +710,12 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
-        dateAdded: new Date().toISOString()
-      }
+        dateAdded: new Date().toISOString(),
+      },
     ]
 
     // Convert to record format
-    defaultCards.forEach(card => {
+    defaultCards.forEach((card) => {
       cards.value[card.id] = card
     })
   }
@@ -728,42 +728,56 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         title: 'My First Verses',
         description: 'Perfect starting verses for new memorizers',
         category: 'Beginner',
-        cardIds: ['jesus-wept', 'god-is-love', '1thessalonians-5-17', 'psalm-118-24', 'psalm-23-1', 'philippians-4-13'],
+        cardIds: [
+          'jesus-wept',
+          'god-is-love',
+          '1thessalonians-5-17',
+          'psalm-118-24',
+          'psalm-23-1',
+          'philippians-4-13',
+        ],
         isDefault: true,
         color: 'from-green-400 to-emerald-500',
-        icon: '🌱'
+        icon: '🌱',
       },
       {
         id: 'children-favorites',
-        title: 'Children\'s Favorites',
+        title: "Children's Favorites",
         description: 'Simple, powerful verses kids love to memorize',
         category: 'Children',
         cardIds: ['jesus-wept', 'be-kind', 'god-is-love', 'children-obey', 'psalm-150-6'],
         isDefault: true,
         color: 'from-yellow-400 to-orange-400',
-        icon: '👶'
+        icon: '👶',
       },
 
       // CORE CHRISTIAN DOCTRINES
       {
         id: 'salvation-essentials',
         title: 'Salvation Essentials',
-        description: 'Core verses about salvation and God\'s love',
+        description: "Core verses about salvation and God's love",
         category: 'Salvation',
-        cardIds: ['john-3-16', 'romans-6-23', 'ephesians-2-8-9', 'romans-10-9', '1john-4-8', 'romans-3-23'],
+        cardIds: [
+          'john-3-16',
+          'romans-6-23',
+          'ephesians-2-8-9',
+          'romans-10-9',
+          '1john-4-8',
+          'romans-3-23',
+        ],
         isDefault: true,
         color: 'from-red-500 to-pink-500',
-        icon: '✝️'
+        icon: '✝️',
       },
       {
         id: 'forgiveness-grace',
         title: 'Forgiveness & Grace',
-        description: 'Understanding God\'s forgiveness and grace',
+        description: "Understanding God's forgiveness and grace",
         category: 'Forgiveness',
         cardIds: ['1john-1-9', 'romans-3-23', 'psalm-103-12', 'ephesians-2-8-9'],
         isDefault: true,
         color: 'from-blue-400 to-indigo-500',
-        icon: '🕊️'
+        icon: '🕊️',
       },
       {
         id: 'faith-trust',
@@ -773,7 +787,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         cardIds: ['hebrews-11-1', 'romans-10-17', 'ephesians-2-10', 'proverbs-3-5-6'],
         isDefault: true,
         color: 'from-indigo-500 to-purple-500',
-        icon: '🙏'
+        icon: '🙏',
       },
 
       // COMFORT & ENCOURAGEMENT
@@ -782,30 +796,37 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         title: 'Comfort & Peace',
         description: 'Verses for difficult times and anxiety',
         category: 'Comfort',
-        cardIds: ['psalm-23-1', 'psalm-23-4', 'isaiah-41-10', 'john-14-27', 'romans-8-28', 'matthew-11-28'],
+        cardIds: [
+          'psalm-23-1',
+          'psalm-23-4',
+          'isaiah-41-10',
+          'john-14-27',
+          'romans-8-28',
+          'matthew-11-28',
+        ],
         isDefault: true,
         color: 'from-teal-400 to-cyan-500',
-        icon: '🤗'
+        icon: '🤗',
       },
       {
         id: 'strength-courage',
         title: 'Strength & Courage',
-        description: 'Verses for when you need God\'s strength',
+        description: "Verses for when you need God's strength",
         category: 'Strength',
         cardIds: ['philippians-4-13', 'joshua-1-9', '2timothy-1-7', 'isaiah-40-31'],
         isDefault: true,
         color: 'from-orange-500 to-red-500',
-        icon: '💪'
+        icon: '💪',
       },
       {
         id: 'hope-future',
         title: 'Hope & Future',
-        description: 'Verses about eternal hope and God\'s promises',
+        description: "Verses about eternal hope and God's promises",
         category: 'Hope',
         cardIds: ['jeremiah-29-11', 'romans-8-18', 'revelation-21-4', '1peter-1-3'],
         isDefault: true,
         color: 'from-purple-400 to-pink-400',
-        icon: '🌅'
+        icon: '🌅',
       },
 
       // SPIRITUAL GROWTH
@@ -817,27 +838,27 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         cardIds: ['psalm-119-18', 'philippians-4-6-7', '1thessalonians-5-17', 'psalm-100-4'],
         isDefault: true,
         color: 'from-violet-500 to-purple-600',
-        icon: '🙌'
+        icon: '🙌',
       },
       {
         id: 'bible-study-growth',
         title: 'Bible Study & Growth',
-        description: 'Verses about studying God\'s Word',
+        description: "Verses about studying God's Word",
         category: 'Bible Study',
         cardIds: ['psalm-119-18', '2timothy-3-16', 'hebrews-4-12', 'psalm-1-2-3', 'psalm-119-105'],
         isDefault: true,
         color: 'from-emerald-500 to-teal-600',
-        icon: '📖'
+        icon: '📖',
       },
       {
         id: 'guidance-wisdom',
         title: 'Guidance & Wisdom',
-        description: 'Verses about seeking God\'s direction',
+        description: "Verses about seeking God's direction",
         category: 'Guidance',
         cardIds: ['proverbs-3-5-6', 'psalm-119-105', 'james-1-5', 'jeremiah-29-11'],
         isDefault: true,
         color: 'from-amber-500 to-orange-600',
-        icon: '🧭'
+        icon: '🧭',
       },
 
       // CHRISTIAN LIVING
@@ -849,7 +870,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         cardIds: ['1john-4-19', 'john-13-35', 'ephesians-4-32', '1corinthians-13-4-5'],
         isDefault: true,
         color: 'from-pink-500 to-rose-500',
-        icon: '❤️'
+        icon: '❤️',
       },
       {
         id: 'christian-priorities',
@@ -859,7 +880,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         cardIds: ['matthew-6-33', 'galatians-2-20', 'romans-12-1', '1corinthians-10-31'],
         isDefault: true,
         color: 'from-slate-500 to-gray-600',
-        icon: '🎯'
+        icon: '🎯',
       },
       {
         id: 'obedience-discipleship',
@@ -869,7 +890,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         cardIds: ['john-7-17', 'luke-9-23', 'james-1-22'],
         isDefault: true,
         color: 'from-stone-500 to-neutral-600',
-        icon: '🚶'
+        icon: '🚶',
       },
 
       // JOY & CELEBRATION
@@ -881,7 +902,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         cardIds: ['nehemiah-8-10', 'psalm-118-24', 'psalm-150-6'],
         isDefault: true,
         color: 'from-yellow-500 to-amber-500',
-        icon: '🎉'
+        icon: '🎉',
       },
 
       // COMPREHENSIVE COLLECTIONS
@@ -891,48 +912,73 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         description: 'The most beloved and quoted verses',
         category: 'Popular',
         cardIds: [
-          'john-3-16', 'psalm-23-1', 'philippians-4-13', 'jeremiah-29-11', 'romans-8-28',
-          'proverbs-3-5-6', 'isaiah-41-10', 'matthew-6-33', 'ephesians-2-8-9', 'john-14-27',
-          'romans-6-23', 'psalm-119-105', 'hebrews-11-1', 'philippians-4-6-7', '1john-4-8',
-          'matthew-11-28', 'joshua-1-9', '2timothy-3-16', 'romans-10-9', 'james-1-5'
+          'john-3-16',
+          'psalm-23-1',
+          'philippians-4-13',
+          'jeremiah-29-11',
+          'romans-8-28',
+          'proverbs-3-5-6',
+          'isaiah-41-10',
+          'matthew-6-33',
+          'ephesians-2-8-9',
+          'john-14-27',
+          'romans-6-23',
+          'psalm-119-105',
+          'hebrews-11-1',
+          'philippians-4-6-7',
+          '1john-4-8',
+          'matthew-11-28',
+          'joshua-1-9',
+          '2timothy-3-16',
+          'romans-10-9',
+          'james-1-5',
         ],
         isDefault: true,
         color: 'from-gradient-to-r from-blue-600 to-purple-600',
-        icon: '⭐'
+        icon: '⭐',
       },
       {
         id: 'short-powerful',
         title: 'Short & Powerful',
         description: 'Impactful verses that are easy to memorize',
         category: 'Quick',
-        cardIds: ['jesus-wept', 'god-is-love', '1thessalonians-5-17', 'psalm-150-6', 'be-kind', 'psalm-118-24'],
+        cardIds: [
+          'jesus-wept',
+          'god-is-love',
+          '1thessalonians-5-17',
+          'psalm-150-6',
+          'be-kind',
+          'psalm-118-24',
+        ],
         isDefault: true,
         color: 'from-lime-400 to-emerald-500',
-        icon: '⚡'
-      }
+        icon: '⚡',
+      },
     ]
 
-    defaultDecks.forEach(deck => {
+    defaultDecks.forEach((deck) => {
       decks.value[deck.id] = deck
     })
   }
 
   const allCards = computed(() => Object.values(cards.value))
-  const memorizedCards = computed(() => allCards.value.filter(card => card.isMemorized))
-  const reviewCards = computed(() => allCards.value.filter(card => card.reviewCount > 0 && !card.isMemorized))
-  const newCards = computed(() => allCards.value.filter(card => card.reviewCount === 0))
+  const memorizedCards = computed(() => allCards.value.filter((card) => card.isMemorized))
+  const reviewCards = computed(() =>
+    allCards.value.filter((card) => card.reviewCount > 0 && !card.isMemorized),
+  )
+  const newCards = computed(() => allCards.value.filter((card) => card.reviewCount === 0))
 
   const cardsByDifficulty = computed(() => {
     return {
-      easy: allCards.value.filter(card => card.difficulty === 'easy'),
-      medium: allCards.value.filter(card => card.difficulty === 'medium'),
-      hard: allCards.value.filter(card => card.difficulty === 'hard')
+      easy: allCards.value.filter((card) => card.difficulty === 'easy'),
+      medium: allCards.value.filter((card) => card.difficulty === 'medium'),
+      hard: allCards.value.filter((card) => card.difficulty === 'hard'),
     }
   })
 
   const cardsByCategory = computed(() => {
     const categories: Record<string, MemoryCard[]> = {}
-    allCards.value.forEach(card => {
+    allCards.value.forEach((card) => {
       if (!categories[card.category]) {
         categories[card.category] = []
       }
@@ -944,30 +990,34 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
   const getCardsForDeck = (deckId: string): MemoryCard[] => {
     const deck = decks.value[deckId]
     if (!deck) return []
-    
-    return deck.cardIds.map(cardId => cards.value[cardId]).filter(Boolean)
+
+    return deck.cardIds.map((cardId) => cards.value[cardId]).filter(Boolean)
   }
 
   const getDueForReview = (): MemoryCard[] => {
     const now = new Date()
-    return allCards.value.filter(card => {
+    return allCards.value.filter((card) => {
       if (card.isMemorized) return false
       if (card.reviewCount === 0) return true
-      
+
       if (!card.lastReviewed) return true
-      
+
       const lastReview = new Date(card.lastReviewed)
-      const daysSinceReview = Math.floor((now.getTime() - lastReview.getTime()) / (1000 * 60 * 60 * 24))
-      
+      const daysSinceReview = Math.floor(
+        (now.getTime() - lastReview.getTime()) / (1000 * 60 * 60 * 24),
+      )
+
       // Spaced repetition: review intervals based on confidence level
       const reviewIntervals = { 1: 1, 2: 3, 3: 7, 4: 14, 5: 30 }
       const requiredInterval = reviewIntervals[card.confidence] || 1
-      
+
       return daysSinceReview >= requiredInterval
     })
   }
 
-  const addCard = (cardData: Omit<MemoryCard, 'id' | 'isMemorized' | 'reviewCount' | 'confidence' | 'dateAdded'>) => {
+  const addCard = (
+    cardData: Omit<MemoryCard, 'id' | 'isMemorized' | 'reviewCount' | 'confidence' | 'dateAdded'>,
+  ) => {
     const id = `${cardData.reference.toLowerCase().replace(/\s+/g, '-').replace(/:/g, '-')}`
     const card: MemoryCard = {
       ...cardData,
@@ -975,9 +1025,9 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
       isMemorized: false,
       reviewCount: 0,
       confidence: 1,
-      dateAdded: new Date().toISOString()
+      dateAdded: new Date().toISOString(),
     }
-    
+
     cards.value[id] = card
     saveToStorage()
     return id
@@ -1008,9 +1058,9 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
     const deck: MemoryDeck = {
       ...deckData,
       id,
-      isDefault: false
+      isDefault: false,
     }
-    
+
     decks.value[id] = deck
     saveToStorage()
     return id
@@ -1027,7 +1077,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
   const removeCardFromDeck = (deckId: string, cardId: string) => {
     const deck = decks.value[deckId]
     if (deck) {
-      deck.cardIds = deck.cardIds.filter(id => id !== cardId)
+      deck.cardIds = deck.cardIds.filter((id) => id !== cardId)
       saveToStorage()
     }
   }
@@ -1040,15 +1090,15 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
       cardsStudied: cardIds,
       correctAnswers: 0,
       totalCards: cardIds.length,
-      duration: 0
+      duration: 0,
     }
-    
+
     studySessions.value.push(session)
     return sessionId
   }
 
   const endStudySession = (sessionId: string, correctAnswers: number, duration: number) => {
-    const session = studySessions.value.find(s => s.id === sessionId)
+    const session = studySessions.value.find((s) => s.id === sessionId)
     if (session) {
       session.correctAnswers = correctAnswers
       session.duration = duration
@@ -1061,11 +1111,18 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
     const memorizedCount = memorizedCards.value.length
     const reviewCount = reviewCards.value.length
     const dueCount = getDueForReview().length
-    
+
     const totalSessions = studySessions.value.length
-    const totalCardsStudied = studySessions.value.reduce((sum, session) => sum + session.cardsStudied.length, 0)
-    const totalCorrect = studySessions.value.reduce((sum, session) => sum + session.correctAnswers, 0)
-    const accuracy = totalCardsStudied > 0 ? Math.round((totalCorrect / totalCardsStudied) * 100) : 0
+    const totalCardsStudied = studySessions.value.reduce(
+      (sum, session) => sum + session.cardsStudied.length,
+      0,
+    )
+    const totalCorrect = studySessions.value.reduce(
+      (sum, session) => sum + session.correctAnswers,
+      0,
+    )
+    const accuracy =
+      totalCardsStudied > 0 ? Math.round((totalCorrect / totalCardsStudied) * 100) : 0
 
     return {
       totalCards,
@@ -1074,7 +1131,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
       dueCount,
       totalSessions,
       accuracy,
-      streakDays: calculateStreak()
+      streakDays: calculateStreak(),
     }
   }
 
@@ -1082,31 +1139,32 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
     // Simple streak calculation based on recent sessions
     const now = new Date()
     let streak = 0
-    
+
     for (let i = 0; i < 30; i++) {
-      const checkDate = new Date(now.getTime() - (i * 24 * 60 * 60 * 1000))
+      const checkDate = new Date(now.getTime() - i * 24 * 60 * 60 * 1000)
       const dateString = checkDate.toISOString().split('T')[0]
-      
-      const hasSession = studySessions.value.some(session => 
-        session.date.startsWith(dateString)
-      )
-      
+
+      const hasSession = studySessions.value.some((session) => session.date.startsWith(dateString))
+
       if (hasSession) {
         streak++
       } else if (i > 0) {
         break // First gap breaks the streak (unless today has no session yet)
       }
     }
-    
+
     return streak
   }
 
   const saveToStorage = () => {
-    localStorage.setItem('biblestem_memory_cards', JSON.stringify({
-      cards: cards.value,
-      decks: decks.value,
-      sessions: studySessions.value
-    }))
+    localStorage.setItem(
+      'biblestem_memory_cards',
+      JSON.stringify({
+        cards: cards.value,
+        decks: decks.value,
+        sessions: studySessions.value,
+      }),
+    )
   }
 
   const loadFromStorage = () => {
@@ -1117,7 +1175,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         cards.value = data.cards || {}
         decks.value = data.decks || {}
         studySessions.value = data.sessions || []
-        
+
         // If no cards loaded, initialize defaults
         if (Object.keys(cards.value).length === 0) {
           initializeDefaultCards()
@@ -1186,6 +1244,6 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
     endStudySession,
     getStudyStats,
     loadFromStorage,
-    initializeDemoData
+    initializeDemoData,
   }
 })

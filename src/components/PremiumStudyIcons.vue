@@ -18,7 +18,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   size: 24,
-  className: ''
+  className: '',
 })
 
 const iconComponent = computed(() => {
@@ -39,6 +39,6 @@ const iconComponent = computed(() => {
 const iconProps = computed(() => ({
   size: props.size,
   color: props.color,
-  className: props.className
+  className: props.className,
 }))
 </script>
