@@ -34,7 +34,7 @@
 
           <div class="mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-700">
             <p class="text-sm text-neutral-500 dark:text-neutral-400">
-              Current route: <code class="bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded text-primary-600">{{ $route.path }}</code>
+              Current route: <code class="bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded text-primary-600">{{ routePath }}</code>
             </p>
           </div>
         </div>
