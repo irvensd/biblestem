@@ -327,13 +327,29 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   return {
+    // State
     user,
     isLoading,
+    error,
+    isInitialized,
+    config,
+
+    // Computed
     isAuthenticated,
     isPremium,
+    hasValidSubscription,
+
+    // Demo data
     demoUsers,
+
+    // Actions
     login,
+    signUp,
     logout,
+    refreshSession,
     initializeAuth,
+    updateUserProfile,
+    clearError,
+    setError
   }
 })
