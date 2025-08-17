@@ -99,9 +99,15 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import AppHeader from './components/AppHeader.vue'
 import MobileNavigation from './components/MobileNavigation.vue'
+import ErrorBoundary from './components/ErrorBoundary.vue'
+import GlobalNotifications from './components/GlobalNotifications.vue'
 import { usePWA } from './composables/usePWA'
+import { useAuthStore } from './stores/auth'
+
+const authStore = useAuthStore()
 
 const {
   isInstallable,
