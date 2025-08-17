@@ -219,15 +219,18 @@ const handleSignIn = async () => {
 
 const quickLogin = async (type: 'premium' | 'free') => {
   error.value = ''
-  
+
   if (type === 'premium') {
-    form.email = 'demo@biblestem.com'
-    form.password = 'demo123'
+    emailField.value.value = 'demo@biblestem.com'
+    passwordField.value.value = 'demo123'
   } else {
-    form.email = 'free@biblestem.com'
-    form.password = 'free123'
+    emailField.value.value = 'free@biblestem.com'
+    passwordField.value.value = 'free123'
   }
-  
+
+  // Clear any previous validation errors
+  formValidation.clear()
+
   await handleSignIn()
 }
 </script>
