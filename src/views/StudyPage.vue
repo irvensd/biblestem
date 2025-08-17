@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
-    <div v-if="study" class="container-base py-8">
+    <div v-if="study && !isLoading" class="container-base py-8">
       <!-- Study Header -->
       <div class="mb-8">
         <nav
