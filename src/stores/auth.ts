@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   // Configuration for auth mode (mock vs real)
   const config = ref<AuthConfig>({
-    useMockAuth: true, // Set to false when ready for Supabase
+    useMockAuth: false, // Now using Supabase authentication
     supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
     supabaseKey: import.meta.env.VITE_SUPABASE_ANON_KEY,
   })
