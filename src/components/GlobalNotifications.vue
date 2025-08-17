@@ -2,7 +2,7 @@
   <!-- Global Loading Overlay -->
   <Transition name="fade">
     <div
-      v-if="loadingStore.value.isLoading.value && showGlobalLoader"
+      v-if="safeIsLoading && showGlobalLoader"
       class="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center"
     >
       <div
@@ -18,7 +18,7 @@
   <div class="fixed top-4 right-4 z-40 space-y-3 max-w-sm">
     <TransitionGroup name="slide-fade" tag="div">
       <div
-        v-for="error in errorStore.value.errors"
+        v-for="error in safeErrors"
         :key="error.id"
         class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg border-l-4 p-4 max-w-sm"
         :class="getErrorClasses(error.type)"
@@ -76,7 +76,7 @@
           </div>
 
           <button
-            @click="errorStore.value.removeError(error.id)"
+            @click="errorStore.value?.removeError?.(error.id)"
             class="flex-shrink-0 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
           >
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
