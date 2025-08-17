@@ -1,5 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { supabase } from '@/lib/supabase'
+import { useAuthStore } from './auth'
 
 export interface StudyProgress {
   studyId: string
@@ -111,8 +113,9 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     
     progress.lastAccessedAt = new Date().toISOString()
     progress.totalTimeSpent += timeSpent
-    
+
     saveToStorage()
+    await saveProgressToSupabase(studyId)
   }
 
   const startStudy = (studyId: string, lessonId?: string) => {
@@ -131,8 +134,9 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
         progressData.value[studyId].currentLesson = lessonId
       }
     }
-    
+
     saveToStorage()
+    await saveProgressToSupabase(studyId)
   }
 
   const getStudyCompletionPercentage = (studyId: string, totalLessons: number): number => {
@@ -160,6 +164,64 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
 
   const saveToStorage = () => {
     localStorage.setItem('biblestem_study_progress', JSON.stringify(progressData.value))
+  }
+
+  const syncWithSupabase = async () => {
+    const authStore = useAuthStore()
+    if (!authStore.isAuthenticated || authStore.config.useMockAuth) return
+
+    try {
+      // Fetch user's study progress from Supabase
+      const { data, error } = await supabase
+        .from('study_progress')
+        .select('*')
+        .eq('user_id', authStore.user!.id)
+
+      if (error) throw error
+
+      // Transform Supabase data to local format
+      const supabaseProgress: Record<string, StudyProgress> = {}
+      data?.forEach(item => {
+        supabaseProgress[item.study_id] = {
+          studyId: item.study_id,
+          completedLessons: item.completed_lessons || [],
+          currentLesson: item.current_lesson,
+          startedAt: item.started_at,
+          lastAccessedAt: item.last_accessed_at,
+          totalTimeSpent: item.total_time_spent
+        }
+      })
+
+      progressData.value = supabaseProgress
+    } catch (error) {
+      console.error('Error syncing study progress:', error)
+    }
+  }
+
+  const saveProgressToSupabase = async (studyId: string) => {
+    const authStore = useAuthStore()
+    if (!authStore.isAuthenticated || authStore.config.useMockAuth) return
+
+    const progress = progressData.value[studyId]
+    if (!progress) return
+
+    try {
+      const { error } = await supabase
+        .from('study_progress')
+        .upsert({
+          user_id: authStore.user!.id,
+          study_id: studyId,
+          completed_lessons: progress.completedLessons,
+          current_lesson: progress.currentLesson,
+          started_at: progress.startedAt,
+          last_accessed_at: progress.lastAccessedAt,
+          total_time_spent: progress.totalTimeSpent
+        })
+
+      if (error) throw error
+    } catch (error) {
+      console.error('Error saving progress to Supabase:', error)
+    }
   }
 
   const loadFromStorage = () => {
@@ -234,6 +296,8 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     getPremiumFeatures,
     resetStudyProgress,
     loadFromStorage,
-    initializeDemoData
+    initializeDemoData,
+    syncWithSupabase,
+    saveProgressToSupabase
   }
 })
