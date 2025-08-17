@@ -7,7 +7,7 @@
       <!-- Dashboard -->
       <router-link
         to="/dashboard"
-        v-if="authStore.value.isAuthenticated"
+        v-if="safeAuthStore.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
           routePath === '/dashboard'
@@ -29,7 +29,7 @@
       <!-- Home (for non-authenticated users) -->
       <router-link
         to="/"
-        v-if="!authStore.value.isAuthenticated"
+        v-if="!safeAuthStore.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
           routePath === '/'
@@ -69,7 +69,7 @@
       <!-- My Studies (for authenticated users) -->
       <router-link
         to="/my-studies"
-        v-if="authStore.value.isAuthenticated"
+        v-if="safeAuthStore.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
           routePath === '/my-studies'
@@ -141,10 +141,10 @@
         "
       >
         <div
-          v-if="authStore.value.isAuthenticated"
+          v-if="safeAuthStore.isAuthenticated"
           class="w-5 h-5 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
         >
-          <span class="text-white text-xs font-bold">{{ authStore.value.user?.name.charAt(0) }}</span>
+          <span class="text-white text-xs font-bold">{{ safeAuthStore.user?.name.charAt(0) }}</span>
         </div>
         <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -155,7 +155,7 @@
           />
         </svg>
         <span class="text-xs font-medium">{{
-          authStore.value.isAuthenticated ? 'Profile' : 'Sign In'
+          safeAuthStore.isAuthenticated ? 'Profile' : 'Sign In'
         }}</span>
       </button>
     </div>
@@ -205,30 +205,30 @@
             </svg>
           </button>
           <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-            {{ authStore.value.isAuthenticated ? 'Profile' : 'Account' }}
+            {{ safeAuthStore.isAuthenticated ? 'Profile' : 'Account' }}
           </h2>
         </div>
       </div>
 
       <div class="p-4">
         <!-- Authenticated User Profile -->
-        <div v-if="authStore.value.isAuthenticated" class="space-y-4">
+        <div v-if="safeAuthStore.isAuthenticated" class="space-y-4">
           <!-- User Info -->
           <div class="flex items-center space-x-3 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
             <div
               class="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
             >
-              <span class="text-white font-bold text-lg">{{ authStore.value.user?.name.charAt(0) }}</span>
+              <span class="text-white font-bold text-lg">{{ safeAuthStore.user?.name.charAt(0) }}</span>
             </div>
             <div>
               <div class="font-medium text-neutral-900 dark:text-neutral-100">
-                {{ authStore.value.user?.name }}
+                {{ safeAuthStore.user?.name }}
               </div>
               <div
                 class="text-sm"
-                :class="authStore.value.isPremium ? 'text-accent-600' : 'text-neutral-500'"
+                :class="safeAuthStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
               >
-                {{ authStore.value.isPremium ? 'Premium' : 'Free' }} Plan
+                {{ safeAuthStore.isPremium ? 'Premium' : 'Free' }} Plan
               </div>
             </div>
           </div>
@@ -284,7 +284,7 @@
             </router-link>
 
             <button
-              v-if="!authStore.value.isPremium"
+              v-if="!safeAuthStore.isPremium"
               @click="handleUpgrade"
               class="w-full flex items-center space-x-3 p-3 rounded-lg bg-accent-50 dark:bg-accent-900/20 text-accent-700 dark:text-accent-300 hover:bg-accent-100 dark:hover:bg-accent-900/30 transition-colors"
             >
@@ -441,7 +441,7 @@ const handleUpgrade = () => {
 }
 
 const signOut = async () => {
-  await authStore.value.logout()
+  await safeAuthStore.logout()
   closeProfile()
 }
 
