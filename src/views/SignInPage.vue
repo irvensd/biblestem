@@ -68,11 +68,13 @@
           <div class="relative">
             <input
               id="password"
-              v-model="form.password"
+              v-model="passwordField.value.value"
               :type="showPassword ? 'text' : 'password'"
-              required
-              class="w-full px-4 py-3 pr-12 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+              class="w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+              :class="passwordField.error.value ? 'border-red-500 dark:border-red-500' : 'border-neutral-300 dark:border-neutral-600'"
               placeholder="Enter your password"
+              @blur="passwordField.validate()"
+              @input="passwordField.clear()"
             />
             <button
               type="button"
@@ -88,6 +90,9 @@
               </svg>
             </button>
           </div>
+          <p v-if="passwordField.error.value" class="text-red-500 text-sm mt-1">
+            {{ passwordField.error.value }}
+          </p>
         </div>
 
         <div class="flex items-center justify-between">
