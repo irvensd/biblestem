@@ -362,21 +362,23 @@ const handleSignUp = async () => {
   isLoading.value = true
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    console.log('Attempting signup with:', { email: form.email, name: form.name })
 
-    // Demo response
-    success.value = 'Account created successfully! Redirecting to sign in...'
+    const result = await authStore.signUp(form.email, form.password, form.name)
 
-    // Redirect to sign in after a delay
-    setTimeout(() => {
-      router.push({
-        path: '/signin',
-        query: { email: form.email },
-      })
-    }, 1500)
+    if (result.success) {
+      success.value = 'Account created successfully! Redirecting to dashboard...'
+
+      // Redirect to dashboard after successful signup
+      setTimeout(() => {
+        router.push('/dashboard')
+      }, 1500)
+    } else {
+      error.value = result.error || 'Failed to create account. Please try again.'
+    }
   } catch (err) {
-    error.value = 'Failed to create account. Please try again.'
+    console.error('Signup error:', err)
+    error.value = err instanceof Error ? err.message : 'Failed to create account. Please try again.'
   } finally {
     isLoading.value = false
   }
