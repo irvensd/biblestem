@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useErrorStore } from '../stores/errors'
+import { useLoadingStore } from '../stores/loading'
 import HomePage from '../views/HomePage.vue'
 import StudySeriesPage from '../views/StudySeriesPage.vue'
 import StudyPage from '../views/StudyPage.vue'
