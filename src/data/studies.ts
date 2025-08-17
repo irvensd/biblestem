@@ -2201,7 +2201,7 @@ export const premiumStudies: Study[] = [
     totalDuration: 150, // 5 lessons × 30 minutes each
     difficulty: 'intermediate',
     tags: ['sabbath', 'commandments', 'seal', 'creation', 'covenant', 'worship'],
-    image: '/images/sabbath.jpg',
+    image: 'sabbath',
     color: 'from-indigo-500 to-blue-600',
     features: [
       'Sabbath through Scripture study',
