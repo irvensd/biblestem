@@ -236,7 +236,6 @@ import {
 } from '../composables/useValidation'
 
 const router = useRouter()
-
 const authStore = useAuthStore()
 
 const form = reactive({
