@@ -164,7 +164,7 @@
                 <div
                   v-for="study in recommendedStudies"
                   :key="study.id"
-                  class="card p-4 hover:scale-105 transition-transform duration-200 cursor-pointer"
+                  class="card interactive p-4 animate-in cursor-pointer"
                   @click="goToStudy(study.id)"
                 >
                   <div
