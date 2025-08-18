@@ -379,9 +379,13 @@ const handleSignUp = async () => {
   isLoading.value = true
 
   try {
-    console.log('Attempting signup with:', { email: form.email, name: form.name })
+    console.log('=== SIGNUP ATTEMPT ===')
+    console.log('Form data:', { email: form.email, name: form.name })
+    console.log('Auth store:', authStore.value)
+    console.log('Auth store signUp method:', authStore.value.signUp)
 
     const result = await authStore.value.signUp(form.email, form.password, form.name)
+    console.log('=== SIGNUP RESULT ===', result)
 
     if (result.success) {
       if (result.emailConfirmed) {
