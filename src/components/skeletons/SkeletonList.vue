@@ -1,8 +1,8 @@
 <template>
   <div class="space-y-4">
-    <div 
-      v-for="i in count" 
-      :key="i" 
+    <div
+      v-for="i in count"
+      :key="i"
       class="animate-pulse"
       :style="{ animationDelay: `${i * 100}ms` }"
     >
@@ -13,8 +13,11 @@
           <div class="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-1/2"></div>
         </div>
       </div>
-      
-      <div v-else-if="variant === 'detailed'" class="p-4 border border-neutral-200 dark:border-neutral-700 rounded-xl">
+
+      <div
+        v-else-if="variant === 'detailed'"
+        class="p-4 border border-neutral-200 dark:border-neutral-700 rounded-xl"
+      >
         <div class="flex items-start space-x-4">
           <div class="w-12 h-12 bg-neutral-200 dark:bg-neutral-700 rounded-xl flex-shrink-0"></div>
           <div class="flex-1 space-y-3">
@@ -31,8 +34,11 @@
           <div class="w-16 h-8 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
         </div>
       </div>
-      
-      <div v-else class="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
+
+      <div
+        v-else
+        class="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg"
+      >
         <div class="flex items-center space-x-3">
           <div class="w-6 h-6 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
           <div class="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-32"></div>
@@ -51,6 +57,6 @@ interface Props {
 
 withDefaults(defineProps<Props>(), {
   count: 3,
-  variant: 'simple'
+  variant: 'simple',
 })
 </script>

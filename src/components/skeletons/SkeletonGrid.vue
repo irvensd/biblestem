@@ -1,7 +1,7 @@
 <template>
   <div :class="gridClasses">
-    <div 
-      v-for="i in count" 
+    <div
+      v-for="i in count"
       :key="i"
       class="animate-pulse"
       :style="{ animationDelay: `${i * 100}ms` }"
@@ -9,22 +9,25 @@
       <div class="card p-4 space-y-4">
         <!-- Header -->
         <div class="flex items-center space-x-3">
-          <div 
+          <div
             class="bg-neutral-200 dark:bg-neutral-700 rounded-xl flex-shrink-0"
             :class="showLargeIcon ? 'w-16 h-16' : 'w-10 h-10'"
           ></div>
           <div class="flex-1 space-y-2">
             <div class="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-3/4"></div>
-            <div v-if="showSubtitle" class="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-1/2"></div>
+            <div
+              v-if="showSubtitle"
+              class="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-1/2"
+            ></div>
           </div>
         </div>
-        
+
         <!-- Content -->
         <div v-if="showContent" class="space-y-2">
           <div class="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-full"></div>
           <div class="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-4/5"></div>
         </div>
-        
+
         <!-- Meta -->
         <div v-if="showMeta" class="flex items-center justify-between">
           <div class="flex items-center space-x-2">
@@ -33,7 +36,7 @@
           </div>
           <div v-if="showAction" class="h-8 bg-neutral-200 dark:bg-neutral-700 rounded w-20"></div>
         </div>
-        
+
         <!-- Progress Bar -->
         <div v-if="showProgress" class="space-y-2">
           <div class="flex justify-between">
@@ -69,7 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
   showContent: true,
   showMeta: true,
   showAction: false,
-  showProgress: false
+  showProgress: false,
 })
 
 const gridClasses = computed(() => {
@@ -78,7 +81,7 @@ const gridClasses = computed(() => {
     1: 'grid-cols-1',
     2: 'grid-cols-1 sm:grid-cols-2',
     3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
   }
   return `${base} ${columnClasses[props.columns]}`
 })

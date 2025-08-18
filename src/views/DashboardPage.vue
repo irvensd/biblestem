@@ -7,9 +7,7 @@
       <div class="container-base py-6 sm:py-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 class="heading-2">
-              Welcome back, {{ authStore.user?.name }}!
-            </h1>
+            <h1 class="heading-2">Welcome back, {{ authStore.user?.name }}!</h1>
             <p class="body-normal mt-1 sm:mt-2">
               Continue your Bible study journey where you left off
             </p>
@@ -46,9 +44,7 @@
         <div class="xl:col-span-2 content-spacing">
           <!-- Progress Overview -->
           <section class="card p-4 sm:p-6">
-            <h2 class="heading-4 mb-4 sm:mb-6">
-              Your Progress
-            </h2>
+            <h2 class="heading-4 mb-4 sm:mb-6">Your Progress</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
               <div class="text-center">
                 <div
@@ -158,7 +154,10 @@
               </div>
 
               <!-- Recommended Studies -->
-              <div v-if="recommendedStudies.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div
+                v-if="recommendedStudies.length > 0"
+                class="grid grid-cols-1 sm:grid-cols-2 gap-4"
+              >
                 <div
                   v-for="study in recommendedStudies"
                   :key="study.id"
@@ -307,11 +306,11 @@
           </section>
 
           <!-- Empty State for No Completed Studies -->
-          <section v-else-if="completedStudies.length === 0 && !currentStudy" class="card p-4 sm:p-6">
-            <StudiesEmpty
-              type="completed"
-              @secondary-action="showStudyTips"
-            />
+          <section
+            v-else-if="completedStudies.length === 0 && !currentStudy"
+            class="card p-4 sm:p-6"
+          >
+            <StudiesEmpty type="completed" @secondary-action="showStudyTips" />
           </section>
 
           <!-- Recent Activity -->
@@ -955,7 +954,9 @@ const handleUpgrade = () => {
 }
 
 const showStudyTips = () => {
-  alert('Study Tips:\n\n• Set aside dedicated time for Bible study\n• Pray before you begin\n• Take notes and reflect on what you learn\n• Apply the lessons to your daily life\n• Join study discussions when available')
+  alert(
+    'Study Tips:\n\n• Set aside dedicated time for Bible study\n• Pray before you begin\n• Take notes and reflect on what you learn\n• Apply the lessons to your daily life\n• Join study discussions when available',
+  )
 }
 
 onMounted(() => {
