@@ -301,7 +301,9 @@ const handleSignIn = async () => {
   }
 
   try {
-    const result = await authStore.login(form.email, form.password)
+    const email = form.email?.value || form.email
+    const password = form.password?.value || form.password
+    const result = await authStore.login(email, password)
 
     if (result.success) {
       // Get redirect path from query params or default to dashboard
