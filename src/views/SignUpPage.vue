@@ -374,23 +374,30 @@ const validateForm = () => {
 }
 
 const handleSignUp = async () => {
+  console.log('=== HANDLE SIGNUP CALLED ===')
   error.value = ''
   success.value = ''
 
   if (!validateForm()) {
+    console.log('=== FORM VALIDATION FAILED ===')
     return
   }
 
+  console.log('=== STARTING SIGNUP PROCESS ===')
   isLoading.value = true
 
   try {
-    console.log('=== SIGNUP ATTEMPT ===')
-    console.log('Form data:', { email: form.email, name: form.name })
-    console.log('Auth store:', authStore.value)
-    console.log('Auth store signUp method:', authStore.value.signUp)
+    console.log('=== AUTH STORE CHECK ===', authStore.value)
 
+    if (!authStore.value.signUp) {
+      console.error('=== SIGNUP METHOD NOT FOUND ===')
+      error.value = 'Authentication system not ready. Please refresh the page.'
+      return
+    }
+
+    console.log('=== CALLING SIGNUP ===')
     const result = await authStore.value.signUp(form.email, form.password, form.name)
-    console.log('=== SIGNUP RESULT ===', result)
+    console.log('=== SIGNUP COMPLETE ===', result)
 
     if (result.success) {
       if (result.emailConfirmed) {
