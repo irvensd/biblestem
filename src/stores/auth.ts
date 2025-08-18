@@ -1,15 +1,5 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  updateProfile,
-  User as FirebaseUser,
-} from 'firebase/auth'
-import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
-import { auth, db } from '@/lib/firebase'
 
 export interface User {
   id: string
