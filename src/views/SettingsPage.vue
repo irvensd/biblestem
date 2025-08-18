@@ -130,29 +130,29 @@
                     class="w-20 h-20 bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 rounded-2xl flex items-center justify-center shadow-lg"
                   >
                     <span class="text-white text-2xl font-bold">{{
-                      authStore.user?.name?.charAt(0) || 'U'
+                      authStore.value.user?.name?.charAt(0) || 'U'
                     }}</span>
                   </div>
                   <div class="flex-1">
                     <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200 mb-1">
-                      {{ authStore.user?.name || 'Your Name' }}
+                      {{ authStore.value.user?.name || 'Your Name' }}
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 mb-2">
-                      {{ authStore.user?.email }}
+                      {{ authStore.value.user?.email }}
                     </p>
                     <div class="flex items-center space-x-3">
                       <span
                         class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
                         :class="
-                          authStore.isPremium
+                          authStore.value.isPremium
                             ? 'bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 dark:from-amber-900/30 dark:to-orange-900/30 dark:text-amber-200'
                             : 'bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200'
                         "
                       >
-                        {{ authStore.isPremium ? '✨ Premium Member' : 'Free Member' }}
+                        {{ authStore.value.isPremium ? '✨ Premium Member' : 'Free Member' }}
                       </span>
                       <span class="text-sm text-neutral-500 dark:text-neutral-400">
-                        Member since {{ formatDate(authStore.user?.joinDate) }}
+                        Member since {{ formatDate(authStore.value.user?.joinDate) }}
                       </span>
                     </div>
                   </div>
