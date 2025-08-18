@@ -782,6 +782,9 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getFreeStudies, getPremiumStudies, type Study } from '../data/studies'
+import { useAuthStore } from '../stores/auth'
+import { useStudyProgressStore } from '../stores/studyProgress'
+import { useAchievementsStore } from '../stores/achievements'
 import AchievementBadges from '../components/AchievementBadges.vue'
 import MemoryCards from '../components/MemoryCards.vue'
 import StudyTemplates from '../components/StudyTemplates.vue'
@@ -791,18 +794,10 @@ import StudiesEmpty from '../components/empty-states/StudiesEmpty.vue'
 
 const router = useRouter()
 
-// Initialize stores safely
-const authStore = ref({
-  isAuthenticated: false,
-  user: null,
-  isPremium: false,
-})
-const progressStore = ref({
-  getStudyProgress: () => ({}),
-  getTotalTimeSpent: () => 0,
-})
-const achievementsStore = ref({
-  achievements: [],
+// Initialize stores
+const authStore = useAuthStore()
+const progressStore = useStudyProgressStore()
+const achievementsStore = useAchievementsStore()
   getRecentAchievements: () => [],
 })
 
