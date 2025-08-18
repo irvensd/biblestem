@@ -319,7 +319,7 @@ const router = useRouter()
 // Initialize authStore safely
 const authStore = ref({
   isAuthenticated: false,
-  signup: () => Promise.resolve({ success: false }),
+  signUp: () => Promise.resolve({ success: false }),
 })
 
 // Initialize the real store when component mounts
