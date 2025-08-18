@@ -108,7 +108,6 @@ import MobileNavigation from './components/MobileNavigation.vue'
 import ErrorBoundary from './components/ErrorBoundary.vue'
 import GlobalNotifications from './components/GlobalNotifications.vue'
 import { usePWA } from './composables/usePWA'
-import { useAuthStore } from './stores/auth'
 
 // App readiness state
 const isAppReady = ref(false)
@@ -126,9 +125,8 @@ const {
 // Initialize app when mounted
 onMounted(async () => {
   try {
-    // Small delay to ensure Pinia is fully ready
-    await new Promise((resolve) => setTimeout(resolve, 50))
-
+    // Import auth store only when needed to avoid Pinia timing issues
+    const { useAuthStore } = await import('./stores/auth')
     const authStore = useAuthStore()
     await authStore.initializeAuth()
 
