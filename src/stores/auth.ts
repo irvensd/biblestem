@@ -184,7 +184,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     user.value = newUser
     saveUserToStorage(newUser)
-    return { success: true }
+    return { success: true, emailConfirmed: true }
   }
 
   const supabaseSignUp = async (email: string, password: string, name: string) => {
