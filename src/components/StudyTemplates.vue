@@ -407,17 +407,17 @@ const selectedTemplate = ref<StudyTemplate | null>(null)
 const templateFilter = ref<'all' | 'free' | 'premium'>('all')
 
 const featuredTemplates = computed(() => {
-  return templatesStore.freeTemplates.slice(0, 3)
+  return templatesStore.freeTemplates?.slice(0, 3) || []
 })
 
 const filteredTemplates = computed(() => {
   switch (templateFilter.value) {
     case 'free':
-      return templatesStore.freeTemplates
+      return templatesStore.freeTemplates || []
     case 'premium':
-      return templatesStore.premiumTemplates
+      return templatesStore.premiumTemplates || []
     default:
-      return templatesStore.templates
+      return templatesStore.templates || []
   }
 })
 
