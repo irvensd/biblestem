@@ -1,8 +1,9 @@
 <template>
   <header
     class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 sticky top-0 z-50"
+    role="banner"
   >
-    <nav class="container-base">
+    <nav class="container-base" role="navigation" aria-label="Main navigation">
       <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20">
         <!-- Logo -->
         <router-link to="/" class="flex items-center space-x-2 sm:space-x-3 group">
