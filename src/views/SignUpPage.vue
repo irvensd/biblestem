@@ -313,10 +313,25 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
-const authStore = useAuthStore()
+
+// Initialize authStore safely
+const authStore = ref({
+  isAuthenticated: false,
+  signup: () => Promise.resolve({ success: false }),
+})
+
+// Initialize the real store when component mounts
+onMounted(async () => {
+  try {
+    const { useAuthStore } = await import('../stores/auth')
+    const realAuthStore = useAuthStore()
+    authStore.value = realAuthStore
+  } catch (error) {
+    console.warn('Failed to initialize auth store in SignUpPage:', error)
+  }
+})
 
 const form = reactive({
   name: '',
