@@ -342,7 +342,31 @@ import { getFreeStudies, getPremiumStudies } from '../data/studies'
 import StudyIcon from '@/components/icons/StudyIcon.vue'
 
 const router = useRouter()
-const authStore = useAuthStore()
+
+// Safe auth store initialization
+const authStoreRef = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false
+})
+
+// Safe computed for auth store access
+const authStore = computed(() => {
+  return authStoreRef.value || {
+    isAuthenticated: false,
+    user: null,
+    isPremium: false
+  }
+})
+
+// Initialize store when component mounts
+onMounted(() => {
+  try {
+    authStoreRef.value = useAuthStore()
+  } catch (error) {
+    console.warn('Failed to initialize auth store in StudySeriesPage:', error)
+  }
+})
 
 const activeFilter = ref<'all' | 'free' | 'premium'>('all')
 const freeStudies = ref(getFreeStudies())
