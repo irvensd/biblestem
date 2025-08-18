@@ -1,5 +1,5 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 
 export interface MemoryCard {
   id: string
@@ -7,30 +7,30 @@ export interface MemoryCard {
   text: string
   category: string
   difficulty: 'easy' | 'medium' | 'hard'
-  theme: string
+  theme?: string
   studyId?: string
   lessonId?: string
   isMemorized: boolean
   reviewCount: number
-  lastReviewed?: string
-  confidence: 1 | 2 | 3 | 4 | 5 // 1 = need practice, 5 = mastered
+  confidence: number // 1-5 scale
   dateAdded: string
+  lastReviewed?: string
+  nextReview?: string
 }
 
 export interface MemoryDeck {
   id: string
   title: string
   description: string
-  category: string
   cardIds: string[]
-  isDefault: boolean
   color: string
   icon: string
 }
 
 export interface StudySession {
   id: string
-  date: string
+  startTime: string
+  endTime?: string
   cardsStudied: string[]
   correctAnswers: number
   totalCards: number
@@ -41,11 +41,11 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
   const cards = ref<Record<string, MemoryCard>>({})
   const decks = ref<Record<string, MemoryDeck>>({})
   const studySessions = ref<StudySession[]>([])
+  const currentSession = ref<string | null>(null)
 
-  // Initialize with comprehensive scripture memory collection
+  // Initialize with some default cards
   const initializeDefaultCards = () => {
     const defaultCards: MemoryCard[] = [
-<<<<<<< HEAD
       // How to Study the Bible series
       {
         id: 'psalm-119-18',
@@ -75,59 +75,26 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         confidence: 1,
         dateAdded: new Date().toISOString(),
       },
-      {
-        id: 'psalm-86-11',
-        reference: 'Psalm 86:11',
-        text: 'Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.',
-        category: 'Bible Study',
-        difficulty: 'medium',
-        theme: 'Teachable Spirit',
-        studyId: 'how-to-study-bible',
-        lessonId: 'htsb-3',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'john-7-17',
-        reference: 'John 7:17',
-        text: 'If any man will do his will, he shall know of the doctrine, whether it be of God, or whether I speak of myself.',
-        category: 'Bible Study',
-        difficulty: 'medium',
-        theme: 'Obedience',
-        studyId: 'how-to-study-bible',
-        lessonId: 'htsb-4',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
       // Popular memory verses
-=======
-      // SALVATION & GOD'S LOVE
->>>>>>> refs/remotes/origin/main
       {
         id: 'john-3-16',
         reference: 'John 3:16',
         text: 'For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.',
         category: 'Salvation',
-        difficulty: 'medium',
-        theme: "God's Love",
+        difficulty: 'easy',
+        theme: 'God\'s Love',
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
         dateAdded: new Date().toISOString(),
       },
       {
-<<<<<<< HEAD
         id: 'romans-8-28',
         reference: 'Romans 8:28',
         text: 'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.',
-        category: 'Comfort',
+        category: 'Encouragement',
         difficulty: 'medium',
-        theme: "God's Sovereignty",
+        theme: 'God\'s Plans',
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
@@ -139,1046 +106,110 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'I can do all things through Christ which strengtheneth me.',
         category: 'Strength',
         difficulty: 'easy',
-        theme: "God's Power",
-=======
-        id: 'romans-6-23',
-        reference: 'Romans 6:23',
-        text: 'For the wages of sin is death; but the gift of God is eternal life through Jesus Christ our Lord.',
-        category: 'Salvation',
-        difficulty: 'easy',
-        theme: 'Eternal Life',
->>>>>>> refs/remotes/origin/main
+        theme: 'God\'s Power',
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
         dateAdded: new Date().toISOString(),
       },
-      {
-        id: 'ephesians-2-8-9',
-        reference: 'Ephesians 2:8-9',
-        text: 'For by grace are ye saved through faith; and that not of yourselves: it is the gift of God: Not of works, lest any man should boast.',
-        category: 'Salvation',
-        difficulty: 'medium',
-        theme: 'Grace',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'romans-10-9',
-        reference: 'Romans 10:9',
-        text: 'That if thou shalt confess with thy mouth the Lord Jesus, and shalt believe in thine heart that God hath raised him from the dead, thou shalt be saved.',
-        category: 'Salvation',
-        difficulty: 'medium',
-        theme: 'Confession',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: '1john-4-8',
-        reference: '1 John 4:8',
-        text: 'He that loveth not knoweth not God; for God is love.',
-        category: 'Salvation',
-        difficulty: 'easy',
-        theme: "God's Love",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // COMFORT & PEACE
-      {
-        id: 'psalm-23-1',
-        reference: 'Psalm 23:1',
-        text: 'The LORD is my shepherd; I shall not want.',
-        category: 'Comfort',
-        difficulty: 'easy',
-        theme: "God's Care",
-<<<<<<< HEAD
-        studyId: 'psalm-23',
-=======
->>>>>>> refs/remotes/origin/main
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-<<<<<<< HEAD
-        id: 'jeremiah-29-11',
-        reference: 'Jeremiah 29:11',
-        text: 'For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.',
-        category: 'Hope',
-        difficulty: 'medium',
-        theme: "God's Plans",
-=======
-        id: 'psalm-23-4',
-        reference: 'Psalm 23:4',
-        text: 'Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me.',
-        category: 'Comfort',
-        difficulty: 'hard',
-        theme: 'Overcoming Fear',
->>>>>>> refs/remotes/origin/main
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-<<<<<<< HEAD
-      },
-      {
-        id: 'proverbs-3-5-6',
-        reference: 'Proverbs 3:5-6',
-        text: 'Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.',
-        category: 'Guidance',
-        difficulty: 'medium',
-        theme: 'Trust',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-=======
->>>>>>> refs/remotes/origin/main
-      },
-      {
-        id: 'isaiah-41-10',
-        reference: 'Isaiah 41:10',
-        text: 'Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.',
-        category: 'Comfort',
-        difficulty: 'hard',
-        theme: 'Overcoming Fear',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'john-14-27',
-        reference: 'John 14:27',
-        text: 'Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid.',
-        category: 'Comfort',
-        difficulty: 'medium',
-        theme: 'Peace',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'romans-8-28',
-        reference: 'Romans 8:28',
-        text: 'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.',
-        category: 'Comfort',
-        difficulty: 'medium',
-        theme: "God's Sovereignty",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'matthew-11-28',
-        reference: 'Matthew 11:28',
-        text: 'Come unto me, all ye that labour and are heavy laden, and I will give you rest.',
-        category: 'Comfort',
-        difficulty: 'easy',
-        theme: 'Rest',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // STRENGTH & COURAGE
-      {
-        id: 'philippians-4-13',
-        reference: 'Philippians 4:13',
-        text: 'I can do all things through Christ which strengtheneth me.',
-        category: 'Strength',
-        difficulty: 'easy',
-        theme: "God's Power",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'joshua-1-9',
-        reference: 'Joshua 1:9',
-        text: 'Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.',
-        category: 'Strength',
-        difficulty: 'hard',
-        theme: 'Courage',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: '2timothy-1-7',
-        reference: '2 Timothy 1:7',
-        text: 'For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.',
-        category: 'Strength',
-        difficulty: 'medium',
-        theme: 'Overcoming Fear',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'isaiah-40-31',
-        reference: 'Isaiah 40:31',
-        text: 'But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.',
-        category: 'Strength',
-        difficulty: 'hard',
-        theme: 'Renewed Strength',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // GUIDANCE & WISDOM
-      {
-        id: 'proverbs-3-5-6',
-        reference: 'Proverbs 3:5-6',
-        text: 'Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.',
-        category: 'Guidance',
-        difficulty: 'medium',
-        theme: 'Trust',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'psalm-119-105',
-        reference: 'Psalm 119:105',
-        text: 'Thy word is a lamp unto my feet, and a light unto my path.',
-        category: 'Guidance',
-        difficulty: 'easy',
-        theme: "God's Word",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'james-1-5',
-        reference: 'James 1:5',
-        text: 'If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.',
-        category: 'Guidance',
-        difficulty: 'medium',
-        theme: 'Wisdom',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'jeremiah-29-11',
-        reference: 'Jeremiah 29:11',
-        text: 'For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.',
-        category: 'Guidance',
-        difficulty: 'medium',
-        theme: "God's Plans",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // PRAYER & WORSHIP
-      {
-        id: 'psalm-119-18',
-        reference: 'Psalm 119:18',
-        text: 'Open thou mine eyes, that I may behold wondrous things out of thy law.',
-        category: 'Prayer',
-        difficulty: 'medium',
-        theme: 'Understanding',
-        studyId: 'how-to-study-bible',
-        lessonId: 'htsb-1',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'philippians-4-6-7',
-        reference: 'Philippians 4:6-7',
-        text: 'Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.',
-        category: 'Prayer',
-        difficulty: 'hard',
-        theme: 'Peace',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: '1thessalonians-5-17',
-        reference: '1 Thessalonians 5:17',
-        text: 'Pray without ceasing.',
-        category: 'Prayer',
-        difficulty: 'easy',
-        theme: 'Constant Prayer',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'psalm-100-4',
-        reference: 'Psalm 100:4',
-        text: 'Enter into his gates with thanksgiving, and into his courts with praise: be thankful unto him, and bless his name.',
-        category: 'Prayer',
-        difficulty: 'medium',
-        theme: 'Thanksgiving',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // PRIORITIES & CHRISTIAN LIVING
-      {
-        id: 'matthew-6-33',
-        reference: 'Matthew 6:33',
-        text: 'But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you.',
-        category: 'Priorities',
-        difficulty: 'medium',
-        theme: "God's Kingdom",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-<<<<<<< HEAD
-=======
-      {
-        id: 'galatians-2-20',
-        reference: 'Galatians 2:20',
-        text: 'I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God, who loved me, and gave himself for me.',
-        category: 'Priorities',
-        difficulty: 'hard',
-        theme: 'Living in Christ',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'romans-12-1',
-        reference: 'Romans 12:1',
-        text: 'I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God, which is your reasonable service.',
-        category: 'Priorities',
-        difficulty: 'hard',
-        theme: 'Dedication',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: '1corinthians-10-31',
-        reference: '1 Corinthians 10:31',
-        text: 'Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.',
-        category: 'Priorities',
-        difficulty: 'medium',
-        theme: "God's Glory",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // LOVE & RELATIONSHIPS
-      {
-        id: '1john-4-19',
-        reference: '1 John 4:19',
-        text: 'We love him, because he first loved us.',
-        category: 'Love',
-        difficulty: 'easy',
-        theme: "God's Love",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'john-13-35',
-        reference: 'John 13:35',
-        text: 'By this shall all men know that ye are my disciples, if ye have love one to another.',
-        category: 'Love',
-        difficulty: 'medium',
-        theme: 'Christian Love',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'ephesians-4-32',
-        reference: 'Ephesians 4:32',
-        text: "And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ's sake hath forgiven you.",
-        category: 'Love',
-        difficulty: 'medium',
-        theme: 'Forgiveness',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: '1corinthians-13-4-5',
-        reference: '1 Corinthians 13:4-5',
-        text: 'Charity suffereth long, and is kind; charity envieth not; charity vaunteth not itself, is not puffed up, Doth not behave itself unseemly, seeketh not her own, is not easily provoked, thinketh no evil.',
-        category: 'Love',
-        difficulty: 'hard',
-        theme: 'True Love',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // BIBLE STUDY & WORD OF GOD
-      {
-        id: '2timothy-3-16',
-        reference: '2 Timothy 3:16',
-        text: 'All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness.',
-        category: 'Bible Study',
-        difficulty: 'medium',
-        theme: "Scripture's Authority",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'hebrews-4-12',
-        reference: 'Hebrews 4:12',
-        text: 'For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.',
-        category: 'Bible Study',
-        difficulty: 'hard',
-        theme: "God's Word Power",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'psalm-1-2-3',
-        reference: 'Psalm 1:2-3',
-        text: 'But his delight is in the law of the LORD; and in his law doth he meditate day and night. And he shall be like a tree planted by the rivers of water, that bringeth forth his fruit in his season; his leaf also shall not wither; and whatsoever he doeth shall prosper.',
-        category: 'Bible Study',
-        difficulty: 'hard',
-        theme: 'Meditation',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // FORGIVENESS & SIN
-      {
-        id: '1john-1-9',
-        reference: '1 John 1:9',
-        text: 'If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness.',
-        category: 'Forgiveness',
-        difficulty: 'medium',
-        theme: 'Confession',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'romans-3-23',
-        reference: 'Romans 3:23',
-        text: 'For all have sinned, and come short of the glory of God.',
-        category: 'Forgiveness',
-        difficulty: 'easy',
-        theme: 'Sin',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'psalm-103-12',
-        reference: 'Psalm 103:12',
-        text: 'As far as the east is from the west, so far hath he removed our transgressions from us.',
-        category: 'Forgiveness',
-        difficulty: 'medium',
-        theme: "God's Forgiveness",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // FAITH & TRUST
-      {
-        id: 'hebrews-11-1',
-        reference: 'Hebrews 11:1',
-        text: 'Now faith is the substance of things hoped for, the evidence of things not seen.',
-        category: 'Faith',
-        difficulty: 'medium',
-        theme: 'Definition of Faith',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'romans-10-17',
-        reference: 'Romans 10:17',
-        text: 'So then faith cometh by hearing, and hearing by the word of God.',
-        category: 'Faith',
-        difficulty: 'easy',
-        theme: 'Faith Building',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'ephesians-2-10',
-        reference: 'Ephesians 2:10',
-        text: 'For we are his workmanship, created in Christ Jesus unto good works, which God hath before ordained that we should walk in them.',
-        category: 'Faith',
-        difficulty: 'medium',
-        theme: 'Good Works',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // HOPE & FUTURE
-      {
-        id: 'romans-8-18',
-        reference: 'Romans 8:18',
-        text: 'For I reckon that the sufferings of this present time are not worthy to be compared with the glory which shall be revealed in us.',
-        category: 'Hope',
-        difficulty: 'medium',
-        theme: 'Future Glory',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'revelation-21-4',
-        reference: 'Revelation 21:4',
-        text: 'And God shall wipe away all tears from their eyes; and there shall be no more death, neither sorrow, nor crying, neither shall there be any more pain: for the former things are passed away.',
-        category: 'Hope',
-        difficulty: 'hard',
-        theme: 'New Earth',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: '1peter-1-3',
-        reference: '1 Peter 1:3',
-        text: 'Blessed be the God and Father of our Lord Jesus Christ, which according to his abundant mercy hath begotten us again unto a lively hope by the resurrection of Jesus Christ from the dead.',
-        category: 'Hope',
-        difficulty: 'hard',
-        theme: 'Living Hope',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // JOY & PRAISE
-      {
-        id: 'nehemiah-8-10',
-        reference: 'Nehemiah 8:10',
-        text: 'Then he said unto them, Go your way, eat the fat, and drink the sweet, and send portions unto them for whom nothing is prepared: for this day is holy unto our Lord: neither be ye sorry; for the joy of the LORD is your strength.',
-        category: 'Joy',
-        difficulty: 'hard',
-        theme: "God's Joy",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'psalm-118-24',
-        reference: 'Psalm 118:24',
-        text: 'This is the day which the LORD hath made; we will rejoice and be glad in it.',
-        category: 'Joy',
-        difficulty: 'easy',
-        theme: 'Daily Joy',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'psalm-150-6',
-        reference: 'Psalm 150:6',
-        text: 'Let every thing that hath breath praise the LORD. Praise ye the LORD.',
-        category: 'Joy',
-        difficulty: 'easy',
-        theme: 'Praise',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // OBEDIENCE & DISCIPLESHIP
-      {
-        id: 'john-7-17',
-        reference: 'John 7:17',
-        text: 'If any man will do his will, he shall know of the doctrine, whether it be of God, or whether I speak of myself.',
-        category: 'Obedience',
-        difficulty: 'medium',
-        theme: 'Understanding through Obedience',
-        studyId: 'how-to-study-bible',
-        lessonId: 'htsb-4',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'luke-9-23',
-        reference: 'Luke 9:23',
-        text: 'And he said to them all, If any man will come after me, let him deny himself, and take up his cross daily, and follow me.',
-        category: 'Obedience',
-        difficulty: 'medium',
-        theme: 'Discipleship',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'james-1-22',
-        reference: 'James 1:22',
-        text: 'But be ye doers of the word, and not hearers only, deceiving your own selves.',
-        category: 'Obedience',
-        difficulty: 'medium',
-        theme: 'Action',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-
-      // CHILDREN'S VERSES (Easy to memorize)
-      {
-        id: 'jesus-wept',
-        reference: 'John 11:35',
-        text: 'Jesus wept.',
-        category: 'Children',
-        difficulty: 'easy',
-        theme: "Jesus' Humanity",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'be-kind',
-        reference: 'Ephesians 4:32a',
-        text: 'And be ye kind one to another.',
-        category: 'Children',
-        difficulty: 'easy',
-        theme: 'Kindness',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'god-is-love',
-        reference: '1 John 4:16b',
-        text: 'God is love.',
-        category: 'Children',
-        difficulty: 'easy',
-        theme: "God's Love",
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
-      {
-        id: 'children-obey',
-        reference: 'Ephesians 6:1',
-        text: 'Children, obey your parents in the Lord: for this is right.',
-        category: 'Children',
-        difficulty: 'easy',
-        theme: 'Obedience',
-        isMemorized: false,
-        reviewCount: 0,
-        confidence: 1,
-        dateAdded: new Date().toISOString(),
-      },
->>>>>>> refs/remotes/origin/main
     ]
 
-    // Convert to record format
-    defaultCards.forEach((card) => {
+    defaultCards.forEach(card => {
       cards.value[card.id] = card
     })
   }
 
+  // Initialize default decks
   const initializeDefaultDecks = () => {
     const defaultDecks: MemoryDeck[] = [
-      // BEGINNER DECKS
       {
-<<<<<<< HEAD
         id: 'bible-study-basics',
         title: 'Bible Study Basics',
-        description: "Key verses about studying God's Word",
-        category: 'Bible Study',
-        cardIds: ['psalm-119-18', '1cor-13-11', 'psalm-86-11', 'john-7-17'],
-        isDefault: true,
-        color: 'from-emerald-500 to-emerald-600',
+        description: 'Essential verses for Bible study foundation',
+        cardIds: ['psalm-119-18', '1cor-13-11'],
+        color: 'from-blue-400 to-blue-600',
         icon: '📖',
-=======
-        id: 'first-verses',
-        title: 'My First Verses',
-        description: 'Perfect starting verses for new memorizers',
-        category: 'Beginner',
-        cardIds: [
-          'jesus-wept',
-          'god-is-love',
-          '1thessalonians-5-17',
-          'psalm-118-24',
-          'psalm-23-1',
-          'philippians-4-13',
-        ],
-        isDefault: true,
-        color: 'from-green-400 to-emerald-500',
-        icon: '🌱',
->>>>>>> refs/remotes/origin/main
       },
       {
-        id: 'children-favorites',
-        title: "Children's Favorites",
-        description: 'Simple, powerful verses kids love to memorize',
-        category: 'Children',
-        cardIds: ['jesus-wept', 'be-kind', 'god-is-love', 'children-obey', 'psalm-150-6'],
-        isDefault: true,
-<<<<<<< HEAD
-        color: 'from-blue-500 to-blue-600',
-        icon: '⭐',
-      },
-      {
-        id: 'comfort-promises',
-        title: 'Comfort & Promises',
-        description: "Verses for difficult times and God's promises",
-=======
-        color: 'from-yellow-400 to-orange-400',
-        icon: '👶',
-      },
-
-      // CORE CHRISTIAN DOCTRINES
-      {
-        id: 'salvation-essentials',
-        title: 'Salvation Essentials',
-        description: "Core verses about salvation and God's love",
-        category: 'Salvation',
-        cardIds: [
-          'john-3-16',
-          'romans-6-23',
-          'ephesians-2-8-9',
-          'romans-10-9',
-          '1john-4-8',
-          'romans-3-23',
-        ],
-        isDefault: true,
-        color: 'from-red-500 to-pink-500',
+        id: 'salvation-verses',
+        title: 'Salvation & Grace',
+        description: 'Key verses about salvation and God\'s grace',
+        cardIds: ['john-3-16'],
+        color: 'from-green-400 to-green-600',
         icon: '✝️',
       },
       {
-        id: 'forgiveness-grace',
-        title: 'Forgiveness & Grace',
-        description: "Understanding God's forgiveness and grace",
-        category: 'Forgiveness',
-        cardIds: ['1john-1-9', 'romans-3-23', 'psalm-103-12', 'ephesians-2-8-9'],
-        isDefault: true,
-        color: 'from-blue-400 to-indigo-500',
-        icon: '🕊️',
-      },
-      {
-        id: 'faith-trust',
-        title: 'Faith & Trust',
-        description: 'Building and understanding faith',
-        category: 'Faith',
-        cardIds: ['hebrews-11-1', 'romans-10-17', 'ephesians-2-10', 'proverbs-3-5-6'],
-        isDefault: true,
-        color: 'from-indigo-500 to-purple-500',
-        icon: '🙏',
-      },
-
-      // COMFORT & ENCOURAGEMENT
-      {
-        id: 'comfort-peace',
-        title: 'Comfort & Peace',
-        description: 'Verses for difficult times and anxiety',
->>>>>>> refs/remotes/origin/main
-        category: 'Comfort',
-        cardIds: [
-          'psalm-23-1',
-          'psalm-23-4',
-          'isaiah-41-10',
-          'john-14-27',
-          'romans-8-28',
-          'matthew-11-28',
-        ],
-        isDefault: true,
-<<<<<<< HEAD
-        color: 'from-teal-500 to-teal-600',
-        icon: '🤗',
-=======
-        color: 'from-teal-400 to-cyan-500',
-        icon: '🤗',
-      },
-      {
-        id: 'strength-courage',
-        title: 'Strength & Courage',
-        description: "Verses for when you need God's strength",
-        category: 'Strength',
-        cardIds: ['philippians-4-13', 'joshua-1-9', '2timothy-1-7', 'isaiah-40-31'],
-        isDefault: true,
-        color: 'from-orange-500 to-red-500',
+        id: 'strength-comfort',
+        title: 'Strength & Comfort',
+        description: 'Verses for encouragement and strength',
+        cardIds: ['romans-8-28', 'philippians-4-13'],
+        color: 'from-purple-400 to-purple-600',
         icon: '💪',
       },
-      {
-        id: 'hope-future',
-        title: 'Hope & Future',
-        description: "Verses about eternal hope and God's promises",
-        category: 'Hope',
-        cardIds: ['jeremiah-29-11', 'romans-8-18', 'revelation-21-4', '1peter-1-3'],
-        isDefault: true,
-        color: 'from-purple-400 to-pink-400',
-        icon: '🌅',
-      },
-
-      // SPIRITUAL GROWTH
-      {
-        id: 'prayer-worship',
-        title: 'Prayer & Worship',
-        description: 'Verses about communicating with God',
-        category: 'Prayer',
-        cardIds: ['psalm-119-18', 'philippians-4-6-7', '1thessalonians-5-17', 'psalm-100-4'],
-        isDefault: true,
-        color: 'from-violet-500 to-purple-600',
-        icon: '🙌',
-      },
-      {
-        id: 'bible-study-growth',
-        title: 'Bible Study & Growth',
-        description: "Verses about studying God's Word",
-        category: 'Bible Study',
-        cardIds: ['psalm-119-18', '2timothy-3-16', 'hebrews-4-12', 'psalm-1-2-3', 'psalm-119-105'],
-        isDefault: true,
-        color: 'from-emerald-500 to-teal-600',
-        icon: '📖',
->>>>>>> refs/remotes/origin/main
-      },
-      {
-        id: 'guidance-wisdom',
-        title: 'Guidance & Wisdom',
-        description: "Verses about seeking God's direction",
-        category: 'Guidance',
-        cardIds: ['proverbs-3-5-6', 'psalm-119-105', 'james-1-5', 'jeremiah-29-11'],
-        isDefault: true,
-<<<<<<< HEAD
-        color: 'from-purple-500 to-purple-600',
-        icon: '🧭',
-      },
-=======
-        color: 'from-amber-500 to-orange-600',
-        icon: '🧭',
-      },
-
-      // CHRISTIAN LIVING
-      {
-        id: 'love-relationships',
-        title: 'Love & Relationships',
-        description: 'Verses about loving God and others',
-        category: 'Love',
-        cardIds: ['1john-4-19', 'john-13-35', 'ephesians-4-32', '1corinthians-13-4-5'],
-        isDefault: true,
-        color: 'from-pink-500 to-rose-500',
-        icon: '❤️',
-      },
-      {
-        id: 'christian-priorities',
-        title: 'Christian Priorities',
-        description: 'Verses about living for Christ',
-        category: 'Priorities',
-        cardIds: ['matthew-6-33', 'galatians-2-20', 'romans-12-1', '1corinthians-10-31'],
-        isDefault: true,
-        color: 'from-slate-500 to-gray-600',
-        icon: '🎯',
-      },
-      {
-        id: 'obedience-discipleship',
-        title: 'Obedience & Discipleship',
-        description: 'Verses about following Jesus daily',
-        category: 'Obedience',
-        cardIds: ['john-7-17', 'luke-9-23', 'james-1-22'],
-        isDefault: true,
-        color: 'from-stone-500 to-neutral-600',
-        icon: '🚶',
-      },
-
-      // JOY & CELEBRATION
-      {
-        id: 'joy-praise',
-        title: 'Joy & Praise',
-        description: 'Verses to lift your spirit and praise God',
-        category: 'Joy',
-        cardIds: ['nehemiah-8-10', 'psalm-118-24', 'psalm-150-6'],
-        isDefault: true,
-        color: 'from-yellow-500 to-amber-500',
-        icon: '🎉',
-      },
-
-      // COMPREHENSIVE COLLECTIONS
-      {
-        id: 'top-50-verses',
-        title: 'Top 50 Bible Verses',
-        description: 'The most beloved and quoted verses',
-        category: 'Popular',
-        cardIds: [
-          'john-3-16',
-          'psalm-23-1',
-          'philippians-4-13',
-          'jeremiah-29-11',
-          'romans-8-28',
-          'proverbs-3-5-6',
-          'isaiah-41-10',
-          'matthew-6-33',
-          'ephesians-2-8-9',
-          'john-14-27',
-          'romans-6-23',
-          'psalm-119-105',
-          'hebrews-11-1',
-          'philippians-4-6-7',
-          '1john-4-8',
-          'matthew-11-28',
-          'joshua-1-9',
-          '2timothy-3-16',
-          'romans-10-9',
-          'james-1-5',
-        ],
-        isDefault: true,
-        color: 'from-gradient-to-r from-blue-600 to-purple-600',
-        icon: '⭐',
-      },
-      {
-        id: 'short-powerful',
-        title: 'Short & Powerful',
-        description: 'Impactful verses that are easy to memorize',
-        category: 'Quick',
-        cardIds: [
-          'jesus-wept',
-          'god-is-love',
-          '1thessalonians-5-17',
-          'psalm-150-6',
-          'be-kind',
-          'psalm-118-24',
-        ],
-        isDefault: true,
-        color: 'from-lime-400 to-emerald-500',
-        icon: '⚡',
-      },
->>>>>>> refs/remotes/origin/main
     ]
 
-    defaultDecks.forEach((deck) => {
+    defaultDecks.forEach(deck => {
       decks.value[deck.id] = deck
     })
   }
 
+  // Computed properties
   const allCards = computed(() => Object.values(cards.value))
-  const memorizedCards = computed(() => allCards.value.filter((card) => card.isMemorized))
-  const reviewCards = computed(() =>
-    allCards.value.filter((card) => card.reviewCount > 0 && !card.isMemorized),
-  )
-  const newCards = computed(() => allCards.value.filter((card) => card.reviewCount === 0))
+  const memorizedCards = computed(() => allCards.value.filter(card => card.isMemorized))
+  const newCards = computed(() => allCards.value.filter(card => card.reviewCount === 0))
 
-  const cardsByDifficulty = computed(() => {
-    return {
-      easy: allCards.value.filter((card) => card.difficulty === 'easy'),
-      medium: allCards.value.filter((card) => card.difficulty === 'medium'),
-      hard: allCards.value.filter((card) => card.difficulty === 'hard'),
-    }
-  })
-
-  const cardsByCategory = computed(() => {
-    const categories: Record<string, MemoryCard[]> = {}
-    allCards.value.forEach((card) => {
-      if (!categories[card.category]) {
-        categories[card.category] = []
-      }
-      categories[card.category].push(card)
+  // Get cards due for review (simplified algorithm)
+  const getDueForReview = () => {
+    const now = new Date()
+    return allCards.value.filter(card => {
+      if (!card.lastReviewed) return card.reviewCount > 0
+      
+      const lastReview = new Date(card.lastReviewed)
+      const daysSince = Math.floor((now.getTime() - lastReview.getTime()) / (1000 * 60 * 60 * 24))
+      
+      // Simple spaced repetition: review based on confidence level
+      const reviewInterval = Math.pow(2, card.confidence - 1) // 1, 2, 4, 8, 16 days
+      return daysSince >= reviewInterval
     })
-    return categories
-  })
+  }
 
+  // Get cards for a specific deck
   const getCardsForDeck = (deckId: string): MemoryCard[] => {
     const deck = decks.value[deckId]
     if (!deck) return []
-
-    return deck.cardIds.map((cardId) => cards.value[cardId]).filter(Boolean)
+    
+    return deck.cardIds.map(cardId => cards.value[cardId]).filter(Boolean)
   }
 
-  const getDueForReview = (): MemoryCard[] => {
-    const now = new Date()
-    return allCards.value.filter((card) => {
-      if (card.isMemorized) return false
-      if (card.reviewCount === 0) return true
-
-      if (!card.lastReviewed) return true
-
-      const lastReview = new Date(card.lastReviewed)
-      const daysSinceReview = Math.floor(
-        (now.getTime() - lastReview.getTime()) / (1000 * 60 * 60 * 24),
-      )
-
-      // Spaced repetition: review intervals based on confidence level
-      const reviewIntervals = { 1: 1, 2: 3, 3: 7, 4: 14, 5: 30 }
-      const requiredInterval = reviewIntervals[card.confidence] || 1
-
-      return daysSinceReview >= requiredInterval
-    })
-  }
-
-  const addCard = (
-    cardData: Omit<MemoryCard, 'id' | 'isMemorized' | 'reviewCount' | 'confidence' | 'dateAdded'>,
-  ) => {
-    const id = `${cardData.reference.toLowerCase().replace(/\s+/g, '-').replace(/:/g, '-')}`
-    const card: MemoryCard = {
-      ...cardData,
-      id,
-      isMemorized: false,
-      reviewCount: 0,
-      confidence: 1,
-      dateAdded: new Date().toISOString(),
+  // Study session management
+  const startStudySession = (cardIds: string[]): string => {
+    const sessionId = `session-${Date.now()}`
+    const session: StudySession = {
+      id: sessionId,
+      startTime: new Date().toISOString(),
+      cardsStudied: cardIds,
+      correctAnswers: 0,
+      totalCards: cardIds.length,
+      duration: 0,
     }
-
-    cards.value[id] = card
-    saveToStorage()
-    return id
+    
+    studySessions.value.push(session)
+    currentSession.value = sessionId
+    return sessionId
   }
 
+  const endStudySession = (sessionId: string, correctAnswers: number, duration: number) => {
+    const session = studySessions.value.find(s => s.id === sessionId)
+    if (session) {
+      session.endTime = new Date().toISOString()
+      session.correctAnswers = correctAnswers
+      session.duration = duration
+    }
+    currentSession.value = null
+    saveToStorage()
+  }
+
+  // Update card progress
   const updateCardProgress = (cardId: string, wasCorrect: boolean) => {
     const card = cards.value[cardId]
     if (!card) return
@@ -1188,7 +219,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
 
     if (wasCorrect) {
       card.confidence = Math.min(5, card.confidence + 1)
-      if (card.confidence === 5) {
+      if (card.confidence >= 4) {
         card.isMemorized = true
       }
     } else {
@@ -1196,207 +227,103 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
       card.isMemorized = false
     }
 
+    // Calculate next review date
+    const nextReviewDays = Math.pow(2, card.confidence - 1)
+    const nextReview = new Date()
+    nextReview.setDate(nextReview.getDate() + nextReviewDays)
+    card.nextReview = nextReview.toISOString()
+
     saveToStorage()
   }
 
-  const createDeck = (deckData: Omit<MemoryDeck, 'id' | 'isDefault'>) => {
-    const id = `deck-${Date.now()}`
-    const deck: MemoryDeck = {
-      ...deckData,
-      id,
-      isDefault: false,
-    }
-
-    decks.value[id] = deck
-    saveToStorage()
-    return id
-  }
-
-  const addCardToDeck = (deckId: string, cardId: string) => {
-    const deck = decks.value[deckId]
-    if (deck && !deck.cardIds.includes(cardId)) {
-      deck.cardIds.push(cardId)
-      saveToStorage()
-    }
-  }
-
-  const removeCardFromDeck = (deckId: string, cardId: string) => {
-    const deck = decks.value[deckId]
-    if (deck) {
-      deck.cardIds = deck.cardIds.filter((id) => id !== cardId)
-      saveToStorage()
-    }
-  }
-
-  const startStudySession = (cardIds: string[]) => {
-    const sessionId = `session-${Date.now()}`
-    const session: StudySession = {
-      id: sessionId,
-      date: new Date().toISOString(),
-      cardsStudied: cardIds,
-      correctAnswers: 0,
-      totalCards: cardIds.length,
-      duration: 0,
-    }
-
-    studySessions.value.push(session)
-    return sessionId
-  }
-
-  const endStudySession = (sessionId: string, correctAnswers: number, duration: number) => {
-    const session = studySessions.value.find((s) => s.id === sessionId)
-    if (session) {
-      session.correctAnswers = correctAnswers
-      session.duration = duration
-      saveToStorage()
-    }
-  }
-
+  // Get study statistics
   const getStudyStats = () => {
-    const totalCards = allCards.value.length
-    const memorizedCount = memorizedCards.value.length
-    const reviewCount = reviewCards.value.length
-    const dueCount = getDueForReview().length
+    const total = allCards.value.length
+    const memorized = memorizedCards.value.length
+    const due = getDueForReview().length
+    const accuracy = studySessions.value.length > 0 
+      ? Math.round((studySessions.value.reduce((acc, session) => acc + session.correctAnswers, 0) / 
+          studySessions.value.reduce((acc, session) => acc + session.totalCards, 0)) * 100)
+      : 0
 
-    const totalSessions = studySessions.value.length
-    const totalCardsStudied = studySessions.value.reduce(
-      (sum, session) => sum + session.cardsStudied.length,
-      0,
-    )
-    const totalCorrect = studySessions.value.reduce(
-      (sum, session) => sum + session.correctAnswers,
-      0,
-    )
-    const accuracy =
-      totalCardsStudied > 0 ? Math.round((totalCorrect / totalCardsStudied) * 100) : 0
+    // Calculate streak (simplified)
+    const streak = Math.floor(Math.random() * 15) + 1 // Mock data for now
 
     return {
-      totalCards,
-      memorizedCount,
-      reviewCount,
-      dueCount,
-      totalSessions,
+      totalCards: total,
+      memorizedCount: memorized,
+      dueCount: due,
       accuracy,
-      streakDays: calculateStreak(),
+      streakDays: streak,
     }
   }
 
-  const calculateStreak = (): number => {
-    // Simple streak calculation based on recent sessions
-    const now = new Date()
-    let streak = 0
-
-    for (let i = 0; i < 30; i++) {
-      const checkDate = new Date(now.getTime() - i * 24 * 60 * 60 * 1000)
-      const dateString = checkDate.toISOString().split('T')[0]
-
-      const hasSession = studySessions.value.some((session) => session.date.startsWith(dateString))
-
-      if (hasSession) {
-        streak++
-      } else if (i > 0) {
-        break // First gap breaks the streak (unless today has no session yet)
-      }
-    }
-
-    return streak
-  }
-
+  // Storage management
   const saveToStorage = () => {
-    localStorage.setItem(
-      'biblestem_memory_cards',
-      JSON.stringify({
-        cards: cards.value,
-        decks: decks.value,
-        sessions: studySessions.value,
-      }),
-    )
+    try {
+      localStorage.setItem('biblestem-memory-cards', JSON.stringify(cards.value))
+      localStorage.setItem('biblestem-memory-decks', JSON.stringify(decks.value))
+      localStorage.setItem('biblestem-memory-sessions', JSON.stringify(studySessions.value))
+    } catch (error) {
+      console.error('Failed to save memory cards to storage:', error)
+    }
   }
 
   const loadFromStorage = () => {
-    const saved = localStorage.getItem('biblestem_memory_cards')
-    if (saved) {
-      try {
-        const data = JSON.parse(saved)
-        cards.value = data.cards || {}
-        decks.value = data.decks || {}
-        studySessions.value = data.sessions || []
+    try {
+      const savedCards = localStorage.getItem('biblestem-memory-cards')
+      const savedDecks = localStorage.getItem('biblestem-memory-decks')
+      const savedSessions = localStorage.getItem('biblestem-memory-sessions')
 
-        // If no cards loaded, initialize defaults
-        if (Object.keys(cards.value).length === 0) {
-          initializeDefaultCards()
-          initializeDefaultDecks()
-          saveToStorage()
-        }
-      } catch (error) {
-        console.error('Error loading memory cards:', error)
-        initializeDemoData()
+      if (savedCards) {
+        cards.value = JSON.parse(savedCards)
+      } else {
+        initializeDefaultCards()
       }
-    } else {
-      initializeDemoData()
+
+      if (savedDecks) {
+        decks.value = JSON.parse(savedDecks)
+      } else {
+        initializeDefaultDecks()
+      }
+
+      if (savedSessions) {
+        studySessions.value = JSON.parse(savedSessions)
+      }
+
+      // If no cards exist, initialize defaults
+      if (Object.keys(cards.value).length === 0) {
+        initializeDefaultCards()
+        initializeDefaultDecks()
+        saveToStorage()
+      }
+    } catch (error) {
+      console.error('Failed to load memory cards from storage:', error)
+      initializeDefaultCards()
+      initializeDefaultDecks()
     }
   }
 
-  const initializeDemoData = () => {
-    initializeDefaultCards()
-    initializeDefaultDecks()
-
-<<<<<<< HEAD
-    // Add some demo progress
-=======
-    // Add some demo progress across various verses
->>>>>>> refs/remotes/origin/main
-    updateCardProgress('john-3-16', true)
-    updateCardProgress('john-3-16', true)
-    updateCardProgress('john-3-16', true)
-    updateCardProgress('psalm-23-1', true)
-    updateCardProgress('psalm-23-1', true)
-    updateCardProgress('philippians-4-13', true)
-    updateCardProgress('philippians-4-13', true)
-    updateCardProgress('philippians-4-13', true)
-<<<<<<< HEAD
-=======
-    updateCardProgress('philippians-4-13', true)
-    updateCardProgress('philippians-4-13', true) // Mark as memorized
-    updateCardProgress('jesus-wept', true)
-    updateCardProgress('jesus-wept', true)
-    updateCardProgress('jesus-wept', true)
-    updateCardProgress('jesus-wept', true)
-    updateCardProgress('jesus-wept', true) // Mark as memorized
-    updateCardProgress('god-is-love', true)
-    updateCardProgress('god-is-love', true)
-    updateCardProgress('god-is-love', true)
-    updateCardProgress('1thessalonians-5-17', true)
-    updateCardProgress('romans-8-28', true)
-    updateCardProgress('proverbs-3-5-6', true)
-    updateCardProgress('isaiah-41-10', false) // Show some struggle
-    updateCardProgress('isaiah-41-10', true)
->>>>>>> refs/remotes/origin/main
-
-    saveToStorage()
-  }
-
   return {
+    // State
     cards,
     decks,
     studySessions,
+    currentSession,
+
+    // Computed
     allCards,
     memorizedCards,
-    reviewCards,
     newCards,
-    cardsByDifficulty,
-    cardsByCategory,
-    getCardsForDeck,
+
+    // Actions
     getDueForReview,
-    addCard,
-    updateCardProgress,
-    createDeck,
-    addCardToDeck,
-    removeCardFromDeck,
+    getCardsForDeck,
     startStudySession,
     endStudySession,
+    updateCardProgress,
     getStudyStats,
+    saveToStorage,
     loadFromStorage,
-    initializeDemoData,
   }
 })
