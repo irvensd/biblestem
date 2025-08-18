@@ -47,29 +47,44 @@
       </div>
 
       <!-- Sign In Form -->
-      <form @submit.prevent="handleSignIn" class="card p-8 space-y-6">
-        <div>
+      <form @submit.prevent="handleSignIn" class="card p-8 space-y-6" novalidate>
+        <div class="form-field">
           <label
             for="email"
-            class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+            class="form-label"
+            :class="{ 'text-red-600 dark:text-red-400': emailField.error.value }"
           >
             Email Address
+            <span class="text-red-500" aria-label="required">*</span>
           </label>
           <input
             id="email"
             v-model="emailField.value.value"
             type="email"
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+            autocomplete="email"
+            class="form-input"
             :class="
               emailField.error.value
-                ? 'border-red-500 dark:border-red-500'
+                ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
                 : 'border-neutral-300 dark:border-neutral-600'
             "
             placeholder="Enter your email"
+            :aria-invalid="!!emailField.error.value"
+            :aria-describedby="emailField.error.value ? 'email-error' : 'email-help'"
             @blur="emailField.validate()"
             @input="emailField.clear()"
+            required
           />
-          <p v-if="emailField.error.value" class="text-red-500 text-sm mt-1">
+          <div id="email-help" class="form-help">
+            Use the demo accounts provided above for testing
+          </div>
+          <p
+            v-if="emailField.error.value"
+            id="email-error"
+            class="form-error"
+            role="alert"
+            aria-live="polite"
+          >
             {{ emailField.error.value }}
           </p>
         </div>
