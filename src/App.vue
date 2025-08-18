@@ -130,6 +130,16 @@ const {
   updateServiceWorker,
 } = usePWA()
 
+// Page transition logic
+const getTransitionName = (route: any) => {
+  // Define different transitions for different routes
+  if (route.name === 'home') return 'slide-up'
+  if (route.name === 'signin' || route.name === 'signup') return 'fade'
+  if (route.name === 'dashboard') return 'slide-right'
+  if (route.name === 'study') return 'slide-left'
+  return 'fade'
+}
+
 // Initialize app when mounted
 onMounted(async () => {
   try {
