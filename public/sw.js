@@ -1,4 +1,4 @@
-const CACHE_NAME = 'biblestem-v1.0.1'
+const CACHE_NAME = 'biblestem-v1.0.2-debug'
 const OFFLINE_URL = '/offline.html'
 
 // Resources to cache for offline use
