@@ -1016,7 +1016,7 @@ a:focus-visible {
   @apply transition-all duration-300 ease-out cursor-pointer;
   @apply hover:shadow-lg hover:-translate-y-2;
   @apply focus:shadow-lg focus:-translate-y-2;
-  @apply active:scale-98 active:translate-y-0;
+  @apply active:scale-95 active:translate-y-0;
 }
 
 .card-interactive:hover {
@@ -1073,7 +1073,7 @@ a:focus-visible {
 }
 
 .icon-interactive:hover {
-  @apply transform rotate-3;
+  @apply transform rotate-12;
 }
 
 /* Enhanced List Item Interactions */
@@ -1980,12 +1980,12 @@ a:focus-visible {
 
 /* Enhanced Study Cards */
 .study-card {
-  @apply bg-white dark:bg-neutral-800 rounded-xl shadow-soft;
+  @apply bg-white dark:bg-neutral-800 rounded-xl shadow-2xl;
   @apply border border-neutral-200 dark:border-neutral-700;
   @apply transition-all duration-300 cursor-pointer;
   @apply hover:shadow-lg hover:-translate-y-2;
   @apply focus:shadow-lg focus:-translate-y-2;
-  @apply active:scale-98 active:translate-y-0;
+  @apply active:scale-95 active:translate-y-0;
 }
 
 .study-card.featured {
@@ -3057,15 +3057,15 @@ a:focus-visible {
 }
 
 .transform-scale-small {
-  @apply hover:scale-102 focus:scale-102;
+  @apply hover:scale-105 focus:scale-105;
 }
 
 .transform-rotate {
-  @apply hover:rotate-3 focus:rotate-3;
+  @apply hover:rotate-12 focus:rotate-12;
 }
 
 .transform-rotate-large {
-  @apply hover:rotate-6 focus:rotate-6;
+  @apply hover:rotate-12 focus:rotate-12;
 }
 
 /* Shadow Utilities */
