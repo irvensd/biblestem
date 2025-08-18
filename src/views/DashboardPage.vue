@@ -782,6 +782,7 @@ import MemoryCards from '../components/MemoryCards.vue'
 import StudyTemplates from '../components/StudyTemplates.vue'
 import SkeletonCard from '../components/skeletons/SkeletonCard.vue'
 import SkeletonGrid from '../components/skeletons/SkeletonGrid.vue'
+import StudiesEmpty from '../components/empty-states/StudiesEmpty.vue'
 
 const router = useRouter()
 
