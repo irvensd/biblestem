@@ -18,7 +18,7 @@ interface SwipeGestureResult {
 
 export function useSwipeGestures(
   targetElement: Ref<HTMLElement | null>,
-  options: SwipeOptions = {}
+  options: SwipeOptions = {},
 ): SwipeGestureResult {
   const {
     threshold = 50,
@@ -117,16 +117,16 @@ export function useSwipeGestures(
       if (absX > absY) {
         // Horizontal swipe
         if (deltaX > 0) {
-          callbacks.right.forEach(callback => callback())
+          callbacks.right.forEach((callback) => callback())
         } else {
-          callbacks.left.forEach(callback => callback())
+          callbacks.left.forEach((callback) => callback())
         }
       } else {
         // Vertical swipe
         if (deltaY > 0) {
-          callbacks.down.forEach(callback => callback())
+          callbacks.down.forEach((callback) => callback())
         } else {
-          callbacks.up.forEach(callback => callback())
+          callbacks.up.forEach((callback) => callback())
         }
       }
     }
@@ -195,13 +195,18 @@ export function useCardSwipe(
     onSwipeLeft?: () => void
     onSwipeRight?: () => void
     enableVisualFeedback?: boolean
-  } = {}
+  } = {},
 ) {
   const { onSwipeLeft, onSwipeRight, enableVisualFeedback = true } = options
   const swipeOffset = ref(0)
   const isAnimating = ref(false)
 
-  const { isSwiping, direction, onSwipeLeft: handleSwipeLeft, onSwipeRight: handleSwipeRight } = useSwipeGestures(cardElement, {
+  const {
+    isSwiping,
+    direction,
+    onSwipeLeft: handleSwipeLeft,
+    onSwipeRight: handleSwipeRight,
+  } = useSwipeGestures(cardElement, {
     threshold: 80,
     velocity: 0.5,
   })

@@ -38,7 +38,7 @@
                 'rounded-t-3xl sm:rounded-2xl': !fullScreen,
                 'h-full rounded-none': fullScreen,
                 'max-h-[85vh] sm:max-h-[90vh]': !fullScreen,
-              }
+              },
             ]"
             @click.stop
           >
@@ -63,10 +63,7 @@
                 >
                   {{ title }}
                 </h2>
-                <p
-                  v-if="subtitle"
-                  class="text-sm text-neutral-500 dark:text-neutral-400 mt-1"
-                >
+                <p v-if="subtitle" class="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
                   {{ subtitle }}
                 </p>
               </div>
@@ -97,8 +94,8 @@
                 {
                   'p-4 sm:p-6': !customPadding,
                   'pb-6 sm:pb-8': !customPadding && !fullScreen,
-                  'flex-1': fullScreen
-                }
+                  'flex-1': fullScreen,
+                },
               ]"
             >
               <slot />
@@ -212,7 +209,7 @@ const isMobile = computed(() => {
 
 const handleTouchStart = (event: TouchEvent) => {
   if (!isMobile.value || props.fullScreen) return
-  
+
   const touch = event.touches[0]
   touchStartY.value = touch.clientY
   touchCurrentY.value = touch.clientY
@@ -221,16 +218,16 @@ const handleTouchStart = (event: TouchEvent) => {
 
 const handleTouchMove = (event: TouchEvent) => {
   if (!isMobile.value || props.fullScreen) return
-  
+
   const touch = event.touches[0]
   touchCurrentY.value = touch.clientY
-  
+
   const deltaY = touchCurrentY.value - touchStartY.value
-  
+
   // Only allow dragging down
   if (deltaY > 0) {
     isDragging.value = true
-    
+
     // Apply transform to modal content for visual feedback
     if (modalContent.value) {
       const transform = Math.min(deltaY * 0.5, 50) // Dampen the movement
@@ -242,20 +239,20 @@ const handleTouchMove = (event: TouchEvent) => {
 
 const handleTouchEnd = () => {
   if (!isMobile.value || props.fullScreen) return
-  
+
   const deltaY = touchCurrentY.value - touchStartY.value
-  
+
   // Reset transform
   if (modalContent.value) {
     modalContent.value.style.transform = ''
     modalContent.value.style.opacity = ''
   }
-  
+
   // Close modal if dragged down far enough
   if (isDragging.value && deltaY > dragThreshold) {
     closeModal()
   }
-  
+
   isDragging.value = false
 }
 
@@ -286,32 +283,35 @@ const handleEscape = (event: KeyboardEvent) => {
 }
 
 // Prevent background scroll when modal is open
-watch(() => props.isOpen, (isOpen) => {
-  if (!props.preventBackgroundScroll) return
-  
-  nextTick(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-      document.body.style.paddingRight = getScrollbarWidth() + 'px'
-    } else {
-      document.body.style.overflow = ''
-      document.body.style.paddingRight = ''
-    }
-  })
-})
+watch(
+  () => props.isOpen,
+  (isOpen) => {
+    if (!props.preventBackgroundScroll) return
+
+    nextTick(() => {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden'
+        document.body.style.paddingRight = getScrollbarWidth() + 'px'
+      } else {
+        document.body.style.overflow = ''
+        document.body.style.paddingRight = ''
+      }
+    })
+  },
+)
 
 const getScrollbarWidth = () => {
   const outer = document.createElement('div')
   outer.style.visibility = 'hidden'
   outer.style.overflow = 'scroll'
   document.body.appendChild(outer)
-  
+
   const inner = document.createElement('div')
   outer.appendChild(inner)
-  
+
   const scrollbarWidth = outer.offsetWidth - inner.offsetWidth
   outer.parentNode?.removeChild(outer)
-  
+
   return scrollbarWidth
 }
 
@@ -321,7 +321,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleEscape)
-  
+
   // Clean up body styles
   if (props.preventBackgroundScroll) {
     document.body.style.overflow = ''
@@ -344,6 +344,8 @@ onUnmounted(() => {
 
 /* Smooth transitions for touch feedback */
 .modal-content {
-  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  transition:
+    transform 0.1s ease-out,
+    opacity 0.1s ease-out;
 }
 </style>

@@ -261,9 +261,9 @@
   .btn,
   button,
   .interactive,
-  [role="button"],
-  input[type="checkbox"],
-  input[type="radio"] {
+  [role='button'],
+  input[type='checkbox'],
+  input[type='radio'] {
     min-height: 44px;
     min-width: 44px;
   }
@@ -283,10 +283,10 @@
   }
 
   /* Mobile-optimized input fields */
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="search"],
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='search'],
   textarea,
   select {
     @apply py-4 px-4 text-base rounded-xl;

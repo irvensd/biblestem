@@ -220,9 +220,7 @@
             <div
               class="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
             >
-              <span class="text-white font-bold text-lg">{{
-                authStore.user?.name.charAt(0)
-              }}</span>
+              <span class="text-white font-bold text-lg">{{ authStore.user?.name.charAt(0) }}</span>
             </div>
             <div>
               <div class="font-medium text-neutral-900 dark:text-neutral-100">
