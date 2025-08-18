@@ -408,6 +408,7 @@ const safeAuthStore = computed(() => {
 // Initialize the real store when component mounts
 onMounted(async () => {
   try {
+    const { useAuthStore } = await import('@/stores/auth')
     const realAuthStore = useAuthStore()
     authStore.value = realAuthStore
   } catch (error) {
