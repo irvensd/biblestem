@@ -121,6 +121,10 @@
               @click="toggleUserMenu"
               class="flex items-center space-x-2 lg:space-x-3 p-1.5 lg:p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
               :class="{ 'bg-neutral-100 dark:bg-neutral-800': userMenuOpen }"
+              :aria-expanded="userMenuOpen"
+              :aria-haspopup="true"
+              aria-label="User menu"
+              :aria-describedby="authStore.user?.name ? 'user-name' : undefined"
             >
               <div
                 class="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
