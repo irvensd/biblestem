@@ -415,6 +415,7 @@ const handleUpgrade = () => {
 const signOut = async () => {
   await authStore.logout()
   closeProfile()
+  router.push('/')
 }
 
 // Close overlays when route changes
