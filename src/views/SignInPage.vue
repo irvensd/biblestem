@@ -89,32 +89,40 @@
           </p>
         </div>
 
-        <div>
+        <div class="form-field">
           <label
             for="password"
-            class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+            class="form-label"
+            :class="{ 'text-red-600 dark:text-red-400': passwordField.error.value }"
           >
             Password
+            <span class="text-red-500" aria-label="required">*</span>
           </label>
           <div class="relative">
             <input
               id="password"
               v-model="passwordField.value.value"
               :type="showPassword ? 'text' : 'password'"
-              class="w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+              autocomplete="current-password"
+              class="form-input pr-12"
               :class="
                 passwordField.error.value
-                  ? 'border-red-500 dark:border-red-500'
+                  ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
                   : 'border-neutral-300 dark:border-neutral-600'
               "
               placeholder="Enter your password"
+              :aria-invalid="!!passwordField.error.value"
+              :aria-describedby="passwordField.error.value ? 'password-error' : 'password-help'"
               @blur="passwordField.validate()"
               @input="passwordField.clear()"
+              required
             />
             <button
               type="button"
               @click="showPassword = !showPassword"
-              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 focus-ring rounded p-1"
+              :aria-label="showPassword ? 'Hide password' : 'Show password'"
+              :aria-pressed="showPassword"
             >
               <svg
                 v-if="showPassword"
