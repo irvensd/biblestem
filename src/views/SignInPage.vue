@@ -282,7 +282,7 @@ const handleSignIn = async () => {
 
   console.log('✅ Validating form...')
   // Validate form before submitting
-  if (!formValidation.validate()) {
+  if (!validateForm()) {
     console.log('❌ Form validation failed')
     return
   }
