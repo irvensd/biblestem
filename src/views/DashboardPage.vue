@@ -133,23 +133,23 @@
                     </span>
                   </div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-5">
                   <div
-                    class="flex justify-between text-sm text-neutral-600 dark:text-neutral-400 mb-2"
+                    class="flex justify-between text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-3"
                   >
                     <span>Progress</span>
-                    <span>{{ Math.round(currentStudy.progress) }}%</span>
+                    <span class="text-primary-600 dark:text-primary-400">{{ Math.round(currentStudy.progress) }}%</span>
                   </div>
-                  <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
+                  <div class="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-3 shadow-inner">
                     <div
-                      class="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-300"
+                      class="bg-gradient-to-r from-primary-500 to-secondary-500 h-3 rounded-full transition-all duration-500 shadow-sm"
                       :style="`width: ${currentStudy.progress}%`"
                     ></div>
                   </div>
                 </div>
                 <router-link
                   :to="`/study/${currentStudy.id}`"
-                  class="btn-primary w-full md:w-auto inline-block text-center"
+                  class="btn-primary w-full text-center py-3 text-base font-semibold shadow-md hover:shadow-lg active:shadow-sm transition-all duration-200 touch-manipulation"
                 >
                   {{ currentStudy.progress === 100 ? 'Review Study' : 'Continue Study' }}
                 </router-link>
