@@ -133,7 +133,9 @@
       <!-- Profile/Menu -->
       <button
         @click="toggleProfile"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
+        @touchstart="toggleProfile"
+        type="button"
+        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200 touch-manipulation"
         :class="
           showProfile
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
