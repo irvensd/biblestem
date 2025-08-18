@@ -352,45 +352,23 @@ const validateForm = () => {
 }
 
 const handleSignUp = async () => {
-  console.log('=== HANDLE SIGNUP CALLED ===')
   error.value = ''
   success.value = ''
 
   if (!validateForm()) {
-    console.log('=== FORM VALIDATION FAILED ===')
     return
   }
 
-  console.log('=== STARTING SIGNUP PROCESS ===')
   isLoading.value = true
 
   try {
-    console.log('=== AUTH STORE CHECK ===', authStore.value)
-
-    if (!authStore.value.signUp) {
-      console.error('=== SIGNUP METHOD NOT FOUND ===')
-      error.value = 'Authentication system not ready. Please refresh the page.'
-      return
-    }
-
-    console.log('=== CALLING SIGNUP ===')
-    const result = await authStore.value.signUp(form.email, form.password, form.name)
-    console.log('=== SIGNUP COMPLETE ===', result)
+    const result = await authStore.signUp(form.email, form.password, form.name)
 
     if (result.success) {
-      if (result.emailConfirmed) {
-        // User is immediately signed in
-        success.value = 'Account created successfully! Redirecting to dashboard...'
-        setTimeout(() => {
-          router.push('/dashboard')
-        }, 1500)
-      } else {
-        // Email confirmation required
-        success.value = result.message || 'Please check your email and click the confirmation link to complete signup.'
-        setTimeout(() => {
-          router.push('/signin')
-        }, 3000)
-      }
+      success.value = 'Account created successfully! Redirecting to dashboard...'
+      setTimeout(() => {
+        router.push('/dashboard')
+      }, 1500)
     } else {
       error.value = result.error || 'Failed to create account. Please try again.'
     }
