@@ -48,6 +48,8 @@
               to="/study-series"
               class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
+              role="menuitem"
+              :aria-current="$route.path === '/study-series' ? 'page' : undefined"
             >
               Study Series
             </router-link>
@@ -55,6 +57,8 @@
               to="/my-studies"
               class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/my-studies' }"
+              role="menuitem"
+              :aria-current="$route.path === '/my-studies' ? 'page' : undefined"
             >
               My Studies
             </router-link>
@@ -64,6 +68,8 @@
               :class="{
                 'text-primary-600 dark:text-primary-400': $route.path === '/daily-devotions',
               }"
+              role="menuitem"
+              :aria-current="$route.path === '/daily-devotions' ? 'page' : undefined"
             >
               Daily Devotions
             </router-link>
