@@ -851,8 +851,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
+import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
+const router = useRouter()
 
 // Active section
 const activeSection = ref('account')
@@ -890,6 +892,7 @@ const settingsSections = [
 const savingNotifications = ref(false)
 const showPasswordForm = ref(false)
 const changingPassword = ref(false)
+const signingOut = ref(false)
 
 // Privacy settings
 const privacySettings = ref({
