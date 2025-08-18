@@ -768,6 +768,8 @@ import { getFreeStudies, getPremiumStudies, type Study } from '../data/studies'
 import AchievementBadges from '../components/AchievementBadges.vue'
 import MemoryCards from '../components/MemoryCards.vue'
 import StudyTemplates from '../components/StudyTemplates.vue'
+import SkeletonCard from '../components/skeletons/SkeletonCard.vue'
+import SkeletonGrid from '../components/skeletons/SkeletonGrid.vue'
 
 const router = useRouter()
 
