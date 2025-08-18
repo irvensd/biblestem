@@ -158,12 +158,12 @@
               <!-- Recommended Studies -->
               <div
                 v-if="recommendedStudies.length > 0"
-                class="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                class="grid grid-cols-1 gap-4"
               >
                 <div
                   v-for="study in recommendedStudies"
                   :key="study.id"
-                  class="card interactive p-4 animate-in cursor-pointer"
+                  class="card interactive p-4 animate-in cursor-pointer touch-manipulation active:scale-[0.98] transition-transform duration-150 shadow-sm hover:shadow-md"
                   @click="goToStudy(study.id)"
                 >
                   <div
