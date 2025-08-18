@@ -70,7 +70,8 @@
           v-for="recent in recentSearches"
           :key="recent"
           @click="searchQuery = recent"
-          class="w-full text-left px-3 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-700 rounded transition-colors flex items-center space-x-2"
+          class="w-full text-left px-4 py-3 text-base text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-700 active:bg-neutral-100 dark:active:bg-neutral-600 rounded-lg transition-colors flex items-center space-x-3 touch-manipulation"
+          :class="isMobile ? 'min-h-[48px]' : ''"
         >
           <svg
             class="h-4 w-4 text-neutral-400"
