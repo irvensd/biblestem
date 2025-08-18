@@ -450,28 +450,35 @@ a:focus-visible,
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .btn-primary {
-    @apply bg-blue-700 border-2 border-blue-900 text-white;
+    background-color: #1d4ed8;
+    border: 2px solid #1e3a8a;
+    color: white;
   }
 
   .btn-secondary {
-    @apply bg-white border-2 border-neutral-900 text-neutral-900;
+    background-color: white;
+    border: 2px solid #171717;
+    color: #171717;
   }
 
   .dark .btn-primary {
-    @apply bg-blue-400 text-neutral-900;
+    background-color: #60a5fa;
+    color: #171717;
   }
 
   .dark .btn-secondary {
-    @apply bg-neutral-900 border-white text-white;
+    background-color: #171717;
+    border-color: white;
+    color: white;
   }
 
-  /* Enhanced contrast for text */
-  .text-neutral-600 {
-    @apply text-neutral-800;
+  /* Enhanced contrast for text - use new class names to avoid conflicts */
+  .text-contrast-medium {
+    color: #1f2937;
   }
 
-  .dark .text-neutral-400 {
-    @apply text-neutral-200;
+  .dark .text-contrast-medium {
+    color: #e5e7eb;
   }
 }
 
