@@ -208,6 +208,18 @@
                 </div>
               </div>
 
+              <!-- Loading State for Recommended Studies -->
+              <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <SkeletonCard
+                  v-for="i in 4"
+                  :key="i"
+                  :show-avatar="true"
+                  :show-description="true"
+                  :show-meta="true"
+                  :show-action="true"
+                />
+              </div>
+
               <!-- No Current Study Message -->
               <div v-if="!currentStudy" class="text-center py-8">
                 <div
