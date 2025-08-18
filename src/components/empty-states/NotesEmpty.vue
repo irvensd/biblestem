@@ -15,6 +15,8 @@ import EmptyState from './EmptyState.vue'
 
 const showNoteHelp = () => {
   // This could open a modal or navigate to a help section
-  alert('Note-taking tips:\n\n• Use different note types for different purposes\n• Tag your notes for easy organization\n• Make notes private if they\'re personal\n• Review your notes regularly for deeper insight')
+  alert(
+    "Note-taking tips:\n\n• Use different note types for different purposes\n• Tag your notes for easy organization\n• Make notes private if they're personal\n• Review your notes regularly for deeper insight",
+  )
 }
 </script>

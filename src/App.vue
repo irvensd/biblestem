@@ -4,18 +4,12 @@
     class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
   >
     <!-- Skip Navigation for Screen Readers -->
-    <a href="#main-content" class="skip-link">
-      Skip to main content
-    </a>
+    <a href="#main-content" class="skip-link"> Skip to main content </a>
 
     <AppHeader />
     <main id="main-content" class="pb-16 sm:pb-0">
       <router-view v-if="isAppReady" v-slot="{ Component, route }">
-        <transition
-          :name="getTransitionName(route)"
-          mode="out-in"
-          appear
-        >
+        <transition :name="getTransitionName(route)" mode="out-in" appear>
           <component :is="Component" :key="route.path" />
         </transition>
       </router-view>

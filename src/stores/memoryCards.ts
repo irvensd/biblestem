@@ -82,7 +82,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.',
         category: 'Salvation',
         difficulty: 'easy',
-        theme: 'God\'s Love',
+        theme: "God's Love",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
@@ -94,7 +94,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.',
         category: 'Encouragement',
         difficulty: 'medium',
-        theme: 'God\'s Plans',
+        theme: "God's Plans",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
@@ -106,7 +106,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
         text: 'I can do all things through Christ which strengtheneth me.',
         category: 'Strength',
         difficulty: 'easy',
-        theme: 'God\'s Power',
+        theme: "God's Power",
         isMemorized: false,
         reviewCount: 0,
         confidence: 1,
@@ -114,7 +114,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
       },
     ]
 
-    defaultCards.forEach(card => {
+    defaultCards.forEach((card) => {
       cards.value[card.id] = card
     })
   }
@@ -133,7 +133,7 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
       {
         id: 'salvation-verses',
         title: 'Salvation & Grace',
-        description: 'Key verses about salvation and God\'s grace',
+        description: "Key verses about salvation and God's grace",
         cardIds: ['john-3-16'],
         color: 'from-green-400 to-green-600',
         icon: '✝️',
@@ -148,25 +148,25 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
       },
     ]
 
-    defaultDecks.forEach(deck => {
+    defaultDecks.forEach((deck) => {
       decks.value[deck.id] = deck
     })
   }
 
   // Computed properties
   const allCards = computed(() => Object.values(cards.value))
-  const memorizedCards = computed(() => allCards.value.filter(card => card.isMemorized))
-  const newCards = computed(() => allCards.value.filter(card => card.reviewCount === 0))
+  const memorizedCards = computed(() => allCards.value.filter((card) => card.isMemorized))
+  const newCards = computed(() => allCards.value.filter((card) => card.reviewCount === 0))
 
   // Get cards due for review (simplified algorithm)
   const getDueForReview = () => {
     const now = new Date()
-    return allCards.value.filter(card => {
+    return allCards.value.filter((card) => {
       if (!card.lastReviewed) return card.reviewCount > 0
-      
+
       const lastReview = new Date(card.lastReviewed)
       const daysSince = Math.floor((now.getTime() - lastReview.getTime()) / (1000 * 60 * 60 * 24))
-      
+
       // Simple spaced repetition: review based on confidence level
       const reviewInterval = Math.pow(2, card.confidence - 1) // 1, 2, 4, 8, 16 days
       return daysSince >= reviewInterval
@@ -177,8 +177,8 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
   const getCardsForDeck = (deckId: string): MemoryCard[] => {
     const deck = decks.value[deckId]
     if (!deck) return []
-    
-    return deck.cardIds.map(cardId => cards.value[cardId]).filter(Boolean)
+
+    return deck.cardIds.map((cardId) => cards.value[cardId]).filter(Boolean)
   }
 
   // Study session management
@@ -192,14 +192,14 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
       totalCards: cardIds.length,
       duration: 0,
     }
-    
+
     studySessions.value.push(session)
     currentSession.value = sessionId
     return sessionId
   }
 
   const endStudySession = (sessionId: string, correctAnswers: number, duration: number) => {
-    const session = studySessions.value.find(s => s.id === sessionId)
+    const session = studySessions.value.find((s) => s.id === sessionId)
     if (session) {
       session.endTime = new Date().toISOString()
       session.correctAnswers = correctAnswers
@@ -241,10 +241,14 @@ export const useMemoryCardsStore = defineStore('memoryCards', () => {
     const total = allCards.value.length
     const memorized = memorizedCards.value.length
     const due = getDueForReview().length
-    const accuracy = studySessions.value.length > 0 
-      ? Math.round((studySessions.value.reduce((acc, session) => acc + session.correctAnswers, 0) / 
-          studySessions.value.reduce((acc, session) => acc + session.totalCards, 0)) * 100)
-      : 0
+    const accuracy =
+      studySessions.value.length > 0
+        ? Math.round(
+            (studySessions.value.reduce((acc, session) => acc + session.correctAnswers, 0) /
+              studySessions.value.reduce((acc, session) => acc + session.totalCards, 0)) *
+              100,
+          )
+        : 0
 
     // Calculate streak (simplified)
     const streak = Math.floor(Math.random() * 15) + 1 // Mock data for now

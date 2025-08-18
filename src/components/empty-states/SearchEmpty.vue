@@ -21,11 +21,9 @@ const props = defineProps<Props>()
 
 defineEmits(['clear-search'])
 
-const title = props.query 
-  ? `No results for "${props.query}"`
-  : 'Start your search'
+const title = props.query ? `No results for "${props.query}"` : 'Start your search'
 
 const description = props.query
-  ? 'Try adjusting your search terms or browse our study series to find what you\'re looking for.'
+  ? "Try adjusting your search terms or browse our study series to find what you're looking for."
   : 'Search through our extensive library of Bible studies, lessons, and devotions to find content that speaks to your heart.'
 </script>
