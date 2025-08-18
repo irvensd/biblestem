@@ -345,7 +345,9 @@
                         :class="getDifficultyClass(template.difficulty)"
                       >
                         {{
-                          template.difficulty.charAt(0).toUpperCase() + template.difficulty.slice(1)
+                          template.difficulty ?
+                          template.difficulty.charAt(0).toUpperCase() + template.difficulty.slice(1) :
+                          'Unknown'
                         }}
                       </span>
                       <span class="text-xs text-neutral-500 dark:text-neutral-500">
