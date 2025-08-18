@@ -226,8 +226,11 @@
       <!-- Mobile Menu -->
       <div
         v-if="mobileMenuOpen"
-        class="lg:hidden border-t border-neutral-200 dark:border-neutral-800 animate-fade-in max-h-[calc(100vh-200px)] overflow-y-auto overscroll-contain"
+        class="lg:hidden border-t border-neutral-200 dark:border-neutral-800 animate-fade-in max-h-[calc(100vh-160px)] overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-neutral-100"
         @touchmove.stop
+        @touchstart.passive="true"
+        @touchend.passive="true"
+        style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch;"
       >
         <!-- Authenticated User Mobile Menu -->
         <div v-if="authStore.isAuthenticated" class="py-4">
