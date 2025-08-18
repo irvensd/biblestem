@@ -236,7 +236,19 @@ import {
 } from '../composables/useValidation'
 
 const router = useRouter()
-const authStore = useAuthStore()
+
+// Safe store initialization with error handling
+let authStore: any
+try {
+  authStore = useAuthStore()
+} catch (error) {
+  console.error('Failed to initialize auth store:', error)
+  authStore = {
+    login: () => Promise.resolve({ success: false, error: 'Store not available' }),
+    isLoading: false,
+    error: null,
+  }
+}
 
 // Debug: Check if reactive is available
 console.log('reactive function:', reactive)
