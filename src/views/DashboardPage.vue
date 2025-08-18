@@ -801,7 +801,14 @@ const achievementsStore = useAchievementsStore()
 
 // Initialize stores on mount
 onMounted(async () => {
-  try
+  try {
+    // Initialize progress store with demo data
+    progressStore.loadFromStorage()
+
+    // Initialize auth if needed
+    if (!authStore.isInitialized) {
+      await authStore.initializeAuth()
+    }
   } catch (error) {
     console.warn('Failed to initialize stores in DashboardPage:', error)
   }
