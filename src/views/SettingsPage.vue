@@ -973,6 +973,18 @@ const changePassword = async () => {
   }
 }
 
+const handleSignOut = async () => {
+  signingOut.value = true
+  try {
+    await authStore.logout()
+    router.push('/sign-in')
+  } catch (error) {
+    console.error('Failed to sign out:', error)
+  } finally {
+    signingOut.value = false
+  }
+}
+
 // Load saved settings
 const loadSettings = () => {
   const savedNotifications = localStorage.getItem('notificationSettings')
