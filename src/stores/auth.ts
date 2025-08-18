@@ -18,6 +18,32 @@ export interface AuthError {
   code?: string
 }
 
+// Demo users for quick login
+const DEMO_USERS = {
+  'demo@biblestem.com': {
+    id: 'demo-premium-user',
+    name: 'Demo Premium User',
+    email: 'demo@biblestem.com',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    bio: 'Exploring the depths of God\'s Word with premium features.',
+    plan: 'premium' as const,
+    studiesCompleted: 12,
+    joinDate: '2023-01-15T00:00:00.000Z',
+    emailVerified: true,
+  },
+  'free@biblestem.com': {
+    id: 'demo-free-user',
+    name: 'Demo Free User',
+    email: 'free@biblestem.com',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+    bio: 'Starting my journey with Bible studies.',
+    plan: 'free' as const,
+    studiesCompleted: 3,
+    joinDate: '2024-01-01T00:00:00.000Z',
+    emailVerified: true,
+  },
+}
+
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const isLoading = ref(false)
@@ -35,86 +61,41 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = { message, code }
   }
 
-  const transformFirebaseUser = async (firebaseUser: FirebaseUser): Promise<User> => {
-    console.log('Transforming Firebase user:', firebaseUser.uid)
-
-    // Try to get user profile from Firestore
-    const userDocRef = doc(db, 'users', firebaseUser.uid)
-    const userDoc = await getDoc(userDocRef)
-
-    if (userDoc.exists()) {
-      const userData = userDoc.data()
-      return {
-        id: firebaseUser.uid,
-        name: userData.name || firebaseUser.displayName || 'User',
-        email: firebaseUser.email || '',
-        avatar: userData.avatar || firebaseUser.photoURL,
-        bio: userData.bio,
-        plan: userData.plan || 'free',
-        studiesCompleted: userData.studiesCompleted || 0,
-        joinDate:
-          userData.joinDate || firebaseUser.metadata.creationTime || new Date().toISOString(),
-        emailVerified: firebaseUser.emailVerified,
-      }
-    } else {
-      // Create user profile if it doesn't exist
-      const newUser: User = {
-        id: firebaseUser.uid,
-        name: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'User',
-        email: firebaseUser.email || '',
-        avatar: firebaseUser.photoURL,
-        plan: 'free',
-        studiesCompleted: 0,
-        joinDate: firebaseUser.metadata.creationTime || new Date().toISOString(),
-        emailVerified: firebaseUser.emailVerified,
-      }
-
-      // Save to Firestore
-      await setDoc(userDocRef, {
-        name: newUser.name,
-        email: newUser.email,
-        avatar: newUser.avatar,
-        bio: newUser.bio,
-        plan: newUser.plan,
-        studiesCompleted: newUser.studiesCompleted,
-        joinDate: newUser.joinDate,
-        emailVerified: newUser.emailVerified,
-      })
-
-      return newUser
-    }
-  }
-
   const signUp = async (
     email: string,
     password: string,
     name: string,
   ): Promise<{ success: boolean; error?: string }> => {
-    console.log('=== FIREBASE SIGNUP ===')
+    console.log('=== DEMO SIGNUP ===')
     console.log('Email:', email, 'Name:', name)
 
     isLoading.value = true
     clearError()
 
     try {
-      // Create user with Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-      const firebaseUser = userCredential.user
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000))
 
-      console.log('Firebase user created:', firebaseUser.uid)
+      // Create demo user
+      const newUser: User = {
+        id: `user-${Date.now()}`,
+        name,
+        email,
+        plan: 'free',
+        studiesCompleted: 0,
+        joinDate: new Date().toISOString(),
+        emailVerified: true,
+      }
 
-      // Update the user's display name
-      await updateProfile(firebaseUser, {
-        displayName: name,
-      })
+      user.value = newUser
 
-      // Transform and set user
-      user.value = await transformFirebaseUser(firebaseUser)
+      // Store in localStorage for persistence
+      localStorage.setItem('biblestem_user', JSON.stringify(newUser))
 
-      console.log('User signup successful:', user.value)
+      console.log('Demo user signup successful:', user.value)
       return { success: true }
     } catch (err: any) {
-      console.error('Firebase signup error:', err)
+      console.error('Demo signup error:', err)
       const errorMessage = err.message || 'Sign up failed. Please try again.'
       setError(errorMessage, err.code)
       return { success: false, error: errorMessage }
@@ -127,32 +108,47 @@ export const useAuthStore = defineStore('auth', () => {
     email: string,
     password: string,
   ): Promise<{ success: boolean; error?: string }> => {
-    console.log('=== FIREBASE LOGIN ===')
+    console.log('=== DEMO LOGIN ===')
     console.log('Email:', email)
 
     isLoading.value = true
     clearError()
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password)
-      const firebaseUser = userCredential.user
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 800))
 
-      console.log('Firebase login successful:', firebaseUser.uid)
-
-      user.value = await transformFirebaseUser(firebaseUser)
-
-      console.log('User login complete:', user.value)
-      return { success: true }
-    } catch (err: any) {
-      console.error('Firebase login error:', err)
-      let errorMessage = 'Login failed. Please try again.'
-
-      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-        errorMessage = 'Invalid email or password.'
-      } else if (err.code === 'auth/too-many-requests') {
-        errorMessage = 'Too many failed attempts. Please try again later.'
+      // Check demo users
+      if (email in DEMO_USERS) {
+        const demoUser = DEMO_USERS[email as keyof typeof DEMO_USERS]
+        user.value = { ...demoUser }
+        
+        // Store in localStorage for persistence
+        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
+        
+        console.log('Demo login successful:', user.value)
+        return { success: true }
       }
 
+      // For any other email/password, create a generic demo user
+      const newUser: User = {
+        id: `user-${Date.now()}`,
+        name: email.split('@')[0] || 'Demo User',
+        email,
+        plan: 'free',
+        studiesCompleted: Math.floor(Math.random() * 5),
+        joinDate: new Date().toISOString(),
+        emailVerified: true,
+      }
+
+      user.value = newUser
+      localStorage.setItem('biblestem_user', JSON.stringify(user.value))
+
+      console.log('Demo login complete:', user.value)
+      return { success: true }
+    } catch (err: any) {
+      console.error('Demo login error:', err)
+      const errorMessage = 'Login failed. Please try again.'
       setError(errorMessage, err.code)
       return { success: false, error: errorMessage }
     } finally {
@@ -165,8 +161,8 @@ export const useAuthStore = defineStore('auth', () => {
     clearError()
 
     try {
-      await signOut(auth)
       user.value = null
+      localStorage.removeItem('biblestem_user')
       console.log('User logged out successfully')
     } catch (err: any) {
       console.error('Logout error:', err)
@@ -183,11 +179,11 @@ export const useAuthStore = defineStore('auth', () => {
     clearError()
 
     try {
-      const userDocRef = doc(db, 'users', user.value.id)
-      await updateDoc(userDocRef, updates)
-
       // Update local user state
       user.value = { ...user.value, ...updates }
+      
+      // Update localStorage
+      localStorage.setItem('biblestem_user', JSON.stringify(user.value))
 
       return { success: true }
     } catch (err: any) {
@@ -203,33 +199,24 @@ export const useAuthStore = defineStore('auth', () => {
   const initializeAuth = async () => {
     if (isInitialized.value) return
 
-    console.log('=== INITIALIZING FIREBASE AUTH ===')
+    console.log('=== INITIALIZING DEMO AUTH ===')
 
-    return new Promise<void>((resolve) => {
-      const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-        console.log('Auth state changed:', firebaseUser?.uid || 'No user')
+    try {
+      // Check localStorage for existing user
+      const storedUser = localStorage.getItem('biblestem_user')
+      if (storedUser) {
+        user.value = JSON.parse(storedUser)
+        console.log('User loaded from localStorage:', user.value)
+      } else {
+        user.value = null
+        console.log('No stored user found')
+      }
+    } catch (err) {
+      console.error('Error loading user from localStorage:', err)
+      user.value = null
+    }
 
-        try {
-          if (firebaseUser) {
-            user.value = await transformFirebaseUser(firebaseUser)
-            console.log('User loaded from auth state:', user.value)
-          } else {
-            user.value = null
-          }
-        } catch (err) {
-          console.error('Error loading user from auth state:', err)
-          user.value = null
-        }
-
-        if (!isInitialized.value) {
-          isInitialized.value = true
-          resolve()
-        }
-      })
-
-      // Store unsubscribe function for cleanup if needed
-      // You could store this in the store for cleanup on logout
-    })
+    isInitialized.value = true
   }
 
   return {
