@@ -348,6 +348,8 @@ const showResults = ref(false)
 const showFullResults = ref(false)
 const isSearching = ref(false)
 const recentSearches = ref<string[]>([])
+const activeDescendant = ref('')
+const focusedIndex = ref(-1)
 
 // Detect mobile for better UX
 const isMobile = computed(() => window.innerWidth < 768)
