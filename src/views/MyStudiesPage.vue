@@ -651,10 +651,8 @@ const studiesWithProgress = computed(() => {
       const progress = allProgress[study.id]
       if (!progress) return null
 
-      const completionPercent = progressStore.getStudyCompletionPercentage?.(
-        study.id,
-        study.lessons.length,
-      ) || 0
+      const completionPercent =
+        progressStore.getStudyCompletionPercentage?.(study.id, study.lessons.length) || 0
 
       return {
         ...study,
@@ -723,14 +721,15 @@ const filteredStudies = computed(() => {
 })
 
 // Computed stats
-const completedStudies = computed(() =>
-  studiesWithProgress.value?.filter((s) => s && s.progress.completionPercent === 100) || [],
+const completedStudies = computed(
+  () => studiesWithProgress.value?.filter((s) => s && s.progress.completionPercent === 100) || [],
 )
 
-const inProgressStudies = computed(() =>
-  studiesWithProgress.value?.filter(
-    (s) => s && s.progress.completionPercent > 0 && s.progress.completionPercent < 100,
-  ) || [],
+const inProgressStudies = computed(
+  () =>
+    studiesWithProgress.value?.filter(
+      (s) => s && s.progress.completionPercent > 0 && s.progress.completionPercent < 100,
+    ) || [],
 )
 
 const totalLessonsCompleted = computed(() =>

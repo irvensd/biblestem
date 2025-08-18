@@ -266,8 +266,16 @@ const validateForm = (): boolean => {
   const emailValid = emailField.validate()
   const passwordValid = passwordField.validate()
 
-  console.log('📧 Email validation:', { value: form.email, valid: emailValid, error: emailField.error.value })
-  console.log('🔑 Password validation:', { value: form.password, valid: passwordValid, error: passwordField.error.value })
+  console.log('📧 Email validation:', {
+    value: form.email,
+    valid: emailValid,
+    error: emailField.error.value,
+  })
+  console.log('🔑 Password validation:', {
+    value: form.password,
+    valid: passwordValid,
+    error: passwordField.error.value,
+  })
 
   return emailValid && passwordValid
 }
@@ -278,7 +286,12 @@ const isFormValid = computed(() => {
   emailField.value.value = form.email
   passwordField.value.value = form.password
 
-  return emailField.isValid.value && passwordField.isValid.value && form.email.trim() !== '' && form.password.trim() !== ''
+  return (
+    emailField.isValid.value &&
+    passwordField.isValid.value &&
+    form.email.trim() !== '' &&
+    form.password.trim() !== ''
+  )
 })
 
 const showPassword = ref(false)

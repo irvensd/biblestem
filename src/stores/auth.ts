@@ -24,8 +24,9 @@ const DEMO_USERS = {
     id: 'demo-premium-user',
     name: 'Demo Premium User',
     email: 'demo@biblestem.com',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    bio: 'Exploring the depths of God\'s Word with premium features.',
+    avatar:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    bio: "Exploring the depths of God's Word with premium features.",
     plan: 'premium' as const,
     studiesCompleted: 12,
     joinDate: '2023-01-15T00:00:00.000Z',
@@ -35,7 +36,8 @@ const DEMO_USERS = {
     id: 'demo-free-user',
     name: 'Demo Free User',
     email: 'free@biblestem.com',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+    avatar:
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
     bio: 'Starting my journey with Bible studies.',
     plan: 'free' as const,
     studiesCompleted: 3,
@@ -74,7 +76,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     try {
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000))
 
       // Create demo user
       const newUser: User = {
@@ -116,16 +118,16 @@ export const useAuthStore = defineStore('auth', () => {
 
     try {
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 800))
+      await new Promise((resolve) => setTimeout(resolve, 800))
 
       // Check demo users
       if (email in DEMO_USERS) {
         const demoUser = DEMO_USERS[email as keyof typeof DEMO_USERS]
         user.value = { ...demoUser }
-        
+
         // Store in localStorage for persistence
         localStorage.setItem('biblestem_user', JSON.stringify(user.value))
-        
+
         console.log('Demo login successful:', user.value)
         return { success: true }
       }
@@ -181,7 +183,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       // Update local user state
       user.value = { ...user.value, ...updates }
-      
+
       // Update localStorage
       localStorage.setItem('biblestem_user', JSON.stringify(user.value))
 

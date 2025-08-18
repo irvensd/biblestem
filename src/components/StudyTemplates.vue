@@ -47,7 +47,11 @@
                     class="text-xs px-2 py-1 rounded"
                     :class="getDifficultyClass(template.difficulty)"
                   >
-                    {{ template.difficulty ? template.difficulty.charAt(0).toUpperCase() + template.difficulty.slice(1) : 'Unknown' }}
+                    {{
+                      template.difficulty
+                        ? template.difficulty.charAt(0).toUpperCase() + template.difficulty.slice(1)
+                        : 'Unknown'
+                    }}
                   </span>
                   <span class="text-xs text-neutral-500 dark:text-neutral-500">
                     {{ template.estimatedTime }}
@@ -140,9 +144,10 @@
               :class="getDifficultyClass(selectedTemplate.difficulty)"
             >
               {{
-                selectedTemplate.difficulty ?
-                selectedTemplate.difficulty.charAt(0).toUpperCase() + selectedTemplate.difficulty.slice(1) :
-                'Unknown'
+                selectedTemplate.difficulty
+                  ? selectedTemplate.difficulty.charAt(0).toUpperCase() +
+                    selectedTemplate.difficulty.slice(1)
+                  : 'Unknown'
               }}
             </span>
           </div>
@@ -345,9 +350,10 @@
                         :class="getDifficultyClass(template.difficulty)"
                       >
                         {{
-                          template.difficulty ?
-                          template.difficulty.charAt(0).toUpperCase() + template.difficulty.slice(1) :
-                          'Unknown'
+                          template.difficulty
+                            ? template.difficulty.charAt(0).toUpperCase() +
+                              template.difficulty.slice(1)
+                            : 'Unknown'
                         }}
                       </span>
                       <span class="text-xs text-neutral-500 dark:text-neutral-500">
