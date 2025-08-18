@@ -50,7 +50,8 @@
     <!-- Search Results Dropdown -->
     <div
       v-if="showResults && (searchQuery.trim() || recentSearches.length > 0)"
-      class="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-neutral-800 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700 z-50 max-h-96 overflow-hidden"
+      class="absolute top-full left-0 right-0 bg-white dark:bg-neutral-800 rounded-b-xl shadow-xl border border-t-0 border-neutral-200 dark:border-neutral-700 z-50 max-h-96 overflow-hidden mobile-scroll"
+      :class="isMobile ? 'max-h-[60vh]' : 'max-h-96 mt-2 rounded-xl border-t'"
     >
       <!-- Loading State -->
       <div v-if="isSearching" class="p-4 text-center">
