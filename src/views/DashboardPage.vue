@@ -266,7 +266,7 @@
               <div
                 v-for="study in completedStudies.slice(0, 6)"
                 :key="study.id"
-                class="card p-4 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 hover:scale-105 transition-transform duration-200 cursor-pointer"
+                class="card interactive p-4 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 animate-in cursor-pointer"
                 @click="goToStudy(study.id)"
               >
                 <div class="flex items-start space-x-3">
