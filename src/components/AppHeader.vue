@@ -16,7 +16,12 @@
               class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200"
               aria-hidden="true"
             >
-              <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg
+                class="w-4 h-4 sm:w-6 sm:h-6 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <path
                   d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z"
                 />
@@ -32,7 +37,10 @@
         </router-link>
 
         <!-- Desktop Navigation -->
-        <div class="hidden lg:flex items-center space-x-6 xl:space-x-8 lg:ml-12 xl:ml-16" role="menubar">
+        <div
+          class="hidden lg:flex items-center space-x-6 xl:space-x-8 lg:ml-12 xl:ml-16"
+          role="menubar"
+        >
           <!-- Authenticated User Navigation -->
           <template v-if="authStore.isAuthenticated">
             <router-link
@@ -228,7 +236,13 @@
           aria-label="Toggle mobile menu"
           aria-controls="mobile-menu"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
             <path
               v-if="!mobileMenuOpen"
               stroke-linecap="round"
