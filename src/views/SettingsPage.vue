@@ -152,7 +152,7 @@
                         {{ authStore.value.isPremium ? '✨ Premium Member' : 'Free Member' }}
                       </span>
                       <span class="text-sm text-neutral-500 dark:text-neutral-400">
-                        Member since {{ formatDate(authStore.value.user?.joinDate) }}
+                        Member since {{ formatDate(authStore.user?.joinDate) }}
                       </span>
                     </div>
                   </div>
