@@ -142,7 +142,7 @@ export const useAuthStore = defineStore('auth', () => {
     email: string,
     password: string,
     name: string,
-  ): Promise<{ success: boolean; error?: string }> => {
+  ): Promise<{ success: boolean; error?: string; emailConfirmed?: boolean; message?: string }> => {
     isLoading.value = true
     clearError()
 
