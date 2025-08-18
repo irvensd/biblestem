@@ -267,22 +267,13 @@ const remember = ref(false)
 const handleSignIn = async () => {
   error.value = ''
 
-<<<<<<< HEAD
-  const result = await authStore.login(form.email, form.password)
-
-  if (result.success) {
-    // Redirect to dashboard after successful login
-    router.push('/dashboard')
-  } else {
-    error.value = result.error || 'Login failed. Please try again.'
-=======
   // Validate form before submitting
   if (!formValidation.validate()) {
     return
   }
 
   try {
-    const result = await authStore.login(emailField.value.value, passwordField.value.value)
+    const result = await authStore.login(form.email, form.password)
 
     if (result.success) {
       // Get redirect path from query params or default to dashboard
@@ -290,12 +281,9 @@ const handleSignIn = async () => {
       router.push(redirectPath)
     } else {
       error.value = result.error || 'Login failed. Please try again.'
-      errorStore.addValidationError(error.value)
     }
   } catch (err) {
     error.value = 'An unexpected error occurred. Please try again.'
-    errorStore.handleError(err, 'Sign In')
->>>>>>> refs/remotes/origin/main
   }
 }
 
