@@ -130,7 +130,7 @@
                     class="w-20 h-20 bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 rounded-2xl flex items-center justify-center shadow-lg"
                   >
                     <span class="text-white text-2xl font-bold">{{
-                      authStore.value.user?.name?.charAt(0) || 'U'
+                      authStore.user?.name?.charAt(0) || 'U'
                     }}</span>
                   </div>
                   <div class="flex-1">
