@@ -214,6 +214,15 @@ body {
 
   .card {
     @apply bg-white dark:bg-neutral-800 rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 border border-neutral-200 dark:border-neutral-700;
+    @apply hover:-translate-y-1 transform;
+  }
+
+  .card.interactive {
+    @apply cursor-pointer hover:scale-[1.02] hover:shadow-lg;
+  }
+
+  .card.animate-in {
+    @apply animate-scale-in;
   }
 
   .gradient-text {
