@@ -426,7 +426,7 @@ const showTemplateDetail = (template: StudyTemplate) => {
 }
 
 const downloadTemplate = (templateId: string) => {
-  const template = templatesStore.templates.find((t) => t.id === templateId)
+  const template = templatesStore.templates?.find((t) => t.id === templateId)
   if (!template) return
 
   if (template.isPremium && !authStore.isPremium) {
@@ -434,7 +434,7 @@ const downloadTemplate = (templateId: string) => {
     return
   }
 
-  templatesStore.downloadTemplate(templateId)
+  templatesStore.downloadTemplate?.(templateId)
 
   // Show success message
   alert(`${template.title} template downloaded successfully!`)
