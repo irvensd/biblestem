@@ -72,22 +72,19 @@ const hasError = ref(false)
 const errorMessage = ref('')
 const showDetails = ref(false)
 
-onErrorCaptured(async (error, instance, info) => {
+onErrorCaptured((error, instance, info) => {
   console.error('Error boundary caught error:', error)
   console.error('Component info:', info)
 
   hasError.value = true
   errorMessage.value = error.message || 'Unknown error occurred'
 
-  // Report error to error store (only if Pinia is available)
-  try {
-    // Dynamic import to avoid Pinia timing issues
-    const { useErrorStore } = await import('../stores/errors')
-    const errorStore = useErrorStore()
-    errorStore.handleError(error, `Component: ${info}`)
-  } catch (storeError) {
-    console.warn('Could not report error to store - Pinia not ready:', storeError)
-  }
+  // Simple error logging without store dependency
+  console.warn('Error caught by boundary:', {
+    error: error.message,
+    component: info,
+    timestamp: new Date().toISOString()
+  })
 
   // Prevent error from propagating
   return false
