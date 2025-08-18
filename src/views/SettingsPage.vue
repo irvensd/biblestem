@@ -851,23 +851,20 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
 
-// Initialize authStore safely
-const authStore = ref({
-  isAuthenticated: false,
-  user: null,
-  isPremium: false,
-  logout: () => Promise.resolve(),
-})
+// Initialize stores
+const authStore = useAuthStore()
 
-// Initialize the real store when component mounts
+// Initialize stores on mount
 onMounted(async () => {
   try {
-    const { useAuthStore } = await import('../stores/auth')
-    const realAuthStore = useAuthStore()
-    authStore.value = realAuthStore
+    // Initialize auth if needed
+    if (!authStore.isInitialized) {
+      await authStore.initializeAuth()
+    }
   } catch (error) {
     console.warn('Failed to initialize auth store in SettingsPage:', error)
   }
