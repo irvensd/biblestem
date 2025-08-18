@@ -22,10 +22,10 @@
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <router-link
-                :to="authStore.value.isAuthenticated ? '/dashboard' : '/signup'"
+                :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
                 class="btn-primary text-lg px-8 py-4 inline-block text-center"
               >
-                {{ authStore.value.isAuthenticated ? 'Go to Dashboard' : 'Start Free Study' }}
+                {{ authStore.isAuthenticated ? 'Go to Dashboard' : 'Start Free Study' }}
               </router-link>
               <router-link
                 to="/study-series"
@@ -368,10 +368,10 @@
             </div>
 
             <router-link
-              :to="authStore.value.isAuthenticated ? '/dashboard' : '/signup'"
+              :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
               class="w-full btn-secondary text-center block"
             >
-              {{ authStore.value.isAuthenticated ? 'Continue Free' : 'Get Started Free' }}
+              {{ authStore.isAuthenticated ? 'Continue Free' : 'Get Started Free' }}
             </router-link>
           </div>
 
@@ -520,10 +520,10 @@
             </div>
 
             <router-link
-              :to="authStore.value.isAuthenticated ? '/dashboard' : '/signup'"
+              :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
               class="w-full btn-accent text-center block"
             >
-              {{ authStore.value.isAuthenticated ? 'Upgrade Now' : 'Start 3-Day Trial' }}
+              {{ authStore.isAuthenticated ? 'Upgrade Now' : 'Start 3-Day Trial' }}
             </router-link>
           </div>
         </div>
@@ -563,10 +563,10 @@
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <router-link
-              :to="authStore.value.isAuthenticated ? '/dashboard' : '/signin'"
+              :to="authStore.isAuthenticated ? '/dashboard' : '/signin'"
               class="bg-white text-primary-600 hover:bg-primary-50 font-bold py-4 px-8 rounded-lg text-lg transition-all duration-200 shadow-medium hover:shadow-strong inline-block text-center"
             >
-              {{ authStore.value.isAuthenticated ? 'Go to Dashboard' : 'Start 3-Day Free Trial' }}
+              {{ authStore.isAuthenticated ? 'Go to Dashboard' : 'Start 3-Day Free Trial' }}
             </router-link>
             <router-link
               to="/study-series"
