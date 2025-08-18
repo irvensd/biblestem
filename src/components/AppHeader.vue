@@ -164,6 +164,8 @@
               v-if="userMenuOpen"
               class="absolute right-0 mt-2 w-48 bg-white dark:bg-neutral-800 rounded-lg shadow-strong border border-neutral-200 dark:border-neutral-700 py-2 z-50 animate-fade-in"
               @click="closeUserMenu"
+              role="menu"
+              aria-label="User account menu"
             >
               <router-link
                 to="/dashboard"
