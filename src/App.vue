@@ -10,7 +10,7 @@
 
     <ErrorBoundary>
       <AppHeader />
-      <main class="pb-16 sm:pb-0">
+      <main id="main-content" class="pb-16 sm:pb-0">
         <ErrorBoundary>
           <router-view v-if="isAppReady" v-slot="{ Component, route }">
             <transition
