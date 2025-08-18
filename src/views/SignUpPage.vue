@@ -314,6 +314,10 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
+console.log('=== SIGNUP PAGE SCRIPT IS RUNNING ===')
+console.log('Date:', new Date())
+console.log('Window location:', window.location.href)
+
 const router = useRouter()
 
 // Initialize authStore safely
