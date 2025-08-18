@@ -308,6 +308,14 @@
             </div>
           </section>
 
+          <!-- Empty State for No Completed Studies -->
+          <section v-else-if="completedStudies.length === 0 && !currentStudy" class="card p-4 sm:p-6">
+            <StudiesEmpty
+              type="completed"
+              @secondary-action="showStudyTips"
+            />
+          </section>
+
           <!-- Recent Activity -->
           <section class="card p-4 sm:p-6">
             <h2
