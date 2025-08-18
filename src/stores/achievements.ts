@@ -10,7 +10,13 @@ export interface Badge {
   color: string
   category: 'completion' | 'milestone' | 'consistency' | 'exploration' | 'special'
   requirement: {
-    type: 'studies_completed' | 'lessons_completed' | 'study_streak' | 'specific_study' | 'word_interactions' | 'prayer_engagement'
+    type:
+      | 'studies_completed'
+      | 'lessons_completed'
+      | 'study_streak'
+      | 'specific_study'
+      | 'word_interactions'
+      | 'prayer_engagement'
     count?: number
     studyId?: string
   }
@@ -40,7 +46,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-green-500 to-green-600',
       category: 'completion',
       requirement: { type: 'studies_completed', count: 1 },
-      rarity: 'common'
+      rarity: 'common',
     },
     {
       id: 'prayer-warrior',
@@ -50,7 +56,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-blue-500 to-blue-600',
       category: 'completion',
       requirement: { type: 'specific_study', studyId: 'htsb-1' },
-      rarity: 'common'
+      rarity: 'common',
     },
     {
       id: 'scripture-seeker',
@@ -60,7 +66,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-purple-500 to-purple-600',
       category: 'completion',
       requirement: { type: 'studies_completed', count: 3 },
-      rarity: 'common'
+      rarity: 'common',
     },
     {
       id: 'wise-student',
@@ -70,7 +76,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-amber-500 to-amber-600',
       category: 'completion',
       requirement: { type: 'specific_study', studyId: 'how-to-study-bible' },
-      rarity: 'rare'
+      rarity: 'rare',
     },
     {
       id: 'shepherd-follower',
@@ -80,7 +86,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-teal-500 to-teal-600',
       category: 'completion',
       requirement: { type: 'specific_study', studyId: 'psalm-23' },
-      rarity: 'common'
+      rarity: 'common',
     },
 
     // Milestone Badges
@@ -92,7 +98,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-yellow-500 to-yellow-600',
       category: 'milestone',
       requirement: { type: 'studies_completed', count: 5 },
-      rarity: 'rare'
+      rarity: 'rare',
     },
     {
       id: 'faithful-scholar',
@@ -102,7 +108,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-indigo-500 to-indigo-600',
       category: 'milestone',
       requirement: { type: 'studies_completed', count: 10 },
-      rarity: 'epic'
+      rarity: 'epic',
     },
     {
       id: 'lesson-master',
@@ -112,7 +118,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-red-500 to-red-600',
       category: 'milestone',
       requirement: { type: 'lessons_completed', count: 50 },
-      rarity: 'epic'
+      rarity: 'epic',
     },
 
     // Consistency Badges
@@ -124,7 +130,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-emerald-500 to-emerald-600',
       category: 'consistency',
       requirement: { type: 'study_streak', count: 7 },
-      rarity: 'rare'
+      rarity: 'rare',
     },
     {
       id: 'faithful-servant',
@@ -134,7 +140,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-violet-500 to-violet-600',
       category: 'consistency',
       requirement: { type: 'study_streak', count: 30 },
-      rarity: 'legendary'
+      rarity: 'legendary',
     },
 
     // Exploration Badges
@@ -146,7 +152,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-cyan-500 to-cyan-600',
       category: 'exploration',
       requirement: { type: 'word_interactions', count: 25 },
-      rarity: 'rare'
+      rarity: 'rare',
     },
     {
       id: 'ancient-linguist',
@@ -156,7 +162,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-orange-500 to-orange-600',
       category: 'exploration',
       requirement: { type: 'word_interactions', count: 100 },
-      rarity: 'epic'
+      rarity: 'epic',
     },
 
     // Special Badges
@@ -168,29 +174,29 @@ export const useAchievementsStore = defineStore('achievements', () => {
       color: 'from-pink-500 to-pink-600',
       category: 'special',
       requirement: { type: 'prayer_engagement', count: 10 },
-      rarity: 'rare'
-    }
+      rarity: 'rare',
+    },
   ]
 
   const availableBadges = computed(() => allBadges)
 
   const unlockedBadges = computed(() => {
-    return allBadges.filter(badge => achievements.value[badge.id]?.unlockedAt)
+    return allBadges.filter((badge) => achievements.value[badge.id]?.unlockedAt)
   })
 
   const lockedBadges = computed(() => {
-    return allBadges.filter(badge => !achievements.value[badge.id]?.unlockedAt)
+    return allBadges.filter((badge) => !achievements.value[badge.id]?.unlockedAt)
   })
 
   const badgesByCategory = computed(() => {
     const categories: Record<string, Badge[]> = {}
-    allBadges.forEach(badge => {
+    allBadges.forEach((badge) => {
       if (!categories[badge.category]) {
         categories[badge.category] = []
       }
       categories[badge.category].push({
         ...badge,
-        unlocked: !!achievements.value[badge.id]?.unlockedAt
+        unlocked: !!achievements.value[badge.id]?.unlockedAt,
       })
     })
     return categories
@@ -201,13 +207,13 @@ export const useAchievementsStore = defineStore('achievements', () => {
   const checkAchievements = () => {
     const allProgress = progressStore.getAllStudyProgress()
     const studiesCompleted = progressStore.getTotalStudiesCompleted()
-    
+
     // Get total lessons completed across all studies
     const totalLessonsCompleted = Object.values(allProgress).reduce((total, progress) => {
       return total + progress.completedLessons.length
     }, 0)
 
-    allBadges.forEach(badge => {
+    allBadges.forEach((badge) => {
       if (achievements.value[badge.id]?.unlockedAt) return // Already unlocked
 
       let shouldUnlock = false
@@ -216,11 +222,11 @@ export const useAchievementsStore = defineStore('achievements', () => {
         case 'studies_completed':
           shouldUnlock = studiesCompleted >= (badge.requirement.count || 0)
           break
-        
+
         case 'lessons_completed':
           shouldUnlock = totalLessonsCompleted >= (badge.requirement.count || 0)
           break
-        
+
         case 'specific_study':
           if (badge.requirement.studyId) {
             const studyProgress = allProgress[badge.requirement.studyId]
@@ -236,19 +242,19 @@ export const useAchievementsStore = defineStore('achievements', () => {
             }
           }
           break
-        
+
         case 'study_streak':
           // Mock streak calculation - in real app this would track consecutive days
           const mockStreak = Math.floor(Math.random() * 35) + 1
           shouldUnlock = mockStreak >= (badge.requirement.count || 0)
           break
-        
+
         case 'word_interactions':
           // Mock word interactions - in real app this would track actual clicks
           const mockInteractions = Math.floor(Math.random() * 120) + 1
           shouldUnlock = mockInteractions >= (badge.requirement.count || 0)
           break
-        
+
         case 'prayer_engagement':
           // Mock prayer engagement - in real app this would track prayer interactions
           const mockPrayerEngagement = Math.floor(Math.random() * 15) + 1
@@ -266,17 +272,17 @@ export const useAchievementsStore = defineStore('achievements', () => {
     if (!achievements.value[badgeId]) {
       achievements.value[badgeId] = {
         badgeId,
-        unlockedAt: new Date().toISOString()
+        unlockedAt: new Date().toISOString(),
       }
       saveToStorage()
-      
+
       // Show achievement notification
       showAchievementNotification(badgeId)
     }
   }
 
   const showAchievementNotification = (badgeId: string) => {
-    const badge = allBadges.find(b => b.id === badgeId)
+    const badge = allBadges.find((b) => b.id === badgeId)
     if (badge) {
       // In a real app, this would trigger a toast notification or modal
       console.log(`🎉 Achievement Unlocked: ${badge.title} - ${badge.description}`)
@@ -284,7 +290,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
   }
 
   const getBadgeProgress = (badgeId: string): number => {
-    const badge = allBadges.find(b => b.id === badgeId)
+    const badge = allBadges.find((b) => b.id === badgeId)
     if (!badge || achievements.value[badgeId]?.unlockedAt) return 100
 
     const allProgress = progressStore.getAllStudyProgress()
@@ -293,13 +299,13 @@ export const useAchievementsStore = defineStore('achievements', () => {
     switch (badge.requirement.type) {
       case 'studies_completed':
         return Math.min(100, (studiesCompleted / (badge.requirement.count || 1)) * 100)
-      
+
       case 'lessons_completed':
         const totalLessons = Object.values(allProgress).reduce((total, progress) => {
           return total + progress.completedLessons.length
         }, 0)
         return Math.min(100, (totalLessons / (badge.requirement.count || 1)) * 100)
-      
+
       default:
         return 0
     }
@@ -328,12 +334,12 @@ export const useAchievementsStore = defineStore('achievements', () => {
     achievements.value = {
       'first-study': {
         badgeId: 'first-study',
-        unlockedAt: '2024-01-15T10:00:00Z'
+        unlockedAt: '2024-01-15T10:00:00Z',
       },
       'prayer-warrior': {
         badgeId: 'prayer-warrior',
-        unlockedAt: '2024-01-20T14:30:00Z'
-      }
+        unlockedAt: '2024-01-20T14:30:00Z',
+      },
     }
     saveToStorage()
   }
@@ -349,6 +355,6 @@ export const useAchievementsStore = defineStore('achievements', () => {
     unlockBadge,
     getBadgeProgress,
     loadFromStorage,
-    initializeDemoData
+    initializeDemoData,
   }
 })

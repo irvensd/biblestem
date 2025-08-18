@@ -12,7 +12,7 @@ export interface StudyProgress {
 
 export const useStudyProgressStore = defineStore('studyProgress', () => {
   const progressData = ref<Record<string, StudyProgress>>({})
-  
+
   // Initialize with some demo data including completed studies
   const initializeDemoData = () => {
     if (Object.keys(progressData.value).length === 0) {
@@ -24,7 +24,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           currentLesson: 'p23-4',
           startedAt: '2024-01-10',
           lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 20
+          totalTimeSpent: 20,
         },
         'lords-prayer': {
           studyId: 'lords-prayer',
@@ -32,7 +32,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           currentLesson: 'lp-6',
           startedAt: '2024-01-05',
           lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 30
+          totalTimeSpent: 30,
         },
         'faith-over-fear': {
           studyId: 'faith-over-fear',
@@ -40,7 +40,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           currentLesson: 'fof-5',
           startedAt: '2024-01-01',
           lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 25
+          totalTimeSpent: 25,
         },
 
         // In Progress Studies
@@ -50,7 +50,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           currentLesson: 'loj-4',
           startedAt: '2024-01-15',
           lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 15
+          totalTimeSpent: 15,
         },
         'how-to-study-bible': {
           studyId: 'how-to-study-bible',
@@ -58,7 +58,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           currentLesson: 'htsb-3',
           startedAt: '2024-01-20',
           lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 12
+          totalTimeSpent: 12,
         },
         'fruit-of-spirit': {
           studyId: 'fruit-of-spirit',
@@ -66,7 +66,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           currentLesson: 'fos-2',
           startedAt: '2024-01-25',
           lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 5
+          totalTimeSpent: 5,
         },
 
         // Started but minimal progress
@@ -76,8 +76,8 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           currentLesson: 'aog-2',
           startedAt: '2024-01-28',
           lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 5
-        }
+          totalTimeSpent: 5,
+        },
       }
       saveToStorage()
     }
@@ -99,19 +99,19 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
         completedLessons: [],
         startedAt: new Date().toISOString(),
         lastAccessedAt: new Date().toISOString(),
-        totalTimeSpent: 0
+        totalTimeSpent: 0,
       }
     }
 
     const progress = progressData.value[studyId]
-    
+
     if (!progress.completedLessons.includes(lessonId)) {
       progress.completedLessons.push(lessonId)
     }
-    
+
     progress.lastAccessedAt = new Date().toISOString()
     progress.totalTimeSpent += timeSpent
-    
+
     saveToStorage()
   }
 
@@ -123,7 +123,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
         currentLesson: lessonId,
         startedAt: new Date().toISOString(),
         lastAccessedAt: new Date().toISOString(),
-        totalTimeSpent: 0
+        totalTimeSpent: 0,
       }
     } else {
       progressData.value[studyId].lastAccessedAt = new Date().toISOString()
@@ -131,14 +131,14 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
         progressData.value[studyId].currentLesson = lessonId
       }
     }
-    
+
     saveToStorage()
   }
 
   const getStudyCompletionPercentage = (studyId: string, totalLessons: number): number => {
     const progress = progressData.value[studyId]
     if (!progress) return 0
-    
+
     return Math.round((progress.completedLessons.length / totalLessons) * 100)
   }
 
@@ -147,14 +147,15 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
   }
 
   const getTotalStudiesCompleted = (): number => {
-    return Object.values(progressData.value).filter(progress => 
-      progress.completedLessons.length > 0
+    return Object.values(progressData.value).filter(
+      (progress) => progress.completedLessons.length > 0,
     ).length
   }
 
   const getTotalTimeSpent = (): number => {
-    return Object.values(progressData.value).reduce((total, progress) => 
-      total + progress.totalTimeSpent, 0
+    return Object.values(progressData.value).reduce(
+      (total, progress) => total + progress.totalTimeSpent,
+      0,
     )
   }
 
@@ -183,7 +184,12 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
   }
 
   // Premium Features
-  const canAccessLesson = (studyId: string, lessonIndex: number, userIsPremium: boolean, study: any): boolean => {
+  const canAccessLesson = (
+    studyId: string,
+    lessonIndex: number,
+    userIsPremium: boolean,
+    study: any,
+  ): boolean => {
     // Premium studies require premium access
     if (study.category === 'premium' && !userIsPremium) {
       return false
@@ -211,7 +217,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
       '3D visualizations',
       'Audio content and meditations',
       'Priority customer support',
-      'Offline study access'
+      'Offline study access',
     ]
   }
 
@@ -234,6 +240,6 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     getPremiumFeatures,
     resetStudyProgress,
     loadFromStorage,
-    initializeDemoData
+    initializeDemoData,
   }
 })
