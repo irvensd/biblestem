@@ -798,19 +798,10 @@ const router = useRouter()
 const authStore = useAuthStore()
 const progressStore = useStudyProgressStore()
 const achievementsStore = useAchievementsStore()
-  getRecentAchievements: () => [],
-})
 
-// Initialize the real stores when component mounts
+// Initialize stores on mount
 onMounted(async () => {
-  try {
-    const { useAuthStore } = await import('../stores/auth')
-    const { useStudyProgressStore } = await import('../stores/studyProgress')
-    const { useAchievementsStore } = await import('../stores/achievements')
-
-    authStore.value = useAuthStore()
-    progressStore.value = useStudyProgressStore()
-    achievementsStore.value = useAchievementsStore()
+  try
   } catch (error) {
     console.warn('Failed to initialize stores in DashboardPage:', error)
   }
