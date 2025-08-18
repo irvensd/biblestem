@@ -40,7 +40,7 @@
     </section>
 
     <!-- Dashboard Content -->
-    <div class="container-base py-6 sm:py-8">
+    <div class="container-base section-spacing">
       <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
         <!-- Main Content -->
         <div class="xl:col-span-2 space-y-6 sm:space-y-8">
