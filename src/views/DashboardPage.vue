@@ -956,6 +956,10 @@ const handleUpgrade = () => {
   showUpgradeModal.value = false
 }
 
+const showStudyTips = () => {
+  alert('Study Tips:\n\n• Set aside dedicated time for Bible study\n• Pray before you begin\n• Take notes and reflect on what you learn\n• Apply the lessons to your daily life\n• Join study discussions when available')
+}
+
 onMounted(() => {
   // Initialize stores
   authStore.initializeAuth()
