@@ -1,12 +1,12 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signOut, 
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
   onAuthStateChanged,
   updateProfile,
-  User as FirebaseUser
+  User as FirebaseUser,
 } from 'firebase/auth'
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
 import { auth, db } from '@/lib/firebase'
@@ -62,8 +62,9 @@ export const useAuthStore = defineStore('auth', () => {
         bio: userData.bio,
         plan: userData.plan || 'free',
         studiesCompleted: userData.studiesCompleted || 0,
-        joinDate: userData.joinDate || firebaseUser.metadata.creationTime || new Date().toISOString(),
-        emailVerified: firebaseUser.emailVerified
+        joinDate:
+          userData.joinDate || firebaseUser.metadata.creationTime || new Date().toISOString(),
+        emailVerified: firebaseUser.emailVerified,
       }
     } else {
       // Create user profile if it doesn't exist
@@ -75,7 +76,7 @@ export const useAuthStore = defineStore('auth', () => {
         plan: 'free',
         studiesCompleted: 0,
         joinDate: firebaseUser.metadata.creationTime || new Date().toISOString(),
-        emailVerified: firebaseUser.emailVerified
+        emailVerified: firebaseUser.emailVerified,
       }
 
       // Save to Firestore
@@ -87,7 +88,7 @@ export const useAuthStore = defineStore('auth', () => {
         plan: newUser.plan,
         studiesCompleted: newUser.studiesCompleted,
         joinDate: newUser.joinDate,
-        emailVerified: newUser.emailVerified
+        emailVerified: newUser.emailVerified,
       })
 
       return newUser
@@ -97,11 +98,11 @@ export const useAuthStore = defineStore('auth', () => {
   const signUp = async (
     email: string,
     password: string,
-    name: string
+    name: string,
   ): Promise<{ success: boolean; error?: string }> => {
     console.log('=== FIREBASE SIGNUP ===')
     console.log('Email:', email, 'Name:', name)
-    
+
     isLoading.value = true
     clearError()
 
@@ -114,15 +115,14 @@ export const useAuthStore = defineStore('auth', () => {
 
       // Update the user's display name
       await updateProfile(firebaseUser, {
-        displayName: name
+        displayName: name,
       })
 
       // Transform and set user
       user.value = await transformFirebaseUser(firebaseUser)
-      
+
       console.log('User signup successful:', user.value)
       return { success: true }
-
     } catch (err: any) {
       console.error('Firebase signup error:', err)
       const errorMessage = err.message || 'Sign up failed. Please try again.'
@@ -135,11 +135,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   const login = async (
     email: string,
-    password: string
+    password: string,
   ): Promise<{ success: boolean; error?: string }> => {
     console.log('=== FIREBASE LOGIN ===')
     console.log('Email:', email)
-    
+
     isLoading.value = true
     clearError()
 
@@ -148,22 +148,21 @@ export const useAuthStore = defineStore('auth', () => {
       const firebaseUser = userCredential.user
 
       console.log('Firebase login successful:', firebaseUser.uid)
-      
+
       user.value = await transformFirebaseUser(firebaseUser)
-      
+
       console.log('User login complete:', user.value)
       return { success: true }
-
     } catch (err: any) {
       console.error('Firebase login error:', err)
       let errorMessage = 'Login failed. Please try again.'
-      
+
       if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
         errorMessage = 'Invalid email or password.'
       } else if (err.code === 'auth/too-many-requests') {
         errorMessage = 'Too many failed attempts. Please try again later.'
       }
-      
+
       setError(errorMessage, err.code)
       return { success: false, error: errorMessage }
     } finally {
@@ -196,10 +195,10 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const userDocRef = doc(db, 'users', user.value.id)
       await updateDoc(userDocRef, updates)
-      
+
       // Update local user state
       user.value = { ...user.value, ...updates }
-      
+
       return { success: true }
     } catch (err: any) {
       console.error('Profile update error:', err)
@@ -215,11 +214,11 @@ export const useAuthStore = defineStore('auth', () => {
     if (isInitialized.value) return
 
     console.log('=== INITIALIZING FIREBASE AUTH ===')
-    
+
     return new Promise<void>((resolve) => {
       const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
         console.log('Auth state changed:', firebaseUser?.uid || 'No user')
-        
+
         try {
           if (firebaseUser) {
             user.value = await transformFirebaseUser(firebaseUser)
@@ -231,7 +230,7 @@ export const useAuthStore = defineStore('auth', () => {
           console.error('Error loading user from auth state:', err)
           user.value = null
         }
-        
+
         if (!isInitialized.value) {
           isInitialized.value = true
           resolve()
@@ -249,11 +248,11 @@ export const useAuthStore = defineStore('auth', () => {
     isLoading,
     error,
     isInitialized,
-    
+
     // Computed
     isAuthenticated,
     isPremium,
-    
+
     // Actions
     signUp,
     login,
@@ -261,6 +260,6 @@ export const useAuthStore = defineStore('auth', () => {
     updateUserProfile,
     initializeAuth,
     clearError,
-    setError
+    setError,
   }
 })

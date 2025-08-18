@@ -260,16 +260,16 @@
                 <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-1">
                   Account Actions
                 </h2>
-                <p class="text-neutral-600 dark:text-neutral-400">Manage your session and account</p>
+                <p class="text-neutral-600 dark:text-neutral-400">
+                  Manage your session and account
+                </p>
               </div>
               <div class="p-8">
                 <div
                   class="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-700/50 rounded-xl"
                 >
                   <div>
-                    <h4 class="font-medium text-neutral-800 dark:text-neutral-200">
-                      Sign Out
-                    </h4>
+                    <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Sign Out</h4>
                     <p class="text-sm text-neutral-600 dark:text-neutral-400">
                       Sign out of your account on this device
                     </p>
