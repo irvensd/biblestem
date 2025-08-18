@@ -420,21 +420,15 @@ import GlobalSearch from './GlobalSearch.vue'
 
 const router = useRouter()
 
-// Initialize authStore safely
-const authStore = ref({
-  isAuthenticated: false,
-  user: null,
-  isPremium: false,
-  logout: () => Promise.resolve(),
-  initializeAuth: () => Promise.resolve(),
-})
+// Initialize stores
+const authStore = useAuthStore()
 
 // Initialize the real store when component mounts
 onMounted(async () => {
   try {
-    const realAuthStore = useAuthStore()
-    authStore.value = realAuthStore
-    await realAuthStore.initializeAuth()
+    if (!authStore.isInitialized) {
+      await authStore.initializeAuth()
+    }
   } catch (error) {
     console.warn('Failed to initialize auth store:', error)
   }
