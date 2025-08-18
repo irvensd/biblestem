@@ -163,10 +163,10 @@
 
         <button
           type="submit"
-          :disabled="authStore.isLoading || !formValidation.isValid.value"
+          :disabled="authStore.isLoading || !isFormValid"
           class="w-full btn-primary flex items-center justify-center space-x-2"
           :class="{
-            'opacity-50 cursor-not-allowed': authStore.isLoading || !formValidation.isValid.value,
+            'opacity-50 cursor-not-allowed': authStore.isLoading || !isFormValid,
           }"
         >
           <svg
