@@ -175,7 +175,8 @@
               v-for="lesson in searchResults.lessons"
               :key="`lesson-${lesson.studyId}-${lesson.id}`"
               @click="goToLesson(lesson)"
-              class="w-full text-left px-3 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-700 rounded transition-colors group"
+              class="w-full text-left px-4 py-4 hover:bg-neutral-50 dark:hover:bg-neutral-700 active:bg-neutral-100 dark:active:bg-neutral-600 rounded-lg transition-colors group touch-manipulation"
+              :class="isMobile ? 'min-h-[68px]' : ''"
             >
               <div class="flex items-start space-x-3">
                 <div
