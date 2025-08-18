@@ -347,16 +347,18 @@ const router = useRouter()
 const authStoreRef = ref({
   isAuthenticated: false,
   user: null,
-  isPremium: false
+  isPremium: false,
 })
 
 // Safe computed for auth store access
 const authStore = computed(() => {
-  return authStoreRef.value || {
-    isAuthenticated: false,
-    user: null,
-    isPremium: false
-  }
+  return (
+    authStoreRef.value || {
+      isAuthenticated: false,
+      user: null,
+      isPremium: false,
+    }
+  )
 })
 
 // Initialize store when component mounts

@@ -220,7 +220,9 @@
             <div
               class="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
             >
-              <span class="text-white font-bold text-lg">{{ safeAuthStore.user?.name.charAt(0) }}</span>
+              <span class="text-white font-bold text-lg">{{
+                safeAuthStore.user?.name.charAt(0)
+              }}</span>
             </div>
             <div>
               <div class="font-medium text-neutral-900 dark:text-neutral-100">
@@ -371,9 +373,13 @@ onMounted(() => {
     routePath.value = route.path || ''
 
     // Watch for route changes
-    watch(() => route.path, (newPath) => {
-      routePath.value = newPath || ''
-    }, { immediate: true })
+    watch(
+      () => route.path,
+      (newPath) => {
+        routePath.value = newPath || ''
+      },
+      { immediate: true },
+    )
   } catch (error) {
     console.warn('Failed to initialize route in MobileNavigation:', error)
     // Keep routePath as empty string if router fails
@@ -385,17 +391,19 @@ const authStore = ref({
   isAuthenticated: false,
   user: null,
   isPremium: false,
-  logout: () => Promise.resolve()
+  logout: () => Promise.resolve(),
 })
 
 // Safe auth store access with fallback
 const safeAuthStore = computed(() => {
-  return authStore.value || {
-    isAuthenticated: false,
-    user: null,
-    isPremium: false,
-    logout: () => Promise.resolve()
-  }
+  return (
+    authStore.value || {
+      isAuthenticated: false,
+      user: null,
+      isPremium: false,
+      logout: () => Promise.resolve(),
+    }
+  )
 })
 
 // Initialize the real store when component mounts

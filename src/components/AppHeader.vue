@@ -230,7 +230,7 @@
         @touchmove.stop
         @touchstart.passive="true"
         @touchend.passive="true"
-        style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch;"
+        style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch"
       >
         <!-- Authenticated User Mobile Menu -->
         <div v-if="authStore.isAuthenticated" class="py-4">
@@ -426,7 +426,7 @@ const authStore = ref({
   user: null,
   isPremium: false,
   logout: () => Promise.resolve(),
-  initializeAuth: () => Promise.resolve()
+  initializeAuth: () => Promise.resolve(),
 })
 
 // Initialize the real store when component mounts
@@ -491,7 +491,6 @@ const handleClickOutside = (event: Event) => {
     userMenuOpen.value = false
   }
 }
-
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)

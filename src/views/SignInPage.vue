@@ -243,18 +243,22 @@ const errorStoreRef = ref<any>(null)
 
 // Safe computed for store access
 const authStore = computed(() => {
-  return authStoreRef.value || {
-    login: () => Promise.resolve({ success: false, error: 'Not ready' }),
-    isLoading: false,
-    error: null
-  }
+  return (
+    authStoreRef.value || {
+      login: () => Promise.resolve({ success: false, error: 'Not ready' }),
+      isLoading: false,
+      error: null,
+    }
+  )
 })
 
 const errorStore = computed(() => {
-  return errorStoreRef.value || {
-    addError: () => {},
-    clearError: () => {}
-  }
+  return (
+    errorStoreRef.value || {
+      addError: () => {},
+      clearError: () => {},
+    }
+  )
 })
 
 // Initialize stores when component mounts

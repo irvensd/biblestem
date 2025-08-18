@@ -83,7 +83,7 @@ onErrorCaptured((error, instance, info) => {
   console.warn('Error caught by boundary:', {
     error: error.message,
     component: info,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   })
 
   // Prevent error from propagating

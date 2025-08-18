@@ -127,7 +127,7 @@ const {
 onMounted(async () => {
   try {
     // Small delay to ensure Pinia is fully ready
-    await new Promise(resolve => setTimeout(resolve, 50))
+    await new Promise((resolve) => setTimeout(resolve, 50))
 
     const authStore = useAuthStore()
     await authStore.initializeAuth()
