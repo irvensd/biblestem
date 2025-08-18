@@ -226,10 +226,14 @@
       <!-- Mobile Menu -->
       <div
         v-if="mobileMenuOpen"
-        class="lg:hidden py-4 border-t border-neutral-200 dark:border-neutral-800 animate-fade-in"
+        class="lg:hidden border-t border-neutral-200 dark:border-neutral-800 animate-fade-in max-h-[calc(100vh-160px)] overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-neutral-100"
+        @touchmove.stop
+        @touchstart.passive="true"
+        @touchend.passive="true"
+        style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch"
       >
         <!-- Authenticated User Mobile Menu -->
-        <div v-if="authStore.isAuthenticated">
+        <div v-if="authStore.isAuthenticated" class="py-4">
           <!-- User Info -->
           <div class="px-4 mb-4">
             <div
@@ -308,7 +312,7 @@
           </div>
 
           <!-- Account Actions -->
-          <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4">
+          <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4 pb-6">
             <div class="flex flex-col space-y-3">
               <router-link
                 to="/profile"
@@ -335,7 +339,7 @@
         </div>
 
         <!-- Guest User Mobile Menu -->
-        <div v-else>
+        <div v-else class="py-4">
           <!-- Navigation Links -->
           <div class="flex flex-col space-y-3 px-4">
             <router-link
@@ -409,13 +413,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import GlobalSearch from './GlobalSearch.vue'
 
 const router = useRouter()
-const authStore = useAuthStore()
+
+// Initialize authStore safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+  logout: () => Promise.resolve(),
+  initializeAuth: () => Promise.resolve(),
+})
+
+// Initialize the real store when component mounts
+onMounted(async () => {
+  try {
+    const realAuthStore = useAuthStore()
+    authStore.value = realAuthStore
+    await realAuthStore.initializeAuth()
+  } catch (error) {
+    console.warn('Failed to initialize auth store:', error)
+  }
+
+  // Set up click handler
+  document.addEventListener('click', handleClickOutside)
+})
 
 const mobileMenuOpen = ref(false)
 const userMenuOpen = ref(false)
@@ -423,11 +449,24 @@ const userMenuOpen = ref(false)
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
   userMenuOpen.value = false
+
+  // Prevent body scroll when mobile menu is open
+  if (mobileMenuOpen.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
 }
 
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
+  document.body.style.overflow = ''
 }
+
+// Cleanup body scroll when component unmounts
+onUnmounted(() => {
+  document.body.style.overflow = ''
+})
 
 const toggleUserMenu = () => {
   userMenuOpen.value = !userMenuOpen.value
@@ -452,12 +491,6 @@ const handleClickOutside = (event: Event) => {
     userMenuOpen.value = false
   }
 }
-
-onMounted(() => {
-  // Initialize auth state
-  authStore.initializeAuth()
-  document.addEventListener('click', handleClickOutside)
-})
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)

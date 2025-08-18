@@ -7,10 +7,10 @@
       <!-- Dashboard -->
       <router-link
         to="/dashboard"
-        v-if="authStore.isAuthenticated"
+        v-if="safeAuthStore.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/dashboard'
+          routePath === '/dashboard'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -29,10 +29,10 @@
       <!-- Home (for non-authenticated users) -->
       <router-link
         to="/"
-        v-if="!authStore.isAuthenticated"
+        v-if="!safeAuthStore.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/'
+          routePath === '/'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -53,7 +53,7 @@
         to="/study-series"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/study-series'
+          routePath === '/study-series'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -69,10 +69,10 @@
       <!-- My Studies (for authenticated users) -->
       <router-link
         to="/my-studies"
-        v-if="authStore.isAuthenticated"
+        v-if="safeAuthStore.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/my-studies'
+          routePath === '/my-studies'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -93,7 +93,7 @@
         to="/daily-devotions"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          $route.path === '/daily-devotions'
+          routePath === '/daily-devotions'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -133,7 +133,9 @@
       <!-- Profile/Menu -->
       <button
         @click="toggleProfile"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
+        @touchstart="toggleProfile"
+        type="button"
+        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200 touch-manipulation"
         :class="
           showProfile
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -141,10 +143,10 @@
         "
       >
         <div
-          v-if="authStore.isAuthenticated"
+          v-if="safeAuthStore.isAuthenticated"
           class="w-5 h-5 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
         >
-          <span class="text-white text-xs font-bold">{{ authStore.user?.name.charAt(0) }}</span>
+          <span class="text-white text-xs font-bold">{{ safeAuthStore.user?.name.charAt(0) }}</span>
         </div>
         <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -155,7 +157,7 @@
           />
         </svg>
         <span class="text-xs font-medium">{{
-          authStore.isAuthenticated ? 'Profile' : 'Sign In'
+          safeAuthStore.isAuthenticated ? 'Profile' : 'Sign In'
         }}</span>
       </button>
     </div>
@@ -205,30 +207,32 @@
             </svg>
           </button>
           <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-            {{ authStore.isAuthenticated ? 'Profile' : 'Account' }}
+            {{ safeAuthStore.isAuthenticated ? 'Profile' : 'Account' }}
           </h2>
         </div>
       </div>
 
       <div class="p-4">
         <!-- Authenticated User Profile -->
-        <div v-if="authStore.isAuthenticated" class="space-y-4">
+        <div v-if="safeAuthStore.isAuthenticated" class="space-y-4">
           <!-- User Info -->
           <div class="flex items-center space-x-3 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
             <div
               class="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
             >
-              <span class="text-white font-bold text-lg">{{ authStore.user?.name.charAt(0) }}</span>
+              <span class="text-white font-bold text-lg">{{
+                safeAuthStore.user?.name.charAt(0)
+              }}</span>
             </div>
             <div>
               <div class="font-medium text-neutral-900 dark:text-neutral-100">
-                {{ authStore.user?.name }}
+                {{ safeAuthStore.user?.name }}
               </div>
               <div
                 class="text-sm"
-                :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
+                :class="safeAuthStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
               >
-                {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
+                {{ safeAuthStore.isPremium ? 'Premium' : 'Free' }} Plan
               </div>
             </div>
           </div>
@@ -284,7 +288,7 @@
             </router-link>
 
             <button
-              v-if="!authStore.isPremium"
+              v-if="!safeAuthStore.isPremium"
               @click="handleUpgrade"
               class="w-full flex items-center space-x-3 p-3 rounded-lg bg-accent-50 dark:bg-accent-900/20 text-accent-700 dark:text-accent-300 hover:bg-accent-100 dark:hover:bg-accent-900/30 transition-colors"
             >
@@ -354,13 +358,63 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
 import GlobalSearch from './GlobalSearch.vue'
 
-const route = useRoute()
-const authStore = useAuthStore()
+// Safe route path - starts empty, gets updated when router is ready
+const routePath = ref('')
+
+// Initialize route safely when component is ready
+onMounted(() => {
+  try {
+    const route = useRoute()
+    routePath.value = route.path || ''
+
+    // Watch for route changes
+    watch(
+      () => route.path,
+      (newPath) => {
+        routePath.value = newPath || ''
+      },
+      { immediate: true },
+    )
+  } catch (error) {
+    console.warn('Failed to initialize route in MobileNavigation:', error)
+    // Keep routePath as empty string if router fails
+  }
+})
+
+// Initialize authStore safely with guaranteed defaults
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+  logout: () => Promise.resolve(),
+})
+
+// Safe auth store access with fallback
+const safeAuthStore = computed(() => {
+  return (
+    authStore.value || {
+      isAuthenticated: false,
+      user: null,
+      isPremium: false,
+      logout: () => Promise.resolve(),
+    }
+  )
+})
+
+// Initialize the real store when component mounts
+onMounted(async () => {
+  try {
+    const { useAuthStore } = await import('@/stores/auth')
+    const realAuthStore = useAuthStore()
+    authStore.value = realAuthStore
+  } catch (error) {
+    console.warn('Failed to initialize auth store in MobileNavigation:', error)
+  }
+})
 
 const showSearch = ref(false)
 const showProfile = ref(false)
@@ -369,7 +423,7 @@ const showProfile = ref(false)
 const showMobileNav = computed(() => {
   // Don't show on certain full-screen routes
   const hideOnRoutes = ['/signin', '/signup']
-  return !hideOnRoutes.includes(route.path)
+  return !hideOnRoutes.includes(routePath.value)
 })
 
 const toggleSearch = () => {
@@ -396,8 +450,8 @@ const handleUpgrade = () => {
   closeProfile()
 }
 
-const signOut = () => {
-  authStore.signOut()
+const signOut = async () => {
+  await safeAuthStore.logout()
   closeProfile()
 }
 

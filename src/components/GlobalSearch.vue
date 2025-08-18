@@ -311,7 +311,19 @@ interface SearchResults {
 }
 
 const router = useRouter()
-const notesStore = useNotesStore()
+
+// Initialize notes store safely
+const notesStore = ref<any>(null)
+
+onMounted(() => {
+  try {
+    notesStore.value = useNotesStore()
+    notesStore.value?.loadFromStorage?.()
+  } catch (error) {
+    console.warn('Notes store not available:', error)
+  }
+  loadRecentSearches()
+})
 
 // Component state
 const searchQuery = ref('')
@@ -389,7 +401,7 @@ const performSearch = (query: string) => {
   )
 
   // Search notes
-  const matchingNotes = notesStore.searchNotes(query)
+  const matchingNotes = notesStore.value?.searchNotes?.(query) || []
 
   searchResults.value = {
     studies: matchingStudies.slice(0, 5), // Limit for dropdown
@@ -498,10 +510,7 @@ const handleBlur = () => {
   }, 200)
 }
 
-onMounted(() => {
-  notesStore.loadFromStorage()
-  loadRecentSearches()
-})
+// Removed duplicate onMounted - handled above
 </script>
 
 <style scoped>

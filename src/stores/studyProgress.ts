@@ -1,5 +1,8 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
+import { useAuthStore } from './auth'
 
 export interface StudyProgress {
   studyId: string
@@ -92,7 +95,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     return progress ? progress.completedLessons.includes(lessonId) : false
   }
 
-  const completeLesson = (studyId: string, lessonId: string, timeSpent: number = 0) => {
+  const completeLesson = async (studyId: string, lessonId: string, timeSpent: number = 0) => {
     if (!progressData.value[studyId]) {
       progressData.value[studyId] = {
         studyId,
@@ -113,9 +116,13 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     progress.totalTimeSpent += timeSpent
 
     saveToStorage()
+    // Fire and forget Firebase sync - don't block UI
+    saveProgressToFirebase(studyId).catch((error) =>
+      console.error('Failed to sync progress to Firebase:', error),
+    )
   }
 
-  const startStudy = (studyId: string, lessonId?: string) => {
+  const startStudy = async (studyId: string, lessonId?: string) => {
     if (!progressData.value[studyId]) {
       progressData.value[studyId] = {
         studyId,
@@ -133,6 +140,10 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     }
 
     saveToStorage()
+    // Fire and forget Firebase sync - don't block UI
+    saveProgressToFirebase(studyId).catch((error) =>
+      console.error('Failed to sync progress to Firebase:', error),
+    )
   }
 
   const getStudyCompletionPercentage = (studyId: string, totalLessons: number): number => {
@@ -161,6 +172,59 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
 
   const saveToStorage = () => {
     localStorage.setItem('biblestem_study_progress', JSON.stringify(progressData.value))
+  }
+
+  const syncWithFirebase = async () => {
+    const authStore = useAuthStore()
+    if (!authStore.isAuthenticated) return
+
+    try {
+      // Fetch user's study progress from Firebase
+      const progressRef = collection(db, 'userProgress')
+      const q = query(progressRef, where('userId', '==', authStore.user!.id))
+      const querySnapshot = await getDocs(q)
+
+      // Transform Firebase data to local format
+      const firebaseProgress: Record<string, StudyProgress> = {}
+      querySnapshot.forEach((doc) => {
+        const data = doc.data()
+        firebaseProgress[data.studyId] = {
+          studyId: data.studyId,
+          completedLessons: data.completedLessons || [],
+          currentLesson: data.currentLesson,
+          startedAt: data.startedAt,
+          lastAccessedAt: data.lastAccessedAt,
+          totalTimeSpent: data.totalTimeSpent,
+        }
+      })
+
+      progressData.value = firebaseProgress
+    } catch (error) {
+      console.error('Error syncing study progress:', error)
+    }
+  }
+
+  const saveProgressToFirebase = async (studyId: string) => {
+    const authStore = useAuthStore()
+    if (!authStore.isAuthenticated) return
+
+    const progress = progressData.value[studyId]
+    if (!progress) return
+
+    try {
+      const progressDocRef = doc(db, 'userProgress', `${authStore.user!.id}_${studyId}`)
+      await setDoc(progressDocRef, {
+        userId: authStore.user!.id,
+        studyId: studyId,
+        completedLessons: progress.completedLessons,
+        currentLesson: progress.currentLesson,
+        startedAt: progress.startedAt,
+        lastAccessedAt: progress.lastAccessedAt,
+        totalTimeSpent: progress.totalTimeSpent,
+      })
+    } catch (error) {
+      console.error('Error saving progress to Firebase:', error)
+    }
   }
 
   const loadFromStorage = () => {
@@ -241,5 +305,10 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     resetStudyProgress,
     loadFromStorage,
     initializeDemoData,
+<<<<<<< HEAD
+=======
+    syncWithFirebase,
+    saveProgressToFirebase,
+>>>>>>> refs/remotes/origin/main
   }
 })

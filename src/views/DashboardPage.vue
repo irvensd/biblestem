@@ -764,18 +764,42 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
-import { useStudyProgressStore } from '../stores/studyProgress'
-import { useAchievementsStore } from '../stores/achievements'
 import { getFreeStudies, getPremiumStudies, type Study } from '../data/studies'
 import AchievementBadges from '../components/AchievementBadges.vue'
 import MemoryCards from '../components/MemoryCards.vue'
 import StudyTemplates from '../components/StudyTemplates.vue'
 
 const router = useRouter()
-const authStore = useAuthStore()
-const progressStore = useStudyProgressStore()
-const achievementsStore = useAchievementsStore()
+
+// Initialize stores safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+})
+const progressStore = ref({
+  getStudyProgress: () => ({}),
+  getTotalTimeSpent: () => 0,
+})
+const achievementsStore = ref({
+  achievements: [],
+  getRecentAchievements: () => [],
+})
+
+// Initialize the real stores when component mounts
+onMounted(async () => {
+  try {
+    const { useAuthStore } = await import('../stores/auth')
+    const { useStudyProgressStore } = await import('../stores/studyProgress')
+    const { useAchievementsStore } = await import('../stores/achievements')
+
+    authStore.value = useAuthStore()
+    progressStore.value = useStudyProgressStore()
+    achievementsStore.value = useAchievementsStore()
+  } catch (error) {
+    console.warn('Failed to initialize stores in DashboardPage:', error)
+  }
+})
 
 // Modal states
 const showProgressModal = ref(false)

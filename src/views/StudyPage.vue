@@ -1,6 +1,49 @@
 <template>
   <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
-    <div v-if="study" class="container-base py-8">
+    <!-- Loading State -->
+    <div v-if="isLoading" class="container-base py-8">
+      <div class="animate-pulse">
+        <div class="h-8 bg-neutral-200 dark:bg-neutral-700 rounded w-1/3 mb-6"></div>
+        <div class="h-12 bg-neutral-200 dark:bg-neutral-700 rounded w-3/4 mb-4"></div>
+        <div class="h-6 bg-neutral-200 dark:bg-neutral-700 rounded w-1/2 mb-8"></div>
+        <div class="space-y-4">
+          <div class="h-20 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+          <div class="h-20 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+          <div class="h-20 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div v-else-if="error" class="container-base py-8">
+      <div class="text-center">
+        <div
+          class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-red-600 dark:text-red-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+            />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+          Study Not Found
+        </h2>
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">{{ error }}</p>
+        <router-link to="/study-series" class="btn-primary"> Browse Study Series </router-link>
+      </div>
+    </div>
+
+    <!-- Study Content -->
+    <div v-else-if="study" class="container-base py-8">
       <!-- Study Header -->
       <div class="mb-8">
         <nav
@@ -166,13 +209,35 @@
                     <span class="text-sm text-primary-600 font-medium">{{ lesson.scripture }}</span>
                     <button
                       v-if="canAccessLesson(index)"
-                      class="text-primary-600 hover:text-primary-700 font-medium text-sm"
+                      class="text-primary-600 hover:text-primary-700 font-medium text-sm flex items-center space-x-1"
+                      :class="{ 'opacity-50 cursor-not-allowed': isNavigating }"
+                      :disabled="isNavigating"
                       @click.stop="openLesson(lesson, index)"
                     >
-                      {{
+                      <span>{{
                         progressStore.isLessonCompleted(study.id, lesson.id) ? 'Review' : 'Start'
-                      }}
-                      →
+                      }}</span>
+                      <svg
+                        v-if="isNavigating"
+                        class="animate-spin h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          class="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          stroke-width="4"
+                        ></circle>
+                        <path
+                          class="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      <span v-else>→</span>
                     </button>
                     <span
                       v-else-if="getLessonAccessReason(index) === 'not-authenticated'"
@@ -283,10 +348,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
-import { useStudyProgressStore } from '../stores/studyProgress'
+import { useCleanup, useDOMEvents, useSafeState } from '../composables/useCleanup'
 import { getStudyById, type Study, type Lesson } from '../data/studies'
 import LessonModal from '../components/LessonModal.vue'
 import StudyCompletion from '../components/StudyCompletion.vue'
@@ -294,13 +358,55 @@ import StudyShare from '../components/StudyShare.vue'
 
 const route = useRoute()
 const router = useRouter()
-const authStore = useAuthStore()
-const progressStore = useStudyProgressStore()
 
-const isLoading = ref(true)
+// Initialize stores safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+})
+const progressStore = ref({
+  getStudyProgress: () => ({}),
+  updateProgress: () => Promise.resolve(),
+})
+const loadingStore = ref({
+  setLoading: () => {},
+  clearLoading: () => {},
+})
+const errorStore = ref({
+  addError: () => {},
+})
+
+// Initialize the real stores when component mounts
+onMounted(async () => {
+  try {
+    const { useAuthStore } = await import('../stores/auth')
+    const { useStudyProgressStore } = await import('../stores/studyProgress')
+    const { useLoadingStore } = await import('../stores/loading')
+    const { useErrorStore } = await import('../stores/errors')
+
+    authStore.value = useAuthStore()
+    progressStore.value = useStudyProgressStore()
+    loadingStore.value = useLoadingStore()
+    errorStore.value = useErrorStore()
+  } catch (error) {
+    console.warn('Failed to initialize stores in StudyPage:', error)
+  }
+})
+
+// Cleanup composables
+const cleanup = useCleanup()
+const domEvents = useDOMEvents()
+const { isMounted, safeSet, safeAsync } = useSafeState()
+
 const study = ref<Study | null>(null)
 const currentLesson = ref<Lesson | null>(null)
 const currentLessonIndex = ref<number>(0)
+const error = ref<string>('')
+
+// Loading states
+const isLoading = computed(() => loadingStore.isLoadingKey('study-page').value)
+const isNavigating = computed(() => loadingStore.isLoadingKey('lesson-navigation').value)
 
 const studyProgress = computed(() =>
   study.value ? progressStore.getStudyProgress(study.value.id) : null,
@@ -361,45 +467,140 @@ const formatDuration = (minutes: number) => {
   return `${hours}h ${mins}m`
 }
 
-const openLesson = (lesson: Lesson, index: number) => {
-  // Check if user is authenticated first
-  if (!authStore.isAuthenticated) {
-    // Redirect to sign-in page with return URL
-    router.push({
-      name: 'signin',
-      query: { redirect: route.fullPath },
-    })
-    return
+const openLesson = async (lesson: Lesson, index: number) => {
+  try {
+    loadingStore.setLoading('lesson-navigation', true)
+
+    // Check if user is authenticated first
+    if (!authStore.isAuthenticated) {
+      errorStore.addError('Please sign in to access lessons', { type: 'info' })
+      router.push({
+        name: 'signin',
+        query: { redirect: route.fullPath },
+      })
+      return
+    }
+
+    // Check access permissions
+    if (!canAccessLesson(index)) {
+      const reason = getLessonAccessReason(index)
+      switch (reason) {
+        case 'premium-required':
+          errorStore.addError('Premium subscription required for this lesson', { type: 'warning' })
+          break
+        case 'sequential':
+          errorStore.addError('Complete the previous lesson first', { type: 'info' })
+          break
+        default:
+          errorStore.addError('Cannot access this lesson', { type: 'warning' })
+      }
+      return
+    }
+
+    // Track lesson start
+    if (study.value) {
+      progressStore.startLesson(study.value.id, lesson.id)
+    }
+
+    currentLesson.value = lesson
+    currentLessonIndex.value = index
+
+    // Clear any previous errors
+    error.value = ''
+  } catch (err) {
+    console.error('Error opening lesson:', err)
+    errorStore.handleError(err, 'Lesson Navigation')
+  } finally {
+    loadingStore.clearLoading('lesson-navigation')
   }
-
-  if (!canAccessLesson(index)) return
-
-  currentLesson.value = lesson
-  currentLessonIndex.value = index
 }
 
 const closeLesson = () => {
-  currentLesson.value = null
+  try {
+    // Save any progress before closing
+    if (study.value && currentLesson.value && isMounted.value) {
+      const sessionDuration = Math.max(1, Math.floor(Math.random() * 5) + 1) // Mock session time
+      progressStore.updateLessonProgress(study.value.id, currentLesson.value.id, {
+        timeSpent: sessionDuration,
+        lastAccessed: new Date().toISOString(),
+      })
+    }
+
+    safeSet(currentLesson, null)
+    safeSet(currentLessonIndex, 0)
+  } catch (err) {
+    console.error('Error closing lesson:', err)
+    if (isMounted.value) {
+      errorStore.handleError(err, 'Lesson Close')
+    }
+  }
 }
 
-const completeLesson = (lessonId: string) => {
-  if (study.value) {
+const completeLesson = async (lessonId: string) => {
+  try {
+    if (!study.value) return
+
+    loadingStore.setLoading('lesson-completion', true)
+
     const lesson = study.value.lessons.find((l) => l.id === lessonId)
     const timeSpent = lesson ? lesson.duration : 5
+
+    // Complete the lesson with proper tracking
     progressStore.completeLesson(study.value.id, lessonId, timeSpent)
+
+    // Check if study is completed
+    const completionPercentage = progressStore.getStudyCompletionPercentage(
+      study.value.id,
+      study.value.lessons.length,
+    )
+
+    if (completionPercentage === 100) {
+      // Add celebration notification
+      errorStore.addError(`🎉 Congratulations! You completed "${study.value.title}"!`, {
+        type: 'info',
+        persistent: true,
+      })
+    }
+
+    closeLesson()
+  } catch (err) {
+    console.error('Error completing lesson:', err)
+    errorStore.handleError(err, 'Lesson Completion')
+  } finally {
+    loadingStore.clearLoading('lesson-completion')
   }
-  closeLesson()
 }
 
-const nextLessonInModal = () => {
-  if (!study.value || currentLessonIndex.value >= study.value.lessons.length - 1) {
-    closeLesson()
-    return
-  }
+const nextLessonInModal = async () => {
+  try {
+    if (!study.value || currentLessonIndex.value >= study.value.lessons.length - 1) {
+      closeLesson()
+      return
+    }
 
-  const nextIndex = currentLessonIndex.value + 1
-  if (canAccessLesson(nextIndex)) {
-    openLesson(study.value.lessons[nextIndex], nextIndex)
+    const nextIndex = currentLessonIndex.value + 1
+    const nextLesson = study.value.lessons[nextIndex]
+
+    if (canAccessLesson(nextIndex)) {
+      await openLesson(nextLesson, nextIndex)
+    } else {
+      // Show why next lesson can't be accessed
+      const reason = getLessonAccessReason(nextIndex)
+      switch (reason) {
+        case 'premium-required':
+          errorStore.addError('Premium subscription required for next lesson', { type: 'warning' })
+          break
+        case 'sequential':
+          errorStore.addError('Complete current lesson to unlock the next one', { type: 'info' })
+          break
+        default:
+          errorStore.addError('Next lesson is not available yet', { type: 'info' })
+      }
+      closeLesson()
+    }
+  } catch (err) {
+    console.error('Error navigating to next lesson:', err)
+    errorStore.handleError(err, 'Next Lesson Navigation')
   }
 }
 
@@ -439,42 +640,117 @@ const handleUpgrade = () => {
   )
 }
 
-onMounted(async () => {
-  try {
-    // Initialize stores
-    authStore.initializeAuth()
-    progressStore.loadFromStorage()
+// Keyboard navigation
+const handleKeyboard = (event: KeyboardEvent) => {
+  if (!currentLesson.value) return
 
-    const studyId = route.params.id as string
+  if (event.key === 'Escape') {
+    closeLesson()
+  } else if (event.key === 'ArrowRight' && event.ctrlKey) {
+    nextLessonInModal()
+  } else if (event.key === 'ArrowLeft' && event.ctrlKey) {
+    // Previous lesson logic
+    if (currentLessonIndex.value > 0) {
+      const prevIndex = currentLessonIndex.value - 1
+      const prevLesson = study.value?.lessons[prevIndex]
+      if (prevLesson && canAccessLesson(prevIndex)) {
+        openLesson(prevLesson, prevIndex)
+      }
+    }
+  }
+}
+
+// Route parameter watcher with cleanup
+cleanup.addWatcher(
+  watch(
+    () => route.params.id,
+    async (newStudyId) => {
+      if (newStudyId && newStudyId !== study.value?.id && isMounted.value) {
+        await loadStudy(newStudyId as string)
+      }
+    },
+    { immediate: false },
+  ),
+)
+
+const loadStudy = async (studyId: string) => {
+  const result = await safeAsync(async () => {
+    loadingStore.setLoading('study-page', true)
+    safeSet(error, '')
+
+    // Wait for auth to be ready
+    if (!authStore.isInitialized) {
+      await authStore.initializeAuth()
+    }
+
+    // Load progress data
+    progressStore.loadFromStorage()
 
     // Only proceed if we have a valid study ID
     if (!studyId) {
-      isLoading.value = false
-      router.push('/study-series')
+      safeSet(error, 'Invalid study ID')
+      if (isMounted.value) {
+        router.push('/study-series')
+      }
       return
     }
 
     const foundStudy = getStudyById(studyId)
 
-    if (foundStudy) {
-      study.value = foundStudy
+    if (foundStudy && isMounted.value) {
+      safeSet(study, foundStudy)
       progressStore.startStudy(studyId)
-      isLoading.value = false
-    } else {
-      // Log the error for debugging and redirect
-      console.warn('Study not found:', studyId)
-      isLoading.value = false
-      // Don't redirect immediately, let user see the "not found" state
-      setTimeout(() => {
-        router.push('/study-series')
+
+      // Track study access
+      progressStore.updateStudyAccess(studyId)
+    } else if (isMounted.value) {
+      safeSet(error, `Study "${studyId}" not found`)
+      errorStore.addError('Study not found', { type: 'warning' })
+
+      // Delay redirect to show error
+      const timeoutId = setTimeout(() => {
+        if (isMounted.value) {
+          router.push('/study-series')
+        }
       }, 2000)
+      cleanup.addTimeout(timeoutId)
     }
-  } catch (error) {
-    console.error('Error loading study:', error)
-    isLoading.value = false
-    setTimeout(() => {
-      router.push('/study-series')
-    }, 2000)
+  })
+
+  if (result === null && !isMounted.value) {
+    // Component was unmounted during async operation
+    return
   }
+
+  if (result instanceof Error) {
+    console.error('Error loading study:', result)
+    safeSet(error, 'Failed to load study')
+    if (isMounted.value) {
+      errorStore.handleError(result, 'Study Loading')
+
+      const timeoutId = setTimeout(() => {
+        if (isMounted.value) {
+          router.push('/study-series')
+        }
+      }, 2000)
+      cleanup.addTimeout(timeoutId)
+    }
+  }
+
+  if (isMounted.value) {
+    loadingStore.clearLoading('study-page')
+  }
+}
+
+onMounted(async () => {
+  const studyId = route.params.id as string
+  if (studyId && isMounted.value) {
+    await loadStudy(studyId)
+  }
+
+  // Add keyboard navigation with proper cleanup
+  domEvents.onKeydown(document, handleKeyboard)
 })
+
+// Cleanup is handled automatically by the cleanup composable
 </script>

@@ -27,12 +27,23 @@
     </div>
 
     <!-- Flashcard -->
+<<<<<<< HEAD
     <div class="relative">
       <div
         class="card p-8 cursor-pointer transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col justify-center"
+=======
+    <div class="relative perspective-1000">
+      <div
+        class="card-container relative w-full min-h-[300px] cursor-pointer touch-manipulation"
+        :class="{ flipped: isFlipped, 'touch-active': isTouching }"
+>>>>>>> refs/remotes/origin/main
         @click="flipCard"
+        @touchstart="handleTouchStart"
+        @touchend="handleTouchEnd"
+        @touchcancel="handleTouchEnd"
       >
         <!-- Front Side (Reference) -->
+<<<<<<< HEAD
         <div v-if="!isFlipped" class="text-center space-y-4">
           <div class="text-sm text-neutral-600 dark:text-neutral-400">What verse is this?</div>
 
@@ -70,12 +81,68 @@
                       : 'bg-neutral-300 dark:bg-neutral-600'
                   "
                 ></div>
+=======
+        <div
+          class="card-face card-front card p-8 absolute inset-0 flex flex-col justify-center backface-hidden"
+        >
+          <div class="text-center space-y-4">
+            <div class="text-sm text-neutral-600 dark:text-neutral-400">What verse is this?</div>
+
+            <div class="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+              {{ card?.reference }}
+            </div>
+
+            <div class="text-sm text-neutral-500 dark:text-neutral-500">
+              Click to reveal the verse
+            </div>
+
+            <!-- Card Info -->
+            <div class="flex items-center justify-center space-x-3 mt-6">
+              <span
+                class="text-xs px-2 py-1 rounded"
+                :class="getDifficultyClass(card?.difficulty || 'medium')"
+              >
+                {{ card?.difficulty }}
+              </span>
+              <span
+                class="text-xs px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400"
+              >
+                {{ card?.category }}
+              </span>
+              <div class="flex items-center space-x-1">
+                <span class="text-xs text-neutral-600 dark:text-neutral-400">Confidence:</span>
+                <div class="flex items-center space-x-1">
+                  <div
+                    v-for="i in 5"
+                    :key="i"
+                    class="w-2 h-2 rounded-full"
+                    :class="
+                      i <= (card?.confidence || 1)
+                        ? 'bg-amber-400'
+                        : 'bg-neutral-300 dark:bg-neutral-600'
+                    "
+                  ></div>
+                </div>
+>>>>>>> refs/remotes/origin/main
               </div>
             </div>
+          </div>
+
+          <!-- Flip Indicator -->
+          <div class="absolute top-4 right-4 text-neutral-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+              />
+            </svg>
           </div>
         </div>
 
         <!-- Back Side (Verse Text) -->
+<<<<<<< HEAD
         <div v-else class="text-center space-y-6">
           <div class="text-sm text-neutral-600 dark:text-neutral-400">
             {{ card?.reference }}
@@ -89,30 +156,62 @@
 
           <div class="text-sm text-neutral-500 dark:text-neutral-500">
             How well did you remember this verse?
+=======
+        <div
+          class="card-face card-back card p-8 absolute inset-0 flex flex-col justify-center backface-hidden"
+        >
+          <div class="text-center space-y-6">
+            <div class="text-sm text-neutral-600 dark:text-neutral-400">
+              {{ card?.reference }}
+            </div>
+
+            <div
+              class="text-lg sm:text-xl leading-relaxed text-neutral-900 dark:text-neutral-100 font-medium"
+            >
+              "{{ card?.text }}"
+            </div>
+
+            <div class="text-sm text-neutral-500 dark:text-neutral-500">
+              How well did you remember this verse?
+            </div>
+
+            <!-- Answer Buttons -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8">
+              <button
+                @click.stop="handleAnswer(false)"
+                class="p-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors font-medium"
+              >
+                😓 Need Practice
+              </button>
+              <button
+                @click.stop="handleAnswer(true)"
+                class="p-3 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors font-medium"
+              >
+                🤔 Almost There
+              </button>
+              <button
+                @click.stop="handleAnswer(true)"
+                class="p-3 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors font-medium"
+              >
+                🎯 Perfect!
+              </button>
+            </div>
+>>>>>>> refs/remotes/origin/main
           </div>
 
-          <!-- Answer Buttons -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8">
-            <button
-              @click.stop="handleAnswer(false)"
-              class="p-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors font-medium"
-            >
-              😓 Need Practice
-            </button>
-            <button
-              @click.stop="handleAnswer(true)"
-              class="p-3 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors font-medium"
-            >
-              🤔 Almost There
-            </button>
-            <button
-              @click.stop="handleAnswer(true)"
-              class="p-3 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors font-medium"
-            >
-              🎯 Perfect!
-            </button>
+          <!-- Flip Indicator -->
+          <div class="absolute top-4 right-4 text-neutral-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+              />
+            </svg>
           </div>
         </div>
+<<<<<<< HEAD
 
         <!-- Flip Indicator -->
         <div class="absolute top-4 right-4 text-neutral-400">
@@ -125,6 +224,8 @@
             />
           </svg>
         </div>
+=======
+>>>>>>> refs/remotes/origin/main
       </div>
     </div>
 
@@ -245,9 +346,24 @@ const emit = defineEmits(['answer', 'skip', 'end-session'])
 
 const isFlipped = ref(false)
 const showSessionComplete = ref(false)
+const isTouching = ref(false)
 
 const flipCard = () => {
   isFlipped.value = !isFlipped.value
+}
+
+const handleTouchStart = (event: TouchEvent) => {
+  isTouching.value = true
+  // Prevent default to avoid conflicts with click
+  event.preventDefault()
+}
+
+const handleTouchEnd = (event: TouchEvent) => {
+  isTouching.value = false
+  // Only flip if this was a tap (not a scroll or swipe)
+  if (event.type === 'touchend') {
+    flipCard()
+  }
 }
 
 const handleAnswer = (wasCorrect: boolean) => {
@@ -297,5 +413,70 @@ watch(
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 /* Card flip styles removed - using simple content toggle instead */
+=======
+/* 3D Card Flip Animation */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.card-container {
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+}
+
+.card-container.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-front {
+  transform: rotateY(0deg);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Hover effect for non-flipped state */
+.card-container:not(.flipped):hover {
+  transform: scale(1.05);
+}
+
+.card-container.flipped:hover {
+  transform: rotateY(180deg) scale(1.05);
+}
+
+/* Touch interactions */
+.card-container.touch-active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+.card-container.touch-active.flipped {
+  transform: rotateY(180deg) scale(0.98);
+}
+
+/* Better mobile touch target */
+@media (max-width: 768px) {
+  .card-container {
+    min-height: 280px;
+    touch-action: manipulation;
+  }
+
+  .card-face {
+    padding: 1.5rem;
+  }
+}
+>>>>>>> refs/remotes/origin/main
 </style>

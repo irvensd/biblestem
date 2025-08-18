@@ -31,8 +31,11 @@ export function usePWA() {
     }
   }
 
-  // Register service worker
+  // Register service worker (TEMPORARILY DISABLED FOR DEBUGGING)
   const registerServiceWorker = async () => {
+    console.log('Service Worker registration temporarily disabled for debugging')
+    return
+
     if ('serviceWorker' in navigator) {
       try {
         registration = await navigator.serviceWorker.register('/sw.js', {

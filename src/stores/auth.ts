@@ -1,5 +1,15 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  updateProfile,
+  User as FirebaseUser,
+} from 'firebase/auth'
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
+import { auth, db } from '@/lib/firebase'
 
 export interface User {
   id: string
@@ -10,91 +20,246 @@ export interface User {
   plan: 'free' | 'premium'
   studiesCompleted: number
   joinDate: string
+  emailVerified?: boolean
+}
+
+export interface AuthError {
+  message: string
+  code?: string
 }
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const isLoading = ref(false)
+  const error = ref<AuthError | null>(null)
+  const isInitialized = ref(false)
 
   const isAuthenticated = computed(() => !!user.value)
   const isPremium = computed(() => user.value?.plan === 'premium')
 
-  // Demo users for login
-  const demoUsers = [
-    {
-      id: '1',
-      name: 'John Smith',
-      email: 'demo@biblestem.com',
-      avatar: '',
-      plan: 'premium' as const,
-      studiesCompleted: 15,
-      joinDate: '2024-01-15',
-    },
-    {
-      id: '2',
-      name: 'Sarah Johnson',
-      email: 'free@biblestem.com',
-      avatar: '',
-      plan: 'free' as const,
-      studiesCompleted: 7, // Updated to reflect 3 completed + 3 in progress studies
-      joinDate: '2024-02-20',
-    },
-  ]
+  const clearError = () => {
+    error.value = null
+  }
 
-  const login = async (
+  const setError = (message: string, code?: string) => {
+    error.value = { message, code }
+  }
+
+  const transformFirebaseUser = async (firebaseUser: FirebaseUser): Promise<User> => {
+    console.log('Transforming Firebase user:', firebaseUser.uid)
+
+    // Try to get user profile from Firestore
+    const userDocRef = doc(db, 'users', firebaseUser.uid)
+    const userDoc = await getDoc(userDocRef)
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data()
+      return {
+        id: firebaseUser.uid,
+        name: userData.name || firebaseUser.displayName || 'User',
+        email: firebaseUser.email || '',
+        avatar: userData.avatar || firebaseUser.photoURL,
+        bio: userData.bio,
+        plan: userData.plan || 'free',
+        studiesCompleted: userData.studiesCompleted || 0,
+        joinDate:
+          userData.joinDate || firebaseUser.metadata.creationTime || new Date().toISOString(),
+        emailVerified: firebaseUser.emailVerified,
+      }
+    } else {
+      // Create user profile if it doesn't exist
+      const newUser: User = {
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'User',
+        email: firebaseUser.email || '',
+        avatar: firebaseUser.photoURL,
+        plan: 'free',
+        studiesCompleted: 0,
+        joinDate: firebaseUser.metadata.creationTime || new Date().toISOString(),
+        emailVerified: firebaseUser.emailVerified,
+      }
+
+      // Save to Firestore
+      await setDoc(userDocRef, {
+        name: newUser.name,
+        email: newUser.email,
+        avatar: newUser.avatar,
+        bio: newUser.bio,
+        plan: newUser.plan,
+        studiesCompleted: newUser.studiesCompleted,
+        joinDate: newUser.joinDate,
+        emailVerified: newUser.emailVerified,
+      })
+
+      return newUser
+    }
+  }
+
+  const signUp = async (
     email: string,
     password: string,
+    name: string,
   ): Promise<{ success: boolean; error?: string }> => {
+    console.log('=== FIREBASE SIGNUP ===')
+    console.log('Email:', email, 'Name:', name)
+
     isLoading.value = true
+    clearError()
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      // Create user with Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      const firebaseUser = userCredential.user
 
-      // Demo login logic
-      if (email === 'demo@biblestem.com' && password === 'demo123') {
-        user.value = demoUsers[0]
-        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
-        return { success: true }
-      } else if (email === 'free@biblestem.com' && password === 'free123') {
-        user.value = demoUsers[1]
-        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
-        return { success: true }
-      } else {
-        return { success: false, error: 'Invalid email or password' }
-      }
-    } catch (error) {
-      return { success: false, error: 'Login failed. Please try again.' }
+      console.log('Firebase user created:', firebaseUser.uid)
+
+      // Update the user's display name
+      await updateProfile(firebaseUser, {
+        displayName: name,
+      })
+
+      // Transform and set user
+      user.value = await transformFirebaseUser(firebaseUser)
+
+      console.log('User signup successful:', user.value)
+      return { success: true }
+    } catch (err: any) {
+      console.error('Firebase signup error:', err)
+      const errorMessage = err.message || 'Sign up failed. Please try again.'
+      setError(errorMessage, err.code)
+      return { success: false, error: errorMessage }
     } finally {
       isLoading.value = false
     }
   }
 
-  const logout = () => {
-    user.value = null
-    localStorage.removeItem('biblestem_user')
-  }
+  const login = async (
+    email: string,
+    password: string,
+  ): Promise<{ success: boolean; error?: string }> => {
+    console.log('=== FIREBASE LOGIN ===')
+    console.log('Email:', email)
 
-  const initializeAuth = () => {
-    const savedUser = localStorage.getItem('biblestem_user')
-    if (savedUser) {
-      try {
-        user.value = JSON.parse(savedUser)
-      } catch (error) {
-        console.error('Error parsing saved user:', error)
-        localStorage.removeItem('biblestem_user')
+    isLoading.value = true
+    clearError()
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      const firebaseUser = userCredential.user
+
+      console.log('Firebase login successful:', firebaseUser.uid)
+
+      user.value = await transformFirebaseUser(firebaseUser)
+
+      console.log('User login complete:', user.value)
+      return { success: true }
+    } catch (err: any) {
+      console.error('Firebase login error:', err)
+      let errorMessage = 'Login failed. Please try again.'
+
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+        errorMessage = 'Invalid email or password.'
+      } else if (err.code === 'auth/too-many-requests') {
+        errorMessage = 'Too many failed attempts. Please try again later.'
       }
+
+      setError(errorMessage, err.code)
+      return { success: false, error: errorMessage }
+    } finally {
+      isLoading.value = false
     }
   }
 
+  const logout = async () => {
+    isLoading.value = true
+    clearError()
+
+    try {
+      await signOut(auth)
+      user.value = null
+      console.log('User logged out successfully')
+    } catch (err: any) {
+      console.error('Logout error:', err)
+      setError('Failed to log out')
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const updateUserProfile = async (updates: Partial<User>) => {
+    if (!user.value) return { success: false, error: 'User not authenticated' }
+
+    isLoading.value = true
+    clearError()
+
+    try {
+      const userDocRef = doc(db, 'users', user.value.id)
+      await updateDoc(userDocRef, updates)
+
+      // Update local user state
+      user.value = { ...user.value, ...updates }
+
+      return { success: true }
+    } catch (err: any) {
+      console.error('Profile update error:', err)
+      const errorMessage = 'Failed to update profile'
+      setError(errorMessage)
+      return { success: false, error: errorMessage }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const initializeAuth = async () => {
+    if (isInitialized.value) return
+
+    console.log('=== INITIALIZING FIREBASE AUTH ===')
+
+    return new Promise<void>((resolve) => {
+      const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+        console.log('Auth state changed:', firebaseUser?.uid || 'No user')
+
+        try {
+          if (firebaseUser) {
+            user.value = await transformFirebaseUser(firebaseUser)
+            console.log('User loaded from auth state:', user.value)
+          } else {
+            user.value = null
+          }
+        } catch (err) {
+          console.error('Error loading user from auth state:', err)
+          user.value = null
+        }
+
+        if (!isInitialized.value) {
+          isInitialized.value = true
+          resolve()
+        }
+      })
+
+      // Store unsubscribe function for cleanup if needed
+      // You could store this in the store for cleanup on logout
+    })
+  }
+
   return {
+    // State
     user,
     isLoading,
+    error,
+    isInitialized,
+
+    // Computed
     isAuthenticated,
     isPremium,
-    demoUsers,
+
+    // Actions
+    signUp,
     login,
     logout,
+    updateUserProfile,
     initializeAuth,
+    clearError,
+    setError,
   }
 })

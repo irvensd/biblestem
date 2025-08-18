@@ -3,11 +3,21 @@
     id="app"
     class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
   >
-    <AppHeader />
-    <main class="pb-16 sm:pb-0">
-      <router-view />
-    </main>
-    <MobileNavigation />
+    <ErrorBoundary>
+      <AppHeader />
+      <main class="pb-16 sm:pb-0">
+        <ErrorBoundary>
+          <router-view v-if="isAppReady" />
+          <div v-else class="flex items-center justify-center min-h-[400px]">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+          </div>
+        </ErrorBoundary>
+      </main>
+      <MobileNavigation />
+    </ErrorBoundary>
+
+    <!-- Global Notifications for errors and loading -->
+    <GlobalNotifications />
 
     <!-- PWA Install Prompt -->
     <div
@@ -92,9 +102,15 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import AppHeader from './components/AppHeader.vue'
 import MobileNavigation from './components/MobileNavigation.vue'
+import ErrorBoundary from './components/ErrorBoundary.vue'
+import GlobalNotifications from './components/GlobalNotifications.vue'
 import { usePWA } from './composables/usePWA'
+
+// App readiness state
+const isAppReady = ref(false)
 
 const {
   isInstallable,
@@ -105,6 +121,23 @@ const {
   installPWA,
   updateServiceWorker,
 } = usePWA()
+
+// Initialize app when mounted
+onMounted(async () => {
+  try {
+    // Import auth store only when needed to avoid Pinia timing issues
+    const { useAuthStore } = await import('./stores/auth')
+    const authStore = useAuthStore()
+    await authStore.initializeAuth()
+
+    // Mark app as ready to render router-view
+    isAppReady.value = true
+  } catch (error) {
+    console.error('App initialization error:', error)
+    // Still mark as ready to prevent infinite loading
+    isAppReady.value = true
+  }
+})
 </script>
 
 <style>

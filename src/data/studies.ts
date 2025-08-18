@@ -1,3 +1,12 @@
+export interface GreekHebrewWord {
+  word: string
+  language: 'Greek' | 'Hebrew' | 'Aramaic'
+  transliteration: string
+  meaning: string
+  context: string
+  references: string[]
+}
+
 export interface Lesson {
   id: string
   title: string
@@ -9,9 +18,18 @@ export interface Lesson {
     scriptureText: string
     commentary: string[]
     interactiveElement: {
-      type: 'quiz' | 'timeline' | 'reflection' | 'drag-drop' | 'tracker'
+      type:
+        | 'quiz'
+        | 'timeline'
+        | 'reflection'
+        | 'drag-drop'
+        | 'tracker'
+        | 'diagram'
+        | 'comparison'
+        | 'checklist'
       content: any
     }
+    hebrewGreekWords?: GreekHebrewWord[]
     lifeApplication: {
       challenge: string
       journaling?: string
@@ -1857,52 +1875,360 @@ export const freeStudies: Study[] = [
 // Premium Bible Studies
 export const premiumStudies: Study[] = [
   {
-    id: 'daniel-revelation',
-    title: 'Prophecies of Daniel & Revelation',
-    description: 'Historicist perspective, prophecy charts, interactive timeline maps.',
+    id: 'heavenly-sanctuary',
+    title: "The Heavenly Sanctuary: Christ's Ministry Above",
+    description:
+      "Explore the biblical foundation of Christ's high priestly ministry in the heavenly sanctuary, understanding the significance of the two-apartment system and its role in salvation history.",
     category: 'premium',
-    totalDuration: 350,
-    difficulty: 'advanced',
-    tags: ['Prophecy', 'Daniel', 'Revelation', 'End Times'],
-    image: 'prophecies',
-    color: 'from-purple-600 to-indigo-600',
+    totalDuration: 180, // 6 lessons × 30 minutes each
+    difficulty: 'intermediate',
+    tags: ['sanctuary', 'prophecy', 'salvation', 'priesthood', 'judgment'],
+    image: 'sanctuary',
+    color: 'from-purple-500 to-indigo-600',
     features: [
-      'Prophecy charts',
-      'Interactive timelines',
-      'Historicist perspective',
-      'Video explainers',
+      'Greek/Hebrew word studies',
+      'Interactive sanctuary diagrams',
+      'Historical archaeology images',
+      'Downloadable PDF workbook',
+      'Audio devotionals',
+      'Certification badge',
     ],
     lessons: [
       {
-        id: 'dr-1',
-        title: 'Introduction to Biblical Prophecy',
-        duration: 25,
-        scripture: 'Daniel 2:20-22',
-        description: 'Understanding Gods method of revealing future events',
+        id: 'earthly-sanctuary-pattern',
+        title: 'The Earthly Sanctuary: A Pattern of Heavenly Things',
+        duration: 30,
+        scripture: 'Hebrews 8:1-5',
+        description:
+          'Understanding how the earthly sanctuary served as a copy and shadow of the heavenly reality.',
         content: {
           scriptureText:
-            'Daniel said: "Praise be to the name of God for ever and ever; wisdom and power are his..."',
+            'Now this is the main point of the things we are saying: We have such a High Priest, who is seated at the right hand of the throne of the Majesty in the heavens, a Minister of the sanctuary and of the true tabernacle which the Lord erected, and not man.',
           commentary: [
-            'God reveals the future to prepare and encourage His people',
-            'Biblical prophecy uses symbolic language that requires careful study',
-            'The historicist method sees prophecy as a continuous timeline',
+            "The earthly sanctuary built by Moses was constructed according to the exact pattern shown to him on Mount Sinai (Exodus 25:40). This wasn't merely an architectural blueprint, but a prophetic revelation of Christ's ministry in heaven.",
+            'The Hebrew word "tabniyth" (pattern) indicates a detailed model or representation. Just as the earthly sanctuary had two apartments - the Holy Place and the Most Holy Place - so the heavenly sanctuary has corresponding areas of ministry.',
+            "The furniture and services of the earthly sanctuary each pointed forward to different aspects of Christ's work: the altar of burnt offering (His sacrifice), the laver (cleansing), the table of showbread (sustenance), the golden candlestick (illumination), and the altar of incense (intercession).",
           ],
           interactiveElement: {
             type: 'timeline',
             content: {
+              title: 'Sanctuary Services Throughout History',
               events: [
-                { period: '605 BC', event: 'Daniel taken to Babylon' },
-                { period: '553 BC', event: 'Vision of four beasts' },
-                { period: '95 AD', event: 'John receives Revelation' },
+                {
+                  date: '1445 BC',
+                  event: 'Moses receives sanctuary pattern on Sinai',
+                  reference: 'Exodus 25:40',
+                },
+                {
+                  date: '1444 BC',
+                  event: 'Earthly sanctuary constructed and dedicated',
+                  reference: 'Exodus 40:17',
+                },
+                {
+                  date: '31 AD',
+                  event: 'Christ crucified - earthly services fulfilled',
+                  reference: 'Matthew 27:51',
+                },
+                {
+                  date: '31 AD',
+                  event: 'Christ begins heavenly high priestly ministry',
+                  reference: 'Hebrews 4:14',
+                },
+                {
+                  date: '1844 AD',
+                  event: 'Investigative judgment begins in Most Holy Place',
+                  reference: 'Daniel 8:14',
+                },
               ],
             },
           },
           lifeApplication: {
             challenge:
-              'Study one prophetic passage this week and look for its historical fulfillment.',
-            journaling: 'Reflect on how studying prophecy strengthens your faith.',
+              'This week, spend time in prayer recognizing Christ as your High Priest who intercedes for you daily.',
+            journaling:
+              'How does knowing Christ ministers for you in heaven change your approach to prayer and worship?',
           },
-          prayerPrompt: 'Thank God for revealing the future to give us hope and guidance.',
+          prayerPrompt:
+            'Thank Jesus for His continuous ministry on your behalf in the heavenly sanctuary.',
+          deeperStudy: {
+            pdf: '/pdfs/sanctuary-study-guide.pdf',
+            additionalReadings: [
+              'Leviticus 16 - The Day of Atonement service',
+              "Hebrews 9-10 - Christ's superior sacrifice and ministry",
+            ],
+            discussionQuestions: [
+              "How does the sanctuary system help us understand God's plan of salvation?",
+              'What comfort do you find in knowing Christ intercedes for you?',
+              'How can we apply the principle of cleansing in our daily spiritual lives?',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'daniel-revelation',
+    title: 'Daniel and Revelation: The Apocalyptic Connection',
+    description:
+      "Unlock the prophetic mysteries connecting Daniel and Revelation, understanding how these books work together to reveal God's plan for the end times.",
+    category: 'premium',
+    totalDuration: 210, // 7 lessons × 30 minutes each
+    difficulty: 'advanced',
+    tags: ['prophecy', 'apocalyptic', 'end-times', 'beasts', 'judgment'],
+    image: 'prophecies',
+    color: 'from-red-500 to-orange-600',
+    features: [
+      'Prophecy timeline charts',
+      'Beast identification diagrams',
+      'Greek/Hebrew word studies',
+      'Historical fulfillment maps',
+      'Audio commentary',
+      'Advanced certification',
+    ],
+    lessons: [
+      {
+        id: 'image-of-daniel-2',
+        title: 'The Great Image: Kingdoms of Earth',
+        duration: 30,
+        scripture: 'Daniel 2:31-45',
+        description:
+          "Explore Nebuchadnezzar's dream and its prophetic outline of world history from Babylon to God's eternal kingdom.",
+        content: {
+          scriptureText:
+            "You, O king, were watching; and behold, a great image! This great image, whose splendor was excellent, stood before you; and its form was awesome. This image's head was of fine gold, its chest and arms of silver, its belly and thighs of bronze, its legs of iron, its feet partly of iron and partly of clay.",
+          commentary: [
+            'Daniel 2 presents the grand outline of world history through the symbolism of a great metallic image. Each metal represents a successive world empire, decreasing in value but increasing in strength and harshness.',
+            'The head of gold represents Babylon (605-539 BC), the greatest empire of its time. The chest and arms of silver symbolize Medo-Persia (539-331 BC), which conquered Babylon but was inferior in splendor.',
+            'The belly and thighs of bronze represent Greece (331-168 BC) under Alexander the Great and his successors. The legs of iron symbolize Rome (168 BC - 476 AD), the strongest and most enduring empire.',
+          ],
+          interactiveElement: {
+            type: 'timeline',
+            content: {
+              title: 'Kingdoms of Daniel 2',
+              description: 'The succession of world empires as prophesied',
+              events: [
+                {
+                  date: '605 BC',
+                  event: 'Babylon (Head of Gold)',
+                  reference: 'Daniel 2:38',
+                  duration: '66 years',
+                },
+                {
+                  date: '539 BC',
+                  event: 'Medo-Persia (Chest/Arms of Silver)',
+                  reference: 'Daniel 2:39a',
+                  duration: '208 years',
+                },
+                {
+                  date: '331 BC',
+                  event: 'Greece (Belly/Thighs of Bronze)',
+                  reference: 'Daniel 2:39b',
+                  duration: '163 years',
+                },
+                {
+                  date: '168 BC',
+                  event: 'Rome (Legs of Iron)',
+                  reference: 'Daniel 2:40',
+                  duration: '644 years',
+                },
+                {
+                  date: '476 AD',
+                  event: 'Divided Europe (Feet of Iron/Clay)',
+                  reference: 'Daniel 2:41-43',
+                  duration: 'ongoing',
+                },
+                {
+                  date: 'Future',
+                  event: "God's Kingdom (Stone)",
+                  reference: 'Daniel 2:44-45',
+                  duration: 'eternal',
+                },
+              ],
+            },
+          },
+          lifeApplication: {
+            challenge:
+              "Consider how temporary earthly powers are compared to God's eternal kingdom.",
+            journaling:
+              "How does understanding prophecy strengthen your faith in God's sovereignty?",
+          },
+          prayerPrompt: 'Praise God for His sovereignty over the nations and His eternal kingdom.',
+          deeperStudy: {
+            pdf: '/pdfs/daniel-2-prophetic-chart.pdf',
+            additionalReadings: [
+              'Revelation 13 - The beast powers in end-time prophecy',
+              'Daniel 7 - The four beasts representing the same kingdoms',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'three-angels-messages',
+    title: "The Three Angels' Messages: Heaven's Final Appeal",
+    description:
+      "Discover the urgent messages of Revelation 14:6-12 that God is calling His people to proclaim before Christ's return.",
+    category: 'premium',
+    totalDuration: 150, // 5 lessons × 30 minutes each
+    difficulty: 'intermediate',
+    tags: ['angels', 'messages', 'judgment', 'Babylon', 'mark-of-beast', 'remnant'],
+    image: 'three-angels',
+    color: 'from-blue-500 to-cyan-600',
+    features: [
+      'Interactive message breakdown',
+      'Modern application studies',
+      'Historical context maps',
+      'Greek word analysis',
+      'Discussion guides',
+      'Ministry training materials',
+    ],
+    lessons: [
+      {
+        id: 'first-angel-judgment',
+        title: 'First Angel: The Hour of Judgment Has Come',
+        duration: 30,
+        scripture: 'Revelation 14:6-7',
+        description:
+          "Understand the first angel's message calling the world to fear God and worship the Creator as judgment begins.",
+        content: {
+          scriptureText:
+            'Then I saw another angel flying in the midst of heaven, having the everlasting gospel to preach to those who dwell on the earth—to every nation, tribe, tongue, and people— saying with a loud voice, "Fear God and give glory to Him, for the hour of His judgment has come; and worship Him who made heaven and earth, the sea and the fountains of water."',
+          commentary: [
+            'The first angel proclaims the "everlasting gospel" - the same good news of salvation that has always existed, but now with special urgency because "the hour of judgment has come."',
+            'This message connects directly to Daniel 8:14 and the cleansing of the sanctuary that began in 1844. The judgment mentioned here is the investigative judgment that determines who will be saved.',
+            'The call to "worship Him who made heaven and earth" is a direct reference to the Fourth Commandment and the Sabbath, highlighting God as Creator in contrast to false systems of worship.',
+          ],
+          interactiveElement: {
+            type: 'comparison',
+            content: {
+              title: 'Creator vs. Created Worship',
+              leftSide: {
+                title: 'Worship the Creator',
+                points: [
+                  'Remember the Sabbath day (Exodus 20:8-11)',
+                  'Worship on the seventh day',
+                  'Acknowledges God as Creator',
+                  'Based on Scripture alone',
+                ],
+              },
+              rightSide: {
+                title: 'Worship of Created Things',
+                points: [
+                  'Sunday worship (man-made tradition)',
+                  'Worship on the first day',
+                  'Elevates human authority',
+                  'Based on church tradition',
+                ],
+              },
+            },
+          },
+          lifeApplication: {
+            challenge:
+              'This week, consciously worship God as Creator by spending time in nature and observing the Sabbath.',
+            journaling: 'How can you better honor God as Creator in your daily life?',
+          },
+          prayerPrompt:
+            'Thank God for creating you and ask Him to help you worship Him in spirit and truth.',
+          deeperStudy: {
+            pdf: '/pdfs/first-angel-message-study.pdf',
+            additionalReadings: [
+              'Genesis 2:1-3 - The institution of the Sabbath',
+              'Exodus 20:8-11 - The Fourth Commandment',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'sabbath-seal-of-god',
+    title: "The Sabbath: God's Seal and Sign",
+    description:
+      "Explore the biblical significance of the Sabbath as God's sign of creative power and covenant relationship with His people.",
+    category: 'premium',
+    totalDuration: 150, // 5 lessons × 30 minutes each
+    difficulty: 'intermediate',
+    tags: ['sabbath', 'commandments', 'seal', 'creation', 'covenant', 'worship'],
+    image: 'sabbath',
+    color: 'from-indigo-500 to-blue-600',
+    features: [
+      'Sabbath through Scripture study',
+      'Historical Sabbath observance',
+      'Practical Sabbath keeping',
+      'Hebrew word studies',
+      'Worship planning guides',
+      'Family Sabbath activities',
+    ],
+    lessons: [
+      {
+        id: 'creation-sabbath',
+        title: "Creation and the Sabbath: God's Memorial",
+        duration: 30,
+        scripture: 'Genesis 2:1-3',
+        description:
+          "Discover how the Sabbath was established at creation as a memorial of God's creative power and a blessing for all humanity.",
+        content: {
+          scriptureText:
+            'Thus the heavens and the earth, and all the host of them, were finished. And on the seventh day God ended His work which He had done, and He rested on the seventh day from all His work which He had done. Then God blessed the seventh day and sanctified it, because in it He rested from all His work which God had created and made.',
+          commentary: [
+            "The Sabbath was instituted before sin entered the world, making it part of God's perfect plan for humanity. It was not given only to Jews but to all people as a blessing.",
+            'God "rested" not because He was tired, but to establish a pattern for humanity. The Hebrew word "shabat" means to cease or stop, providing a rhythm of work and rest.',
+            'The three actions God took - rested, blessed, and sanctified the seventh day - establish the Sabbath as holy time set apart for special communion with the Creator.',
+          ],
+          interactiveElement: {
+            type: 'timeline',
+            content: {
+              title: 'The Sabbath Through History',
+              events: [
+                {
+                  date: 'Creation',
+                  event: 'God rests and sanctifies the seventh day',
+                  reference: 'Genesis 2:2-3',
+                },
+                {
+                  date: 'Exodus',
+                  event: 'Sabbath included in Ten Commandments',
+                  reference: 'Exodus 20:8-11',
+                },
+                {
+                  date: "Jesus' Ministry",
+                  event: 'Jesus observes and teaches about Sabbath',
+                  reference: 'Luke 4:16',
+                },
+                {
+                  date: 'Early Church',
+                  event: 'Apostles continue Sabbath observance',
+                  reference: 'Acts 13:14',
+                },
+                {
+                  date: '321 AD',
+                  event: "Constantine's Sunday law issued",
+                  reference: 'Historical record',
+                },
+                {
+                  date: 'End Times',
+                  event: 'Sabbath becomes test of loyalty',
+                  reference: 'Revelation 14:12',
+                },
+              ],
+            },
+          },
+          lifeApplication: {
+            challenge:
+              'Plan to observe the Sabbath this week from Friday evening to Saturday evening, focusing on rest and worship.',
+            journaling:
+              'How can keeping the Sabbath deepen your relationship with God and provide rest for your soul?',
+          },
+          prayerPrompt:
+            'Thank God for the gift of the Sabbath and ask Him to help you honor this holy time.',
+          deeperStudy: {
+            pdf: '/pdfs/sabbath-through-scripture.pdf',
+            additionalReadings: [
+              'Exodus 20:8-11 - The Fourth Commandment',
+              'Isaiah 58:13-14 - The blessing of proper Sabbath observance',
+            ],
+          },
         },
       },
     ],

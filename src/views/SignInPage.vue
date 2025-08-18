@@ -57,12 +57,21 @@
           </label>
           <input
             id="email"
-            v-model="form.email"
+            v-model="emailField.value.value"
             type="email"
-            required
-            class="w-full px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+            :class="
+              emailField.error.value
+                ? 'border-red-500 dark:border-red-500'
+                : 'border-neutral-300 dark:border-neutral-600'
+            "
             placeholder="Enter your email"
+            @blur="emailField.validate()"
+            @input="emailField.clear()"
           />
+          <p v-if="emailField.error.value" class="text-red-500 text-sm mt-1">
+            {{ emailField.error.value }}
+          </p>
         </div>
 
         <div>
@@ -75,11 +84,17 @@
           <div class="relative">
             <input
               id="password"
-              v-model="form.password"
+              v-model="passwordField.value.value"
               :type="showPassword ? 'text' : 'password'"
-              required
-              class="w-full px-4 py-3 pr-12 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+              class="w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-neutral-800 dark:text-neutral-100 transition-colors duration-200"
+              :class="
+                passwordField.error.value
+                  ? 'border-red-500 dark:border-red-500'
+                  : 'border-neutral-300 dark:border-neutral-600'
+              "
               placeholder="Enter your password"
+              @blur="passwordField.validate()"
+              @input="passwordField.clear()"
             />
             <button
               type="button"
@@ -116,6 +131,9 @@
               </svg>
             </button>
           </div>
+          <p v-if="passwordField.error.value" class="text-red-500 text-sm mt-1">
+            {{ passwordField.error.value }}
+          </p>
         </div>
 
         <div class="flex items-center justify-between">
@@ -145,9 +163,11 @@
 
         <button
           type="submit"
-          :disabled="authStore.isLoading"
+          :disabled="authStore.isLoading || !formValidation.isValid.value"
           class="w-full btn-primary flex items-center justify-center space-x-2"
-          :class="{ 'opacity-50 cursor-not-allowed': authStore.isLoading }"
+          :class="{
+            'opacity-50 cursor-not-allowed': authStore.isLoading || !formValidation.isValid.value,
+          }"
         >
           <svg
             v-if="authStore.isLoading"
@@ -205,25 +225,83 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useErrorStore } from '../stores/errors'
+import {
+  useFormValidation,
+  useFieldValidation,
+  validationRules,
+} from '../composables/useValidation'
 
 const router = useRouter()
-const authStore = useAuthStore()
 
+<<<<<<< HEAD
 const form = reactive({
   email: '',
   password: '',
   remember: false,
+=======
+// Safe store initialization
+const authStoreRef = ref<any>(null)
+const errorStoreRef = ref<any>(null)
+
+// Safe computed for store access
+const authStore = computed(() => {
+  return (
+    authStoreRef.value || {
+      login: () => Promise.resolve({ success: false, error: 'Not ready' }),
+      isLoading: false,
+      error: null,
+    }
+  )
+})
+
+const errorStore = computed(() => {
+  return (
+    errorStoreRef.value || {
+      addError: () => {},
+      clearError: () => {},
+    }
+  )
+})
+
+// Initialize stores when component mounts
+onMounted(() => {
+  try {
+    authStoreRef.value = useAuthStore()
+    errorStoreRef.value = useErrorStore()
+  } catch (error) {
+    console.warn('Failed to initialize stores in SignInPage:', error)
+  }
+})
+
+// Form validation
+const emailField = useFieldValidation('', [
+  validationRules.required('Email is required'),
+  validationRules.email(),
+])
+
+const passwordField = useFieldValidation('', [
+  validationRules.required('Password is required'),
+  validationRules.minLength(3, 'Password must be at least 3 characters'), // Relaxed for demo
+])
+
+const formValidation = useFormValidation({
+  email: emailField.rules,
+  password: passwordField.rules,
+>>>>>>> refs/remotes/origin/main
 })
 
 const showPassword = ref(false)
 const error = ref('')
+const remember = ref(false)
 
 const handleSignIn = async () => {
   error.value = ''
 
+<<<<<<< HEAD
   const result = await authStore.login(form.email, form.password)
 
   if (result.success) {
@@ -231,6 +309,27 @@ const handleSignIn = async () => {
     router.push('/dashboard')
   } else {
     error.value = result.error || 'Login failed. Please try again.'
+=======
+  // Validate form before submitting
+  if (!formValidation.validate()) {
+    return
+  }
+
+  try {
+    const result = await authStore.login(emailField.value.value, passwordField.value.value)
+
+    if (result.success) {
+      // Get redirect path from query params or default to dashboard
+      const redirectPath = (router.currentRoute.value.query.redirect as string) || '/dashboard'
+      router.push(redirectPath)
+    } else {
+      error.value = result.error || 'Login failed. Please try again.'
+      errorStore.addValidationError(error.value)
+    }
+  } catch (err) {
+    error.value = 'An unexpected error occurred. Please try again.'
+    errorStore.handleError(err, 'Sign In')
+>>>>>>> refs/remotes/origin/main
   }
 }
 
@@ -238,13 +337,19 @@ const quickLogin = async (type: 'premium' | 'free') => {
   error.value = ''
 
   if (type === 'premium') {
-    form.email = 'demo@biblestem.com'
-    form.password = 'demo123'
+    emailField.value.value = 'demo@biblestem.com'
+    passwordField.value.value = 'demo123'
   } else {
-    form.email = 'free@biblestem.com'
-    form.password = 'free123'
+    emailField.value.value = 'free@biblestem.com'
+    passwordField.value.value = 'free123'
   }
 
+<<<<<<< HEAD
+=======
+  // Clear any previous validation errors
+  formValidation.clear()
+
+>>>>>>> refs/remotes/origin/main
   await handleSignIn()
 }
 </script>

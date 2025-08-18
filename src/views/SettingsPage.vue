@@ -130,29 +130,29 @@
                     class="w-20 h-20 bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 rounded-2xl flex items-center justify-center shadow-lg"
                   >
                     <span class="text-white text-2xl font-bold">{{
-                      authStore.user?.name?.charAt(0) || 'U'
+                      authStore.value.user?.name?.charAt(0) || 'U'
                     }}</span>
                   </div>
                   <div class="flex-1">
                     <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200 mb-1">
-                      {{ authStore.user?.name || 'Your Name' }}
+                      {{ authStore.value.user?.name || 'Your Name' }}
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 mb-2">
-                      {{ authStore.user?.email }}
+                      {{ authStore.value.user?.email }}
                     </p>
                     <div class="flex items-center space-x-3">
                       <span
                         class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
                         :class="
-                          authStore.isPremium
+                          authStore.value.isPremium
                             ? 'bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 dark:from-amber-900/30 dark:to-orange-900/30 dark:text-amber-200'
                             : 'bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200'
                         "
                       >
-                        {{ authStore.isPremium ? '✨ Premium Member' : 'Free Member' }}
+                        {{ authStore.value.isPremium ? '✨ Premium Member' : 'Free Member' }}
                       </span>
                       <span class="text-sm text-neutral-500 dark:text-neutral-400">
-                        Member since {{ formatDate(authStore.user?.joinDate) }}
+                        Member since {{ formatDate(authStore.value.user?.joinDate) }}
                       </span>
                     </div>
                   </div>
@@ -203,14 +203,14 @@
                     <div
                       class="w-12 h-12 rounded-xl flex items-center justify-center mr-4"
                       :class="
-                        authStore.isPremium
+                        authStore.value.isPremium
                           ? 'bg-gradient-to-br from-amber-400 to-orange-500'
                           : 'bg-gradient-to-br from-neutral-400 to-neutral-500'
                       "
                     >
                       <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path
-                          v-if="authStore.isPremium"
+                          v-if="authStore.value.isPremium"
                           d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
                         />
                         <path
@@ -223,11 +223,11 @@
                     </div>
                     <div>
                       <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-200">
-                        {{ authStore.isPremium ? 'Premium Plan' : 'Free Plan' }}
+                        {{ authStore.value.isPremium ? 'Premium Plan' : 'Free Plan' }}
                       </h3>
                       <p class="text-neutral-600 dark:text-neutral-400">
                         {{
-                          authStore.isPremium
+                          authStore.value.isPremium
                             ? '$9.99/month • Unlimited access'
                             : 'Limited access to free studies'
                         }}
@@ -235,7 +235,7 @@
                     </div>
                   </div>
                   <button
-                    v-if="!authStore.isPremium"
+                    v-if="!authStore.value.isPremium"
                     class="px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-lg hover:shadow-xl font-medium"
                   >
                     ✨ Upgrade Now
@@ -245,6 +245,59 @@
                     class="px-6 py-3 bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 rounded-xl hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-all duration-200 font-medium"
                   >
                     Manage Plan
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Account Actions -->
+            <div
+              class="bg-white/70 dark:bg-neutral-800/70 backdrop-blur-xl rounded-3xl border border-white/20 dark:border-neutral-700/50 shadow-xl shadow-neutral-900/5 dark:shadow-black/20 overflow-hidden"
+            >
+              <div
+                class="bg-gradient-to-r from-primary-500/5 via-secondary-500/5 to-accent-500/5 dark:from-primary-400/10 dark:via-secondary-400/10 dark:to-accent-400/10 px-8 py-6 border-b border-neutral-200/50 dark:border-neutral-700/50"
+              >
+                <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                  Account Actions
+                </h2>
+                <p class="text-neutral-600 dark:text-neutral-400">
+                  Manage your session and account
+                </p>
+              </div>
+              <div class="p-8">
+                <div
+                  class="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-700/50 rounded-xl"
+                >
+                  <div>
+                    <h4 class="font-medium text-neutral-800 dark:text-neutral-200">Sign Out</h4>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                      Sign out of your account on this device
+                    </p>
+                  </div>
+                  <button
+                    @click="handleSignOut"
+                    :disabled="signingOut"
+                    class="px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all duration-200 shadow-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span v-if="signingOut" class="flex items-center">
+                      <svg class="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
+                        <circle
+                          class="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          stroke-width="4"
+                        ></circle>
+                        <path
+                          class="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Signing out...
+                    </span>
+                    <span v-else>Sign Out</span>
                   </button>
                 </div>
               </div>
@@ -797,9 +850,28 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useAuthStore } from '../stores/auth'
+import { useRouter } from 'vue-router'
 
-const authStore = useAuthStore()
+const router = useRouter()
+
+// Initialize authStore safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+  logout: () => Promise.resolve(),
+})
+
+// Initialize the real store when component mounts
+onMounted(async () => {
+  try {
+    const { useAuthStore } = await import('../stores/auth')
+    const realAuthStore = useAuthStore()
+    authStore.value = realAuthStore
+  } catch (error) {
+    console.warn('Failed to initialize auth store in SettingsPage:', error)
+  }
+})
 
 // Active section
 const activeSection = ref('account')
@@ -837,6 +909,7 @@ const settingsSections = [
 const savingNotifications = ref(false)
 const showPasswordForm = ref(false)
 const changingPassword = ref(false)
+const signingOut = ref(false)
 
 // Privacy settings
 const privacySettings = ref({
@@ -914,6 +987,18 @@ const changePassword = async () => {
     alert('Failed to change password')
   } finally {
     changingPassword.value = false
+  }
+}
+
+const handleSignOut = async () => {
+  signingOut.value = true
+  try {
+    await authStore.value.logout()
+    router.push('/sign-in')
+  } catch (error) {
+    console.error('Failed to sign out:', error)
+  } finally {
+    signingOut.value = false
   }
 }
 

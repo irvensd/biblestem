@@ -1,8 +1,14 @@
 <template>
   <div class="w-full h-full flex items-center justify-center">
+    <!-- Premium Study Icons -->
+    <SanctuaryIcon v-if="iconType === 'sanctuary'" class="w-12 h-12 text-white" />
+    <ProphecyIcon v-if="iconType === 'prophecies'" class="w-12 h-12 text-white" />
+    <ThreeAngelsIcon v-if="iconType === 'three-angels'" class="w-12 h-12 text-white" />
+    <SabbathIcon v-if="iconType === 'sabbath'" class="w-12 h-12 text-white" />
+
     <!-- Bible Study Preparation Icon -->
     <svg
-      v-if="iconType === 'bible-study-prep'"
+      v-else-if="iconType === 'bible-study-prep'"
       class="w-12 h-12"
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
@@ -397,6 +403,11 @@
 </template>
 
 <script setup lang="ts">
+import SanctuaryIcon from './SanctuaryIcon.vue'
+import ProphecyIcon from './ProphecyIcon.vue'
+import ThreeAngelsIcon from './ThreeAngelsIcon.vue'
+import SabbathIcon from './SabbathIcon.vue'
+
 interface Props {
   iconType: string
   fallbackLetter?: string

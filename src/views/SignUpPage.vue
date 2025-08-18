@@ -311,10 +311,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
+
+// Test Firebase connection on mount
+onMounted(async () => {
+  console.log('=== FIREBASE CONNECTION TEST ===')
+  try {
+    const { auth } = await import('../lib/firebase')
+    console.log('Firebase auth object:', auth)
+    console.log('Firebase auth currentUser:', auth.currentUser)
+    console.log('Firebase auth app:', auth.app)
+  } catch (error) {
+    console.error('Firebase connection error:', error)
+  }
+})
 
 const form = reactive({
   name: '',
@@ -360,21 +375,19 @@ const handleSignUp = async () => {
   isLoading.value = true
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    const result = await authStore.signUp(form.email, form.password, form.name)
 
-    // Demo response
-    success.value = 'Account created successfully! Redirecting to sign in...'
-
-    // Redirect to sign in after a delay
-    setTimeout(() => {
-      router.push({
-        path: '/signin',
-        query: { email: form.email },
-      })
-    }, 1500)
+    if (result.success) {
+      success.value = 'Account created successfully! Redirecting to dashboard...'
+      setTimeout(() => {
+        router.push('/dashboard')
+      }, 1500)
+    } else {
+      error.value = result.error || 'Failed to create account. Please try again.'
+    }
   } catch (err) {
-    error.value = 'Failed to create account. Please try again.'
+    console.error('Signup error:', err)
+    error.value = err instanceof Error ? err.message : 'Failed to create account. Please try again.'
   } finally {
     isLoading.value = false
   }
