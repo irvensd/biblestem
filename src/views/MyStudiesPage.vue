@@ -600,29 +600,26 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+import { useStudyProgressStore } from '../stores/studyProgress'
 import { getFreeStudies, getPremiumStudies, getStudyById, type Study } from '../data/studies'
 
 const router = useRouter()
 
-// Initialize stores safely
-const authStore = ref({
-  isAuthenticated: false,
-  user: null,
-  isPremium: false,
-})
-const progressStore = ref({
-  getStudyProgress: () => ({}),
-  userProgress: [],
-})
+// Initialize stores
+const authStore = useAuthStore()
+const progressStore = useStudyProgressStore()
 
-// Initialize the real stores when component mounts
+// Initialize stores on mount
 onMounted(async () => {
   try {
-    const { useAuthStore } = await import('../stores/auth')
-    const { useStudyProgressStore } = await import('../stores/studyProgress')
+    // Initialize progress store with demo data
+    progressStore.loadFromStorage()
 
-    authStore.value = useAuthStore()
-    progressStore.value = useStudyProgressStore()
+    // Initialize auth if needed
+    if (!authStore.isInitialized) {
+      await authStore.initializeAuth()
+    }
   } catch (error) {
     console.warn('Failed to initialize stores in MyStudiesPage:', error)
   }
