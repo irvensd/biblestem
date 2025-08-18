@@ -235,7 +235,7 @@
                     </div>
                   </div>
                   <button
-                    v-if="!authStore.isPremium"
+                    v-if="!authStore.value.isPremium"
                     class="px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-lg hover:shadow-xl font-medium"
                   >
                     ✨ Upgrade Now
