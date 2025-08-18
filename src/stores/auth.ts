@@ -197,7 +197,11 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const supabaseSignUp = async (email: string, password: string, name: string) => {
-    console.log('Attempting Supabase signup for:', email)
+    console.log('=== SUPABASE SIGNUP ===')
+    console.log('Email:', email)
+    console.log('Password length:', password.length)
+    console.log('Name:', name)
+    console.log('Supabase client:', supabase)
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -208,6 +212,12 @@ export const useAuthStore = defineStore('auth', () => {
         }
       }
     })
+
+    console.log('=== SUPABASE RESPONSE ===')
+    console.log('Error:', error)
+    console.log('Data:', data)
+    console.log('User:', data?.user)
+    console.log('Session:', data?.session)
 
     if (error) {
       console.error('Supabase signup error:', error)
