@@ -173,61 +173,56 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     localStorage.setItem('biblestem_study_progress', JSON.stringify(progressData.value))
   }
 
-  const syncWithSupabase = async () => {
+  const syncWithFirebase = async () => {
     const authStore = useAuthStore()
-    if (!authStore.isAuthenticated || authStore.config.useMockAuth) return
+    if (!authStore.isAuthenticated) return
 
     try {
-      // Fetch user's study progress from Supabase
-      const { data, error } = await supabase
-        .from('study_progress')
-        .select('*')
-        .eq('user_id', authStore.user!.id)
+      // Fetch user's study progress from Firebase
+      const progressRef = collection(db, 'userProgress')
+      const q = query(progressRef, where('userId', '==', authStore.user!.id))
+      const querySnapshot = await getDocs(q)
 
-      if (error) throw error
-
-      // Transform Supabase data to local format
-      const supabaseProgress: Record<string, StudyProgress> = {}
-      data?.forEach(item => {
-        supabaseProgress[item.study_id] = {
-          studyId: item.study_id,
-          completedLessons: item.completed_lessons || [],
-          currentLesson: item.current_lesson,
-          startedAt: item.started_at,
-          lastAccessedAt: item.last_accessed_at,
-          totalTimeSpent: item.total_time_spent
+      // Transform Firebase data to local format
+      const firebaseProgress: Record<string, StudyProgress> = {}
+      querySnapshot.forEach(doc => {
+        const data = doc.data()
+        firebaseProgress[data.studyId] = {
+          studyId: data.studyId,
+          completedLessons: data.completedLessons || [],
+          currentLesson: data.currentLesson,
+          startedAt: data.startedAt,
+          lastAccessedAt: data.lastAccessedAt,
+          totalTimeSpent: data.totalTimeSpent
         }
       })
 
-      progressData.value = supabaseProgress
+      progressData.value = firebaseProgress
     } catch (error) {
       console.error('Error syncing study progress:', error)
     }
   }
 
-  const saveProgressToSupabase = async (studyId: string) => {
+  const saveProgressToFirebase = async (studyId: string) => {
     const authStore = useAuthStore()
-    if (!authStore.isAuthenticated || authStore.config.useMockAuth) return
+    if (!authStore.isAuthenticated) return
 
     const progress = progressData.value[studyId]
     if (!progress) return
 
     try {
-      const { error } = await supabase
-        .from('study_progress')
-        .upsert({
-          user_id: authStore.user!.id,
-          study_id: studyId,
-          completed_lessons: progress.completedLessons,
-          current_lesson: progress.currentLesson,
-          started_at: progress.startedAt,
-          last_accessed_at: progress.lastAccessedAt,
-          total_time_spent: progress.totalTimeSpent
-        })
-
-      if (error) throw error
+      const progressDocRef = doc(db, 'userProgress', `${authStore.user!.id}_${studyId}`)
+      await setDoc(progressDocRef, {
+        userId: authStore.user!.id,
+        studyId: studyId,
+        completedLessons: progress.completedLessons,
+        currentLesson: progress.currentLesson,
+        startedAt: progress.startedAt,
+        lastAccessedAt: progress.lastAccessedAt,
+        totalTimeSpent: progress.totalTimeSpent
+      })
     } catch (error) {
-      console.error('Error saving progress to Supabase:', error)
+      console.error('Error saving progress to Firebase:', error)
     }
   }
 
