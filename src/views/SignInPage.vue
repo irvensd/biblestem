@@ -237,18 +237,7 @@ import {
 
 const router = useRouter()
 
-// Safe store initialization with error handling
-let authStore: any
-try {
-  authStore = useAuthStore()
-} catch (error) {
-  console.error('Failed to initialize auth store:', error)
-  authStore = {
-    login: () => Promise.resolve({ success: false, error: 'Store not available' }),
-    isLoading: false,
-    error: null,
-  }
-}
+const authStore = useAuthStore()
 
 const form = reactive({
   email: '',
