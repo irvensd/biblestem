@@ -318,6 +318,19 @@ import { useAuthStore } from '../stores/auth'
 const router = useRouter()
 const authStore = useAuthStore()
 
+// Test Firebase connection on mount
+onMounted(async () => {
+  console.log('=== FIREBASE CONNECTION TEST ===')
+  try {
+    const { auth } = await import('../lib/firebase')
+    console.log('Firebase auth object:', auth)
+    console.log('Firebase auth currentUser:', auth.currentUser)
+    console.log('Firebase auth app:', auth.app)
+  } catch (error) {
+    console.error('Firebase connection error:', error)
+  }
+})
+
 const form = reactive({
   name: '',
   email: '',
