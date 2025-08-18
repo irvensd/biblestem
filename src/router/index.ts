@@ -14,6 +14,7 @@ import ProfilePage from '../views/ProfilePage.vue'
 import SettingsPage from '../views/SettingsPage.vue'
 import PlaceholderPage from '../views/PlaceholderPage.vue'
 import AboutPage from '../views/AboutPage.vue'
+import ContactPage from '../views/ContactPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -85,7 +86,7 @@ const router = createRouter({
     {
       path: '/contact',
       name: 'contact',
-      component: PlaceholderPage,
+      component: ContactPage,
     },
     {
       path: '/pricing',
