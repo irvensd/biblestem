@@ -724,13 +724,13 @@ const filteredStudies = computed(() => {
 
 // Computed stats
 const completedStudies = computed(() =>
-  studiesWithProgress.value.filter((s) => s.progress.completionPercent === 100),
+  studiesWithProgress.value?.filter((s) => s && s.progress.completionPercent === 100) || [],
 )
 
 const inProgressStudies = computed(() =>
-  studiesWithProgress.value.filter(
-    (s) => s.progress.completionPercent > 0 && s.progress.completionPercent < 100,
-  ),
+  studiesWithProgress.value?.filter(
+    (s) => s && s.progress.completionPercent > 0 && s.progress.completionPercent < 100,
+  ) || [],
 )
 
 const totalLessonsCompleted = computed(() =>
