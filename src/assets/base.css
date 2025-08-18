@@ -249,6 +249,124 @@
   animation: slide-up 0.5s ease-out forwards;
 }
 
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Enhanced touch targets for mobile */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Minimum touch target size (44px recommended by Apple/Google) */
+  .btn,
+  button,
+  .interactive,
+  [role="button"],
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Enhanced button padding for mobile */
+  .btn-primary,
+  .btn-secondary,
+  .btn-accent {
+    @apply py-3 px-6 text-base;
+    min-height: 48px;
+  }
+
+  /* Mobile-optimized card spacing */
+  .card {
+    @apply mx-4 rounded-2xl;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Mobile-optimized input fields */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  textarea,
+  select {
+    @apply py-4 px-4 text-base rounded-xl;
+    min-height: 48px;
+  }
+
+  /* Mobile-friendly focus states */
+  .focus-ring:focus {
+    @apply ring-4 ring-primary-500/30 ring-offset-2;
+  }
+
+  /* Improved scroll behavior on mobile */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Mobile typography optimizations */
+  .heading-1 { @apply text-2xl leading-tight; }
+  .heading-2 { @apply text-xl leading-tight; }
+  .heading-3 { @apply text-lg leading-tight; }
+  .heading-4 { @apply text-base leading-tight; }
+
+  /* Mobile navigation spacing */
+  .container-base {
+    @apply px-4;
+  }
+
+  /* Mobile modal adjustments */
+  .modal-mobile {
+    @apply m-2 max-h-[90vh] rounded-2xl;
+  }
+
+  /* Mobile-optimized animations */
+  .animate-in {
+    animation: mobile-slide-up 0.3s ease-out;
+  }
+
+  /* Safe area support for mobile devices */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Mobile animation keyframes */
+@keyframes mobile-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Improved active states for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .interactive:active,
+  .card.interactive:active,
+  button:active,
+  .btn:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* Remove hover effects on touch devices */
+  .hover\\:scale-105:hover {
+    transform: none;
+  }
+
+  .hover\\:shadow-md:hover {
+    box-shadow: inherit;
+  }
+}
+
 .stagger-animation > *:nth-child(1) {
   animation-delay: 0.1s;
 }
