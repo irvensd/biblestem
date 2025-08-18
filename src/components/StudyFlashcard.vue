@@ -21,9 +21,8 @@
 
     <!-- Flashcard -->
     <div class="relative">
-      <div 
+      <div
         class="card p-8 cursor-pointer transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col justify-center"
-        :class="{ 'rotate-y-180': isFlipped }"
         @click="flipCard"
       >
         <!-- Front Side (Reference) -->
