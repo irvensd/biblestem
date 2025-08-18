@@ -116,9 +116,9 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     progress.totalTimeSpent += timeSpent
 
     saveToStorage()
-    // Fire and forget Supabase sync - don't block UI
-    saveProgressToSupabase(studyId).catch(error =>
-      console.error('Failed to sync progress to Supabase:', error)
+    // Fire and forget Firebase sync - don't block UI
+    saveProgressToFirebase(studyId).catch(error =>
+      console.error('Failed to sync progress to Firebase:', error)
     )
   }
 
@@ -140,9 +140,9 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     }
 
     saveToStorage()
-    // Fire and forget Supabase sync - don't block UI
-    saveProgressToSupabase(studyId).catch(error =>
-      console.error('Failed to sync progress to Supabase:', error)
+    // Fire and forget Firebase sync - don't block UI
+    saveProgressToFirebase(studyId).catch(error =>
+      console.error('Failed to sync progress to Firebase:', error)
     )
   }
 
@@ -299,7 +299,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     resetStudyProgress,
     loadFromStorage,
     initializeDemoData,
-    syncWithSupabase,
-    saveProgressToSupabase
+    syncWithFirebase,
+    saveProgressToFirebase
   }
 })
