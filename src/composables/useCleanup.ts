@@ -223,7 +223,7 @@ export function useSafeState() {
   })
 
   // Safe state setter that only updates if component is still mounted
-  const safeSet = <T>(refToUpdate: typeof ref<T>, newValue: T) => {
+  const safeSet = <T>(refToUpdate: { value: T }, newValue: T) => {
     if (isMounted.value) {
       refToUpdate.value = newValue
     }

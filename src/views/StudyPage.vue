@@ -332,7 +332,7 @@
 
     <!-- Lesson Modal -->
     <LessonModal
-      v-if="currentLesson"
+      v-if="currentLesson && study"
       :lesson="currentLesson"
       :study="study"
       :lesson-index="currentLessonIndex"
@@ -355,44 +355,19 @@ import { getStudyById, type Study, type Lesson } from '../data/studies'
 import LessonModal from '../components/LessonModal.vue'
 import StudyCompletion from '../components/StudyCompletion.vue'
 import StudyShare from '../components/StudyShare.vue'
+import { useAuthStore } from '../stores/auth'
+import { useStudyProgressStore } from '../stores/studyProgress'
+import { useLoadingStore } from '../stores/loading'
+import { useErrorStore } from '../stores/errors'
 
 const route = useRoute()
 const router = useRouter()
 
-// Initialize stores safely
-const authStore = ref({
-  isAuthenticated: false,
-  user: null,
-  isPremium: false,
-})
-const progressStore = ref({
-  getStudyProgress: () => ({}),
-  updateProgress: () => Promise.resolve(),
-})
-const loadingStore = ref({
-  setLoading: () => {},
-  clearLoading: () => {},
-})
-const errorStore = ref({
-  addError: () => {},
-})
-
-// Initialize the real stores when component mounts
-onMounted(async () => {
-  try {
-    const { useAuthStore } = await import('../stores/auth')
-    const { useStudyProgressStore } = await import('../stores/studyProgress')
-    const { useLoadingStore } = await import('../stores/loading')
-    const { useErrorStore } = await import('../stores/errors')
-
-    authStore.value = useAuthStore()
-    progressStore.value = useStudyProgressStore()
-    loadingStore.value = useLoadingStore()
-    errorStore.value = useErrorStore()
-  } catch (error) {
-    console.warn('Failed to initialize stores in StudyPage:', error)
-  }
-})
+// Initialize stores
+const authStore = useAuthStore()
+const progressStore = useStudyProgressStore()
+const loadingStore = useLoadingStore()
+const errorStore = useErrorStore()
 
 // Cleanup composables
 const cleanup = useCleanup()
@@ -405,8 +380,8 @@ const currentLessonIndex = ref<number>(0)
 const error = ref<string>('')
 
 // Loading states
-const isLoading = computed(() => loadingStore.isLoadingKey('study-page').value)
-const isNavigating = computed(() => loadingStore.isLoadingKey('lesson-navigation').value)
+const isLoading = loadingStore.isLoadingKey('study-page')
+const isNavigating = loadingStore.isLoadingKey('lesson-navigation')
 
 const studyProgress = computed(() =>
   study.value ? progressStore.getStudyProgress(study.value.id) : null,
@@ -499,7 +474,8 @@ const openLesson = async (lesson: Lesson, index: number) => {
 
     // Track lesson start
     if (study.value) {
-      progressStore.startLesson(study.value.id, lesson.id)
+      // Use startStudy with current lesson to update lastAccessed/currentLesson
+      progressStore.startStudy(study.value.id, lesson.id)
     }
 
     currentLesson.value = lesson
@@ -517,15 +493,6 @@ const openLesson = async (lesson: Lesson, index: number) => {
 
 const closeLesson = () => {
   try {
-    // Save any progress before closing
-    if (study.value && currentLesson.value && isMounted.value) {
-      const sessionDuration = Math.max(1, Math.floor(Math.random() * 5) + 1) // Mock session time
-      progressStore.updateLessonProgress(study.value.id, currentLesson.value.id, {
-        timeSpent: sessionDuration,
-        lastAccessed: new Date().toISOString(),
-      })
-    }
-
     safeSet(currentLesson, null)
     safeSet(currentLessonIndex, 0)
   } catch (err) {
@@ -700,9 +667,6 @@ const loadStudy = async (studyId: string) => {
     if (foundStudy && isMounted.value) {
       safeSet(study, foundStudy)
       progressStore.startStudy(studyId)
-
-      // Track study access
-      progressStore.updateStudyAccess(studyId)
     } else if (isMounted.value) {
       safeSet(error, `Study "${studyId}" not found`)
       errorStore.addError('Study not found', { type: 'warning' })
