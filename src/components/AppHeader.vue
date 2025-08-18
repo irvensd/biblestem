@@ -223,8 +223,12 @@
           @click="toggleMobileMenu"
           class="lg:hidden p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
           :class="{ 'bg-neutral-100 dark:bg-neutral-800': mobileMenuOpen }"
+          :aria-expanded="mobileMenuOpen"
+          :aria-haspopup="true"
+          aria-label="Toggle mobile menu"
+          aria-controls="mobile-menu"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path
               v-if="!mobileMenuOpen"
               stroke-linecap="round"
