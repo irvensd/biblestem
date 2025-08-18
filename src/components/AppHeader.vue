@@ -32,13 +32,15 @@
         </router-link>
 
         <!-- Desktop Navigation -->
-        <div class="hidden lg:flex items-center space-x-6 xl:space-x-8 lg:ml-12 xl:ml-16">
+        <div class="hidden lg:flex items-center space-x-6 xl:space-x-8 lg:ml-12 xl:ml-16" role="menubar">
           <!-- Authenticated User Navigation -->
           <template v-if="authStore.isAuthenticated">
             <router-link
               to="/dashboard"
               class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/dashboard' }"
+              role="menuitem"
+              :aria-current="$route.path === '/dashboard' ? 'page' : undefined"
             >
               Dashboard
             </router-link>
