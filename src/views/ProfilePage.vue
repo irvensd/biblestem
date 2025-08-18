@@ -658,9 +658,25 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useAuthStore } from '../stores/auth'
 
-const authStore = useAuthStore()
+// Initialize authStore safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+  updateProfile: () => Promise.resolve(),
+})
+
+// Initialize the real store when component mounts
+onMounted(async () => {
+  try {
+    const { useAuthStore } = await import('../stores/auth')
+    const realAuthStore = useAuthStore()
+    authStore.value = realAuthStore
+  } catch (error) {
+    console.warn('Failed to initialize auth store in ProfilePage:', error)
+  }
+})
 
 // Form states
 const editingProfile = ref(false)
