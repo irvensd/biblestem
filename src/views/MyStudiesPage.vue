@@ -644,17 +644,17 @@ const allStudies = computed(() => [...getFreeStudies(), ...getPremiumStudies()])
 
 // Get studies with progress information
 const studiesWithProgress = computed(() => {
-  const allProgress = progressStore.getAllStudyProgress()
+  const allProgress = progressStore.getAllStudyProgress?.() || {}
 
   return allStudies.value
     .map((study) => {
       const progress = allProgress[study.id]
       if (!progress) return null
 
-      const completionPercent = progressStore.getStudyCompletionPercentage(
+      const completionPercent = progressStore.getStudyCompletionPercentage?.(
         study.id,
         study.lessons.length,
-      )
+      ) || 0
 
       return {
         ...study,
