@@ -113,8 +113,10 @@ const safeErrors = computed(() => errorStore.value?.errors || [])
 const safeIsLoading = computed(() => loadingStore.value?.isLoading?.value || false)
 
 // Initialize stores when component mounts
-onMounted(() => {
+onMounted(async () => {
   try {
+    const { useErrorStore } = await import('../stores/errors')
+    const { useLoadingStore } = await import('../stores/loading')
     errorStore.value = useErrorStore()
     loadingStore.value = useLoadingStore()
   } catch (error) {
