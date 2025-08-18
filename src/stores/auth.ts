@@ -208,24 +208,36 @@ export const useAuthStore = defineStore('auth', () => {
     console.log('Supabase signup response:', data)
 
     if (data.user) {
-      try {
-        user.value = await transformSupabaseUser(data.user)
-        console.log('User successfully transformed and set:', user.value)
-        return { success: true }
-      } catch (transformError) {
-        console.error('Error transforming user:', transformError)
-        // Fallback: create basic user object
-        user.value = {
-          id: data.user.id,
-          name: name,
-          email: email,
-          plan: 'free',
-          studiesCompleted: 0,
-          joinDate: new Date().toISOString(),
-          createdAt: data.user.created_at,
-          emailVerified: data.user.email_confirmed_at ? true : false
+      // Check if email confirmation is required
+      if (data.user.email_confirmed_at) {
+        // User is immediately confirmed and signed in
+        try {
+          user.value = await transformSupabaseUser(data.user)
+          console.log('User successfully confirmed and signed in:', user.value)
+          return { success: true, emailConfirmed: true }
+        } catch (transformError) {
+          console.error('Error transforming user:', transformError)
+          // Fallback: create basic user object
+          user.value = {
+            id: data.user.id,
+            name: name,
+            email: email,
+            plan: 'free',
+            studiesCompleted: 0,
+            joinDate: new Date().toISOString(),
+            createdAt: data.user.created_at,
+            emailVerified: true
+          }
+          return { success: true, emailConfirmed: true }
         }
-        return { success: true }
+      } else {
+        // Email confirmation required
+        console.log('Email confirmation required for:', email)
+        return {
+          success: true,
+          emailConfirmed: false,
+          message: 'Please check your email and click the confirmation link to complete signup.'
+        }
       }
     }
 
