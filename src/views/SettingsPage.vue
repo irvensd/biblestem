@@ -135,10 +135,10 @@
                   </div>
                   <div class="flex-1">
                     <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200 mb-1">
-                      {{ authStore.value.user?.name || 'Your Name' }}
+                      {{ authStore.user?.name || 'Your Name' }}
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 mb-2">
-                      {{ authStore.value.user?.email }}
+                      {{ authStore.user?.email }}
                     </p>
                     <div class="flex items-center space-x-3">
                       <span
