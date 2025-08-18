@@ -298,12 +298,9 @@ const quickLogin = async (type: 'premium' | 'free') => {
     passwordField.value.value = 'free123'
   }
 
-<<<<<<< HEAD
-=======
   // Clear any previous validation errors
   formValidation.clear()
 
->>>>>>> refs/remotes/origin/main
   await handleSignIn()
 }
 </script>
