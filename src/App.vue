@@ -7,7 +7,15 @@
       <AppHeader />
       <main class="pb-16 sm:pb-0">
         <ErrorBoundary>
-          <router-view v-if="isAppReady" />
+          <router-view v-if="isAppReady" v-slot="{ Component, route }">
+            <transition
+              :name="getTransitionName(route)"
+              mode="out-in"
+              appear
+            >
+              <component :is="Component" :key="route.path" />
+            </transition>
+          </router-view>
           <div v-else class="flex items-center justify-center min-h-[400px]">
             <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
           </div>
