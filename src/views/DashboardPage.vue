@@ -46,9 +46,7 @@
         <div class="xl:col-span-2 space-y-6 sm:space-y-8">
           <!-- Progress Overview -->
           <section class="card p-4 sm:p-6">
-            <h2
-              class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 sm:mb-6"
-            >
+            <h2 class="heading-4 mb-4 sm:mb-6">
               Your Progress
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
