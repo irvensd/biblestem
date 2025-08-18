@@ -10,7 +10,7 @@
         v-if="authStore.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          routePath === '/dashboard'
+          route.path === '/dashboard'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -32,7 +32,7 @@
         v-if="!authStore.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          routePath === '/'
+          route.path === '/'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -53,7 +53,7 @@
         to="/study-series"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          routePath === '/study-series'
+          route.path === '/study-series'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -72,7 +72,7 @@
         v-if="authStore.isAuthenticated"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          routePath === '/my-studies'
+          route.path === '/my-studies'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -93,7 +93,7 @@
         to="/daily-devotions"
         class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
         :class="
-          routePath === '/daily-devotions'
+          route.path === '/daily-devotions'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
         "
@@ -385,7 +385,7 @@ const showProfile = ref(false)
 const showMobileNav = computed(() => {
   // Don't show on certain full-screen routes
   const hideOnRoutes = ['/signin', '/signup']
-  return !hideOnRoutes.includes(routePath.value)
+  return !hideOnRoutes.includes(route.path.value)
 })
 
 const toggleSearch = () => {
