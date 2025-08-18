@@ -258,7 +258,6 @@ const passwordField = useFieldValidation('', [
 const formValidation = useFormValidation({
   email: emailField.rules,
   password: passwordField.rules,
->>>>>>> refs/remotes/origin/main
 })
 
 const showPassword = ref(false)
