@@ -379,15 +379,22 @@ const handleSignUp = async () => {
   try {
     console.log('Attempting signup with:', { email: form.email, name: form.name })
 
-    const result = await authStore.signUp(form.email, form.password, form.name)
+    const result = await authStore.value.signUp(form.email, form.password, form.name)
 
     if (result.success) {
-      success.value = 'Account created successfully! Redirecting to dashboard...'
-
-      // Redirect to dashboard after successful signup
-      setTimeout(() => {
-        router.push('/dashboard')
-      }, 1500)
+      if (result.emailConfirmed) {
+        // User is immediately signed in
+        success.value = 'Account created successfully! Redirecting to dashboard...'
+        setTimeout(() => {
+          router.push('/dashboard')
+        }, 1500)
+      } else {
+        // Email confirmation required
+        success.value = result.message || 'Please check your email and click the confirmation link to complete signup.'
+        setTimeout(() => {
+          router.push('/signin')
+        }, 3000)
+      }
     } else {
       error.value = result.error || 'Failed to create account. Please try again.'
     }
