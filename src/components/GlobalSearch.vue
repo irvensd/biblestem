@@ -502,9 +502,18 @@ const loadRecentSearches = () => {
 }
 
 // Event handlers
+const handleFocus = () => {
+  showResults.value = true
+  // On mobile, consider showing full screen search
+  if (isMobile.value && searchQuery.value.trim()) {
+    showFullResults.value = true
+  }
+}
+
 const clearSearch = () => {
   searchQuery.value = ''
   showResults.value = false
+  showFullResults.value = false
 }
 
 const closeSearch = () => {
@@ -515,7 +524,9 @@ const closeSearch = () => {
 const handleBlur = () => {
   // Delay hiding to allow for clicks on results
   setTimeout(() => {
-    showResults.value = false
+    if (!showFullResults.value) {
+      showResults.value = false
+    }
   }, 200)
 }
 
