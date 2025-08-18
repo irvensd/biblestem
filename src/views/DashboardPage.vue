@@ -160,7 +160,7 @@
               </div>
 
               <!-- Recommended Studies -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div v-if="recommendedStudies.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div
                   v-for="study in recommendedStudies"
                   :key="study.id"
