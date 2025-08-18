@@ -305,10 +305,5 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     resetStudyProgress,
     loadFromStorage,
     initializeDemoData,
-<<<<<<< HEAD
-=======
-    syncWithFirebase,
-    saveProgressToFirebase,
->>>>>>> refs/remotes/origin/main
   }
 })
