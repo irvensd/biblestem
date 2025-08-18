@@ -385,7 +385,7 @@ const showProfile = ref(false)
 const showMobileNav = computed(() => {
   // Don't show on certain full-screen routes
   const hideOnRoutes = ['/signin', '/signup']
-  return !hideOnRoutes.includes(route.path.value)
+  return !hideOnRoutes.includes(route.path)
 })
 
 const toggleSearch = () => {
