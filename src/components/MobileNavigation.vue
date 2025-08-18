@@ -359,58 +359,20 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 import GlobalSearch from './GlobalSearch.vue'
 
-// Safe route path - starts empty, gets updated when router is ready
-const routePath = ref('')
+const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 
-// Initialize route safely when component is ready
-onMounted(() => {
-  try {
-    const route = useRoute()
-    routePath.value = route.path || ''
-
-    // Watch for route changes
-    watch(
-      () => route.path,
-      (newPath) => {
-        routePath.value = newPath || ''
-      },
-      { immediate: true },
-    )
-  } catch (error) {
-    console.warn('Failed to initialize route in MobileNavigation:', error)
-    // Keep routePath as empty string if router fails
-  }
-})
-
-// Initialize authStore safely with guaranteed defaults
-const authStore = ref({
-  isAuthenticated: false,
-  user: null,
-  isPremium: false,
-  logout: () => Promise.resolve(),
-})
-
-// Safe auth store access with fallback
-const safeAuthStore = computed(() => {
-  return (
-    authStore.value || {
-      isAuthenticated: false,
-      user: null,
-      isPremium: false,
-      logout: () => Promise.resolve(),
-    }
-  )
-})
-
-// Initialize the real store when component mounts
+// Initialize auth store
 onMounted(async () => {
   try {
-    const { useAuthStore } = await import('@/stores/auth')
-    const realAuthStore = useAuthStore()
-    authStore.value = realAuthStore
+    if (!authStore.isInitialized) {
+      await authStore.initializeAuth()
+    }
   } catch (error) {
     console.warn('Failed to initialize auth store in MobileNavigation:', error)
   }
