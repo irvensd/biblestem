@@ -140,8 +140,9 @@
               :class="getDifficultyClass(selectedTemplate.difficulty)"
             >
               {{
-                selectedTemplate.difficulty.charAt(0).toUpperCase() +
-                selectedTemplate.difficulty.slice(1)
+                selectedTemplate.difficulty ?
+                selectedTemplate.difficulty.charAt(0).toUpperCase() + selectedTemplate.difficulty.slice(1) :
+                'Unknown'
               }}
             </span>
           </div>
