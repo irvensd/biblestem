@@ -7,10 +7,10 @@
       <div class="container-base py-6 sm:py-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+            <h1 class="heading-2">
               Welcome back, {{ authStore.user?.name }}!
             </h1>
-            <p class="text-neutral-600 dark:text-neutral-400 mt-1 sm:mt-2 text-sm sm:text-base">
+            <p class="body-normal mt-1 sm:mt-2">
               Continue your Bible study journey where you left off
             </p>
           </div>
