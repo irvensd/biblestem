@@ -38,48 +38,48 @@
     </section>
 
     <!-- Dashboard Content -->
-    <div class="container-base section-spacing">
-      <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
+    <div class="container-base py-4 sm:py-6 lg:py-8 pb-20 lg:pb-8">
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         <!-- Main Content -->
-        <div class="xl:col-span-2 content-spacing">
+        <div class="xl:col-span-2 space-y-4 sm:space-y-6">
           <!-- Progress Overview -->
-          <section class="card p-4 sm:p-6">
-            <h2 class="heading-4 mb-4 sm:mb-6">Your Progress</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <section class="card p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
+            <h2 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 sm:mb-6">Your Progress</h2>
+            <div class="grid grid-cols-3 gap-3 sm:gap-6">
               <div class="text-center">
                 <div
-                  class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                  class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg touch-manipulation"
                 >
-                  <span class="text-xl sm:text-2xl font-bold text-white">{{
+                  <span class="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{{
                     authStore.user?.studiesCompleted || 0
                   }}</span>
                 </div>
-                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
-                  Studies Completed
+                <div class="text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 leading-tight">
+                  Studies<br class="sm:hidden" /> Completed
                 </div>
               </div>
               <div class="text-center">
                 <div
-                  class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                  class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg touch-manipulation"
                 >
-                  <span class="text-xl sm:text-2xl font-bold text-white">{{
+                  <span class="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{{
                     calculateStreak()
                   }}</span>
                 </div>
-                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
-                  Day Streak
+                <div class="text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 leading-tight">
+                  Day<br class="sm:hidden" /> Streak
                 </div>
               </div>
               <div class="text-center">
                 <div
-                  class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                  class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg touch-manipulation"
                 >
-                  <span class="text-xl sm:text-2xl font-bold text-white">{{
+                  <span class="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{{
                     achievementsStore.totalBadgesEarned
                   }}</span>
                 </div>
-                <div class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
-                  Badges Earned
+                <div class="text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 leading-tight">
+                  Badges<br class="sm:hidden" /> Earned
                 </div>
               </div>
             </div>
