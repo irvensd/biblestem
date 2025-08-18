@@ -255,10 +255,22 @@ const passwordField = useFieldValidation('', [
   validationRules.minLength(3, 'Password must be at least 3 characters'), // Relaxed for demo
 ])
 
-const formValidation = useFormValidation({
-  email: emailField.rules,
-  password: passwordField.rules,
-})
+// Create a custom validation function that checks our actual fields
+const validateForm = (): boolean => {
+  console.log('🧪 Validating individual fields...')
+
+  // First sync the field values with form values
+  emailField.value.value = form.email
+  passwordField.value.value = form.password
+
+  const emailValid = emailField.validate()
+  const passwordValid = passwordField.validate()
+
+  console.log('📧 Email validation:', { value: form.email, valid: emailValid, error: emailField.error.value })
+  console.log('🔑 Password validation:', { value: form.password, valid: passwordValid, error: passwordField.error.value })
+
+  return emailValid && passwordValid
+}
 
 const showPassword = ref(false)
 const error = ref('')
