@@ -360,7 +360,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
 import GlobalSearch from './GlobalSearch.vue'
 
 // Safe route path - starts empty, gets updated when router is ready
