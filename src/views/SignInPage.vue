@@ -250,27 +250,11 @@ try {
   }
 }
 
-// Debug: Check if reactive is available
-console.log('reactive function:', typeof reactive, reactive)
-
-// Try to initialize form with explicit reactive import
-let form: any
-try {
-  form = reactive({
-    email: '',
-    password: '',
-    remember: false,
-  })
-  console.log('Form created successfully:', form)
-} catch (error) {
-  console.error('Failed to create reactive form:', error)
-  // Fallback to ref-based form
-  form = {
-    email: ref(''),
-    password: ref(''),
-    remember: ref(false),
-  }
-}
+const form = reactive({
+  email: '',
+  password: '',
+  remember: false,
+})
 
 // Form validation
 const emailField = useFieldValidation('', [
