@@ -329,7 +329,8 @@ const quickLogin = async (type: 'premium' | 'free') => {
   console.log('📝 Form values set:', { email: form.email, password: form.password })
 
   // Clear any previous validation errors
-  formValidation.clear()
+  emailField.clear()
+  passwordField.clear()
 
   console.log('🔄 Calling handleSignIn...')
   await handleSignIn()
