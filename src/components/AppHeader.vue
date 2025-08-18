@@ -312,7 +312,7 @@
           </div>
 
           <!-- Account Actions -->
-          <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4">
+          <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4 pb-6">
             <div class="flex flex-col space-y-3">
               <router-link
                 to="/profile"
