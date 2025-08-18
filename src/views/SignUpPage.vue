@@ -325,11 +325,13 @@ const authStore = ref({
 // Initialize the real store when component mounts
 onMounted(async () => {
   try {
+    console.log('=== SIGNUP PAGE: Loading real auth store ===')
     const { useAuthStore } = await import('../stores/auth')
     const realAuthStore = useAuthStore()
     authStore.value = realAuthStore
+    console.log('=== SIGNUP PAGE: Real auth store loaded ===', realAuthStore)
   } catch (error) {
-    console.warn('Failed to initialize auth store in SignUpPage:', error)
+    console.error('Failed to initialize auth store in SignUpPage:', error)
   }
 })
 
