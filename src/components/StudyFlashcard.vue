@@ -264,7 +264,5 @@ watch(() => props.card, () => {
 </script>
 
 <style scoped>
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
+/* Card flip styles removed - using simple content toggle instead */
 </style>
