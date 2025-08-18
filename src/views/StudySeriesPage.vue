@@ -408,8 +408,7 @@ const upgradeToPremium = () => {
 }
 
 onMounted(() => {
-  // Initialize auth state
-  authStore.initializeAuth()
+  // Auth store already initialized above
 })
 </script>
 
