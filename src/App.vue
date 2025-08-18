@@ -3,6 +3,11 @@
     id="app"
     class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
   >
+    <!-- Skip Navigation for Screen Readers -->
+    <a href="#main-content" class="skip-link">
+      Skip to main content
+    </a>
+
     <ErrorBoundary>
       <AppHeader />
       <main class="pb-16 sm:pb-0">
