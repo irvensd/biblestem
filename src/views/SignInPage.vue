@@ -272,6 +272,15 @@ const validateForm = (): boolean => {
   return emailValid && passwordValid
 }
 
+// Computed property for template reactivity
+const isFormValid = computed(() => {
+  // Sync field values with form values
+  emailField.value.value = form.email
+  passwordField.value.value = form.password
+
+  return emailField.isValid.value && passwordField.isValid.value && form.email.trim() !== '' && form.password.trim() !== ''
+})
+
 const showPassword = ref(false)
 const error = ref('')
 const remember = ref(false)
