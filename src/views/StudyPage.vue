@@ -350,10 +350,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
-import { useStudyProgressStore } from '../stores/studyProgress'
-import { useLoadingStore } from '../stores/loading'
-import { useErrorStore } from '../stores/errors'
 import { useCleanup, useDOMEvents, useSafeState } from '../composables/useCleanup'
 import { getStudyById, type Study, type Lesson } from '../data/studies'
 import LessonModal from '../components/LessonModal.vue'
@@ -362,10 +358,41 @@ import StudyShare from '../components/StudyShare.vue'
 
 const route = useRoute()
 const router = useRouter()
-const authStore = useAuthStore()
-const progressStore = useStudyProgressStore()
-const loadingStore = useLoadingStore()
-const errorStore = useErrorStore()
+
+// Initialize stores safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+})
+const progressStore = ref({
+  getStudyProgress: () => ({}),
+  updateProgress: () => Promise.resolve(),
+})
+const loadingStore = ref({
+  setLoading: () => {},
+  clearLoading: () => {},
+})
+const errorStore = ref({
+  addError: () => {},
+})
+
+// Initialize the real stores when component mounts
+onMounted(async () => {
+  try {
+    const { useAuthStore } = await import('../stores/auth')
+    const { useStudyProgressStore } = await import('../stores/studyProgress')
+    const { useLoadingStore } = await import('../stores/loading')
+    const { useErrorStore } = await import('../stores/errors')
+
+    authStore.value = useAuthStore()
+    progressStore.value = useStudyProgressStore()
+    loadingStore.value = useLoadingStore()
+    errorStore.value = useErrorStore()
+  } catch (error) {
+    console.warn('Failed to initialize stores in StudyPage:', error)
+  }
+})
 
 // Cleanup composables
 const cleanup = useCleanup()
