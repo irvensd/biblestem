@@ -99,7 +99,7 @@
           </section>
 
           <!-- Continue Studies -->
-          <section class="card p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
+          <section class="card p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
             <div
               class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-4 sm:mb-6"
             >
@@ -114,13 +114,13 @@
               </router-link>
             </div>
 
-            <div class="space-y-4">
+            <div class="space-y-3">
               <!-- Current Study -->
               <div
                 v-if="currentStudy"
-                class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-4 sm:p-6 rounded-2xl border border-primary-200 dark:border-primary-800 shadow-sm"
+                class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-3 sm:p-4 rounded-xl border border-primary-200 dark:border-primary-800 shadow-sm"
               >
-                <div class="flex flex-col gap-4 mb-4">
+                <div class="flex flex-col gap-3 mb-3">
                   <div class="flex items-start justify-between gap-3">
                     <div class="flex-1 min-w-0">
                       <h3
@@ -144,7 +144,7 @@
                     </span>
                   </div>
                 </div>
-                <div class="mb-5">
+                <div class="mb-3">
                   <div
                     class="flex justify-between text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-3"
                   >
@@ -164,32 +164,32 @@
                 </div>
                 <router-link
                   :to="`/study/${currentStudy.id}`"
-                  class="btn-primary w-full text-center py-3 text-base font-semibold shadow-md hover:shadow-lg active:shadow-sm transition-all duration-200 touch-manipulation"
+                  class="btn-primary w-full text-center py-2 text-sm font-semibold shadow-md hover:shadow-lg active:shadow-sm transition-all duration-200 touch-manipulation"
                 >
                   {{ currentStudy.progress === 100 ? 'Review Study' : 'Continue Study' }}
                 </router-link>
               </div>
 
               <!-- Recommended Studies -->
-              <div v-if="recommendedStudies.length > 0" class="grid grid-cols-1 gap-4">
+              <div v-if="recommendedStudies.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div
                   v-for="study in recommendedStudies"
                   :key="study.id"
-                  class="card interactive p-4 animate-in cursor-pointer touch-manipulation active:scale-[0.98] transition-transform duration-150 shadow-sm hover:shadow-md"
+                  class="card interactive p-3 animate-in cursor-pointer touch-manipulation active:scale-[0.98] transition-transform duration-150 shadow-sm hover:shadow-md"
                   @click="goToStudy(study.id)"
                 >
                   <div
-                    class="aspect-video rounded-lg mb-3 flex items-center justify-center bg-gradient-to-br"
+                    class="aspect-video rounded-lg mb-2 flex items-center justify-center bg-gradient-to-br"
                     :class="study.color"
                   >
                     <span class="text-white font-medium text-sm">{{
                       study.category === 'premium' ? 'Premium' : 'Free'
                     }}</span>
                   </div>
-                  <h4 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1">
+                  <h4 class="font-bold text-neutral-900 dark:text-neutral-100 mb-1 text-sm">
                     {{ study.title }}
                   </h4>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+                  <p class="text-xs text-neutral-600 dark:text-neutral-400 mb-2">
                     {{ study.lessons.length }} lessons • {{ formatDuration(study.totalDuration) }}
                   </p>
                   <div class="flex items-center justify-between">
@@ -220,7 +220,7 @@
               </div>
 
               <!-- Loading State for Recommended Studies -->
-              <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <SkeletonCard
                   v-for="i in 4"
                   :key="i"
@@ -254,7 +254,7 @@
           </section>
 
           <!-- Completed Studies Section -->
-          <section v-if="completedStudies.length > 0" class="card p-4 sm:p-6">
+          <section v-if="completedStudies.length > 0" class="card p-3 sm:p-4">
             <div
               class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-4 sm:mb-6"
             >
@@ -273,14 +273,14 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
               <div
                 v-for="study in completedStudies.slice(0, 6)"
                 :key="study.id"
-                class="card interactive p-4 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 animate-in cursor-pointer"
+                class="card interactive p-3 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 animate-in cursor-pointer"
                 @click="goToStudy(study.id)"
               >
-                <div class="flex items-start space-x-3">
+                                  <div class="flex items-start space-x-2">
                   <div
                     class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0"
                   >
@@ -293,10 +293,10 @@
                     </svg>
                   </div>
                   <div class="flex-1 min-w-0">
-                    <h4 class="font-bold text-green-800 dark:text-green-200 mb-1 truncate">
+                    <h4 class="font-bold text-green-800 dark:text-green-200 mb-1 truncate text-sm">
                       {{ study.title }}
                     </h4>
-                    <p class="text-sm text-green-600 dark:text-green-400 mb-2">
+                    <p class="text-xs text-green-600 dark:text-green-400 mb-1">
                       {{ study.lessons.length }} lessons completed
                     </p>
                     <div class="flex items-center justify-between">
