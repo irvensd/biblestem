@@ -8,7 +8,7 @@
       <router-link
         to="/dashboard"
         v-if="authStore.isAuthenticated"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200 focus-ring"
+        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 focus-ring touch-feedback touch-ripple"
         :class="
           route.path === '/dashboard'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -33,7 +33,7 @@
       <router-link
         to="/"
         v-if="!authStore.isAuthenticated"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
+        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
         :class="
           route.path === '/'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -54,7 +54,7 @@
       <!-- Study Series -->
       <router-link
         to="/study-series"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
+        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
         :class="
           route.path === '/study-series'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -73,7 +73,7 @@
       <router-link
         to="/my-studies"
         v-if="authStore.isAuthenticated"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
+        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
         :class="
           route.path === '/my-studies'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -94,7 +94,7 @@
       <!-- Daily Devotions -->
       <router-link
         to="/daily-devotions"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
+        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
         :class="
           route.path === '/daily-devotions'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -115,7 +115,7 @@
       <!-- Search -->
       <button
         @click="toggleSearch"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200"
+        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
         :class="
           showSearch
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -138,7 +138,7 @@
         @click="toggleProfile"
         @touchstart="toggleProfile"
         type="button"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-colors duration-200 touch-manipulation"
+        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-manipulation touch-feedback touch-ripple"
         :class="
           showProfile
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -173,7 +173,7 @@
     >
       <div class="p-4 border-b border-neutral-200 dark:border-neutral-700">
         <div class="flex items-center space-x-3">
-          <button @click="closeSearch" class="text-neutral-600 dark:text-neutral-400">
+          <button @click="closeSearch" class="text-neutral-600 dark:text-neutral-400 touch-feedback touch-ripple p-2 rounded-lg">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
@@ -199,7 +199,7 @@
     >
       <div class="p-4 border-b border-neutral-200 dark:border-neutral-700">
         <div class="flex items-center space-x-3">
-          <button @click="closeProfile" class="text-neutral-600 dark:text-neutral-400">
+          <button @click="closeProfile" class="text-neutral-600 dark:text-neutral-400 touch-feedback touch-ripple p-2 rounded-lg">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
@@ -243,7 +243,7 @@
             <router-link
               to="/profile"
               @click="closeProfile"
-              class="flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+              class="flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors touch-feedback touch-ripple"
             >
               <svg
                 class="w-5 h-5 text-neutral-600 dark:text-neutral-400"
@@ -264,7 +264,7 @@
             <router-link
               to="/settings"
               @click="closeProfile"
-              class="flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+              class="flex items-center space-x-3 p-3 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors touch-feedback touch-ripple"
             >
               <svg
                 class="w-5 h-5 text-neutral-600 dark:text-neutral-400"
