@@ -21,12 +21,18 @@
         v-model="searchQuery"
         @focus="handleFocus"
         @blur="handleBlur"
+        @keydown="handleKeydown"
         type="search"
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
         spellcheck="false"
         placeholder="Search studies, lessons, verses..."
+        aria-label="Search studies, lessons, and verses"
+        aria-describedby="search-help"
+        :aria-expanded="showResults"
+        aria-haspopup="listbox"
+        :aria-activedescendant="activeDescendant"
         class="block w-full pl-10 pr-12 py-3 sm:py-3 border border-neutral-300 dark:border-neutral-600 rounded-xl bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-base sm:text-base touch-manipulation focus-ring transition-all duration-200"
         :class="{
           'rounded-b-none': showResults && (searchQuery.trim() || recentSearches.length > 0),
