@@ -179,9 +179,47 @@
   @apply transform -translate-y-1 shadow-lg;
 }
 
-/* Focus improvements */
+/* Enhanced Focus System */
 .focus-ring {
   @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200;
+}
+
+.focus-ring-accent {
+  @apply focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 transition-all duration-200;
+}
+
+.focus-ring-error {
+  @apply focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200;
+}
+
+/* Card focus indicators */
+.card.focusable {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  @apply focus:shadow-lg focus:-translate-y-1;
+}
+
+/* Link focus improvements */
+a:focus {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2 rounded;
+}
+
+/* Input focus improvements */
+input:focus,
+textarea:focus,
+select:focus {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+  @apply border-primary-300 dark:border-primary-600;
+}
+
+/* Skip links for screen readers */
+.skip-link {
+  @apply absolute -top-10 left-4 bg-primary-600 text-white px-4 py-2 rounded z-50;
+  @apply focus:top-4 transition-all duration-200;
+}
+
+/* Focus within - highlight containers when child is focused */
+.focus-within-ring:focus-within {
+  @apply ring-2 ring-primary-500 ring-offset-2;
 }
 
 /* Loading state animations */
