@@ -225,7 +225,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useErrorStore } from '../stores/errors'
@@ -236,8 +236,36 @@ import {
 } from '../composables/useValidation'
 
 const router = useRouter()
-const authStore = useAuthStore()
-const errorStore = useErrorStore()
+
+// Safe store initialization
+const authStoreRef = ref<any>(null)
+const errorStoreRef = ref<any>(null)
+
+// Safe computed for store access
+const authStore = computed(() => {
+  return authStoreRef.value || {
+    login: () => Promise.resolve({ success: false, error: 'Not ready' }),
+    isLoading: false,
+    error: null
+  }
+})
+
+const errorStore = computed(() => {
+  return errorStoreRef.value || {
+    addError: () => {},
+    clearError: () => {}
+  }
+})
+
+// Initialize stores when component mounts
+onMounted(() => {
+  try {
+    authStoreRef.value = useAuthStore()
+    errorStoreRef.value = useErrorStore()
+  } catch (error) {
+    console.warn('Failed to initialize stores in SignInPage:', error)
+  }
+})
 
 // Form validation
 const emailField = useFieldValidation('', [
