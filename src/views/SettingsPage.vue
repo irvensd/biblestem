@@ -249,6 +249,59 @@
                 </div>
               </div>
             </div>
+
+            <!-- Account Actions -->
+            <div
+              class="bg-white/70 dark:bg-neutral-800/70 backdrop-blur-xl rounded-3xl border border-white/20 dark:border-neutral-700/50 shadow-xl shadow-neutral-900/5 dark:shadow-black/20 overflow-hidden"
+            >
+              <div
+                class="bg-gradient-to-r from-primary-500/5 via-secondary-500/5 to-accent-500/5 dark:from-primary-400/10 dark:via-secondary-400/10 dark:to-accent-400/10 px-8 py-6 border-b border-neutral-200/50 dark:border-neutral-700/50"
+              >
+                <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                  Account Actions
+                </h2>
+                <p class="text-neutral-600 dark:text-neutral-400">Manage your session and account</p>
+              </div>
+              <div class="p-8">
+                <div
+                  class="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-700/50 rounded-xl"
+                >
+                  <div>
+                    <h4 class="font-medium text-neutral-800 dark:text-neutral-200">
+                      Sign Out
+                    </h4>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                      Sign out of your account on this device
+                    </p>
+                  </div>
+                  <button
+                    @click="handleSignOut"
+                    :disabled="signingOut"
+                    class="px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all duration-200 shadow-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span v-if="signingOut" class="flex items-center">
+                      <svg class="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
+                        <circle
+                          class="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          stroke-width="4"
+                        ></circle>
+                        <path
+                          class="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Signing out...
+                    </span>
+                    <span v-else>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Privacy Settings -->
