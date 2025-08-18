@@ -265,24 +265,35 @@ const error = ref('')
 const remember = ref(false)
 
 const handleSignIn = async () => {
+  console.log('🔐 handleSignIn called')
   error.value = ''
 
+  console.log('✅ Validating form...')
   // Validate form before submitting
   if (!formValidation.validate()) {
+    console.log('❌ Form validation failed')
     return
   }
 
+  console.log('✅ Form validation passed')
+
   try {
+    console.log('🔄 Calling authStore.login with:', { email: form.email, password: '***' })
     const result = await authStore.login(form.email, form.password)
+    console.log('📋 Login result:', result)
 
     if (result.success) {
+      console.log('✅ Login successful, redirecting...')
       // Get redirect path from query params or default to dashboard
       const redirectPath = (router.currentRoute.value.query.redirect as string) || '/dashboard'
+      console.log('🚀 Redirecting to:', redirectPath)
       router.push(redirectPath)
     } else {
+      console.log('❌ Login failed:', result.error)
       error.value = result.error || 'Login failed. Please try again.'
     }
   } catch (err) {
+    console.log('💥 Login error:', err)
     error.value = 'An unexpected error occurred. Please try again.'
   }
 }
