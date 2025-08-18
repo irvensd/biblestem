@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { supabase } from '@/lib/supabase'
+import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 import { useAuthStore } from './auth'
 
 export interface StudyProgress {
