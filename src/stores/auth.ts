@@ -146,13 +146,22 @@ export const useAuthStore = defineStore('auth', () => {
     isLoading.value = true
     clearError()
 
+    console.log('=== SIGNUP DEBUG ===')
+    console.log('Config:', config.value)
+    console.log('useMockAuth:', config.value.useMockAuth)
+    console.log('supabaseUrl:', config.value.supabaseUrl)
+    console.log('supabaseKey:', config.value.supabaseKey ? 'Present' : 'Missing')
+
     try {
       if (config.value.useMockAuth) {
+        console.log('Using mock auth for signup')
         return await mockSignUp(email, password, name)
       } else {
+        console.log('Using Supabase auth for signup')
         return await supabaseSignUp(email, password, name)
       }
     } catch (err) {
+      console.error('Signup error caught:', err)
       const errorMessage = err instanceof Error ? err.message : 'Sign up failed. Please try again.'
       setError(errorMessage)
       return { success: false, error: errorMessage }
