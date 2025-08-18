@@ -43,7 +43,7 @@
     <div class="container-base section-spacing">
       <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
         <!-- Main Content -->
-        <div class="xl:col-span-2 space-y-6 sm:space-y-8">
+        <div class="xl:col-span-2 content-spacing">
           <!-- Progress Overview -->
           <section class="card p-4 sm:p-6">
             <h2 class="heading-4 mb-4 sm:mb-6">
