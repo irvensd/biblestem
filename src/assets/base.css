@@ -157,6 +157,83 @@
   transform: translateY(-30px);
 }
 
+/* Dark Mode Enhancements */
+.dark .card {
+  @apply bg-neutral-800/90 backdrop-blur-sm border-neutral-700/60;
+  @apply shadow-xl shadow-black/10;
+}
+
+.dark .card:hover {
+  @apply bg-neutral-800/95 border-neutral-600/60;
+  @apply shadow-2xl shadow-black/20;
+}
+
+/* Dark mode text contrast improvements */
+.dark .heading-1,
+.dark .heading-2,
+.dark .heading-3,
+.dark .heading-4,
+.dark .heading-5 {
+  @apply text-neutral-50;
+}
+
+.dark .body-large,
+.dark .body-normal {
+  @apply text-neutral-200;
+}
+
+.dark .body-small {
+  @apply text-neutral-300;
+}
+
+.dark .caption {
+  @apply text-neutral-400;
+}
+
+/* Dark mode button improvements */
+.dark .btn-primary {
+  @apply shadow-lg shadow-primary-900/30;
+}
+
+.dark .btn-primary:hover {
+  @apply shadow-xl shadow-primary-900/40;
+}
+
+.dark .btn-secondary {
+  @apply border-neutral-600 hover:border-neutral-500;
+  @apply hover:bg-neutral-800/50;
+}
+
+.dark .btn-accent {
+  @apply shadow-lg shadow-amber-900/30;
+}
+
+/* Dark mode loading shimmer */
+.dark .loading-shimmer {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Dark mode skeleton improvements */
+.dark .animate-pulse > * {
+  @apply bg-neutral-700/60;
+}
+
+/* Dark mode input improvements */
+.dark input,
+.dark textarea,
+.dark select {
+  @apply bg-neutral-800/50 border-neutral-600 text-neutral-100;
+  @apply placeholder-neutral-400;
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  @apply bg-neutral-800/80 border-primary-500;
+}
+
 /* Staggered animations for lists */
 .stagger-animation > * {
   opacity: 0;
