@@ -154,7 +154,16 @@
               </svg>
             </button>
           </div>
-          <p v-if="passwordField.error.value" class="text-red-500 text-sm mt-1">
+          <div id="password-help" class="form-help">
+            Use 'demo123' for demo accounts or 'free123' for free user demo
+          </div>
+          <p
+            v-if="passwordField.error.value"
+            id="password-error"
+            class="form-error"
+            role="alert"
+            aria-live="polite"
+          >
             {{ passwordField.error.value }}
           </p>
         </div>
