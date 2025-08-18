@@ -238,6 +238,9 @@ import {
 const router = useRouter()
 const authStore = useAuthStore()
 
+// Debug: Check if reactive is available
+console.log('reactive function:', reactive)
+
 const form = reactive({
   email: '',
   password: '',
