@@ -312,15 +312,34 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useAuthStore } from '../stores/auth'
-import { useStudyTemplatesStore } from '../stores/studyTemplates'
+import { computed, ref, onMounted } from 'vue'
 import type { StudyTemplate } from '../stores/studyTemplates'
 
 const emit = defineEmits(['upgrade'])
 
-const authStore = useAuthStore()
-const templatesStore = useStudyTemplatesStore()
+// Initialize stores safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+})
+const templatesStore = ref({
+  templates: [],
+  getTemplatesByCategory: () => [],
+})
+
+// Initialize the real stores when component mounts
+onMounted(async () => {
+  try {
+    const { useAuthStore } = await import('../stores/auth')
+    const { useStudyTemplatesStore } = await import('../stores/studyTemplates')
+
+    authStore.value = useAuthStore()
+    templatesStore.value = useStudyTemplatesStore()
+  } catch (error) {
+    console.warn('Failed to initialize stores in StudyTemplates:', error)
+  }
+})
 
 const showAllTemplates = ref(false)
 const selectedTemplate = ref<StudyTemplate | null>(null)
