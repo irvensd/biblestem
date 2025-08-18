@@ -238,7 +238,7 @@
                     v-if="!authStore.isPremium"
                     class="px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-lg hover:shadow-xl font-medium"
                   >
-                    ✨ Upgrade Now
+                    �� Upgrade Now
                   </button>
                   <button
                     v-else
@@ -850,11 +850,28 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 
-const authStore = useAuthStore()
 const router = useRouter()
+
+// Initialize authStore safely
+const authStore = ref({
+  isAuthenticated: false,
+  user: null,
+  isPremium: false,
+  logout: () => Promise.resolve(),
+})
+
+// Initialize the real store when component mounts
+onMounted(async () => {
+  try {
+    const { useAuthStore } = await import('../stores/auth')
+    const realAuthStore = useAuthStore()
+    authStore.value = realAuthStore
+  } catch (error) {
+    console.warn('Failed to initialize auth store in SettingsPage:', error)
+  }
+})
 
 // Active section
 const activeSection = ref('account')
