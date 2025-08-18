@@ -326,6 +326,25 @@ const authStore = ref({
 onMounted(async () => {
   try {
     console.log('=== SIGNUP PAGE: Loading real auth store ===')
+
+    // DIRECT SUPABASE TEST
+    const { createClient } = await import('@supabase/supabase-js')
+    const directSupabase = createClient(
+      'https://lvwejgdutohwyyqhiqth.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2d2VqZ2R1dG9od3l5cWhpcXRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ0NzY0MDEsImV4cCI6MjA1MDA1MjQwMX0.HFfhLQNDwu7iT-LMDcJqrDZEyBfCG4e3bCKkJN0oZwI'
+    )
+    console.log('=== DIRECT SUPABASE CLIENT ===', directSupabase)
+
+    // Test direct signup
+    const testResult = await directSupabase.auth.signUp({
+      email: 'directtest@example.com',
+      password: 'testpassword123',
+      options: {
+        data: { name: 'Direct Test User' }
+      }
+    })
+    console.log('=== DIRECT SUPABASE SIGNUP TEST ===', testResult)
+
     const { useAuthStore } = await import('../stores/auth')
     const realAuthStore = useAuthStore()
     authStore.value = realAuthStore
