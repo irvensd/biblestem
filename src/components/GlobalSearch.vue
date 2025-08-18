@@ -511,9 +511,74 @@ const loadRecentSearches = () => {
   }
 }
 
+// Keyboard navigation
+const handleKeydown = (event: KeyboardEvent) => {
+  if (!showResults.value) return
+
+  const allResults = [
+    ...recentSearches.value,
+    ...searchResults.value.studies,
+    ...searchResults.value.lessons,
+    ...searchResults.value.notes,
+  ]
+
+  switch (event.key) {
+    case 'ArrowDown':
+      event.preventDefault()
+      focusedIndex.value = Math.min(focusedIndex.value + 1, allResults.length - 1)
+      updateActiveDescendant()
+      break
+    case 'ArrowUp':
+      event.preventDefault()
+      focusedIndex.value = Math.max(focusedIndex.value - 1, -1)
+      updateActiveDescendant()
+      break
+    case 'Enter':
+      event.preventDefault()
+      if (focusedIndex.value >= 0 && allResults[focusedIndex.value]) {
+        selectResult(allResults[focusedIndex.value])
+      }
+      break
+    case 'Escape':
+      event.preventDefault()
+      closeSearch()
+      break
+  }
+}
+
+const updateActiveDescendant = () => {
+  const allResults = [
+    ...recentSearches.value,
+    ...searchResults.value.studies,
+    ...searchResults.value.lessons,
+    ...searchResults.value.notes,
+  ]
+
+  if (focusedIndex.value >= 0 && allResults[focusedIndex.value]) {
+    activeDescendant.value = `search-result-${focusedIndex.value}`
+  } else {
+    activeDescendant.value = ''
+  }
+}
+
+const selectResult = (result: any) => {
+  if (typeof result === 'string') {
+    // Recent search
+    searchQuery.value = result
+  } else if (result.studyId) {
+    // Lesson or note
+    goToLesson(result)
+  } else {
+    // Study
+    goToStudy(result)
+  }
+}
+
 // Event handlers
 const handleFocus = () => {
   showResults.value = true
+  focusedIndex.value = -1
+  activeDescendant.value = ''
   // On mobile, consider showing full screen search
   if (isMobile.value && searchQuery.value.trim()) {
     showFullResults.value = true
