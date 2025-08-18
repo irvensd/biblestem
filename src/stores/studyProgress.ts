@@ -1,8 +1,5 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
-import { useAuthStore } from './auth'
 
 export interface StudyProgress {
   studyId: string
