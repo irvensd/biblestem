@@ -1178,7 +1178,7 @@ a:focus-visible {
 /* Enhanced Error Interactions */
 .error-interactive {
   @apply transition-all duration-300 ease-out;
-  @apply animate-shake;
+  animation: shake 0.5s ease-in-out;
 }
 
 @keyframes shake {
@@ -1190,7 +1190,7 @@ a:focus-visible {
 /* Enhanced Success Interactions */
 .success-interactive {
   @apply transition-all duration-300 ease-out;
-  @apply animate-bounce-in;
+  animation: bounce-in 0.8s ease-in-out;
 }
 
 @keyframes bounce-in {
@@ -1974,6 +1974,10 @@ a:focus-visible {
   100% { left: 100%; }
 }
 
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
 /* =================================================================
    CONTENT PRESENTATION & VISUAL HIERARCHY
    ================================================================= */
@@ -2060,7 +2064,7 @@ a:focus-visible {
 .progress-bar::after {
   content: '';
   @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent;
-  @apply animate-shimmer;
+  animation: shimmer 2s infinite;
 }
 
 .progress-bar.accent {
@@ -2263,7 +2267,7 @@ a:focus-visible {
 .content-modal-content {
   @apply bg-white dark:bg-neutral-800 rounded-xl shadow-2xl;
   @apply max-w-2xl w-full max-h-[90vh] overflow-y-auto;
-  @apply animate-scale-in;
+  animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .content-modal-header {
@@ -2313,7 +2317,7 @@ a:focus-visible {
   @apply w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600;
   @apply rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100;
   @apply focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
-  @apply transition-all duration-200 resize-vertical;
+  @apply transition-all duration-200 resize-y;
   @apply min-h-[100px];
 }
 
@@ -2962,7 +2966,7 @@ a:focus-visible {
 /* Validation Utilities */
 .validation-error {
   @apply text-sm text-red-600 dark:text-red-400;
-  @apply animate-shake;
+  animation: shake 0.5s ease-in-out;
 }
 
 .validation-success {
@@ -2975,51 +2979,51 @@ a:focus-visible {
 
 /* Animation Utilities */
 .animate-in {
-  @apply animate-fade-in;
+  animation: fadeIn 0.5s ease-in-out forwards;
 }
 
 .animate-out {
-  @apply animate-fade-out;
+  animation: fadeOut 0.5s ease-in-out forwards;
 }
 
 .animate-slide-in {
-  @apply animate-slide-up;
+  animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-slide-out {
-  @apply animate-slide-down;
+  animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-scale-in {
-  @apply animate-scale-in;
+  animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-scale-out {
-  @apply animate-scale-out;
+  animation: scaleOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-bounce-in {
-  @apply animate-bounce-in;
+  animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
 .animate-bounce-out {
-  @apply animate-bounce-out;
+  animation: bounceOut 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
 .animate-rotate-in {
-  @apply animate-rotate-in;
+  animation: rotateIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-rotate-out {
-  @apply animate-rotate-out;
+  animation: rotateOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-flip-in {
-  @apply animate-flip-in;
+  animation: flipIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-flip-out {
-  @apply animate-flip-out;
+  animation: flipOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* Transition Utilities */
@@ -3036,11 +3040,11 @@ a:focus-visible {
 }
 
 .transition-bounce {
-  @apply transition-all duration-300 cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  @apply transition-all duration-300 ease-out;
 }
 
 .transition-elastic {
-  @apply transition-all duration-500 cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  @apply transition-all duration-500 ease-out;
 }
 
 /* Transform Utilities */

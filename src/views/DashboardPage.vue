@@ -7,8 +7,10 @@
       <div class="container-base py-6 sm:py-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 class="heading-2">Welcome back, {{ authStore.user?.name }}!</h1>
-            <p class="body-normal mt-1 sm:mt-2">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-neutral-900 dark:text-neutral-100 leading-tight tracking-tight">
+              Welcome back, {{ authStore.user?.name }}!
+            </h1>
+            <p class="text-lg sm:text-xl text-neutral-700 dark:text-neutral-300 mt-3 sm:mt-4 font-medium leading-relaxed">
               Continue your Bible study journey where you left off
             </p>
           </div>
