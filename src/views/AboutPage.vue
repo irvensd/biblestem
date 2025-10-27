@@ -1,287 +1,247 @@
 <template>
-  <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+  <div class="min-h-screen">
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-primary-600 to-secondary-600 py-20">
-      <div class="container-base text-center">
-        <h1 class="text-5xl font-bold text-white mb-6">About BibleStem</h1>
-        <p class="text-xl text-primary-100 max-w-3xl mx-auto">
-          Empowering believers to dive deeper into God's Word through interactive, engaging Bible studies
+    <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-20 md:py-32 overflow-hidden">
+      <!-- Animated Background -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-20 animate-pulse"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 1s"></div>
+      </div>
+      
+      <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="mb-6 animate-slide-up">
+            <span class="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold border border-white/30">
+              Our Mission
+            </span>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-slide-up" style="animation-delay: 0.1s">
+            Making Jesus Famous,
+            <span class="block mt-3 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+              One Study at a Time
+            </span>
+          </h1>
+          <p class="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed max-w-3xl mx-auto animate-slide-up" style="animation-delay: 0.2s">
+            I'm just a guy looking to help make Jesus famous. My goal? Make studying the Bible easier, deeper, and more accessible than ever before.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Personal Story Section -->
+    <section class="py-20 bg-white dark:bg-neutral-900">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold mb-4">Why BibleStem Exists</h2>
+            <p class="text-xl text-gray-600">
+              A personal mission to make God's Word accessible to everyone
+            </p>
+          </div>
+
+          <div class="space-y-8">
+            <!-- Story Point 1 -->
+            <div class="card p-8">
+              <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <span class="text-3xl">🙏</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold mb-3">A Simple Mission</h3>
+                  <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    I'm just a guy who loves Jesus and wants to help others know Him better. I saw how difficult it can be to study the Bible deeply - especially learning Hebrew and Greek. So I thought, "Why not make this easier for everyone?"
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Story Point 2 -->
+            <div class="card p-8 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20">
+              <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <span class="text-3xl">💡</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold mb-3">Making the Complex Simple</h3>
+                  <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Deep Bible study shouldn't require a seminary degree. That's why BibleStem breaks down complex theological concepts into interactive, easy-to-understand lessons. Whether you're a beginner or a seasoned student, you'll find insights that deepen your understanding.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Story Point 3 -->
+            <div class="card p-8">
+              <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <span class="text-3xl">🎯</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold mb-3">Helping Jesus Become Famous</h3>
+                  <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    At the end of the day, it's all about making Jesus famous. Every study, every lesson, every insight is designed to point people to Him. When you understand God's Word better, you know Jesus better - and when you know Jesus, you can't help but share Him with others.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What Makes Us Different -->
+    <section class="py-20 bg-gray-50 dark:bg-neutral-800">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-4">What Makes BibleStem Different</h2>
+        <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+          We're not just another Bible app. We're a movement to make deep study accessible to everyone.
         </p>
-      </div>
-    </section>
 
-    <!-- Mission Section -->
-    <section class="section-padding">
-      <div class="container-base">
-        <div class="max-w-4xl mx-auto">
-          <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200 mb-6">Our Mission</h2>
-            <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
-              BibleStem exists to make Bible study accessible, engaging, and transformative for believers at every level. 
-              We believe that understanding Scripture should be both intellectually stimulating and spiritually enriching.
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
+          <div class="card p-8 text-center transform hover:scale-105 transition-all">
+            <div class="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <span class="text-4xl">📚</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Interactive Learning</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              No passive reading. Every lesson is interactive with quizzes, reflections, and guided activities that help you truly engage with Scripture.
             </p>
           </div>
 
-          <div class="grid md:grid-cols-3 gap-8 mb-16">
-            <div class="text-center">
-              <div class="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-3">Interactive Learning</h3>
-              <p class="text-neutral-600 dark:text-neutral-400">
-                Engage with Scripture through multimedia content, interactive elements, and hands-on activities
-              </p>
+          <div class="card p-8 text-center transform hover:scale-105 transition-all">
+            <div class="w-20 h-20 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <span class="text-4xl">🔤</span>
             </div>
+            <h3 class="text-xl font-bold mb-3">Original Languages Made Easy</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Hebrew and Greek insights that are actually understandable. No seminary required - just pure, accessible insight into the original text.
+            </p>
+          </div>
 
-            <div class="text-center">
-              <div class="w-16 h-16 bg-secondary-100 dark:bg-secondary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-3">Comprehensive Studies</h3>
-              <p class="text-neutral-600 dark:text-neutral-400">
-                Access a wide range of studies from foundational topics to in-depth theological explorations
-              </p>
+          <div class="card p-8 text-center transform hover:scale-105 transition-all">
+            <div class="w-20 h-20 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <span class="text-4xl">💒</span>
             </div>
+            <h3 class="text-xl font-bold mb-3">Practical Application</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Every lesson ends with real-world application. Not just knowledge - but transformation that shows up in your daily life.
+            </p>
+          </div>
+        </div>
 
-            <div class="text-center">
-              <div class="w-16 h-16 bg-accent-100 dark:bg-accent-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-3">Community Growth</h3>
-              <p class="text-neutral-600 dark:text-neutral-400">
-                Connect with fellow believers and grow together in your understanding of God's Word
-              </p>
-            </div>
+        <!-- Scripture Quote -->
+        <div class="max-w-3xl mx-auto">
+          <div class="card p-8 bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
+            <p class="text-2xl md:text-3xl italic text-center mb-4">
+              "Thy word is a lamp unto my feet, and a light unto my path."
+            </p>
+            <p class="text-center text-white/80 text-lg">Psalm 119:105</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- What We Offer Section -->
-    <section class="section-padding bg-white dark:bg-neutral-800">
-      <div class="container-base">
-        <div class="max-w-6xl mx-auto">
-          <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200 mb-6">What We Offer</h2>
-            <p class="text-lg text-neutral-600 dark:text-neutral-400">
-              Discover the tools and resources that make BibleStem your go-to platform for spiritual growth
+    <!-- Values Section -->
+    <section class="py-20 bg-white dark:bg-neutral-900">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold mb-4">Our Core Values</h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            What drives everything we do
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <!-- Value 1 -->
+          <div class="card card-interactive p-8 transform hover:scale-105 transition-all">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">✝️</span>
+              </div>
+              <h3 class="text-2xl font-bold">Christ-Centered</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Everything points back to Jesus. Every study, every lesson, every insight is designed to help you know and follow Him better. He's the center of everything we do.
             </p>
           </div>
 
-          <div class="grid lg:grid-cols-2 gap-12">
-            <!-- Free Features -->
-            <div>
-              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-6 flex items-center">
-                <span class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mr-3">
-                  <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                </span>
-                Free Features
-              </h3>
-              <div class="space-y-4">
-                <div class="flex items-start space-x-3">
-                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <div>
-                    <h4 class="font-semibold text-neutral-800 dark:text-neutral-200">Core Bible Studies</h4>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Access foundational studies covering essential biblical topics</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-3">
-                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <div>
-                    <h4 class="font-semibold text-neutral-800 dark:text-neutral-200">Progress Tracking</h4>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Monitor your study progress and completion rates</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-3">
-                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <div>
-                    <h4 class="font-semibold text-neutral-800 dark:text-neutral-200">Basic Notes</h4>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Take personal notes and reflections on your studies</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-3">
-                  <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <div>
-                    <h4 class="font-semibold text-neutral-800 dark:text-neutral-200">Mobile Access</h4>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Study anywhere with our responsive mobile design</p>
-                  </div>
-                </div>
+          <!-- Value 2 -->
+          <div class="card card-interactive p-8 transform hover:scale-105 transition-all">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">📖</span>
               </div>
+              <h3 class="text-2xl font-bold">Biblically Faithful</h3>
             </div>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Every interpretation is grounded in Scripture. We don't add to or take away from God's Word - we simply help you understand it better through the original languages and contexts.
+            </p>
+          </div>
 
-            <!-- Premium Features -->
-            <div>
-              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-6 flex items-center">
-                <span class="w-8 h-8 bg-accent-100 dark:bg-accent-900/30 rounded-full flex items-center justify-center mr-3">
-                  <svg class="w-5 h-5 text-accent-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                </span>
-                Premium Features
-              </h3>
-              <div class="space-y-4">
-                <div class="flex items-start space-x-3">
-                  <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <div>
-                    <h4 class="font-semibold text-neutral-800 dark:text-neutral-200">Advanced Studies</h4>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Access in-depth theological studies and advanced content</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-3">
-                  <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <div>
-                    <h4 class="font-semibold text-neutral-800 dark:text-neutral-200">Video Content</h4>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Watch expert explanations and visual teachings</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-3">
-                  <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <div>
-                    <h4 class="font-semibold text-neutral-800 dark:text-neutral-200">Interactive Elements</h4>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Engage with quizzes, timelines, and interactive diagrams</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-3">
-                  <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <div>
-                    <h4 class="font-semibold text-neutral-800 dark:text-neutral-200">Downloadable Resources</h4>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Access study guides, worksheets, and reference materials</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-3">
-                  <svg class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <div>
-                    <h4 class="font-semibold text-neutral-800 dark:text-neutral-200">Priority Support</h4>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Get help when you need it with dedicated customer support</p>
-                  </div>
-                </div>
+          <!-- Value 3 -->
+          <div class="card card-interactive p-8 transform hover:scale-105 transition-all">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">🌱</span>
               </div>
+              <h3 class="text-2xl font-bold">Growth-Focused</h3>
             </div>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+              We believe studying the Bible should lead to transformation, not just information. Every lesson includes practical steps to apply what you've learned in your daily life.
+            </p>
+          </div>
+
+          <!-- Value 4 -->
+          <div class="card card-interactive p-8 transform hover:scale-105 transition-all">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">🤝</span>
+              </div>
+              <h3 class="text-2xl font-bold">Accessible to All</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Deep Bible study shouldn't require expensive resources or years of training. BibleStem makes advanced study tools accessible to everyone - because everyone deserves to know Jesus better.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Our Approach Section -->
-    <section class="section-padding">
-      <div class="container-base">
-        <div class="max-w-4xl mx-auto">
-          <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200 mb-6">Our Approach</h2>
-            <p class="text-lg text-neutral-600 dark:text-neutral-400">
-              We believe in making Bible study both accessible and transformative
-            </p>
-          </div>
-
-          <div class="grid md:grid-cols-2 gap-8">
-            <div class="card p-8">
-              <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-3">Engaging Content</h3>
-              <p class="text-neutral-600 dark:text-neutral-400">
-                We create content that captures your attention and makes complex theological concepts easy to understand. 
-                Our studies combine traditional biblical scholarship with modern interactive elements.
-              </p>
-            </div>
-
-            <div class="card p-8">
-              <div class="w-12 h-12 bg-secondary-100 dark:bg-secondary-900/30 rounded-lg flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-3">Proven Methods</h3>
-              <p class="text-neutral-600 dark:text-neutral-400">
-                Our study methodology is based on proven educational principles and biblical hermeneutics. 
-                We guide you through observation, interpretation, and application of Scripture.
-              </p>
-            </div>
-
-            <div class="card p-8">
-              <div class="w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-3">Personal Growth</h3>
-              <p class="text-neutral-600 dark:text-neutral-400">
-                Every study is designed to help you grow spiritually and intellectually. 
-                We provide tools for reflection, application, and ongoing spiritual development.
-              </p>
-            </div>
-
-            <div class="card p-8">
-              <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-3">Community Focus</h3>
-              <p class="text-neutral-600 dark:text-neutral-400">
-                While Bible study is personal, it's also communal. 
-                We encourage sharing insights, discussing discoveries, and growing together in faith.
-              </p>
-            </div>
-          </div>
-        </div>
+    <!-- Join the Mission -->
+    <section class="py-20 bg-gradient-to-r from-primary-600 to-secondary-600 text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
       </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="section-padding bg-gradient-to-r from-primary-600 to-secondary-600">
-      <div class="container-base text-center">
-        <h2 class="text-3xl font-bold text-white mb-6">Ready to Start Your Journey?</h2>
-        <p class="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-          Join thousands of believers who are deepening their understanding of Scripture with BibleStem
+      
+      <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Join the Mission</h2>
+        <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+          Help make Jesus famous by diving deeper into His Word. Every study, every lesson, every moment spent in Scripture brings us one step closer to knowing Him better.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <router-link to="/study-series" class="btn-primary bg-white text-primary-600 hover:bg-primary-50">
-            Explore Studies
+          <router-link 
+            to="/sign-up" 
+            class="btn bg-white text-primary-600 hover:bg-white/90 px-10 py-4 rounded-xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all"
+          >
+            Start Studying Free
           </router-link>
-          <router-link to="/signup" class="btn-secondary border-white text-white hover:bg-white hover:text-primary-600">
-            Get Started Free
+          <router-link 
+            to="/" 
+            class="btn border-2 border-white text-white hover:bg-white/10 px-10 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm"
+          >
+            Go to Home
           </router-link>
         </div>
+        
+        <p class="mt-8 text-white/80 italic text-lg max-w-2xl mx-auto">
+          "I press toward the mark for the prize of the high calling of God in Christ Jesus." - Philippians 3:14
+        </p>
       </div>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-// No additional logic needed for this static page
+// About page - making Jesus famous through accessible Bible study
 </script>
-
-<style scoped>
-.section-padding {
-  @apply py-16;
-}
-</style>

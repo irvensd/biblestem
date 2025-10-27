@@ -45,7 +45,7 @@ export function usePWA() {
         console.log('Service Worker registered successfully:', registration)
 
         // Check for updates
-        registration.addEventListener('updatefound', () => {
+        registration?.addEventListener('updatefound', () => {
           const newWorker = registration!.installing
           if (newWorker) {
             newWorker.addEventListener('statechange', () => {
@@ -163,7 +163,7 @@ export function usePWA() {
         messageChannel.port1.onmessage = (event) => {
           resolve(event.data.version)
         }
-        registration.active!.postMessage({ type: 'GET_VERSION' }, [messageChannel.port2])
+        registration?.active?.postMessage({ type: 'GET_VERSION' }, [messageChannel.port2])
       })
     }
     return null

@@ -1,332 +1,193 @@
 <template>
-  <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+  <div class="min-h-screen">
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-primary-600 to-secondary-600 py-20">
-      <div class="container-base text-center">
-        <h1 class="text-5xl font-bold text-white mb-6">Bible Study Series</h1>
-        <p class="text-xl text-primary-100 max-w-3xl mx-auto mb-8">
-          Explore our comprehensive collection of interactive Bible studies designed to deepen your
-          faith and understanding of Scripture.
-        </p>
-
-        <!-- Filter Tabs -->
-        <div class="flex justify-center space-x-4">
-          <button
-            @click="activeFilter = 'all'"
-            class="px-6 py-3 rounded-lg font-medium transition-all duration-200"
-            :class="
-              activeFilter === 'all'
-                ? 'bg-white text-primary-600 shadow-medium'
-                : 'bg-primary-700 text-white hover:bg-primary-800'
-            "
-          >
-            All Studies
-          </button>
-          <button
-            @click="activeFilter = 'free'"
-            class="px-6 py-3 rounded-lg font-medium transition-all duration-200"
-            :class="
-              activeFilter === 'free'
-                ? 'bg-white text-primary-600 shadow-medium'
-                : 'bg-primary-700 text-white hover:bg-primary-800'
-            "
-          >
-            Free Studies
-          </button>
-          <button
-            @click="activeFilter = 'premium'"
-            class="px-6 py-3 rounded-lg font-medium transition-all duration-200"
-            :class="
-              activeFilter === 'premium'
-                ? 'bg-white text-primary-600 shadow-medium'
-                : 'bg-primary-700 text-white hover:bg-primary-800'
-            "
-          >
-            Premium Studies
-          </button>
+    <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-16 md:py-24 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-10 animate-pulse"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-10 animate-pulse" style="animation-delay: 1s"></div>
+      </div>
+      
+      <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="mb-6 animate-slide-up">
+            <span class="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold border border-white/30">
+              Explore Our Studies
+            </span>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-slide-up" style="animation-delay: 0.1s">
+            Study Series
+          </h1>
+          <p class="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed max-w-3xl mx-auto animate-slide-up" style="animation-delay: 0.2s">
+            Discover deep, interactive Bible studies designed to transform your faith and deepen your understanding
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Studies Content -->
-    <section class="section-padding">
-      <div class="container-base">
+    <!-- Studies Section -->
+    <section class="py-16 bg-white dark:bg-neutral-900">
+      <div class="container mx-auto px-4">
         <!-- Free Studies Section -->
-        <div v-if="showFreeStudies" class="mb-16">
+        <div class="mb-16">
           <div class="flex items-center justify-between mb-8">
             <div>
-              <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200">
-                Free Bible Studies
-              </h2>
-              <p class="text-neutral-600 dark:text-neutral-400 mt-2">
-                Intro-level, universally appealing, short series that build your foundation.
-              </p>
-            </div>
-            <div class="flex items-center space-x-2 text-green-600">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <span class="font-medium">Always Free</span>
+              <h2 class="text-3xl md:text-4xl font-bold mb-2">Free Studies</h2>
+              <p class="text-gray-600 dark:text-gray-400">Start your journey with these foundational studies</p>
             </div>
           </div>
-
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <div
-              v-for="study in freeStudies"
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Free Study Cards -->
+            <div 
+              v-for="study in freeStudies" 
               :key="study.id"
-              class="card hover:scale-105 transition-all duration-300 group cursor-pointer"
-              @click="goToStudy(study.id)"
+              class="card p-0 overflow-hidden hover-lift"
             >
+              <div class="h-48 bg-gradient-to-br from-emerald-500 to-emerald-600 relative">
+                <div class="absolute top-4 right-4">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-sm text-white">
+                    FREE
+                  </span>
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <svg class="w-16 h-16 text-white/30" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+              
               <div class="p-6">
-                <!-- Study Icon -->
-                <div
-                  class="aspect-video rounded-lg mb-4 flex items-center justify-center bg-gradient-to-br"
-                  :class="study.color"
-                >
-                  <StudyIcon :icon-type="study.image" :fallback-letter="study.title.charAt(0)" />
-                </div>
-
-                <!-- Study Info -->
-                <div class="mb-4">
-                  <h3
-                    class="font-bold text-lg mb-2 text-neutral-800 dark:text-neutral-200 group-hover:text-primary-600 transition-colors"
-                  >
-                    {{ study.title }}
-                  </h3>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-3 line-clamp-2">
-                    {{ study.description }}
-                  </p>
-
-                  <!-- Study Meta -->
-                  <div class="flex items-center justify-between text-xs text-neutral-500 mb-3">
-                    <span>{{ study.lessons.length }} lessons</span>
-                    <span>{{ study.totalDuration }} min</span>
-                  </div>
-
-                  <!-- Tags -->
-                  <div class="flex flex-wrap gap-1 mb-3">
-                    <span
-                      v-for="tag in study.tags.slice(0, 3)"
-                      :key="tag"
-                      class="bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 px-2 py-1 rounded-full text-xs"
-                    >
-                      {{ tag }}
-                    </span>
-                  </div>
-                </div>
-
-                <!-- Study Actions -->
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center space-x-2">
-                    <span
-                      class="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-1 rounded-full text-xs font-medium"
-                    >
-                      Free
-                    </span>
-                    <span class="text-xs text-neutral-500 capitalize">{{ study.difficulty }}</span>
-                  </div>
-                  <button
-                    class="text-primary-600 hover:text-primary-700 font-medium text-sm flex items-center space-x-1 group-hover:translate-x-1 transition-transform"
-                    @click.stop="goToStudy(study.id)"
-                  >
-                    <span>{{ authStore.isAuthenticated ? 'Start' : 'Sign In to Start' }}</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9 5l7 7-7 7"
-                      />
+                <h3 class="text-xl font-bold mb-2">{{ study.title }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                  {{ study.description }}
+                </p>
+                
+                <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  <span class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                      <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                     </svg>
-                  </button>
+                    {{ study.lessons.length }} Lessons
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                    </svg>
+                    {{ study.totalDuration }} min
+                  </span>
+                  <span class="capitalize">{{ study.difficulty }}</span>
                 </div>
+                
+                <router-link 
+                  :to="`/study/${study.id}`"
+                  class="btn btn-primary w-full"
+                >
+                  Start Study
+                </router-link>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Premium Studies Section -->
-        <div v-if="showPremiumStudies">
+        <div class="mb-16">
           <div class="flex items-center justify-between mb-8">
             <div>
-              <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200">
-                Premium Bible Studies
+              <h2 class="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
+                Premium Studies
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400">
+                  Premium
+                </span>
               </h2>
-              <p class="text-neutral-600 dark:text-neutral-400 mt-2">
-                In-depth studies with advanced interactivity, video content, and comprehensive
-                features.
-              </p>
-            </div>
-            <div class="flex items-center space-x-2 text-accent-600">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                />
-              </svg>
-              <span class="font-medium">Premium Content</span>
+              <p class="text-gray-600 dark:text-gray-400">Advanced studies with deeper insights and exclusive content</p>
             </div>
           </div>
-
+          
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div
-              v-for="study in premiumStudies"
+            <!-- Premium Study Cards -->
+            <div 
+              v-for="study in premiumStudies" 
               :key="study.id"
-              class="card hover:scale-105 transition-all duration-300 group cursor-pointer relative"
-              :class="{ 'opacity-75': !authStore.isPremium }"
-              @click="handlePremiumStudy(study.id)"
+              class="card p-0 overflow-hidden hover-lift relative"
             >
-              <!-- Premium Lock Overlay -->
-              <div
-                v-if="!authStore.isPremium"
-                class="absolute inset-0 bg-neutral-900/20 dark:bg-neutral-100/10 rounded-xl flex items-center justify-center z-10"
-              >
-                <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-strong text-center">
-                  <svg
-                    class="w-8 h-8 text-accent-500 mx-auto mb-2"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                      clip-rule="evenodd"
-                    />
+              <!-- Premium Badge Overlay -->
+              <div class="absolute top-4 right-4 z-10">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-accent-500 text-white shadow-lg">
+                  PREMIUM
+                </span>
+              </div>
+              
+              <div class="h-48 bg-gradient-to-br from-purple-600 to-purple-700 relative">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <svg class="w-16 h-16 text-white/30" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M3 1a1 1 0 011 1v1.707l3.707 3.707a1 1 0 010 2L5 10.414l-3.293 3.293a1 1 0 01-1.414-1.414L4.586 9H1a1 1 0 110-2h4.414l3.293-3.293zM13 9h4.586l3.293 3.293a1 1 0 01-1.414 1.414L16 10.414v4.586a1 1 0 01-2 0v-4.586l-3.293-3.293a1 1 0 112.828-2.828L13 5.586V1a1 1 0 112 0v4.586l1.707 1.707z" />
                   </svg>
-                  <p class="text-sm font-medium text-neutral-800 dark:text-neutral-200">
-                    Premium Required
-                  </p>
-                  <button class="btn-accent text-xs py-1 px-3 mt-2" @click.stop="upgradeToPremium">
-                    Upgrade
-                  </button>
                 </div>
               </div>
-
+              
               <div class="p-6">
-                <!-- Study Icon -->
-                <div
-                  class="aspect-video rounded-lg mb-4 flex items-center justify-center bg-gradient-to-br relative"
-                  :class="study.color"
-                >
-                  <StudyIcon :icon-type="study.image" :fallback-letter="study.title.charAt(0)" />
-                  <div
-                    class="absolute top-2 right-2 bg-accent-500 text-white px-2 py-1 rounded-full text-xs font-bold"
-                  >
-                    PREMIUM
-                  </div>
-                </div>
-
-                <!-- Study Info -->
-                <div class="mb-4">
-                  <h3
-                    class="font-bold text-lg mb-2 text-neutral-800 dark:text-neutral-200 group-hover:text-primary-600 transition-colors"
-                  >
-                    {{ study.title }}
-                  </h3>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-3 line-clamp-2">
-                    {{ study.description }}
-                  </p>
-
-                  <!-- Study Meta -->
-                  <div class="flex items-center justify-between text-xs text-neutral-500 mb-3">
-                    <span>{{ study.lessons.length }} lessons</span>
-                    <span
-                      >{{ Math.floor(study.totalDuration / 60) }}h
-                      {{ study.totalDuration % 60 }}m</span
-                    >
-                  </div>
-
-                  <!-- Features -->
-                  <div class="flex flex-wrap gap-1 mb-3">
-                    <span
-                      v-for="feature in study.features.slice(0, 2)"
-                      :key="feature"
-                      class="bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400 px-2 py-1 rounded-full text-xs"
-                    >
-                      {{ feature }}
-                    </span>
-                  </div>
-                </div>
-
-                <!-- Study Actions -->
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center space-x-2">
-                    <span
-                      class="bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400 px-2 py-1 rounded-full text-xs font-medium"
-                    >
-                      Premium
-                    </span>
-                    <span class="text-xs text-neutral-500 capitalize">{{ study.difficulty }}</span>
-                  </div>
-                  <button
-                    class="font-medium text-sm flex items-center space-x-1 group-hover:translate-x-1 transition-transform"
-                    :class="
-                      authStore.isPremium
-                        ? 'text-primary-600 hover:text-primary-700'
-                        : 'text-neutral-400'
-                    "
-                    @click.stop="handlePremiumStudy(study.id)"
-                  >
-                    <span>{{ authStore.isPremium ? 'Start' : 'Locked' }}</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9 5l7 7-7 7"
-                      />
+                <h3 class="text-xl font-bold mb-2">{{ study.title }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                  {{ study.description }}
+                </p>
+                
+                <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  <span class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                      <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                     </svg>
-                  </button>
+                    {{ study.lessons.length }} Lessons
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                    </svg>
+                    {{ study.totalDuration }} min
+                  </span>
+                  <span class="capitalize">{{ study.difficulty }}</span>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Upgrade CTA for Free Users -->
-          <div v-if="!authStore.isPremium" class="mt-12 text-center">
-            <div
-              class="card p-8 bg-gradient-to-r from-accent-50 to-primary-50 dark:from-accent-900/20 dark:to-primary-900/20 border-accent-200 dark:border-accent-800"
-            >
-              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-4">
-                Unlock Premium Studies
-              </h3>
-              <p class="text-neutral-600 dark:text-neutral-400 mb-6 max-w-2xl mx-auto">
-                Get access to in-depth studies with video content, interactive features,
-                downloadable resources, and advanced Bible study tools.
-              </p>
-              <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="btn-accent text-lg px-8 py-4" @click="upgradeToPremium">
-                  Upgrade to Premium
-                </button>
-                <button class="btn-secondary text-lg px-8 py-4">Learn More</button>
+                
+                <router-link 
+                  :to="`/study/${study.id}`"
+                  class="btn btn-primary w-full relative"
+                  :class="{ 'opacity-50 cursor-not-allowed': !isPremium }"
+                >
+                  <span v-if="isPremium">Start Study</span>
+                  <span v-else class="flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                    </svg>
+                    Premium Required
+                  </span>
+                </router-link>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Empty State -->
-        <div v-if="!showFreeStudies && !showPremiumStudies" class="text-center py-16">
-          <div class="card p-12 max-w-md mx-auto">
-            <div
-              class="w-16 h-16 bg-gradient-to-br from-neutral-400 to-neutral-500 rounded-full flex items-center justify-center mx-auto mb-6"
-            >
-              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clip-rule="evenodd"
-                />
-              </svg>
+        <!-- Upgrade CTA (if not premium) -->
+        <div v-if="!isPremium" class="max-w-4xl mx-auto">
+          <div class="card p-8 bg-gradient-to-br from-accent-50 dark:from-accent-900/20 to-accent-100 dark:to-accent-800/20 border-2 border-accent-200 dark:border-accent-700">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold mb-2">Unlock Premium Studies</h3>
+              <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+                Get access to advanced studies with deeper insights, exclusive content, and enhanced features
+              </p>
+              <router-link 
+                to="/sign-up"
+                class="btn btn-primary px-8 py-3 text-lg"
+              >
+                Upgrade to Premium →
+              </router-link>
             </div>
-            <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-4">
-              No studies found
-            </h3>
-            <p class="text-neutral-600 dark:text-neutral-400">
-              Try adjusting your filter to see more study options.
-            </p>
           </div>
         </div>
       </div>
@@ -335,90 +196,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
-import { getFreeStudies, getPremiumStudies } from '../data/studies'
-import StudyIcon from '@/components/icons/StudyIcon.vue'
+import { computed } from 'vue'
+import { getFreeStudies, getPremiumStudies } from '@/data/studies'
+import { useAuthStore } from '@/stores/auth'
 
-const router = useRouter()
+const authStore = useAuthStore()
 
-// Safe auth store initialization
-const authStoreRef = ref({
-  isAuthenticated: false,
-  user: null,
-  isPremium: false,
-})
+const freeStudies = getFreeStudies()
+const premiumStudies = getPremiumStudies()
 
-// Safe computed for auth store access
-const authStore = computed(() => {
-  return (
-    authStoreRef.value || {
-      isAuthenticated: false,
-      user: null,
-      isPremium: false,
-    }
-  )
-})
-
-// Initialize store when component mounts
-onMounted(() => {
-  try {
-    authStoreRef.value = useAuthStore()
-  } catch (error) {
-    console.warn('Failed to initialize auth store in StudySeriesPage:', error)
-  }
-})
-
-const activeFilter = ref<'all' | 'free' | 'premium'>('all')
-const freeStudies = ref(getFreeStudies())
-const premiumStudies = ref(getPremiumStudies())
-
-const showFreeStudies = computed(
-  () => activeFilter.value === 'all' || activeFilter.value === 'free',
-)
-
-const showPremiumStudies = computed(
-  () => activeFilter.value === 'all' || activeFilter.value === 'premium',
-)
-
-const goToStudy = (studyId: string) => {
-  // Require authentication to access any study content
-  if (!authStore.isAuthenticated) {
-    router.push({
-      name: 'signin',
-      query: { redirect: `/study/${studyId}` },
-    })
-    return
-  }
-  router.push(`/study/${studyId}`)
-}
-
-const handlePremiumStudy = (studyId: string) => {
-  if (authStore.isPremium) {
-    goToStudy(studyId)
-  } else {
-    upgradeToPremium()
-  }
-}
-
-const upgradeToPremium = () => {
-  // TODO: Implement premium upgrade flow
-  alert(
-    'Premium upgrade coming soon! Only $9.99/month with 3-day free trial. For now, use the demo premium account: demo@biblestem.com / demo123',
-  )
-}
-
-onMounted(() => {
-  // Auth store already initialized above
-})
+const isPremium = computed(() => authStore.isPremium)
 </script>
 
-<style scoped>
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-</style>

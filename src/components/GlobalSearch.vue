@@ -312,7 +312,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { getFreeStudies, getPremiumStudies, type Study, type Lesson } from '@/data/studies'
+import { getAllStudies, type Study, type Lesson } from '@/data/studies'
 import { useNotesStore, type StudyNote } from '@/stores/notes'
 
 interface LessonSearchResult extends Lesson {
@@ -363,7 +363,7 @@ const searchResults = ref<SearchResults>({
 })
 
 // All available content
-const allStudies = computed(() => [...getFreeStudies(), ...getPremiumStudies()])
+const allStudies = computed(() => getAllStudies())
 const allLessons = computed(() => {
   const lessons: LessonSearchResult[] = []
   allStudies.value.forEach((study) => {
@@ -379,7 +379,7 @@ const allLessons = computed(() => {
 })
 
 // Debounced search
-let searchTimeout: NodeJS.Timeout
+let searchTimeout: ReturnType<typeof setTimeout>
 
 watch(searchQuery, (newQuery) => {
   clearTimeout(searchTimeout)

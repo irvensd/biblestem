@@ -1,225 +1,96 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
-import { useErrorStore } from '../stores/errors'
-import { useLoadingStore } from '../stores/loading'
-import HomePage from '../views/HomePage.vue'
-import StudySeriesPage from '../views/StudySeriesPage.vue'
-import StudyPage from '../views/StudyPage.vue'
-import SignInPage from '../views/SignInPage.vue'
-import SignUpPage from '../views/SignUpPage.vue'
-import DashboardPage from '../views/DashboardPage.vue'
-import DailyDevotionsPage from '../views/DailyDevotionsPage.vue'
-import MyStudiesPage from '../views/MyStudiesPage.vue'
-import ProfilePage from '../views/ProfilePage.vue'
-import SettingsPage from '../views/SettingsPage.vue'
-import PlaceholderPage from '../views/PlaceholderPage.vue'
-import AboutPage from '../views/AboutPage.vue'
-import ContactPage from '../views/ContactPage.vue'
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: () => import('../views/HomePage.vue')
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/DashboardPage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/study-series',
+    name: 'StudySeries',
+    component: () => import('../views/StudySeriesPage.vue')
+  },
+  {
+    path: '/study/:id',
+    name: 'Study',
+    component: () => import('../views/StudyPage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/study/:studyId/lesson/:lessonId',
+    name: 'Lesson',
+    component: () => import('../views/LessonPage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/ProfilePage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('../views/SettingsPage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/sign-in',
+    name: 'SignIn',
+    component: () => import('../views/SignInPage.vue')
+  },
+  {
+    path: '/signin',
+    redirect: '/sign-in'
+  },
+  {
+    path: '/sign-up',
+    name: 'SignUp',
+    component: () => import('../views/SignUpPage.vue')
+  },
+  {
+    path: '/signup',
+    redirect: '/sign-up'
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: () => import('../views/AboutPage.vue')
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: () => import('../views/ContactPage.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('../views/PlaceholderPage.vue')
+  }
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomePage,
-    },
-    {
-      path: '/signin',
-      name: 'signin',
-      component: SignInPage,
-      meta: { requiresGuest: true },
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: SignUpPage,
-      meta: { requiresGuest: true },
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: DashboardPage,
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/study-series',
-      name: 'study-series',
-      component: StudySeriesPage,
-    },
-    {
-      path: '/study/:id',
-      name: 'study',
-      component: StudyPage,
-      props: true,
-      meta: { requiresAuth: true, checkPremium: true },
-    },
-    {
-      path: '/my-studies',
-      name: 'my-studies',
-      component: MyStudiesPage,
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/daily-devotions',
-      name: 'daily-devotions',
-      component: DailyDevotionsPage,
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/profile',
-      name: 'profile',
-      component: ProfilePage,
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/settings',
-      name: 'settings',
-      component: SettingsPage,
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: AboutPage,
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: ContactPage,
-    },
-    {
-      path: '/pricing',
-      name: 'pricing',
-      component: PlaceholderPage,
-    },
-    {
-      path: '/blog',
-      name: 'blog',
-      component: PlaceholderPage,
-    },
-    {
-      path: '/help',
-      name: 'help',
-      component: PlaceholderPage,
-    },
-    // Catch all route - must be last
-    {
-      path: '/:pathMatch(.*)*',
-      name: 'not-found',
-      component: PlaceholderPage,
-    },
-  ],
-  scrollBehavior(to, from, savedPosition) {
-    // Always scroll to top when navigating to a new route
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { top: 0 }
-    }
-  },
+  history: createWebHistory(),
+  routes
 })
 
-// Navigation guards
-router.beforeEach(async (to, from, next) => {
-  try {
-    // Try to access stores, but handle gracefully if Pinia isn't ready
-    let authStore: any = null
-    let errorStore: any = null
-    let loadingStore: any = null
-
-    try {
-      authStore = useAuthStore()
-      errorStore = useErrorStore()
-      loadingStore = useLoadingStore()
-
-      // Show loading for navigation
-      loadingStore.setLoading('navigation', true)
-
-      // Wait for auth initialization if not ready
-      if (!authStore.isInitialized) {
-        await authStore.initializeAuth()
-      }
-    } catch (storeError) {
-      console.warn('Stores not ready during navigation, proceeding without auth check:', storeError)
-      // Continue with navigation if stores aren't ready
-      next()
-      return
-    }
-
-    // Check if route requires authentication
-    if (to.meta.requiresAuth && !authStore?.isAuthenticated) {
-      errorStore?.addError?.('Please sign in to access this page', { type: 'info' })
-      next({ name: 'signin', query: { redirect: to.fullPath } })
-      return
-    }
-
-    // Check if route requires guest (not authenticated)
-    if (to.meta.requiresGuest && authStore?.isAuthenticated) {
-      next({ name: 'dashboard' })
-      return
-    }
-
-    // Check premium access for studies
-    if (to.meta.checkPremium && to.params.id && authStore) {
-      const studyId = to.params.id as string
-      const isPremiumStudy = await checkIfPremiumStudy(studyId)
-
-      if (isPremiumStudy && !authStore.isPremium) {
-        errorStore?.addError?.('Premium subscription required for this study', { type: 'warning' })
-        next({ name: 'study-series', query: { premium: 'required' } })
-        return
-      }
-    }
-
-    // Validate study exists
-    if (to.name === 'study' && to.params.id) {
-      const studyExists = await validateStudyExists(to.params.id as string)
-      if (!studyExists) {
-        errorStore?.addError?.('Study not found', { type: 'warning' })
-        next({ name: 'study-series' })
-        return
-      }
-    }
-
+// Navigation guard for auth
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+  
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next({ name: 'SignIn' })
+  } else {
     next()
-  } catch (error) {
-    console.error('Navigation guard error:', error)
-    errorStore?.handleError?.(error, 'Navigation')
-    next({ name: 'home' })
-  } finally {
-    loadingStore?.clearLoading?.('navigation')
   }
-})
-
-// Helper function to check if study is premium
-async function checkIfPremiumStudy(studyId: string): Promise<boolean> {
-  try {
-    // Import dynamically to avoid circular dependencies
-    const { getPremiumStudies } = await import('../data/studies')
-    const premiumStudies = getPremiumStudies()
-    return premiumStudies.some((study) => study.id === studyId)
-  } catch {
-    return false
-  }
-}
-
-// Helper function to validate study exists
-async function validateStudyExists(studyId: string): Promise<boolean> {
-  try {
-    const { getStudyById } = await import('../data/studies')
-    const study = getStudyById(studyId)
-    return !!study
-  } catch {
-    return false
-  }
-}
-
-// Global error handler for navigation
-router.onError((error) => {
-  console.error('Router error:', error)
-  const errorStore = useErrorStore()
-  errorStore.handleError(error, 'Router')
 })
 
 export default router

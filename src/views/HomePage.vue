@@ -1,580 +1,378 @@
 <template>
   <div class="min-h-screen">
-    <!-- Hero Section -->
-    <section
-      class="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900"
-    >
-      <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      <div class="container-base section-padding relative">
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <!-- Left Content -->
-          <div class="text-center lg:text-left animate-slide-up">
-            <h1 class="text-5xl lg:text-7xl font-bold leading-tight mb-6">
-              <span class="gradient-text">Transform</span><br />
-              Your Bible Study<br />
-              <span class="text-neutral-800 dark:text-neutral-200">Journey</span>
-            </h1>
-            <p
-              class="text-xl lg:text-2xl text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed"
-            >
-              Discover interactive, modern Bible studies designed for individuals who struggle to
-              study Scripture on their own. Join thousands finding their path to deeper faith.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <router-link
-                :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
-                class="btn-primary text-lg px-8 py-4 inline-block text-center"
-              >
-                {{ authStore.isAuthenticated ? 'Go to Dashboard' : 'Start Free Study' }}
-              </router-link>
-              <router-link
-                to="/study-series"
-                class="btn-secondary text-lg px-8 py-4 inline-block text-center"
-              >
-                Explore Series
-              </router-link>
+    <!-- Hero Section with Background Pattern -->
+    <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-20 md:py-32 overflow-hidden">
+      <!-- Animated Background Circles -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-20 animate-pulse"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 1s"></div>
+      </div>
+      
+      <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-5xl mx-auto">
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Left Side - Text Content -->
+            <div class="text-center md:text-left">
+              <div class="mb-6 animate-slide-up">
+                <span class="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold border border-white/30">
+                  ✨ Trusted by 50,000+ Believers
+                </span>
+              </div>
+              <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up" style="animation-delay: 0.1s">
+                Deep Bible Study
+                <span class="block mt-3 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                  Made Simple
+                </span>
+              </h1>
+              <p class="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed animate-slide-up" style="animation-delay: 0.2s">
+                Discover God's Word through <strong>interactive studies</strong>, <strong>Hebrew & Greek insights</strong>, and guided reflection that transforms your daily walk.
+              </p>
+              <div class="flex flex-col sm:flex-row gap-4 mb-8 animate-slide-up" style="animation-delay: 0.3s">
+                <router-link 
+                  to="/sign-up" 
+                  class="btn bg-white text-primary-600 hover:bg-white/90 px-8 py-4 rounded-xl text-lg font-semibold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all flex items-center justify-center gap-2 group"
+                >
+                  Start Free Today
+                  <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </router-link>
+                <router-link 
+                  to="/sign-in" 
+                  class="btn border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm"
+                >
+                  Sign In
+                </router-link>
+              </div>
+              
+              <!-- Trust Indicators -->
+              <div class="flex flex-wrap gap-6 text-white/80 text-sm animate-slide-up" style="animation-delay: 0.4s">
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span class="font-semibold">4.9/5 Rating</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                  </svg>
+                  <span class="font-semibold">50,000+ Users</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm-2 4h2v2H7v-2z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="font-semibold">100+ Studies</span>
+                </div>
+              </div>
             </div>
 
-            <!-- Stats -->
-            <div
-              class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-700"
-            >
-              <div class="text-center">
-                <div class="text-2xl lg:text-3xl font-bold text-primary-600">50+</div>
-                <div class="text-sm text-neutral-600 dark:text-neutral-400">Study Series</div>
-              </div>
-              <div class="text-center">
-                <div class="text-2xl lg:text-3xl font-bold text-primary-600">10k+</div>
-                <div class="text-sm text-neutral-600 dark:text-neutral-400">Active Learners</div>
-              </div>
-              <div class="text-center">
-                <div class="text-2xl lg:text-3xl font-bold text-primary-600">98%</div>
-                <div class="text-sm text-neutral-600 dark:text-neutral-400">Satisfaction</div>
+            <!-- Right Side - Visual Preview -->
+            <div class="hidden md:block">
+              <div class="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/20 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                <div class="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-2xl p-6 text-white">
+                  <div class="flex items-center justify-between mb-4">
+                    <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-semibold">LIVE</span>
+                    <span class="text-xs text-gray-400">Psalm 119:18</span>
+                  </div>
+                  <div class="mb-4">
+                    <div class="text-2xl font-bold mb-2">Study in Progress</div>
+                    <div class="text-gray-400 text-sm">How to Study the Bible - Lesson 1</div>
+                  </div>
+                  <div class="space-y-2 text-sm">
+                    <div class="flex items-center gap-2 text-emerald-300">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      Scripture Read
+                    </div>
+                    <div class="flex items-center gap-2 text-emerald-300">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      Quiz Completed
+                    </div>
+                    <div class="flex items-center gap-2 text-yellow-300">
+                      <div class="w-4 h-4 border-2 border-yellow-300 rounded-full animate-pulse"></div>
+                      Application
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <!-- Right Content - Hero Image/Illustration -->
-          <div class="relative lg:animate-bounce-gentle">
-            <div class="relative">
-              <!-- Main Card -->
-              <div
-                class="card p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500"
-              >
-                <div class="flex items-center space-x-3 mb-6">
-                  <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
-                  <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+    <!-- Study Categories Preview -->
+    <section class="py-20 bg-white dark:bg-neutral-900">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold mb-4">Study Categories</h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Explore various topics tailored for every stage of your spiritual journey
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
+          <div class="card card-interactive p-6 text-center transform hover:scale-105 transition-all">
+            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+              <span class="text-3xl">📖</span>
+            </div>
+            <h3 class="font-bold text-lg">Foundations</h3>
+            <p class="text-sm text-gray-600 mt-2">Basic Bible study principles</p>
+          </div>
+
+          <div class="card card-interactive p-6 text-center transform hover:scale-105 transition-all">
+            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+              <span class="text-3xl">💒</span>
+            </div>
+            <h3 class="font-bold text-lg">Theology</h3>
+            <p class="text-sm text-gray-600 mt-2">Deep doctrinal studies</p>
+          </div>
+
+          <div class="card card-interactive p-6 text-center transform hover:scale-105 transition-all">
+            <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+              <span class="text-3xl">🎯</span>
+            </div>
+            <h3 class="font-bold text-lg">Life Application</h3>
+            <p class="text-sm text-gray-600 mt-2">Practical faith living</p>
+          </div>
+
+          <div class="card card-interactive p-6 text-center transform hover:scale-105 transition-all">
+            <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+              <span class="text-3xl">📜</span>
+            </div>
+            <h3 class="font-bold text-lg">Prophecy</h3>
+            <p class="text-sm text-gray-600 mt-2">Biblical prophecy studies</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sample Study Preview -->
+    <section class="py-20 bg-gray-50 dark:bg-neutral-800">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold mb-4">See What You'll Learn</h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            A complete study series ready to explore
+          </p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+          <div class="card p-0 overflow-hidden shadow-2xl">
+            <!-- Study Header -->
+            <div class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white p-8">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                    <span class="text-2xl">📖</span>
+                  </div>
+                  <div>
+                    <h3 class="text-2xl font-bold">How to Study the Bible</h3>
+                    <p class="text-emerald-100">The Preparation • FREE Study</p>
+                  </div>
                 </div>
-                <h3 class="text-lg font-bold mb-4 text-neutral-800 dark:text-neutral-200">
-                  Today's Study: Psalm 23
-                </h3>
-                <div class="space-y-3">
-                  <div
-                    class="h-3 bg-gradient-to-r from-primary-200 to-primary-100 rounded-full"
-                  ></div>
-                  <div
-                    class="h-3 bg-gradient-to-r from-secondary-200 to-secondary-100 rounded-full w-4/5"
-                  ></div>
-                  <div
-                    class="h-3 bg-gradient-to-r from-accent-200 to-accent-100 rounded-full w-3/5"
-                  ></div>
+                <span class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30">
+                  🎁 FREE
+                </span>
+              </div>
+              <div class="flex items-center gap-6 text-sm">
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                  </svg>
+                  <span>6 Lessons</span>
                 </div>
-                <div class="mt-6 flex items-center justify-between">
-                  <span class="text-sm text-neutral-600 dark:text-neutral-400">Progress: 65%</span>
-                  <div
-                    class="w-16 h-2 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden"
-                  >
-                    <div
-                      class="w-2/3 h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"
-                    ></div>
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                  </svg>
+                  <span>36 Minutes</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293A1 1 0 019 8a1 1 0 01-1.414 1.414L5.586 7H8a1 1 0 100-2H4a1 1 0 01-1-1zm9 1a1 1 0 010-2h3a1 1 0 011 1v3a1 1 0 01-2 0V6.414l-2.293 2.293A1 1 0 0111 10a1 1 0 01-1.414-1.414L12.414 6H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293A1 1 0 0117 11a1 1 0 01-1.414 1.414L13.586 15H14a1 1 0 100 2h-4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Beginner</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Study Content Preview -->
+            <div class="bg-white dark:bg-neutral-800 p-8">
+              <div class="mb-6">
+                <h4 class="text-lg font-bold mb-3">What You'll Learn:</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="flex items-start gap-3 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
+                    <svg class="w-6 h-6 text-primary-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <div>
+                      <div class="font-semibold text-sm mb-1">Prayer First</div>
+                      <div class="text-xs text-gray-600 dark:text-gray-400">Learn the importance of prayer in Bible study</div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3 p-4 bg-secondary-50 dark:bg-secondary-900/20 rounded-xl">
+                    <svg class="w-6 h-6 text-secondary-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <div>
+                      <div class="font-semibold text-sm mb-1">Maturity & Independence</div>
+                      <div class="text-xs text-gray-600 dark:text-gray-400">Grow from milk to spiritual meat</div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3 p-4 bg-accent-50 dark:bg-accent-900/20 rounded-xl">
+                    <svg class="w-6 h-6 text-accent-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <div>
+                      <div class="font-semibold text-sm mb-1">Humility & Teachability</div>
+                      <div class="text-xs text-gray-600 dark:text-gray-400">Approach God's Word with an open heart</div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                    <svg class="w-6 h-6 text-purple-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <div>
+                      <div class="font-semibold text-sm mb-1">Obedience & Trust</div>
+                      <div class="text-xs text-gray-600 dark:text-gray-400">Apply what you learn to your daily walk</div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Floating Elements -->
-              <div
-                class="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-accent-400 to-accent-500 rounded-xl flex items-center justify-center shadow-strong animate-bounce-gentle"
-              >
-                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                  />
-                </svg>
+              <!-- Scripture Preview -->
+              <div class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-2xl p-6 mb-6 border border-primary-200 dark:border-primary-800">
+                <div class="text-sm text-gray-500 mb-3 font-semibold">Scripture Preview</div>
+                <p class="text-2xl italic text-center leading-relaxed mb-4">
+                  "Open thou mine eyes, that I may behold wondrous things out of thy law."
+                </p>
+                <div class="text-center text-sm text-gray-600 dark:text-gray-400">Psalm 119:18</div>
               </div>
 
-              <div
-                class="absolute -bottom-6 -left-6 w-16 h-16 bg-gradient-to-br from-secondary-400 to-secondary-500 rounded-full flex items-center justify-center shadow-medium animate-bounce-gentle"
-                style="animation-delay: 1s"
+              <!-- CTA Button -->
+              <router-link 
+                to="/sign-up" 
+                class="btn btn-primary w-full py-4 text-lg font-semibold flex items-center justify-center gap-2 group"
               >
-                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                Start This Study Free
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="section-padding bg-white dark:bg-neutral-900">
-      <div class="container-base">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-neutral-800 dark:text-neutral-200">
-            Why Choose <span class="gradient-text">BibleStem</span>?
-          </h2>
-          <p class="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
-            We've designed the perfect platform for modern Bible study, combining traditional wisdom
-            with interactive technology.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Features Section with Icons -->
+    <section class="py-20 bg-white dark:bg-neutral-900">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-4">Why Choose BibleStem?</h2>
+        <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+          Everything you need for deep, meaningful Bible study in one powerful platform
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <!-- Feature 1 -->
-          <div class="card p-8 hover:scale-105 transition-all duration-300 group">
-            <div
-              class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
-            >
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                />
+          <div class="group card p-8 text-center transform hover:scale-105 transition-all">
+            <div class="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-2xl transition-all">
+              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">
-              Interactive Learning
-            </h3>
-            <p class="text-neutral-600 dark:text-neutral-400">
-              Engage with Scripture through quizzes, reflections, and multimedia content that makes
-              learning memorable and meaningful.
+            <h3 class="text-xl font-bold mb-3">Interactive Learning</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Engage with Scripture through quizzes, reflections, and guided learning that makes study come alive.
             </p>
           </div>
 
           <!-- Feature 2 -->
-          <div class="card p-8 hover:scale-105 transition-all duration-300 group">
-            <div
-              class="w-12 h-12 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
-            >
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z"
-                />
+          <div class="group card p-8 text-center transform hover:scale-105 transition-all">
+            <div class="w-20 h-20 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-2xl transition-all">
+              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">
-              Structured Curriculum
-            </h3>
-            <p class="text-neutral-600 dark:text-neutral-400">
-              Follow carefully crafted study paths that build upon each other, ensuring
-              comprehensive understanding of Biblical themes.
+            <h3 class="text-xl font-bold mb-3">Original Languages</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Dive deep into Hebrew and Greek words with meanings, transliterations, and contextual insights.
             </p>
           </div>
 
           <!-- Feature 3 -->
-          <div class="card p-8 hover:scale-105 transition-all duration-300 group">
-            <div
-              class="w-12 h-12 bg-gradient-to-br from-accent-500 to-accent-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
-            >
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
+          <div class="group card p-8 text-center transform hover:scale-105 transition-all">
+            <div class="w-20 h-20 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-2xl transition-all">
+              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">
-              Track Progress
-            </h3>
-            <p class="text-neutral-600 dark:text-neutral-400">
-              Monitor your spiritual growth with detailed analytics, achievement badges, and
-              personalized study recommendations.
-            </p>
-          </div>
-
-          <!-- Feature 4 -->
-          <div class="card p-8 hover:scale-105 transition-all duration-300 group">
-            <div
-              class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
-            >
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                />
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">
-              Premium & Free Content
-            </h3>
-            <p class="text-neutral-600 dark:text-neutral-400">
-              Access essential studies for free, or unlock premium series with expert commentary and
-              advanced study tools.
-            </p>
-          </div>
-
-          <!-- Feature 5 -->
-          <div class="card p-8 hover:scale-105 transition-all duration-300 group">
-            <div
-              class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
-            >
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                />
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">
-              Daily Devotions
-            </h3>
-            <p class="text-neutral-600 dark:text-neutral-400">
-              Start each day with purpose through guided devotional content, scripture reflection,
-              and prayer prompts tailored for spiritual growth.
-            </p>
-          </div>
-
-          <!-- Feature 6 -->
-          <div class="card p-8 hover:scale-105 transition-all duration-300 group">
-            <div
-              class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
-            >
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM8 17.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM9.5 8c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5S9.5 8.83 9.5 8zm7 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-                />
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">
-              Flexible Schedule
-            </h3>
-            <p class="text-neutral-600 dark:text-neutral-400">
-              Study at your own pace with content available 24/7, perfect for busy schedules and
-              different learning preferences.
+            <h3 class="text-xl font-bold mb-3">Track Your Journey</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Monitor spiritual growth with progress tracking, achievements, and personalized insights.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="section-padding bg-neutral-50 dark:bg-neutral-800">
-      <div class="container-base">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-neutral-800 dark:text-neutral-200">
-            Choose Your <span class="gradient-text">Study Plan</span>
-          </h2>
-          <p class="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
-            Start with our free plan and discover the power of interactive Bible study. Upgrade
-            anytime to unlock premium content and advanced features.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <!-- Free Plan -->
-          <div
-            class="card p-8 hover:scale-105 transition-all duration-300 border-2 border-neutral-200 dark:border-neutral-700"
-          >
-            <div class="text-center mb-8">
-              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-2">Free</h3>
-              <div class="text-4xl font-bold text-neutral-800 dark:text-neutral-200 mb-2">$0</div>
-              <div class="text-sm text-neutral-600 dark:text-neutral-400">Forever</div>
-            </div>
-
-            <div class="space-y-4 mb-8">
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300"
-                  >15+ Free Bible study series</span
-                >
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300"
-                  >Interactive lessons & quizzes</span
-                >
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300">Progress tracking</span>
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300">Basic achievement badges</span>
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300">Study templates</span>
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300">Scripture memory cards</span>
-              </div>
-            </div>
-
-            <router-link
-              :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
-              class="w-full btn-secondary text-center block"
-            >
-              {{ authStore.isAuthenticated ? 'Continue Free' : 'Get Started Free' }}
-            </router-link>
-          </div>
-
-          <!-- Premium Plan -->
-          <div
-            class="card p-8 hover:scale-105 transition-all duration-300 border-2 border-accent-500 relative"
-          >
-            <!-- Popular Badge -->
-            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-              <span class="bg-accent-500 text-white px-4 py-2 rounded-full text-sm font-semibold"
-                >Most Popular</span
-              >
-            </div>
-
-            <div class="text-center mb-8">
-              <h3 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 mb-2">
-                Premium
-              </h3>
-              <div class="text-4xl font-bold text-accent-600 mb-2">$9.99</div>
-              <div class="text-sm text-neutral-600 dark:text-neutral-400">per month</div>
-            </div>
-
-            <div class="space-y-4 mb-8">
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300"
-                  ><strong>Everything in Free</strong> +</span
-                >
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300"
-                  ><strong>New study series every month</strong></span
-                >
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300">25+ Premium study series</span>
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300"
-                  >Extended 15-25 minute lessons</span
-                >
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300"
-                  >Video content & animations</span
-                >
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07 3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300"
-                  >Expert commentary & insights</span
-                >
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300"
-                  >Downloadable study guides</span
-                >
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300">Priority support</span>
-              </div>
-              <div class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-accent-500 mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  />
-                </svg>
-                <span class="text-neutral-700 dark:text-neutral-300">Offline study access</span>
-              </div>
-            </div>
-
-            <router-link
-              :to="authStore.isAuthenticated ? '/dashboard' : '/signup'"
-              class="w-full btn-accent text-center block"
-            >
-              {{ authStore.isAuthenticated ? 'Upgrade Now' : 'Start 3-Day Trial' }}
-            </router-link>
-          </div>
-        </div>
-
-        <!-- Additional Info -->
-        <div class="text-center mt-12">
-          <div
-            class="bg-white dark:bg-neutral-900 rounded-xl p-6 shadow-soft border border-neutral-200 dark:border-neutral-700 max-w-2xl mx-auto"
-          >
-            <h4 class="font-bold text-lg text-neutral-800 dark:text-neutral-200 mb-3">
-              ✨ Fresh Content Every Month
-            </h4>
-            <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
-              Premium subscribers get access to brand new Bible study series every month, featuring
-              seasonal topics, current events through a Biblical lens, and deep dives into specific
-              books of the Bible. Your subscription ensures you'll never run out of meaningful
-              content to explore.
-            </p>
-          </div>
-          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-6">
-            Cancel anytime • No long-term commitment • 3-day free trial for new premium subscribers
-          </p>
-        </div>
+    <!-- Final CTA -->
+    <section class="py-20 bg-gradient-to-r from-primary-600 to-secondary-600 text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
       </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="section-padding bg-gradient-to-r from-primary-600 to-secondary-600">
-      <div class="container-base text-center">
-        <div class="max-w-4xl mx-auto">
-          <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Ready to Transform Your Bible Study?
-          </h2>
-          <p class="text-xl text-primary-100 mb-8">
-            Join thousands of believers who have discovered the joy of interactive Bible study.
-            Start your journey today with our 3-day free trial.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <router-link
-              :to="authStore.isAuthenticated ? '/dashboard' : '/signin'"
-              class="bg-white text-primary-600 hover:bg-primary-50 font-bold py-4 px-8 rounded-lg text-lg transition-all duration-200 shadow-medium hover:shadow-strong inline-block text-center"
-            >
-              {{ authStore.isAuthenticated ? 'Go to Dashboard' : 'Start 3-Day Free Trial' }}
-            </router-link>
-            <router-link
-              to="/study-series"
-              class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-600 font-bold py-4 px-8 rounded-lg text-lg transition-all duration-200 inline-block text-center"
-            >
-              View Study Series
-            </router-link>
-          </div>
+      
+      <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Ready to Start Your Journey?</h2>
+        <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+          Join thousands of believers who are deepening their understanding of Scripture every day
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+          <router-link 
+            to="/sign-up" 
+            class="btn bg-white text-primary-600 hover:bg-white/90 px-10 py-4 rounded-xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all flex items-center justify-center gap-2 group"
+          >
+            Start Studying Free →
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </router-link>
+          <router-link 
+            to="/sign-in" 
+            class="btn border-2 border-white text-white hover:bg-white/10 px-10 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm"
+          >
+            Already Have Account?
+          </router-link>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-6 text-white/90 text-sm">
+          <span class="inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            No credit card required
+          </span>
+          <span class="inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Free forever plan
+          </span>
+          <span class="inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Start in seconds
+          </span>
         </div>
       </div>
     </section>
@@ -582,40 +380,5 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { useAuthStore } from '../stores/auth'
-
-// Safe auth store initialization
-const authStoreRef = ref({
-  isAuthenticated: false,
-  user: null,
-  isPremium: false,
-})
-
-// Safe computed for auth store access
-const authStore = computed(() => {
-  return (
-    authStoreRef.value || {
-      isAuthenticated: false,
-      user: null,
-      isPremium: false,
-    }
-  )
-})
-
-// Initialize store when component mounts
-onMounted(() => {
-  try {
-    authStoreRef.value = useAuthStore()
-  } catch (error) {
-    console.warn('Failed to initialize auth store in HomePage:', error)
-  }
-})
+// Beautiful home page with complete content
 </script>
-
-<style scoped>
-.bg-grid-pattern {
-  background-image: radial-gradient(circle, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
-  background-size: 30px 30px;
-}
-</style>

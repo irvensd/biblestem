@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useAuthStore } from './auth'
 
 export interface StudyProgress {
   studyId: string
@@ -8,6 +9,7 @@ export interface StudyProgress {
   startedAt: string
   lastAccessedAt: string
   totalTimeSpent: number
+  acceptedChallenges: string[] // Track accepted challenges by lesson ID
 }
 
 export const useStudyProgressStore = defineStore('studyProgress', () => {
@@ -25,6 +27,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           startedAt: '2024-01-10',
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 20,
+          acceptedChallenges: ['p23-1', 'p23-2', 'p23-3', 'p23-4'],
         },
         'lords-prayer': {
           studyId: 'lords-prayer',
@@ -33,6 +36,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           startedAt: '2024-01-05',
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 30,
+          acceptedChallenges: ['lp-1', 'lp-2', 'lp-3', 'lp-4', 'lp-5', 'lp-6'],
         },
         'faith-over-fear': {
           studyId: 'faith-over-fear',
@@ -41,6 +45,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           startedAt: '2024-01-01',
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 25,
+          acceptedChallenges: ['fof-1', 'fof-2', 'fof-3', 'fof-4', 'fof-5'],
         },
 
         // In Progress Studies
@@ -51,6 +56,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           startedAt: '2024-01-15',
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 15,
+          acceptedChallenges: ['loj-1', 'loj-2', 'loj-3'],
         },
         'how-to-study-bible': {
           studyId: 'how-to-study-bible',
@@ -59,6 +65,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           startedAt: '2024-01-20',
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 12,
+          acceptedChallenges: ['htsb-1', 'htsb-2'],
         },
         'fruit-of-spirit': {
           studyId: 'fruit-of-spirit',
@@ -67,6 +74,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           startedAt: '2024-01-25',
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 5,
+          acceptedChallenges: ['fos-1'],
         },
 
         // Started but minimal progress
@@ -77,6 +85,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           startedAt: '2024-01-28',
           lastAccessedAt: new Date().toISOString(),
           totalTimeSpent: 5,
+          acceptedChallenges: ['aog-1'],
         },
       }
       saveToStorage()
@@ -100,6 +109,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
         startedAt: new Date().toISOString(),
         lastAccessedAt: new Date().toISOString(),
         totalTimeSpent: 0,
+        acceptedChallenges: [],
       }
     }
 
@@ -119,6 +129,42 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     )
   }
 
+  const isChallengeAccepted = (studyId: string, lessonId: string): boolean => {
+    const progress = progressData.value[studyId]
+    return progress ? (progress.acceptedChallenges || []).includes(lessonId) : false
+  }
+
+  const acceptChallenge = async (studyId: string, lessonId: string) => {
+    if (!progressData.value[studyId]) {
+      progressData.value[studyId] = {
+        studyId,
+        completedLessons: [],
+        startedAt: new Date().toISOString(),
+        lastAccessedAt: new Date().toISOString(),
+        totalTimeSpent: 0,
+        acceptedChallenges: [],
+      }
+    }
+
+    const progress = progressData.value[studyId]
+    
+    if (!progress.acceptedChallenges) {
+      progress.acceptedChallenges = []
+    }
+
+    if (!progress.acceptedChallenges.includes(lessonId)) {
+      progress.acceptedChallenges.push(lessonId)
+    }
+
+    progress.lastAccessedAt = new Date().toISOString()
+    saveToStorage()
+    
+    // Fire and forget Firebase sync - don't block UI
+    saveProgressToFirebase(studyId).catch((error) =>
+      console.error('Failed to sync progress to Firebase:', error),
+    )
+  }
+
   const startStudy = async (studyId: string, lessonId?: string) => {
     if (!progressData.value[studyId]) {
       progressData.value[studyId] = {
@@ -128,6 +174,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
         startedAt: new Date().toISOString(),
         lastAccessedAt: new Date().toISOString(),
         totalTimeSpent: 0,
+        acceptedChallenges: [],
       }
     } else {
       progressData.value[studyId].lastAccessedAt = new Date().toISOString()
@@ -172,56 +219,13 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
   }
 
   const syncWithFirebase = async () => {
-    const authStore = useAuthStore()
-    if (!authStore.isAuthenticated) return
-
-    try {
-      // Fetch user's study progress from Firebase
-      const progressRef = collection(db, 'userProgress')
-      const q = query(progressRef, where('userId', '==', authStore.user!.id))
-      const querySnapshot = await getDocs(q)
-
-      // Transform Firebase data to local format
-      const firebaseProgress: Record<string, StudyProgress> = {}
-      querySnapshot.forEach((doc) => {
-        const data = doc.data()
-        firebaseProgress[data.studyId] = {
-          studyId: data.studyId,
-          completedLessons: data.completedLessons || [],
-          currentLesson: data.currentLesson,
-          startedAt: data.startedAt,
-          lastAccessedAt: data.lastAccessedAt,
-          totalTimeSpent: data.totalTimeSpent,
-        }
-      })
-
-      progressData.value = firebaseProgress
-    } catch (error) {
-      console.error('Error syncing study progress:', error)
-    }
+    // Firebase integration disabled for now
+    console.log('Firebase sync disabled - using local storage only')
   }
 
   const saveProgressToFirebase = async (studyId: string) => {
-    const authStore = useAuthStore()
-    if (!authStore.isAuthenticated) return
-
-    const progress = progressData.value[studyId]
-    if (!progress) return
-
-    try {
-      const progressDocRef = doc(db, 'userProgress', `${authStore.user!.id}_${studyId}`)
-      await setDoc(progressDocRef, {
-        userId: authStore.user!.id,
-        studyId: studyId,
-        completedLessons: progress.completedLessons,
-        currentLesson: progress.currentLesson,
-        startedAt: progress.startedAt,
-        lastAccessedAt: progress.lastAccessedAt,
-        totalTimeSpent: progress.totalTimeSpent,
-      })
-    } catch (error) {
-      console.error('Error saving progress to Firebase:', error)
-    }
+    // Firebase integration disabled for now
+    console.log('Firebase save disabled - using local storage only')
   }
 
   const loadFromStorage = () => {
@@ -301,6 +305,8 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     getPremiumFeatures,
     resetStudyProgress,
     loadFromStorage,
+    isChallengeAccepted,
+    acceptChallenge,
     initializeDemoData,
   }
 })

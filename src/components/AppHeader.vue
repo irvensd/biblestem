@@ -116,8 +116,8 @@
           </template>
         </div>
 
-        <!-- Search Component (Desktop) -->
-        <div class="hidden lg:block flex-1 max-w-md mx-6">
+        <!-- Search Component (Desktop) - Only for Authenticated Users -->
+        <div v-if="authStore.isAuthenticated" class="hidden lg:block flex-1 max-w-md mx-6">
           <GlobalSearch />
         </div>
 
@@ -299,7 +299,7 @@
             </div>
           </div>
 
-          <!-- Search Component (Mobile) -->
+          <!-- Search Component (Mobile) - Only shown for authenticated users -->
           <div class="px-4 mb-4">
             <GlobalSearch />
           </div>

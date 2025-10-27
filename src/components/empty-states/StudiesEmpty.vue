@@ -5,7 +5,7 @@
     :description="description"
     :action-text="actionText"
     :action-to="actionTo"
-    :secondary-text="secondaryText"
+    :secondary-text="secondaryTextValue"
     @secondary-action="$emit('secondary-action')"
   />
 </template>
@@ -60,4 +60,6 @@ const configs = {
 
 const config = configs[props.type]
 const { title, description, actionText, actionTo, secondaryText } = config
+
+const secondaryTextValue = secondaryText === null ? undefined : secondaryText
 </script>
