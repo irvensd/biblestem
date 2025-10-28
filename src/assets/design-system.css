@@ -605,11 +605,11 @@
 }
 
 .text-gradient-warm {
-  @apply bg-gradient-to-r from-accent-500 to-error-500 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent;
 }
 
 .text-gradient-cool {
-  @apply bg-gradient-to-r from-primary-500 to-success-500 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent;
 }
 
 .text-balance {
