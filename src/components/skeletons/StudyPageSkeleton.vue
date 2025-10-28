@@ -58,4 +58,3 @@ withDefaults(defineProps<Props>(), {
   lessonCount: 5
 })
 </script>
-</template>
