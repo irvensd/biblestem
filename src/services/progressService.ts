@@ -19,7 +19,7 @@ class ProgressService {
    * Check if service is available
    */
   isAvailable() {
-    return !config.isMockMode && config.isBackendReady()
+    return !config.isMockMode && config.isBackendReady
   }
 
   /**
