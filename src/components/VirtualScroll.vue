@@ -306,7 +306,7 @@ const handleScroll = (event: Event) => {
   }
   
   // Emit item visibility events
-  visibleItems.value.forEach((item, index) => {
+  visibleItems.value.forEach((item, index: number) => {
     const actualIndex = visibleStartIndex.value + index
     emit('item-visible', item, actualIndex)
   })

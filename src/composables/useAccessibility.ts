@@ -27,7 +27,14 @@ export function useAccessibility(options: AccessibilityOptions = {}) {
     ...options
   }
   
-  const announcements = ref<string[]>([])
+  interface Announcement {
+    id: string
+    message: string
+    priority: 'polite' | 'assertive'
+    timestamp: number
+  }
+  
+  const announcements = ref<Announcement[]>([])
   const isNavigating = ref(false)
   const currentPage = ref('')
   
@@ -35,7 +42,7 @@ export function useAccessibility(options: AccessibilityOptions = {}) {
   const announce = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
     if (!defaultOptions.announceChanges) return
     
-    const announcement = {
+    const announcement: Announcement = {
       id: Date.now().toString(),
       message,
       priority,

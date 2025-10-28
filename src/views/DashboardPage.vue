@@ -306,20 +306,27 @@ const welcomeMessage = computed(() => {
 const completedStudies = computed(() => {
   return studies.value.filter(study => {
     const progress = progressStore.getStudyProgress(study.id)
-    return progress.completionPercentage === 100
+    if (!progress) return false
+    const totalLessons = study.lessons.length
+    const completedLessons = progress.completedLessons.length
+    return totalLessons > 0 && completedLessons === totalLessons
   })
 })
 
 const inProgressStudies = computed(() => {
   return studies.value.filter(study => {
     const progress = progressStore.getStudyProgress(study.id)
-    return progress.completionPercentage > 0 && progress.completionPercentage < 100
+    if (!progress) return false
+    const totalLessons = study.lessons.length
+    const completedLessons = progress.completedLessons.length
+    return completedLessons > 0 && completedLessons < totalLessons
   })
 })
 
 const totalStudyTime = computed(() => {
   return completedStudies.value.reduce((total, study) => {
-    return total + (study.estimatedTime || 0)
+    const totalDuration = study.lessons.reduce((sum, lesson) => sum + (lesson.duration || 0), 0)
+    return total + totalDuration
   }, 0)
 })
 

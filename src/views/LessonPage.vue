@@ -118,7 +118,7 @@
           <!-- Enhanced Scripture Display with Highlighting -->
           <div class="mb-6">
             <VerseHighlighting
-              :scripture-text="lesson.content.scriptureText"
+              :scripture-text="lesson.content.scriptureText || ''"
               :reference="lesson.scripture"
               :is-selectable="true"
               :existing-highlights="existingHighlights"
@@ -602,14 +602,16 @@ const canAccessNextLesson = computed(() => {
 })
 
 // Section refs object for ReadingProgress component
-const sectionRefs = computed(() => ({
-  1: section1.value,
-  2: section2.value,
-  3: section3.value,
-  4: section4.value,
-  5: section5.value,
-  6: section6.value,
-}))
+const sectionRefs = computed((): Record<number, HTMLElement> => {
+  const refs: Record<number, HTMLElement> = {}
+  if (section1.value) refs[1] = section1.value
+  if (section2.value) refs[2] = section2.value
+  if (section3.value) refs[3] = section3.value
+  if (section4.value) refs[4] = section4.value
+  if (section5.value) refs[5] = section5.value
+  if (section6.value) refs[6] = section6.value
+  return refs
+})
 
 // Methods
 const getReflectionPrompt = () => {
@@ -667,7 +669,7 @@ const autoSaveNotes = () => {
 
 const saveApplicationStatus = () => {
   if (applicationComplete.value) {
-    progressStore.markChallengeAccepted(
+    progressStore.acceptChallenge(
       route.params.studyId as string,
       route.params.lessonId as string
     )
@@ -760,12 +762,13 @@ const handleVerseShare = (verseId: string, text: string) => {
 
 const handleNoteSave = (note: any) => {
   medium()
-  notesStore.addNote({
+  notesStore.createNote({
     studyId: route.params.studyId as string,
     lessonId: route.params.lessonId as string,
     content: note.content,
     type: 'reflection',
-    tags: note.tags
+    tags: note.tags,
+    isPrivate: true
   })
 }
 

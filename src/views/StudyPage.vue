@@ -188,7 +188,10 @@ onMounted(async () => {
     } else {
       // Fallback to local data for demo
       const { getStudyById } = await import('../data/studies')
-      study.value = getStudyById(studyId)
+      const foundStudy = getStudyById(studyId)
+      if (foundStudy) {
+        study.value = foundStudy
+      }
     }
 
     // Load user progress to show completion status

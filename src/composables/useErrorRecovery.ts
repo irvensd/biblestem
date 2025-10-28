@@ -149,7 +149,7 @@ export function useErrorRecovery() {
         backoffMultiplier: finalConfig.backoffMultiplier
       })
     } catch (error) {
-      const networkError = handleNetworkError(error)
+      const networkError = handleNetworkError(error as Error)
       
       // Add recovery actions based on error type
       await addRecoveryActionsForError(networkError)

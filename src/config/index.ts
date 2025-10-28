@@ -31,6 +31,9 @@ export const config = {
   isDevelopment: import.meta.env.VITE_ENVIRONMENT === 'development',
   isProduction: import.meta.env.VITE_ENVIRONMENT === 'production',
   isMockMode: import.meta.env.VITE_IS_MOCK_MODE === 'true',
+  
+  // Backend status
+  isBackendReady: !!(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY),
 
   // Feature Flags
   features: {
