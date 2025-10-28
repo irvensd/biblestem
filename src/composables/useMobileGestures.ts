@@ -240,50 +240,72 @@ export function useHapticFeedback() {
 
 export function useSwipeNavigation() {
   const currentIndex = ref(0)
-  const totalItems = ref(0)
   const isTransitioning = ref(false)
 
   const next = () => {
-    if (currentIndex.value < totalItems.value - 1 && !isTransitioning.value) {
-      isTransitioning.value = true
-      currentIndex.value++
-      setTimeout(() => {
-        isTransitioning.value = false
-      }, 300)
-    }
+    if (isTransitioning.value) return
+    isTransitioning.value = true
+    currentIndex.value++
+    setTimeout(() => {
+      isTransitioning.value = false
+    }, 300)
   }
 
   const previous = () => {
-    if (currentIndex.value > 0 && !isTransitioning.value) {
-      isTransitioning.value = true
-      currentIndex.value--
-      setTimeout(() => {
-        isTransitioning.value = false
-      }, 300)
-    }
+    if (isTransitioning.value) return
+    isTransitioning.value = true
+    currentIndex.value--
+    setTimeout(() => {
+      isTransitioning.value = false
+    }, 300)
   }
 
   const goTo = (index: number) => {
-    if (index >= 0 && index < totalItems.value && !isTransitioning.value) {
-      isTransitioning.value = true
-      currentIndex.value = index
-      setTimeout(() => {
-        isTransitioning.value = false
-      }, 300)
-    }
-  }
-
-  const setTotalItems = (total: number) => {
-    totalItems.value = total
+    if (isTransitioning.value) return
+    isTransitioning.value = true
+    currentIndex.value = index
+    setTimeout(() => {
+      isTransitioning.value = false
+    }, 300)
   }
 
   return {
     currentIndex,
-    totalItems,
     isTransitioning,
     next,
     previous,
-    goTo,
-    setTotalItems
+    goTo
+  }
+}
+
+export function useTouchFeedback() {
+  const { light, medium } = useHapticFeedback()
+
+  const addTouchFeedback = (element: HTMLElement) => {
+    const handleTouchStart = () => {
+      light()
+      element.style.transform = 'scale(0.95)'
+      element.style.transition = 'transform 0.1s ease'
+    }
+
+    const handleTouchEnd = () => {
+      element.style.transform = 'scale(1)'
+    }
+
+    element.addEventListener('touchstart', handleTouchStart, { passive: true })
+    element.addEventListener('touchend', handleTouchEnd, { passive: true })
+    element.addEventListener('touchcancel', handleTouchEnd, { passive: true })
+
+    return () => {
+      element.removeEventListener('touchstart', handleTouchStart)
+      element.removeEventListener('touchend', handleTouchEnd)
+      element.removeEventListener('touchcancel', handleTouchEnd)
+    }
+  }
+
+  return {
+    addTouchFeedback,
+    light,
+    medium
   }
 }

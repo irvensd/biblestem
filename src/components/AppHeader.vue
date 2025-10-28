@@ -1,15 +1,39 @@
 <template>
+  <!-- Loading skeleton -->
   <header
-    class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 sticky top-0 z-50"
+    v-if="!isHeaderReady"
+    class="bg-gray-900/95 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 shadow-lg"
+  >
+    <nav class="container-base">
+      <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20">
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse"></div>
+          <div class="hidden sm:block w-24 h-6 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse"></div>
+        </div>
+        <div class="hidden lg:flex items-center space-x-6">
+          <div class="w-20 h-5 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse"></div>
+        </div>
+        <div class="hidden lg:flex items-center">
+          <div class="w-24 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse"></div>
+        </div>
+        <div class="lg:hidden w-10 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse"></div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Actual header -->
+  <header
+    v-else
+    class="bg-gray-900/95 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 shadow-lg"
     role="banner"
   >
-    <nav class="container-base" role="navigation" aria-label="Main navigation">
+      <nav class="container-base" role="navigation" aria-label="Main navigation">
       <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20">
         <!-- Logo -->
         <router-link
-          to="/"
+          :to="authStore.isAuthenticated ? '/dashboard' : '/'"
           class="flex items-center space-x-2 sm:space-x-3 group"
-          aria-label="BibleStem - Go to homepage"
+          :aria-label="authStore.isAuthenticated ? 'BibleStem - Go to dashboard' : 'BibleStem - Go to homepage'"
         >
           <div class="relative">
             <div
@@ -29,8 +53,8 @@
             </div>
           </div>
           <div class="flex flex-col">
-            <span class="text-lg sm:text-xl font-bold gradient-text">BibleStem</span>
-            <span class="text-xs text-neutral-500 -mt-1 hidden lg:block"
+            <span class="text-lg sm:text-xl font-bold text-white">BibleStem</span>
+            <span class="text-xs text-gray-400 -mt-1 hidden lg:block"
               >Interactive Bible Study</span
             >
           </div>
@@ -45,8 +69,8 @@
           <template v-if="authStore.isAuthenticated">
             <router-link
               to="/dashboard"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/dashboard' }"
+              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400 pb-1': $route.path === '/dashboard' }"
               role="menuitem"
               :aria-current="$route.path === '/dashboard' ? 'page' : undefined"
             >
@@ -54,7 +78,7 @@
             </router-link>
             <router-link
               to="/study-series"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
               role="menuitem"
               :aria-current="$route.path === '/study-series' ? 'page' : undefined"
@@ -63,8 +87,8 @@
             </router-link>
             <router-link
               to="/my-studies"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/my-studies' }"
+              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400 pb-1': $route.path === '/my-studies' }"
               role="menuitem"
               :aria-current="$route.path === '/my-studies' ? 'page' : undefined"
             >
@@ -72,9 +96,9 @@
             </router-link>
             <router-link
               to="/daily-devotions"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{
-                'text-primary-600 dark:text-primary-400': $route.path === '/daily-devotions',
+                'text-blue-400 border-b-2 border-blue-400 pb-1': $route.path === '/daily-devotions',
               }"
               role="menuitem"
               :aria-current="$route.path === '/daily-devotions' ? 'page' : undefined"
@@ -87,28 +111,28 @@
           <template v-else>
             <router-link
               to="/"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/' }"
             >
               Home
             </router-link>
             <router-link
               to="/study-series"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
             >
               Study Series
             </router-link>
             <router-link
               to="/about"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/about' }"
             >
               About
             </router-link>
             <router-link
               to="/contact"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/contact' }"
             >
               Contact
@@ -138,12 +162,12 @@
                 class="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
               >
                 <span class="text-white text-xs lg:text-sm font-bold">{{
-                  authStore.user?.name.charAt(0)
+                  authStore.user?.name?.charAt(0) || 'U'
                 }}</span>
               </div>
               <div class="text-left hidden md:block">
                 <div class="text-xs lg:text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                  {{ authStore.user?.name }}
+                  {{ authStore.user?.name || 'User' }}
                 </div>
                 <div
                   class="text-xs text-neutral-500"
@@ -207,7 +231,7 @@
           <template v-else>
             <router-link
               to="/signin"
-              class="text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 text-sm lg:text-base"
+              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm lg:text-base"
             >
               Sign In
             </router-link>
@@ -229,7 +253,7 @@
         <!-- Mobile Menu Button -->
         <button
           @click="toggleMobileMenu"
-          class="lg:hidden p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
+          class="lg:hidden p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-200 touch-manipulation active:scale-95 min-h-[44px] min-w-[44px]"
           :class="{ 'bg-neutral-100 dark:bg-neutral-800': mobileMenuOpen }"
           :aria-expanded="mobileMenuOpen"
           :aria-haspopup="true"
@@ -283,11 +307,11 @@
               <div
                 class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
               >
-                <span class="text-white font-bold">{{ authStore.user?.name.charAt(0) }}</span>
+                <span class="text-white font-bold">{{ authStore.user?.name?.charAt(0) || 'U' }}</span>
               </div>
               <div>
                 <div class="font-medium text-neutral-900 dark:text-neutral-100">
-                  {{ authStore.user?.name }}
+                  {{ authStore.user?.name || 'User' }}
                 </div>
                 <div
                   class="text-sm"
@@ -457,6 +481,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useHapticFeedback } from '../composables/useMobileGestures'
 import GlobalSearch from './GlobalSearch.vue'
 
 const router = useRouter()
@@ -464,15 +489,33 @@ const router = useRouter()
 // Initialize stores
 const authStore = useAuthStore()
 
-// Initialize the real store when component mounts
+// Touch feedback
+const { light, medium } = useHapticFeedback()
+
+// Track if we should show the header
+const isHeaderReady = ref(false)
+
+// Wait for auth to be initialized and then show header
 onMounted(async () => {
-  try {
-    if (!authStore.isInitialized) {
-      await authStore.initializeAuth()
+  let attempts = 0
+  const maxAttempts = 20 // 1 second timeout (20 * 50ms)
+  
+  // Wait for auth to be initialized from App.vue
+  const checkAuthInitialized = () => {
+    attempts++
+    if (authStore.isInitialized) {
+      isHeaderReady.value = true
+    } else if (attempts < maxAttempts) {
+      // Check again after a short delay
+      setTimeout(checkAuthInitialized, 50)
+    } else {
+      // Timeout - show header anyway to prevent infinite loading
+      console.warn('Auth initialization timeout, showing header anyway')
+      isHeaderReady.value = true
     }
-  } catch (error) {
-    console.warn('Failed to initialize auth store:', error)
   }
+  
+  checkAuthInitialized()
 
   // Set up click handler
   document.addEventListener('click', handleClickOutside)
@@ -482,6 +525,7 @@ const mobileMenuOpen = ref(false)
 const userMenuOpen = ref(false)
 
 const toggleMobileMenu = () => {
+  medium()
   mobileMenuOpen.value = !mobileMenuOpen.value
   userMenuOpen.value = false
 
@@ -494,25 +538,24 @@ const toggleMobileMenu = () => {
 }
 
 const closeMobileMenu = () => {
+  light()
   mobileMenuOpen.value = false
   document.body.style.overflow = ''
 }
 
-// Cleanup body scroll when component unmounts
-onUnmounted(() => {
-  document.body.style.overflow = ''
-})
-
 const toggleUserMenu = () => {
+  light()
   userMenuOpen.value = !userMenuOpen.value
   mobileMenuOpen.value = false
 }
 
 const closeUserMenu = () => {
+  light()
   userMenuOpen.value = false
 }
 
 const handleSignOut = () => {
+  medium()
   authStore.logout()
   userMenuOpen.value = false
   mobileMenuOpen.value = false
@@ -527,7 +570,9 @@ const handleClickOutside = (event: Event) => {
   }
 }
 
+// Single cleanup function for component unmount
 onUnmounted(() => {
+  document.body.style.overflow = ''
   document.removeEventListener('click', handleClickOutside)
 })
 </script>

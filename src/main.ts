@@ -2,8 +2,16 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { initSupabase } from './lib/supabase'
 import App from './App.vue'
 import router from './router'
+
+// Force dark mode
+document.documentElement.classList.add('dark')
+document.documentElement.classList.remove('light')
+
+// Initialize Supabase
+initSupabase()
 
 const app = createApp(App)
 const pinia = createPinia()

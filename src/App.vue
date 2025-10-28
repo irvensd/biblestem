@@ -8,14 +8,16 @@
 
     <AppHeader />
     <main id="main-content" class="pb-16 sm:pb-0">
-      <router-view v-if="isAppReady" v-slot="{ Component, route }">
-        <transition :name="getTransitionName(route)" mode="out-in" appear>
-          <component :is="Component" :key="route.path" />
-        </transition>
-      </router-view>
-      <div v-else class="flex items-center justify-center min-h-[400px]">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-      </div>
+      <ErrorBoundary @error-caught="handleGlobalError" @error-retry="handleErrorRetry">
+        <router-view v-if="isAppReady" v-slot="{ Component, route }">
+          <transition :name="getTransitionName(route)" mode="out-in" appear>
+            <component :is="Component" :key="route.path" />
+          </transition>
+        </router-view>
+        <div v-else class="flex items-center justify-center min-h-[400px]">
+          <EnhancedLoading type="spinner" size="lg" message="Loading BibleStem..." />
+        </div>
+      </ErrorBoundary>
     </main>
     <MobileNavigation />
 
@@ -109,7 +111,11 @@ import { onMounted, ref } from 'vue'
 import AppHeader from './components/AppHeader.vue'
 import MobileNavigation from './components/MobileNavigation.vue'
 import GlobalNotifications from './components/GlobalNotifications.vue'
+import ErrorBoundary from './components/ErrorBoundary.vue'
+import EnhancedLoading from './components/EnhancedLoading.vue'
 import { usePWA } from './composables/usePWA'
+import { useErrorRecovery } from './composables/useErrorRecovery'
+import { globalErrorRecovery } from './composables/useErrorRecovery'
 
 // App readiness state
 const isAppReady = ref(false)
@@ -124,6 +130,9 @@ const {
   updateServiceWorker,
 } = usePWA()
 
+// Error recovery
+const { addRecoveryAction, executeRecoveryAction } = useErrorRecovery()
+
 // Page transition logic
 const getTransitionName = (route: any) => {
   // Define different transitions for different routes
@@ -134,13 +143,48 @@ const getTransitionName = (route: any) => {
   return 'fade'
 }
 
+// Error handling methods
+const handleGlobalError = async (error: Error, errorInfo: any) => {
+  console.error('Global error caught:', error, errorInfo)
+  
+  // Try to handle with global error recovery
+  const handled = await globalErrorRecovery.handleError(error)
+  
+  if (!handled) {
+    // Add recovery actions for common errors
+    if (error.message.includes('network') || error.message.includes('fetch')) {
+      addRecoveryAction({
+        id: 'check-connection',
+        name: 'Check Connection',
+        description: 'Verify your internet connection',
+        action: async () => {
+          if (!navigator.onLine) {
+            throw new Error('No internet connection')
+          }
+        },
+        icon: 'wifi',
+        variant: 'warning'
+      })
+    }
+  }
+}
+
+const handleErrorRetry = () => {
+  console.log('Error retry requested')
+  // The ErrorBoundary component will handle the retry logic
+}
+
 // Initialize app when mounted
 onMounted(async () => {
   try {
     // Import auth store only when needed to avoid Pinia timing issues
     const { useAuthStore } = await import('./stores/auth')
     const authStore = useAuthStore()
-    await authStore.initializeAuth()
+    
+    // Initialize auth if not already initialized
+    if (!authStore.isInitialized) {
+      await authStore.initializeAuth()
+    }
 
     // Mark app as ready to render router-view
     isAppReady.value = true

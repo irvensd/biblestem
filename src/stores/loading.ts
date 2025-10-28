@@ -7,6 +7,8 @@ export interface LoadingState {
 
 export const useLoadingStore = defineStore('loading', () => {
   const loadingStates = ref<LoadingState>({})
+  const globalLoading = ref(false)
+  const loadingCount = ref(0)
 
   const isLoading = computed(() => {
     return Object.values(loadingStates.value).some((state) => state)
@@ -43,13 +45,29 @@ export const useLoadingStore = defineStore('loading', () => {
     }
   }
 
+  // Global loading management
+  const startLoading = () => {
+    loadingCount.value++
+    globalLoading.value = true
+  }
+
+  const stopLoading = () => {
+    loadingCount.value = Math.max(0, loadingCount.value - 1)
+    if (loadingCount.value === 0) {
+      globalLoading.value = false
+    }
+  }
+
   return {
     loadingStates,
     isLoading,
+    globalLoading: computed(() => globalLoading.value),
     isLoadingKey,
     setLoading,
     clearLoading,
     clearAllLoading,
     withLoading,
+    startLoading,
+    stopLoading,
   }
 })

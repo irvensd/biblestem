@@ -1,5 +1,27 @@
 <template>
   <div class="min-h-screen">
+    <!-- Loading Skeleton -->
+    <div v-if="isLoading">
+      <!-- Hero Skeleton -->
+      <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-16 md:py-24 overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+          <div class="max-w-4xl mx-auto text-center animate-pulse">
+            <div class="h-16 bg-white/20 rounded w-96 mx-auto mb-6"></div>
+            <div class="h-6 bg-white/20 rounded w-full max-w-3xl mx-auto"></div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Studies Skeleton -->
+      <section class="py-16 bg-white dark:bg-neutral-900">
+        <div class="container mx-auto px-4">
+          <StudyGridSkeleton :count="9" />
+        </div>
+      </section>
+    </div>
+    
+    <!-- Actual Content -->
+    <div v-else>
     <!-- Hero Section -->
     <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-16 md:py-24 overflow-hidden">
       <div class="absolute inset-0 overflow-hidden">
@@ -9,15 +31,10 @@
       
       <div class="container mx-auto px-4 relative z-10">
         <div class="max-w-4xl mx-auto text-center">
-          <div class="mb-6 animate-slide-up">
-            <span class="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold border border-white/30">
-              Explore Our Studies
-            </span>
-          </div>
-          <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-slide-up" style="animation-delay: 0.1s">
+          <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
             Study Series
           </h1>
-          <p class="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed max-w-3xl mx-auto animate-slide-up" style="animation-delay: 0.2s">
+          <p class="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed max-w-3xl mx-auto animate-slide-up">
             Discover deep, interactive Bible studies designed to transform your faith and deepen your understanding
           </p>
         </div>
@@ -43,16 +60,16 @@
               :key="study.id"
               class="card p-0 overflow-hidden hover-lift"
             >
-              <div class="h-48 bg-gradient-to-br from-emerald-500 to-emerald-600 relative">
-                <div class="absolute top-4 right-4">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-sm text-white">
+              <div class="h-32 bg-gradient-to-br from-emerald-500 to-teal-600 relative flex items-center justify-center p-6">
+                <div class="absolute top-3 right-3">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-emerald-600 shadow-sm">
                     FREE
                   </span>
                 </div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <svg class="w-16 h-16 text-white/30" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                <!-- Simplified icon that fits properly -->
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
               </div>
@@ -113,16 +130,17 @@
               class="card p-0 overflow-hidden hover-lift relative"
             >
               <!-- Premium Badge Overlay -->
-              <div class="absolute top-4 right-4 z-10">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-accent-500 text-white shadow-lg">
+              <div class="absolute top-3 right-3 z-10">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg">
                   PREMIUM
                 </span>
               </div>
               
-              <div class="h-48 bg-gradient-to-br from-purple-600 to-purple-700 relative">
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <svg class="w-16 h-16 text-white/30" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M3 1a1 1 0 011 1v1.707l3.707 3.707a1 1 0 010 2L5 10.414l-3.293 3.293a1 1 0 01-1.414-1.414L4.586 9H1a1 1 0 110-2h4.414l3.293-3.293zM13 9h4.586l3.293 3.293a1 1 0 01-1.414 1.414L16 10.414v4.586a1 1 0 01-2 0v-4.586l-3.293-3.293a1 1 0 112.828-2.828L13 5.586V1a1 1 0 112 0v4.586l1.707 1.707z" />
+              <div class="h-32 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 relative flex items-center justify-center p-6">
+                <!-- Same book icon but with premium colors -->
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
               </div>
@@ -192,19 +210,31 @@
         </div>
       </div>
     </section>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { getFreeStudies, getPremiumStudies } from '@/data/studies'
 import { useAuthStore } from '@/stores/auth'
+import StudyGridSkeleton from '../components/skeletons/StudyGridSkeleton.vue'
 
 const authStore = useAuthStore()
+
+// Loading state
+const isLoading = ref(true)
 
 const freeStudies = getFreeStudies()
 const premiumStudies = getPremiumStudies()
 
 const isPremium = computed(() => authStore.isPremium)
+
+onMounted(() => {
+  // Simulate loading time for better UX
+  setTimeout(() => {
+    isLoading.value = false
+  }, 800)
+})
 </script>
 

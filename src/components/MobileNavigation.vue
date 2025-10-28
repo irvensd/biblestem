@@ -3,20 +3,21 @@
     v-if="showMobileNav"
     class="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 z-50 sm:hidden"
   >
-    <div class="grid grid-cols-5 h-16">
+    <div class="grid grid-cols-5 h-20">
       <!-- Dashboard -->
       <router-link
         to="/dashboard"
         v-if="authStore.isAuthenticated"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 focus-ring touch-feedback touch-ripple"
+        class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 focus-ring touch-manipulation active:scale-95 min-h-[64px]"
         :class="
           route.path === '/dashboard'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 active:bg-neutral-100 dark:active:bg-neutral-800'
         "
         :aria-current="route.path === '/dashboard' ? 'page' : undefined"
         role="tab"
         :aria-selected="route.path === '/dashboard'"
+        @touchstart="light"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -33,12 +34,13 @@
       <router-link
         to="/"
         v-if="!authStore.isAuthenticated"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
+        class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 touch-manipulation active:scale-95 min-h-[64px]"
         :class="
           route.path === '/'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 active:bg-neutral-100 dark:active:bg-neutral-800'
         "
+        @touchstart="light"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -54,12 +56,13 @@
       <!-- Study Series -->
       <router-link
         to="/study-series"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
+        class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 touch-manipulation active:scale-95 min-h-[64px]"
         :class="
           route.path === '/study-series'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 active:bg-neutral-100 dark:active:bg-neutral-800'
         "
+        @touchstart="light"
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path
@@ -73,12 +76,13 @@
       <router-link
         to="/my-studies"
         v-if="authStore.isAuthenticated"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
+        class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 touch-manipulation active:scale-95 min-h-[64px]"
         :class="
           route.path === '/my-studies'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 active:bg-neutral-100 dark:active:bg-neutral-800'
         "
+        @touchstart="light"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -94,12 +98,13 @@
       <!-- Daily Devotions -->
       <router-link
         to="/daily-devotions"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
+        class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 touch-manipulation active:scale-95 min-h-[64px]"
         :class="
           route.path === '/daily-devotions'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 active:bg-neutral-100 dark:active:bg-neutral-800'
         "
+        @touchstart="light"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -115,11 +120,11 @@
       <!-- Search -->
       <button
         @click="toggleSearch"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-feedback touch-ripple"
+        class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 touch-manipulation active:scale-95 min-h-[64px]"
         :class="
           showSearch
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 active:bg-neutral-100 dark:active:bg-neutral-800'
         "
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,13 +141,12 @@
       <!-- Profile/Menu -->
       <button
         @click="toggleProfile"
-        @touchstart="toggleProfile"
         type="button"
-        class="flex flex-col items-center justify-center space-y-1 py-2 px-1 transition-all duration-200 touch-manipulation touch-feedback touch-ripple"
+        class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 touch-manipulation active:scale-95 min-h-[64px]"
         :class="
           showProfile
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 active:bg-neutral-100 dark:active:bg-neutral-800'
         "
       >
         <div
@@ -169,7 +173,7 @@
     <div
       v-if="showSearch"
       class="fixed inset-0 bg-white dark:bg-neutral-900 z-60"
-      style="bottom: 64px"
+      style="bottom: 80px"
     >
       <div class="p-4 border-b border-neutral-200 dark:border-neutral-700">
         <div class="flex items-center space-x-3">
@@ -195,7 +199,7 @@
     <div
       v-if="showProfile"
       class="fixed inset-0 bg-white dark:bg-neutral-900 z-60"
-      style="bottom: 64px"
+      style="bottom: 80px"
     >
       <div class="p-4 border-b border-neutral-200 dark:border-neutral-700">
         <div class="flex items-center space-x-3">
@@ -359,14 +363,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useHapticFeedback } from '../composables/useMobileGestures'
 import GlobalSearch from './GlobalSearch.vue'
 
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
+
+// Touch feedback
+const { light, medium } = useHapticFeedback()
 
 // Initialize auth store
 onMounted(async () => {
@@ -390,30 +398,36 @@ const showMobileNav = computed(() => {
 })
 
 const toggleSearch = () => {
+  light()
   showSearch.value = !showSearch.value
   showProfile.value = false
 }
 
 const closeSearch = () => {
+  light()
   showSearch.value = false
 }
 
 const toggleProfile = () => {
+  medium()
   showProfile.value = !showProfile.value
   showSearch.value = false
 }
 
 const closeProfile = () => {
+  light()
   showProfile.value = false
 }
 
 const handleUpgrade = () => {
+  medium()
   // TODO: Implement upgrade flow
   alert('Upgrade to Premium - $9.99/month with 3-day free trial!')
   closeProfile()
 }
 
 const signOut = async () => {
+  medium()
   await authStore.logout()
   closeProfile()
   router.push('/')
@@ -447,10 +461,19 @@ onUnmounted(() => {
 }
 
 .fixed.inset-0::-webkit-scrollbar-track {
-  @apply bg-neutral-100 dark:bg-neutral-800;
+  background-color: rgb(245 245 245);
 }
 
 .fixed.inset-0::-webkit-scrollbar-thumb {
-  @apply bg-neutral-300 dark:bg-neutral-600 rounded-full;
+  background-color: rgb(212 212 212);
+  border-radius: 9999px;
+}
+
+.dark .fixed.inset-0::-webkit-scrollbar-track {
+  background-color: rgb(38 38 38);
+}
+
+.dark .fixed.inset-0::-webkit-scrollbar-thumb {
+  background-color: rgb(82 82 82);
 }
 </style>

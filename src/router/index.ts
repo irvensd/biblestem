@@ -19,6 +19,18 @@ const routes = [
     component: () => import('../views/StudySeriesPage.vue')
   },
   {
+    path: '/my-studies',
+    name: 'MyStudies',
+    component: () => import('../views/MyStudiesPage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/daily-devotions',
+    name: 'DailyDevotions',
+    component: () => import('../views/DailyDevotionsPage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/study/:id',
     name: 'Study',
     component: () => import('../views/StudyPage.vue'),
