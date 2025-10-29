@@ -101,28 +101,30 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     return progress ? progress.completedLessons.includes(lessonId) : false
   }
 
-  const completeLesson = async (studyId: string, lessonId: string, timeSpent: number = 0) => {
+  const incompleteLesson = async (studyId: string, lessonId: string) => {
     if (!progressData.value[studyId]) {
-      progressData.value[studyId] = {
-        studyId,
-        completedLessons: [],
-        startedAt: new Date().toISOString(),
-        lastAccessedAt: new Date().toISOString(),
-        totalTimeSpent: 0,
-        acceptedChallenges: [],
-      }
+      return // No progress to modify
     }
 
     const progress = progressData.value[studyId]
+    
+    // Remove lesson from completed lessons
+    const index = progress.completedLessons.indexOf(lessonId)
+    if (index > -1) {
+      progress.completedLessons.splice(index, 1)
+    }
 
-    if (!progress.completedLessons.includes(lessonId)) {
-      progress.completedLessons.push(lessonId)
+    // Remove from accepted challenges if it was there
+    if (progress.acceptedChallenges) {
+      const challengeIndex = progress.acceptedChallenges.indexOf(lessonId)
+      if (challengeIndex > -1) {
+        progress.acceptedChallenges.splice(challengeIndex, 1)
+      }
     }
 
     progress.lastAccessedAt = new Date().toISOString()
-    progress.totalTimeSpent += timeSpent
-
     saveToStorage()
+    
     // Fire and forget Firebase sync - don't block UI
     saveProgressToFirebase(studyId).catch((error) =>
       console.error('Failed to sync progress to Firebase:', error),
@@ -296,6 +298,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     getStudyProgress,
     isLessonCompleted,
     completeLesson,
+    incompleteLesson,
     startStudy,
     getStudyCompletionPercentage,
     getAllStudyProgress,

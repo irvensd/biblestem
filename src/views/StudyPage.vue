@@ -84,6 +84,19 @@
                     </svg>
                     {{ lesson.duration }} min
                   </span>
+                  
+                  <!-- Mark as Incomplete Button (only for completed lessons) -->
+                  <button
+                    v-if="isCompleted(lesson.id)"
+                    @click="markAsIncomplete(lesson.id)"
+                    class="group inline-flex items-center gap-1 px-3 py-1 bg-orange-500/20 hover:bg-orange-500/30 text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 rounded-full font-semibold text-sm transition-all duration-200 transform hover:scale-105"
+                    title="Mark as incomplete to re-study this lesson"
+                  >
+                    <svg class="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    <span class="hidden sm:inline">Reset</span>
+                  </button>
                 </div>
               </div>
               <p class="text-neutral-400 mb-3 leading-relaxed">{{ lesson.description }}</p>
@@ -134,6 +147,29 @@ const isCompleted = (lessonId: string) => {
 
 const viewLesson = (lessonId: string) => {
   router.push(`/study/${route.params.id}/lesson/${lessonId}`)
+}
+
+const markAsIncomplete = async (lessonId: string) => {
+  if (!study.value) return
+  
+  // Find the lesson title for the confirmation dialog
+  const lesson = study.value.lessons.find(l => l.id === lessonId)
+  const lessonTitle = lesson?.title || 'this lesson'
+  
+  // Show confirmation dialog
+  const confirmed = confirm(
+    `Are you sure you want to mark "${lessonTitle}" as incomplete?\n\nThis will reset your progress for this lesson and allow you to study it again.`
+  )
+  
+  if (!confirmed) return
+  
+  try {
+    await progressStore.incompleteLesson(study.value.id, lessonId)
+    // Optional: Show a success message or toast
+    console.log(`Lesson ${lessonId} marked as incomplete`)
+  } catch (error) {
+    console.error('Failed to mark lesson as incomplete:', error)
+  }
 }
 
 onMounted(async () => {
