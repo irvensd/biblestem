@@ -74,7 +74,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { useVirtualScrolling } from './usePerformance'
+import { useVirtualScrolling } from '../composables/usePerformance'
 
 interface Props<T> {
   items: T[]

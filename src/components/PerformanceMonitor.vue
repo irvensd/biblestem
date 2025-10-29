@@ -142,7 +142,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { usePerformanceMonitoring } from './usePerformance'
+import { usePerformanceMonitoring } from '../composables/usePerformance'
 
 interface Props {
   showMetrics?: boolean

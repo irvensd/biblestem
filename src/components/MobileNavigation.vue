@@ -376,17 +376,6 @@ const authStore = useAuthStore()
 // Touch feedback
 const { light, medium } = useHapticFeedback()
 
-// Initialize auth store
-onMounted(async () => {
-  try {
-    if (!authStore.isInitialized) {
-      await authStore.initializeAuth()
-    }
-  } catch (error) {
-    console.warn('Failed to initialize auth store in MobileNavigation:', error)
-  }
-})
-
 const showSearch = ref(false)
 const showProfile = ref(false)
 

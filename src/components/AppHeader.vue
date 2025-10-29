@@ -1,29 +1,6 @@
 <template>
-  <!-- Loading skeleton -->
-  <header
-    v-if="!isHeaderReady"
-    class="bg-gray-900/95 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 shadow-lg"
-  >
-    <nav class="container-base">
-      <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20">
-        <div class="flex items-center space-x-2 sm:space-x-3">
-          <div class="w-8 h-8 sm:w-10 sm:h-10 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse"></div>
-          <div class="hidden sm:block w-24 h-6 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse"></div>
-        </div>
-        <div class="hidden lg:flex items-center space-x-6">
-          <div class="w-20 h-5 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse"></div>
-        </div>
-        <div class="hidden lg:flex items-center">
-          <div class="w-24 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse"></div>
-        </div>
-        <div class="lg:hidden w-10 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse"></div>
-      </div>
-    </nav>
-  </header>
-
   <!-- Actual header -->
   <header
-    v-else
     class="bg-gray-900/95 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 shadow-lg"
     role="banner"
   >
@@ -492,31 +469,7 @@ const authStore = useAuthStore()
 // Touch feedback
 const { light, medium } = useHapticFeedback()
 
-// Track if we should show the header
-const isHeaderReady = ref(false)
-
-// Wait for auth to be initialized and then show header
-onMounted(async () => {
-  let attempts = 0
-  const maxAttempts = 20 // 1 second timeout (20 * 50ms)
-  
-  // Wait for auth to be initialized from App.vue
-  const checkAuthInitialized = () => {
-    attempts++
-    if (authStore.isInitialized) {
-      isHeaderReady.value = true
-    } else if (attempts < maxAttempts) {
-      // Check again after a short delay
-      setTimeout(checkAuthInitialized, 50)
-    } else {
-      // Timeout - show header anyway to prevent infinite loading
-      console.warn('Auth initialization timeout, showing header anyway')
-      isHeaderReady.value = true
-    }
-  }
-  
-  checkAuthInitialized()
-
+onMounted(() => {
   // Set up click handler
   document.addEventListener('click', handleClickOutside)
 })

@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useLazyLoading } from './usePerformance'
+import { useLazyLoading } from '../composables/usePerformance'
 
 interface Props {
   placeholderType?: 'skeleton' | 'spinner' | 'blur' | 'empty'
