@@ -227,15 +227,24 @@
             </router-link>
             <router-link
               to="/signup"
-              class="btn-secondary text-sm lg:text-base py-2 px-3 lg:py-3 lg:px-6 hidden md:inline-block"
+              class="group hidden md:inline-flex items-center justify-center gap-2 py-2 px-4 lg:py-3 lg:px-6 bg-gradient-to-r from-neutral-600 to-neutral-700 hover:from-neutral-700 hover:to-neutral-800 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm lg:text-base"
             >
-              Sign Up
+              <span>Sign Up</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
             </router-link>
             <router-link
               to="/signin"
-              class="btn-primary text-sm lg:text-base py-2 px-3 lg:py-3 lg:px-6"
+              class="group inline-flex items-center justify-center gap-2 py-2 px-4 lg:py-3 lg:px-6 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm lg:text-base"
             >
-              Start Learning
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span>Start Learning</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
             </router-link>
           </template>
         </div>
@@ -453,11 +462,28 @@
               >
                 Sign In
               </router-link>
-              <router-link to="/signup" @click="closeMobileMenu" class="btn-secondary w-full">
-                Sign Up
+              <router-link 
+                to="/signup" 
+                @click="closeMobileMenu" 
+                class="group w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-neutral-600 to-neutral-700 hover:from-neutral-700 hover:to-neutral-800 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                <span>Sign Up</span>
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
               </router-link>
-              <router-link to="/signin" @click="closeMobileMenu" class="btn-primary w-full">
-                Start Learning
+              <router-link 
+                to="/signin" 
+                @click="closeMobileMenu" 
+                class="group w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <span>Start Learning</span>
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
               </router-link>
             </div>
           </div>
