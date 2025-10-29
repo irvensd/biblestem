@@ -15,7 +15,7 @@
             <div class="text-center md:text-left">
               <div class="mb-6 animate-slide-up">
                 <span class="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold border border-white/30">
-                  ✨ Trusted by 50,000+ Believers
+                  ✨ 100% Free • Donation-Based Ministry
                 </span>
               </div>
               <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up" style="animation-delay: 0.1s">
@@ -25,7 +25,7 @@
                 </span>
               </h1>
               <p class="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed animate-slide-up" style="animation-delay: 0.2s">
-                Discover God's Word through <strong>interactive studies</strong>, <strong>Hebrew & Greek insights</strong>, and guided reflection that transforms your daily walk.
+                Discover God's Word through <strong>interactive studies</strong>, <strong>Hebrew & Greek insights</strong>, and guided reflection that transforms your daily walk. <strong>Completely free forever.</strong>
               </p>
               <div class="flex flex-col sm:flex-row gap-4 mb-8 animate-slide-up" style="animation-delay: 0.3s">
                 <router-link 
@@ -49,15 +49,15 @@
               <div class="flex flex-wrap gap-6 text-white/80 text-sm animate-slide-up" style="animation-delay: 0.4s">
                 <div class="flex items-center gap-2">
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                   </svg>
-                  <span class="font-semibold">4.9/5 Rating</span>
+                  <span class="font-semibold">100% Free Forever</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
                   </svg>
-                  <span class="font-semibold">50,000+ Users</span>
+                  <span class="font-semibold">Donation-Based</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -365,14 +365,99 @@
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
             </svg>
-            Free forever plan
+            100% Free Forever
           </span>
           <span class="inline-flex items-center gap-2">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
             </svg>
-            Start in seconds
+            Optional donations welcome
           </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Donation/Support Section -->
+    <section class="py-20 bg-white dark:bg-neutral-900">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <div class="card p-8 md:p-12 text-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+              Supporting Our Ministry
+            </h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+              BibleStem is a <strong>100% free, donation-based ministry</strong>. We believe the Gospel should be accessible to everyone, everywhere, without barriers.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-6 my-10">
+              <div class="text-center">
+                <div class="text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">100%</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Free Forever</div>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl font-bold text-secondary-600 dark:text-secondary-400 mb-2">0</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Paywalls or Restrictions</div>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl font-bold text-accent-600 dark:text-accent-400 mb-2">❤️</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Donation-Based</div>
+              </div>
+            </div>
+
+            <p class="text-gray-600 dark:text-gray-400 mb-8">
+              If God has blessed you through BibleStem and you'd like to support our mission of spreading His Word, your donation helps us:
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4 text-left mb-8">
+              <div class="flex items-start gap-3 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
+                <svg class="w-6 h-6 text-primary-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <div class="text-gray-700 dark:text-gray-300">
+                  <strong>Create more studies</strong> and daily devotions
+                </div>
+              </div>
+              <div class="flex items-start gap-3 p-4 bg-secondary-50 dark:bg-secondary-900/20 rounded-lg">
+                <svg class="w-6 h-6 text-secondary-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <div class="text-gray-700 dark:text-gray-300">
+                  <strong>Keep the platform</strong> running and improving
+                </div>
+              </div>
+              <div class="flex items-start gap-3 p-4 bg-accent-50 dark:bg-accent-900/20 rounded-lg">
+                <svg class="w-6 h-6 text-accent-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <div class="text-gray-700 dark:text-gray-300">
+                  <strong>Reach more people</strong> with the Gospel
+                </div>
+              </div>
+              <div class="flex items-start gap-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                <svg class="w-6 h-6 text-purple-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <div class="text-gray-700 dark:text-gray-300">
+                  <strong>Add new features</strong> and translations
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-6 border border-primary-200 dark:border-primary-800">
+              <p class="text-lg italic text-gray-700 dark:text-gray-300 mb-4">
+                "Freely you have received; freely give." - Matthew 10:8
+              </p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Every contribution, no matter the size, helps us continue providing free Bible studies to believers worldwide. Thank you for prayerfully considering supporting this ministry! ❤️
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

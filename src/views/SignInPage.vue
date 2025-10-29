@@ -97,13 +97,13 @@
                 @click="useEmail('demo@biblestem.com')" 
                 class="btn btn-secondary"
               >
-                Premium Demo
+                ❤️ Supporter Demo
               </button>
               <button 
-                @click="useEmail('free@biblestem.com')" 
+                @click="useEmail('test@biblestem.com')" 
                 class="btn btn-secondary"
               >
-                Free Demo
+                Regular Demo
               </button>
             </div>
 
