@@ -154,9 +154,7 @@ const selectedLessonTitle = ref<string>('')
 
 const isCompleted = (lessonId: string) => {
   if (!study.value) return false
-  const progress = progressStore.progressData[study.value.id]
-  if (!progress) return false
-  return progress.completedLessons.includes(lessonId)
+  return progressStore.isLessonCompleted(study.value.id, lessonId)
 }
 
 const viewLesson = (lessonId: string) => {
@@ -196,6 +194,9 @@ const confirmResetLesson = async () => {
 onMounted(async () => {
   const studyId = route.params.id as string
   loading.value = true
+
+  // Initialize progress store
+  progressStore.loadFromStorage()
 
   try {
     const supabase = getSupabase()

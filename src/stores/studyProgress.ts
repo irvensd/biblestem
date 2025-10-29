@@ -15,6 +15,13 @@ export interface StudyProgress {
 export const useStudyProgressStore = defineStore('studyProgress', () => {
   const progressData = ref<Record<string, StudyProgress>>({})
 
+  // Ensure progressData is always initialized
+  const ensureInitialized = () => {
+    if (!progressData.value || typeof progressData.value !== 'object') {
+      progressData.value = {}
+    }
+  }
+
   // Initialize with some demo data including completed studies
   const initializeDemoData = () => {
     if (Object.keys(progressData.value).length === 0) {
@@ -97,6 +104,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
   }
 
   const isLessonCompleted = (studyId: string, lessonId: string): boolean => {
+    ensureInitialized()
     const progress = progressData.value[studyId]
     return progress ? progress.completedLessons.includes(lessonId) : false
   }
@@ -231,6 +239,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
   }
 
   const loadFromStorage = () => {
+    ensureInitialized()
     // Force demo data initialization for testing completed studies
     // In production, this would load from localStorage normally
     initializeDemoData()
