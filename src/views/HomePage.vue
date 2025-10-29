@@ -107,11 +107,11 @@
     </section>
 
     <!-- Study Categories Preview -->
-    <section class="py-20 bg-white dark:bg-neutral-900">
+    <section class="py-20 bg-gray-50 dark:bg-neutral-900">
       <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-bold mb-4">Study Categories</h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Study Categories</h2>
+          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Explore various topics tailored for every stage of your spiritual journey
           </p>
         </div>
@@ -121,43 +121,43 @@
             <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
               <span class="text-3xl">📖</span>
             </div>
-            <h3 class="font-bold text-lg">Foundations</h3>
-            <p class="text-sm text-gray-600 mt-2">Basic Bible study principles</p>
+            <h3 class="font-bold text-lg text-gray-900 dark:text-white">Foundations</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Basic Bible study principles</p>
           </div>
 
           <div class="card card-interactive p-6 text-center transform hover:scale-105 transition-all">
             <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
               <span class="text-3xl">💒</span>
             </div>
-            <h3 class="font-bold text-lg">Theology</h3>
-            <p class="text-sm text-gray-600 mt-2">Deep doctrinal studies</p>
+            <h3 class="font-bold text-lg text-gray-900 dark:text-white">Theology</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Deep doctrinal studies</p>
           </div>
 
           <div class="card card-interactive p-6 text-center transform hover:scale-105 transition-all">
             <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
               <span class="text-3xl">🎯</span>
             </div>
-            <h3 class="font-bold text-lg">Life Application</h3>
-            <p class="text-sm text-gray-600 mt-2">Practical faith living</p>
+            <h3 class="font-bold text-lg text-gray-900 dark:text-white">Life Application</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Practical faith living</p>
           </div>
 
           <div class="card card-interactive p-6 text-center transform hover:scale-105 transition-all">
             <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
               <span class="text-3xl">📜</span>
             </div>
-            <h3 class="font-bold text-lg">Prophecy</h3>
-            <p class="text-sm text-gray-600 mt-2">Biblical prophecy studies</p>
+            <h3 class="font-bold text-lg text-gray-900 dark:text-white">Prophecy</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Biblical prophecy studies</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Sample Study Preview -->
-    <section class="py-20 bg-gray-50 dark:bg-neutral-800">
+    <section class="py-20 bg-white dark:bg-neutral-800">
       <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-bold mb-4">See What You'll Learn</h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">See What You'll Learn</h2>
+          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             A complete study series ready to explore
           </p>
         </div>
@@ -275,10 +275,10 @@
     </section>
 
     <!-- Features Section with Icons -->
-    <section class="py-20 bg-white dark:bg-neutral-900">
+    <section class="py-20 bg-gray-50 dark:bg-neutral-900">
       <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-4">Why Choose BibleStem?</h2>
-        <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-4 text-gray-900 dark:text-white">Why Choose BibleStem?</h2>
+        <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
           Everything you need for deep, meaningful Bible study in one powerful platform
         </p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -289,7 +289,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3">Interactive Learning</h3>
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Interactive Learning</h3>
             <p class="text-gray-600 dark:text-gray-400">
               Engage with Scripture through quizzes, reflections, and guided learning that makes study come alive.
             </p>
@@ -302,7 +302,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3">Original Languages</h3>
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Original Languages</h3>
             <p class="text-gray-600 dark:text-gray-400">
               Dive deep into Hebrew and Greek words with meanings, transliterations, and contextual insights.
             </p>
@@ -315,7 +315,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold mb-3">Track Your Journey</h3>
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Track Your Journey</h3>
             <p class="text-gray-600 dark:text-gray-400">
               Monitor spiritual growth with progress tracking, achievements, and personalized insights.
             </p>
