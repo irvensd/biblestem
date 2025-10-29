@@ -54,21 +54,19 @@
                 <div class="flex items-center gap-3 mb-2">
                   <h1 class="text-3xl font-bold">{{ authStore.user.name }}</h1>
                   <div
-                    v-if="authStore.isPremium"
+                    v-if="authStore.hasSupported"
                     class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold flex items-center gap-2"
                   >
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path
-                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                      />
+                      <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
                     </svg>
-                    Premium
+                    Supporter
                   </div>
                   <div
-                    v-if="!authStore.isPremium"
+                    v-else
                     class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold"
                   >
-                    Free
+                    Member
                   </div>
                 </div>
                 <p class="text-blue-100 mb-3">{{ authStore.user.email }}</p>
@@ -218,27 +216,25 @@
             <div class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Member Since</div>
           </div>
 
-          <!-- Current Plan -->
+          <!-- Supporter Status -->
           <div class="bg-white dark:bg-neutral-900 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800 hover:shadow-lg transition-all">
             <div class="flex items-center gap-3 mb-3">
               <div
                 class="w-12 h-12 rounded-lg flex items-center justify-center"
-                :class="authStore.isPremium ? 'bg-gradient-to-br from-amber-500 to-orange-600' : 'bg-gradient-to-br from-neutral-500 to-neutral-600'"
+                :class="authStore.hasSupported ? 'bg-gradient-to-br from-red-500 to-pink-600' : 'bg-gradient-to-br from-blue-500 to-indigo-600'"
               >
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                  />
+                <svg v-if="authStore.hasSupported" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                </svg>
+                <svg v-else class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
             </div>
-            <div class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1 capitalize">
-              {{ authStore.user.plan }}
+            <div class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1">
+              {{ authStore.hasSupported ? '❤️ Supporter' : 'Member' }}
             </div>
-            <div class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Current Plan</div>
+            <div class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Account Status</div>
           </div>
 
           <!-- Email Verified -->
@@ -320,41 +316,24 @@
             </router-link>
 
             <button
-              v-if="!authStore.isPremium"
-              @click="upgradeToPremium"
-              class="p-4 rounded-xl border-2 border-amber-400 dark:border-amber-600 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 hover:from-amber-100 hover:to-orange-100 dark:hover:from-amber-950/30 dark:hover:to-orange-950/30 transition-all group"
+              @click="supportMinistry"
+              class="p-4 rounded-xl border-2 border-red-400 dark:border-red-600 bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20 hover:from-red-100 hover:to-pink-100 dark:hover:from-red-950/30 dark:hover:to-pink-950/30 transition-all group"
             >
               <div class="flex items-center gap-4">
                 <div
-                  class="w-12 h-12 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform"
+                  class="w-12 h-12 rounded-lg bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform"
                 >
                   <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
                   </svg>
                 </div>
                 <div>
-                  <h3 class="font-semibold text-neutral-900 dark:text-neutral-100">Upgrade to Premium</h3>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400">Unlock all features</p>
-                </div>
-              </div>
-            </button>
-
-            <button
-              v-else
-              @click="manageSubscription"
-              class="p-4 rounded-xl border-2 border-emerald-400 dark:border-emerald-600 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/20 dark:to-teal-950/20 hover:from-emerald-100 hover:to-teal-100 dark:hover:from-emerald-950/30 dark:hover:to-teal-950/30 transition-all group"
-            >
-              <div class="flex items-center gap-4">
-                <div
-                  class="w-12 h-12 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform"
-                >
-                  <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-semibold text-neutral-900 dark:text-neutral-100">Manage Subscription</h3>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400">Update payment method</p>
+                  <h3 class="font-semibold text-neutral-900 dark:text-neutral-100">
+                    {{ authStore.hasSupported ? 'Support Us Again' : 'Support Our Ministry' }}
+                  </h3>
+                  <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                    {{ authStore.hasSupported ? 'Thank you for your generosity!' : 'Help us spread the Gospel' }}
+                  </p>
                 </div>
               </div>
             </button>
@@ -478,14 +457,13 @@ const handleUpdateProfile = async () => {
   }
 }
 
-const upgradeToPremium = () => {
-  // TODO: Implement premium upgrade flow
-  alert('Premium upgrade coming soon!')
-}
-
-const manageSubscription = () => {
-  // TODO: Implement subscription management
-  alert('Subscription management coming soon!')
+const supportMinistry = () => {
+  // TODO: Implement donation flow
+  const message = authStore.hasSupported 
+    ? 'Thank you for being a faithful supporter! 🙏\n\nYour previous donation helps us:\n• Create more Bible studies\n• Keep the platform free for everyone\n• Spread the Gospel worldwide\n\nWould you like to donate again?\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo'
+    : 'Thank you for considering supporting BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more studies\n• Keeps the platform free for everyone\n• Spreads the Gospel freely\n• As a thank you: Access to 4 deeper studies\n\n✨ All basic content remains FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo'
+  
+  alert(message)
 }
 
 const handleSignOut = async () => {
