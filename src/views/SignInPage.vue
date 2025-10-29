@@ -87,25 +87,26 @@
             <!-- Divider -->
             <div class="my-8 flex items-center">
               <div class="flex-1 border-t border-gray-300 dark:border-gray-700"></div>
-              <span class="px-4 text-sm text-gray-500 dark:text-gray-400">Demo Accounts</span>
+              <span class="px-4 text-sm text-gray-500 dark:text-gray-400">Quick Demo</span>
               <div class="flex-1 border-t border-gray-300 dark:border-gray-700"></div>
             </div>
 
-            <!-- Demo Buttons -->
-            <div class="grid grid-cols-2 gap-3">
-              <button 
-                @click="useEmail('demo@biblestem.com')" 
-                class="btn btn-secondary"
-              >
-                ❤️ Supporter Demo
-              </button>
-              <button 
-                @click="useEmail('test@biblestem.com')" 
-                class="btn btn-secondary"
-              >
-                Regular Demo
-              </button>
-            </div>
+            <!-- Demo Button -->
+            <button 
+              @click="useDemoAccount" 
+              class="group w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span>Try Demo Account</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            <p class="text-xs text-center text-gray-500 dark:text-gray-400 mt-2">
+              Email: demo@biblestem.com • Password: demo123
+            </p>
 
             <!-- Sign Up Link -->
             <div class="mt-8 text-center">
@@ -158,9 +159,9 @@ const handleSubmit = async () => {
   }
 }
 
-const useEmail = async (demoEmail: string) => {
-  email.value = demoEmail
-  password.value = 'password123'
+const useDemoAccount = async () => {
+  email.value = 'demo@biblestem.com'
+  password.value = 'demo123'
   await handleSubmit()
 }
 </script>

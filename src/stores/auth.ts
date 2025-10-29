@@ -20,32 +20,22 @@ export interface AuthError {
   code?: string
 }
 
-// Demo users for quick login
-const DEMO_USERS = {
-  'demo@biblestem.com': {
-    id: 'demo-supporter-user',
+// Demo user for testing - hardcoded credentials
+const DEMO_USER = {
+  email: 'demo@biblestem.com',
+  password: 'demo123', // Hardcoded password for demo
+  profile: {
+    id: 'demo-user-001',
     name: 'Demo User',
     email: 'demo@biblestem.com',
     avatar:
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    bio: "Exploring the depths of God's Word and supporting the ministry.",
-    hasSupported: true, // This user has donated
-    studiesCompleted: 12,
-    joinDate: '2023-01-15T00:00:00.000Z',
+    bio: "Testing BibleStem's interactive Bible studies.",
+    hasSupported: false, // Regular user by default
+    studiesCompleted: 5,
+    joinDate: '2024-01-15T00:00:00.000Z',
     emailVerified: true,
-  },
-  'test@biblestem.com': {
-    id: 'demo-regular-user',
-    name: 'Test User',
-    email: 'test@biblestem.com',
-    avatar:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
-    bio: 'Starting my journey with Bible studies.',
-    hasSupported: false,
-    studiesCompleted: 3,
-    joinDate: '2024-01-01T00:00:00.000Z',
-    emailVerified: true,
-  },
+  }
 }
 
 export const useAuthStore = defineStore('auth', () => {
@@ -162,6 +152,16 @@ export const useAuthStore = defineStore('auth', () => {
     clearError()
 
     try {
+      // Check for demo account FIRST (before Supabase)
+      if (email === DEMO_USER.email && password === DEMO_USER.password) {
+        console.log('=== DEMO LOGIN ===')
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        user.value = { ...DEMO_USER.profile }
+        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
+        console.log('Demo login successful:', user.value)
+        return { success: true }
+      }
+
       if (useSupabase) {
         const supabase = getSupabase()
         if (!supabase) throw new Error('Supabase client not available')
@@ -213,32 +213,8 @@ export const useAuthStore = defineStore('auth', () => {
 
         return { success: false, error: 'No user data returned' }
       } else {
-        // Fallback to demo mode
-        console.log('=== DEMO LOGIN (fallback) ===')
-        await new Promise((resolve) => setTimeout(resolve, 800))
-
-        if (email in DEMO_USERS) {
-          const demoUser = DEMO_USERS[email as keyof typeof DEMO_USERS]
-          user.value = { ...demoUser }
-          localStorage.setItem('biblestem_user', JSON.stringify(user.value))
-          console.log('Demo login successful:', user.value)
-          return { success: true }
-        }
-
-        const newUser: UserProfile = {
-          id: `user-${Date.now()}`,
-          name: email.split('@')[0] || 'Demo User',
-          email,
-          hasSupported: false,
-          studiesCompleted: Math.floor(Math.random() * 5),
-          joinDate: new Date().toISOString(),
-          emailVerified: true,
-        }
-
-        user.value = newUser
-        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
-        console.log('Demo login complete:', user.value)
-        return { success: true }
+        // No Supabase and not demo - show error
+        throw new Error('Invalid login credentials')
       }
     } catch (err: any) {
       console.error('Login error:', err)
