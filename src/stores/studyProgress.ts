@@ -139,6 +139,36 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     )
   }
 
+  const completeLesson = async (studyId: string, lessonId: string, timeSpent: number = 0) => {
+    ensureInitialized()
+    
+    if (!progressData.value[studyId]) {
+      progressData.value[studyId] = {
+        studyId,
+        completedLessons: [],
+        startedAt: new Date().toISOString(),
+        lastAccessedAt: new Date().toISOString(),
+        totalTimeSpent: 0,
+        acceptedChallenges: [],
+      }
+    }
+
+    const progress = progressData.value[studyId]
+
+    if (!progress.completedLessons.includes(lessonId)) {
+      progress.completedLessons.push(lessonId)
+    }
+
+    progress.lastAccessedAt = new Date().toISOString()
+    progress.totalTimeSpent += timeSpent
+
+    saveToStorage()
+    // Fire and forget Firebase sync - don't block UI
+    saveProgressToFirebase(studyId).catch((error) =>
+      console.error('Failed to sync progress to Firebase:', error),
+    )
+  }
+
   const isChallengeAccepted = (studyId: string, lessonId: string): boolean => {
     const progress = progressData.value[studyId]
     return progress ? (progress.acceptedChallenges || []).includes(lessonId) : false
