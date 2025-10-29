@@ -73,7 +73,7 @@ export interface Study {
   id: string
   title: string
   description: string
-  category: 'free' | 'premium'
+  category: 'free' | 'supporter' // supporter = deeper studies for those who donate
   lessons: Lesson[]
   totalDuration: number
   difficulty: 'beginner' | 'intermediate' | 'advanced'
@@ -374,13 +374,14 @@ export const freeStudies: Study[] = [
   },
 ]
 
-export const premiumStudies: Study[] = [
+// Deeper studies available as a thank you to supporters
+export const supporterStudies: Study[] = [
   {
     id: 'sanctuary-study',
     title: 'The Sanctuary Study',
     description:
       'An in-depth exploration of the heavenly sanctuary, its significance in prophecy, and its relationship to Christ\'s ministry',
-    category: 'premium',
+    category: 'supporter',
     totalDuration: 180,
     difficulty: 'advanced',
     tags: ['Sanctuary', 'Prophecy', 'Hebrew Tabernacle', 'Christ\'s Ministry', 'Advanced'],
@@ -390,7 +391,7 @@ export const premiumStudies: Study[] = [
       'Historical context',
       'Prophetic significance',
       'Symbolic meanings',
-      'Premium content',
+      'Supporter content',
     ],
     lessons: [
       {
@@ -401,12 +402,12 @@ export const premiumStudies: Study[] = [
         description: 'Understanding the pattern given to Moses and its heavenly counterpart',
         content: {
           scriptureText: 'And let them make me a sanctuary; that I may dwell among them',
-          commentary: ['Coming soon in premium version'],
+          commentary: ['Deeper study content available for supporters'],
           interactiveElement: { type: 'reflection', content: {} },
           lifeApplication: {
-            challenge: 'Premium content coming soon',
+            challenge: 'Deeper application available for supporters',
           },
-          prayerPrompt: 'Premium content coming soon',
+          prayerPrompt: 'Extended prayer guide for supporters',
         },
         completed: false,
       },
@@ -418,12 +419,12 @@ export const premiumStudies: Study[] = [
         description: 'Exploring the daily ministration in the earthly sanctuary',
         content: {
           scriptureText: 'Now when these things were thus ordained, the priests went always into the first tabernacle...',
-          commentary: ['Coming soon in premium version'],
+          commentary: ['Deeper study content available for supporters'],
           interactiveElement: { type: 'reflection', content: {} },
           lifeApplication: {
-            challenge: 'Premium content coming soon',
+            challenge: 'Deeper application available for supporters',
           },
-          prayerPrompt: 'Premium content coming soon',
+          prayerPrompt: 'Extended prayer guide for supporters',
         },
         completed: false,
       },
@@ -433,7 +434,7 @@ export const premiumStudies: Study[] = [
     id: 'prophecy-timeline',
     title: 'Biblical Prophecy Timeline',
     description: 'A comprehensive study of major biblical prophecies and their fulfillment throughout history',
-    category: 'premium',
+    category: 'supporter',
     totalDuration: 240,
     difficulty: 'advanced',
     tags: ['Prophecy', 'History', 'Timeline', 'Fulfillment', 'Advanced'],
@@ -443,7 +444,7 @@ export const premiumStudies: Study[] = [
       'Interactive timeline',
       'Historical context',
       'Prophetic fulfillment',
-      'Premium content',
+      'Supporter content',
     ],
     lessons: [
       {
@@ -454,12 +455,12 @@ export const premiumStudies: Study[] = [
         description: 'The prophetic kingdoms and the stone that crushes them all',
         content: {
           scriptureText: 'This is the dream; and we will tell the interpretation thereof before the king',
-          commentary: ['Coming soon in premium version'],
+          commentary: ['Deeper study content available for supporters'],
           interactiveElement: { type: 'reflection', content: {} },
           lifeApplication: {
-            challenge: 'Premium content coming soon',
+            challenge: 'Deeper application available for supporters',
           },
-          prayerPrompt: 'Premium content coming soon',
+          prayerPrompt: 'Extended prayer guide for supporters',
         },
         completed: false,
       },
@@ -469,7 +470,7 @@ export const premiumStudies: Study[] = [
     id: 'three-angels-message',
     title: 'The Three Angels\' Message',
     description: 'Deep study of Revelation 14 and the three-fold message to the world before Christ\'s return',
-    category: 'premium',
+    category: 'supporter',
     totalDuration: 210,
     difficulty: 'advanced',
     tags: ['Revelation', 'Last Days', 'Evangelism', 'Three Angels', 'Advanced'],
@@ -479,7 +480,7 @@ export const premiumStudies: Study[] = [
       'Revelation study',
       'Last-day messages',
       'Evangelism focus',
-      'Premium content',
+      'Supporter content',
     ],
     lessons: [
       {
@@ -490,12 +491,12 @@ export const premiumStudies: Study[] = [
         description: 'The everlasting gospel and the call to worship the Creator',
         content: {
           scriptureText: 'And I saw another angel fly in the midst of heaven, having the everlasting gospel...',
-          commentary: ['Coming soon in premium version'],
+          commentary: ['Deeper study content available for supporters'],
           interactiveElement: { type: 'reflection', content: {} },
           lifeApplication: {
-            challenge: 'Premium content coming soon',
+            challenge: 'Deeper application available for supporters',
           },
-          prayerPrompt: 'Premium content coming soon',
+          prayerPrompt: 'Extended prayer guide for supporters',
         },
         completed: false,
       },
@@ -505,7 +506,7 @@ export const premiumStudies: Study[] = [
     id: 'sabbath-study',
     title: 'The Sabbath: Divine Rest',
     description: 'An in-depth exploration of the Sabbath from creation to its significance today',
-    category: 'premium',
+    category: 'supporter',
     totalDuration: 150,
     difficulty: 'intermediate',
     tags: ['Sabbath', 'Creation', 'Law', 'Rest', 'Intermediate'],
@@ -515,7 +516,7 @@ export const premiumStudies: Study[] = [
       'Biblical foundations',
       'Practical application',
       'Historical significance',
-      'Premium content',
+      'Supporter content',
     ],
     lessons: [
       {
@@ -526,12 +527,12 @@ export const premiumStudies: Study[] = [
         description: 'Understanding God\'s rest after creation',
         content: {
           scriptureText: 'And on the seventh day God ended his work which he had made; and he rested',
-          commentary: ['Coming soon in premium version'],
+          commentary: ['Deeper study content available for supporters'],
           interactiveElement: { type: 'reflection', content: {} },
           lifeApplication: {
-            challenge: 'Premium content coming soon',
+            challenge: 'Deeper application available for supporters',
           },
-          prayerPrompt: 'Premium content coming soon',
+          prayerPrompt: 'Extended prayer guide for supporters',
         },
         completed: false,
       },
@@ -544,12 +545,19 @@ export function getFreeStudies(): Study[] {
   return freeStudies
 }
 
-export function getPremiumStudies(): Study[] {
-  return premiumStudies
+export function getSupporterStudies(): Study[] {
+  return supporterStudies
 }
 
 export function getAllStudies(): Study[] {
-  return [...freeStudies, ...premiumStudies]
+  return [...freeStudies, ...supporterStudies]
+}
+
+// Check if user has access to a study
+export function hasAccessToStudy(study: Study, userHasSupported: boolean): boolean {
+  if (study.category === 'free') return true
+  if (study.category === 'supporter') return userHasSupported
+  return false
 }
 
 export function getStudyById(id: string): Study | undefined {

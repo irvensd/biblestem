@@ -108,35 +108,35 @@
           </div>
         </div>
 
-        <!-- Premium Studies Section -->
+        <!-- Supporter Studies Section -->
         <div class="mb-16">
           <div class="flex items-center justify-between mb-8">
             <div>
               <h2 class="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
-                Premium Studies
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-accent-100 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400">
-                  Premium
+                Deeper Studies
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gradient-to-r from-red-100 to-pink-100 dark:from-red-900/30 dark:to-pink-900/30 text-red-600 dark:text-red-400">
+                  ❤️ For Supporters
                 </span>
               </h2>
-              <p class="text-gray-600 dark:text-gray-400">Advanced studies with deeper insights and exclusive content</p>
+              <p class="text-gray-600 dark:text-gray-400">Advanced studies with deeper insights - available as a thank you to our supporters</p>
             </div>
           </div>
           
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Premium Study Cards -->
+            <!-- Supporter Study Cards -->
             <div 
-              v-for="study in premiumStudies" 
+              v-for="study in supporterStudies" 
               :key="study.id"
               class="card p-0 overflow-hidden hover-lift relative"
             >
-              <!-- Premium Badge Overlay -->
+              <!-- Supporter Badge Overlay -->
               <div class="absolute top-3 right-3 z-10">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg">
-                  PREMIUM
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg">
+                  ❤️ SUPPORTER
                 </span>
               </div>
               
-              <div class="h-32 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 relative flex items-center justify-center p-6">
+              <div class="h-32 bg-gradient-to-br from-purple-500 via-pink-500 to-red-600 relative flex items-center justify-center p-6">
                 <!-- Same book icon but with premium colors -->
                 <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
                   <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -169,42 +169,46 @@
                 </div>
                 
                 <router-link 
+                  v-if="hasSupported"
                   :to="`/study/${study.id}`"
-                  class="btn btn-primary w-full relative"
-                  :class="{ 'opacity-50 cursor-not-allowed': !isPremium }"
+                  class="btn btn-primary w-full"
                 >
-                  <span v-if="isPremium">Start Study</span>
-                  <span v-else class="flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                    </svg>
-                    Premium Required
-                  </span>
+                  Start Study
                 </router-link>
+                <button 
+                  v-else
+                  @click="showSupportModal"
+                  class="btn btn-secondary w-full flex items-center justify-center gap-2"
+                >
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                  </svg>
+                  Support to Unlock
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Upgrade CTA (if not premium) -->
-        <div v-if="!isPremium" class="max-w-4xl mx-auto">
-          <div class="card p-8 bg-gradient-to-br from-accent-50 dark:from-accent-900/20 to-accent-100 dark:to-accent-800/20 border-2 border-accent-200 dark:border-accent-700">
+        <!-- Support CTA (if not a supporter) -->
+        <div v-if="!hasSupported" class="max-w-4xl mx-auto">
+          <div class="card p-8 bg-gradient-to-br from-red-50 dark:from-red-900/20 to-pink-50 dark:to-pink-900/20 border-2 border-red-200 dark:border-red-700">
             <div class="text-center">
-              <div class="w-16 h-16 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold mb-2">Unlock Premium Studies</h3>
+              <h3 class="text-2xl font-bold mb-2">Unlock Deeper Studies</h3>
               <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-                Get access to advanced studies with deeper insights, exclusive content, and enhanced features
+                Support our ministry and get access to advanced studies with deeper insights, Hebrew & Greek word studies, and exclusive content. All basic studies remain free forever!
               </p>
-              <router-link 
-                to="/sign-up"
-                class="btn btn-primary px-8 py-3 text-lg"
+              <button 
+                @click="showSupportModal"
+                class="btn bg-gradient-to-r from-red-500 to-pink-500 text-white hover:from-red-600 hover:to-pink-600 px-8 py-3 text-lg"
               >
-                Upgrade to Premium →
-              </router-link>
+                ❤️ Support & Unlock
+              </button>
             </div>
           </div>
         </div>
@@ -216,7 +220,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { getFreeStudies, getPremiumStudies } from '@/data/studies'
+import { getFreeStudies, getSupporterStudies } from '@/data/studies'
 import { useAuthStore } from '@/stores/auth'
 import StudyGridSkeleton from '../components/skeletons/StudyGridSkeleton.vue'
 
@@ -226,9 +230,14 @@ const authStore = useAuthStore()
 const isLoading = ref(true)
 
 const freeStudies = getFreeStudies()
-const premiumStudies = getPremiumStudies()
+const supporterStudies = getSupporterStudies()
 
-const isPremium = computed(() => authStore.isPremium)
+const hasSupported = computed(() => authStore.hasSupported)
+
+// Handle support modal/message
+const showSupportModal = () => {
+  alert('Thank you for your heart to support BibleStem! 🙏\n\nDonating unlocks:\n• 4 deeper Bible studies\n• Advanced Hebrew & Greek insights\n• Exclusive content\n\nDonation options coming soon:\n• PayPal\n• Stripe\n• Venmo\n\nAll basic studies remain FREE forever!')
+}
 
 onMounted(() => {
   // Simulate loading time for better UX
