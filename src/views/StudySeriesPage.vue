@@ -169,22 +169,17 @@
                 </div>
                 
                 <router-link 
-                  v-if="hasSupported"
                   :to="`/study/${study.id}`"
-                  class="btn btn-primary w-full"
+                  class="btn btn-primary w-full flex items-center justify-center gap-2"
                 >
-                  Start Study
+                  <span v-if="hasSupported">Start Study</span>
+                  <span v-else class="flex items-center gap-2">
+                    Preview Study
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
                 </router-link>
-                <button 
-                  v-else
-                  @click="showSupportModal"
-                  class="btn btn-secondary w-full flex items-center justify-center gap-2"
-                >
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                  </svg>
-                  Support to Unlock
-                </button>
               </div>
             </div>
           </div>
@@ -199,15 +194,15 @@
                   <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold mb-2">Unlock Deeper Studies</h3>
+              <h3 class="text-2xl font-bold mb-2">Love These Deeper Studies?</h3>
               <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-                Support our ministry and get access to advanced studies with deeper insights, Hebrew & Greek word studies, and exclusive content. All basic studies remain free forever!
+                These advanced studies with Hebrew & Greek insights are our way of saying thank you to those who support our ministry. <strong>All donations are optional</strong> — we're just grateful you're here studying God's Word! 
               </p>
               <button 
                 @click="showSupportModal"
                 class="btn bg-gradient-to-r from-red-500 to-pink-500 text-white hover:from-red-600 hover:to-pink-600 px-8 py-3 text-lg"
               >
-                ❤️ Support & Unlock
+                ❤️ Support This Ministry
               </button>
             </div>
           </div>
@@ -236,7 +231,7 @@ const hasSupported = computed(() => authStore.hasSupported)
 
 // Handle support modal/message
 const showSupportModal = () => {
-  alert('Thank you for your heart to support BibleStem! 🙏\n\nDonating unlocks:\n• 4 deeper Bible studies\n• Advanced Hebrew & Greek insights\n• Exclusive content\n\nDonation options coming soon:\n• PayPal\n• Stripe\n• Venmo\n\nAll basic studies remain FREE forever!')
+  alert('Thank you for your interest in supporting BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more Bible studies\n• Keeps the platform running for everyone\n• Spreads the Gospel freely worldwide\n• As a thank you, you\'ll get access to 4 deeper studies\n\n✨ All basic studies remain 100% FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo\n\nWe\'re grateful for your prayers and support! ❤️')
 }
 
 onMounted(() => {
