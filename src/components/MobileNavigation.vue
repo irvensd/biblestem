@@ -233,12 +233,12 @@
               <div class="font-medium text-neutral-900 dark:text-neutral-100">
                 {{ authStore.user?.name }}
               </div>
-              <div
-                class="text-sm"
-                :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
-              >
-                {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
-              </div>
+                <div
+                  class="text-sm"
+                  :class="authStore.hasSupported ? 'text-accent-600' : 'text-neutral-500'"
+                >
+                  {{ authStore.hasSupported ? '❤️ Supporter' : 'Member' }}
+                </div>
             </div>
           </div>
 
@@ -293,19 +293,13 @@
             </router-link>
 
             <button
-              v-if="!authStore.isPremium"
-              @click="handleUpgrade"
+              @click="handleSupportUs"
               class="w-full flex items-center space-x-3 p-3 rounded-lg bg-accent-50 dark:bg-accent-900/20 text-accent-700 dark:text-accent-300 hover:bg-accent-100 dark:hover:bg-accent-900/30 transition-colors"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
               </svg>
-              <span class="font-medium">Upgrade to Premium</span>
+              <span class="font-medium">{{ authStore.hasSupported ? 'Support Us Again' : 'Support Our Ministry' }}</span>
             </button>
 
             <button
@@ -408,10 +402,11 @@ const closeProfile = () => {
   showProfile.value = false
 }
 
-const handleUpgrade = () => {
+const handleSupportUs = () => {
   medium()
-  // TODO: Implement upgrade flow
-  alert('Upgrade to Premium - $9.99/month with 3-day free trial!')
+  // TODO: Implement donation flow
+  // For now, show a message - we'll create a proper donation component later
+  alert('Thank you for considering supporting BibleStem! We are a donation-based ministry spreading the Gospel freely. Donation options coming soon!')
   closeProfile()
 }
 

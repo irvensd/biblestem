@@ -9,7 +9,7 @@ export interface UserProfile {
   email: string
   avatar?: string
   bio?: string
-  plan: 'free' | 'premium'
+  hasSupported?: boolean // Optional: Track if user has donated (for recognition)
   studiesCompleted: number
   joinDate: string
   emailVerified?: boolean
@@ -23,25 +23,25 @@ export interface AuthError {
 // Demo users for quick login
 const DEMO_USERS = {
   'demo@biblestem.com': {
-    id: 'demo-premium-user',
-    name: 'Demo Premium User',
+    id: 'demo-supporter-user',
+    name: 'Demo User',
     email: 'demo@biblestem.com',
     avatar:
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    bio: "Exploring the depths of God's Word with premium features.",
-    plan: 'premium' as const,
+    bio: "Exploring the depths of God's Word and supporting the ministry.",
+    hasSupported: true, // This user has donated
     studiesCompleted: 12,
     joinDate: '2023-01-15T00:00:00.000Z',
     emailVerified: true,
   },
-  'free@biblestem.com': {
-    id: 'demo-free-user',
-    name: 'Demo Free User',
-    email: 'free@biblestem.com',
+  'test@biblestem.com': {
+    id: 'demo-regular-user',
+    name: 'Test User',
+    email: 'test@biblestem.com',
     avatar:
       'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
     bio: 'Starting my journey with Bible studies.',
-    plan: 'free' as const,
+    hasSupported: false,
     studiesCompleted: 3,
     joinDate: '2024-01-01T00:00:00.000Z',
     emailVerified: true,
@@ -56,7 +56,7 @@ export const useAuthStore = defineStore('auth', () => {
   const useSupabase = isSupabaseAvailable()
 
   const isAuthenticated = computed(() => !!user.value)
-  const isPremium = computed(() => user.value?.plan === 'premium')
+  const hasSupported = computed(() => user.value?.hasSupported === true)
 
   const clearError = () => {
     error.value = null
@@ -95,28 +95,28 @@ export const useAuthStore = defineStore('auth', () => {
 
         if (authError) throw authError
 
-        // Create user profile in database
-        if (authData.user) {
-          const { error: profileError } = await supabase.from('users').insert({
-            id: authData.user.id,
-            email,
-            name,
-            plan: 'free',
-          })
+          // Create user profile in database
+          if (authData.user) {
+            const { error: profileError } = await supabase.from('users').insert({
+              id: authData.user.id,
+              email,
+              name,
+              has_supported: false,
+            })
 
-          if (profileError) console.error('Profile creation error:', profileError)
+            if (profileError) console.error('Profile creation error:', profileError)
 
-          // Map Supabase user to our user profile
-          user.value = {
-            id: authData.user.id,
-            name,
-            email: authData.user.email!,
-            plan: 'free',
-            studiesCompleted: 0,
-            joinDate: new Date().toISOString(),
-            emailVerified: authData.user.email_confirmed_at ? true : false,
+            // Map Supabase user to our user profile
+            user.value = {
+              id: authData.user.id,
+              name,
+              email: authData.user.email!,
+              hasSupported: false,
+              studiesCompleted: 0,
+              joinDate: new Date().toISOString(),
+              emailVerified: authData.user.email_confirmed_at ? true : false,
+            }
           }
-        }
 
         console.log('Signup successful with Supabase:', user.value)
         return { success: true }
@@ -129,7 +129,7 @@ export const useAuthStore = defineStore('auth', () => {
           id: `user-${Date.now()}`,
           name,
           email,
-          plan: 'free',
+          hasSupported: false,
           studiesCompleted: 0,
           joinDate: new Date().toISOString(),
           emailVerified: true,
@@ -189,7 +189,7 @@ export const useAuthStore = defineStore('auth', () => {
               email: profile.email,
               avatar: profile.avatar,
               bio: profile.bio,
-              plan: profile.plan,
+              hasSupported: profile.has_supported || false,
               studiesCompleted: 0, // TODO: Calculate from study_progress
               joinDate: profile.created_at,
               emailVerified: profile.email_verified,
@@ -200,7 +200,7 @@ export const useAuthStore = defineStore('auth', () => {
               id: authData.user.id,
               name: authData.user.user_metadata.name || email.split('@')[0],
               email: authData.user.email!,
-              plan: 'free',
+              hasSupported: false,
               studiesCompleted: 0,
               joinDate: new Date().toISOString(),
               emailVerified: !!authData.user.email_confirmed_at,
@@ -229,7 +229,7 @@ export const useAuthStore = defineStore('auth', () => {
           id: `user-${Date.now()}`,
           name: email.split('@')[0] || 'Demo User',
           email,
-          plan: 'free',
+          hasSupported: false,
           studiesCompleted: Math.floor(Math.random() * 5),
           joinDate: new Date().toISOString(),
           emailVerified: true,
@@ -345,7 +345,7 @@ export const useAuthStore = defineStore('auth', () => {
                 email: profile.email,
                 avatar: profile.avatar,
                 bio: profile.bio,
-                plan: profile.plan,
+                hasSupported: profile.has_supported || false,
                 studiesCompleted: 0, // TODO: Calculate from study_progress
                 joinDate: profile.created_at,
                 emailVerified: profile.email_verified,
@@ -357,7 +357,7 @@ export const useAuthStore = defineStore('auth', () => {
                 id: session.user.id,
                 name: session.user.user_metadata.name || session.user.email!.split('@')[0],
                 email: session.user.email!,
-                plan: 'free',
+                hasSupported: false,
                 studiesCompleted: 0,
                 joinDate: session.user.created_at,
                 emailVerified: !!session.user.email_confirmed_at,
@@ -409,7 +409,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     // Computed
     isAuthenticated,
-    isPremium,
+    hasSupported,
 
     // Actions
     signUp,

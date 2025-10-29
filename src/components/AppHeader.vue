@@ -147,10 +147,10 @@
                   {{ authStore.user?.name || 'User' }}
                 </div>
                 <div
-                  class="text-xs text-neutral-500"
-                  :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
+                  class="text-xs"
+                  :class="authStore.hasSupported ? 'text-accent-600' : 'text-neutral-500'"
                 >
-                  {{ authStore.isPremium ? 'Premium' : 'Free' }}
+                  {{ authStore.hasSupported ? '❤️ Supporter' : 'Member' }}
                 </div>
               </div>
               <svg
@@ -292,9 +292,9 @@
                 </div>
                 <div
                   class="text-sm"
-                  :class="authStore.isPremium ? 'text-accent-600' : 'text-neutral-500'"
+                  :class="authStore.hasSupported ? 'text-accent-600' : 'text-neutral-500'"
                 >
-                  {{ authStore.isPremium ? 'Premium' : 'Free' }} Plan
+                  {{ authStore.hasSupported ? '❤️ Supporter' : 'Member' }}
                 </div>
               </div>
             </div>
