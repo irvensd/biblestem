@@ -122,6 +122,19 @@
           <GlobalSearch />
         </div>
 
+        <!-- Donation Heart Button (Desktop) -->
+        <button
+          @click="handleDonation"
+          class="hidden lg:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+          aria-label="Support our ministry"
+          title="Support BibleStem"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+          </svg>
+          <span class="text-sm">Donate</span>
+        </button>
+
         <!-- CTA Buttons / User Menu -->
         <div class="hidden lg:flex items-center space-x-2 lg:space-x-4">
           <!-- Authenticated User -->
@@ -513,6 +526,11 @@ const handleSignOut = () => {
   userMenuOpen.value = false
   mobileMenuOpen.value = false
   router.push('/')
+}
+
+const handleDonation = () => {
+  medium()
+  alert('Thank you for your heart to support BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more Bible studies\n• Keeps the platform free for everyone\n• Spreads the Gospel freely worldwide\n• As a thank you: Access to 4 deeper studies\n\n✨ All basic studies remain 100% FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo\n\nWe\'re grateful for your prayers and support! ❤️')
 }
 
 // Close menus when clicking outside

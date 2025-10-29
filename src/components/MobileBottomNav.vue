@@ -3,7 +3,7 @@
     v-if="authStore.isAuthenticated"
     class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-700 safe-bottom"
   >
-    <nav class="grid grid-cols-4 h-16">
+    <nav class="grid grid-cols-5 h-16">
       <!-- Dashboard -->
       <router-link
         to="/dashboard"
@@ -141,7 +141,7 @@
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
         </div>
@@ -151,6 +151,21 @@
           class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-0.5 bg-primary-500 rounded-full"
         ></div>
       </router-link>
+
+      <!-- Donate Button -->
+      <button
+        @click="handleDonation"
+        class="flex flex-col items-center justify-center space-y-1 text-xs font-medium transition-all duration-200 relative overflow-hidden text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 active:bg-red-50 dark:active:bg-red-900/20"
+        @touchstart="handleTouchStart"
+        @touchend="handleTouchEnd"
+      >
+        <div class="w-6 h-6 transition-transform duration-200 animate-pulse">
+          <svg class="w-full h-full" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <span>Donate</span>
+      </button>
     </nav>
   </div>
 </template>
@@ -173,6 +188,10 @@ const handleTouchEnd = (event: TouchEvent) => {
     element.style.transform = ''
     element.style.opacity = ''
   }, 150)
+}
+
+const handleDonation = () => {
+  alert('Thank you for your heart to support BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more Bible studies\n• Keeps the platform free for everyone\n• Spreads the Gospel freely worldwide\n• As a thank you: Access to 4 deeper studies\n\n✨ All basic studies remain 100% FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo\n\nWe\'re grateful for your prayers and support! ❤️')
 }
 </script>
 
