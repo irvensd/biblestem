@@ -121,6 +121,14 @@
       </router-link>
     </div>
   </div>
+
+  <!-- Reset Lesson Modal -->
+  <ResetLessonModal
+    :is-open="showResetModal"
+    :lesson-title="selectedLessonTitle"
+    @close="closeResetModal"
+    @confirm="confirmResetLesson"
+  />
 </template>
 
 <script setup lang="ts">
@@ -129,6 +137,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getSupabase } from '../lib/supabase'
 import { useStudyProgressStore } from '../stores/studyProgress'
 import StudyPageSkeleton from '../components/skeletons/StudyPageSkeleton.vue'
+import ResetLessonModal from '../components/ResetLessonModal.vue'
 import type { Study } from '../data/studies'
 
 const route = useRoute()
@@ -137,6 +146,11 @@ const progressStore = useStudyProgressStore()
 
 const study = ref<Study | null>(null)
 const loading = ref(true)
+
+// Modal state
+const showResetModal = ref(false)
+const selectedLessonId = ref<string>('')
+const selectedLessonTitle = ref<string>('')
 
 const isCompleted = (lessonId: string) => {
   if (!study.value) return false
@@ -152,21 +166,28 @@ const viewLesson = (lessonId: string) => {
 const markAsIncomplete = async (lessonId: string) => {
   if (!study.value) return
   
-  // Find the lesson title for the confirmation dialog
+  // Find the lesson title for the modal
   const lesson = study.value.lessons.find(l => l.id === lessonId)
-  const lessonTitle = lesson?.title || 'this lesson'
+  if (!lesson) return
   
-  // Show confirmation dialog
-  const confirmed = confirm(
-    `Are you sure you want to mark "${lessonTitle}" as incomplete?\n\nThis will reset your progress for this lesson and allow you to study it again.`
-  )
-  
-  if (!confirmed) return
+  // Set modal data and show modal
+  selectedLessonId.value = lessonId
+  selectedLessonTitle.value = lesson.title
+  showResetModal.value = true
+}
+
+const closeResetModal = () => {
+  showResetModal.value = false
+  selectedLessonId.value = ''
+  selectedLessonTitle.value = ''
+}
+
+const confirmResetLesson = async () => {
+  if (!study.value || !selectedLessonId.value) return
   
   try {
-    await progressStore.incompleteLesson(study.value.id, lessonId)
-    // Optional: Show a success message or toast
-    console.log(`Lesson ${lessonId} marked as incomplete`)
+    await progressStore.incompleteLesson(study.value.id, selectedLessonId.value)
+    console.log(`Lesson ${selectedLessonId.value} marked as incomplete`)
   } catch (error) {
     console.error('Failed to mark lesson as incomplete:', error)
   }
