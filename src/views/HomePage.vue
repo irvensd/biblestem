@@ -334,33 +334,30 @@
       <div class="container mx-auto px-4 text-center relative z-10">
         <h2 class="text-4xl md:text-5xl font-bold mb-4">Ready to Start Your Journey?</h2>
         <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-          Join thousands of believers who are deepening their understanding of Scripture every day
+          Join thousands of believers who are deepening their understanding of Scripture every day — completely free!
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
           <router-link 
             to="/sign-up" 
             class="btn bg-white text-primary-600 hover:bg-white/90 px-10 py-4 rounded-xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all flex items-center justify-center gap-2 group"
           >
-            Start Studying Free →
+            Start Studying Free
             <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </router-link>
-          <router-link 
-            to="/sign-in" 
-            class="btn border-2 border-white text-white hover:bg-white/10 px-10 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm"
+          <a 
+            href="#support"
+            class="btn border-2 border-white text-white hover:bg-white/10 px-10 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm flex items-center justify-center gap-2"
           >
-            Already Have Account?
-          </router-link>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+            </svg>
+            Support Our Ministry
+          </a>
         </div>
         
         <div class="flex flex-wrap justify-center gap-6 text-white/90 text-sm">
-          <span class="inline-flex items-center gap-2">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
-            No credit card required
-          </span>
           <span class="inline-flex items-center gap-2">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -371,14 +368,20 @@
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
             </svg>
-            Optional donations welcome
+            Donation-Based Ministry
+          </span>
+          <span class="inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+            No Paywalls
           </span>
         </div>
       </div>
     </section>
 
     <!-- Donation/Support Section -->
-    <section class="py-20 bg-white dark:bg-neutral-900">
+    <section id="support" class="py-20 bg-white dark:bg-neutral-900 scroll-mt-20">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto">
           <div class="card p-8 md:p-12 text-center">
@@ -449,13 +452,35 @@
               </div>
             </div>
 
-            <div class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-6 border border-primary-200 dark:border-primary-800">
+            <div class="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-6 border border-primary-200 dark:border-primary-800 mb-8">
               <p class="text-lg italic text-gray-700 dark:text-gray-300 mb-4">
                 "Freely you have received; freely give." - Matthew 10:8
               </p>
               <p class="text-sm text-gray-600 dark:text-gray-400">
                 Every contribution, no matter the size, helps us continue providing free Bible studies to believers worldwide. Thank you for prayerfully considering supporting this ministry! ❤️
               </p>
+            </div>
+
+            <!-- Donation Button -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                @click="handleDonation"
+                class="btn bg-gradient-to-r from-red-500 to-pink-500 text-white hover:from-red-600 hover:to-pink-600 px-10 py-4 rounded-xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all flex items-center justify-center gap-2 group"
+              >
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                </svg>
+                Donate Now
+              </button>
+              <router-link 
+                to="/sign-up"
+                class="btn btn-secondary px-10 py-4 rounded-xl text-lg font-semibold flex items-center justify-center gap-2"
+              >
+                Start Studying Free
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </router-link>
             </div>
           </div>
         </div>
@@ -465,5 +490,13 @@
 </template>
 
 <script setup lang="ts">
-// Beautiful home page with complete content
+// Handle donation click - can be updated with actual payment integration
+const handleDonation = () => {
+  // For now, show a message - you can replace this with actual donation page/modal
+  // Options: Stripe, PayPal, Buy Me a Coffee, Ko-fi, etc.
+  alert('Thank you for your heart to support BibleStem! 🙏\n\nDonation options coming soon:\n• PayPal\n• Stripe\n• Venmo\n• Buy Me a Coffee\n\nFor now, please contact us if you\'d like to donate.')
+  
+  // Future: Could open a modal or redirect to /donate page
+  // router.push('/donate')
+}
 </script>
