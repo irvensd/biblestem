@@ -13,26 +13,26 @@
             </svg>
           </router-link>
           <div>
-            <h1 class="text-3xl sm:text-4xl font-bold text-white">
+            <h1 class="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white">
               Daily Devotions
             </h1>
-            <p class="text-gray-300">{{ getGreeting() }} • Your daily spiritual growth</p>
+            <p class="text-neutral-600 dark:text-gray-300">{{ getGreeting() }} • Your daily spiritual growth</p>
           </div>
         </div>
       </div>
 
       <!-- Today's Devotion (Large Hero Card) -->
       <div
-        class="mb-8 lg:mb-12 bg-gradient-to-br from-primary-600 via-blue-600 to-indigo-700 rounded-2xl p-6 sm:p-8 lg:p-12 text-white relative overflow-hidden group hover:shadow-2xl transition-all duration-300"
+        class="mb-8 lg:mb-12 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-primary-600 dark:via-blue-600 dark:to-indigo-700 rounded-2xl p-6 sm:p-8 lg:p-12 text-neutral-900 dark:text-white relative overflow-hidden group hover:shadow-2xl transition-all duration-300 border border-blue-200 dark:border-transparent"
       >
         <div class="relative z-10">
           <div class="flex items-start justify-between mb-6">
             <div>
-              <p class="text-blue-100 text-sm font-medium mb-2">{{ todayDate }}</p>
+              <p class="text-blue-700 dark:text-blue-100 text-sm font-medium mb-2">{{ todayDate }}</p>
               <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">
                 Verse of the Day
               </h2>
-              <p class="text-blue-100 text-lg font-semibold">{{ devotion.scripture }}</p>
+              <p class="text-blue-700 dark:text-blue-100 text-lg font-semibold">{{ devotion.scripture }}</p>
             </div>
             <div class="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
               <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,13 +52,13 @@
             </p>
 
             <!-- Devotion Reflection -->
-            <div class="mt-6 p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+            <div class="mt-6 p-6 bg-white/80 dark:bg-white/10 backdrop-blur-sm rounded-xl border border-blue-200 dark:border-white/20">
               <h3 class="text-lg font-semibold mb-3">Reflection</h3>
-              <p class="text-blue-100 leading-relaxed">{{ devotion.reflection }}</p>
+              <p class="text-blue-900 dark:text-blue-100 leading-relaxed">{{ devotion.reflection }}</p>
             </div>
 
             <!-- Prayer Prompt -->
-            <div class="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+            <div class="p-6 bg-white/80 dark:bg-white/10 backdrop-blur-sm rounded-xl border border-blue-200 dark:border-white/20">
               <h3 class="text-lg font-semibold mb-3 flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -70,14 +70,14 @@
                 </svg>
                 Prayer Prompt
               </h3>
-              <p class="text-blue-100 leading-relaxed">{{ devotion.prayer }}</p>
+              <p class="text-blue-900 dark:text-blue-100 leading-relaxed">{{ devotion.prayer }}</p>
             </div>
 
             <!-- Action Items -->
             <div class="flex flex-wrap gap-3 mt-6">
               <button
                 @click="saveDevotion"
-                class="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg font-medium transition-all duration-200 flex items-center gap-2"
+                class="px-4 py-2 bg-white dark:bg-white/20 hover:bg-blue-50 dark:hover:bg-white/30 backdrop-blur-sm rounded-lg font-medium transition-all duration-200 flex items-center gap-2 border border-blue-200 dark:border-transparent text-blue-700 dark:text-white"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -91,7 +91,7 @@
               </button>
               <button
                 @click="shareDevotion"
-                class="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg font-medium transition-all duration-200 flex items-center gap-2"
+                class="px-4 py-2 bg-white dark:bg-white/20 hover:bg-blue-50 dark:hover:bg-white/30 backdrop-blur-sm rounded-lg font-medium transition-all duration-200 flex items-center gap-2 border border-blue-200 dark:border-transparent text-blue-700 dark:text-white"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -115,7 +115,7 @@
       <!-- Recent Devotions -->
       <div class="mb-8">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <h2 class="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white flex items-center gap-2">
             <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
             Recent Devotions
           </h2>
@@ -128,7 +128,7 @@
           <div
             v-for="(devotion, index) in recentDevotions"
             :key="index"
-            class="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+            class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-neutral-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
             @click="viewDevotion(devotion.date)"
           >
             <div class="mb-4">

@@ -14,15 +14,15 @@
             to="/dashboard"
             class="p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
           >
-            <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-neutral-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
           </router-link>
           <div>
-            <h1 class="text-3xl sm:text-4xl font-bold text-white">
+            <h1 class="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white">
               My Studies
             </h1>
-            <p class="text-gray-300">Track your Bible study progress</p>
+            <p class="text-neutral-600 dark:text-gray-300">Track your Bible study progress</p>
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
         <div
           v-for="study in filteredStudies"
           :key="study.id"
-          class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
+          class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-neutral-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
           @click="viewStudy(study.id)"
         >
           <!-- Study Header Image - Matching Study Series style -->
@@ -130,20 +130,20 @@
 
           <!-- Study Content -->
           <div class="p-5">
-            <h3 class="text-lg font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors line-clamp-2">
+            <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-2 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">
               {{ study.title }}
             </h3>
-            <p class="text-sm text-gray-300 mb-4 line-clamp-2">
+            <p class="text-sm text-neutral-600 dark:text-gray-300 mb-4 line-clamp-2">
               {{ study.description }}
             </p>
 
             <!-- Progress Bar for In Progress -->
             <div v-if="activeTab === 'inProgress'" class="mb-4">
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-medium text-gray-300">
+                <span class="text-xs font-medium text-neutral-600 dark:text-gray-300">
                   Progress
                 </span>
-                <span class="text-xs font-medium text-emerald-400">
+                <span class="text-xs font-medium text-emerald-500 dark:text-emerald-400">
                   {{ getStudyProgress(study.id) }}%
                 </span>
               </div>
