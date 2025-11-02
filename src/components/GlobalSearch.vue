@@ -60,7 +60,7 @@
 
     <!-- Search Results Dropdown -->
     <div
-      v-if="showResults && (searchQuery.trim() || recentSearches.length > 0)"
+      v-if="showResults && searchQuery.trim()"
       class="bg-white dark:bg-neutral-800 rounded-b-xl shadow-xl border border-t-0 border-neutral-200 dark:border-neutral-700 z-50 overflow-hidden mobile-scroll"
       :class="props.modalMode 
         ? 'flex-1 flex flex-col min-h-0 mt-2 rounded-xl border-t' 
@@ -72,39 +72,8 @@
         <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-2">Searching...</p>
       </div>
 
-      <!-- No Query - Show Recent Searches -->
-      <div v-else-if="!searchQuery.trim() && recentSearches.length > 0" class="p-2">
-        <div
-          class="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-700"
-        >
-          Recent Searches
-        </div>
-        <button
-          v-for="recent in recentSearches"
-          :key="recent"
-          @click="searchQuery = recent"
-          class="w-full text-left px-4 py-3 text-base text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-700 active:bg-neutral-100 dark:active:bg-neutral-600 rounded-lg transition-colors flex items-center space-x-3 touch-manipulation"
-          :class="isMobile ? 'min-h-[48px]' : ''"
-        >
-          <svg
-            class="h-4 w-4 text-neutral-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>{{ recent }}</span>
-        </button>
-      </div>
-
       <!-- Search Results -->
-      <div v-else-if="searchQuery.trim()" :class="props.modalMode ? 'flex-1 overflow-y-auto' : 'max-h-80 overflow-y-auto'">
+      <div v-else :class="props.modalMode ? 'flex-1 overflow-y-auto' : 'max-h-80 overflow-y-auto'">
         <!-- No Results -->
         <div v-if="searchResults.total === 0" class="p-4 text-center">
           <svg
@@ -508,29 +477,21 @@ const formatDate = (dateString: string) => {
 }
 
 // Recent searches management
+// Recent searches disabled - not saving/loading anymore
 const addToRecentSearches = (query: string) => {
-  const searches = recentSearches.value.filter((s) => s !== query)
-  searches.unshift(query)
-  recentSearches.value = searches.slice(0, 5)
-  saveRecentSearches()
+  // Feature disabled
 }
 
 const saveRecentSearches = () => {
-  try {
-    localStorage.setItem('biblestem_recent_searches', JSON.stringify(recentSearches.value))
-  } catch (error) {
-    console.error('Failed to save recent searches:', error)
-  }
+  // Feature disabled
 }
 
 const loadRecentSearches = () => {
+  // Feature disabled - clear any existing data
   try {
-    const saved = localStorage.getItem('biblestem_recent_searches')
-    if (saved) {
-      recentSearches.value = JSON.parse(saved)
-    }
+    localStorage.removeItem('biblestem_recent_searches')
   } catch (error) {
-    console.error('Failed to load recent searches:', error)
+    // Silently fail
   }
 }
 
