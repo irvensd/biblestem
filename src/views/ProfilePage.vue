@@ -406,13 +406,11 @@ const handleUpdateProfile = async () => {
 
     if (result.success) {
       editMode.value = false
-      alert('Profile updated successfully!')
     } else {
-      alert('Failed to update profile: ' + result.error)
+      console.error('Failed to update profile:', result.error)
     }
   } catch (error) {
     console.error('Error updating profile:', error)
-    alert('An error occurred while updating your profile')
   } finally {
     isSaving.value = false
   }
@@ -428,10 +426,8 @@ const supportMinistry = () => {
 }
 
 const handleSignOut = async () => {
-  if (confirm('Are you sure you want to sign out?')) {
-    await authStore.logout()
-    router.push('/')
-  }
+  await authStore.logout()
+  router.push('/')
 }
 
 onMounted(async () => {
