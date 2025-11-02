@@ -6,9 +6,22 @@ import { initSupabase } from './lib/supabase'
 import App from './App.vue'
 import router from './router'
 
-// Force dark mode
-document.documentElement.classList.add('dark')
-document.documentElement.classList.remove('light')
+// Initialize theme from localStorage or system preference
+const savedTheme = localStorage.getItem('biblestem_theme')
+if (savedTheme === 'light' || savedTheme === 'dark') {
+  document.documentElement.classList.add(savedTheme)
+  document.documentElement.classList.remove(savedTheme === 'dark' ? 'light' : 'dark')
+} else {
+  // System preference or default
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  if (systemPrefersDark) {
+    document.documentElement.classList.add('dark')
+    document.documentElement.classList.remove('light')
+  } else {
+    document.documentElement.classList.add('light')
+    document.documentElement.classList.remove('dark')
+  }
+}
 
 // Initialize Supabase
 initSupabase()

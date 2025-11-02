@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800">
+  <div class="min-h-screen bg-gradient-to-br from-neutral-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-800">
     <!-- Loading Skeleton -->
     <div v-if="isLoading" class="container-base py-6 sm:py-8 lg:py-12">
       <StudyGridSkeleton :count="6" />

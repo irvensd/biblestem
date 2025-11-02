@@ -1,7 +1,7 @@
 <template>
   <!-- Actual header -->
   <header
-    class="bg-gray-900/95 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 shadow-lg"
+    class="bg-white dark:bg-gray-900 backdrop-blur-md border-b border-neutral-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg"
     role="banner"
   >
       <nav class="container-base" role="navigation" aria-label="Main navigation">
@@ -30,8 +30,8 @@
             </div>
           </div>
           <div class="flex flex-col">
-            <span class="text-lg sm:text-xl font-bold text-white">BibleStem</span>
-            <span class="text-xs text-gray-400 -mt-1 hidden lg:block"
+            <span class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white">BibleStem</span>
+            <span class="text-xs text-neutral-600 dark:text-gray-400 -mt-1 hidden lg:block"
               >Interactive Bible Study</span
             >
           </div>
@@ -46,8 +46,8 @@
           <template v-if="authStore.isAuthenticated">
             <router-link
               to="/dashboard"
-              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400 pb-1': $route.path === '/dashboard' }"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              :class="{ 'text-primary-600 dark:text-blue-400 border-b-2 border-primary-600 dark:border-blue-400 pb-1': $route.path === '/dashboard' }"
               role="menuitem"
               :aria-current="$route.path === '/dashboard' ? 'page' : undefined"
             >
@@ -55,7 +55,7 @@
             </router-link>
             <router-link
               to="/study-series"
-              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
               role="menuitem"
               :aria-current="$route.path === '/study-series' ? 'page' : undefined"
@@ -64,8 +64,8 @@
             </router-link>
             <router-link
               to="/my-studies"
-              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400 pb-1': $route.path === '/my-studies' }"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              :class="{ 'text-primary-600 dark:text-blue-400 border-b-2 border-primary-600 dark:border-blue-400 pb-1': $route.path === '/my-studies' }"
               role="menuitem"
               :aria-current="$route.path === '/my-studies' ? 'page' : undefined"
             >
@@ -73,9 +73,9 @@
             </router-link>
             <router-link
               to="/daily-devotions"
-              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{
-                'text-blue-400 border-b-2 border-blue-400 pb-1': $route.path === '/daily-devotions',
+                'text-primary-600 dark:text-blue-400 border-b-2 border-primary-600 dark:border-blue-400 pb-1': $route.path === '/daily-devotions',
               }"
               role="menuitem"
               :aria-current="$route.path === '/daily-devotions' ? 'page' : undefined"
@@ -88,28 +88,28 @@
           <template v-else>
             <router-link
               to="/"
-              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/' }"
             >
               Home
             </router-link>
             <router-link
               to="/study-series"
-              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
             >
               Study Series
             </router-link>
             <router-link
               to="/about"
-              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/about' }"
             >
               About
             </router-link>
             <router-link
               to="/contact"
-              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
               :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/contact' }"
             >
               Contact
@@ -121,6 +121,21 @@
         <div v-if="authStore.isAuthenticated" class="hidden lg:block flex-1 max-w-md mx-6">
           <GlobalSearch />
         </div>
+
+        <!-- Theme Toggle Button (Desktop) -->
+        <button
+          @click="toggleTheme"
+          class="hidden lg:flex items-center justify-center w-10 h-10 rounded-lg hover:bg-neutral-100 dark:hover:bg-gray-700 transition-colors duration-200"
+          :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+          :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+        >
+          <svg v-if="isDarkMode" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg v-else class="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
 
         <!-- Donation Heart Button (Desktop) -->
         <button
@@ -260,7 +275,7 @@
           aria-controls="mobile-menu"
         >
           <svg
-            class="w-6 h-6"
+            class="w-6 h-6 text-neutral-900 dark:text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -378,6 +393,20 @@
           <!-- Account Actions -->
           <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4 pb-6">
             <div class="flex flex-col space-y-3">
+              <button
+                @click="toggleTheme"
+                class="w-full text-left px-4 py-2 flex items-center justify-between text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              >
+                <div class="flex items-center gap-3">
+                  <svg v-if="isDarkMode" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                  <svg v-else class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                  <span>{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
+                </div>
+              </button>
               <router-link
                 to="/profile"
                 @click="closeMobileMenu"
@@ -455,6 +484,20 @@
           <!-- Auth Actions -->
           <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4">
             <div class="flex flex-col space-y-3">
+              <button
+                @click="toggleTheme"
+                class="w-full text-left px-4 py-2 flex items-center justify-between text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200"
+              >
+                <div class="flex items-center gap-3">
+                  <svg v-if="isDarkMode" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                  <svg v-else class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                  <span>{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
+                </div>
+              </button>
               <router-link
                 to="/signin"
                 @click="closeMobileMenu"
@@ -498,12 +541,16 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useHapticFeedback } from '../composables/useMobileGestures'
+import { useTheme } from '../composables/useTheme'
 import GlobalSearch from './GlobalSearch.vue'
 
 const router = useRouter()
 
 // Initialize stores
 const authStore = useAuthStore()
+
+// Theme management
+const { isDarkMode, toggleTheme } = useTheme()
 
 // Touch feedback
 const { light, medium } = useHapticFeedback()

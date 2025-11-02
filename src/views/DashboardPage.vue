@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800">
+  <div class="min-h-screen bg-gradient-to-br from-neutral-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-800">
     <!-- Loading Skeleton -->
     <div v-if="isLoading" class="container-base py-6 sm:py-8 lg:py-12">
       <DashboardSkeleton />
@@ -10,19 +10,19 @@
       <!-- Welcome Header -->
       <div class="mb-16">
         <div class="text-center max-w-5xl mx-auto">
-          <div class="inline-flex items-center gap-3 px-6 py-3 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-gray-700/50 mb-6">
+          <div class="inline-flex items-center gap-3 px-6 py-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg border border-neutral-200 dark:border-gray-700/50 mb-6">
             <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
               <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
-            <span class="text-sm font-semibold text-gray-300">BibleStem Dashboard</span>
+            <span class="text-sm font-semibold text-neutral-700 dark:text-gray-300">BibleStem Dashboard</span>
           </div>
           
           <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
             {{ welcomeMessage }}
           </h1>
-          <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p class="text-xl text-neutral-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
             {{ getGreeting() }} • Continue your spiritual growth journey with personalized Bible studies
           </p>
           
@@ -120,11 +120,11 @@
 
       <!-- Quick Actions -->
       <div class="mb-16">
-        <h2 class="text-3xl font-bold text-white mb-8 text-center">Quick Actions</h2>
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-white mb-8 text-center">Quick Actions</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div
             @click="navigateToBrowseStudies"
-            class="group relative overflow-hidden rounded-2xl bg-gray-800 p-8 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-700 hover:border-purple-500"
+            class="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-neutral-200 dark:border-gray-700 hover:border-purple-500"
           >
             <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-900/20 to-pink-900/20 rounded-full -translate-y-16 translate-x-16 group-hover:scale-110 transition-transform duration-500"></div>
             <div class="relative z-10">
@@ -133,10 +133,10 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+              <h3 class="text-2xl font-bold text-neutral-900 dark:text-white mb-3 group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">
                 Browse Studies
               </h3>
-              <p class="text-gray-300 mb-6 leading-relaxed">
+              <p class="text-neutral-600 dark:text-gray-300 mb-6 leading-relaxed">
                 Discover new Bible study series and deepen your understanding of Scripture with our comprehensive collection.
               </p>
               <div class="flex items-center text-purple-400 font-semibold group-hover:text-purple-300 transition-colors">
@@ -150,7 +150,7 @@
 
           <div
             @click="navigateToDailyStudy"
-            class="group relative overflow-hidden rounded-2xl bg-gray-800 p-8 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-700 hover:border-orange-500"
+            class="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-neutral-200 dark:border-gray-700 hover:border-orange-500"
           >
             <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-900/20 to-red-900/20 rounded-full -translate-y-16 translate-x-16 group-hover:scale-110 transition-transform duration-500"></div>
             <div class="relative z-10">
@@ -159,10 +159,10 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors">
+              <h3 class="text-2xl font-bold text-neutral-900 dark:text-white mb-3 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors">
                 Daily Study
               </h3>
-              <p class="text-gray-300 mb-6 leading-relaxed">
+              <p class="text-neutral-600 dark:text-gray-300 mb-6 leading-relaxed">
                 Start your day with a focused Bible study session designed to inspire and guide your spiritual journey.
               </p>
               <div class="flex items-center text-orange-400 font-semibold group-hover:text-orange-300 transition-colors">
@@ -178,9 +178,9 @@
 
       <!-- Stats Grid -->
       <div class="mb-16">
-        <h2 class="text-3xl font-bold text-white mb-8 text-center">Your Progress</h2>
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-white mb-8 text-center">Your Progress</h2>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="group bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-emerald-500">
+          <div class="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-neutral-200 dark:border-gray-700 hover:border-emerald-500">
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -188,14 +188,14 @@
                 </svg>
               </div>
               <div class="text-right">
-                <div class="text-3xl font-bold text-white group-hover:text-emerald-400 transition-colors">7</div>
-                <div class="text-sm text-gray-400">Studies</div>
+                <div class="text-3xl font-bold text-neutral-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">7</div>
+                <div class="text-sm text-neutral-600 dark:text-gray-400">Studies</div>
               </div>
             </div>
-            <div class="text-sm font-semibold text-emerald-400">Completed</div>
+            <div class="text-sm font-semibold text-emerald-500 dark:text-emerald-400">Completed</div>
           </div>
 
-          <div class="group bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-blue-500">
+          <div class="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-neutral-200 dark:border-gray-700 hover:border-blue-500">
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,14 +203,14 @@
                 </svg>
               </div>
               <div class="text-right">
-                <div class="text-3xl font-bold text-white group-hover:text-blue-400 transition-colors">112</div>
-                <div class="text-sm text-gray-400">Minutes</div>
+                <div class="text-3xl font-bold text-neutral-900 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">112</div>
+                <div class="text-sm text-neutral-600 dark:text-gray-400">Minutes</div>
               </div>
             </div>
-            <div class="text-sm font-semibold text-blue-400">Studied</div>
+            <div class="text-sm font-semibold text-blue-500 dark:text-blue-400">Studied</div>
           </div>
 
-          <div class="group bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-orange-500">
+          <div class="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-neutral-200 dark:border-gray-700 hover:border-orange-500">
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -218,14 +218,14 @@
                 </svg>
               </div>
               <div class="text-right">
-                <div class="text-3xl font-bold text-white group-hover:text-orange-400 transition-colors">0</div>
-                <div class="text-sm text-gray-400">Active</div>
+                <div class="text-3xl font-bold text-neutral-900 dark:text-white group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors">0</div>
+                <div class="text-sm text-neutral-600 dark:text-gray-400">Active</div>
               </div>
             </div>
-            <div class="text-sm font-semibold text-orange-400">In Progress</div>
+            <div class="text-sm font-semibold text-orange-500 dark:text-orange-400">In Progress</div>
           </div>
 
-          <div class="group bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-purple-500">
+          <div class="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-neutral-200 dark:border-gray-700 hover:border-purple-500">
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -233,19 +233,19 @@
                 </svg>
               </div>
               <div class="text-right">
-                <div class="text-3xl font-bold text-white group-hover:text-purple-400 transition-colors">2</div>
-                <div class="text-sm text-gray-400">Days</div>
+                <div class="text-3xl font-bold text-neutral-900 dark:text-white group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">2</div>
+                <div class="text-sm text-neutral-600 dark:text-gray-400">Days</div>
               </div>
             </div>
-            <div class="text-sm font-semibold text-purple-400">Streak</div>
+            <div class="text-sm font-semibold text-purple-500 dark:text-purple-400">Streak</div>
           </div>
         </div>
       </div>
 
       <!-- Recently Completed -->
       <div class="mb-16">
-        <h2 class="text-3xl font-bold text-white mb-8 text-center">Recently Completed</h2>
-        <div class="bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-700 hover:shadow-xl transition-all duration-300">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-white mb-8 text-center">Recently Completed</h2>
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-neutral-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300">
           <div class="flex items-center gap-6">
             <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center flex-shrink-0">
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -253,13 +253,13 @@
               </svg>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-xl font-bold text-white mb-2">
+              <h3 class="text-xl font-bold text-neutral-900 dark:text-white mb-2">
                 How to Study the Bible: The Preparation
               </h3>
-              <p class="text-emerald-400 font-semibold mb-3">
+              <p class="text-emerald-500 dark:text-emerald-400 font-semibold mb-3">
                 ✓ Completed Successfully
               </p>
-              <p class="text-gray-300 leading-relaxed">
+              <p class="text-neutral-600 dark:text-gray-300 leading-relaxed">
                 You've completed this foundational study on Bible study preparation. Great job on building your spiritual foundation!
               </p>
             </div>

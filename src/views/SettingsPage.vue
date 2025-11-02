@@ -52,6 +52,49 @@
           </h2>
 
           <div class="space-y-4">
+            <!-- Theme Toggle -->
+            <div class="flex items-center justify-between p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center"
+                >
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-neutral-900 dark:text-neutral-100">Theme</h3>
+                  <p class="text-sm text-neutral-600 dark:text-neutral-400">Switch between light and dark mode</p>
+                </div>
+              </div>
+              <button
+                @click="toggleTheme"
+                class="relative inline-flex items-center cursor-pointer"
+              >
+                <div
+                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1"
+                  :class="isDarkMode ? 'bg-gradient-to-r from-blue-600 to-indigo-600' : 'bg-neutral-300'"
+                >
+                  <div
+                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300"
+                    :class="isDarkMode ? 'translate-x-6' : 'translate-x-0'"
+                  >
+                    <svg v-if="isDarkMode" class="w-6 h-6 p-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                    <svg v-else class="w-6 h-6 p-1 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  </div>
+                </div>
+              </button>
+            </div>
+
             <!-- Font Size -->
             <div class="p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
               <div class="flex items-center gap-4 mb-4">
@@ -327,8 +370,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useTheme } from '../composables/useTheme'
 
 const router = useRouter()
+
+// Theme management
+const { isDarkMode, toggleTheme } = useTheme()
 
 // Settings state
 const fontSize = ref(16)
