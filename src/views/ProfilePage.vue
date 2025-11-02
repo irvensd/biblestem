@@ -426,8 +426,8 @@ const supportMinistry = () => {
 }
 
 const handleSignOut = async () => {
-  await authStore.logout()
   router.push('/')
+  await authStore.logout()
 }
 
 onMounted(async () => {
