@@ -69,9 +69,7 @@
                     Member
                   </div>
                 </div>
-                <p class="text-blue-100 mb-3">{{ authStore.user.email }}</p>
-                <p v-if="authStore.user.bio" class="text-white/90">{{ authStore.user.bio }}</p>
-                <p v-else class="text-white/70 italic">Add a bio to tell others about yourself...</p>
+                <p class="text-blue-100">{{ authStore.user.email }}</p>
               </div>
             </div>
           </div>
@@ -124,19 +122,6 @@
               <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
                 Email cannot be changed
               </p>
-            </div>
-
-            <!-- Bio Input -->
-            <div>
-              <label class="block text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-                Bio
-              </label>
-              <textarea
-                v-model="editForm.bio"
-                rows="4"
-                class="w-full px-4 py-3 rounded-xl border-2 border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:border-primary-500 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900/50 transition-all resize-none"
-                placeholder="Tell others about yourself..."
-              ></textarea>
             </div>
 
             <!-- Action Buttons -->
@@ -381,7 +366,6 @@ const isSaving = ref(false)
 
 const editForm = ref({
   name: '',
-  bio: '',
 })
 
 const formatJoinDate = (dateString: string) => {
@@ -396,7 +380,6 @@ const handleUpdateProfile = async () => {
   try {
     const result = await authStore.updateUserProfile({
       name: editForm.value.name,
-      bio: editForm.value.bio,
     })
 
     if (result.success) {
@@ -433,7 +416,6 @@ onMounted(() => {
   if (authStore.user) {
     editForm.value = {
       name: authStore.user.name,
-      bio: authStore.user.bio || '',
     }
   }
 })
