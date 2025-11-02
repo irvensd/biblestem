@@ -563,7 +563,7 @@
     >
       <div
         v-if="searchModalOpen"
-        class="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4"
+        class="fixed inset-0 z-[100] flex items-start justify-center pt-[10vh] sm:pt-[15vh] px-2 sm:px-4"
         @click.self="closeSearchModal"
       >
         <!-- Backdrop -->
@@ -577,7 +577,7 @@
           class="relative w-full max-w-2xl bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-200 dark:border-neutral-700 overflow-hidden animate-slide-up max-h-[85vh] flex flex-col"
         >
           <!-- Modal Header -->
-          <div class="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800 flex-shrink-0">
+          <div class="flex items-center justify-between p-3 sm:p-4 border-b border-neutral-200 dark:border-neutral-800 flex-shrink-0">
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -585,8 +585,8 @@
                 </svg>
               </div>
               <div>
-                <h2 class="text-lg font-bold text-neutral-900 dark:text-white">Search</h2>
-                <p class="text-xs text-neutral-500 dark:text-neutral-400">Find studies, lessons, and verses</p>
+                <h2 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-white">Search</h2>
+                <p class="text-[10px] sm:text-xs text-neutral-500 dark:text-neutral-400">Find studies, lessons, and verses</p>
               </div>
             </div>
             <button
@@ -601,22 +601,22 @@
           </div>
 
           <!-- Search Content - Grows to fill available space -->
-          <div class="p-6 flex-1 overflow-hidden flex flex-col min-h-0">
+          <div class="p-3 sm:p-6 flex-1 overflow-hidden flex flex-col min-h-0">
             <GlobalSearch :modal-mode="true" @search-close="closeSearchModal" />
           </div>
 
           <!-- Keyboard Hint -->
-          <div class="px-6 pb-4 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400 flex-shrink-0 border-t border-neutral-200 dark:border-neutral-800">
-            <div class="flex items-center gap-4">
+          <div class="px-3 sm:px-6 pb-3 sm:pb-4 flex items-center justify-between text-[10px] sm:text-xs text-neutral-500 dark:text-neutral-400 flex-shrink-0 border-t border-neutral-200 dark:border-neutral-800">
+            <div class="flex items-center gap-2 sm:gap-4">
               <div class="flex items-center gap-1">
-                <kbd class="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">Ctrl</kbd>
+                <kbd class="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[9px] sm:text-xs">Ctrl</kbd>
                 <span>+</span>
-                <kbd class="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">K</kbd>
-                <span class="ml-1">to open</span>
+                <kbd class="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[9px] sm:text-xs">K</kbd>
+                <span class="ml-1 hidden xs:inline">to open</span>
               </div>
               <div class="flex items-center gap-1">
-                <kbd class="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">Esc</kbd>
-                <span class="ml-1">to close</span>
+                <kbd class="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[9px] sm:text-xs">Esc</kbd>
+                <span class="ml-1 hidden xs:inline">to close</span>
               </div>
             </div>
           </div>
