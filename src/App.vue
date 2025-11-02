@@ -116,6 +116,10 @@ import EnhancedLoading from './components/EnhancedLoading.vue'
 import { usePWA } from './composables/usePWA'
 import { useErrorRecovery } from './composables/useErrorRecovery'
 import { globalErrorRecovery } from './composables/useErrorRecovery'
+import { useTheme } from './composables/useTheme'
+
+// Initialize theme
+const { isDarkMode, toggleTheme } = useTheme()
 
 // App readiness state
 const isAppReady = ref(false)
