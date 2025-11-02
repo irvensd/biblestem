@@ -236,7 +236,7 @@
           <template v-else>
             <router-link
               to="/signin"
-              class="text-white hover:text-blue-400 font-medium transition-colors duration-200 text-sm lg:text-base"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm lg:text-base"
             >
               Sign In
             </router-link>
