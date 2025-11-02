@@ -103,7 +103,7 @@ export const useAuthStore = defineStore('auth', () => {
               email: authData.user.email!,
               hasSupported: false,
               studiesCompleted: 0,
-              joinDate: new Date().toISOString(),
+              joinDate: authData.user.created_at || new Date().toISOString(),
               emailVerified: authData.user.email_confirmed_at ? true : false,
             }
           }
