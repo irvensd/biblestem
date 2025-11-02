@@ -125,7 +125,7 @@
         <!-- Theme Toggle Button (Desktop) -->
         <button
           @click="toggleTheme"
-          class="hidden lg:flex items-center justify-center w-10 h-10 rounded-lg hover:bg-neutral-100 dark:hover:bg-gray-700 transition-colors duration-200"
+          class="hidden lg:flex items-center justify-center w-10 h-10 rounded-lg hover:bg-neutral-100 dark:hover:bg-gray-700 transition-colors duration-200 mr-2"
           :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
           :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
         >
@@ -140,7 +140,7 @@
         <!-- Donation Heart Button (Desktop) -->
         <button
           @click="handleDonation"
-          class="hidden lg:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+          class="hidden lg:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg mr-3"
           aria-label="Support our ministry"
           title="Support BibleStem"
         >
@@ -151,7 +151,7 @@
         </button>
 
         <!-- CTA Buttons / User Menu -->
-        <div class="hidden lg:flex items-center space-x-2 lg:space-x-4">
+        <div class="hidden lg:flex items-center space-x-2 lg:space-x-4 ml-0">
           <!-- Authenticated User -->
           <div v-if="authStore.isAuthenticated" class="relative">
             <button
