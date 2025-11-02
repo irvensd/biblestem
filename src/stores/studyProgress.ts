@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useAuthStore } from './auth'
+import { getSupabase, isSupabaseAvailable } from '../lib/supabase'
 
 export interface StudyProgress {
   studyId: string
@@ -133,9 +134,9 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     progress.lastAccessedAt = new Date().toISOString()
     saveToStorage()
     
-    // Fire and forget Firebase sync - don't block UI
-    saveProgressToFirebase(studyId).catch((error) =>
-      console.error('Failed to sync progress to Firebase:', error),
+    // Fire and forget Supabase sync - don't block UI
+    saveProgressToSupabase(studyId).catch((error) =>
+      console.error('Failed to sync progress to Supabase:', error),
     )
   }
 
@@ -163,9 +164,9 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     progress.totalTimeSpent += timeSpent
 
     saveToStorage()
-    // Fire and forget Firebase sync - don't block UI
-    saveProgressToFirebase(studyId).catch((error) =>
-      console.error('Failed to sync progress to Firebase:', error),
+    // Fire and forget Supabase sync - don't block UI
+    saveProgressToSupabase(studyId).catch((error) =>
+      console.error('Failed to sync progress to Supabase:', error),
     )
   }
 
@@ -199,9 +200,9 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     progress.lastAccessedAt = new Date().toISOString()
     saveToStorage()
     
-    // Fire and forget Firebase sync - don't block UI
-    saveProgressToFirebase(studyId).catch((error) =>
-      console.error('Failed to sync progress to Firebase:', error),
+    // Fire and forget Supabase sync - don't block UI
+    saveProgressToSupabase(studyId).catch((error) =>
+      console.error('Failed to sync progress to Supabase:', error),
     )
   }
 
@@ -263,51 +264,114 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     console.log('Firebase sync disabled - using local storage only')
   }
 
-  const saveProgressToFirebase = async (studyId: string) => {
-    // Firebase integration disabled for now
-    console.log('Firebase save disabled - using local storage only')
+  const saveProgressToSupabase = async (studyId: string) => {
+    const useSupabase = isSupabaseAvailable()
+    const authStore = useAuthStore()
+    
+    if (!useSupabase || !authStore.user) {
+      console.log('Supabase not available or user not authenticated - using local storage only')
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase) return
+
+    const progress = progressData.value[studyId]
+    if (!progress) return
+
+    try {
+      const { error } = await supabase
+        .from('study_progress')
+        .upsert({
+          user_id: authStore.user.id,
+          study_id: studyId,
+          completed_lessons: progress.completedLessons,
+          current_lesson: progress.currentLesson,
+          started_at: progress.startedAt,
+          last_accessed_at: progress.lastAccessedAt,
+          total_time_spent: progress.totalTimeSpent,
+          accepted_challenges: progress.acceptedChallenges,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id,study_id'
+        })
+
+      if (error) throw error
+      console.log('Progress saved to Supabase:', studyId)
+    } catch (error) {
+      console.error('Failed to save progress to Supabase:', error)
+    }
   }
 
-  const loadFromStorage = () => {
-    ensureInitialized()
-    // Force demo data initialization for testing completed studies
-    // In production, this would load from localStorage normally
-    initializeDemoData()
+  const loadProgressFromSupabase = async () => {
+    const useSupabase = isSupabaseAvailable()
+    const authStore = useAuthStore()
+    
+    if (!useSupabase || !authStore.user) {
+      console.log('Supabase not available or user not authenticated - loading from local storage')
+      loadFromLocalStorage()
+      return
+    }
 
-    /* Normal localStorage loading:
+    const supabase = getSupabase()
+    if (!supabase) {
+      loadFromLocalStorage()
+      return
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('study_progress')
+        .select('*')
+        .eq('user_id', authStore.user.id)
+
+      if (error) throw error
+
+      if (data && data.length > 0) {
+        // Convert Supabase data to local format
+        const progressMap: Record<string, StudyProgress> = {}
+        data.forEach((item: any) => {
+          progressMap[item.study_id] = {
+            studyId: item.study_id,
+            completedLessons: item.completed_lessons || [],
+            currentLesson: item.current_lesson,
+            startedAt: item.started_at,
+            lastAccessedAt: item.last_accessed_at,
+            totalTimeSpent: item.total_time_spent || 0,
+            acceptedChallenges: item.accepted_challenges || []
+          }
+        })
+        progressData.value = progressMap
+        console.log('Progress loaded from Supabase:', progressMap)
+      } else {
+        // No progress in Supabase, load from local storage or initialize
+        loadFromLocalStorage()
+      }
+    } catch (error) {
+      console.error('Failed to load progress from Supabase:', error)
+      loadFromLocalStorage()
+    }
+  }
+
+  const loadFromLocalStorage = () => {
+    ensureInitialized()
     const saved = localStorage.getItem('biblestem_study_progress')
     if (saved) {
       try {
         progressData.value = JSON.parse(saved)
+        console.log('Progress loaded from localStorage')
       } catch (error) {
-        console.error('Error loading study progress:', error)
+        console.error('Error loading study progress from localStorage:', error)
         initializeDemoData()
       }
     } else {
+      console.log('No saved progress found, initializing demo data')
       initializeDemoData()
     }
-    */
   }
 
-  const loadFromStorage = () => {
-    ensureInitialized()
-    // Force demo data initialization for testing completed studies
-    // In production, this would load from localStorage normally
-    initializeDemoData()
-
-    /* Normal localStorage loading:
-    const saved = localStorage.getItem('biblestem_study_progress')
-    if (saved) {
-      try {
-        progressData.value = JSON.parse(saved)
-      } catch (error) {
-        console.error('Error loading study progress:', error)
-        initializeDemoData()
-      }
-    } else {
-      initializeDemoData()
-    }
-    */
+  const loadFromStorage = async () => {
+    await loadProgressFromSupabase()
   }
 
   // Premium Features

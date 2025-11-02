@@ -176,8 +176,11 @@ const markAsIncomplete = async (lessonId: string) => {
 
 const closeResetModal = () => {
   showResetModal.value = false
-  selectedLessonId.value = ''
-  selectedLessonTitle.value = ''
+  // Clean up modal state
+  setTimeout(() => {
+    selectedLessonId.value = ''
+    selectedLessonTitle.value = ''
+  }, 300) // Wait for modal animation to complete
 }
 
 const confirmResetLesson = async () => {
@@ -186,6 +189,15 @@ const confirmResetLesson = async () => {
   try {
     await progressStore.incompleteLesson(study.value.id, selectedLessonId.value)
     console.log(`Lesson ${selectedLessonId.value} marked as incomplete`)
+    
+    // Force a small re-render to ensure reactivity
+    // This helps Vue detect the change in progress
+    const lessonId = selectedLessonId.value
+    selectedLessonId.value = ''
+    
+    // Trigger reactivity by accessing the progress store
+    await new Promise(resolve => setTimeout(resolve, 50))
+    
   } catch (error) {
     console.error('Failed to mark lesson as incomplete:', error)
   }
@@ -195,8 +207,8 @@ onMounted(async () => {
   const studyId = route.params.id as string
   loading.value = true
 
-  // Initialize progress store
-  progressStore.loadFromStorage()
+  // Initialize progress store (now async)
+  await progressStore.loadFromStorage()
 
   try {
     const supabase = getSupabase()
@@ -242,13 +254,21 @@ onMounted(async () => {
             completed: false,
           })),
         }
+        console.log('Study loaded from Supabase:', study.value)
+      } else {
+        console.warn('Supabase returned empty data, falling back to local data')
+        throw new Error('No data returned from Supabase')
       }
     } else {
       // Fallback to local data for demo
+      console.log('Supabase not available, loading from local data')
       const { getStudyById } = await import('../data/studies')
       const foundStudy = getStudyById(studyId)
       if (foundStudy) {
         study.value = foundStudy
+        console.log('Study loaded from local data:', study.value)
+      } else {
+        console.error('Study not found in local data:', studyId)
       }
     }
 
@@ -258,6 +278,19 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error('Error loading study:', error)
+    // If Supabase failed, try local fallback
+    if (!study.value) {
+      try {
+        const { getStudyById } = await import('../data/studies')
+        const foundStudy = getStudyById(studyId)
+        if (foundStudy) {
+          study.value = foundStudy
+          console.log('Fallback: Study loaded from local data')
+        }
+      } catch (fallbackError) {
+        console.error('Fallback also failed:', fallbackError)
+      }
+    }
   } finally {
     loading.value = false
   }

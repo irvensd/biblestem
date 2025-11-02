@@ -250,6 +250,24 @@ export const freeStudies: Study[] = [
         content: {
           scriptureText:
             'Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.',
+          hebrewGreekWords: [
+            {
+              word: 'למדני',
+              language: 'Hebrew',
+              transliteration: 'lamdēni',
+              meaning: 'teach me, instruct me - imperative form showing urgency and dependence',
+              context: 'The psalmist uses the imperative, showing this is not a casual request but an urgent plea for instruction',
+              references: ['Psalm 86:11', 'Psalm 25:5', 'Psalm 119:12'],
+            },
+            {
+              word: 'יחד',
+              language: 'Hebrew',
+              transliteration: 'yachēd',
+              meaning: 'together, united, without division - implies complete focus and single-mindedness',
+              context: 'The psalmist wants his heart to be united in fear of God, not divided between God and the world',
+              references: ['Psalm 86:11', 'Deuteronomy 6:5', 'Mark 12:30'],
+            },
+          ],
           commentary: [
             'A teachable spirit begins with the recognition that we don\'t have all the answers.',
             'We must come to Scripture willing to be corrected, not just to find confirmation of our opinions.',
@@ -282,6 +300,24 @@ export const freeStudies: Study[] = [
           "Pride is the great barrier to receiving God's Word. We must come in humility",
         content: {
           scriptureText: 'Wherefore lay apart all filthiness and superfluity of naughtiness, and receive with meekness the engrafted word, which is able to save your souls.',
+          hebrewGreekWords: [
+            {
+              word: 'πραΰτητι',
+              language: 'Greek',
+              transliteration: 'praÿtēti',
+              meaning: 'meekness, gentleness, humility - not weakness but controlled strength',
+              context: 'This word describes not weakness but controlled strength. The Greek praÿtēs means having power but restraining it',
+              references: ['James 1:21', 'Matthew 5:5', 'Galatians 5:23', 'Numbers 12:3'],
+            },
+            {
+              word: 'ἔμφυτον',
+              language: 'Greek',
+              transliteration: 'emphuton',
+              meaning: 'implanted, engrafted - suggesting something permanently growing within',
+              context: 'The word describes something planted deep within us, growing roots and becoming part of our nature',
+              references: ['James 1:21', 'Psalm 1:3', 'Jeremiah 17:8'],
+            },
+          ],
           commentary: [
             'Humility is the necessary posture for receiving God\'s Word effectively.',
             'James commands us to "receive with meekness" - the Greek word suggests flexibility and readiness to learn.',
@@ -314,6 +350,24 @@ export const freeStudies: Study[] = [
           'Knowledge without obedience leads to a hard heart. The goal of Bible study is transformation, not just information',
         content: {
           scriptureText: 'Thy word have I hid in mine heart, that I might not sin against thee.',
+          hebrewGreekWords: [
+            {
+              word: 'צפנתי',
+              language: 'Hebrew',
+              transliteration: 'tsāpanīti',
+              meaning: 'I have hidden, stored up, treasured - implies intentional safekeeping',
+              context: 'This word describes storing something valuable for future use, like a treasure hidden for safety',
+              references: ['Psalm 119:11', 'Proverbs 7:1', 'Deuteronomy 33:4'],
+            },
+            {
+              word: 'בלבי',
+              language: 'Hebrew',
+              transliteration: 'bilvāvī',
+              meaning: 'in my heart - the center of thoughts, emotions, and will',
+              context: 'The Hebrew concept of "heart" encompasses mind, emotions, and will - the whole inner person',
+              references: ['Psalm 119:11', 'Deuteronomy 6:6', 'Jeremiah 31:33'],
+            },
+          ],
           commentary: [
             'The purpose of Bible study is not merely to gain knowledge but to be transformed.',
             'We "hide" God\'s Word in our hearts not just by memorizing it, but by letting it shape our actions.',
@@ -347,6 +401,24 @@ export const freeStudies: Study[] = [
           'We must trust that what God has revealed is what we need. His Word is sufficient',
         content: {
           scriptureText: 'Great peace have they which love thy law: and nothing shall offend them.',
+          hebrewGreekWords: [
+            {
+              word: 'שלום',
+              language: 'Hebrew',
+              transliteration: 'shālōm',
+              meaning: 'peace, wholeness, completeness - not absence of conflict but presence of harmony',
+              context: 'Biblical peace is not mere absence of conflict but the presence of wholeness, completeness, and harmony in all of life',
+              references: ['Psalm 119:165', 'Isaiah 26:3', 'John 14:27', 'Philippians 4:7'],
+            },
+            {
+              word: 'למוכשל',
+              language: 'Hebrew',
+              transliteration: 'lemokēshēl',
+              meaning: 'a stumbling block, offense - anything that causes one to fall or stumble',
+              context: 'The word describes anything that trips us up or causes us to fall spiritually. Trusting God\'s Word removes these stumbling blocks',
+              references: ['Psalm 119:165', 'Isaiah 8:14', 'Romans 9:33', '1 Corinthians 1:23'],
+            },
+          ],
           commentary: [
             'When we love and trust God\'s Word, we find great peace - stability in the midst of life\'s storms.',
             'The Hebrew for "offend" means to stumble or fall. God\'s Word keeps us steady.',

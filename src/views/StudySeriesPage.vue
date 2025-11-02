@@ -99,10 +99,10 @@
                 
                 <router-link 
                   :to="`/study/${study.id}`"
-                  class="group flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  class="btn btn-primary w-full inline-flex items-center justify-center gap-2"
                 >
                   <span>Start Study</span>
-                  <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                   </svg>
                 </router-link>
@@ -117,11 +117,11 @@
             <div>
               <h2 class="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
                 Deeper Studies
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gradient-to-r from-red-100 to-pink-100 dark:from-red-900/30 dark:to-pink-900/30 text-red-600 dark:text-red-400">
-                  ❤️ For Supporters
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 text-amber-600 dark:text-amber-400">
+                  ⭐ Advanced
                 </span>
               </h2>
-              <p class="text-gray-600 dark:text-gray-400">Advanced studies with deeper insights - available as a thank you to our supporters</p>
+              <p class="text-gray-600 dark:text-gray-400">Deeper insights with Hebrew & Greek word studies - our way of thanking those who support our ministry</p>
             </div>
           </div>
           
@@ -132,10 +132,10 @@
               :key="study.id"
               class="card p-0 overflow-hidden hover-lift relative"
             >
-              <!-- Supporter Badge Overlay -->
+              <!-- Advanced Badge Overlay -->
               <div class="absolute top-3 right-3 z-10">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg">
-                  ❤️ SUPPORTER
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg">
+                  ⭐ ADVANCED
                 </span>
               </div>
               
@@ -173,14 +173,12 @@
                 
                 <router-link 
                   :to="`/study/${study.id}`"
-                  class="group flex items-center justify-center gap-2 w-full py-3 px-4 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                  :class="hasSupported 
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700' 
-                    : 'bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700'"
+                  class="btn w-full inline-flex items-center justify-center gap-2"
+                  :class="hasSupported ? 'btn-primary' : 'btn-secondary'"
                 >
                   <span v-if="hasSupported">Start Study</span>
-                  <span v-else>Preview Study</span>
-                  <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span v-else>View Study</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                   </svg>
                 </router-link>
@@ -204,13 +202,13 @@
               </p>
               <button 
                 @click="showSupportModal"
-                class="group inline-flex items-center justify-center gap-3 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-10 py-4 rounded-xl text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105"
+                class="btn btn-primary inline-flex items-center justify-center gap-3"
               >
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
                 </svg>
                 <span>Support This Ministry</span>
-                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
               </button>

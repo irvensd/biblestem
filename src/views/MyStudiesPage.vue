@@ -75,7 +75,7 @@
         <p class="text-gray-300 mb-6 max-w-md mx-auto">
           {{ activeTab === 'inProgress' ? 'Start your first study to see it here' : activeTab === 'completed' ? 'Complete a study to see it listed here' : 'Bookmark studies to save them for later' }}
         </p>
-        <router-link to="/study-series" class="btn-primary inline-flex items-center gap-2">
+        <router-link to="/study-series" class="btn btn-primary inline-flex items-center gap-3 px-6 py-3">
           Browse Studies
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />

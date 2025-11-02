@@ -76,7 +76,7 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useVirtualScrolling } from '../composables/usePerformance'
 
-interface Props<T> {
+interface Props<T = unknown> {
   items: T[]
   itemHeight: number
   containerHeight?: number
@@ -95,7 +95,7 @@ interface Props<T> {
   footerHeight?: number
 }
 
-const props = withDefaults(defineProps<Props<any>>(), {
+const props = withDefaults(defineProps<Props<unknown>>(), {
   containerHeight: 400,
   overscan: 5,
   isLoading: false,
@@ -114,8 +114,8 @@ const props = withDefaults(defineProps<Props<any>>(), {
 
 const emit = defineEmits<{
   'scroll': [scrollTop: number, scrollLeft: number]
-  'item-visible': [item: any, index: number]
-  'item-hidden': [item: any, index: number]
+  'item-visible': [item: unknown, index: number]
+  'item-hidden': [item: unknown, index: number]
   'load-more': []
 }>()
 
@@ -128,7 +128,6 @@ const scrollLeft = ref(0)
 const {
   visibleItems,
   visibleStartIndex,
-  visibleEndIndex,
   totalHeight,
   offsetY,
   updateVisibleItems
@@ -267,11 +266,11 @@ const scrollbarThumbStyles = computed(() => {
 })
 
 // Methods
-const getItemKey = (item: any, index: number): string | number => {
+const getItemKey = (item: unknown, index: number): string | number => {
   if (typeof props.itemKey === 'function') {
-    return props.itemKey(item, index)
+    return props.itemKey(item as never, index)
   }
-  return item[props.itemKey] || index
+  return (item as Record<string, unknown>)[props.itemKey as string] as string | number || index
 }
 
 const getItemStyles = (index: number): Record<string, string> => {
@@ -306,7 +305,7 @@ const handleScroll = (event: Event) => {
   }
   
   // Emit item visibility events
-  visibleItems.value.forEach((item: any, index: number) => {
+  visibleItems.value.forEach((item: unknown, index: number) => {
     const actualIndex = visibleStartIndex.value + index
     emit('item-visible', item, actualIndex)
   })

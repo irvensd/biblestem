@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { watch, onUnmounted } from 'vue'
 
 interface Props {
   isOpen: boolean
@@ -81,12 +81,17 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 const closeModal = () => {
+  // Restore body overflow before closing
+  document.body.style.overflow = ''
   emit('close')
 }
 
 const confirmReset = () => {
   emit('confirm')
-  closeModal()
+  // Small delay to ensure the reset completes before closing
+  setTimeout(() => {
+    closeModal()
+  }, 100)
 }
 
 // Close modal on Escape key
@@ -104,5 +109,11 @@ watch(() => props.isOpen, (isOpen) => {
     document.removeEventListener('keydown', handleKeydown)
     document.body.style.overflow = ''
   }
+})
+
+// Cleanup on component unmount
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+  document.body.style.overflow = ''
 })
 </script>
