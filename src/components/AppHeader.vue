@@ -574,10 +574,10 @@
 
         <!-- Search Modal -->
         <div
-          class="relative w-full max-w-2xl bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-200 dark:border-neutral-700 overflow-hidden animate-slide-up"
+          class="relative w-full max-w-2xl bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-200 dark:border-neutral-700 overflow-hidden animate-slide-up max-h-[85vh] flex flex-col"
         >
           <!-- Modal Header -->
-          <div class="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">
+          <div class="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800 flex-shrink-0">
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -600,13 +600,13 @@
             </button>
           </div>
 
-          <!-- Search Content -->
-          <div class="p-6">
-            <GlobalSearch @search-close="closeSearchModal" />
+          <!-- Search Content - Grows to fill available space -->
+          <div class="p-6 flex-1 overflow-hidden flex flex-col min-h-0">
+            <GlobalSearch :modal-mode="true" @search-close="closeSearchModal" />
           </div>
 
           <!-- Keyboard Hint -->
-          <div class="px-6 pb-4 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+          <div class="px-6 pb-4 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400 flex-shrink-0 border-t border-neutral-200 dark:border-neutral-800">
             <div class="flex items-center gap-4">
               <div class="flex items-center gap-1">
                 <kbd class="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">Ctrl</kbd>

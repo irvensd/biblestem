@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div :class="props.modalMode ? 'flex flex-col h-full' : 'relative'">
     <!-- Search Input -->
     <div class="relative">
       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -33,10 +33,11 @@
         :aria-expanded="showResults"
         aria-haspopup="listbox"
         :aria-activedescendant="activeDescendant"
-        class="block w-full pl-10 pr-12 py-2.5 sm:py-3 border-2 border-neutral-300 dark:border-neutral-600 rounded-xl bg-white dark:bg-neutral-800 placeholder-neutral-400 dark:placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white dark:focus:bg-neutral-800 text-base sm:text-base font-medium touch-manipulation shadow-sm hover:shadow-md transition-all duration-200"
+        class="block w-full pl-10 pr-12 py-2.5 sm:py-3 border-2 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 placeholder-neutral-400 dark:placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white dark:focus:bg-neutral-800 text-base sm:text-base font-medium touch-manipulation shadow-sm hover:shadow-md transition-all duration-200"
         :style="{ color: isDarkMode ? 'rgb(243 244 246)' : 'rgb(17 24 39)' }"
         :class="{
-          'rounded-b-none': showResults && (searchQuery.trim() || recentSearches.length > 0),
+          'rounded-xl': !showResults || !(searchQuery.trim() || recentSearches.length > 0) || props.modalMode,
+          'rounded-b-none': showResults && (searchQuery.trim() || recentSearches.length > 0) && !props.modalMode,
           'border-primary-400 dark:border-primary-500 bg-white dark:bg-neutral-800': showResults,
         }"
       />
@@ -60,8 +61,10 @@
     <!-- Search Results Dropdown -->
     <div
       v-if="showResults && (searchQuery.trim() || recentSearches.length > 0)"
-      class="absolute top-full left-0 right-0 bg-white dark:bg-neutral-800 rounded-b-xl shadow-xl border border-t-0 border-neutral-200 dark:border-neutral-700 z-50 max-h-96 overflow-hidden mobile-scroll"
-      :class="isMobile ? 'max-h-[60vh]' : 'max-h-96 mt-2 rounded-xl border-t'"
+      class="bg-white dark:bg-neutral-800 rounded-b-xl shadow-xl border border-t-0 border-neutral-200 dark:border-neutral-700 z-50 overflow-hidden mobile-scroll"
+      :class="props.modalMode 
+        ? 'flex-1 flex flex-col min-h-0 mt-2 rounded-xl border-t' 
+        : 'absolute top-full left-0 right-0 max-h-96' + (isMobile ? ' max-h-[60vh]' : ' max-h-96 mt-2 rounded-xl border-t')"
     >
       <!-- Loading State -->
       <div v-if="isSearching" class="p-4 text-center">
@@ -101,7 +104,7 @@
       </div>
 
       <!-- Search Results -->
-      <div v-else-if="searchQuery.trim()" class="max-h-80 overflow-y-auto">
+      <div v-else-if="searchQuery.trim()" :class="props.modalMode ? 'flex-1 overflow-y-auto' : 'max-h-80 overflow-y-auto'">
         <!-- No Results -->
         <div v-if="searchResults.total === 0" class="p-4 text-center">
           <svg
@@ -322,6 +325,10 @@ const emit = defineEmits<{
   'search-close': []
 }>()
 
+interface Props {
+  modalMode?: boolean
+}
+
 interface LessonSearchResult extends Lesson {
   studyId: string
   studyTitle: string
@@ -335,6 +342,9 @@ interface SearchResults {
 }
 
 const router = useRouter()
+const props = withDefaults(defineProps<Props>(), {
+  modalMode: false,
+})
 
 // Theme for text color
 const { isDarkMode } = useTheme()
