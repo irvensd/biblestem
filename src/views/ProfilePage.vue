@@ -174,7 +174,7 @@
               </div>
             </div>
             <div class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-1">
-              {{ authStore.user.studiesCompleted }}
+              {{ completedStudiesCount }}
             </div>
             <div class="text-sm font-medium text-neutral-600 dark:text-neutral-400">
               Studies Completed
@@ -214,7 +214,7 @@
               </div>
             </div>
             <div class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-1">
-              {{ authStore.hasSupported ? '7' : '3' }}
+              {{ availableStudiesCount }}
             </div>
             <div class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Studies Available</div>
           </div>
@@ -357,15 +357,37 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useStudyProgressStore } from '../stores/studyProgress'
+import { getAllStudies, hasAccessToStudy } from '../data/studies'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const progressStore = useStudyProgressStore()
 
 const editMode = ref(false)
 const isSaving = ref(false)
 
 const editForm = ref({
   name: '',
+})
+
+// Computed stats based on actual data
+const completedStudiesCount = computed(() => {
+  if (!authStore.user) return 0
+  const allStudies = getAllStudies()
+  
+  return allStudies.filter(study => {
+    const progress = progressStore.getStudyProgress(study.id)
+    if (!progress) return false
+    return progress.completedLessons.length === study.lessons.length && study.lessons.length > 0
+  }).length
+})
+
+const availableStudiesCount = computed(() => {
+  if (!authStore.user) return 0
+  const allStudies = getAllStudies()
+  
+  return allStudies.filter(study => hasAccessToStudy(study, authStore.hasSupported)).length
 })
 
 const formatJoinDate = (dateString: string) => {
@@ -412,11 +434,16 @@ const handleSignOut = async () => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (authStore.user) {
     editForm.value = {
       name: authStore.user.name,
     }
+  }
+  
+  // Ensure progress data is loaded
+  if (Object.keys(progressStore.progressData).length === 0) {
+    progressStore.loadFromStorage()
   }
 })
 </script>
