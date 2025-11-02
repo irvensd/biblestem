@@ -318,6 +318,10 @@ import { getAllStudies, type Study, type Lesson } from '@/data/studies'
 import { useNotesStore, type StudyNote } from '@/stores/notes'
 import { useTheme } from '@/composables/useTheme'
 
+const emit = defineEmits<{
+  'search-close': []
+}>()
+
 interface LessonSearchResult extends Lesson {
   studyId: string
   studyTitle: string
@@ -443,16 +447,19 @@ const performSearch = (query: string) => {
 const goToStudy = (study: Study) => {
   router.push(`/study/${study.id}`)
   closeSearch()
+  emit('search-close')
 }
 
 const goToLesson = (lesson: LessonSearchResult) => {
   router.push(`/study/${lesson.studyId}`)
   closeSearch()
+  emit('search-close')
 }
 
 const goToNote = (note: StudyNote) => {
   router.push(`/study/${note.studyId}`)
   closeSearch()
+  emit('search-close')
 }
 
 // Utility functions

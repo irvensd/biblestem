@@ -117,10 +117,18 @@
           </template>
         </div>
 
-        <!-- Search Component (Desktop) - Only for Authenticated Users -->
-        <div v-if="authStore.isAuthenticated" class="hidden lg:block flex-1 max-w-md mx-6">
-          <GlobalSearch />
-        </div>
+        <!-- Search Button (Desktop) - Opens floating search -->
+        <button
+          v-if="authStore.isAuthenticated"
+          @click="toggleSearchModal"
+          class="hidden lg:flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 mr-3"
+          aria-label="Open search"
+          title="Search (Ctrl+K)"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
 
         <!-- Theme Toggle Button (Desktop) -->
         <button
@@ -337,9 +345,17 @@
             </div>
           </div>
 
-          <!-- Search Component (Mobile) - Only shown for authenticated users -->
+          <!-- Search Button (Mobile) -->
           <div class="px-4 mb-4">
-            <GlobalSearch />
+            <button
+              @click="() => { toggleSearchModal(); closeMobileMenu(); }"
+              class="w-full flex items-center justify-center gap-3 px-4 py-3 bg-gradient-to-br from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <span>Search</span>
+            </button>
           </div>
 
           <!-- Navigation Links -->
@@ -534,6 +550,80 @@
       </div>
     </nav>
   </header>
+
+  <!-- Floating Search Modal -->
+  <Teleport to="body">
+    <Transition
+      enter-active-class="transition-all duration-300 ease-out"
+      enter-from-class="opacity-0 scale-95"
+      enter-to-class="opacity-100 scale-100"
+      leave-active-class="transition-all duration-200 ease-in"
+      leave-from-class="opacity-100 scale-100"
+      leave-to-class="opacity-0 scale-95"
+    >
+      <div
+        v-if="searchModalOpen"
+        class="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4"
+        @click.self="closeSearchModal"
+      >
+        <!-- Backdrop -->
+        <div
+          class="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-sm"
+          @click="closeSearchModal"
+        ></div>
+
+        <!-- Search Modal -->
+        <div
+          class="relative w-full max-w-2xl bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-200 dark:border-neutral-700 overflow-hidden animate-slide-up"
+        >
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg font-bold text-neutral-900 dark:text-white">Search</h2>
+                <p class="text-xs text-neutral-500 dark:text-neutral-400">Find studies, lessons, and verses</p>
+              </div>
+            </div>
+            <button
+              @click="closeSearchModal"
+              class="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+              aria-label="Close search"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Search Content -->
+          <div class="p-6">
+            <GlobalSearch @search-close="closeSearchModal" />
+          </div>
+
+          <!-- Keyboard Hint -->
+          <div class="px-6 pb-4 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+            <div class="flex items-center gap-4">
+              <div class="flex items-center gap-1">
+                <kbd class="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">Ctrl</kbd>
+                <span>+</span>
+                <kbd class="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">K</kbd>
+                <span class="ml-1">to open</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <kbd class="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">Esc</kbd>
+                <span class="ml-1">to close</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -555,13 +645,56 @@ const { isDarkMode, toggleTheme } = useTheme()
 // Touch feedback
 const { light, medium } = useHapticFeedback()
 
+const mobileMenuOpen = ref(false)
+const userMenuOpen = ref(false)
+const searchModalOpen = ref(false)
+
+const toggleSearchModal = () => {
+  medium()
+  searchModalOpen.value = !searchModalOpen.value
+  if (searchModalOpen.value) {
+    document.body.style.overflow = 'hidden'
+    // Auto-focus search input when modal opens
+    setTimeout(() => {
+      const input = document.querySelector('input[type="search"]') as HTMLInputElement
+      if (input) {
+        input.focus()
+      }
+    }, 100)
+  } else {
+    document.body.style.overflow = ''
+  }
+}
+
+const closeSearchModal = () => {
+  searchModalOpen.value = false
+  document.body.style.overflow = ''
+}
+
+// Keyboard shortcut handler
+const handleKeyDown = (e: KeyboardEvent) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault()
+    if (!searchModalOpen.value) {
+      toggleSearchModal()
+    }
+  }
+  if (e.key === 'Escape' && searchModalOpen.value) {
+    closeSearchModal()
+  }
+}
+
 onMounted(() => {
   // Set up click handler
   document.addEventListener('click', handleClickOutside)
+  // Keyboard shortcut for search (Ctrl+K or Cmd+K)
+  document.addEventListener('keydown', handleKeyDown)
 })
 
-const mobileMenuOpen = ref(false)
-const userMenuOpen = ref(false)
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeyDown)
+  document.removeEventListener('click', handleClickOutside)
+})
 
 const toggleMobileMenu = () => {
   medium()
