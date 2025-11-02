@@ -39,7 +39,7 @@
 
         <!-- Desktop Navigation -->
         <div
-          class="hidden lg:flex items-center space-x-4 xl:space-x-6 lg:ml-8 xl:ml-12"
+          class="hidden lg:flex items-center space-x-6 xl:space-x-8 lg:ml-12 xl:ml-16"
           role="menubar"
         >
           <!-- Authenticated User Navigation -->
@@ -118,7 +118,7 @@
         </div>
 
         <!-- Search Component (Desktop) - Only for Authenticated Users -->
-        <div v-if="authStore.isAuthenticated" class="hidden lg:block flex-1 max-w-xl mx-4 lg:mx-6 min-w-[320px]">
+        <div v-if="authStore.isAuthenticated" class="hidden lg:block flex-1 max-w-md mx-6">
           <GlobalSearch />
         </div>
 
