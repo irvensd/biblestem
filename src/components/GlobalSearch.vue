@@ -4,7 +4,7 @@
     <div class="relative">
       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
         <svg
-          class="h-5 w-5 text-neutral-400 dark:text-neutral-500"
+          class="h-5 w-5 text-neutral-500 dark:text-neutral-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -33,9 +33,11 @@
         :aria-expanded="showResults"
         aria-haspopup="listbox"
         :aria-activedescendant="activeDescendant"
-        class="block w-full pl-10 pr-12 py-3 sm:py-3 border border-neutral-300 dark:border-neutral-600 rounded-xl bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-base sm:text-base touch-manipulation focus-ring transition-all duration-200"
+        class="block w-full pl-10 pr-12 py-2.5 sm:py-3 border-2 border-neutral-300 dark:border-neutral-600 rounded-xl bg-white dark:bg-neutral-800 placeholder-neutral-400 dark:placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white dark:focus:bg-neutral-800 text-base sm:text-base font-medium touch-manipulation shadow-sm hover:shadow-md transition-all duration-200"
+        :style="{ color: isDarkMode ? 'rgb(243 244 246)' : 'rgb(17 24 39)' }"
         :class="{
           'rounded-b-none': showResults && (searchQuery.trim() || recentSearches.length > 0),
+          'border-primary-400 dark:border-primary-500 bg-white dark:bg-neutral-800': showResults,
         }"
       />
       <div v-if="searchQuery" class="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -314,6 +316,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getAllStudies, type Study, type Lesson } from '@/data/studies'
 import { useNotesStore, type StudyNote } from '@/stores/notes'
+import { useTheme } from '@/composables/useTheme'
 
 interface LessonSearchResult extends Lesson {
   studyId: string
@@ -328,6 +331,9 @@ interface SearchResults {
 }
 
 const router = useRouter()
+
+// Theme for text color
+const { isDarkMode } = useTheme()
 
 // Initialize notes store safely
 const notesStore = ref<any>(null)
