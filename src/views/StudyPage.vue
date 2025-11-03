@@ -85,7 +85,7 @@
                   <!-- Mark as Incomplete Button (only for completed lessons) -->
                   <button
                     v-if="isCompleted(lesson.id)"
-                    @click="markAsIncomplete(lesson.id)"
+                    @click.stop="markAsIncomplete(lesson.id)"
                     class="group inline-flex items-center gap-1 px-3 py-1 bg-orange-500/20 hover:bg-orange-500/30 text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 rounded-full font-semibold text-sm transition-all duration-200 transform hover:scale-105"
                     title="Mark as incomplete to re-study this lesson"
                   >
