@@ -383,6 +383,8 @@ onUnmounted(() => {
   line-height: 1.8;
   font-size: 1.125rem;
   color: rgb(31 41 55);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .dark .verse-paragraph {
@@ -395,6 +397,9 @@ onUnmounted(() => {
   transition: all 0.2s ease;
   padding: 2px 4px;
   border-radius: 4px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 .word:hover {
