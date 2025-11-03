@@ -837,10 +837,6 @@ const handleReportIssue = (lessonId: string) => {
 
 // Lifecycle
 onMounted(() => {
-  console.log('LessonPage mounted - studyId:', route.params.studyId, 'lessonId:', route.params.lessonId)
-  console.log('Study:', study.value)
-  console.log('Lesson:', lesson.value)
-  
   // Don't proceed if lesson not found
   if (!lesson.value) {
     console.error('Lesson not found!')
