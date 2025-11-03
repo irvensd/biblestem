@@ -1,17 +1,16 @@
 <template>
   <div class="min-h-screen" :class="gradientClass">
-    <!-- Enhanced Reading Progress -->
-    <ReadingProgress
-      :current-section="currentSection"
-      :total-sections="6"
-      :time-spent="timeSpent"
-      :estimated-remaining="estimatedRemaining"
-      :section-refs="sectionRefs"
-      @section-change="handleSectionChange"
-      @time-update="handleTimeUpdate"
-    />
-
     <div v-if="lesson" class="container-base py-8 sm:py-12">
+      <!-- Enhanced Reading Progress -->
+      <ReadingProgress
+        :current-section="currentSection"
+        :total-sections="6"
+        :time-spent="timeSpent"
+        :estimated-remaining="estimatedRemaining"
+        :section-refs="sectionRefs"
+        @section-change="handleSectionChange"
+        @time-update="handleTimeUpdate"
+      />
       <!-- Header Section -->
       <div class="mb-12">
         <button
