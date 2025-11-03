@@ -356,7 +356,7 @@ const editForm = ref({
 })
 
 // Get lesson notes
-const lessonNotes = computed(() => notesStore.getLessonNotes(props.studyId, props.lessonId).value)
+const lessonNotes = computed(() => notesStore.getLessonNotes(props.studyId, props.lessonId))
 
 // Helper functions
 const getNoteTypeInfo = (type: StudyNote['type']) => {

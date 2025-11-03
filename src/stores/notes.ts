@@ -70,20 +70,16 @@ export const useNotesStore = defineStore('notes', () => {
 
   // Get notes for a specific study
   const getStudyNotes = (studyId: string) => {
-    return computed(() =>
-      Object.values(notesData.value)
-        .filter((note) => note.studyId === studyId)
-        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()),
-    )
+    return Object.values(notesData.value)
+      .filter((note) => note.studyId === studyId)
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
   }
 
   // Get notes for a specific lesson
   const getLessonNotes = (studyId: string, lessonId: string) => {
-    return computed(() =>
-      Object.values(notesData.value)
-        .filter((note) => note.studyId === studyId && note.lessonId === lessonId)
-        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()),
-    )
+    return Object.values(notesData.value)
+      .filter((note) => note.studyId === studyId && note.lessonId === lessonId)
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
   }
 
   // Get all notes
