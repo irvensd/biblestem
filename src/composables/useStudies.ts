@@ -33,7 +33,19 @@ const mapStudyToCategory = (study: Study): string => {
     return 'advanced'
   }
   
-  // Categorize based on tags and title
+  // Map specific foundational studies
+  const foundationalStudyIds = [
+    'how-to-study-bible',
+    'where-bible-came-from',
+    'story-of-the-bible',
+    'power-of-the-word',
+  ]
+  
+  if (foundationalStudyIds.includes(study.id)) {
+    return 'foundational'
+  }
+  
+  // Categorize based on tags and title for other studies
   const tags = study.tags.map(t => t.toLowerCase())
   const titleLower = study.title.toLowerCase()
   
@@ -43,7 +55,6 @@ const mapStudyToCategory = (study: Study): string => {
     tags.includes('discipleship') ||
     tags.includes('transformation') ||
     tags.includes('faith') ||
-    tags.includes('preparation') ||
     titleLower.includes('power')
   ) {
     return 'spiritual-growth'
@@ -65,7 +76,7 @@ const mapStudyToCategory = (study: Study): string => {
     tags.includes('canon') ||
     tags.includes('inspiration') ||
     tags.includes('foundational') ||
-    (tags.includes('scripture') && !tags.includes('spiritual growth')) ||
+    tags.includes('scripture') ||
     titleLower.includes('bible came from') ||
     titleLower.includes('where bible')
   ) {
