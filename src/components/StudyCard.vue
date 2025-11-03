@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex-shrink-0 w-72 bg-white dark:bg-neutral-900 rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-600 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-2xl hover:shadow-primary-900/20 group cursor-pointer"
+    class="flex-shrink-0 w-72 bg-white dark:bg-neutral-900 rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-600 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-[0_10px_40px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_10px_40px_rgba(0,0,0,0.6)] hover:scale-[1.03] hover:-translate-y-1 group cursor-pointer"
     @click="handleClick"
   >
     <!-- Study Header with Gradient -->

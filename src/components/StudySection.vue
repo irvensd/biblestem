@@ -3,8 +3,9 @@
     <!-- Section Header -->
     <div class="flex items-center justify-between mb-4 px-4">
       <div>
-        <h2 class="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-1">
-          {{ category.title }}
+        <h2 class="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-1 flex items-center gap-3">
+          <span class="text-2xl">{{ getCategoryIcon(category.id) }}</span>
+          <span>{{ category.title }}</span>
         </h2>
         <p class="text-sm text-neutral-600 dark:text-neutral-400">
           {{ studies.length }} {{ studies.length === 1 ? 'study' : 'studies' }}
@@ -27,16 +28,14 @@
     <!-- Horizontal Scrolling Container -->
     <div
       ref="scrollContainer"
-      class="flex gap-4 overflow-x-auto pb-4 px-4 scrollbar-hide"
-      :class="{ 'md:snap-x md:snap-mandatory': enableSnap }"
+      class="flex gap-4 overflow-x-auto pb-4 px-4 scrollbar-hide snap-x snap-mandatory"
       @scroll="handleScroll"
     >
       <!-- Study Cards -->
       <div
         v-for="(study, index) in studies"
         :key="study.id"
-        class="flex-shrink-0"
-        :class="{ 'md:snap-start': enableSnap }"
+        class="flex-shrink-0 snap-start"
       >
         <StudyCard :study="study" />
       </div>
@@ -115,6 +114,17 @@ const scrollContainer = ref<HTMLElement | null>(null)
 const canScrollLeft = ref(false)
 const canScrollRight = ref(false)
 
+const getCategoryIcon = (categoryId: string): string => {
+  const icons: Record<string, string> = {
+    'foundational': '📚',
+    'growth': '🌱',
+    'biblical-narrative': '📖',
+    'spiritual-growth': '✨',
+    'advanced': '🔥',
+  }
+  return icons[categoryId] || '📖'
+}
+
 const checkScrollButtons = () => {
   if (!scrollContainer.value) return
   
@@ -171,14 +181,17 @@ onUnmounted(() => {
   scroll-behavior: smooth;
 }
 
-/* Snap scrolling on desktop */
-@media (min-width: 768px) {
-  .md\:snap-x {
-    scroll-snap-type: x mandatory;
-  }
-  
-  .md\:snap-start {
-    scroll-snap-align: start;
-  }
+/* Snap scrolling for smooth card-to-card swiping */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* Smooth momentum scrolling on touch devices */
+.scrollbar-hide {
+  -webkit-overflow-scrolling: touch;
 }
 </style>

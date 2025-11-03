@@ -41,18 +41,61 @@
         </div>
       </section>
 
+      <!-- Hero Context Strip -->
+      <section class="relative py-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 overflow-hidden">
+        <!-- Ambient background elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+          <div class="absolute top-1/2 left-1/4 w-64 h-64 bg-primary-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute top-1/3 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+          <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-sm font-medium mb-4">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+              </svg>
+              <span>Explore Structured Bible Studies</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
+              From Foundational Truths to Deeper Prophetic Themes
+            </h2>
+            <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+              Designed for every believer's journey—whether you're just starting or ready to dive deeper into God's Word.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <!-- Studies Section with Horizontal Scrolling Categories -->
-      <section class="py-16 bg-neutral-50 dark:bg-neutral-900">
-        <div class="container mx-auto px-4">
+      <section class="relative py-16 bg-neutral-50 dark:bg-neutral-900 overflow-hidden">
+        <!-- Ambient background for sections -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+          <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" style="top: 10%; left: 5%;"></div>
+          <div class="absolute w-80 h-80 bg-purple-500/5 rounded-full blur-3xl" style="top: 40%; right: 10%;"></div>
+          <div class="absolute w-72 h-72 bg-amber-500/5 rounded-full blur-3xl" style="top: 70%; left: 15%;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
           <!-- Category Sections -->
           <template v-if="categoriesWithStudies.length > 0">
-            <StudySection
-              v-for="category in categoriesWithStudies"
+            <div
+              v-for="(category, index) in categoriesWithStudies"
               :key="category.id"
-              :category="category"
-              :show-view-all="category.studies.length > 3"
-              :enable-snap="true"
-            />
+              class="relative"
+            >
+              <StudySection
+                :category="category"
+                :show-view-all="category.studies.length > 3"
+                :enable-snap="true"
+              />
+              
+              <!-- Smooth gradient divider between sections (except after last section) -->
+              <div
+                v-if="index < categoriesWithStudies.length - 1"
+                class="h-px w-full my-8 bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent"
+              ></div>
+            </div>
           </template>
           
           <!-- Empty State -->
@@ -90,7 +133,7 @@
                 </p>
                 <button
                   @click="showSupportModal"
-                  class="inline-flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-200"
+                  class="inline-flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] hover:scale-105"
                 >
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
