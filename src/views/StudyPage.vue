@@ -41,9 +41,6 @@
             </svg>
             <span class="text-neutral-300 capitalize">{{ study.difficulty }}</span>
           </div>
-          <span class="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg border border-emerald-500/30 font-semibold">
-            {{ study.category }}
-          </span>
         </div>
       </div>
 
