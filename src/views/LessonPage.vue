@@ -842,9 +842,9 @@ onMounted(() => {
   
   // Load saved notes and reflection
   try {
-    const savedNotes = notesStore.getLessonNotes(route.params.studyId as string, route.params.lessonId as string).value
-    if (savedNotes && savedNotes.length > 0) {
-      savedNotes.forEach(note => {
+    const savedNotes = notesStore.getLessonNotes(route.params.studyId as string, route.params.lessonId as string)
+    if (savedNotes && savedNotes.value && savedNotes.value.length > 0) {
+      savedNotes.value.forEach(note => {
         if (note.type === 'reflection') reflectionNotes.value = note.content
         if (note.type === 'general') personalNotes.value = note.content
       })
@@ -868,7 +868,7 @@ onMounted(() => {
     }
     
     // Load lesson notes for the note-taking component
-    lessonNotes.value = savedNotes || []
+    lessonNotes.value = savedNotes?.value || []
     
   } catch (error) {
     console.warn('Could not load enhanced data:', error)
