@@ -838,6 +838,16 @@ const handleReportIssue = (lessonId: string) => {
 
 // Lifecycle
 onMounted(() => {
+  console.log('LessonPage mounted - studyId:', route.params.studyId, 'lessonId:', route.params.lessonId)
+  console.log('Study:', study.value)
+  console.log('Lesson:', lesson.value)
+  
+  // Don't proceed if lesson not found
+  if (!lesson.value) {
+    console.error('Lesson not found!')
+    return
+  }
+  
   window.addEventListener('scroll', updateCurrentSection)
   
   // Load saved notes and reflection
@@ -871,7 +881,7 @@ onMounted(() => {
     lessonNotes.value = savedNotes || []
     
   } catch (error) {
-    console.warn('Could not load enhanced data:', error)
+    console.error('Error loading enhanced data:', error)
   }
 
   updateCurrentSection()
