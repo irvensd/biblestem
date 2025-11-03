@@ -22,46 +22,38 @@
     
     <!-- Actual Content -->
     <div v-else>
-      <!-- Hero Section -->
-      <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-16 md:py-24 overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
-          <div class="absolute -top-40 -right-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-10 animate-pulse"></div>
-          <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-10 animate-pulse" style="animation-delay: 1s"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-          <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
-              Study Series
-            </h1>
-            <p class="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed max-w-3xl mx-auto animate-slide-up">
-              Discover deep, interactive Bible studies designed to transform your faith and deepen your understanding
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Hero Context Strip -->
-      <section class="relative py-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 overflow-hidden">
+      <!-- Unified Hero Section -->
+      <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-16 md:py-20 overflow-hidden">
         <!-- Ambient background elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
-          <div class="absolute top-1/2 left-1/4 w-64 h-64 bg-primary-500/10 rounded-full blur-3xl"></div>
-          <div class="absolute top-1/3 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-white rounded-full blur-3xl opacity-10"></div>
+          <div class="absolute bottom-1/4 left-1/4 w-80 h-80 bg-white rounded-full blur-3xl opacity-10"></div>
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-purple-300/10 rounded-full blur-3xl"></div>
         </div>
         
         <div class="container mx-auto px-4 relative z-10">
           <div class="max-w-4xl mx-auto text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-sm font-medium mb-4">
+            <!-- Top badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium mb-6 animate-slide-up">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
               </svg>
-              <span>Explore Structured Bible Studies</span>
+              <span>Bible Study Library</span>
             </div>
-            <h2 class="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
+            
+            <!-- Main heading -->
+            <h1 class="text-4xl md:text-6xl font-bold mb-5 animate-slide-up leading-tight">
+              Study Series
+            </h1>
+            
+            <!-- Subheading -->
+            <p class="text-lg md:text-xl text-white/95 mb-4 leading-relaxed max-w-3xl mx-auto animate-slide-up font-medium">
               From Foundational Truths to Deeper Prophetic Themes
-            </h2>
-            <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Designed for every believer's journey—whether you're just starting or ready to dive deeper into God's Word.
+            </p>
+            
+            <!-- Description -->
+            <p class="text-base md:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed animate-slide-up">
+              Interactive Bible studies designed to transform your faith and deepen your understanding—whether you're just starting or ready to dive deeper into God's Word.
             </p>
           </div>
         </div>
