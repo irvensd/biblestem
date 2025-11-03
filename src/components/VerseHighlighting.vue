@@ -212,19 +212,39 @@ const highlightedCount = computed(() => highlightedVerses.value.length + highlig
 
 // Methods
 const parseScriptureText = () => {
-  // Simple parsing - in a real app, this would be more sophisticated
+  // Parse scripture text preserving punctuation and proper spacing
   const sentences = props.scriptureText.split(/[.!?]+/).filter(s => s.trim())
   
-  verses.value = sentences.map((sentence, index) => ({
-    id: `verse-${index + 1}`,
-    reference: `${props.reference}:${index + 1}`,
-    words: sentence.trim().split(/\s+/).map((word, wordIndex) => ({
-      id: `word-${index + 1}-${wordIndex + 1}`,
-      text: word.replace(/[.,;:!?]/g, ''),
-      strongs: undefined, // Would be populated from Strong's Concordance
-      definition: undefined
-    }))
-  }))
+  verses.value = sentences.map((sentence, index) => {
+    const trimmedSentence = sentence.trim()
+    // Split by whitespace, keeping punctuation with words
+    const words: string[] = []
+    const parts = trimmedSentence.split(/\s+/)
+    
+    parts.forEach(part => {
+      // Separate word from trailing punctuation
+      const match = part.match(/^([\w'’-]+)([.,;:!?]*)$/)
+      if (match) {
+        words.push(match[1]) // word
+        if (match[2]) {
+          words.push(match[2]) // punctuation
+        }
+      } else if (part) {
+        words.push(part)
+      }
+    })
+    
+    return {
+      id: `verse-${index + 1}`,
+      reference: `${props.reference}:${index + 1}`,
+      words: words.map((word, wordIndex) => ({
+        id: `word-${index + 1}-${wordIndex + 1}`,
+        text: word,
+        strongs: undefined, // Would be populated from Strong's Concordance
+        definition: undefined
+      }))
+    }
+  })
 }
 
 const handleTextSelection = () => {
