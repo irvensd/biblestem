@@ -58,9 +58,9 @@
             <p class="text-gray-600 dark:text-gray-400 mb-4">
               Find answers to common questions and troubleshooting guides
             </p>
-            <a href="#" class="text-primary-600 dark:text-primary-400 font-semibold hover:underline">
-              Browse Help Articles →
-            </a>
+            <p class="text-sm text-gray-500 dark:text-gray-500 italic">
+              Coming Soon
+            </p>
           </div>
 
           <!-- Community Card -->
@@ -74,9 +74,9 @@
             <p class="text-gray-600 dark:text-gray-400 mb-4">
               Connect with other believers and study together
             </p>
-            <a href="#" class="text-primary-600 dark:text-primary-400 font-semibold hover:underline">
-              Join Community →
-            </a>
+            <p class="text-sm text-gray-500 dark:text-gray-500 italic">
+              Coming Soon
+            </p>
           </div>
         </div>
 
@@ -199,7 +199,7 @@
           <div class="card p-6">
             <h3 class="text-lg font-bold mb-2">Is BibleStem really free?</h3>
             <p class="text-gray-600 dark:text-gray-400">
-              Yes! We offer a generous free plan with access to all free studies. Premium features are available for those who want deeper insights, but the core content is always free.
+              Yes! BibleStem is completely free and donation-based. All basic studies are available at no cost. Deeper studies with advanced Hebrew & Greek insights are available as a thank-you to those who support our ministry, but the core content is always free.
             </p>
           </div>
 

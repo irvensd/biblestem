@@ -63,7 +63,7 @@
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm-2 4h2v2H7v-2z" clip-rule="evenodd" />
                   </svg>
-                  <span class="font-semibold">100+ Studies</span>
+                  <span class="font-semibold">{{ totalStudies }} Studies {{ totalStudies > 0 ? '(More Coming Soon!)' : '' }}</span>
                 </div>
               </div>
             </div>
@@ -490,6 +490,18 @@
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { getAllStudies } from '@/data/studies'
+
+// Study count for homepage display
+const allStudies = ref([])
+const totalStudies = computed(() => allStudies.value.length)
+const freeStudiesCount = computed(() => allStudies.value.filter((s: any) => s.category === 'free').length)
+
+onMounted(() => {
+  allStudies.value = getAllStudies()
+})
+
 // Handle donation click - can be updated with actual payment integration
 const handleDonation = () => {
   // For now, show a message - you can replace this with actual donation page/modal
