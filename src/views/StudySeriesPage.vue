@@ -23,7 +23,7 @@
     <!-- Actual Content -->
     <div v-else>
       <!-- Unified Hero Section -->
-      <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-16 md:py-20 overflow-hidden">
+      <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-12 md:py-16 overflow-hidden">
         <!-- Ambient background elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
           <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-white rounded-full blur-3xl opacity-10"></div>
@@ -53,7 +53,7 @@
             
             <!-- Description -->
             <p class="text-base md:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed animate-slide-up">
-              Interactive Bible studies designed to transform your faith and deepen your understanding—whether you're just starting or ready to dive deeper into God's Word.
+              Interactive Bible studies designed to transform your faith and deepen your understanding whether you're just starting or ready to dive deeper into God's Word.
             </p>
           </div>
         </div>
@@ -72,21 +72,17 @@
           <!-- Category Sections -->
           <template v-if="categoriesWithStudies.length > 0">
             <div
-              v-for="(category, index) in categoriesWithStudies"
+              v-for="category in categoriesWithStudies"
+              :id="category.id"
               :key="category.id"
-              class="relative"
+              class="relative scroll-mt-24 rounded-2xl p-8 mb-8"
+              :class="getSectionGradient(category.id)"
             >
               <StudySection
                 :category="category"
                 :show-view-all="category.studies.length > 3"
                 :enable-snap="true"
               />
-              
-              <!-- Smooth gradient divider between sections (except after last section) -->
-              <div
-                v-if="index < categoriesWithStudies.length - 1"
-                class="h-px w-full my-8 bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent"
-              ></div>
             </div>
           </template>
           
@@ -141,11 +137,25 @@
         </div>
       </section>
     </div>
+    
+    <!-- Back to Top Button -->
+    <transition name="fade">
+      <button
+        v-if="showBackToTop"
+        @click="scrollToTop"
+        class="fixed bottom-8 right-8 z-50 p-4 bg-gradient-to-br from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700 text-white rounded-full shadow-2xl hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] transition-all duration-300 hover:scale-110 group"
+        aria-label="Back to top"
+      >
+        <svg class="w-6 h-6 transform group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
+    </transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useStudies } from '@/composables/useStudies'
 import StudySection from '@/components/StudySection.vue'
@@ -160,6 +170,33 @@ const hasAdvancedStudies = computed(() => {
   return categoriesWithStudies.value.some(cat => cat.id === 'advanced' && cat.studies.length > 0)
 })
 
+// Back to top functionality
+const showBackToTop = ref(false)
+
+const handleScroll = () => {
+  // Show button after scrolling down 50vh
+  showBackToTop.value = window.scrollY > window.innerHeight * 0.5
+}
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
+
+// Get section gradient backgrounds
+const getSectionGradient = (categoryId: string): string => {
+  const gradients: Record<string, string> = {
+    'foundational': 'bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-950/20 dark:to-indigo-950/20',
+    'growth': 'bg-gradient-to-br from-emerald-50/50 to-teal-50/50 dark:from-emerald-950/20 dark:to-teal-950/20',
+    'biblical-narrative': 'bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20',
+    'spiritual-growth': 'bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/20',
+    'advanced': 'bg-gradient-to-br from-orange-50/50 to-red-50/50 dark:from-orange-950/20 dark:to-red-950/20',
+  }
+  return gradients[categoryId] || 'bg-gradient-to-br from-neutral-50/50 to-neutral-100/50 dark:from-neutral-900/20 dark:to-neutral-800/20'
+}
+
 // Handle support modal/message
 const showSupportModal = () => {
   alert('Thank you for your interest in supporting BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more Bible studies\n• Keeps the platform running for everyone\n• Spreads the Gospel freely worldwide\n• As a thank you, you\'ll get access to advanced studies with Hebrew & Greek insights\n\n✨ All basic studies remain 100% FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo\n\nWe\'re grateful for your prayers and support! ❤️')
@@ -167,6 +204,12 @@ const showSupportModal = () => {
 
 onMounted(async () => {
   await fetchStudies()
+  window.addEventListener('scroll', handleScroll)
+  handleScroll() // Check initial scroll position
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
 })
 </script>
 
@@ -184,6 +227,22 @@ onMounted(async () => {
 
 .animate-slide-up {
   animation: slide-up 0.6s ease-out;
+}
+
+/* Fade transition for back to top button */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>
 

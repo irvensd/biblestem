@@ -28,14 +28,14 @@
     <!-- Horizontal Scrolling Container -->
     <div
       ref="scrollContainer"
-      class="flex gap-4 overflow-x-auto pb-4 px-4 scrollbar-hide snap-x snap-mandatory"
+      class="grid grid-cols-2 md:flex gap-4 overflow-x-auto pb-4 px-4 scrollbar-hide md:snap-x md:snap-mandatory"
       @scroll="handleScroll"
     >
       <!-- Study Cards -->
       <div
         v-for="(study, index) in studies"
         :key="study.id"
-        class="flex-shrink-0 snap-start"
+        class="flex-shrink-0 md:snap-start"
       >
         <StudyCard :study="study" />
       </div>
