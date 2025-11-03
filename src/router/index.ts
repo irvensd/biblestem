@@ -39,7 +39,7 @@ const routes = [
   {
     path: '/study/:studyId/lesson/:lessonId',
     name: 'Lesson',
-    component: () => import('../views/LessonPage.vue'),
+    component: () => import('../views/LessonPageSimple.vue'),
     meta: { requiresAuth: true }
   },
   {
