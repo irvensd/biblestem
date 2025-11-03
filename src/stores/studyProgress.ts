@@ -225,9 +225,9 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     }
 
     saveToStorage()
-    // Fire and forget Firebase sync - don't block UI
-    saveProgressToFirebase(studyId).catch((error) =>
-      console.error('Failed to sync progress to Firebase:', error),
+    // Fire and forget Supabase sync - don't block UI
+    saveProgressToSupabase(studyId).catch((error: any) =>
+      console.error('Failed to sync progress to Supabase:', error),
     )
   }
 

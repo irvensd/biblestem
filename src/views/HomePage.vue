@@ -494,7 +494,7 @@ import { computed, onMounted, ref } from 'vue'
 import { getAllStudies } from '@/data/studies'
 
 // Study count for homepage display
-const allStudies = ref([])
+const allStudies = ref<any[]>([])
 const totalStudies = computed(() => allStudies.value.length)
 const freeStudiesCount = computed(() => allStudies.value.filter((s: any) => s.category === 'free').length)
 

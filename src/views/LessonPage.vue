@@ -558,7 +558,7 @@ const section6 = ref<HTMLElement>()
 // Computed properties
 const gradientClass = computed(() => {
   if (!study.value) return 'bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900'
-  return study.value.category === 'premium'
+  return study.value.category === 'supporter'
     ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 dark:from-neutral-950 dark:via-indigo-950 dark:to-purple-950'
     : 'bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 dark:from-neutral-950 dark:via-blue-950 dark:to-indigo-950'
 })

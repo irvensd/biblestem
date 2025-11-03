@@ -101,10 +101,10 @@
             </div>
             <div class="absolute top-3 right-3 flex gap-2">
               <div
-                v-if="study.category === 'premium'"
+                v-if="study.category === 'supporter'"
                 class="px-3 py-1 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-semibold rounded-full shadow-lg"
               >
-                PREMIUM
+                ADVANCED
               </div>
               <div
                 v-if="activeTab === 'completed'"

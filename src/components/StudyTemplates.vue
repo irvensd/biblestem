@@ -68,9 +68,9 @@
               <button
                 @click.stop="downloadTemplate(template.id)"
                 class="ml-3 px-3 py-1 text-xs font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors"
-                :disabled="template.isPremium && !authStore.isPremium"
+                :disabled="template.isPremium && !authStore.hasSupported"
               >
-                {{ template.isPremium && !authStore.isPremium ? 'Premium' : 'Download' }}
+                {{ template.isPremium && !authStore.hasSupported ? 'Advanced' : 'Download' }}
               </button>
             </div>
           </div>
@@ -204,10 +204,10 @@
             <button
               @click="downloadTemplate(selectedTemplate.id)"
               class="btn-primary text-sm"
-              :disabled="selectedTemplate.isPremium && !authStore.isPremium"
+              :disabled="selectedTemplate.isPremium && !authStore.hasSupported"
             >
               {{
-                selectedTemplate.isPremium && !authStore.isPremium
+                selectedTemplate.isPremium && !authStore.hasSupported
                   ? 'Requires Premium'
                   : 'Download Template'
               }}
@@ -216,7 +216,7 @@
 
           <!-- Premium Upsell -->
           <div
-            v-if="selectedTemplate.isPremium && !authStore.isPremium"
+            v-if="selectedTemplate.isPremium && !authStore.hasSupported"
             class="p-4 bg-accent-50 dark:bg-accent-900/20 rounded-lg border border-accent-200 dark:border-accent-800"
           >
             <div class="flex items-start space-x-3">
@@ -371,7 +371,7 @@
                       <button
                         @click.stop="downloadTemplate(template.id)"
                         class="text-xs font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
-                        :disabled="template.isPremium && !authStore.isPremium"
+                        :disabled="template.isPremium && !authStore.hasSupported"
                       >
                         Download
                       </button>
@@ -438,7 +438,7 @@ const downloadTemplate = (templateId: string) => {
   const template = templatesStore.templates?.find((t) => t.id === templateId)
   if (!template) return
 
-  if (template.isPremium && !authStore.isPremium) {
+  if (template.isPremium && !authStore.hasSupported) {
     emit('upgrade')
     return
   }
