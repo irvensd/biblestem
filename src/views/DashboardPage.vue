@@ -352,7 +352,7 @@ const navigateToBrowseStudies = () => {
 }
 
 const navigateToDailyStudy = () => {
-  router.push('/daily-study')
+  router.push('/my-studies')
 }
 
 const loadDashboardData = async () => {
