@@ -348,7 +348,7 @@ const navigateToDailyDevotion = () => {
 }
 
 const navigateToBrowseStudies = () => {
-  router.push('/studies')
+  router.push('/study-series')
 }
 
 const navigateToDailyStudy = () => {
