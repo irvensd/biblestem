@@ -972,6 +972,297 @@ export const freeStudies: Study[] = [
       },
     ],
   },
+  {
+    id: 'power-of-the-word',
+    title: 'The Power of the Word',
+    description:
+      'A transformative 6-part study exploring how God\'s Word creates faith, renews minds, pierces hearts, sustains life, guides obedience, and transforms believers into channels of His truth.',
+    category: 'free',
+    totalDuration: 42,
+    difficulty: 'beginner',
+    tags: ['Bible Study', 'Scripture', 'Faith', 'Transformation', 'Discipleship', 'Spiritual Growth'],
+    image: 'power-word',
+    color: 'from-orange-500 to-red-600',
+    features: [
+      'Faith building',
+      'Mind renewal',
+      'Practical application',
+      'Free content',
+    ],
+    lessons: [
+      {
+        id: 'power-word-lesson1',
+        title: 'Faith Comes by Hearing',
+        duration: 6,
+        scripture: 'Romans 10:17',
+        description:
+          'The journey from hearing to believing to living.',
+        openingThought: 'Imagine standing at a door with your hand on the knob—but the one inside is saying your name. Unless you hear your name called, you won\'t open. Faith begins when you hear that voice and recognise it.',
+        content: {
+          scriptureText: 'So then faith cometh by hearing, and hearing by the word of God.',
+          teachingPoints: [
+            {
+              narrative:
+                'Hearing the Word is more than ears catching words—it\'s the Spirit illuminating truth in our hearts. The Word calls us into a relationship; hearing is the first step toward trust and response. In SDA theology the idea that faith comes from hearing emphasises open Bible-study, proclamation and personal encounter. Faith begins when we hear that voice and recognise it as God\'s voice speaking to us personally.',
+              scriptures: [
+                {
+                  verse: 'Romans 10:17',
+                  text: 'So then faith cometh by hearing, and hearing by the word of God.',
+                },
+                {
+                  verse: 'John 10:27',
+                  text: 'My sheep hear my voice, and I know them, and they follow me.',
+                },
+              ],
+              rhetoricalQuestions: [
+                'When was the last time I heard Scripture and felt something change inside me?',
+                'How does recognizing God\'s voice in Scripture differ from just reading words?',
+              ],
+            },
+          ],
+          lifeApplication: {
+            challenge:
+              'This week, choose one short verse to read aloud each day and ask: what voice is speaking to me through this?',
+            journaling:
+              'What did I hear differently when I read the verse aloud?',
+          },
+          prayerPrompt:
+            'Lord, open my ears to hear Your Word—not just with my ears, but with my heart. Let me move from listening to faith.',
+        },
+        completed: false,
+      },
+      {
+        id: 'power-word-lesson2',
+        title: 'The Word That Changes Minds',
+        duration: 6,
+        scripture: 'Romans 12:1-2',
+        description:
+          'Not just information—but transformation through renewing of the mind.',
+        openingThought: 'Think of a seed planted in dry ground. Unless the soil changes, the seed won\'t grow. The soil is your mindset—and the Word changes it.',
+        content: {
+          scriptureText: 'And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.',
+          teachingPoints: [
+            {
+              narrative:
+                'Transformation is internal—not merely following rules—but the mind\'s renewal by the Word. The Word aligns our thinking with God\'s thinking: truth replaces lies, identity replaces shame, purpose replaces drift. In the Seventh-day Adventist tradition, Scripture is viewed as dynamic—not static. It changes how we think, feel, and live. The soil of our mindset must change for the seed of truth to grow.',
+              scriptures: [
+                {
+                  verse: 'Romans 12:1-2',
+                  text: 'I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God, which is your reasonable service. And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.',
+                },
+                {
+                  verse: 'Ephesians 4:23',
+                  text: 'And be renewed in the spirit of your mind.',
+                },
+              ],
+              examples: [
+                'Truth from Scripture replaces lies we believed about ourselves',
+                'God\'s identity for us replaces shame from past mistakes',
+                'Divine purpose replaces the drift of aimless living',
+              ],
+              rhetoricalQuestions: [
+                'Which beliefs in my mind need renewal by God\'s Word?',
+                'How has Scripture already changed how I think about myself or God?',
+              ],
+            },
+          ],
+          lifeApplication: {
+            challenge:
+              'Each day this week, pick one challenging thought you have and stand it against one Scripture truth—write the difference it makes.',
+            journaling:
+              'What shift in my thinking did I notice by reading Scripture actively?',
+          },
+          prayerPrompt:
+            'Holy Spirit, fill my mind with truth, remove the old imprint of the world, and renew me from the inside out.',
+        },
+        completed: false,
+      },
+      {
+        id: 'power-word-lesson3',
+        title: 'The Word That Pierces and Heals',
+        duration: 6,
+        scripture: 'Hebrews 4:12',
+        description:
+          'More than book, the Bible is a living instrument in God\'s hands.',
+        openingThought: 'Imagine a sword-smith shaping a blade—not just for display but for battle. The Word is that blade: it doesn\'t just sit—it cuts, it heals, it refines.',
+        content: {
+          scriptureText: 'For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.',
+          teachingPoints: [
+            {
+              narrative:
+                'Scripture is not passive—it discerns the hidden places of the heart, exposes, transforms and heals. When we approach the Word with openness, we allow God to use it as scalpel and balm. Adventist teaching emphasises the healing and sanctifying power of the Word in the believer\'s life. The Word doesn\'t just sit on the page—it cuts through deception, heals wounds, and refines character.',
+              scriptures: [
+                {
+                  verse: 'Hebrews 4:12',
+                  text: 'For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.',
+                },
+                {
+                  verse: 'Jeremiah 23:29',
+                  text: 'Is not my word like as a fire? saith the Lord; and like a hammer that breaketh the rock in pieces?',
+                },
+              ],
+              examples: [
+                'Scripture exposes hidden sins we didn\'t want to face',
+                'God\'s Word heals wounds from past hurts and failures',
+                'The Word refines our character like fire purifies gold',
+              ],
+              rhetoricalQuestions: [
+                'Where in my heart is the Word revealing what I wouldn\'t want others to see?',
+                'How have I experienced the Word as both cutting and healing?',
+              ],
+            },
+          ],
+          lifeApplication: {
+            challenge:
+              'Bring a journal and open the Word this week with the question: "What do You want to show me today?" Write what is revealed.',
+            journaling:
+              'What did the Word reveal, and how did I respond?',
+          },
+          prayerPrompt:
+            'God, You know me better than I know myself. Use Your Word to shed light in me, heal in me, and refine me.',
+        },
+        completed: false,
+      },
+      {
+        id: 'power-word-lesson4',
+        title: 'Living by Every Word',
+        duration: 8,
+        scripture: 'Matthew 4:4',
+        description:
+          'Jesus said life comes by more than bread—it comes by every word from God.',
+        openingThought: 'Bread sustains the body but needs to be repeated each day. Words from God are the bread of the soul—repeated, absorbed, and alive.',
+        content: {
+          scriptureText: 'But he answered and said, It is written, Man shall not live by bread alone, but by every word that proceedeth out of the mouth of God.',
+          teachingPoints: [
+            {
+              narrative:
+                'Just as food nourishes the body daily, the Word must be consumed daily for the soul\'s life and growth. In later Adventist thought, this connects to the idea that reading and obeying Scripture is part of daily discipleship. Living by every word means obedience, not just reading—making each passage time-sensitive and life-shaping. Words from God are the bread of the soul—repeated, absorbed, and alive in our daily experience.',
+              scriptures: [
+                {
+                  verse: 'Matthew 4:4',
+                  text: 'But he answered and said, It is written, Man shall not live by bread alone, but by every word that proceedeth out of the mouth of God.',
+                },
+                {
+                  verse: 'Deuteronomy 8:3',
+                  text: 'And he humbled thee, and suffered thee to hunger, and fed thee with manna, which thou knewest not, neither did thy fathers know; that he might make thee know that man doth not live by bread only, but by every word that proceedeth out of the mouth of the Lord doth man live.',
+                },
+              ],
+              examples: [
+                'Daily Bible reading is as essential as daily meals',
+                'Obedience to Scripture is part of spiritual nutrition',
+                'Each word from God shapes and sustains our spiritual life',
+              ],
+              rhetoricalQuestions: [
+                'Which part of Scripture do I treat as optional rather than essential?',
+                'How does treating Scripture as daily bread change my approach to it?',
+              ],
+            },
+          ],
+          lifeApplication: {
+            challenge:
+              'Choose a small passage you\'ll "live" this week—memorize, speak, act—and note how it shapes your day.',
+            journaling:
+              'What difference did it make when I treated this passage as life-word, not just information?',
+          },
+          prayerPrompt:
+            'Lord, let Your Word not just pass through my eyes, but come alive in my steps. Teach me to live by every word You\'ve spoken.',
+        },
+        completed: false,
+      },
+      {
+        id: 'power-word-lesson5',
+        title: 'Wise Listening, Wise Living',
+        duration: 8,
+        scripture: 'James 1:22',
+        description:
+          'Understanding that Scripture doesn\'t just direct—it disciplines and guides daily life.',
+        openingThought: 'Listening is the gateway, but living is the destination. Many hear the Word; few allow it to reshape the day. You don\'t just need instructions—you need transformation.',
+        content: {
+          scriptureText: 'But be ye doers of the word, and not hearers only, deceiving your own selves.',
+          teachingPoints: [
+            {
+              narrative:
+                'James challenges passive hearing; true power of the Word is shown in what we do with it. Adventist perspective emphasises both hearing and obeying—to study the Word and to act on it. Obedience isn\'t legalism—it\'s the soil for the Word\'s fruit to grow. Listening is the gateway, but living is the destination. Transformation happens when we move from passive hearing to active doing.',
+              scriptures: [
+                {
+                  verse: 'James 1:22',
+                  text: 'But be ye doers of the word, and not hearers only, deceiving your own selves.',
+                },
+                {
+                  verse: 'Luke 11:28',
+                  text: 'But he said, Yea rather, blessed are they that hear the word of God, and keep it.',
+                },
+              ],
+              examples: [
+                'Hearing without doing is like studying a recipe but never cooking',
+                'Obedience is the soil where God\'s Word produces fruit',
+                'True discipleship combines hearing with active obedience',
+              ],
+              rhetoricalQuestions: [
+                'When did I hear truth lately—and then delay acting on it? What held me back?',
+                'How does obedience to Scripture differ from legalistic rule-following?',
+              ],
+            },
+          ],
+          lifeApplication: {
+            challenge:
+              'Pick one command or promise from your study and build a practical habit around it this week.',
+            journaling:
+              'How did acting on the Word change my day, week, or mindset?',
+          },
+          prayerPrompt:
+            'Father, help me not just to hear but to do. Let Your Word build in me habits that reflect Your will.',
+        },
+        completed: false,
+      },
+      {
+        id: 'power-word-lesson6',
+        title: 'Transformed & Transmitting',
+        duration: 8,
+        scripture: '2 Timothy 3:16-17',
+        description:
+          'When Scripture changes us, we become channels of transformation to others.',
+        openingThought: 'A candle passes on its flame without losing its light. The Word passes through us, transforms us—and then flows out through us into others.',
+        content: {
+          scriptureText: 'All Scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: That the man of God may be perfect, throughly furnished unto all good works.',
+          teachingPoints: [
+            {
+              narrative:
+                'Scripture\'s purpose is not only to change the individual, but to equip for service—transmission becomes transformation. In the rising movement of Adventist discipleship, transformed believers become teachers, not just learners. When the Word lives in us, we live the Word—and then we give it away. A candle passes on its flame without losing its light; so we share God\'s truth without losing it ourselves.',
+              scriptures: [
+                {
+                  verse: '2 Timothy 3:16-17',
+                  text: 'All Scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: That the man of God may be perfect, throughly furnished unto all good works.',
+                },
+                {
+                  verse: 'Matthew 28:19-20',
+                  text: 'Go ye therefore, and teach all nations, baptizing them in the name of the Father, and of the Son, and of the Holy Ghost: Teaching them to observe all things whatsoever I have commanded you.',
+                },
+              ],
+              examples: [
+                'Transformed believers naturally become teachers of others',
+                'Sharing Scripture deepens our own understanding',
+                'The Word multiplies when we pass it on to others',
+              ],
+              rhetoricalQuestions: [
+                'What part of my life is ready to give away what the Word has done in me?',
+                'How does sharing Scripture with others change my own faith?',
+              ],
+            },
+          ],
+          lifeApplication: {
+            challenge:
+              'This week share one insight from the Word with someone—verbally, text, or social. See how giving it away shapes you.',
+            journaling:
+              'How did transmitting the Word change my understanding or deepen my faith?',
+          },
+          prayerPrompt:
+            'God of the Word, not for myself only, but for others—use me. Let the truth You\'ve planted in me flow out and bring life.',
+        },
+        completed: false,
+      },
+    ],
+  },
 ]
 
 // Deeper studies available as a thank you to supporters
