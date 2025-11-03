@@ -12,7 +12,7 @@
         <div class="flex items-center gap-3 mb-6">
           <button
             @click="router.back()"
-            class="group flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 hover:border-primary-600 transition-all text-neutral-400 hover:text-white"
+            class="group flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:border-primary-600 transition-all text-neutral-700 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-white"
           >
             <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -20,37 +20,37 @@
             <span class="font-medium">Back</span>
           </button>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-bold mb-4 text-neutral-100">{{ study.title }}</h1>
-        <p class="text-lg text-neutral-400 mb-6 leading-relaxed">{{ study.description }}</p>
+        <h1 class="text-3xl sm:text-4xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">{{ study.title }}</h1>
+        <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-6 leading-relaxed">{{ study.description }}</p>
         <div class="flex flex-wrap items-center gap-3 text-sm">
-          <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800">
-            <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+            <svg class="w-4 h-4 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            <span class="text-neutral-300">{{ study.lessons.length }} lessons</span>
+            <span class="text-neutral-700 dark:text-neutral-300">{{ study.lessons.length }} lessons</span>
           </div>
-          <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800">
-            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+            <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span class="text-neutral-300">{{ study.totalDuration }} min</span>
+            <span class="text-neutral-700 dark:text-neutral-300">{{ study.totalDuration }} min</span>
           </div>
-          <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800">
-            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+            <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <span class="text-neutral-300 capitalize">{{ study.difficulty }}</span>
+            <span class="text-neutral-700 dark:text-neutral-300 capitalize">{{ study.difficulty }}</span>
           </div>
         </div>
       </div>
 
       <!-- Lessons List -->
       <div class="space-y-4">
-        <h2 class="text-2xl font-bold mb-6 text-neutral-100">Lessons</h2>
+        <h2 class="text-2xl font-bold mb-6 text-neutral-900 dark:text-neutral-100">Lessons</h2>
         <div
           v-for="(lesson, index) in study.lessons"
           :key="lesson.id"
-          class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 cursor-pointer hover:border-primary-600 hover:shadow-2xl hover:shadow-primary-900/20 transition-all group"
+          class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 cursor-pointer hover:border-primary-600 hover:shadow-2xl hover:shadow-primary-900/20 transition-all group"
           @click="viewLesson(lesson.id)"
         >
           <div class="flex items-start gap-4">
@@ -61,7 +61,7 @@
             </div>
             <div class="flex-1">
               <div class="flex items-start justify-between mb-2">
-                <h3 class="text-xl font-bold text-neutral-100 group-hover:text-primary-400 transition-colors">{{ lesson.title }}</h3>
+                <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ lesson.title }}</h3>
                 <div class="flex items-center gap-3">
                   <span
                     v-if="isCompleted(lesson.id)"
@@ -96,10 +96,10 @@
                   </button>
                 </div>
               </div>
-              <p class="text-neutral-400 mb-3 leading-relaxed">{{ lesson.description }}</p>
-              <div class="flex items-center gap-4 text-sm text-neutral-500">
+              <p class="text-neutral-600 dark:text-neutral-400 mb-3 leading-relaxed">{{ lesson.description }}</p>
+              <div class="flex items-center gap-4 text-sm text-neutral-600 dark:text-neutral-500">
                 <div class="flex items-center gap-2">
-                  <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-4 h-4 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                   <span>{{ lesson.scripture }}</span>
@@ -112,7 +112,7 @@
     </div>
 
     <div v-else class="text-center py-16">
-      <p class="text-xl text-gray-600">Study not found</p>
+      <p class="text-xl text-neutral-600 dark:text-gray-400">Study not found</p>
       <router-link to="/dashboard" class="btn btn-primary mt-4">
         Back to Dashboard
       </router-link>
