@@ -89,9 +89,9 @@ export const freeStudies: Study[] = [
     id: 'how-to-study-bible',
     title: 'How to Study the Bible: The Preparation',
     description:
-      "A 6-part Bible study series designed to prepare the believer to approach God's Word with prayer, maturity, humility, obedience, a teaching spirit, and trust in what God has revealed.",
+      "A 6-part Bible study series designed to prepare the believer to approach God's Word with prayer, maturity, teachability, obedience, a teaching spirit, and trust in what God has revealed.",
     category: 'free',
-    totalDuration: 36,
+    totalDuration: 42,
     difficulty: 'beginner',
     tags: ['Bible Study', 'Preparation', 'Spiritual Growth', 'Learning'],
     image: 'bible-study-prep',
@@ -245,267 +245,168 @@ export const freeStudies: Study[] = [
       },
       {
         id: 'htsb-3',
-        title: 'Teachability',
+        title: 'Teachability – The Humble Mindset',
         duration: 6,
-        scripture: 'Psalm 86:11',
+        scripture: 'Psalm 25:9',
         description:
-          "A closed mind cannot receive new truth. If we come to the Bible to prove ourselves right, we've already decided what it can say",
-        openingThought: 'A teachable spirit is essential for true Bible study. We must approach Scripture not to prove ourselves right, but to be transformed.',
-          content: {
-          scriptureText:
-            'Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.',
-          hebrewGreekWords: [
-            {
-              word: 'למדני',
-              language: 'Hebrew',
-              transliteration: 'lamdēni',
-              meaning: 'teach me, instruct me - imperative form showing urgency and dependence',
-              context: 'The psalmist uses the imperative, showing this is not a casual request but an urgent plea for instruction',
-              references: ['Psalm 86:11', 'Psalm 25:5', 'Psalm 119:12'],
-            },
-            {
-              word: 'יחד',
-              language: 'Hebrew',
-              transliteration: 'yachēd',
-              meaning: 'together, united, without division - implies complete focus and single-mindedness',
-              context: 'The psalmist wants his heart to be united in fear of God, not divided between God and the world',
-              references: ['Psalm 86:11', 'Deuteronomy 6:5', 'Mark 12:30'],
-            },
-          ],
+          "A proud mind can't receive new truth. God teaches those who come with humility.",
+        openingThought: 'The teachable heart is God\'s classroom. Imagine approaching a famous teacher with your mind already made up about what they should say. You wouldn\'t learn anything—not because the teacher isn\'t wise, but because you\'ve already closed the door to anything that contradicts your assumptions. In the same way, pride prevents us from receiving divine truth. A proud mind can\'t receive new truth because it has already decided what truth looks like.\n\nGod teaches those who come with humility. The meek—those who acknowledge their need for correction and instruction—are the ones God guides in judgment and teaches His way. This isn\'t about intelligence or education; it\'s about posture. A teachable heart listens for conviction, not confirmation. It\'s willing to be corrected, eager to learn, and humble enough to admit when it doesn\'t understand. When we approach Scripture with this spirit, God opens His Word to us in ways that pride cannot access.',
+        content: {
+          scriptureText: 'The meek will He guide in judgment: and the meek will He teach His way.',
           teachingPoints: [
             {
               narrative:
-                'A teachable spirit begins with the recognition that we don\'t have all the answers. We must come to Scripture willing to be corrected, not just to find confirmation of our opinions. The psalmist\'s request is urgent and dependent—"teach me"—using the imperative form. This isn\'t passive learning; it\'s desperate dependence. True teachability means we\'re ready to change based on what we discover in God\'s Word. A closed mind cannot receive new truth. If we come to the Bible to prove ourselves right, we\'ve already decided what it can say, and we\'ve closed ourselves off from what it might actually mean.',
+                'Humility is the soil where divine truth grows. The proud heart resists instruction, believing it already knows enough. But God guides and teaches the meek—those who recognize their need for divine wisdom. When we come to Scripture convinced we have all the answers, we\'ve already closed the door to deeper understanding. God hides truth from the proud but reveals it to those willing to be corrected. A teachable heart listens for conviction, not confirmation. It doesn\'t seek to prove itself right; it seeks to be transformed by truth.\n\nThe key is coming to God\'s Word with an open heart, ready to have our assumptions challenged and our understanding deepened. This humility doesn\'t mean ignorance—it means acknowledging that God\'s wisdom far surpasses our own. When we approach Scripture this way, we position ourselves to receive the instruction and guidance only God can provide.',
               scriptures: [
                 {
-                  verse: 'Psalm 86:11',
-                  text: 'Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.',
+                  verse: 'Psalm 25:9',
+                  text: 'The meek will He guide in judgment: and the meek will He teach His way.',
                 },
               ],
               examples: [
-                'Coming to Scripture with preconceived ideas prevents us from hearing God\'s truth',
-                'The imperative form shows this is urgent, not optional',
-                'Teachability requires both humility and obedience',
+                'A proud mind cannot receive new truth because it has already decided what truth looks like',
+                'Humility acknowledges our need for divine wisdom',
+                'God teaches those who are willing to be corrected',
               ],
               rhetoricalQuestions: [
-                'What assumptions do you bring to Scripture that might blind you to truth?',
-                'Are you willing to let God\'s Word change your mind?',
+                'When reading the Bible, do you listen to learn—or to be right?',
+                'What assumptions do you bring to Scripture that might blind you to God\'s truth?',
+                'Are you willing to have your understanding corrected by God\'s Word?',
               ],
             },
           ],
-          interactiveElement: {
-            type: 'reflection',
-            content: {
-              question:
-                'Think of a time when Scripture challenged your preconceptions. How did you respond?',
-            },
-          },
           lifeApplication: {
             challenge:
-              "When you encounter difficult or challenging passages in Scripture, ask: 'What is God teaching me here?' rather than 'How can I make this mean what I want?'",
-            journaling: 'Write about an area where you struggle to remain teachable.',
+              'Before each study, pray for humility. Ask God to remove bias and open your heart to correction.',
+            journaling: 'Write about a time when God corrected your thinking through Scripture.',
           },
           prayerPrompt:
-            'Lord, unite my heart to fear Your name. Remove my pride and help me approach Your Word with humility and teachability.',
+            'Father, give me a humble spirit. Remove pride and open my mind to receive Your truth in full.',
         },
         completed: false,
       },
       {
         id: 'htsb-4',
-        title: 'Humility',
-        duration: 6,
-        scripture: 'James 1:21',
+        title: 'Obedience – The Key to Understanding',
+        duration: 8,
+        scripture: 'John 7:17',
         description:
-          "Pride is the great barrier to receiving God's Word. We must come in humility",
-        openingThought: 'Pride has a strange quality—the more you have it, the less you can receive. Think of a clenched fist: no matter what treasure you offer, it cannot be placed inside a hand that won\'t open. In the same way, a proud heart cannot receive God\'s Word. Humility is not weakness; the Greek word for meekness (praÿtēs) means having power but restraining it—like a lion controlled by his master. True Bible study requires humility—the honest recognition that we need God\'s wisdom more than we need to prove our own.\n\nJames commands us to "receive with meekness the engrafted word." Notice it\'s "engrafted"—not just placed on top, but implanted deep within, growing roots and becoming part of our nature. But this implantation requires a receptive heart. A closed mind, a defensive posture, or a spirit of "I already know" will prevent the Word from taking root. We must lay aside our own wisdom and opinions, making room for God\'s truth to be planted within us.',
+          'Obedience unlocks insight. When we do what we know, God reveals more.',
+        openingThought: 'Light followed is light increased. This is one of the most profound spiritual principles in Scripture: obedience is the key that unlocks deeper understanding. Jesus made this clear when He said, "If any man will do His will, he shall know of the doctrine." This isn\'t just good advice—it\'s a spiritual law. When we act on what God has revealed, He reveals more.\n\nThis principle transforms how we approach Bible study. We\'re not studying to accumulate knowledge for its own sake. We\'re studying to know how to live, and when we live what we know, God entrusts us with greater light. Spiritual understanding grows through obedience, not argument. Those who act on God\'s Word are the ones who receive clearer insight into its deeper meanings. Truth lived becomes truth understood in ways that mere intellectual knowledge can never achieve.',
         content: {
-          scriptureText: 'Wherefore lay apart all filthiness and superfluity of naughtiness, and receive with meekness the engrafted word, which is able to save your souls.',
-          hebrewGreekWords: [
-            {
-              word: 'πραΰτητι',
-              language: 'Greek',
-              transliteration: 'praÿtēti',
-              meaning: 'meekness, gentleness, humility - not weakness but controlled strength',
-              context: 'This word describes not weakness but controlled strength. The Greek praÿtēs means having power but restraining it',
-              references: ['James 1:21', 'Matthew 5:5', 'Galatians 5:23', 'Numbers 12:3'],
-            },
-            {
-              word: 'ἔμφυτον',
-              language: 'Greek',
-              transliteration: 'emphuton',
-              meaning: 'implanted, engrafted - suggesting something permanently growing within',
-              context: 'The word describes something planted deep within us, growing roots and becoming part of our nature',
-              references: ['James 1:21', 'Psalm 1:3', 'Jeremiah 17:8'],
-            },
-          ],
+          scriptureText: 'If any man will do His will, he shall know of the doctrine, whether it be of God.',
           teachingPoints: [
             {
               narrative:
-                'Humility is the necessary posture for receiving God\'s Word effectively. James commands us to "receive with meekness"—the Greek word suggests flexibility and readiness to learn. This humility isn\'t self-deprecation; it\'s honest recognition of our need for God\'s wisdom. Pride creates a barrier—it says "I know" when we should say "teach me." The engrafted word becomes part of us, growing roots and transforming us from within. But this implantation requires open hands, not clenched fists. A humble heart is fertile soil for God\'s truth to grow deep and bear fruit.',
+                'Obedience unlocks insight in ways that argument never can. Spiritual understanding grows through practice, not just study. Jesus promises that those who choose to do God\'s will will discover whether His doctrine is truly from God. This isn\'t theoretical—it\'s experiential. When we act on what we know, God reveals more. Those who obey are entrusted with greater light because they\'ve proven faithful with what they\'ve already received.\n\nThe Holy Spirit teaches through practice. Truth lived becomes truth understood. We might read about faith, but when we step out in faith, we understand it in a way that reading alone cannot provide. This principle means our Bible study must always lead to action. Every truth we learn should have practical application, and every application should open us to receive deeper truth. Obedience isn\'t optional for spiritual growth—it\'s the pathway to greater understanding.',
               scriptures: [
                 {
-                  verse: 'James 1:21',
-                  text: 'Wherefore lay apart all filthiness and superfluity of naughtiness, and receive with meekness the engrafted word, which is able to save your souls.',
+                  verse: 'John 7:17',
+                  text: 'If any man will do His will, he shall know of the doctrine, whether it be of God.',
                 },
               ],
               examples: [
-                'Humility means coming to Scripture as a student, not a critic',
-                'The engrafted word grows deep roots, changing us from within',
-                'Pride prevents the Word from taking root in our hearts',
+                'Those who act on God\'s Word receive clearer insight into its deeper meanings',
+                'Truth lived becomes truth understood in ways intellectual knowledge cannot',
+                'Obedience proves our faithfulness and opens the door to greater revelation',
               ],
               rhetoricalQuestions: [
-                'How does pride prevent you from truly receiving God\'s Word?',
-                'What opinions or assumptions do you need to lay aside to make room for God\'s truth?',
+                'Are you obeying the truths God has already shown you?',
+                'What truth have you learned but not yet applied to your life?',
+                'How has obedience deepened your understanding of Scripture?',
               ],
             },
           ],
-          interactiveElement: {
-            type: 'reflection',
-            content: {
-              question:
-                'How does pride prevent you from truly receiving God\'s Word? In what areas do you need more humility?',
-            },
-          },
           lifeApplication: {
             challenge:
-              "Before each study session, pray: 'Lord, I lay aside my own wisdom and opinions. I come to receive Your truth with humility.'",
-            journaling: 'Reflect on the connection between humility and receiving God\'s Word.',
+              'Choose one clear command of God and practice it faithfully this week.',
+            journaling: 'Record how obedience changes your understanding of Scripture.',
           },
           prayerPrompt:
-            'Lord, grant me meekness - not weakness, but the strength to lay aside my pride and receive Your Word with an open, teachable heart.',
+            'Lord, help me walk in the truth I know. Let my actions reflect my understanding of Your Word.',
         },
         completed: false,
       },
       {
         id: 'htsb-5',
-        title: 'Obedience',
-        duration: 6,
-        scripture: 'Psalm 119:11',
+        title: 'Teaching Spirit – Sharing What You Learn',
+        duration: 8,
+        scripture: 'Matthew 10:8',
         description:
-          'Knowledge without obedience leads to a hard heart. The goal of Bible study is transformation, not just information',
-        openingThought: 'Knowledge without obedience is dangerous. It puffs up, creates pride, and leads to a hard heart. The Pharisees knew Scripture better than anyone—they could quote it from memory, debate its meanings, and teach it with authority. Yet Jesus said they were "blind guides" because their knowledge never translated into obedience. The goal of Bible study is transformation, not just information. What we learn must change how we live.\n\nThe psalmist says "Thy word have I hid in mine heart." The Hebrew word for "hidden" means stored up like treasure, intentionally preserved for future use. But hiding the Word isn\'t just about memorization—it\'s about internalization. It\'s hidden "in my heart," which in Hebrew means the center of thoughts, emotions, and will—the whole inner person. When God\'s Word is truly hidden in our hearts, it shapes our thinking, guides our decisions, and transforms our actions. The test of our Bible study isn\'t what we know—it\'s how we live.',
+          'When we share God\'s Word, it strengthens both others and ourselves.',
+        openingThought: 'Truth multiplies when it\'s shared. Jesus made this clear when He commissioned His disciples: "Freely ye have received, freely give." What we\'ve learned from God is never meant to stay locked up in our own hearts. Teaching others reinforces what we\'ve learned ourselves. When we explain God\'s Word to someone else, we often gain clarity we didn\'t have before. The process of sharing forces us to articulate truth clearly, and in that articulation, understanding deepens.\n\nSharing Scripture invites the Holy Spirit to clarify our understanding. Every believer is called to be a teacher, not necessarily from a pulpit or platform, but through lifestyle and love. When you share what God showed you in your study, you\'re participating in the Great Commission. You\'re helping someone else grow, and in the process, God blesses you with even greater understanding. This isn\'t about being an expert—it\'s about being faithful with what God has given you.',
         content: {
-          scriptureText: 'Thy word have I hid in mine heart, that I might not sin against thee.',
-          hebrewGreekWords: [
-            {
-              word: 'צפנתי',
-              language: 'Hebrew',
-              transliteration: 'tsāpanīti',
-              meaning: 'I have hidden, stored up, treasured - implies intentional safekeeping',
-              context: 'This word describes storing something valuable for future use, like a treasure hidden for safety',
-              references: ['Psalm 119:11', 'Proverbs 7:1', 'Deuteronomy 33:4'],
-            },
-            {
-              word: 'בלבי',
-              language: 'Hebrew',
-              transliteration: 'bilvāvī',
-              meaning: 'in my heart - the center of thoughts, emotions, and will',
-              context: 'The Hebrew concept of "heart" encompasses mind, emotions, and will - the whole inner person',
-              references: ['Psalm 119:11', 'Deuteronomy 6:6', 'Jeremiah 31:33'],
-            },
-          ],
+          scriptureText: 'Freely ye have received, freely give.',
           teachingPoints: [
             {
               narrative:
-                'The purpose of Bible study is not merely to gain knowledge but to be transformed. We "hide" God\'s Word in our hearts not just by memorizing it, but by letting it shape our actions. The psalmist\'s goal is clear: "that I might not sin against thee"—practical holiness. Biblical knowledge should lead to biblical living. The test of our study is our obedience. Knowledge without application leads to spiritual pride. The Pharisees knew Scripture, but their knowledge made them harder, not holier. True Bible study isn\'t about accumulating facts; it\'s about transformation. When God\'s Word is truly hidden in our hearts, it changes our thinking, guides our decisions, and empowers us to resist sin.',
+                'Teaching others reinforces what we\'ve learned ourselves. When we share Scripture, we\'re not just helping someone else—we\'re strengthening our own understanding. The process of explaining God\'s Word forces us to think carefully about what we\'ve learned, and in that thinking, clarity emerges. Sharing invites the Holy Spirit to clarify our understanding because we\'re participating in God\'s work of multiplication.\n\nEvery believer is called to be a teacher through lifestyle and love. This doesn\'t mean we need all the answers or theological degrees—it means we faithfully share what God has shown us. When you teach what you\'ve learned, you\'re being faithful with the revelation God has given you, and He promises to entrust faithful stewards with more. Freely you received, so freely give.',
               scriptures: [
                 {
-                  verse: 'Psalm 119:11',
-                  text: 'Thy word have I hid in mine heart, that I might not sin against thee.',
+                  verse: 'Matthew 10:8',
+                  text: 'Freely ye have received, freely give.',
                 },
               ],
               examples: [
-                'Memorization without application leads to spiritual pride',
-                'True Bible study transforms behavior, not just beliefs',
-                'The goal is holiness, not just head knowledge',
+                'Explaining truth to others deepens our own understanding',
+                'Sharing Scripture opens the door for the Holy Spirit to clarify insight',
+                'Teaching multiplies the impact of what we\'ve learned',
               ],
               rhetoricalQuestions: [
-                'What have you learned from Scripture recently that you haven\'t yet applied?',
-                'How do you ensure your Bible study leads to obedience, not just information?',
+                'Who could benefit from something God showed you recently?',
+                'How has sharing Scripture deepened your faith?',
+                'What\'s holding you back from teaching others what you\'ve learned?',
               ],
             },
           ],
-          interactiveElement: {
-            type: 'reflection',
-            content: {
-              question:
-                'What have you learned from Scripture recently that you haven\'t yet applied? What\'s stopping you?',
-            },
-          },
           lifeApplication: {
-            challenge:
-              "After each study session, ask: 'What does God want me to do with this truth today?' Then do it.",
-            journaling:
-              'Write about a time when obeying God\'s Word transformed your life.',
+            challenge: 'Share one insight from your study with someone this week.',
+            journaling: 'Write about how sharing Scripture deepened your faith.',
           },
           prayerPrompt:
-            'Father, help me not just to learn Your Word but to obey it. May Your Word be hidden in my heart so that I might not sin against You.',
+            'Father, make me a channel of Your truth. Let my words bring light to others.',
         },
         completed: false,
       },
       {
         id: 'htsb-6',
-        title: 'Trust',
-        duration: 6,
-        scripture: 'Psalm 119:165',
+        title: 'Trusting What\'s Revealed – Walking by Faith',
+        duration: 8,
+        scripture: 'Deuteronomy 29:29',
         description:
-          'We must trust that what God has revealed is what we need. His Word is sufficient',
-        openingThought: 'Peace doesn\'t come from having all the answers. It comes from trusting the One who does. When we love and trust God\'s Word, we find great peace—not because every question is answered, but because we trust the God who revealed it. The Hebrew word shālōm means more than absence of conflict; it means wholeness, completeness, harmony in all of life. This peace comes from loving God\'s law, trusting His sufficiency, and resting in His revelation.\n\nWe must trust that what God has chosen to reveal is exactly what we need. His Word is sufficient for our spiritual growth. When we doubt this, we stumble. The Hebrew for "offend" means a stumbling block—anything that causes us to fall. Questions are fine, but doubt that undermines God\'s Word causes us to trip. Great peace belongs to those who trust God\'s Word, not those who need to understand everything. We find stability not in having all answers, but in trusting the God who does.',
+          'Faith accepts what God has revealed and trusts Him for what He has not yet explained.',
+        openingThought: 'Faith begins where explanation ends. Moses made this clear when he said, "The secret things belong unto the Lord our God: but those things which are revealed belong unto us." God has given us everything we need to know—not everything we want to know, but everything we need. The spiritually mature learn to rest in God\'s sufficiency, trusting that what He has revealed is what we need for this moment.\n\nThis principle is crucial for Bible study. We can study forever and still have unanswered questions. But faith accepts what God has revealed and trusts Him for what He has not yet explained. God reveals enough to trust Him, not everything to satisfy curiosity. When we can rest in this reality, we find peace even in our questions. Great peace belongs to those who trust God\'s revealed Word, not those who demand answers to every mystery.',
         content: {
-          scriptureText: 'Great peace have they which love thy law: and nothing shall offend them.',
-          hebrewGreekWords: [
-            {
-              word: 'שלום',
-              language: 'Hebrew',
-              transliteration: 'shālōm',
-              meaning: 'peace, wholeness, completeness - not absence of conflict but presence of harmony',
-              context: 'Biblical peace is not mere absence of conflict but the presence of wholeness, completeness, and harmony in all of life',
-              references: ['Psalm 119:165', 'Isaiah 26:3', 'John 14:27', 'Philippians 4:7'],
-            },
-            {
-              word: 'למוכשל',
-              language: 'Hebrew',
-              transliteration: 'lemokēshēl',
-              meaning: 'a stumbling block, offense - anything that causes one to fall or stumble',
-              context: 'The word describes anything that trips us up or causes us to fall spiritually. Trusting God\'s Word removes these stumbling blocks',
-              references: ['Psalm 119:165', 'Isaiah 8:14', 'Romans 9:33', '1 Corinthians 1:23'],
-            },
-          ],
+          scriptureText: 'The secret things belong unto the Lord our God: but those things which are revealed belong unto us and to our children forever.',
           teachingPoints: [
             {
               narrative:
-                'When we love and trust God\'s Word, we find great peace—stability in the midst of life\'s storms. The Hebrew for "offend" means to stumble or fall. God\'s Word keeps us steady. This trust means we don\'t need to seek answers beyond what God has revealed. Peace comes not from having all answers, but from trusting in what God has made known. The world offers endless opinions, theories, and philosophies, but they create confusion and conflict. God\'s Word, when trusted and loved, creates wholeness. It answers what we need to know and grounds us in what we need to believe.',
+                'God reveals enough to trust Him, not everything to satisfy curiosity. The secret things belong to Him, but what He has revealed belongs to us. This distinction is crucial for spiritual maturity. Faith is choosing to rest in God\'s wisdom when answers are missing. The spiritually mature walk by trust, not by full understanding. They know God has given them everything they need, even if He hasn\'t answered every question.\n\nThis principle transforms how we approach unanswered questions in Scripture. Instead of demanding explanations or losing faith when mysteries remain, we trust the God who revealed them. We accept what God has made known and trust Him for what He has kept secret. This trust doesn\'t mean ignoring hard questions—it means bringing them to God in faith, believing He knows what He\'s doing even when we don\'t.',
               scriptures: [
                 {
-                  verse: 'Psalm 119:165',
-                  text: 'Great peace have they which love thy law: and nothing shall offend them.',
+                  verse: 'Deuteronomy 29:29',
+                  text: 'The secret things belong unto the Lord our God: but those things which are revealed belong unto us and to our children forever.',
                 },
               ],
               examples: [
-                'Trusting God\'s Word brings stability in uncertainty',
-                'Doubt that undermines God\'s Word becomes a stumbling block',
-                'Peace comes from loving God\'s law, not from answering every question',
+                'Faith is choosing to trust God\'s wisdom when answers are missing',
+                'God reveals enough to guide us, not everything to satisfy us',
+                'Those who trust God\'s revealed Word find peace even in mystery',
               ],
               rhetoricalQuestions: [
-                'In what areas do you struggle to trust what God has revealed?',
-                'What questions make you lose peace instead of trusting God\'s sufficiency?',
+                'Do I trust God\'s Word even when I don\'t understand everything?',
+                'What questions have I been demanding God answer instead of trusting Him with?',
+                'How has trusting God\'s revealed Word brought me peace?',
               ],
             },
           ],
-          interactiveElement: {
-            type: 'reflection',
-            content: {
-              question:
-                'In what areas do you struggle to trust what God has revealed? What questions make you lose peace?',
-            },
-          },
           lifeApplication: {
             challenge:
-              'When you encounter difficult questions in your study, first ask: "What has God clearly revealed?" Trust His sufficient Word.',
-            journaling: 'Reflect on how trusting God\'s Word has brought you peace.',
+              'Turn one of your biggest Bible questions into a prayer of trust this week.',
+            journaling: 'Describe how trusting God\'s silence strengthens your faith.',
           },
           prayerPrompt:
-            'Lord, grant me great peace through loving and trusting Your law. Help me to find my security in Your revealed truth.',
+            'Lord, I choose to rest in what You\'ve revealed. Help me trust that Your Word is enough for every step of my journey.',
         },
         completed: false,
       },
