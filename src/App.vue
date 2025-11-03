@@ -9,10 +9,8 @@
     <AppHeader />
     <main id="main-content" class="pb-16 sm:pb-0">
       <ErrorBoundary @error-caught="handleGlobalError" @error-retry="handleErrorRetry">
-        <router-view v-if="isAppReady" v-slot="{ Component, route }">
-          <transition :name="getTransitionName(route)" mode="out-in" appear>
-            <component :is="Component" :key="route.path" />
-          </transition>
+        <router-view v-if="isAppReady" v-slot="{ Component }">
+          <component :is="Component" />
         </router-view>
         <div v-else class="flex items-center justify-center min-h-[400px]">
           <EnhancedLoading type="spinner" size="lg" message="Loading BibleStem..." />
