@@ -101,7 +101,7 @@
               </div>
             </div>
             <button
-              v-if="(lesson.content.taggedScripture || lesson.content.hebrewGreekWords) && study?.category === 'supporter' && authStore.hasSupported"
+              v-if="(lesson.content.taggedScripture || lesson.content.hebrewGreekWords) && study?.difficulty === 'advanced'"
               @click="showGreekHebrew = !showGreekHebrew"
               class="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"
             >
