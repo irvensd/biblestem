@@ -110,13 +110,13 @@ export const freeStudies: Study[] = [
         scripture: 'Psalm 119:18',
         description:
           'Opening the Bible without prayer is like walking into a dark room without turning on the light',
-        openingThought: 'The foundation of all Bible study is humble prayer, asking God to illuminate His Word.',
+        openingThought: 'Imagine trying to read in total darkness. You might hold the book, turn the pages, even trace your finger across the words—but the words remain invisible. There\'s no light to illuminate the text, no way to understand what\'s written. In the same way, opening Scripture without prayer leaves our spiritual eyes blind. We can read the words with our minds, analyze the grammar, study the history—but without the light of the Holy Spirit, the deeper meaning remains hidden.\n\nThe psalmist\'s plea, "Open my eyes that I may see wondrous things," is not just poetic language—it\'s an essential instruction for every believer. Prayer is the lamp that turns the written Word into living light. Before we read, we must pause to ask: "Lord, help me see what I cannot see." This isn\'t weakness; it\'s wisdom. We come to God\'s Word not as masters of the text, but as students in need of illumination. The foundation of all Bible study is humble prayer, asking God to illuminate His Word with understanding that only He can provide.',
         content: {
           scriptureText: 'Open thou mine eyes, that I may behold wondrous things out of thy law.',
           teachingPoints: [
             {
               narrative:
-                'Opening the Bible without prayer is like walking into a dark room without turning on the light. Prayer is the essential first step in Bible study because we acknowledge our utter dependence on God for spiritual understanding. The psalmist recognizes that spiritual truths are hidden from our natural understanding and require divine revelation.',
+                'Opening the Bible without prayer is like walking into a dark room without turning on the light. Prayer is the essential first step in Bible study because we acknowledge our utter dependence on God for spiritual understanding. The psalmist recognizes that spiritual truths are hidden from our natural understanding and require divine revelation. Without God\'s illumination, we can read the words with our intellect, analyze the grammar, and study the historical context—but we miss the transformative power that Scripture is meant to have in our hearts and lives.\n\nThe natural man, as Paul reminds us, cannot receive the things of the Spirit. They appear foolish to him. But when we come in prayer, inviting the Holy Spirit to guide us, the same passage we\'ve read a hundred times becomes alive with new meaning. Prayer transforms Bible study from an academic exercise into a divine encounter.',
               scriptures: [
                 {
                   verse: 'Psalm 119:18',
@@ -140,16 +140,18 @@ export const freeStudies: Study[] = [
               examples: [
                 'Without God\'s illumination, we can read the words but miss the transformative power of Scripture',
                 'This prayer expresses humility - admitting we need God\'s help to understand His own Word',
+                'Prayer transforms Bible study from information-gathering to heart transformation',
               ],
               rhetoricalQuestions: [
                 'When was the last time you asked God to open your understanding before reading His Word?',
                 'Have you ever read a passage multiple times, then suddenly had it illuminated through prayer?',
+                'What would change if you began every Bible study session with intentional prayer?',
               ],
             },
             {
               title: 'Why Prayer Matters',
               narrative:
-                'Without God\'s illumination through prayer, we may read the words of Scripture but completely miss the transformative power that God intends for us. Spiritual things must be spiritually discerned. The Bible itself tells us that the natural person cannot understand the things of the Spirit.',
+                'Without God\'s illumination through prayer, we may read the words of Scripture but completely miss the transformative power that God intends for us. Spiritual things must be spiritually discerned. The Bible itself tells us that the natural person cannot understand the things of the Spirit. Scripture wasn\'t written to be privately interpreted or intellectually decoded—it was given through the Holy Spirit to holy men of God. The same Spirit who inspired the writing is needed to illuminate the reading. How can we expect to understand Scripture if we don\'t ask the Author for illumination? Prayer isn\'t optional decoration; it\'s essential connection to the very source of spiritual truth.',
               scriptures: [
                 {
                   verse: '2 Peter 1:20-21',
@@ -158,6 +160,7 @@ export const freeStudies: Study[] = [
               ],
               rhetoricalQuestions: [
                 'How can we expect to understand Scripture if we don\'t ask the Author for illumination?',
+                'Have you ever realized that the Holy Spirit who wrote the Bible is the same Spirit who must read it through you?',
               ],
             },
           ],
@@ -178,14 +181,14 @@ export const freeStudies: Study[] = [
         scripture: '1 Corinthians 13:11',
         description:
           'God calls us to grow from milk to meat—to move from relying on others for our spiritual food to feeding ourselves',
-        openingThought: 'Maturity in Bible study means developing the ability to feed yourself spiritually, not just being fed.',
+        openingThought: 'There\'s nothing wrong with a baby who needs to be fed. Their dependence is natural, expected, and necessary. But imagine a thirty-year-old who still had to be spoon-fed every meal. That would be tragic—not because there\'s anything wrong with being fed, but because there\'s something profoundly wrong with never learning to feed yourself. In the same way, God calls believers to grow from milk to meat, from dependence to maturity. While pastors, teachers, and Bible study leaders are tremendous gifts to the church, they are meant to equip us to feed ourselves from God\'s Word, not to become our sole source of spiritual nourishment.\n\nMaturity in Bible study means developing the ability to feed yourself spiritually. It means learning to read Scripture, understand its meaning, and apply its truth without having someone else decode it for you. The Holy Spirit didn\'t just inspire the writing of Scripture; He also empowers its reading. You have everything you need to study God\'s Word for yourself—not in isolation, but in dependence on the Spirit who wrote it.',
         content: {
           scriptureText:
             'When I was a child, I spake as a child, I understood as a child, I thought as a child: but when I became a man, I put away childish things.',
           teachingPoints: [
             {
               narrative:
-                'God calls us to grow from milk to meat—to move from relying on others for our spiritual food to feeding ourselves. Just as a child eventually learns to feed themselves, we must mature in our Bible study. While teachers and pastors are valuable gifts to the church, they are meant to equip us to study independently, not to become our sole source of truth.',
+                'God calls us to grow from milk to meat—to move from relying on others for our spiritual food to feeding ourselves. Just as a child eventually learns to feed themselves, we must mature in our Bible study. While teachers and pastors are valuable gifts to the church, they are meant to equip us to study independently, not to become our sole source of truth. Paul speaks of leaving behind childish things when we become adults. In the spiritual realm, this means transitioning from perpetual spiritual infancy to responsible, self-directed growth. A mature believer doesn\'t reject their teachers; they verify their teaching. They don\'t abandon community; they bring something to contribute. They can feed themselves AND help feed others.',
               scriptures: [
                 {
                   verse: '1 Corinthians 13:11',
@@ -208,7 +211,7 @@ export const freeStudies: Study[] = [
             {
               title: 'The Responsibility of Maturity',
               narrative:
-                'This isn\'t about arrogance or rejecting our teachers—it\'s about the responsibility to verify truth yourself. The Bible commends those who, like the Bereans, "searched the scriptures daily" to confirm what they were taught.',
+                'This isn\'t about arrogance or rejecting our teachers—it\'s about the responsibility to verify truth yourself. The Bible commends those who, like the Bereans, "searched the scriptures daily" to confirm what they were taught. These Bereans weren\'t disrespectful or rebellious. They listened attentively to Paul, received his teaching with readiness—but then they tested it in Scripture. That combination of receptivity and verification made them "more noble." God gave you the Holy Spirit to guide you into truth. You don\'t need to wait for someone else to tell you what Scripture means. The anointing abides in you. That doesn\'t replace teachers; it empowers your own study.',
               scriptures: [
                 {
                   verse: 'Acts 17:11',
@@ -248,7 +251,7 @@ export const freeStudies: Study[] = [
         description:
           "A closed mind cannot receive new truth. If we come to the Bible to prove ourselves right, we've already decided what it can say",
         openingThought: 'A teachable spirit is essential for true Bible study. We must approach Scripture not to prove ourselves right, but to be transformed.',
-        content: {
+          content: {
           scriptureText:
             'Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.',
           hebrewGreekWords: [
@@ -269,11 +272,26 @@ export const freeStudies: Study[] = [
               references: ['Psalm 86:11', 'Deuteronomy 6:5', 'Mark 12:30'],
             },
           ],
-          commentary: [
-            'A teachable spirit begins with the recognition that we don\'t have all the answers.',
-            'We must come to Scripture willing to be corrected, not just to find confirmation of our opinions.',
-            'The psalmist requests both learning and obedience - not just knowledge but action.',
-            "True teachability means we're ready to change based on what we discover in God's Word.",
+          teachingPoints: [
+            {
+              narrative:
+                'A teachable spirit begins with the recognition that we don\'t have all the answers. We must come to Scripture willing to be corrected, not just to find confirmation of our opinions. The psalmist\'s request is urgent and dependent—"teach me"—using the imperative form. This isn\'t passive learning; it\'s desperate dependence. True teachability means we\'re ready to change based on what we discover in God\'s Word. A closed mind cannot receive new truth. If we come to the Bible to prove ourselves right, we\'ve already decided what it can say, and we\'ve closed ourselves off from what it might actually mean.',
+              scriptures: [
+                {
+                  verse: 'Psalm 86:11',
+                  text: 'Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.',
+                },
+              ],
+              examples: [
+                'Coming to Scripture with preconceived ideas prevents us from hearing God\'s truth',
+                'The imperative form shows this is urgent, not optional',
+                'Teachability requires both humility and obedience',
+              ],
+              rhetoricalQuestions: [
+                'What assumptions do you bring to Scripture that might blind you to truth?',
+                'Are you willing to let God\'s Word change your mind?',
+              ],
+            },
           ],
           interactiveElement: {
             type: 'reflection',
@@ -299,7 +317,7 @@ export const freeStudies: Study[] = [
         scripture: 'James 1:21',
         description:
           "Pride is the great barrier to receiving God's Word. We must come in humility",
-        openingThought: 'True Bible study requires humility—the recognition that we need God\'s wisdom more than we need to prove our own.',
+        openingThought: 'Pride has a strange quality—the more you have it, the less you can receive. Think of a clenched fist: no matter what treasure you offer, it cannot be placed inside a hand that won\'t open. In the same way, a proud heart cannot receive God\'s Word. Humility is not weakness; the Greek word for meekness (praÿtēs) means having power but restraining it—like a lion controlled by his master. True Bible study requires humility—the honest recognition that we need God\'s wisdom more than we need to prove our own.\n\nJames commands us to "receive with meekness the engrafted word." Notice it\'s "engrafted"—not just placed on top, but implanted deep within, growing roots and becoming part of our nature. But this implantation requires a receptive heart. A closed mind, a defensive posture, or a spirit of "I already know" will prevent the Word from taking root. We must lay aside our own wisdom and opinions, making room for God\'s truth to be planted within us.',
         content: {
           scriptureText: 'Wherefore lay apart all filthiness and superfluity of naughtiness, and receive with meekness the engrafted word, which is able to save your souls.',
           hebrewGreekWords: [
@@ -320,11 +338,26 @@ export const freeStudies: Study[] = [
               references: ['James 1:21', 'Psalm 1:3', 'Jeremiah 17:8'],
             },
           ],
-          commentary: [
-            'Humility is the necessary posture for receiving God\'s Word effectively.',
-            'James commands us to "receive with meekness" - the Greek word suggests flexibility and readiness to learn.',
-            'The "engrafted word" implies something permanent, something that becomes part of us.',
-            'This humility isn\'t self-deprecation - it\'s honest recognition of our need for God\'s wisdom.',
+          teachingPoints: [
+            {
+              narrative:
+                'Humility is the necessary posture for receiving God\'s Word effectively. James commands us to "receive with meekness"—the Greek word suggests flexibility and readiness to learn. This humility isn\'t self-deprecation; it\'s honest recognition of our need for God\'s wisdom. Pride creates a barrier—it says "I know" when we should say "teach me." The engrafted word becomes part of us, growing roots and transforming us from within. But this implantation requires open hands, not clenched fists. A humble heart is fertile soil for God\'s truth to grow deep and bear fruit.',
+              scriptures: [
+                {
+                  verse: 'James 1:21',
+                  text: 'Wherefore lay apart all filthiness and superfluity of naughtiness, and receive with meekness the engrafted word, which is able to save your souls.',
+                },
+              ],
+              examples: [
+                'Humility means coming to Scripture as a student, not a critic',
+                'The engrafted word grows deep roots, changing us from within',
+                'Pride prevents the Word from taking root in our hearts',
+              ],
+              rhetoricalQuestions: [
+                'How does pride prevent you from truly receiving God\'s Word?',
+                'What opinions or assumptions do you need to lay aside to make room for God\'s truth?',
+              ],
+            },
           ],
           interactiveElement: {
             type: 'reflection',
@@ -350,7 +383,7 @@ export const freeStudies: Study[] = [
         scripture: 'Psalm 119:11',
         description:
           'Knowledge without obedience leads to a hard heart. The goal of Bible study is transformation, not just information',
-        openingThought: 'The goal of Bible study is transformation, not just information. What we learn must change how we live.',
+        openingThought: 'Knowledge without obedience is dangerous. It puffs up, creates pride, and leads to a hard heart. The Pharisees knew Scripture better than anyone—they could quote it from memory, debate its meanings, and teach it with authority. Yet Jesus said they were "blind guides" because their knowledge never translated into obedience. The goal of Bible study is transformation, not just information. What we learn must change how we live.\n\nThe psalmist says "Thy word have I hid in mine heart." The Hebrew word for "hidden" means stored up like treasure, intentionally preserved for future use. But hiding the Word isn\'t just about memorization—it\'s about internalization. It\'s hidden "in my heart," which in Hebrew means the center of thoughts, emotions, and will—the whole inner person. When God\'s Word is truly hidden in our hearts, it shapes our thinking, guides our decisions, and transforms our actions. The test of our Bible study isn\'t what we know—it\'s how we live.',
         content: {
           scriptureText: 'Thy word have I hid in mine heart, that I might not sin against thee.',
           hebrewGreekWords: [
@@ -371,11 +404,26 @@ export const freeStudies: Study[] = [
               references: ['Psalm 119:11', 'Deuteronomy 6:6', 'Jeremiah 31:33'],
             },
           ],
-          commentary: [
-            'The purpose of Bible study is not merely to gain knowledge but to be transformed.',
-            'We "hide" God\'s Word in our hearts not just by memorizing it, but by letting it shape our actions.',
-            'The psalmist\'s goal is clear: "that I might not sin against thee" - practical holiness.',
-            'Biblical knowledge should lead to biblical living. The test of our study is our obedience.',
+          teachingPoints: [
+            {
+              narrative:
+                'The purpose of Bible study is not merely to gain knowledge but to be transformed. We "hide" God\'s Word in our hearts not just by memorizing it, but by letting it shape our actions. The psalmist\'s goal is clear: "that I might not sin against thee"—practical holiness. Biblical knowledge should lead to biblical living. The test of our study is our obedience. Knowledge without application leads to spiritual pride. The Pharisees knew Scripture, but their knowledge made them harder, not holier. True Bible study isn\'t about accumulating facts; it\'s about transformation. When God\'s Word is truly hidden in our hearts, it changes our thinking, guides our decisions, and empowers us to resist sin.',
+              scriptures: [
+                {
+                  verse: 'Psalm 119:11',
+                  text: 'Thy word have I hid in mine heart, that I might not sin against thee.',
+                },
+              ],
+              examples: [
+                'Memorization without application leads to spiritual pride',
+                'True Bible study transforms behavior, not just beliefs',
+                'The goal is holiness, not just head knowledge',
+              ],
+              rhetoricalQuestions: [
+                'What have you learned from Scripture recently that you haven\'t yet applied?',
+                'How do you ensure your Bible study leads to obedience, not just information?',
+              ],
+            },
           ],
           interactiveElement: {
             type: 'reflection',
@@ -402,7 +450,7 @@ export const freeStudies: Study[] = [
         scripture: 'Psalm 119:165',
         description:
           'We must trust that what God has revealed is what we need. His Word is sufficient',
-        openingThought: 'We must trust that what God has chosen to reveal is exactly what we need. His Word is sufficient for our spiritual growth.',
+        openingThought: 'Peace doesn\'t come from having all the answers. It comes from trusting the One who does. When we love and trust God\'s Word, we find great peace—not because every question is answered, but because we trust the God who revealed it. The Hebrew word shālōm means more than absence of conflict; it means wholeness, completeness, harmony in all of life. This peace comes from loving God\'s law, trusting His sufficiency, and resting in His revelation.\n\nWe must trust that what God has chosen to reveal is exactly what we need. His Word is sufficient for our spiritual growth. When we doubt this, we stumble. The Hebrew for "offend" means a stumbling block—anything that causes us to fall. Questions are fine, but doubt that undermines God\'s Word causes us to trip. Great peace belongs to those who trust God\'s Word, not those who need to understand everything. We find stability not in having all answers, but in trusting the God who does.',
         content: {
           scriptureText: 'Great peace have they which love thy law: and nothing shall offend them.',
           hebrewGreekWords: [
@@ -423,11 +471,26 @@ export const freeStudies: Study[] = [
               references: ['Psalm 119:165', 'Isaiah 8:14', 'Romans 9:33', '1 Corinthians 1:23'],
             },
           ],
-          commentary: [
-            'When we love and trust God\'s Word, we find great peace - stability in the midst of life\'s storms.',
-            'The Hebrew for "offend" means to stumble or fall. God\'s Word keeps us steady.',
-            'This trust means we don\'t need to seek answers beyond what God has revealed.',
-            'Peace comes not from having all answers, but from trusting in what God has made known.',
+          teachingPoints: [
+            {
+              narrative:
+                'When we love and trust God\'s Word, we find great peace—stability in the midst of life\'s storms. The Hebrew for "offend" means to stumble or fall. God\'s Word keeps us steady. This trust means we don\'t need to seek answers beyond what God has revealed. Peace comes not from having all answers, but from trusting in what God has made known. The world offers endless opinions, theories, and philosophies, but they create confusion and conflict. God\'s Word, when trusted and loved, creates wholeness. It answers what we need to know and grounds us in what we need to believe.',
+              scriptures: [
+                {
+                  verse: 'Psalm 119:165',
+                  text: 'Great peace have they which love thy law: and nothing shall offend them.',
+                },
+              ],
+              examples: [
+                'Trusting God\'s Word brings stability in uncertainty',
+                'Doubt that undermines God\'s Word becomes a stumbling block',
+                'Peace comes from loving God\'s law, not from answering every question',
+              ],
+              rhetoricalQuestions: [
+                'In what areas do you struggle to trust what God has revealed?',
+                'What questions make you lose peace instead of trusting God\'s sufficiency?',
+              ],
+            },
           ],
           interactiveElement: {
             type: 'reflection',
