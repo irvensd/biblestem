@@ -186,6 +186,7 @@ const confirmResetLesson = async () => {
   try {
     await progressStore.incompleteLesson(study.value.id, selectedLessonId.value)
     console.log(`Lesson ${selectedLessonId.value} marked as incomplete`)
+    console.log('Current progress:', progressStore.getStudyProgress(study.value.id))
     
     // Close the modal after successful reset
     closeResetModal()
