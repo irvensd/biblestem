@@ -21,9 +21,10 @@ export interface CategoryWithStudies extends StudyCategory {
 // Define categories (we'll use logical grouping since we don't have a categories table yet)
 const CATEGORIES: StudyCategory[] = [
   { id: 'foundational', title: 'Foundational Studies', order: 1 },
-  { id: 'biblical-narrative', title: 'Biblical Narrative', order: 2 },
-  { id: 'spiritual-growth', title: 'Spiritual Growth', order: 3 },
-  { id: 'advanced', title: 'Advanced Studies', order: 4 },
+  { id: 'growth', title: 'Growth Studies', order: 2 },
+  { id: 'biblical-narrative', title: 'Biblical Narrative', order: 3 },
+  { id: 'spiritual-growth', title: 'Spiritual Growth', order: 4 },
+  { id: 'advanced', title: 'Advanced Studies', order: 5 },
 ]
 
 // Map studies to categories based on tags/characteristics
@@ -43,6 +44,18 @@ const mapStudyToCategory = (study: Study): string => {
   
   if (foundationalStudyIds.includes(study.id)) {
     return 'foundational'
+  }
+  
+  // Map growth studies
+  const growthStudyIds = [
+    'walking-with-god-daily',
+    'victory-over-temptation',
+    'faith-that-works',
+    'fruit-of-the-spirit',
+  ]
+  
+  if (growthStudyIds.includes(study.id)) {
+    return 'growth'
   }
   
   // Categorize based on tags and title for other studies

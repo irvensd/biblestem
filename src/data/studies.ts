@@ -1263,6 +1263,150 @@ export const freeStudies: Study[] = [
       },
     ],
   },
+  {
+    id: 'walking-with-god-daily',
+    title: 'Walking with God Daily',
+    description:
+      'A practical study on devotion, consistency, hearing His voice, and daily surrender. Learn to walk with God in every moment.',
+    category: 'free',
+    totalDuration: 0,
+    difficulty: 'beginner',
+    tags: ['Spiritual Growth', 'Devotion', 'Daily Walk', 'Prayer', 'Consistency'],
+    image: 'walking-god',
+    color: 'from-blue-500 to-cyan-600',
+    features: [
+      'Daily devotion practices',
+      'Hearing God\'s voice',
+      'Consistency in faith',
+      'Practical application',
+    ],
+    lessons: [
+      {
+        id: 'wgd-placeholder',
+        title: 'Coming Soon',
+        duration: 0,
+        scripture: 'Micah 6:8',
+        description: 'Study content coming soon',
+        content: {
+          scriptureText: '',
+          teachingPoints: [],
+          lifeApplication: {
+            challenge: 'Coming soon',
+          },
+          prayerPrompt: 'Coming soon',
+        },
+        completed: false,
+      },
+    ],
+  },
+  {
+    id: 'victory-over-temptation',
+    title: 'Victory Over Temptation',
+    description:
+      'Discover how the Word serves as your weapon against temptation. Learn from Jesus\' example and experience the renewal of your mind for lasting victory.',
+    category: 'free',
+    totalDuration: 0,
+    difficulty: 'beginner',
+    tags: ['Spiritual Growth', 'Temptation', 'Victory', 'Spiritual Warfare', 'Renewal'],
+    image: 'victory-temptation',
+    color: 'from-purple-500 to-pink-600',
+    features: [
+      'Biblical weapons for battle',
+      'Jesus\' example of victory',
+      'Mind renewal strategies',
+      'Practical victory tools',
+    ],
+    lessons: [
+      {
+        id: 'vot-placeholder',
+        title: 'Coming Soon',
+        duration: 0,
+        scripture: '1 Corinthians 10:13',
+        description: 'Study content coming soon',
+        content: {
+          scriptureText: '',
+          teachingPoints: [],
+          lifeApplication: {
+            challenge: 'Coming soon',
+          },
+          prayerPrompt: 'Coming soon',
+        },
+        completed: false,
+      },
+    ],
+  },
+  {
+    id: 'faith-that-works',
+    title: 'Faith That Works',
+    description:
+      'Explore how genuine faith produces obedience and good works. Understand the relationship between faith and action in your daily walk with Christ.',
+    category: 'free',
+    totalDuration: 0,
+    difficulty: 'intermediate',
+    tags: ['Spiritual Growth', 'Faith', 'Obedience', 'Works', 'Discipleship'],
+    image: 'faith-works',
+    color: 'from-emerald-500 to-teal-600',
+    features: [
+      'Faith and works relationship',
+      'Genuine faith indicators',
+      'Obedience in action',
+      'Practical application',
+    ],
+    lessons: [
+      {
+        id: 'ftw-placeholder',
+        title: 'Coming Soon',
+        duration: 0,
+        scripture: 'James 2:17',
+        description: 'Study content coming soon',
+        content: {
+          scriptureText: '',
+          teachingPoints: [],
+          lifeApplication: {
+            challenge: 'Coming soon',
+          },
+          prayerPrompt: 'Coming soon',
+        },
+        completed: false,
+      },
+    ],
+  },
+  {
+    id: 'fruit-of-the-spirit',
+    title: 'Fruit of the Spirit',
+    description:
+      'A deep dive into each fruit of the Spirit: love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control. Learn practical daily cultivation methods.',
+    category: 'free',
+    totalDuration: 0,
+    difficulty: 'intermediate',
+    tags: ['Spiritual Growth', 'Fruit of the Spirit', 'Character', 'Transformation', 'Daily Cultivation'],
+    image: 'fruit-spirit',
+    color: 'from-amber-500 to-orange-600',
+    features: [
+      'Deep dive on each fruit',
+      'Practical cultivation methods',
+      'Daily application',
+      'Character transformation',
+    ],
+    lessons: [
+      {
+        id: 'fots-placeholder',
+        title: 'Coming Soon',
+        duration: 0,
+        scripture: 'Galatians 5:22-23',
+        description: 'Study content coming soon',
+        content: {
+          scriptureText: '',
+          teachingPoints: [],
+          lifeApplication: {
+            challenge: 'Coming soon',
+          },
+          prayerPrompt: 'Coming soon',
+        },
+        completed: false,
+      },
+    ],
+  },
 ]
 
 // Deeper studies available as a thank you to supporters
