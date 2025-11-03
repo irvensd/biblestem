@@ -93,12 +93,15 @@
               >
                 <span class="text-white font-bold">02</span>
               </div>
-              <h2 class="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
-                Scripture
-              </h2>
+              <div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                  Scripture
+                </h2>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">{{ lesson.scripture }}</p>
+              </div>
             </div>
             <button
-              v-if="lesson.content.taggedScripture || lesson.content.hebrewGreekWords"
+              v-if="(lesson.content.taggedScripture || lesson.content.hebrewGreekWords) && study?.category === 'supporter' && authStore.hasSupported"
               @click="showGreekHebrew = !showGreekHebrew"
               class="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"
             >
