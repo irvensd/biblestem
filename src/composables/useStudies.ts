@@ -152,8 +152,15 @@ export function useStudies() {
       
       if (studiesError) throw studiesError
       
-      // Fetch lessons count for each study
-      const studiesWithCounts: StudyWithCount[] = await Promise.all(
+      // Also load local data to merge with Supabase data
+      const { getAllStudies } = await import('../data/studies')
+      const localStudies = getAllStudies()
+      
+      // Create a map of Supabase studies by ID
+      const supabaseStudyMap = new Map<string, any>()
+      
+      // Fetch lessons count for each Supabase study
+      const supabaseStudiesWithCounts: StudyWithCount[] = await Promise.all(
         (studiesData || []).map(async (study: any) => {
           const { count, error: countError } = await supabase
             .from('lessons')
@@ -164,7 +171,7 @@ export function useStudies() {
             console.error('Error counting lessons:', countError)
           }
           
-          return {
+          const studyWithCount: StudyWithCount = {
             id: study.id,
             title: study.title,
             description: study.description,
@@ -180,8 +187,30 @@ export function useStudies() {
             thumbnail_url: study.image || '',
             level: study.difficulty,
           }
+          
+          supabaseStudyMap.set(study.id, studyWithCount)
+          return studyWithCount
         })
       )
+      
+      // Merge local studies with Supabase studies (Supabase takes priority for conflicts)
+      const mergedStudies = new Map<string, StudyWithCount>()
+      
+      // First, add all Supabase studies
+      supabaseStudiesWithCounts.forEach(study => {
+        mergedStudies.set(study.id, study)
+      })
+      
+      // Then, add local-only studies (not in Supabase)
+      localStudies.forEach(study => {
+        if (!mergedStudies.has(study.id)) {
+          mergedStudies.set(study.id, {
+            ...study,
+            lessons_count: study.lessons.length,
+            level: study.difficulty,
+          })
+        }
+      })
       
       // Group studies by category
       const grouped = new Map<string, StudyWithCount[]>()
@@ -190,7 +219,7 @@ export function useStudies() {
         grouped.set(cat.id, [])
       })
       
-      studiesWithCounts.forEach(study => {
+      mergedStudies.forEach(study => {
         const categoryId = mapStudyToCategory(study as Study)
         const existing = grouped.get(categoryId) || []
         existing.push(study)
