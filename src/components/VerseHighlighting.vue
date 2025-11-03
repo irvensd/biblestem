@@ -217,22 +217,8 @@ const parseScriptureText = () => {
   
   verses.value = sentences.map((sentence, index) => {
     const trimmedSentence = sentence.trim()
-    // Split by whitespace, keeping punctuation with words
-    const words: string[] = []
-    const parts = trimmedSentence.split(/\s+/)
-    
-    parts.forEach(part => {
-      // Separate word from trailing punctuation
-      const match = part.match(/^([\w'’-]+)([.,;:!?]*)$/)
-      if (match) {
-        words.push(match[1]) // word
-        if (match[2]) {
-          words.push(match[2]) // punctuation
-        }
-      } else if (part) {
-        words.push(part)
-      }
-    })
+    // Simply split by whitespace, keeping punctuation with words
+    const words = trimmedSentence.split(/\s+/).filter(word => word.length > 0)
     
     return {
       id: `verse-${index + 1}`,
