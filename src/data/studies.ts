@@ -416,9 +416,9 @@ export const freeStudies: Study[] = [
     id: 'where-bible-came-from',
     title: 'Where Bible Came From',
     description:
-      'A foundational study exploring why the Bible matters, how its books were recognized, and how God inspired its authors to create His written Word.',
+      'A foundational 6-part study exploring why the Bible matters, how its books were recognized, how God inspired its authors, how it was preserved through manuscripts, and how translations bring it to all nations.',
     category: 'free',
-    totalDuration: 18,
+    totalDuration: 42,
     difficulty: 'beginner',
     tags: ['Bible Study', 'Scripture', 'Canon', 'Inspiration', 'Foundational'],
     image: 'bible-origin',
@@ -538,6 +538,144 @@ export const freeStudies: Study[] = [
           },
           prayerPrompt:
             'Holy Spirit, open my heart and mind that I might receive these pages as Your breath. Show me that the words are not merely written—they are alive.',
+        },
+        completed: false,
+      },
+      {
+        id: 'wcbcf-lesson4',
+        title: 'Manuscripts & Transmission: How We Received the Texts',
+        duration: 8,
+        scripture: 'Psalm 119:89',
+        description:
+          'How the Bible was faithfully copied and preserved through generations.',
+        openingThought: 'When you open your Bible, you\'re reading words preserved across millennia. The process wasn\'t luck—it was providence. From Moses\' scrolls to modern translations, God has guided faithful scribes to ensure His truth endures.',
+        content: {
+          scriptureText: 'For ever, O Lord, thy word is settled in heaven.',
+          teachingPoints: [
+            {
+              narrative:
+                'The original writings (autographs) of Scripture were inspired; later scribes meticulously copied them, counting letters and words to avoid mistakes. Thousands of ancient manuscripts, including the Dead Sea Scrolls, confirm the Bible\'s accuracy over centuries. God\'s providence preserved the message despite persecution, wars, and attempts to destroy it (Matthew 5:18). The process wasn\'t luck—it was divine protection. From Moses\' scrolls to modern translations, God has guided faithful scribes to ensure His truth endures unchanged.',
+              scriptures: [
+                {
+                  verse: 'Psalm 119:89',
+                  text: 'For ever, O Lord, thy word is settled in heaven.',
+                },
+                {
+                  verse: 'Matthew 5:18',
+                  text: 'For verily I say unto you, Till heaven and earth pass, one jot or one tittle shall in no wise pass from the law, till all be fulfilled.',
+                },
+              ],
+              examples: [
+                'Scribes counted letters and words to prevent copying errors',
+                'The Dead Sea Scrolls confirm biblical accuracy over centuries',
+                'God\'s Word survived despite persecution and attempts to destroy it',
+              ],
+              rhetoricalQuestions: [
+                'How does knowing the Bible\'s careful transmission strengthen your confidence in Scripture?',
+                'What does the preservation of God\'s Word tell us about His faithfulness?',
+              ],
+            },
+          ],
+          lifeApplication: {
+            challenge:
+              'Research the history of one biblical manuscript (like the Dead Sea Scrolls or Codex Sinaiticus). Reflect on how God used human hands to protect His Word.',
+            journaling:
+              'Write how this deeper understanding impacts your trust in the Bible.',
+          },
+          prayerPrompt:
+            'Lord, thank You for preserving Your Word through generations. Help me cherish every page as a testimony of Your faithfulness.',
+        },
+        completed: false,
+      },
+      {
+        id: 'wcbcf-lesson5',
+        title: 'Preservation: God\'s Protection of His Word',
+        duration: 8,
+        scripture: 'Psalm 12:6-7',
+        description:
+          'How God ensured His Word remained pure and available through time.',
+        openingThought: 'Empires have risen and fallen. Philosophies have come and gone. Yet, the Bible remains. Its survival is not coincidence—it\'s divine preservation. God promised His Word would endure, and history has proven it true.',
+        content: {
+          scriptureText: 'The words of the Lord are pure words: as silver tried in a furnace of earth, purified seven times. Thou shalt keep them, O Lord, thou shalt preserve them from this generation for ever.',
+          teachingPoints: [
+            {
+              narrative:
+                'God promised to preserve His Word, and history confirms His faithfulness. Empires have tried to destroy Scripture, but it endures. The words of the Lord are pure—refined like silver, tested seven times. What God speaks, He preserves. The Bible\'s survival through persecution, wars, and cultural shifts is not coincidence—it\'s divine protection. God keeps His Word from generation to generation, ensuring that what He revealed remains available to all who seek Him.',
+              scriptures: [
+                {
+                  verse: 'Psalm 12:6-7',
+                  text: 'The words of the Lord are pure words: as silver tried in a furnace of earth, purified seven times. Thou shalt keep them, O Lord, thou shalt preserve them from this generation for ever.',
+                },
+                {
+                  verse: 'Isaiah 40:8',
+                  text: 'The grass withereth, the flower fadeth: but the word of our God shall stand for ever.',
+                },
+              ],
+              examples: [
+                'The Bible has survived countless attempts to destroy it throughout history',
+                'God\'s Word remains unchanged despite changing cultures and empires',
+                'Scripture is preserved like refined silver, tested and pure',
+              ],
+              rhetoricalQuestions: [
+                'How does seeing the Bible\'s preservation throughout history strengthen your faith?',
+                'What does God\'s commitment to preserving His Word tell you about His character?',
+              ],
+            },
+          ],
+          lifeApplication: {
+            challenge:
+              'Reflect on one historical period when the Bible faced persecution. Consider how God preserved it despite opposition.',
+            journaling:
+              'How does knowing God preserves His Word change how you value Scripture?',
+          },
+          prayerPrompt:
+            'Father, thank You for Your faithfulness in preserving Your Word. Help me trust that what You have revealed will stand forever.',
+        },
+        completed: false,
+      },
+      {
+        id: 'wcbcf-lesson6',
+        title: 'Translations: Bringing God\'s Word to All Nations',
+        duration: 8,
+        scripture: 'Revelation 7:9',
+        description:
+          'How God\'s Word has been translated to reach people in their own languages.',
+        openingThought: 'God spoke in Hebrew, Aramaic, and Greek—but His message is for all nations. From ancient translations like the Septuagint to modern versions in thousands of languages, God ensures everyone can access His truth. Translation is not compromise—it\'s commission fulfilled.',
+        content: {
+          scriptureText: 'After this I beheld, and, lo, a great multitude, which no man could number, of all nations, and kindreds, and people, and tongues, stood before the throne.',
+          teachingPoints: [
+            {
+              narrative:
+                'God\'s Word was given in Hebrew, Aramaic, and Greek, but His message is for all nations. From the earliest translations like the Septuagint (Greek Old Testament) to modern versions in thousands of languages, God ensures everyone can access His truth. Translation is not compromise—it\'s the Great Commission in action. Faithful translators work carefully to preserve the meaning while making Scripture accessible. The goal is not word-for-word perfection, but meaning-for-meaning accuracy so that people can know God in their own language.',
+              scriptures: [
+                {
+                  verse: 'Revelation 7:9',
+                  text: 'After this I beheld, and, lo, a great multitude, which no man could number, of all nations, and kindreds, and people, and tongues, stood before the throne.',
+                },
+                {
+                  verse: 'Acts 2:8',
+                  text: 'And how hear we every man in our own tongue, wherein we were born?',
+                },
+              ],
+              examples: [
+                'The Septuagint brought the Old Testament to Greek-speaking Jews',
+                'Modern translations make Scripture accessible in thousands of languages',
+                'Faithful translation preserves meaning while ensuring clarity',
+              ],
+              rhetoricalQuestions: [
+                'How does the availability of translations show God\'s love for all people?',
+                'What responsibility do we have to share God\'s Word across languages?',
+              ],
+            },
+          ],
+          lifeApplication: {
+            challenge:
+              'Pray for Bible translators working to bring Scripture to unreached languages. Consider supporting translation work if able.',
+            journaling:
+              'How has reading the Bible in your language impacted your faith?',
+          },
+          prayerPrompt:
+            'Lord, thank You for making Your Word available in my language. Use me to share it with others, that all nations might know Your truth.',
         },
         completed: false,
       },
