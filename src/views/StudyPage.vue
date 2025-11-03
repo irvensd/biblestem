@@ -187,16 +187,12 @@ const confirmResetLesson = async () => {
     await progressStore.incompleteLesson(study.value.id, selectedLessonId.value)
     console.log(`Lesson ${selectedLessonId.value} marked as incomplete`)
     
-    // Force a small re-render to ensure reactivity
-    // This helps Vue detect the change in progress
-    const lessonId = selectedLessonId.value
-    selectedLessonId.value = ''
-    
-    // Trigger reactivity by accessing the progress store
-    await new Promise(resolve => setTimeout(resolve, 50))
+    // Close the modal after successful reset
+    closeResetModal()
     
   } catch (error) {
     console.error('Failed to mark lesson as incomplete:', error)
+    // Don't close modal on error - user can retry
   }
 }
 

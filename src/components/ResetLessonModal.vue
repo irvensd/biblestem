@@ -88,10 +88,7 @@ const closeModal = () => {
 
 const confirmReset = () => {
   emit('confirm')
-  // Small delay to ensure the reset completes before closing
-  setTimeout(() => {
-    closeModal()
-  }, 100)
+  // Don't close here - let the parent component handle closing after async operation completes
 }
 
 // Close modal on Escape key
