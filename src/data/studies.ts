@@ -247,6 +247,7 @@ export const freeStudies: Study[] = [
         scripture: 'Psalm 86:11',
         description:
           "A closed mind cannot receive new truth. If we come to the Bible to prove ourselves right, we've already decided what it can say",
+        openingThought: 'A teachable spirit is essential for true Bible study. We must approach Scripture not to prove ourselves right, but to be transformed.',
         content: {
           scriptureText:
             'Teach me thy way, O LORD; I will walk in thy truth: unite my heart to fear thy name.',
@@ -298,6 +299,7 @@ export const freeStudies: Study[] = [
         scripture: 'James 1:21',
         description:
           "Pride is the great barrier to receiving God's Word. We must come in humility",
+        openingThought: 'True Bible study requires humility—the recognition that we need God\'s wisdom more than we need to prove our own.',
         content: {
           scriptureText: 'Wherefore lay apart all filthiness and superfluity of naughtiness, and receive with meekness the engrafted word, which is able to save your souls.',
           hebrewGreekWords: [
@@ -348,6 +350,7 @@ export const freeStudies: Study[] = [
         scripture: 'Psalm 119:11',
         description:
           'Knowledge without obedience leads to a hard heart. The goal of Bible study is transformation, not just information',
+        openingThought: 'The goal of Bible study is transformation, not just information. What we learn must change how we live.',
         content: {
           scriptureText: 'Thy word have I hid in mine heart, that I might not sin against thee.',
           hebrewGreekWords: [
@@ -399,6 +402,7 @@ export const freeStudies: Study[] = [
         scripture: 'Psalm 119:165',
         description:
           'We must trust that what God has revealed is what we need. His Word is sufficient',
+        openingThought: 'We must trust that what God has chosen to reveal is exactly what we need. His Word is sufficient for our spiritual growth.',
         content: {
           scriptureText: 'Great peace have they which love thy law: and nothing shall offend them.',
           hebrewGreekWords: [

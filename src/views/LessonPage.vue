@@ -65,7 +65,7 @@
         class="mb-16"
         @scroll="updateCurrentSection"
       >
-        <div class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl">
+        <div v-if="lesson.openingThought" class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl">
           <div class="flex items-center gap-3 mb-6">
             <div
               class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-blue-600 flex items-center justify-center"
