@@ -48,7 +48,7 @@
         <div class="mb-16">
           <div class="flex items-center justify-between mb-8">
             <div>
-              <h2 class="text-3xl md:text-4xl font-bold mb-2">Free Studies</h2>
+              <h2 class="text-3xl md:text-4xl font-bold mb-2">Bible Studies</h2>
               <p class="text-gray-600 dark:text-gray-400">Start your journey with these foundational studies</p>
             </div>
           </div>
@@ -61,11 +61,6 @@
               class="card p-0 overflow-hidden hover-lift"
             >
               <div class="h-32 bg-gradient-to-br from-emerald-500 to-teal-600 relative flex items-center justify-center p-6">
-                <div class="absolute top-3 right-3">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-emerald-600 shadow-sm">
-                    FREE
-                  </span>
-                </div>
                 <!-- Simplified icon that fits properly -->
                 <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
                   <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
