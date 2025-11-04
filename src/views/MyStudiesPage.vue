@@ -197,16 +197,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useStudyProgressStore } from '../stores/studyProgress'
+import { useStudyOrganization } from '../composables/useStudyOrganization'
 import { getAllStudies, getStudyById, type Study } from '../data/studies'
 import StudyGridSkeleton from '../components/skeletons/StudyGridSkeleton.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
 const progressStore = useStudyProgressStore()
+const { userBookmarks, initialize: initializeBookmarks } = useStudyOrganization()
 
 // Loading state
 const isLoading = ref(true)
@@ -272,23 +274,31 @@ const loadStudiesData = () => {
     const inProgress: Study[] = []
     const completed: Study[] = []
     const bookmarked: Study[] = []
+    
+    // Get all bookmarked study IDs (only study-level bookmarks, not lesson-level)
+    const bookmarkedStudyIds = new Set(
+      userBookmarks.value
+        .filter(bookmark => !bookmark.lessonId) // Only study-level bookmarks
+        .map(bookmark => bookmark.studyId)
+    )
 
     allStudies.value.forEach((study) => {
       const progress = progressStore.progressData[study.id]
-      if (!progress) return
-
-      const completedLessonCount = progress.completedLessons.length
+      const completedLessonCount = progress?.completedLessons.length || 0
       const totalLessons = study.lessons.length
 
+      // Check if bookmarked (study-level bookmark)
+      if (bookmarkedStudyIds.has(study.id)) {
+        bookmarked.push(study)
+      }
+
+      // Categorize by progress status
       if (completedLessonCount === totalLessons && completedLessonCount > 0) {
         // Fully completed
         completed.push(study)
       } else if (completedLessonCount > 0 && completedLessonCount < totalLessons) {
         // In progress
         inProgress.push(study)
-      } else {
-        // Started but not in progress (could be bookmarked)
-        bookmarked.push(study)
       }
     })
 
@@ -302,11 +312,19 @@ const loadStudiesData = () => {
   }
 }
 
+// Watch for bookmark changes and reload data
+watch(userBookmarks, () => {
+  loadStudiesData()
+}, { deep: true })
+
 onMounted(async () => {
   // Wait for auth and progress stores to be ready
   if (!authStore.isInitialized) {
     await authStore.initializeAuth()
   }
+  
+  // Initialize bookmarks (loads from localStorage)
+  await initializeBookmarks()
   
   // Ensure progress data is loaded
   if (Object.keys(progressStore.progressData).length === 0) {
