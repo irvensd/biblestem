@@ -21,13 +21,16 @@
     <div
       v-if="isOpen"
       class="px-5 pb-5 text-neutral-700 dark:text-neutral-300 prose dark:prose-invert max-w-none"
-      v-html="content"
+      v-html="sanitizedContent"
     ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+import { sanitizeRichText } from '../utils/sanitize'
+
+const props = defineProps<{
   title: string
   content: string
   isOpen: boolean
@@ -36,4 +39,8 @@ defineProps<{
 defineEmits<{
   toggle: []
 }>()
+
+const sanitizedContent = computed(() => {
+  return sanitizeRichText(props.content)
+})
 </script>

@@ -71,9 +71,17 @@
                   type="text"
                   required
                   placeholder="John Doe"
-                  class="form-input w-full"
+                  :class="[
+                    'form-input w-full',
+                    touched.name && errors.name ? 'form-input.error' : '',
+                    touched.name && !errors.name && name ? 'form-input.success' : ''
+                  ]"
                   autocomplete="name"
+                  @blur="validateNameField"
                 />
+                <p v-if="touched.name && errors.name" class="mt-1 text-xs text-red-600 dark:text-red-400">
+                  {{ errors.name }}
+                </p>
               </div>
 
               <!-- Email -->
@@ -87,9 +95,17 @@
                   type="email"
                   required
                   placeholder="your@email.com"
-                  class="form-input w-full"
+                  :class="[
+                    'form-input w-full',
+                    touched.email && errors.email ? 'form-input.error' : '',
+                    touched.email && !errors.email && email ? 'form-input.success' : ''
+                  ]"
                   autocomplete="email"
+                  @blur="validateEmailField"
                 />
+                <p v-if="touched.email && errors.email" class="mt-1 text-xs text-red-600 dark:text-red-400">
+                  {{ errors.email }}
+                </p>
               </div>
 
               <!-- Password -->
@@ -103,10 +119,44 @@
                   type="password"
                   required
                   placeholder="Create a strong password"
-                  class="form-input w-full"
+                  :class="[
+                    'form-input w-full',
+                    touched.password && errors.password ? 'form-input.error' : '',
+                    touched.password && !errors.password && password ? 'form-input.success' : ''
+                  ]"
                   autocomplete="new-password"
+                  @blur="validatePasswordField"
                 />
-                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                <p v-if="touched.password && errors.password" class="mt-1 text-xs text-red-600 dark:text-red-400">
+                  {{ errors.password }}
+                </p>
+                <div v-else-if="password" class="mt-2">
+                  <div class="flex items-center gap-2 mb-1">
+                    <div class="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div
+                        :class="[
+                          'h-full transition-all duration-300',
+                          passwordStrength.strength === 'weak' ? 'bg-red-500 w-1/4' : '',
+                          passwordStrength.strength === 'fair' ? 'bg-yellow-500 w-1/2' : '',
+                          passwordStrength.strength === 'good' ? 'bg-blue-500 w-3/4' : '',
+                          passwordStrength.strength === 'strong' ? 'bg-green-500 w-full' : ''
+                        ]"
+                      ></div>
+                    </div>
+                    <span class="text-xs font-medium" :class="{
+                      'text-red-600 dark:text-red-400': passwordStrength.strength === 'weak',
+                      'text-yellow-600 dark:text-yellow-400': passwordStrength.strength === 'fair',
+                      'text-blue-600 dark:text-blue-400': passwordStrength.strength === 'good',
+                      'text-green-600 dark:text-green-400': passwordStrength.strength === 'strong'
+                    }">
+                      {{ passwordStrength.strength.charAt(0).toUpperCase() + passwordStrength.strength.slice(1) }}
+                    </span>
+                  </div>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">
+                    Must be at least 8 characters
+                  </p>
+                </div>
+                <p v-else class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                   Must be at least 8 characters
                 </p>
               </div>
@@ -122,6 +172,11 @@
                     <a href="#" class="text-primary-600 hover:underline">Privacy Policy</a>
                   </span>
                 </label>
+              </div>
+
+              <!-- Auth Error -->
+              <div v-if="authStore.error" class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p class="text-sm text-red-600 dark:text-red-400">{{ authStore.error.message }}</p>
               </div>
 
               <!-- Submit Button -->
@@ -182,9 +237,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { validateName, validateEmail, validatePassword, getPasswordStrength } from '../utils/validation'
 
 const name = ref('')
 const email = ref('')
@@ -192,7 +248,65 @@ const password = ref('')
 const router = useRouter()
 const authStore = useAuthStore()
 
+// Validation errors
+const errors = ref<Record<string, string>>({})
+const touched = ref<Record<string, boolean>>({})
+
+// Password strength
+const passwordStrength = computed(() => getPasswordStrength(password.value))
+
+// Validate individual fields
+const validateNameField = () => {
+  touched.value.name = true
+  const result = validateName(name.value)
+  if (result.isValid) {
+    delete errors.value.name
+  } else {
+    errors.value.name = result.error || ''
+  }
+  return result.isValid
+}
+
+const validateEmailField = () => {
+  touched.value.email = true
+  const result = validateEmail(email.value)
+  if (result.isValid) {
+    delete errors.value.email
+  } else {
+    errors.value.email = result.error || ''
+  }
+  return result.isValid
+}
+
+const validatePasswordField = () => {
+  touched.value.password = true
+  const result = validatePassword(password.value, { minLength: 8 })
+  if (result.isValid) {
+    delete errors.value.password
+  } else {
+    errors.value.password = result.error || ''
+  }
+  return result.isValid
+}
+
+// Validate all fields
+const validateForm = (): boolean => {
+  const nameValid = validateNameField()
+  const emailValid = validateEmailField()
+  const passwordValid = validatePasswordField()
+  
+  return nameValid && emailValid && passwordValid
+}
+
 const handleSubmit = async () => {
+  // Mark all fields as touched
+  touched.value = { name: true, email: true, password: true }
+  
+  // Validate form
+  if (!validateForm()) {
+    return
+  }
+
   const result = await authStore.signUp(email.value, password.value, name.value)
   if (result.success) {
     router.push('/dashboard')

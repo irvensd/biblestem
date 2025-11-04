@@ -86,9 +86,14 @@
       <!-- Studies Grid -->
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <div
-          v-for="study in filteredStudies"
+          v-for="(study, index) in filteredStudies"
           :key="study.id"
+          v-intersect="{
+            handler: () => markStudyVisible(study.id),
+            options: { rootMargin: '100px' }
+          }"
           class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-neutral-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
+          :class="{ 'opacity-0': !visibleStudies.has(study.id), 'animate-fade-in': visibleStudies.has(study.id) }"
           @click="viewStudy(study.id)"
         >
           <!-- Study Header Image - Matching Study Series style -->
@@ -213,6 +218,41 @@ const { userBookmarks, initialize: initializeBookmarks } = useStudyOrganization(
 // Loading state
 const isLoading = ref(true)
 
+// Lazy loading state for studies
+const visibleStudies = ref<Set<string>>(new Set())
+
+// Mark study as visible when it enters viewport
+const markStudyVisible = (studyId: string) => {
+  visibleStudies.value.add(studyId)
+}
+
+// Vue directive for intersection observer
+const vIntersect = {
+  mounted(el: HTMLElement, binding: any) {
+    const options = binding.value?.options || { rootMargin: '100px' }
+    const handler = binding.value?.handler || (() => {})
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          handler()
+          observer.unobserve(el)
+        }
+      })
+    }, options)
+    
+    observer.observe(el)
+    
+    // Store observer for cleanup
+    ;(el as any).__intersectObserver = observer
+  },
+  unmounted(el: HTMLElement) {
+    if ((el as any).__intersectObserver) {
+      ;(el as any).__intersectObserver.disconnect()
+    }
+  }
+}
+
 const activeTab = ref<'inProgress' | 'completed' | 'bookmarked'>('inProgress')
 
 const allStudies = ref<Study[]>([])
@@ -316,6 +356,16 @@ const loadStudiesData = () => {
 watch(userBookmarks, () => {
   loadStudiesData()
 }, { deep: true })
+
+// Watch for filtered studies changes to initialize visible studies
+watch([filteredStudies, isLoading], ([newStudies, loading]) => {
+  if (!loading && newStudies.length > 0 && visibleStudies.value.size === 0) {
+    const initialStudies = newStudies.slice(0, 6)
+    initialStudies.forEach(study => {
+      visibleStudies.value.add(study.id)
+    })
+  }
+}, { immediate: true })
 
 onMounted(async () => {
   // Wait for auth and progress stores to be ready

@@ -339,7 +339,7 @@ const generatePDF = async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000))
 
   // In a real app, you would use a library like jsPDF or call a backend service
-  // For demo purposes, we'll create a simple text file
+  // For now, we'll create a simple text file
   const content = createPDFContent()
   const blob = new Blob([content], { type: 'text/plain' })
   const url = URL.createObjectURL(blob)

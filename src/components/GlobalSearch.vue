@@ -284,11 +284,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getAllStudies, type Study, type Lesson } from '@/data/studies'
 import { useNotesStore, type StudyNote } from '@/stores/notes'
 import { useTheme } from '@/composables/useTheme'
+import { sanitizeForHighlighting } from '@/utils/sanitize'
+import { useDebounce } from '@/composables/useDebounce'
+import { useCache } from '@/composables/useCache'
 
 const emit = defineEmits<{
   'search-close': []
@@ -321,10 +324,12 @@ const { isDarkMode } = useTheme()
 // Initialize notes store safely
 const notesStore = ref<any>(null)
 
-onMounted(() => {
+onMounted(async () => {
   try {
     notesStore.value = useNotesStore()
-    notesStore.value?.loadFromStorage?.()
+    if (notesStore.value?.loadFromStorage) {
+      await notesStore.value.loadFromStorage()
+    }
   } catch (error) {
     console.warn('Notes store not available:', error)
   }
@@ -335,10 +340,22 @@ onMounted(() => {
 const searchQuery = ref('')
 const showResults = ref(false)
 const showFullResults = ref(false)
-const isSearching = ref(false)
 const recentSearches = ref<string[]>([])
 const activeDescendant = ref('')
 const focusedIndex = ref(-1)
+
+// Debounced search query with adaptive timing
+const { debouncedValue: debouncedQuery, isPending: isSearching } = useDebounce(searchQuery, {
+  delay: 300,
+  minDelay: 150,
+  maxDelay: 500,
+  adaptive: true,
+  immediate: true,
+  maxWait: 1000
+})
+
+// Search cache for performance
+const { set: cacheSet, get: cacheGet } = useCache()
 
 // Detect mobile for better UX
 const isMobile = computed(() => window.innerWidth < 768)
@@ -367,31 +384,35 @@ const allLessons = computed(() => {
   return lessons
 })
 
-// Debounced search
-let searchTimeout: ReturnType<typeof setTimeout>
-
-watch(searchQuery, (newQuery) => {
-  clearTimeout(searchTimeout)
-
-  if (!newQuery.trim()) {
+// Watch debounced query and perform search
+watch(debouncedQuery, (newQuery) => {
+  if (!newQuery || (typeof newQuery === 'string' && !newQuery.trim())) {
     searchResults.value = { studies: [], lessons: [], notes: [], total: 0 }
-    isSearching.value = false
     return
   }
 
-  isSearching.value = true
+  const query = typeof newQuery === 'string' ? newQuery.trim() : String(newQuery)
+  if (!query) {
+    searchResults.value = { studies: [], lessons: [], notes: [], total: 0 }
+    return
+  }
 
-  searchTimeout = setTimeout(() => {
-    performSearch(newQuery.trim())
-    isSearching.value = false
-  }, 300)
+  performSearch(query)
 })
 
-// Search function
+// Search function with caching
 const performSearch = (query: string) => {
   const lowerQuery = query.toLowerCase()
+  const cacheKey = `search:${lowerQuery}`
 
-  // Search studies
+  // Check cache first (cache for 5 minutes)
+  const cached = cacheGet<SearchResults>(cacheKey)
+  if (cached) {
+    searchResults.value = cached
+    return
+  }
+
+  // Perform search
   const matchingStudies = allStudies.value.filter(
     (study) =>
       study.title.toLowerCase().includes(lowerQuery) ||
@@ -399,7 +420,6 @@ const performSearch = (query: string) => {
       study.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)),
   )
 
-  // Search lessons
   const matchingLessons = allLessons.value.filter(
     (lesson) =>
       lesson.title.toLowerCase().includes(lowerQuery) ||
@@ -408,15 +428,19 @@ const performSearch = (query: string) => {
       lesson.studyTitle.toLowerCase().includes(lowerQuery),
   )
 
-  // Search notes
   const matchingNotes = notesStore.value?.searchNotes?.(query) || []
 
-  searchResults.value = {
+  const results: SearchResults = {
     studies: matchingStudies.slice(0, 5), // Limit for dropdown
     lessons: matchingLessons.slice(0, 5),
     notes: matchingNotes.slice(0, 5),
     total: matchingStudies.length + matchingLessons.length + matchingNotes.length,
   }
+
+  searchResults.value = results
+
+  // Cache results (cache for 5 minutes = 300000ms)
+  cacheSet(cacheKey, results, 5 * 60 * 1000)
 
   // Add to recent searches
   addToRecentSearches(query)
@@ -443,13 +467,24 @@ const goToNote = (note: StudyNote) => {
 
 // Utility functions
 const highlightMatch = (text: string) => {
-  if (!searchQuery.value.trim()) return text
+  if (!searchQuery.value.trim()) return sanitizeForHighlighting(text)
 
-  const regex = new RegExp(`(${searchQuery.value.trim()})`, 'gi')
-  return text.replace(
-    regex,
-    '<mark class="bg-yellow-200 dark:bg-yellow-800 px-1 rounded">$1</mark>',
-  )
+  // Sanitize input text first
+  const sanitizedText = sanitizeForHighlighting(text)
+  
+  // Escape special regex characters in search query
+  const escapedQuery = searchQuery.value.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  
+  try {
+    const regex = new RegExp(`(${escapedQuery})`, 'gi')
+    return sanitizedText.replace(
+      regex,
+      '<mark class="bg-yellow-200 dark:bg-yellow-800 px-1 rounded">$1</mark>',
+    )
+  } catch (error) {
+    // If regex fails (shouldn't happen with escaping), just return sanitized text
+    return sanitizedText
+  }
 }
 
 const getNoteTypeIcon = (type: StudyNote['type']) => {
@@ -589,7 +624,11 @@ const handleBlur = () => {
   }, 200)
 }
 
-// Removed duplicate onMounted - handled above
+// Cleanup on unmount
+onUnmounted(() => {
+  // Clear any pending search operations
+  // The debounce composable handles its own cleanup
+})
 </script>
 
 <style scoped>

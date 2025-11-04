@@ -188,6 +188,42 @@ export interface Database {
           updated_at?: string
         }
       }
+      bookmarks: {
+        Row: {
+          id: string
+          user_id: string
+          study_id: string
+          lesson_id: string | null
+          title: string
+          description: string | null
+          tags: string[]
+          category_id: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          study_id: string
+          lesson_id?: string | null
+          title: string
+          description?: string | null
+          tags?: string[]
+          category_id?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          user_id?: string
+          study_id?: string
+          lesson_id?: string | null
+          title?: string
+          description?: string | null
+          tags?: string[]
+          category_id?: string | null
+          updated_at?: string
+        }
+      }
     }
     Views: {}
     Functions: {}

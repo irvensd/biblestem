@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getSupabase, isSupabaseAvailable } from '../lib/supabase'
+import { getSupabase, isSupabaseAvailable, handleSupabaseError, requiresReAuth } from '../lib/supabase'
+import { logger } from '../utils/logger'
 import type { User } from '@supabase/supabase-js'
 
 export interface UserProfile {
@@ -20,30 +21,13 @@ export interface AuthError {
   code?: string
 }
 
-// Demo user for testing - hardcoded credentials
-const DEMO_USER = {
-  email: 'demo@biblestem.com',
-  password: 'demo123', // Hardcoded password for demo
-  profile: {
-    id: 'demo-user-001',
-    name: 'Demo User',
-    email: 'demo@biblestem.com',
-    avatar:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    bio: "Testing BibleStem's interactive Bible studies.",
-    hasSupported: false, // Regular user by default
-    studiesCompleted: 5,
-    joinDate: '2024-01-15T00:00:00.000Z',
-    emailVerified: true,
-  }
-}
-
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<UserProfile | null>(null)
   const isLoading = ref(false)
   const error = ref<AuthError | null>(null)
   const isInitialized = ref(false)
   const useSupabase = isSupabaseAvailable()
+  let authSubscription: { unsubscribe: () => void } | null = null
 
   const isAuthenticated = computed(() => !!user.value)
   const hasSupported = computed(() => user.value?.hasSupported === true)
@@ -61,8 +45,8 @@ export const useAuthStore = defineStore('auth', () => {
     password: string,
     name: string,
   ): Promise<{ success: boolean; error?: string }> => {
-    console.log('=== SIGNUP ===')
-    console.log('Email:', email, 'Name:', name, 'Using Supabase:', useSupabase)
+    logger.debug('=== SIGNUP ===')
+    logger.debug('Email:', email, 'Name:', name, 'Using Supabase:', useSupabase)
 
     isLoading.value = true
     clearError()
@@ -83,7 +67,12 @@ export const useAuthStore = defineStore('auth', () => {
           },
         })
 
-        if (authError) throw authError
+        if (authError) {
+          const errorInfo = handleSupabaseError(authError, 'sign up')
+          // Enhance error message for UI
+          authError.message = errorInfo.userFriendlyMessage
+          throw authError
+        }
 
           // Create user profile in database
           if (authData.user) {
@@ -94,7 +83,11 @@ export const useAuthStore = defineStore('auth', () => {
               has_supported: false,
             })
 
-            if (profileError) console.error('Profile creation error:', profileError)
+            if (profileError) {
+              const errorInfo = handleSupabaseError(profileError, 'create user profile')
+              console.error('Profile creation error:', errorInfo.userFriendlyMessage, errorInfo)
+              // Don't throw - auth succeeded, profile creation is secondary
+            }
 
             // Map Supabase user to our user profile
             user.value = {
@@ -108,31 +101,14 @@ export const useAuthStore = defineStore('auth', () => {
             }
           }
 
-        console.log('Signup successful with Supabase:', user.value)
+        logger.debug('Signup successful with Supabase:', user.value)
         return { success: true }
       } else {
-        // Fallback to demo mode
-        console.log('=== DEMO SIGNUP (fallback) ===')
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-
-        const newUser: UserProfile = {
-          id: `user-${Date.now()}`,
-          name,
-          email,
-          hasSupported: false,
-          studiesCompleted: 0,
-          joinDate: new Date().toISOString(),
-          emailVerified: true,
-        }
-
-        user.value = newUser
-        localStorage.setItem('biblestem_user', JSON.stringify(newUser))
-
-        console.log('Demo user signup successful:', user.value)
-        return { success: true }
+        // Supabase is required for sign up
+        throw new Error('Supabase is not available. Please configure Supabase to create an account.')
       }
     } catch (err: any) {
-      console.error('Signup error:', err)
+      logger.error('Signup error:', err)
       const errorMessage = err.message || 'Sign up failed. Please try again.'
       setError(errorMessage, err.code)
       return { success: false, error: errorMessage }
@@ -145,23 +121,13 @@ export const useAuthStore = defineStore('auth', () => {
     email: string,
     password: string,
   ): Promise<{ success: boolean; error?: string }> => {
-    console.log('=== LOGIN ===')
-    console.log('Email:', email, 'Using Supabase:', useSupabase)
+    logger.debug('=== LOGIN ===')
+    logger.debug('Email:', email, 'Using Supabase:', useSupabase)
 
     isLoading.value = true
     clearError()
 
     try {
-      // Check for demo account FIRST (before Supabase)
-      if (email === DEMO_USER.email && password === DEMO_USER.password) {
-        console.log('=== DEMO LOGIN ===')
-        await new Promise((resolve) => setTimeout(resolve, 500))
-        user.value = { ...DEMO_USER.profile }
-        localStorage.setItem('biblestem_user', JSON.stringify(user.value))
-        console.log('Demo login successful:', user.value)
-        return { success: true }
-      }
-
       if (useSupabase) {
         const supabase = getSupabase()
         if (!supabase) throw new Error('Supabase client not available')
@@ -172,7 +138,12 @@ export const useAuthStore = defineStore('auth', () => {
           password,
         })
 
-        if (authError) throw authError
+        if (authError) {
+          const errorInfo = handleSupabaseError(authError, 'sign in')
+          // Enhance error message for UI
+          authError.message = errorInfo.userFriendlyMessage
+          throw authError
+        }
 
         if (authData.user) {
           // Fetch user profile from database
@@ -181,6 +152,16 @@ export const useAuthStore = defineStore('auth', () => {
             .select('*')
             .eq('id', authData.user.id)
             .single()
+
+          if (profileError) {
+            const errorInfo = handleSupabaseError(profileError, 'load user profile')
+            // If RLS error, user might not have profile yet - create one
+            if (errorInfo.isRLSViolation || errorInfo.isNotFound) {
+              console.warn('Profile not found or RLS error - user may need profile creation')
+            } else {
+              console.error('Failed to load profile:', errorInfo.userFriendlyMessage, errorInfo)
+            }
+          }
 
           if (profile) {
             user.value = {
@@ -207,17 +188,17 @@ export const useAuthStore = defineStore('auth', () => {
             }
           }
 
-          console.log('Login successful with Supabase:', user.value)
+                        logger.debug('Login successful with Supabase:', user.value)
           return { success: true }
         }
 
         return { success: false, error: 'No user data returned' }
       } else {
-        // No Supabase and not demo - show error
-        throw new Error('Invalid login credentials')
+        // Supabase is required for login
+        throw new Error('Supabase is not available. Please configure Supabase to log in.')
       }
     } catch (err: any) {
-      console.error('Login error:', err)
+      logger.error('Login error:', err)
       const errorMessage = err.message || 'Login failed. Please try again.'
       setError(errorMessage, err.code)
       return { success: false, error: errorMessage }
@@ -231,6 +212,12 @@ export const useAuthStore = defineStore('auth', () => {
     clearError()
 
     try {
+      // Cleanup auth subscription
+      if (authSubscription) {
+        authSubscription.unsubscribe()
+        authSubscription = null
+      }
+
       if (useSupabase) {
         const supabase = getSupabase()
         if (supabase) {
@@ -240,9 +227,10 @@ export const useAuthStore = defineStore('auth', () => {
 
       user.value = null
       localStorage.removeItem('biblestem_user')
-      console.log('User logged out successfully')
-    } catch (err: any) {
-      console.error('Logout error:', err)
+      isInitialized.value = false
+      logger.debug('User logged out successfully')
+          } catch (err: any) {
+        logger.error('Logout error:', err)
       setError('Failed to log out')
     } finally {
       isLoading.value = false
@@ -273,7 +261,12 @@ export const useAuthStore = defineStore('auth', () => {
             .eq('id', user.value.id)
 
           if (error) {
-            console.error('Database update error:', error)
+            const errorInfo = handleSupabaseError(error, 'update profile')
+            console.error('Database update error:', errorInfo.userFriendlyMessage, errorInfo)
+            // If RLS violation, provide better error message
+            if (errorInfo.isRLSViolation || errorInfo.isAuthError) {
+              throw new Error('You do not have permission to update this profile. Please sign in again.')
+            }
             throw error
           }
         }
@@ -296,8 +289,8 @@ export const useAuthStore = defineStore('auth', () => {
   const initializeAuth = async () => {
     if (isInitialized.value) return
 
-    console.log('=== INITIALIZING AUTH ===')
-    console.log('Using Supabase:', useSupabase)
+    logger.debug('=== INITIALIZING AUTH ===')
+    logger.debug('Using Supabase:', useSupabase)
 
     try {
       if (useSupabase) {
@@ -326,7 +319,7 @@ export const useAuthStore = defineStore('auth', () => {
                 joinDate: profile.created_at,
                 emailVerified: profile.email_verified,
               }
-              console.log('User loaded from Supabase:', user.value)
+              logger.debug('User loaded from Supabase:', user.value)
             } else {
               // Create profile from session if it doesn't exist
               user.value = {
@@ -338,15 +331,15 @@ export const useAuthStore = defineStore('auth', () => {
                 joinDate: session.user.created_at,
                 emailVerified: !!session.user.email_confirmed_at,
               }
-              console.log('User created from session:', user.value)
+              logger.debug('User created from session:', user.value)
             }
           } else {
             user.value = null
-            console.log('No active session found')
+            logger.debug('No active session found')
           }
 
           // Listen for auth changes
-          supabase.auth.onAuthStateChange(async (event, session) => {
+          const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
             console.log('Auth state changed:', event, session)
             if (event === 'SIGNED_IN' && session?.user) {
               // Reload user profile
@@ -355,10 +348,13 @@ export const useAuthStore = defineStore('auth', () => {
               user.value = null
             }
           })
+
+          // Store subscription for cleanup
+          authSubscription = subscription
         }
       } else {
-        // Fallback to localStorage
-        console.log('=== INITIALIZING DEMO AUTH (fallback) ===')
+        // Fallback to localStorage if Supabase is not available
+        logger.debug('Supabase not available, checking localStorage for user')
         const storedUser = localStorage.getItem('biblestem_user')
         if (storedUser) {
           user.value = JSON.parse(storedUser)

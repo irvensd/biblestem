@@ -5,59 +5,69 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/HomePage.vue')
+    // Group home page in its own chunk
+    component: () => import(/* webpackChunkName: "home" */ '../views/HomePage.vue')
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import('../views/DashboardPage.vue'),
+    // Group dashboard with other authenticated pages
+    component: () => import(/* webpackChunkName: "auth-pages" */ '../views/DashboardPage.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/study-series',
     name: 'StudySeries',
-    component: () => import('../views/StudySeriesPage.vue')
+    // Group study-related pages together
+    component: () => import(/* webpackChunkName: "study-pages" */ '../views/StudySeriesPage.vue')
   },
   {
     path: '/my-studies',
     name: 'MyStudies',
-    component: () => import('../views/MyStudiesPage.vue'),
+    // Group study-related pages together
+    component: () => import(/* webpackChunkName: "study-pages" */ '../views/MyStudiesPage.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/daily-devotions',
     name: 'DailyDevotions',
-    component: () => import('../views/DailyDevotionsPage.vue'),
+    // Group authenticated content pages
+    component: () => import(/* webpackChunkName: "auth-pages" */ '../views/DailyDevotionsPage.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/study/:id',
     name: 'Study',
-    component: () => import('../views/StudyPage.vue'),
+    // Group study-related pages together
+    component: () => import(/* webpackChunkName: "study-pages" */ '../views/StudyPage.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/study/:studyId/lesson/:lessonId',
     name: 'Lesson',
-    component: () => import('../views/LessonPage.vue'),
+    // Group study-related pages together (lesson is likely the largest)
+    component: () => import(/* webpackChunkName: "study-pages" */ '../views/LessonPage.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('../views/ProfilePage.vue'),
+    // Group user account pages together
+    component: () => import(/* webpackChunkName: "auth-pages" */ '../views/ProfilePage.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/settings',
     name: 'Settings',
-    component: () => import('../views/SettingsPage.vue'),
+    // Group user account pages together
+    component: () => import(/* webpackChunkName: "auth-pages" */ '../views/SettingsPage.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/sign-in',
     name: 'SignIn',
-    component: () => import('../views/SignInPage.vue')
+    // Group auth pages together
+    component: () => import(/* webpackChunkName: "auth" */ '../views/SignInPage.vue')
   },
   {
     path: '/signin',
@@ -66,7 +76,8 @@ const routes = [
   {
     path: '/sign-up',
     name: 'SignUp',
-    component: () => import('../views/SignUpPage.vue')
+    // Group auth pages together
+    component: () => import(/* webpackChunkName: "auth" */ '../views/SignUpPage.vue')
   },
   {
     path: '/signup',
@@ -75,17 +86,20 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/AboutPage.vue')
+    // Group static/info pages together
+    component: () => import(/* webpackChunkName: "static-pages" */ '../views/AboutPage.vue')
   },
   {
     path: '/contact',
     name: 'Contact',
-    component: () => import('../views/ContactPage.vue')
+    // Group static/info pages together
+    component: () => import(/* webpackChunkName: "static-pages" */ '../views/ContactPage.vue')
   },
   {
     path: '/help',
     name: 'Help',
-    component: () => import('../views/HelpCenterPage.vue')
+    // Group static/info pages together
+    component: () => import(/* webpackChunkName: "static-pages" */ '../views/HelpCenterPage.vue')
   },
   {
     path: '/help-center',
@@ -94,7 +108,8 @@ const routes = [
   {
     path: '/privacy',
     name: 'Privacy',
-    component: () => import('../views/PrivacyPolicyPage.vue')
+    // Group static/info pages together
+    component: () => import(/* webpackChunkName: "static-pages" */ '../views/PrivacyPolicyPage.vue')
   },
   {
     path: '/privacy-policy',
@@ -103,7 +118,8 @@ const routes = [
   {
     path: '/terms',
     name: 'Terms',
-    component: () => import('../views/TermsOfServicePage.vue')
+    // Group static/info pages together
+    component: () => import(/* webpackChunkName: "static-pages" */ '../views/TermsOfServicePage.vue')
   },
   {
     path: '/terms-of-service',
@@ -112,7 +128,8 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('../views/NotFoundPage.vue')
+    // 404 page in its own small chunk
+    component: () => import(/* webpackChunkName: "not-found" */ '../views/NotFoundPage.vue')
   }
 ]
 
@@ -147,5 +164,87 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
+// Route preloading for likely next routes
+// Preload routes when user hovers over navigation links or is likely to navigate
+router.beforeEach((to, from, next) => {
+  // Preload likely next routes based on current route
+  const preloadRoutes: Record<string, string[]> = {
+    'Home': ['StudySeries', 'SignIn'],
+    'SignIn': ['SignUp', 'Dashboard'],
+    'SignUp': ['SignIn', 'Dashboard'],
+    'Dashboard': ['StudySeries', 'MyStudies', 'Profile'],
+    'StudySeries': ['Dashboard', 'MyStudies'],
+    'MyStudies': ['Dashboard', 'StudySeries'],
+    'Study': ['Lesson'],
+  }
+  
+  const routesToPreload = preloadRoutes[from.name as string] || []
+  
+  // Preload routes in the background (non-blocking)
+  routesToPreload.forEach(routeName => {
+    try {
+      const route = router.resolve({ name: routeName })
+      if (route.matched.length > 0) {
+        const matched = route.matched[0]
+        // Preload the component if it's a lazy-loaded component
+        if (matched && matched.components && 'default' in matched.components) {
+          const component = matched.components.default as any
+          // If it's a lazy load function, call it to preload
+          if (typeof component === 'function') {
+            // Preload in background, don't await
+            component().catch(() => {
+              // Silently fail - component will load on actual navigation
+            })
+          }
+        }
+      }
+    } catch (error) {
+      // Silently fail - route will load on actual navigation
+    }
+  })
+  
+  next()
+})
+
+// Preload on link hover (non-blocking optimization)
+if (typeof window !== 'undefined') {
+  let hoverTimeout: ReturnType<typeof setTimeout> | null = null
+  
+  document.addEventListener('mouseover', (e) => {
+    const target = e.target as HTMLElement
+    const link = target.closest('a[href]') as HTMLAnchorElement
+    if (link && link.href.startsWith(window.location.origin)) {
+      // Debounce to avoid excessive preloading
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout)
+      }
+      
+      hoverTimeout = setTimeout(() => {
+        try {
+          const url = new URL(link.href)
+          const route = router.resolve(url.pathname)
+          if (route.matched.length > 0) {
+            const matched = route.matched[0]
+            // Preload the component if it's a lazy-loaded component
+            if (matched && matched.components && 'default' in matched.components) {
+              const component = matched.components.default as any
+              // If it's a lazy load function, call it to preload
+              if (typeof component === 'function') {
+                // Preload in background, don't await
+                component().catch(() => {
+                  // Silently fail - component will load on actual navigation
+                })
+              }
+            }
+          }
+        } catch (error) {
+          // Silently fail - route will load on actual navigation
+        }
+        hoverTimeout = null
+      }, 100) // 100ms delay before preloading
+    }
+  }, { passive: true })
+}
 
 export default router

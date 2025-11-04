@@ -1,6 +1,30 @@
 <template>
-  <div class="min-h-screen bg-neutral-50 dark:bg-neutral-950">
-    <div class="container-base py-6 sm:py-8 lg:py-12">
+  <div class="min-h-screen bg-gradient-to-br from-neutral-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-800">
+    <!-- Loading State -->
+    <div v-if="isLoading" class="container-base py-6 sm:py-8 lg:py-12">
+      <EnhancedLoading type="skeleton" message="Loading profile..." />
+    </div>
+    
+    <!-- Error State -->
+    <div v-else-if="hasError" class="container-base py-16 text-center">
+      <div class="max-w-md mx-auto">
+        <div class="text-6xl mb-4">⚠️</div>
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Failed to Load Profile</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">{{ errorMessage }}</p>
+        <button
+          @click="retryLoad"
+          class="btn-primary inline-flex items-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Try Again
+        </button>
+      </div>
+    </div>
+    
+    <!-- Actual Content -->
+    <div v-else class="container-base py-6 sm:py-8 lg:py-12">
       <!-- Back Button -->
       <button
         @click="router.back()"
@@ -24,11 +48,17 @@
                 <div
                   class="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-sm border-4 border-white/30 overflow-hidden"
                 >
-                  <img
+                  <LazyImage
                     v-if="authStore.user.avatar"
                     :src="authStore.user.avatar"
                     :alt="authStore.user.name"
-                    class="w-full h-full object-cover"
+                    width="96"
+                    height="96"
+                    aspect-ratio="1/1"
+                    object-fit="cover"
+                    :lazy="false"
+                    fetchpriority="high"
+                    show-skeleton-placeholder
                   />
                   <div v-else class="w-full h-full flex items-center justify-center">
                     <span class="text-4xl font-bold">{{ authStore.user.name.charAt(0) }}</span>
@@ -359,6 +389,8 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useStudyProgressStore } from '../stores/studyProgress'
 import { getAllStudies, hasAccessToStudy } from '../data/studies'
+import EnhancedLoading from '../components/EnhancedLoading.vue'
+import LazyImage from '../components/LazyImage.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -366,6 +398,9 @@ const progressStore = useStudyProgressStore()
 
 const editMode = ref(false)
 const isSaving = ref(false)
+const isLoading = ref(true)
+const hasError = ref(false)
+const errorMessage = ref('')
 
 const editForm = ref({
   name: '',
@@ -430,16 +465,35 @@ const handleSignOut = async () => {
   await authStore.logout()
 }
 
-onMounted(async () => {
-  if (authStore.user) {
-    editForm.value = {
-      name: authStore.user.name,
-    }
-  }
+const loadProfileData = async () => {
+  isLoading.value = true
+  hasError.value = false
+  errorMessage.value = ''
   
-  // Ensure progress data is loaded
-  if (Object.keys(progressStore.progressData).length === 0) {
-    progressStore.loadFromStorage()
+  try {
+    if (authStore.user) {
+      editForm.value = {
+        name: authStore.user.name,
+      }
+    }
+    
+    // Ensure progress data is loaded
+    await progressStore.loadFromStorage()
+    
+  } catch (error) {
+    console.error('Error loading profile data:', error)
+    hasError.value = true
+    errorMessage.value = error instanceof Error ? error.message : 'An unexpected error occurred while loading your profile.'
+  } finally {
+    isLoading.value = false
   }
+}
+
+const retryLoad = () => {
+  loadProfileData()
+}
+
+onMounted(async () => {
+  await loadProfileData()
 })
 </script>

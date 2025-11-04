@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 
 interface CacheItem<T> {
   data: T
@@ -63,7 +63,14 @@ export function useCache() {
   const size = computed(() => cache.value.size)
 
   // Cleanup expired items every minute
-  setInterval(cleanup, 60000)
+  const cleanupInterval = setInterval(cleanup, 60000)
+
+  // Cleanup on unmount
+  onUnmounted(() => {
+    if (cleanupInterval) {
+      clearInterval(cleanupInterval)
+    }
+  })
 
   return {
     set,
@@ -85,12 +92,20 @@ export function useStudyCache() {
     USER_DATA: 'user_data'
   }
 
-  const cacheStudy = (study: any) => {
-    cache.set(CACHE_KEYS.STUDIES, study, 10 * 60 * 1000) // 10 minutes
+  const cacheStudy = (study: any, ttl?: number) => {
+    cache.set(CACHE_KEYS.STUDIES, study, ttl || 30 * 60 * 1000) // Default 30 minutes
   }
 
   const getCachedStudy = () => {
-    return cache.get(CACHE_KEYS.STUDIES)
+    return cache.get<any>(CACHE_KEYS.STUDIES)
+  }
+  
+  const cacheStudyWithId = (studyId: string, study: any, ttl?: number) => {
+    cache.set(`study:${studyId}`, study, ttl || 30 * 60 * 1000) // Default 30 minutes
+  }
+
+  const getCachedStudyById = (studyId: string) => {
+    return cache.get<any>(`study:${studyId}`)
   }
 
   const cacheLesson = (studyId: string, lessonId: string, lesson: any) => {
@@ -112,6 +127,8 @@ export function useStudyCache() {
   return {
     cacheStudy,
     getCachedStudy,
+    cacheStudyWithId,
+    getCachedStudyById,
     cacheLesson,
     getCachedLesson,
     cacheProgress,
