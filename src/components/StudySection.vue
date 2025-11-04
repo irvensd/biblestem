@@ -15,7 +15,7 @@
       <!-- View All Button (if more than visible studies) -->
       <router-link
         v-if="showViewAll"
-        :to="`/studies/${category.id}`"
+        :to="`/study-series#${category.id}`"
         class="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
       >
         <span>View All</span>
@@ -46,7 +46,7 @@
         class="flex-shrink-0 w-72 flex items-center justify-center"
       >
         <router-link
-          :to="`/studies/${category.id}`"
+          :to="`/study-series#${category.id}`"
           class="w-full h-full min-h-[400px] bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl flex flex-col items-center justify-center p-6 text-white hover:from-primary-600 hover:to-blue-700 transition-all duration-300 group"
         >
           <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">

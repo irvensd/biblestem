@@ -155,12 +155,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, nextTick, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useStudies } from '@/composables/useStudies'
 import StudySection from '@/components/StudySection.vue'
 import StudySectionSkeleton from '@/components/skeletons/StudySectionSkeleton.vue'
 
+const route = useRoute()
 const authStore = useAuthStore()
 const { categoriesWithStudies, isLoading, error, fetchStudies } = useStudies()
 
@@ -202,10 +204,38 @@ const showSupportModal = () => {
   alert('Thank you for your interest in supporting BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more Bible studies\n• Keeps the platform running for everyone\n• Spreads the Gospel freely worldwide\n• As a thank you, you\'ll get access to advanced studies with Hebrew & Greek insights\n\n✨ All basic studies remain 100% FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo\n\nWe\'re grateful for your prayers and support! ❤️')
 }
 
+// Scroll to hash section
+const scrollToHash = async () => {
+  const hash = route.hash
+  if (hash) {
+    // Remove the # symbol
+    const sectionId = hash.substring(1)
+    
+    // Wait for DOM to be ready and studies to load
+    await nextTick()
+    
+    // Small delay to ensure sections are rendered
+    setTimeout(() => {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
+}
+
+// Watch for hash changes
+watch(() => route.hash, () => {
+  scrollToHash()
+})
+
 onMounted(async () => {
   await fetchStudies()
   window.addEventListener('scroll', handleScroll)
   handleScroll() // Check initial scroll position
+  
+  // Scroll to hash if present
+  await scrollToHash()
 })
 
 onUnmounted(() => {
