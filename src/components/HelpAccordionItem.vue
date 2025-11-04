@@ -1,12 +1,15 @@
 <template>
-  <div class="card overflow-hidden">
+  <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg mb-3 overflow-hidden">
     <button
       @click="$emit('toggle')"
-      class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+      class="w-full flex items-center justify-between p-5 text-left bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+      :aria-expanded="isOpen"
     >
-      <span class="font-semibold text-lg pr-4">{{ title }}</span>
+      <span class="font-semibold text-neutral-900 dark:text-neutral-100 pr-4">
+        {{ title }}
+      </span>
       <svg
-        class="w-5 h-5 text-gray-500 dark:text-gray-400 flex-shrink-0 transition-transform"
+        class="w-5 h-5 text-neutral-500 dark:text-neutral-400 flex-shrink-0 transition-transform duration-200"
         :class="{ 'rotate-180': isOpen }"
         fill="none"
         stroke="currentColor"
@@ -16,22 +19,20 @@
       </svg>
     </button>
     <div
-      v-show="isOpen"
-      class="px-6 pb-4 text-gray-600 dark:text-gray-400 leading-relaxed"
-    >
-      {{ content }}
-    </div>
+      v-if="isOpen"
+      class="px-5 pb-5 text-neutral-700 dark:text-neutral-300 prose dark:prose-invert max-w-none"
+      v-html="content"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-interface Props {
+defineProps<{
   title: string
   content: string
   isOpen: boolean
-}
+}>()
 
-defineProps<Props>()
 defineEmits<{
   toggle: []
 }>()
