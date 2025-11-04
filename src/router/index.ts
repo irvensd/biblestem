@@ -93,6 +93,15 @@ const routes = [
     component: () => import('../views/ContactPage.vue')
   },
   {
+    path: '/help',
+    name: 'Help',
+    component: () => import('../views/HelpCenterPage.vue')
+  },
+  {
+    path: '/help-center',
+    redirect: '/help'
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFoundPage.vue')
