@@ -140,9 +140,9 @@
               Help Center
             </router-link>
             <span class="text-gray-600">•</span>
-            <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+            <router-link to="/privacy" class="hover:text-white transition-colors">Privacy Policy</router-link>
             <span class="text-gray-600">•</span>
-            <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+            <router-link to="/terms" class="hover:text-white transition-colors">Terms of Service</router-link>
           </div>
         </div>
       </div>
