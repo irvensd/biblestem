@@ -84,16 +84,6 @@ const routes = [
     redirect: '/sign-up'
   },
   {
-    path: '/forgot-password',
-    name: 'ForgotPassword',
-    component: () => import('../views/ForgotPasswordPage.vue')
-  },
-  {
-    path: '/reset-password',
-    name: 'ResetPassword',
-    component: () => import('../views/ResetPasswordPage.vue')
-  },
-  {
     path: '/about',
     name: 'About',
     // Group static/info pages together
