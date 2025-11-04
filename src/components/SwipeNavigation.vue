@@ -68,7 +68,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { useMobileGestures, useHapticFeedback } from '../composables/useMobileGestures'
+import { useLazyComposable } from '../composables/useComposableLoader'
+import { loadMobileGestures } from '../composables/lazy'
+import { isMobileDevice, isTouchDevice } from '../composables/useComposableLoader'
 
 interface Props {
   totalItems: number
@@ -97,7 +99,20 @@ const emit = defineEmits<{
 
 const swipeContainer = ref<HTMLElement>()
 const translateX = ref(0)
-const { light } = useHapticFeedback()
+// Lazy load mobile gestures (only on mobile/touch devices)
+const shouldLoadGestures = isMobileDevice() || isTouchDevice()
+const { composable: mobileGesturesModule, load: loadMobileGesturesModule } = useLazyComposable(
+  loadMobileGestures,
+  'default'
+)
+
+// Get haptic feedback function when loaded
+const light = () => {
+  if (mobileGesturesModule.value) {
+    const { useHapticFeedback } = mobileGesturesModule.value
+    useHapticFeedback().light()
+  }
+}
 
 // Auto-hide swipe indicator
 const showSwipeIndicator = ref(props.showSwipeIndicator)
@@ -140,17 +155,27 @@ watch(() => props.currentIndex, (newIndex) => {
 // Setup swipe gestures
 onMounted(() => {
   if (swipeContainer.value) {
-    useMobileGestures(swipeContainer.value, {
-      onSwipeLeft: () => {
-        nextSlide()
-        emit('swipe-left')
-      },
-      onSwipeRight: () => {
-        previousSlide()
-        emit('swipe-right')
-      },
-      threshold: 50
-    })
+    // Load and use mobile gestures if on mobile/touch device
+    if (shouldLoadGestures && swipeContainer.value) {
+      loadMobileGesturesModule().then(() => {
+        if (mobileGesturesModule.value && swipeContainer.value) {
+          const { useMobileGestures } = mobileGesturesModule.value
+          useMobileGestures(swipeContainer.value, {
+            onSwipeLeft: () => {
+              nextSlide()
+              emit('swipe-left')
+            },
+            onSwipeRight: () => {
+              previousSlide()
+              emit('swipe-right')
+            },
+            threshold: 50
+          })
+        }
+      }).catch((error) => {
+        console.warn('Failed to load mobile gestures:', error)
+      })
+    }
   }
 })
 </script>

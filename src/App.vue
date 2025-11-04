@@ -111,29 +111,67 @@ import MobileNavigation from './components/MobileNavigation.vue'
 import GlobalNotifications from './components/GlobalNotifications.vue'
 import ErrorBoundary from './components/ErrorBoundary.vue'
 import EnhancedLoading from './components/EnhancedLoading.vue'
-import { usePWA } from './composables/usePWA'
-import { useErrorRecovery } from './composables/useErrorRecovery'
-import { globalErrorRecovery } from './composables/useErrorRecovery'
 import { useTheme } from './composables/useTheme'
+import { preloadCriticalComposables } from './composables/lazy'
+import { useLazyComposable } from './composables/useComposableLoader'
+import { loadPWA, loadErrorRecovery } from './composables/lazy'
 
-// Initialize theme
+// Initialize theme (eagerly loaded as it's needed immediately)
 const { isDarkMode, toggleTheme } = useTheme()
+
+// Lazy load PWA features (only needed when PWA is installed)
+const { composable: pwaModule, load: loadPWAModule } = useLazyComposable(
+  loadPWA,
+  'usePWA'
+)
+
+// Lazy load error recovery (only needed when errors occur)
+const { composable: errorRecoveryModule, load: loadErrorRecoveryModule } = useLazyComposable(
+  loadErrorRecovery,
+  'useErrorRecovery'
+)
 
 // App readiness state
 const isAppReady = ref(false)
 
-const {
-  isInstallable,
-  isInstalled,
-  isOffline,
-  updateAvailable,
-  showInstallPrompt,
-  installPWA,
-  updateServiceWorker,
-} = usePWA()
+// PWA features (lazy loaded)
+const isInstallable = ref(false)
+const isInstalled = ref(false)
+const isOffline = ref(false)
+const updateAvailable = ref(false)
+const showInstallPrompt = ref(false)
+const installPWA = async () => {
+  await loadPWAModule()
+  if (pwaModule.value) {
+    const { installPWA: install } = pwaModule.value
+    await install()
+  }
+}
+const updateServiceWorker = async () => {
+  await loadPWAModule()
+  if (pwaModule.value) {
+    const { updateServiceWorker: update } = pwaModule.value
+    await update()
+  }
+}
 
-// Error recovery
-const { addRecoveryAction, executeRecoveryAction } = useErrorRecovery()
+// Error recovery (lazy loaded)
+const addRecoveryAction = (...args: any[]) => {
+  loadErrorRecoveryModule().then(() => {
+    if (errorRecoveryModule.value) {
+      const { addRecoveryAction: addAction } = errorRecoveryModule.value
+      return addAction(...args)
+    }
+  })
+}
+const executeRecoveryAction = (...args: any[]) => {
+  loadErrorRecoveryModule().then(() => {
+    if (errorRecoveryModule.value) {
+      const { executeRecoveryAction: executeAction } = errorRecoveryModule.value
+      return executeAction(...args)
+    }
+  })
+}
 
 // Page transition logic
 const getTransitionName = (route: any) => {
@@ -150,7 +188,13 @@ const handleGlobalError = async (error: Error, errorInfo: any) => {
   console.error('Global error caught:', error, errorInfo)
   
   // Try to handle with global error recovery
-  const handled = await globalErrorRecovery.handleError(error)
+  // Load error recovery if needed
+  await loadErrorRecoveryModule()
+  let handled = false
+  if (errorRecoveryModule.value) {
+    const { globalErrorRecovery } = await import('./composables/useErrorRecovery')
+    handled = await globalErrorRecovery.handleError(error)
+  }
   
   if (!handled) {
     // Add recovery actions for common errors

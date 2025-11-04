@@ -322,26 +322,11 @@ export const useAchievementsStore = defineStore('achievements', () => {
         achievements.value = JSON.parse(saved)
       } catch (error) {
         console.error('Error loading achievements:', error)
-        initializeDemoData()
+        achievements.value = {}
       }
     } else {
-      initializeDemoData()
+      achievements.value = {}
     }
-  }
-
-  const initializeDemoData = () => {
-    // Initialize with some demo achievements
-    achievements.value = {
-      'first-study': {
-        badgeId: 'first-study',
-        unlockedAt: '2024-01-15T10:00:00Z',
-      },
-      'prayer-warrior': {
-        badgeId: 'prayer-warrior',
-        unlockedAt: '2024-01-20T14:30:00Z',
-      },
-    }
-    saveToStorage()
   }
 
   return {
@@ -355,6 +340,5 @@ export const useAchievementsStore = defineStore('achievements', () => {
     unlockBadge,
     getBadgeProgress,
     loadFromStorage,
-    initializeDemoData,
   }
 })

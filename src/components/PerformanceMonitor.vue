@@ -142,7 +142,47 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { usePerformanceMonitoring } from '../composables/usePerformance'
+import { useLazyComposable } from '../composables/useComposableLoader'
+import { loadPerformanceMonitoring } from '../composables/lazy'
+
+// Lazy load performance monitoring (only needed for this debug component)
+const { composable: performanceMonitoring, load: loadPerformanceMonitoringComposable, isLoading: isPerformanceLoading } = useLazyComposable(
+  loadPerformanceMonitoring,
+  'usePerformanceMonitoring'
+)
+
+// Initialize performance monitoring when component mounts
+onMounted(async () => {
+  try {
+    await loadPerformanceMonitoringComposable()
+  } catch (error) {
+    console.error('Failed to load performance monitoring:', error)
+  }
+})
+
+// Use the composable if loaded, otherwise provide fallback
+const performanceMetrics = computed(() => performanceMonitoring.value?.metrics || ref({
+  pageLoadTime: 0,
+  firstContentfulPaint: 0,
+  largestContentfulPaint: 0,
+  firstInputDelay: 0,
+  cumulativeLayoutShift: 0,
+  timeToInteractive: 0
+}).value)
+
+const measurePerformanceMetrics = () => {
+  performanceMonitoring.value?.measurePerformance()
+}
+
+const getPerformanceScoreMetrics = () => {
+  return performanceMonitoring.value?.getPerformanceScore() || {
+    overall: 0,
+    fcp: 0,
+    lcp: 0,
+    fid: 0,
+    cls: 0
+  }
+}
 
 interface Props {
   showMetrics?: boolean
@@ -158,15 +198,17 @@ const props = withDefaults(defineProps<Props>(), {
   compact: false
 })
 
-// Performance monitoring
-const { metrics, measurePerformance, getPerformanceScore } = usePerformanceMonitoring()
+// Performance monitoring will be loaded lazily - use fallback values
 
 // State
 const isExpanded = ref(false)
 const isRefreshing = ref(false)
 
 // Computed
-const scores = computed(() => getPerformanceScore())
+const scores = computed(() => getPerformanceScoreMetrics())
+const metrics = performanceMetrics
+const measurePerformance = measurePerformanceMetrics
+const getPerformanceScore = getPerformanceScoreMetrics
 
 const monitorClasses = computed(() => {
   const classes = ['fixed z-50']

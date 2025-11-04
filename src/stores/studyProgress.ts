@@ -1,7 +1,9 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useAuthStore } from './auth'
-import { getSupabase, isSupabaseAvailable } from '../lib/supabase'
+import { getSupabase, isSupabaseAvailable, handleSupabaseError, requiresReAuth } from '../lib/supabase'
+import { getSyncQueue } from '../composables/useSupabaseSync'
+import { logger } from '../utils/logger'
 
 export interface StudyProgress {
   studyId: string
@@ -15,88 +17,13 @@ export interface StudyProgress {
 
 export const useStudyProgressStore = defineStore('studyProgress', () => {
   const progressData = ref<Record<string, StudyProgress>>({})
+  const isInitialized = ref(false)
+  const isInitializing = ref(false)
 
   // Ensure progressData is always initialized
   const ensureInitialized = () => {
     if (!progressData.value || typeof progressData.value !== 'object') {
       progressData.value = {}
-    }
-  }
-
-  // Initialize with some demo data including completed studies
-  const initializeDemoData = () => {
-    if (Object.keys(progressData.value).length === 0) {
-      progressData.value = {
-        // Completed Studies
-        'psalm-23': {
-          studyId: 'psalm-23',
-          completedLessons: ['p23-1', 'p23-2', 'p23-3', 'p23-4'], // All 4 lessons completed
-          currentLesson: 'p23-4',
-          startedAt: '2024-01-10',
-          lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 20,
-          acceptedChallenges: ['p23-1', 'p23-2', 'p23-3', 'p23-4'],
-        },
-        'lords-prayer': {
-          studyId: 'lords-prayer',
-          completedLessons: ['lp-1', 'lp-2', 'lp-3', 'lp-4', 'lp-5', 'lp-6'], // All 6 lessons completed
-          currentLesson: 'lp-6',
-          startedAt: '2024-01-05',
-          lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 30,
-          acceptedChallenges: ['lp-1', 'lp-2', 'lp-3', 'lp-4', 'lp-5', 'lp-6'],
-        },
-        'faith-over-fear': {
-          studyId: 'faith-over-fear',
-          completedLessons: ['fof-1', 'fof-2', 'fof-3', 'fof-4', 'fof-5'], // All 5 lessons completed
-          currentLesson: 'fof-5',
-          startedAt: '2024-01-01',
-          lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 25,
-          acceptedChallenges: ['fof-1', 'fof-2', 'fof-3', 'fof-4', 'fof-5'],
-        },
-
-        // In Progress Studies
-        'life-of-jesus': {
-          studyId: 'life-of-jesus',
-          completedLessons: ['loj-1', 'loj-2', 'loj-3'], // 3 out of 5 completed
-          currentLesson: 'loj-4',
-          startedAt: '2024-01-15',
-          lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 15,
-          acceptedChallenges: ['loj-1', 'loj-2', 'loj-3'],
-        },
-        'how-to-study-bible': {
-          studyId: 'how-to-study-bible',
-          completedLessons: ['htsb-1', 'htsb-2'], // 2 out of 6 completed
-          currentLesson: 'htsb-3',
-          startedAt: '2024-01-20',
-          lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 12,
-          acceptedChallenges: ['htsb-1', 'htsb-2'],
-        },
-        'fruit-of-spirit': {
-          studyId: 'fruit-of-spirit',
-          completedLessons: ['fos-1'], // Just started
-          currentLesson: 'fos-2',
-          startedAt: '2024-01-25',
-          lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 5,
-          acceptedChallenges: ['fos-1'],
-        },
-
-        // Started but minimal progress
-        'armor-of-god': {
-          studyId: 'armor-of-god',
-          completedLessons: ['aog-1'], // Just first lesson
-          currentLesson: 'aog-2',
-          startedAt: '2024-01-28',
-          lastAccessedAt: new Date().toISOString(),
-          totalTimeSpent: 5,
-          acceptedChallenges: ['aog-1'],
-        },
-      }
-      saveToStorage()
     }
   }
 
@@ -136,7 +63,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     
     // Fire and forget Supabase sync - don't block UI
     saveProgressToSupabase(studyId).catch((error) =>
-      console.error('Failed to sync progress to Supabase:', error),
+      logger.error('Failed to sync progress to Supabase:', error),
     )
   }
 
@@ -166,7 +93,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     saveToStorage()
     // Fire and forget Supabase sync - don't block UI
     saveProgressToSupabase(studyId).catch((error) =>
-      console.error('Failed to sync progress to Supabase:', error),
+      logger.error('Failed to sync progress to Supabase:', error),
     )
   }
 
@@ -202,7 +129,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     
     // Fire and forget Supabase sync - don't block UI
     saveProgressToSupabase(studyId).catch((error) =>
-      console.error('Failed to sync progress to Supabase:', error),
+      logger.error('Failed to sync progress to Supabase:', error),
     )
   }
 
@@ -227,7 +154,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     saveToStorage()
     // Fire and forget Supabase sync - don't block UI
     saveProgressToSupabase(studyId).catch((error: any) =>
-      console.error('Failed to sync progress to Supabase:', error),
+      logger.error('Failed to sync progress to Supabase:', error),
     )
   }
 
@@ -261,7 +188,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
 
   const syncWithFirebase = async () => {
     // Firebase integration disabled for now
-    console.log('Firebase sync disabled - using local storage only')
+    logger.debug('Firebase sync disabled - using local storage only')
   }
 
   const saveProgressToSupabase = async (studyId: string) => {
@@ -269,7 +196,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     const authStore = useAuthStore()
     
     if (!useSupabase || !authStore.user) {
-      console.log('Supabase not available or user not authenticated - using local storage only')
+      logger.debug('Supabase not available or user not authenticated - using local storage only')
       return
     }
 
@@ -296,10 +223,28 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
           onConflict: 'user_id,study_id'
         })
 
-      if (error) throw error
-      console.log('Progress saved to Supabase:', studyId)
+      if (error) {
+        const errorInfo = handleSupabaseError(error, 'save progress')
+        logger.error('Failed to save progress to Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+        
+        // If RLS violation, auth error, or network error, queue for later sync
+        if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
+          logger.warn('Queuing progress for later sync')
+          const syncQueue = getSyncQueue()
+          syncQueue.queueOperation('progress_save', progress)
+          return
+        }
+        
+        throw error
+      }
+      logger.debug('Progress saved to Supabase:', studyId)
     } catch (error) {
-      console.error('Failed to save progress to Supabase:', error)
+      const errorInfo = handleSupabaseError(error, 'save progress')
+      console.error('Failed to save progress to Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+      // Don't throw RLS/auth errors - graceful degradation
+      if (errorInfo.isRLSViolation || errorInfo.isAuthError) {
+        return
+      }
     }
   }
 
@@ -308,7 +253,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     const authStore = useAuthStore()
     
     if (!useSupabase || !authStore.user) {
-      console.log('Supabase not available or user not authenticated - loading from local storage')
+      logger.debug('Supabase not available or user not authenticated - loading from local storage')
       loadFromLocalStorage()
       return
     }
@@ -325,7 +270,19 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
         .select('*')
         .eq('user_id', authStore.user.id)
 
-      if (error) throw error
+      if (error) {
+        const errorInfo = handleSupabaseError(error, 'load progress')
+        console.error('Failed to load progress from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+        
+        // If RLS violation or auth error, fall back to local storage
+        if (errorInfo.isRLSViolation || errorInfo.isAuthError) {
+          logger.warn('RLS/Auth error - loading from local storage only')
+          loadFromLocalStorage()
+          return
+        }
+        
+        throw error
+      }
 
       if (data && data.length > 0) {
         // Convert Supabase data to local format
@@ -348,7 +305,9 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
         loadFromLocalStorage()
       }
     } catch (error) {
-      console.error('Failed to load progress from Supabase:', error)
+      const errorInfo = handleSupabaseError(error, 'load progress')
+      console.error('Failed to load progress from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+      // Fall back to local storage on any error (graceful degradation)
       loadFromLocalStorage()
     }
   }
@@ -359,19 +318,37 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     if (saved) {
       try {
         progressData.value = JSON.parse(saved)
-        console.log('Progress loaded from localStorage')
+        logger.debug('Progress loaded from localStorage')
       } catch (error) {
-        console.error('Error loading study progress from localStorage:', error)
-        initializeDemoData()
+        logger.error('Error loading study progress from localStorage:', error)
+        progressData.value = {}
       }
     } else {
-      console.log('No saved progress found, initializing demo data')
-      initializeDemoData()
+      logger.debug('No saved progress found, starting with empty progress')
+      progressData.value = {}
     }
   }
 
   const loadFromStorage = async () => {
-    await loadProgressFromSupabase()
+    // Prevent duplicate initialization
+    if (isInitialized.value || isInitializing.value) {
+      return
+    }
+    
+    isInitializing.value = true
+    
+    try {
+      // Try to load from Supabase first if available
+      await loadProgressFromSupabase()
+      isInitialized.value = true
+    } catch (error) {
+      console.error('Failed to load progress:', error)
+      // Fallback to local storage only
+      loadFromLocalStorage()
+      isInitialized.value = true
+    } finally {
+      isInitializing.value = false
+    }
   }
 
   // Premium Features
@@ -412,9 +389,27 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     ]
   }
 
-  const resetStudyProgress = (studyId: string) => {
-    delete progressData.value[studyId]
+  const resetStudyProgress = async (studyId: string) => {
+    // Reset progress to initial state (cleared but study marked as started)
+    progressData.value[studyId] = {
+      studyId,
+      completedLessons: [],
+      currentLesson: undefined,
+      startedAt: new Date().toISOString(),
+      lastAccessedAt: new Date().toISOString(),
+      totalTimeSpent: 0,
+      acceptedChallenges: [],
+    }
+    
     saveToStorage()
+    
+                // Try to sync to Supabase immediately, queue if it fails
+            saveProgressToSupabase(studyId).catch((error) => {
+              console.error('Failed to sync reset progress to Supabase:', error)
+              // Queue for later sync
+              const syncQueue = getSyncQueue()
+              syncQueue.queueOperation('progress_reset', { studyId })
+            })
   }
 
   return {
@@ -434,6 +429,5 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     loadFromStorage,
     isChallengeAccepted,
     acceptChallenge,
-    initializeDemoData,
   }
 })

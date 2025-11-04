@@ -1,5 +1,7 @@
 import { ref, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
+import { isSupabaseAvailable, getSupabase, handleSupabaseError } from '../lib/supabase'
+import { getSyncQueue } from './useSupabaseSync'
 
 export interface StudyCategory {
   id: string
@@ -159,6 +161,159 @@ export function useStudyOrganization() {
     }
   }
   
+  // Supabase sync helpers for bookmarks
+  const saveBookmarkToSupabase = async (bookmark: StudyBookmark): Promise<void> => {
+    const useSupabase = isSupabaseAvailable()
+    if (!useSupabase || !authStore.user) {
+      console.log('Supabase not available or user not authenticated - using local storage only')
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase) return
+
+    try {
+      const { error } = await supabase
+        .from('bookmarks')
+        .upsert({
+          id: bookmark.id,
+          user_id: authStore.user.id,
+          study_id: bookmark.studyId,
+          lesson_id: bookmark.lessonId || null,
+          title: bookmark.title,
+          description: bookmark.description || null,
+          tags: bookmark.tags,
+          category_id: bookmark.categoryId || null,
+          created_at: bookmark.createdAt.toISOString(),
+          updated_at: bookmark.updatedAt.toISOString()
+        }, {
+          onConflict: 'user_id,study_id,lesson_id'
+        })
+
+      if (error) {
+        const errorInfo = handleSupabaseError(error, 'save bookmark')
+        console.error('Failed to save bookmark to Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+        
+        // If RLS violation, auth error, or network error, queue for later sync
+        if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
+          console.warn('Queuing bookmark for later sync')
+          const syncQueue = getSyncQueue()
+          // Use bookmark_create for new bookmarks, bookmark_update will be handled in updateBookmark
+          syncQueue.queueOperation('bookmark_create', bookmark)
+          return
+        }
+        
+        throw error
+      }
+      console.log('Bookmark saved to Supabase:', bookmark.id)
+    } catch (error) {
+      const errorInfo = handleSupabaseError(error, 'save bookmark')
+      // Queue for offline sync if it's a network/auth/RLS error
+      if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
+        const syncQueue = getSyncQueue()
+        syncQueue.queueOperation('bookmark_create', bookmark)
+      }
+      throw error
+    }
+  }
+
+  const updateBookmarkInSupabase = async (bookmark: StudyBookmark): Promise<void> => {
+    const useSupabase = isSupabaseAvailable()
+    if (!useSupabase || !authStore.user) {
+      console.log('Supabase not available or user not authenticated - using local storage only')
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase) return
+
+    try {
+      const { error } = await supabase
+        .from('bookmarks')
+        .upsert({
+          id: bookmark.id,
+          user_id: authStore.user.id,
+          study_id: bookmark.studyId,
+          lesson_id: bookmark.lessonId || null,
+          title: bookmark.title,
+          description: bookmark.description || null,
+          tags: bookmark.tags,
+          category_id: bookmark.categoryId || null,
+          created_at: bookmark.createdAt.toISOString(),
+          updated_at: bookmark.updatedAt.toISOString()
+        }, {
+          onConflict: 'user_id,study_id,lesson_id'
+        })
+
+      if (error) {
+        const errorInfo = handleSupabaseError(error, 'update bookmark')
+        console.error('Failed to update bookmark in Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+        
+        // If RLS violation, auth error, or network error, queue for later sync
+        if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
+          console.warn('Queuing bookmark update for later sync')
+          const syncQueue = getSyncQueue()
+          syncQueue.queueOperation('bookmark_update', bookmark)
+          return
+        }
+        
+        throw error
+      }
+      console.log('Bookmark updated in Supabase:', bookmark.id)
+    } catch (error) {
+      const errorInfo = handleSupabaseError(error, 'update bookmark')
+      // Queue for offline sync if it's a network/auth/RLS error
+      if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
+        const syncQueue = getSyncQueue()
+        syncQueue.queueOperation('bookmark_update', bookmark)
+      }
+      throw error
+    }
+  }
+  
+  const deleteBookmarkFromSupabase = async (bookmarkId: string): Promise<void> => {
+    const useSupabase = isSupabaseAvailable()
+    if (!useSupabase || !authStore.user) {
+      console.log('Supabase not available or user not authenticated - using local storage only')
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase) return
+
+    try {
+      const { error } = await supabase
+        .from('bookmarks')
+        .delete()
+        .eq('id', bookmarkId)
+        .eq('user_id', authStore.user.id)
+
+      if (error) {
+        const errorInfo = handleSupabaseError(error, 'delete bookmark')
+        console.error('Failed to delete bookmark from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+        
+        // If RLS violation, auth error, or network error, queue for later sync
+        if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
+          console.warn('Queuing bookmark deletion for later sync')
+          const syncQueue = getSyncQueue()
+          syncQueue.queueOperation('bookmark_delete', { bookmarkId })
+          return
+        }
+        
+        throw error
+      }
+      console.log('Bookmark deleted from Supabase:', bookmarkId)
+    } catch (error) {
+      const errorInfo = handleSupabaseError(error, 'delete bookmark')
+      // Queue for offline sync if it's a network/auth/RLS error
+      if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
+        const syncQueue = getSyncQueue()
+        syncQueue.queueOperation('bookmark_delete', { bookmarkId })
+      }
+      throw error
+    }
+  }
+
   const addBookmark = async (bookmarkData: Omit<StudyBookmark, 'id' | 'userId' | 'createdAt' | 'updatedAt'>): Promise<StudyBookmark> => {
     if (!authStore.user) {
       throw new Error('User must be authenticated to add bookmarks')
@@ -178,6 +333,12 @@ export function useStudyOrganization() {
       
       bookmarks.value.push(bookmark)
       await saveBookmarks()
+      
+      // Try to sync to Supabase (fire and forget - don't block UI)
+      saveBookmarkToSupabase(bookmark).catch((error: unknown) => {
+        console.error('Failed to sync bookmark to Supabase:', error)
+        // Already queued in saveBookmarkToSupabase if needed
+      })
       
       return bookmark
     } catch (err) {
@@ -205,6 +366,12 @@ export function useStudyOrganization() {
       }
       
       await saveBookmarks()
+      
+      // Try to sync to Supabase (fire and forget - don't block UI)
+      updateBookmarkInSupabase(bookmarks.value[index]).catch((error: unknown) => {
+        console.error('Failed to sync bookmark update to Supabase:', error)
+        // Already queued in updateBookmarkInSupabase if needed
+      })
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Failed to update bookmark'
       throw err
@@ -220,6 +387,12 @@ export function useStudyOrganization() {
     try {
       bookmarks.value = bookmarks.value.filter(bookmark => bookmark.id !== id)
       await saveBookmarks()
+      
+      // Try to sync deletion to Supabase (fire and forget - don't block UI)
+      deleteBookmarkFromSupabase(id).catch((error: unknown) => {
+        console.error('Failed to sync bookmark deletion to Supabase:', error)
+        // Already queued in deleteBookmarkFromSupabase if needed
+      })
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Failed to remove bookmark'
       throw err
@@ -389,10 +562,116 @@ export function useStudyOrganization() {
     return Math.random().toString(36).substr(2, 9) + Date.now().toString(36)
   }
   
+  const loadBookmarksFromSupabase = async (): Promise<void> => {
+    const useSupabase = isSupabaseAvailable()
+    if (!useSupabase || !authStore.user) {
+      console.log('Supabase not available or user not authenticated - loading from local storage only')
+      await loadBookmarks()
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase) {
+      await loadBookmarks()
+      return
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('bookmarks')
+        .select('*')
+        .eq('user_id', authStore.user.id)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        const errorInfo = handleSupabaseError(error, 'load bookmarks')
+        console.error('Failed to load bookmarks from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+        // Fall back to local storage on any error (graceful degradation)
+        await loadBookmarks()
+        return
+      }
+
+      if (data && data.length > 0) {
+        // Convert Supabase data to local format
+        const supabaseBookmarks: StudyBookmark[] = data.map((item: any) => ({
+          id: item.id,
+          studyId: item.study_id,
+          lessonId: item.lesson_id || undefined,
+          userId: item.user_id,
+          title: item.title,
+          description: item.description || undefined,
+          tags: item.tags || [],
+          categoryId: item.category_id || undefined,
+          createdAt: new Date(item.created_at),
+          updatedAt: new Date(item.updated_at)
+        }))
+
+        // Merge with local bookmarks (local takes precedence for conflicts)
+        const localBookmarks = loadBookmarksFromLocalStorage()
+        
+        // Create a map of local bookmarks by key (userId, studyId, lessonId)
+        const localMap = new Map<string, StudyBookmark>()
+        localBookmarks.forEach(bookmark => {
+          const key = `${bookmark.userId}_${bookmark.studyId}_${bookmark.lessonId || ''}`
+          localMap.set(key, bookmark)
+        })
+
+        // Merge: use local if exists and is newer, otherwise use Supabase
+        const merged: StudyBookmark[] = []
+        const seen = new Set<string>()
+        
+        // Add all local bookmarks first (they take precedence)
+        localBookmarks.forEach(bookmark => {
+          const key = `${bookmark.userId}_${bookmark.studyId}_${bookmark.lessonId || ''}`
+          merged.push(bookmark)
+          seen.add(key)
+        })
+
+        // Add Supabase bookmarks that don't exist locally
+        supabaseBookmarks.forEach(bookmark => {
+          const key = `${bookmark.userId}_${bookmark.studyId}_${bookmark.lessonId || ''}`
+          if (!seen.has(key)) {
+            merged.push(bookmark)
+            seen.add(key)
+          }
+        })
+
+        bookmarks.value = merged
+        // Save merged bookmarks to localStorage
+        await saveBookmarks()
+        console.log('Bookmarks loaded and merged from Supabase:', merged.length)
+      } else {
+        // No bookmarks in Supabase, load from local storage or initialize
+        await loadBookmarks()
+      }
+    } catch (error) {
+      const errorInfo = handleSupabaseError(error, 'load bookmarks')
+      console.error('Failed to load bookmarks from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+      // Fall back to local storage on any error (graceful degradation)
+      await loadBookmarks()
+    }
+  }
+
+  const loadBookmarksFromLocalStorage = (): StudyBookmark[] => {
+    try {
+      const stored = localStorage.getItem('biblestem_bookmarks')
+      if (stored) {
+        return JSON.parse(stored).map((bookmark: StudyBookmark) => ({
+          ...bookmark,
+          createdAt: new Date(bookmark.createdAt),
+          updatedAt: new Date(bookmark.updatedAt)
+        }))
+      }
+    } catch (err) {
+      console.error('Failed to load bookmarks from localStorage:', err)
+    }
+    return []
+  }
+
   // Initialize
   const initialize = async (): Promise<void> => {
     await loadCategories()
-    await loadBookmarks()
+    await loadBookmarksFromSupabase()
   }
   
   return {
