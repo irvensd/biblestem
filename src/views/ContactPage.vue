@@ -48,7 +48,10 @@
           </div>
 
           <!-- Help Center Card -->
-          <div class="card card-interactive p-8 text-center transform hover:scale-105 transition-all">
+          <router-link
+            to="/help"
+            class="card card-interactive p-8 text-center transform hover:scale-105 transition-all"
+          >
             <div class="w-20 h-20 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
               <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -58,10 +61,10 @@
             <p class="text-gray-600 dark:text-gray-400 mb-4">
               Find answers to common questions and troubleshooting guides
             </p>
-            <p class="text-sm text-gray-500 dark:text-gray-500 italic">
-              Coming Soon
-            </p>
-          </div>
+            <span class="text-sm text-primary-600 dark:text-primary-400 font-semibold hover:underline">
+              Visit Help Center →
+            </span>
+          </router-link>
 
           <!-- Community Card -->
           <div class="card card-interactive p-8 text-center transform hover:scale-105 transition-all">

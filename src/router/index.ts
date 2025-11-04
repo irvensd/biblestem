@@ -83,6 +83,33 @@ const routes = [
     component: () => import('../views/ContactPage.vue')
   },
   {
+    path: '/help',
+    name: 'Help',
+    component: () => import('../views/HelpCenterPage.vue')
+  },
+  {
+    path: '/help-center',
+    redirect: '/help'
+  },
+  {
+    path: '/privacy',
+    name: 'Privacy',
+    component: () => import('../views/PrivacyPolicyPage.vue')
+  },
+  {
+    path: '/privacy-policy',
+    redirect: '/privacy'
+  },
+  {
+    path: '/terms',
+    name: 'Terms',
+    component: () => import('../views/TermsOfServicePage.vue')
+  },
+  {
+    path: '/terms-of-service',
+    redirect: '/terms'
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFoundPage.vue')
@@ -91,7 +118,23 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // If navigating with hash (e.g., /help#getting-started), scroll to element
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+        top: 80 // Offset for sticky header
+      }
+    }
+    // If browser back/forward button, restore saved position
+    if (savedPosition) {
+      return savedPosition
+    }
+    // Otherwise, scroll to top of page
+    return { top: 0 }
+  }
 })
 
 // Navigation guard for auth

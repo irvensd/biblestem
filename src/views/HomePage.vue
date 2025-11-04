@@ -486,12 +486,16 @@
         </div>
       </div>
     </section>
+
+    <!-- Footer -->
+    <AppFooter />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { getAllStudies } from '@/data/studies'
+import AppFooter from '@/components/AppFooter.vue'
 
 // Study count for homepage display
 const allStudies = ref<any[]>([])
