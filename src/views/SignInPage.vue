@@ -58,6 +58,18 @@
                 />
               </div>
 
+              <!-- Error Message -->
+              <div v-if="loginError" class="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
+                <div class="flex items-start gap-3">
+                  <svg class="w-5 h-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                  </svg>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-red-800 dark:text-red-200">{{ loginError }}</p>
+                  </div>
+                </div>
+              </div>
+
               <!-- Remember Me & Forgot Password -->
               <div class="flex items-center justify-between">
                 <label class="flex items-center">
@@ -143,25 +155,70 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
 const email = ref('')
 const password = ref('')
+const loginError = ref<string | null>(null)
 const router = useRouter()
 const authStore = useAuthStore()
 
+// Clear error when user starts typing
+watch([email, password], () => {
+  if (loginError.value) {
+    loginError.value = null
+  }
+})
+
+// Convert technical errors to user-friendly messages
+const getUserFriendlyError = (error: string | undefined): string => {
+  if (!error) return 'Wrong email or password. Please try again.'
+  
+  const errorLower = error.toLowerCase()
+  
+  // Supabase auth error codes
+  if (errorLower.includes('invalid login credentials') || 
+      errorLower.includes('invalid_credentials') ||
+      errorLower.includes('email not confirmed') ||
+      errorLower.includes('user not found') ||
+      errorLower.includes('invalid password')) {
+    return 'Wrong email or password. Please check your credentials and try again.'
+  }
+  
+  // Network errors
+  if (errorLower.includes('network') || errorLower.includes('fetch')) {
+    return 'Network error. Please check your internet connection and try again.'
+  }
+  
+  // Rate limiting
+  if (errorLower.includes('rate limit') || errorLower.includes('too many')) {
+    return 'Too many login attempts. Please wait a moment and try again.'
+  }
+  
+  // Generic fallback
+  return 'Wrong email or password. Please try again.'
+}
+
 const handleSubmit = async () => {
+  loginError.value = null // Clear previous errors
+  
   const result = await authStore.login(email.value, password.value)
+  
   if (result.success) {
+    loginError.value = null
     router.push('/dashboard')
+  } else {
+    // Show user-friendly error message
+    loginError.value = getUserFriendlyError(result.error)
   }
 }
 
 const useDemoAccount = async () => {
   email.value = 'demo@biblestem.com'
   password.value = 'demo123'
+  loginError.value = null
   await handleSubmit()
 }
 </script>

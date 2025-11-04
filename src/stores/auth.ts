@@ -218,8 +218,34 @@ export const useAuthStore = defineStore('auth', () => {
       }
     } catch (err: any) {
       console.error('Login error:', err)
-      const errorMessage = err.message || 'Login failed. Please try again.'
-      setError(errorMessage, err.code)
+      
+      // Handle Supabase auth errors specifically
+      let errorMessage = 'Invalid login credentials. Please check your email and password.'
+      
+      if (err?.message) {
+        const errMsg = err.message.toLowerCase()
+        
+        // Supabase auth error codes
+        if (errMsg.includes('invalid login credentials') || 
+            errMsg.includes('invalid_credentials') ||
+            errMsg.includes('invalid password')) {
+          errorMessage = 'Invalid login credentials. Please check your email and password.'
+        } else if (errMsg.includes('email not confirmed') || 
+                   errMsg.includes('email_not_confirmed')) {
+          errorMessage = 'Please verify your email address before signing in.'
+        } else if (errMsg.includes('user not found')) {
+          errorMessage = 'No account found with this email address.'
+        } else if (errMsg.includes('rate limit') || errMsg.includes('too many requests')) {
+          errorMessage = 'Too many login attempts. Please wait a moment and try again.'
+        } else if (errMsg.includes('network') || errMsg.includes('fetch')) {
+          errorMessage = 'Network error. Please check your internet connection and try again.'
+        } else {
+          // Use the original error message if it's not a known auth error
+          errorMessage = err.message
+        }
+      }
+      
+      setError(errorMessage, err?.code)
       return { success: false, error: errorMessage }
     } finally {
       isLoading.value = false
