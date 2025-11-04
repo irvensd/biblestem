@@ -43,7 +43,7 @@
       <!-- View All Card (mobile/end of scroll) -->
       <div
         v-if="showViewAll"
-        class="flex-shrink-0 w-72 flex items-center justify-center"
+        class="flex-shrink-0 w-72 flex items-center justify-center md:hidden"
       >
         <router-link
           :to="`/studies/${category.id}`"
