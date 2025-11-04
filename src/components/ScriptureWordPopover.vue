@@ -229,7 +229,7 @@ const getLanguageBadgeColor = () => {
 
 const playPronunciation = () => {
   // In a real app, this would play audio pronunciation
-  // For demo purposes, we'll just show a message
+  // For now, we'll just show a message
   console.log(`Playing pronunciation for: ${props.word.transliteration}`)
 
   // You could integrate with a text-to-speech API or audio files here

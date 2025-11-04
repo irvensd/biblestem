@@ -1,5 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useAuthStore } from './auth'
+import { getSupabase, isSupabaseAvailable, handleSupabaseError, requiresReAuth } from '../lib/supabase'
+import { getSyncQueue } from '../composables/useSupabaseSync'
 
 export interface StudyNote {
   id: string
@@ -21,6 +24,7 @@ export interface NotesData {
 export const useNotesStore = defineStore('notes', () => {
   const notesData = ref<NotesData>({})
   const isLoaded = ref(false)
+  const isInitializing = ref(false)
 
   // Generate unique note ID
   const generateNoteId = () => {
@@ -28,7 +32,7 @@ export const useNotesStore = defineStore('notes', () => {
   }
 
   // Create a new note
-  const createNote = (noteData: Omit<StudyNote, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const createNote = async (noteData: Omit<StudyNote, 'id' | 'createdAt' | 'updatedAt'>) => {
     const id = generateNoteId()
     const now = new Date().toISOString()
 
@@ -41,11 +45,20 @@ export const useNotesStore = defineStore('notes', () => {
 
     notesData.value[id] = note
     saveToStorage()
+    
+    // Try to sync to Supabase immediately, queue if it fails
+    saveNoteToSupabase(note).catch((error) => {
+      console.error('Failed to sync note to Supabase:', error)
+      // Queue for later sync
+      const syncQueue = getSyncQueue()
+      syncQueue.queueOperation('note_create', note)
+    })
+    
     return note
   }
 
   // Update an existing note
-  const updateNote = (noteId: string, updates: Partial<Omit<StudyNote, 'id' | 'createdAt'>>) => {
+  const updateNote = async (noteId: string, updates: Partial<Omit<StudyNote, 'id' | 'createdAt'>>) => {
     if (notesData.value[noteId]) {
       notesData.value[noteId] = {
         ...notesData.value[noteId],
@@ -53,16 +66,35 @@ export const useNotesStore = defineStore('notes', () => {
         updatedAt: new Date().toISOString(),
       }
       saveToStorage()
+      
+      // Try to sync to Supabase immediately, queue if it fails
+      saveNoteToSupabase(notesData.value[noteId]).catch((error) => {
+        console.error('Failed to sync note update to Supabase:', error)
+        // Queue for later sync
+        const syncQueue = getSyncQueue()
+        syncQueue.queueOperation('note_update', notesData.value[noteId])
+      })
+      
       return notesData.value[noteId]
     }
     return null
   }
 
   // Delete a note
-  const deleteNote = (noteId: string) => {
+  const deleteNote = async (noteId: string) => {
     if (notesData.value[noteId]) {
+      const note = notesData.value[noteId]
       delete notesData.value[noteId]
       saveToStorage()
+      
+      // Try to sync deletion to Supabase immediately, queue if it fails
+      deleteNoteFromSupabase(noteId).catch((error) => {
+        console.error('Failed to sync note deletion to Supabase:', error)
+        // Queue for later sync
+        const syncQueue = getSyncQueue()
+        syncQueue.queueOperation('note_delete', { noteId })
+      })
+      
       return true
     }
     return false
@@ -147,21 +179,250 @@ export const useNotesStore = defineStore('notes', () => {
     }
   }
 
-  const loadFromStorage = () => {
+  const loadFromStorage = async () => {
+    // Prevent duplicate initialization
+    if (isLoaded.value || isInitializing.value) {
+      return
+    }
+    
+    isInitializing.value = true
+    
     try {
       const saved = localStorage.getItem('biblestem_notes')
       if (saved) {
         notesData.value = JSON.parse(saved)
       }
+      
+      // Also load from Supabase if available
+      await loadNotesFromSupabase()
       isLoaded.value = true
     } catch (error) {
       console.error('Failed to load notes from storage:', error)
       isLoaded.value = true
+    } finally {
+      isInitializing.value = false
+    }
+  }
+
+  // Supabase sync functions
+  const saveNoteToSupabase = async (note: StudyNote) => {
+    const useSupabase = isSupabaseAvailable()
+    const authStore = useAuthStore()
+    
+    if (!useSupabase || !authStore.user) {
+      console.log('Supabase not available or user not authenticated - using local storage only')
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase) return
+
+    try {
+      const { error } = await supabase
+        .from('notes')
+        .upsert({
+          id: note.id,
+          user_id: authStore.user.id,
+          study_id: note.studyId,
+          lesson_id: note.lessonId,
+          content: note.content,
+          scripture: note.scripture || null,
+          tags: note.tags,
+          type: note.type,
+          is_private: note.isPrivate,
+          created_at: note.createdAt,
+          updated_at: note.updatedAt,
+        }, {
+          onConflict: 'id'
+        })
+
+      if (error) {
+        const errorInfo = handleSupabaseError(error, 'save this note')
+        console.error('Failed to save note to Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+        
+        // If RLS violation or auth error, queue for later sync
+        if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
+          console.warn('Queuing note for later sync')
+          const syncQueue = getSyncQueue()
+          syncQueue.queueOperation('note_update', note)
+          return
+        }
+        
+        throw error
+      }
+      console.log('Note saved to Supabase:', note.id)
+    } catch (error) {
+      const errorInfo = handleSupabaseError(error, 'save this note')
+      console.error('Failed to save note to Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+      // Only throw if it's not an RLS/auth error (those are handled above)
+      if (!errorInfo.isRLSViolation && !errorInfo.isAuthError) {
+        throw error
+      }
+    }
+  }
+
+  const deleteNoteFromSupabase = async (noteId: string) => {
+    const useSupabase = isSupabaseAvailable()
+    const authStore = useAuthStore()
+    
+    if (!useSupabase || !authStore.user) {
+      console.log('Supabase not available or user not authenticated - using local storage only')
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase) return
+
+    try {
+      const { error } = await supabase
+        .from('notes')
+        .delete()
+        .eq('id', noteId)
+        .eq('user_id', authStore.user.id) // Ensure user can only delete their own notes
+
+      if (error) {
+        const errorInfo = handleSupabaseError(error, 'delete this note')
+        console.error('Failed to delete note from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+        
+        // If RLS violation, auth error, or network error, queue for later sync
+        if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
+          console.warn('Queuing note deletion for later sync')
+          const syncQueue = getSyncQueue()
+          syncQueue.queueOperation('note_delete', { noteId })
+          return
+        }
+        
+        throw error
+      }
+      console.log('Note deleted from Supabase:', noteId)
+    } catch (error) {
+      const errorInfo = handleSupabaseError(error, 'delete this note')
+      console.error('Failed to delete note from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+      // Only throw if it's not an RLS/auth error
+      if (!errorInfo.isRLSViolation && !errorInfo.isAuthError) {
+        throw error
+      }
+    }
+  }
+
+  const loadNotesFromSupabase = async () => {
+    const useSupabase = isSupabaseAvailable()
+    const authStore = useAuthStore()
+    
+    if (!useSupabase || !authStore.user) {
+      console.log('Supabase not available or user not authenticated - loading from local storage only')
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase) return
+
+    try {
+      const { data, error } = await supabase
+        .from('notes')
+        .select('*')
+        .eq('user_id', authStore.user.id)
+        .order('updated_at', { ascending: false })
+
+      if (error) {
+        const errorInfo = handleSupabaseError(error, 'load notes')
+        console.error('Failed to load notes from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+        
+        // If RLS violation or auth error, fall back to local storage only
+        if (errorInfo.isRLSViolation || errorInfo.isAuthError) {
+          console.warn('RLS/Auth error - using local storage only for notes')
+          return
+        }
+        
+        throw error
+      }
+
+      if (data && data.length > 0) {
+        // Convert Supabase data to local format
+        const notesMap: NotesData = {}
+        data.forEach((item: any) => {
+          notesMap[item.id] = {
+            id: item.id,
+            studyId: item.study_id,
+            lessonId: item.lesson_id,
+            content: item.content,
+            scripture: item.scripture || undefined,
+            tags: item.tags || [],
+            type: item.type || 'general',
+            isPrivate: item.is_private ?? true,
+            createdAt: item.created_at,
+            updatedAt: item.updated_at,
+          }
+        })
+        
+        // Merge with local storage (offline created notes and conflict resolution)
+        const localNotes = localStorage.getItem('biblestem_notes')
+        if (localNotes) {
+          try {
+            const localNotesData = JSON.parse(localNotes) as NotesData
+            // Merge logic: Use most recent version for conflicts, keep offline notes
+            Object.keys(localNotesData).forEach((noteId) => {
+              const localNote = localNotesData[noteId]
+              const supabaseNote = notesMap[noteId]
+              
+              if (!supabaseNote) {
+                // Note only exists locally (offline created) - keep it
+                notesMap[noteId] = localNote
+              } else {
+                // Note exists in both - use the one with the most recent updatedAt
+                const localDate = new Date(localNote.updatedAt).getTime()
+                const supabaseDate = new Date(supabaseNote.updatedAt).getTime()
+                
+                if (localDate > supabaseDate) {
+                  // Local version is newer - keep it and sync to Supabase
+                  notesMap[noteId] = localNote
+                  saveNoteToSupabase(localNote).catch((error) =>
+                    console.error('Failed to sync newer local note to Supabase:', error),
+                  )
+                }
+                // Otherwise keep Supabase version (already in notesMap)
+              }
+            })
+          } catch (error) {
+            console.error('Error parsing local notes:', error)
+          }
+        }
+        
+        notesData.value = notesMap
+        saveToStorage() // Save merged data back to localStorage
+        console.log('Notes loaded from Supabase:', Object.keys(notesMap).length, 'notes')
+      } else {
+        // No notes in Supabase, keep local storage if it exists
+        console.log('No notes found in Supabase, using local storage')
+      }
+    } catch (error) {
+      const errorInfo = handleSupabaseError(error, 'load notes')
+      console.error('Failed to load notes from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+      // Keep using local storage on error (graceful degradation)
     }
   }
 
   // Clear all notes (for testing/reset)
-  const clearAllNotes = () => {
+  const clearAllNotes = async () => {
+    // Delete all notes from Supabase
+    const useSupabase = isSupabaseAvailable()
+    const authStore = useAuthStore()
+    
+    if (useSupabase && authStore.user) {
+      const supabase = getSupabase()
+      if (supabase) {
+        try {
+          await supabase
+            .from('notes')
+            .delete()
+            .eq('user_id', authStore.user.id)
+          console.log('All notes deleted from Supabase')
+        } catch (error) {
+          console.error('Failed to delete notes from Supabase:', error)
+        }
+      }
+    }
+    
     notesData.value = {}
     saveToStorage()
   }

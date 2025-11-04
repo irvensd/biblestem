@@ -95,6 +95,23 @@ CREATE TABLE IF NOT EXISTS public.notes (
 );
 
 -- ============================================
+-- BOOKMARKS TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS public.bookmarks (
+  id TEXT PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  study_id TEXT NOT NULL REFERENCES public.studies(id) ON DELETE CASCADE,
+  lesson_id TEXT,
+  title TEXT NOT NULL,
+  description TEXT,
+  tags TEXT[] DEFAULT '{}',
+  category_id TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(user_id, study_id, lesson_id)
+);
+
+-- ============================================
 -- INDEXES FOR PERFORMANCE
 -- ============================================
 CREATE INDEX IF NOT EXISTS idx_progress_user ON public.study_progress(user_id);
@@ -102,6 +119,8 @@ CREATE INDEX IF NOT EXISTS idx_progress_study ON public.study_progress(study_id)
 CREATE INDEX IF NOT EXISTS idx_notes_user ON public.notes(user_id);
 CREATE INDEX IF NOT EXISTS idx_notes_study ON public.notes(study_id);
 CREATE INDEX IF NOT EXISTS idx_lessons_study ON public.lessons(study_id);
+CREATE INDEX IF NOT EXISTS idx_bookmarks_user ON public.bookmarks(user_id);
+CREATE INDEX IF NOT EXISTS idx_bookmarks_study ON public.bookmarks(study_id);
 
 -- ============================================
 -- ROW LEVEL SECURITY (RLS) POLICIES
@@ -111,6 +130,7 @@ CREATE INDEX IF NOT EXISTS idx_lessons_study ON public.lessons(study_id);
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.study_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.notes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.bookmarks ENABLE ROW LEVEL SECURITY;
 
 -- Studies are publicly readable
 ALTER TABLE public.studies ENABLE ROW LEVEL SECURITY;
@@ -141,6 +161,12 @@ CREATE POLICY "Users can insert own notes" ON public.notes FOR INSERT WITH CHECK
 CREATE POLICY "Users can update own notes" ON public.notes FOR UPDATE USING (auth.uid() = user_id);
 CREATE POLICY "Users can delete own notes" ON public.notes FOR DELETE USING (auth.uid() = user_id);
 
+-- Users can only access their own bookmarks
+CREATE POLICY "Users can view own bookmarks" ON public.bookmarks FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own bookmarks" ON public.bookmarks FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update own bookmarks" ON public.bookmarks FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Users can delete own bookmarks" ON public.bookmarks FOR DELETE USING (auth.uid() = user_id);
+
 -- ============================================
 -- FUNCTIONS
 -- ============================================
@@ -168,5 +194,8 @@ CREATE TRIGGER update_progress_updated_at BEFORE UPDATE ON public.study_progress
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_notes_updated_at BEFORE UPDATE ON public.notes
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_bookmarks_updated_at BEFORE UPDATE ON public.bookmarks
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
