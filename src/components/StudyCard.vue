@@ -18,11 +18,39 @@
       <!-- Advanced Badge (if applicable) -->
       <div
         v-if="study.category === 'supporter'"
-        class="absolute top-3 right-3 inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg"
+        class="absolute top-3 right-3 inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg z-10"
       >
         <span class="mr-1">⭐</span>
         <span>Advanced</span>
       </div>
+      
+      <!-- Bookmark Button -->
+      <button
+        @click.stop="handleBookmarkClick"
+        class="absolute top-3 left-3 p-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full transition-all duration-200 z-10"
+        :class="{ 'bg-amber-500/90 hover:bg-amber-600': isBookmarked }"
+        :aria-label="isBookmarked ? 'Remove bookmark' : 'Add bookmark'"
+        title="Bookmark this study"
+      >
+        <svg 
+          class="w-5 h-5 text-white transition-transform"
+          :class="{ 'scale-110': isBookmarked }"
+          fill="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path
+            v-if="isBookmarked"
+            d="M5 4a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 20V4z"
+          />
+          <path
+            v-else
+            d="M5 4a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 20V4z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+        </svg>
+      </button>
     </div>
     
     <!-- Study Content -->
@@ -70,6 +98,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStudyOrganization } from '../composables/useStudyOrganization'
 import type { Study } from '../data/studies'
 
 interface Props {
@@ -82,6 +111,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const router = useRouter()
+const { isBookmarked: checkIsBookmarked, toggleBookmark } = useStudyOrganization()
 
 const gradientClass = computed(() => {
   // Use the study's color if available, otherwise default gradient
@@ -91,8 +121,14 @@ const gradientClass = computed(() => {
   return 'bg-gradient-to-br from-primary-500 to-blue-600'
 })
 
+const isBookmarked = computed(() => checkIsBookmarked(props.study.id))
+
 const handleClick = () => {
   router.push(`/study/${props.study.id}`)
+}
+
+const handleBookmarkClick = async () => {
+  await toggleBookmark(props.study.id, undefined, props.study.title)
 }
 </script>
 
