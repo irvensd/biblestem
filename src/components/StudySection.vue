@@ -16,6 +16,7 @@
       <router-link
         v-if="showViewAll"
         :to="`/study-series#${category.id}`"
+        @click="handleViewAllClick"
         class="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
       >
         <span>View All</span>
@@ -47,6 +48,7 @@
       >
         <router-link
           :to="`/study-series#${category.id}`"
+          @click="handleViewAllClick"
           class="w-full h-full min-h-[400px] bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl flex flex-col items-center justify-center p-6 text-white hover:from-primary-600 hover:to-blue-700 transition-all duration-300 group"
         >
           <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -92,7 +94,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import StudyCard from './StudyCard.vue'
 import type { StudyWithCount, CategoryWithStudies } from '../composables/useStudies'
 
@@ -109,6 +112,7 @@ const props = withDefaults(defineProps<Props>(), {
   showScrollIndicators: false,
 })
 
+const router = useRouter()
 const studies = computed(() => props.category.studies)
 const scrollContainer = ref<HTMLElement | null>(null)
 const canScrollLeft = ref(false)
@@ -123,6 +127,33 @@ const getCategoryIcon = (categoryId: string): string => {
     'advanced': '🔥',
   }
   return icons[categoryId] || '📖'
+}
+
+const handleViewAllClick = async (e: Event) => {
+  // Always ensure we navigate and scroll, even if already on the same route
+  const targetHash = `#${props.category.id}`
+  const targetPath = `/study-series${targetHash}`
+  
+  // Navigate (this will work even if on same route if hash is different)
+  await router.push(targetPath)
+  
+  // Force scroll after navigation
+  await nextTick()
+  
+  // Small delay to ensure DOM is updated
+  setTimeout(() => {
+    const element = document.getElementById(props.category.id)
+    if (element) {
+      const headerOffset = 100
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }, 100)
 }
 
 const checkScrollButtons = () => {

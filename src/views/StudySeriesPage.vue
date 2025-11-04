@@ -205,8 +205,8 @@ const showSupportModal = () => {
 }
 
 // Scroll to hash section
-const scrollToHash = async () => {
-  const hash = route.hash
+const scrollToHash = async (delay = 300) => {
+  const hash = window.location.hash || route.hash
   if (hash) {
     // Remove the # symbol
     const sectionId = hash.substring(1)
@@ -214,32 +214,62 @@ const scrollToHash = async () => {
     // Wait for DOM to be ready and studies to load
     await nextTick()
     
-    // Small delay to ensure sections are rendered
-    setTimeout(() => {
+    // Wait for sections to be rendered (data loaded)
+    // Retry multiple times to ensure element exists
+    let attempts = 0
+    const maxAttempts = 10
+    
+    const tryScroll = () => {
+      attempts++
       const element = document.getElementById(sectionId)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        // Account for header/fixed elements
+        const headerOffset = 100
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+        return true
+      } else if (attempts < maxAttempts) {
+        // Retry after a short delay
+        setTimeout(tryScroll, 100)
       }
-    }, 100)
+      return false
+    }
+    
+    // Initial delay to ensure data is loaded
+    setTimeout(tryScroll, delay)
   }
 }
 
-// Watch for hash changes
-watch(() => route.hash, () => {
-  scrollToHash()
+// Watch for hash changes (including when already on same route)
+watch(() => route.hash, (newHash, oldHash) => {
+  if (newHash !== oldHash) {
+    scrollToHash(100)
+  }
 })
+
+// Also watch for browser hash changes (back/forward buttons, direct navigation)
+const handleHashChange = () => {
+  scrollToHash(100)
+}
 
 onMounted(async () => {
   await fetchStudies()
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('hashchange', handleHashChange)
   handleScroll() // Check initial scroll position
   
-  // Scroll to hash if present
-  await scrollToHash()
+  // Scroll to hash if present (with longer delay to ensure data loaded)
+  await scrollToHash(500)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('hashchange', handleHashChange)
 })
 </script>
 
