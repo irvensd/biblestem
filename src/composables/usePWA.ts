@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[]
@@ -18,6 +18,8 @@ export function usePWA() {
 
   let deferredPrompt: BeforeInstallPromptEvent | null = null
   let registration: ServiceWorkerRegistration | null = null
+  let installPromptTimeout: ReturnType<typeof setTimeout> | null = null
+  const eventHandlers: Array<{ element: Window | Document; event: string; handler: EventListener }> = []
 
   // Check if app is already installed
   const checkIfInstalled = () => {
@@ -171,46 +173,83 @@ export function usePWA() {
 
   // Setup event listeners
   const setupEventListeners = () => {
-    // Install prompt
-    window.addEventListener('beforeinstallprompt', (e) => {
+    // Install prompt handler
+    const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault()
       deferredPrompt = e as BeforeInstallPromptEvent
       isInstallable.value = true
 
+      // Clear existing timeout if any
+      if (installPromptTimeout) {
+        clearTimeout(installPromptTimeout)
+      }
+
       // Show install prompt after a delay
-      setTimeout(() => {
+      installPromptTimeout = setTimeout(() => {
         if (!isInstalled.value && isInstallable.value) {
           showInstallPrompt.value = true
         }
       }, 30000) // Show after 30 seconds
-    })
+    }
 
-    // App installed
-    window.addEventListener('appinstalled', () => {
+    // App installed handler
+    const handleAppInstalled = () => {
       isInstalled.value = true
       isInstallable.value = false
       showInstallPrompt.value = false
       console.log('PWA was installed')
-    })
+    }
 
-    // Online/offline status
-    window.addEventListener('online', () => {
+    // Online handler
+    const handleOnline = () => {
       isOffline.value = false
       console.log('App is online')
-    })
+    }
 
-    window.addEventListener('offline', () => {
+    // Offline handler
+    const handleOffline = () => {
       isOffline.value = true
       console.log('App is offline')
-    })
+    }
 
-    // Visibility change (for background sync)
-    document.addEventListener('visibilitychange', () => {
+    // Visibility change handler
+    const handleVisibilityChange = () => {
       if (!document.hidden && isOffline.value) {
         // App became visible and we're offline, try to sync
         scheduleBackgroundSync('sync-on-focus')
       }
+    }
+
+    // Add listeners
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    window.addEventListener('appinstalled', handleAppInstalled)
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    // Store handlers for cleanup
+    eventHandlers.push(
+      { element: window, event: 'beforeinstallprompt', handler: handleBeforeInstallPrompt },
+      { element: window, event: 'appinstalled', handler: handleAppInstalled },
+      { element: window, event: 'online', handler: handleOnline },
+      { element: window, event: 'offline', handler: handleOffline },
+      { element: document, event: 'visibilitychange', handler: handleVisibilityChange },
+    )
+  }
+
+  // Cleanup event listeners
+  const cleanupEventListeners = () => {
+    // Remove all event listeners
+    eventHandlers.forEach(({ element, event, handler }) => {
+      element.removeEventListener(event, handler)
     })
+    eventHandlers.length = 0
+
+    // Clear timeout
+    if (installPromptTimeout) {
+      clearTimeout(installPromptTimeout)
+      installPromptTimeout = null
+    }
   }
 
   // Initialize PWA
@@ -222,6 +261,10 @@ export function usePWA() {
 
   onMounted(() => {
     initializePWA()
+  })
+
+  onUnmounted(() => {
+    cleanupEventListeners()
   })
 
   return {

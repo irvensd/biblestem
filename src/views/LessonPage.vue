@@ -1,6 +1,41 @@
 <template>
   <div class="min-h-screen" :class="gradientClass">
-    <div v-if="lesson" class="container-base py-8 sm:py-12">
+    <!-- Loading State -->
+    <div v-if="isLoading" class="container-base py-8 sm:py-12">
+      <EnhancedLoading type="skeleton" message="Loading lesson..." />
+    </div>
+    
+    <!-- Error State -->
+    <div v-else-if="hasError" class="container-base py-16 text-center">
+      <div class="max-w-md mx-auto">
+        <div class="text-6xl mb-4">⚠️</div>
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Failed to Load Lesson</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">{{ errorMessage }}</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <button
+            @click="retryLoad"
+            class="btn-primary inline-flex items-center gap-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Try Again
+          </button>
+          <button
+            @click="router.back()"
+            class="btn-secondary inline-flex items-center gap-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Go Back
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Actual Content -->
+    <div v-else-if="lesson" class="container-base py-8 sm:py-12">
       <!-- Enhanced Reading Progress -->
       <ReadingProgress
         :current-section="currentSection"
@@ -524,6 +559,7 @@ import ReadingProgress from '../components/ReadingProgress.vue'
 import VerseHighlighting from '../components/VerseHighlighting.vue'
 import EnhancedNoteTaking from '../components/EnhancedNoteTaking.vue'
 import StudyNavigation from '../components/StudyNavigation.vue'
+import EnhancedLoading from '../components/EnhancedLoading.vue'
 import { useHapticFeedback } from '../composables/useMobileGestures'
 import { useAuthStore } from '../stores/auth'
 
@@ -538,6 +574,9 @@ const study = computed(() => getStudyById(route.params.studyId as string))
 const lesson = computed(() => getLessonById(route.params.studyId as string, route.params.lessonId as string))
 
 // State
+const isLoading = ref(true)
+const hasError = ref(false)
+const errorMessage = ref('')
 const showGreekHebrew = ref(false)
 const reflectionNotes = ref('')
 const personalNotes = ref('')
@@ -838,51 +877,81 @@ const handleReportIssue = (lessonId: string) => {
   console.log('Reporting issue for lesson:', lessonId)
 }
 
-// Lifecycle
-onMounted(() => {
-  // Don't proceed if lesson not found
-  if (!lesson.value) {
-    console.error('Lesson not found!')
-    return
-  }
-  
-  window.addEventListener('scroll', updateCurrentSection)
-  
-  // Load saved notes and reflection
-  try {
-    const savedNotes = notesStore.getLessonNotes(route.params.studyId as string, route.params.lessonId as string)
-    if (savedNotes && savedNotes.length > 0) {
-      savedNotes.forEach(note => {
-        if (note.type === 'reflection') reflectionNotes.value = note.content
-        if (note.type === 'general') personalNotes.value = note.content
-      })
-    }
-    
-    // Load existing highlights and notes
-    const savedHighlights = localStorage.getItem('biblestem_highlights')
-    if (savedHighlights) {
-      existingHighlights.value = JSON.parse(savedHighlights)
-    }
-    
-    const savedNotesData = localStorage.getItem('biblestem_notes')
-    if (savedNotesData) {
-      existingNotes.value = JSON.parse(savedNotesData)
-    }
-    
-    // Load bookmark state
-    const bookmarkState = localStorage.getItem(`biblestem_bookmark_${route.params.lessonId}`)
-    if (bookmarkState) {
-      isBookmarked.value = JSON.parse(bookmarkState)
-    }
-    
-    // Load lesson notes for the note-taking component
-    lessonNotes.value = savedNotes || []
-    
-  } catch (error) {
-    console.error('Error loading enhanced data:', error)
-  }
+const retryLoad = async () => {
+  isLoading.value = true
+  hasError.value = false
+  errorMessage.value = ''
+  await loadLessonData()
+}
 
-  updateCurrentSection()
+const loadLessonData = async () => {
+  isLoading.value = true
+  hasError.value = false
+  errorMessage.value = ''
+  
+  try {
+    // Don't proceed if lesson not found
+    if (!lesson.value) {
+      throw new Error('Lesson not found. Please check the URL and try again.')
+    }
+    
+    // Ensure progress store is loaded
+    await progressStore.loadFromStorage()
+    
+    // Ensure notes store is loaded
+    await notesStore.loadFromStorage()
+    
+    window.addEventListener('scroll', updateCurrentSection)
+    
+    // Load saved notes and reflection
+    try {
+      const savedNotes = notesStore.getLessonNotes(route.params.studyId as string, route.params.lessonId as string)
+      if (savedNotes && savedNotes.length > 0) {
+        savedNotes.forEach(note => {
+          if (note.type === 'reflection') reflectionNotes.value = note.content
+          if (note.type === 'general') personalNotes.value = note.content
+        })
+      }
+      
+      // Load existing highlights and notes
+      const savedHighlights = localStorage.getItem('biblestem_highlights')
+      if (savedHighlights) {
+        existingHighlights.value = JSON.parse(savedHighlights)
+      }
+      
+      const savedNotesData = localStorage.getItem('biblestem_notes')
+      if (savedNotesData) {
+        existingNotes.value = JSON.parse(savedNotesData)
+      }
+      
+      // Load bookmark state
+      const bookmarkState = localStorage.getItem(`biblestem_bookmark_${route.params.lessonId}`)
+      if (bookmarkState) {
+        isBookmarked.value = JSON.parse(bookmarkState)
+      }
+      
+      // Load lesson notes for the note-taking component
+      lessonNotes.value = savedNotes || []
+      
+         } catch (error) {
+       console.error('Error loading enhanced data:', error)
+       hasError.value = true
+       errorMessage.value = 'Failed to load lesson data. Please try again later.'
+     }
+
+     updateCurrentSection()
+     isLoading.value = false
+   } catch (error) {
+     console.error('Error loading lesson:', error)
+     hasError.value = true
+     errorMessage.value = error instanceof Error ? error.message : 'Failed to load lesson. Please try again later.'
+     isLoading.value = false
+   }
+ }
+
+// Lifecycle
+onMounted(async () => {
+  await loadLessonData()
 })
 
 onUnmounted(() => {

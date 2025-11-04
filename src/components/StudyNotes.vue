@@ -459,8 +459,8 @@ const deleteNote = (noteId: string) => {
   }
 }
 
-onMounted(() => {
-  notesStore.loadFromStorage()
+onMounted(async () => {
+  await notesStore.loadFromStorage()
 })
 </script>
 

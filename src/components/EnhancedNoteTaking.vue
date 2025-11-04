@@ -169,7 +169,7 @@
           @input="handleInput"
           @keydown="handleKeydown"
           @paste="handlePaste"
-          v-html="noteContent"
+          v-html="sanitizedNoteContent"
         ></div>
       </div>
 
@@ -252,7 +252,7 @@
               </button>
             </div>
           </div>
-          <div class="note-content prose prose-sm prose-neutral dark:prose-invert max-w-none" v-html="note.content"></div>
+            <div class="note-content prose prose-sm prose-neutral dark:prose-invert max-w-none" v-html="sanitizeRichText(note.content)"></div>
           <div v-if="note.tags && note.tags.length > 0" class="note-tags">
             <span
               v-for="tag in note.tags"
@@ -271,6 +271,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { useHapticFeedback } from '../composables/useMobileGestures'
+import { sanitizeRichText, sanitizeHtml } from '../utils/sanitize'
 
 interface Note {
   id: string
@@ -322,9 +323,14 @@ const wordCount = computed(() => {
   return text.trim().split(/\s+/).filter(word => word.length > 0).length
 })
 
+const sanitizedNoteContent = computed(() => {
+  // Sanitize the note content before rendering
+  return sanitizeHtml(noteContent.value)
+})
+
 const renderedContent = computed(() => {
-  // Simple markdown-like rendering
-  return noteContent.value
+  // Simple markdown-like rendering with sanitization
+  const html = noteContent.value
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -334,6 +340,9 @@ const renderedContent = computed(() => {
     .replace(/^\* (.*$)/gim, '<li>$1</li>')
     .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
     .replace(/\n/g, '<br>')
+  
+  // Sanitize the rendered HTML
+  return sanitizeRichText(html)
 })
 
 // Methods

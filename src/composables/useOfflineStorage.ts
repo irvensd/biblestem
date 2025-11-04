@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 
 interface OfflineItem<T = any> {
   key: string
@@ -262,7 +262,14 @@ export function useOfflineStorage() {
   initializeStorage()
 
   // Cleanup expired items every 5 minutes
-  setInterval(cleanup, 5 * 60 * 1000)
+  const cleanupInterval = setInterval(cleanup, 5 * 60 * 1000)
+
+  // Cleanup on unmount
+  onUnmounted(() => {
+    if (cleanupInterval) {
+      clearInterval(cleanupInterval)
+    }
+  })
 
   return {
     // State

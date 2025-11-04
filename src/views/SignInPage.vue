@@ -37,9 +37,17 @@
                   type="email"
                   required
                   placeholder="your@email.com"
-                  class="form-input w-full"
+                  :class="[
+                    'form-input w-full',
+                    touched.email && errors.email ? 'form-input.error' : '',
+                    touched.email && !errors.email && email ? 'form-input.success' : ''
+                  ]"
                   autocomplete="email"
+                  @blur="validateEmailField"
                 />
+                <p v-if="touched.email && errors.email" class="mt-1 text-xs text-red-600 dark:text-red-400">
+                  {{ errors.email }}
+                </p>
               </div>
 
               <!-- Password -->
@@ -53,21 +61,17 @@
                   type="password"
                   required
                   placeholder="Enter your password"
-                  class="form-input w-full"
+                  :class="[
+                    'form-input w-full',
+                    touched.password && errors.password ? 'form-input.error' : '',
+                    touched.password && !errors.password && password ? 'form-input.success' : ''
+                  ]"
                   autocomplete="current-password"
+                  @blur="validatePasswordField"
                 />
-              </div>
-
-              <!-- Error Message -->
-              <div v-if="loginError" class="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
-                <div class="flex items-start gap-3">
-                  <svg class="w-5 h-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                  </svg>
-                  <div class="flex-1">
-                    <p class="text-sm font-medium text-red-800 dark:text-red-200">{{ loginError }}</p>
-                  </div>
-                </div>
+                <p v-if="touched.password && errors.password" class="mt-1 text-xs text-red-600 dark:text-red-400">
+                  {{ errors.password }}
+                </p>
               </div>
 
               <!-- Remember Me & Forgot Password -->
@@ -76,9 +80,12 @@
                   <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
                   <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
                 </label>
-                <router-link to="/forgot-password" class="text-sm text-primary-600 dark:text-primary-400 hover:underline">
-                  Forgot password?
-                </router-link>
+                <a href="#" class="text-sm text-primary-600 hover:underline">Forgot password?</a>
+              </div>
+
+              <!-- Auth Error -->
+              <div v-if="authStore.error" class="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p class="text-sm text-red-600 dark:text-red-400">{{ authStore.error.message }}</p>
               </div>
 
               <!-- Submit Button -->
@@ -97,30 +104,6 @@
                 </span>
               </button>
             </form>
-
-            <!-- Divider -->
-            <div class="my-8 flex items-center">
-              <div class="flex-1 border-t border-gray-300 dark:border-gray-700"></div>
-              <span class="px-4 text-sm text-gray-500 dark:text-gray-400">Quick Demo</span>
-              <div class="flex-1 border-t border-gray-300 dark:border-gray-700"></div>
-            </div>
-
-            <!-- Demo Button -->
-            <button 
-              @click="useDemoAccount" 
-              class="group w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              <span>Try Demo Account</span>
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-            <p class="text-xs text-center text-gray-500 dark:text-gray-400 mt-2">
-              Email: demo@biblestem.com • Password: demo123
-            </p>
 
             <!-- Sign Up Link -->
             <div class="mt-8 text-center">
@@ -157,70 +140,63 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { validateEmail, validateRequired } from '../utils/validation'
 
 const email = ref('')
 const password = ref('')
-const loginError = ref<string | null>(null)
 const router = useRouter()
 const authStore = useAuthStore()
 
-// Clear error when user starts typing
-watch([email, password], () => {
-  if (loginError.value) {
-    loginError.value = null
-  }
-})
+// Validation errors
+const errors = ref<Record<string, string>>({})
+const touched = ref<Record<string, boolean>>({})
 
-// Convert technical errors to user-friendly messages
-const getUserFriendlyError = (error: string | undefined): string => {
-  if (!error) return 'Wrong email or password. Please try again.'
-  
-  const errorLower = error.toLowerCase()
-  
-  // Supabase auth error codes
-  if (errorLower.includes('invalid login credentials') || 
-      errorLower.includes('invalid_credentials') ||
-      errorLower.includes('email not confirmed') ||
-      errorLower.includes('user not found') ||
-      errorLower.includes('invalid password')) {
-    return 'Wrong email or password. Please check your credentials and try again.'
+// Validate individual fields
+const validateEmailField = () => {
+  touched.value.email = true
+  const result = validateEmail(email.value)
+  if (result.isValid) {
+    delete errors.value.email
+  } else {
+    errors.value.email = result.error || ''
   }
-  
-  // Network errors
-  if (errorLower.includes('network') || errorLower.includes('fetch')) {
-    return 'Network error. Please check your internet connection and try again.'
+  return result.isValid
+}
+
+const validatePasswordField = () => {
+  touched.value.password = true
+  const result = validateRequired(password.value, 'Password')
+  if (result.isValid) {
+    delete errors.value.password
+  } else {
+    errors.value.password = result.error || ''
   }
+  return result.isValid
+}
+
+// Validate all fields
+const validateForm = (): boolean => {
+  const emailValid = validateEmailField()
+  const passwordValid = validatePasswordField()
   
-  // Rate limiting
-  if (errorLower.includes('rate limit') || errorLower.includes('too many')) {
-    return 'Too many login attempts. Please wait a moment and try again.'
-  }
-  
-  // Generic fallback
-  return 'Wrong email or password. Please try again.'
+  return emailValid && passwordValid
 }
 
 const handleSubmit = async () => {
-  loginError.value = null // Clear previous errors
+  // Mark all fields as touched
+  touched.value = { email: true, password: true }
   
-  const result = await authStore.login(email.value, password.value)
-  
-  if (result.success) {
-    loginError.value = null
-    router.push('/dashboard')
-  } else {
-    // Show user-friendly error message
-    loginError.value = getUserFriendlyError(result.error)
+  // Validate form
+  if (!validateForm()) {
+    return
   }
-}
 
-const useDemoAccount = async () => {
-  email.value = 'demo@biblestem.com'
-  password.value = 'demo123'
-  loginError.value = null
-  await handleSubmit()
+  const result = await authStore.login(email.value, password.value)
+  if (result.success) {
+    router.push('/dashboard')
+  }
 }
 </script>
