@@ -155,12 +155,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, nextTick, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useStudies } from '@/composables/useStudies'
 import StudySection from '@/components/StudySection.vue'
 import StudySectionSkeleton from '@/components/skeletons/StudySectionSkeleton.vue'
 
+const route = useRoute()
 const authStore = useAuthStore()
 const { categoriesWithStudies, isLoading, error, fetchStudies } = useStudies()
 
@@ -202,14 +204,72 @@ const showSupportModal = () => {
   alert('Thank you for your interest in supporting BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more Bible studies\n• Keeps the platform running for everyone\n• Spreads the Gospel freely worldwide\n• As a thank you, you\'ll get access to advanced studies with Hebrew & Greek insights\n\n✨ All basic studies remain 100% FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo\n\nWe\'re grateful for your prayers and support! ❤️')
 }
 
+// Scroll to hash section
+const scrollToHash = async (delay = 300) => {
+  const hash = window.location.hash || route.hash
+  if (hash) {
+    // Remove the # symbol
+    const sectionId = hash.substring(1)
+    
+    // Wait for DOM to be ready and studies to load
+    await nextTick()
+    
+    // Wait for sections to be rendered (data loaded)
+    // Retry multiple times to ensure element exists
+    let attempts = 0
+    const maxAttempts = 10
+    
+    const tryScroll = () => {
+      attempts++
+      const element = document.getElementById(sectionId)
+      if (element) {
+        // Account for header/fixed elements
+        const headerOffset = 100
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+        return true
+      } else if (attempts < maxAttempts) {
+        // Retry after a short delay
+        setTimeout(tryScroll, 100)
+      }
+      return false
+    }
+    
+    // Initial delay to ensure data is loaded
+    setTimeout(tryScroll, delay)
+  }
+}
+
+// Watch for hash changes (including when already on same route)
+watch(() => route.hash, (newHash, oldHash) => {
+  if (newHash !== oldHash) {
+    scrollToHash(100)
+  }
+})
+
+// Also watch for browser hash changes (back/forward buttons, direct navigation)
+const handleHashChange = () => {
+  scrollToHash(100)
+}
+
 onMounted(async () => {
   await fetchStudies()
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('hashchange', handleHashChange)
   handleScroll() // Check initial scroll position
+  
+  // Scroll to hash if present (with longer delay to ensure data loaded)
+  await scrollToHash(500)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('hashchange', handleHashChange)
 })
 </script>
 
