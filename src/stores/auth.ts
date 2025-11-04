@@ -91,10 +91,17 @@ export const useAuthStore = defineStore('auth', () => {
               id: authData.user.id,
               email,
               name,
-              has_supported: false,
+              plan: 'free',
+              email_verified: false,
             })
 
-            if (profileError) console.error('Profile creation error:', profileError)
+            if (profileError) {
+              console.error('Profile creation error:', profileError)
+              // If profile already exists, that's okay - user might have signed up before
+              if (!profileError.message.includes('duplicate') && !profileError.message.includes('unique')) {
+                throw profileError
+              }
+            }
 
             // Map Supabase user to our user profile
             user.value = {
@@ -183,26 +190,41 @@ export const useAuthStore = defineStore('auth', () => {
             .single()
 
           if (profile) {
+            // Map plan to hasSupported (premium plan = hasSupported)
             user.value = {
               id: profile.id,
               name: profile.name,
               email: profile.email,
               avatar: profile.avatar,
               bio: profile.bio,
-              hasSupported: profile.has_supported || false,
+              hasSupported: profile.plan === 'premium',
               studiesCompleted: 0, // TODO: Calculate from study_progress
               joinDate: profile.created_at,
               emailVerified: profile.email_verified,
             }
           } else {
-            // Fallback if profile doesn't exist yet
+            // Create profile if it doesn't exist yet
+            const userName = authData.user.user_metadata?.name || authData.user.email!.split('@')[0]
+            const { error: insertError } = await supabase.from('users').insert({
+              id: authData.user.id,
+              email: authData.user.email!,
+              name: userName,
+              plan: 'free',
+              email_verified: !!authData.user.email_confirmed_at,
+            })
+
+            if (insertError) {
+              console.error('Failed to create user profile:', insertError)
+            }
+
+            // Create local user object
             user.value = {
               id: authData.user.id,
-              name: authData.user.user_metadata.name || email.split('@')[0],
+              name: userName,
               email: authData.user.email!,
               hasSupported: false,
               studiesCompleted: 0,
-              joinDate: new Date().toISOString(),
+              joinDate: authData.user.created_at || new Date().toISOString(),
               emailVerified: !!authData.user.email_confirmed_at,
             }
           }
@@ -341,13 +363,14 @@ export const useAuthStore = defineStore('auth', () => {
               .single()
 
             if (profile) {
+              // Map plan to hasSupported (premium plan = hasSupported)
               user.value = {
                 id: profile.id,
                 name: profile.name,
                 email: profile.email,
                 avatar: profile.avatar,
                 bio: profile.bio,
-                hasSupported: profile.has_supported || false,
+                hasSupported: profile.plan === 'premium',
                 studiesCompleted: 0, // TODO: Calculate from study_progress
                 joinDate: profile.created_at,
                 emailVerified: profile.email_verified,
@@ -355,16 +378,29 @@ export const useAuthStore = defineStore('auth', () => {
               console.log('User loaded from Supabase:', user.value)
             } else {
               // Create profile from session if it doesn't exist
+              const userName = session.user.user_metadata?.name || session.user.email!.split('@')[0]
+              const { error: insertError } = await supabase.from('users').insert({
+                id: session.user.id,
+                email: session.user.email!,
+                name: userName,
+                plan: 'free',
+                email_verified: !!session.user.email_confirmed_at,
+              })
+
+              if (insertError) {
+                console.error('Failed to create user profile:', insertError)
+              }
+
               user.value = {
                 id: session.user.id,
-                name: session.user.user_metadata.name || session.user.email!.split('@')[0],
+                name: userName,
                 email: session.user.email!,
                 hasSupported: false,
                 studiesCompleted: 0,
                 joinDate: session.user.created_at,
                 emailVerified: !!session.user.email_confirmed_at,
               }
-              console.log('User created from session:', user.value)
+              console.log('User profile created from session:', user.value)
             }
           } else {
             user.value = null
