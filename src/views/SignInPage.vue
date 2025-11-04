@@ -76,7 +76,9 @@
                   <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
                   <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
                 </label>
-                <a href="#" class="text-sm text-primary-600 hover:underline">Forgot password?</a>
+                <router-link to="/forgot-password" class="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+                  Forgot password?
+                </router-link>
               </div>
 
               <!-- Submit Button -->

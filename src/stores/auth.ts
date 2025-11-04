@@ -297,6 +297,90 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const forgotPassword = async (email: string): Promise<{ success: boolean; error?: string }> => {
+    isLoading.value = true
+    clearError()
+
+    try {
+      if (useSupabase) {
+        const supabase = getSupabase()
+        if (!supabase) throw new Error('Supabase client not available')
+
+        // Send password reset email
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        })
+
+        if (error) throw error
+
+        return { success: true }
+      } else {
+        // Demo mode - just return success (no actual email sent)
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        return { success: true }
+      }
+    } catch (err: any) {
+      console.error('Forgot password error:', err)
+      let errorMessage = 'Failed to send password reset email. Please try again.'
+
+      if (err?.message) {
+        const errMsg = err.message.toLowerCase()
+        if (errMsg.includes('rate limit') || errMsg.includes('too many requests')) {
+          errorMessage = 'Too many requests. Please wait a moment and try again.'
+        } else if (errMsg.includes('network') || errMsg.includes('fetch')) {
+          errorMessage = 'Network error. Please check your internet connection and try again.'
+        }
+      }
+
+      setError(errorMessage, err?.code)
+      return { success: false, error: errorMessage }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const resetPassword = async (newPassword: string): Promise<{ success: boolean; error?: string }> => {
+    isLoading.value = true
+    clearError()
+
+    try {
+      if (useSupabase) {
+        const supabase = getSupabase()
+        if (!supabase) throw new Error('Supabase client not available')
+
+        // Update password
+        const { error } = await supabase.auth.updateUser({
+          password: newPassword,
+        })
+
+        if (error) throw error
+
+        return { success: true }
+      } else {
+        // Demo mode
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        return { success: true }
+      }
+    } catch (err: any) {
+      console.error('Reset password error:', err)
+      let errorMessage = 'Failed to reset password. Please try again.'
+
+      if (err?.message) {
+        const errMsg = err.message.toLowerCase()
+        if (errMsg.includes('password')) {
+          errorMessage = 'Password must be at least 6 characters long.'
+        } else if (errMsg.includes('network') || errMsg.includes('fetch')) {
+          errorMessage = 'Network error. Please check your internet connection and try again.'
+        }
+      }
+
+      setError(errorMessage, err?.code)
+      return { success: false, error: errorMessage }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   const updateUserProfile = async (updates: Partial<UserProfile>) => {
     if (!user.value) return { success: false, error: 'User not authenticated' }
 
@@ -453,6 +537,8 @@ export const useAuthStore = defineStore('auth', () => {
     signUp,
     login,
     logout,
+    forgotPassword,
+    resetPassword,
     updateUserProfile,
     initializeAuth,
     clearError,
