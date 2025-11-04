@@ -208,7 +208,7 @@ import StudyGridSkeleton from '../components/skeletons/StudyGridSkeleton.vue'
 const router = useRouter()
 const authStore = useAuthStore()
 const progressStore = useStudyProgressStore()
-const { userBookmarks } = useStudyOrganization()
+const { userBookmarks, initialize: initializeBookmarks } = useStudyOrganization()
 
 // Loading state
 const isLoading = ref(true)
@@ -322,6 +322,9 @@ onMounted(async () => {
   if (!authStore.isInitialized) {
     await authStore.initializeAuth()
   }
+  
+  // Initialize bookmarks (loads from localStorage)
+  await initializeBookmarks()
   
   // Ensure progress data is loaded
   if (Object.keys(progressStore.progressData).length === 0) {

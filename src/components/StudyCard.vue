@@ -96,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStudyOrganization } from '../composables/useStudyOrganization'
 import type { Study } from '../data/studies'
@@ -111,7 +111,12 @@ interface Props {
 
 const props = defineProps<Props>()
 const router = useRouter()
-const { isBookmarked: checkIsBookmarked, toggleBookmark } = useStudyOrganization()
+const { isBookmarked: checkIsBookmarked, toggleBookmark, initialize: initializeBookmarks } = useStudyOrganization()
+
+// Initialize bookmarks on mount to ensure state is correct (idempotent - safe to call multiple times)
+onMounted(async () => {
+  await initializeBookmarks()
+})
 
 const gradientClass = computed(() => {
   // Use the study's color if available, otherwise default gradient
