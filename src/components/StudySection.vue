@@ -12,22 +12,28 @@
         </p>
       </div>
       
-      <!-- View All Button (if more than visible studies) -->
-      <router-link
+      <!-- View All / Show Less Button -->
+      <button
         v-if="showViewAll"
-        :to="`/study-series#${category.id}`"
         @click="handleViewAllClick"
         class="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
       >
-        <span>View All</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        <span>{{ isExpanded ? 'Show Less' : 'View All' }}</span>
+        <svg 
+          class="w-4 h-4 transition-transform"
+          :class="{ 'rotate-180': isExpanded }"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
-      </router-link>
+      </button>
     </div>
     
-    <!-- Horizontal Scrolling Container -->
+    <!-- Horizontal Scrolling Container (shown when NOT expanded) -->
     <div
+      v-if="!isExpanded"
       ref="scrollContainer"
       class="grid grid-cols-2 md:flex gap-4 overflow-x-auto pb-4 px-4 scrollbar-hide md:snap-x md:snap-mandatory"
       @scroll="handleScroll"
@@ -46,8 +52,7 @@
         v-if="showViewAll"
         class="flex-shrink-0 w-full md:hidden flex items-center justify-center"
       >
-        <router-link
-          :to="`/study-series#${category.id}`"
+        <button
           @click="handleViewAllClick"
           class="w-full min-h-[400px] bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl flex flex-col items-center justify-center p-6 text-white hover:from-primary-600 hover:to-blue-700 transition-all duration-300 group"
         >
@@ -60,7 +65,20 @@
           <p class="text-sm text-white/90 text-center">
             Explore all {{ studies.length }} {{ category.title.toLowerCase() }}
           </p>
-        </router-link>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Expanded Grid View (shown when expanded) -->
+    <div
+      v-else
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 pb-4"
+    >
+      <div
+        v-for="study in studies"
+        :key="study.id"
+      >
+        <StudyCard :study="study" />
       </div>
     </div>
     
@@ -117,6 +135,7 @@ const studies = computed(() => props.category.studies)
 const scrollContainer = ref<HTMLElement | null>(null)
 const canScrollLeft = ref(false)
 const canScrollRight = ref(false)
+const isExpanded = ref(false)
 
 const getCategoryIcon = (categoryId: string): string => {
   const icons: Record<string, string> = {
@@ -129,35 +148,31 @@ const getCategoryIcon = (categoryId: string): string => {
   return icons[categoryId] || '📖'
 }
 
-const handleViewAllClick = async (e: Event) => {
-  // Always ensure we navigate and scroll, even if already on the same route
-  const targetHash = `#${props.category.id}`
-  const targetPath = `/study-series${targetHash}`
+const handleViewAllClick = (e: Event) => {
+  e.preventDefault()
+  // Toggle expanded view to show all studies in a grid
+  isExpanded.value = !isExpanded.value
   
-  // Navigate (this will work even if on same route if hash is different)
-  await router.push(targetPath)
-  
-  // Force scroll after navigation
-  await nextTick()
-  
-  // Small delay to ensure DOM is updated
-  setTimeout(() => {
-    const element = document.getElementById(props.category.id)
-    if (element) {
-      const headerOffset = 100
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      })
-    }
-  }, 100)
+  // Scroll to section when expanding
+  if (isExpanded.value) {
+    nextTick(() => {
+      const element = document.getElementById(props.category.id)
+      if (element) {
+        const headerOffset = 100
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      }
+    })
+  }
 }
 
 const checkScrollButtons = () => {
-  if (!scrollContainer.value) return
+  if (!scrollContainer.value || isExpanded.value) return
   
   const { scrollLeft, scrollWidth, clientWidth } = scrollContainer.value
   canScrollLeft.value = scrollLeft > 0
