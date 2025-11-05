@@ -142,9 +142,10 @@
               </div>
             </div>
             <button
-              v-if="(lesson.content.taggedScripture || lesson.content.hebrewGreekWords) && study?.difficulty === 'advanced'"
+              v-if="lesson.content.taggedScripture || lesson.content.hebrewGreekWords"
               @click="showGreekHebrew = !showGreekHebrew"
               class="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"
+              title="Toggle original Greek/Hebrew text display"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
