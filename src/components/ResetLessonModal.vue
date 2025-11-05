@@ -106,6 +106,25 @@ const previousActiveElement = ref<HTMLElement | null>(null)
 const { announceSuccess, announceError } = useAccessibility()
 const { trapFocus, getFocusableElements } = useFocusManagement()
 
+// Mobile swipe-to-dismiss
+import { useSwipeToDismiss } from '../composables/useSwipeToDismiss'
+import { isMobile } from '../utils/mobileHelpers'
+
+const isMobileDevice = isMobile()
+
+// Enable swipe-to-dismiss on mobile
+if (isMobileDevice) {
+  watch(() => modalRef.value, (newModalRef) => {
+    if (newModalRef && props.isOpen) {
+      useSwipeToDismiss(newModalRef, {
+        onDismiss: closeModal,
+        threshold: 100,
+        haptic: true
+      })
+    }
+  })
+}
+
 // IDs for ARIA
 const titleId = ref(`reset-modal-title-${Math.random().toString(36).substr(2, 9)}`)
 const descriptionId = ref(`reset-modal-description-${Math.random().toString(36).substr(2, 9)}`)
