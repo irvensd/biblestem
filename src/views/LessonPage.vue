@@ -105,7 +105,7 @@
         class="mb-16"
         @scroll="updateCurrentSection"
       >
-        <div v-if="lesson.openingThought" class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl">
+        <div v-if="lesson.openingThought" class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
           <div class="flex items-center gap-3 mb-6">
             <div
               class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-blue-600 flex items-center justify-center"
@@ -126,7 +126,7 @@
 
       <!-- Section 2: Scripture Exploration -->
       <section ref="section2" class="mb-16">
-        <div class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl">
+        <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
           <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-3">
               <div
@@ -185,7 +185,7 @@
                 <div
                   v-for="(tag, index) in lesson.content.taggedScripture"
                   :key="index"
-                  class="p-4 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800"
+                  class="p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg border-2 border-neutral-200 dark:border-neutral-800"
                 >
                   <div class="font-bold text-emerald-700 dark:text-emerald-400 mb-1">
                     {{ tag.data?.word }}
@@ -201,7 +201,7 @@
                 <div
                   v-for="(word, index) in lesson.content.hebrewGreekWords"
                   :key="index"
-                  class="p-4 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800"
+                  class="p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg border-2 border-neutral-200 dark:border-neutral-800"
                 >
                   <div class="font-bold text-primary-700 dark:text-primary-400 mb-1">
                     {{ word.word }}
@@ -220,7 +220,7 @@
 
       <!-- Section 3: Commentary / Teaching Points -->
       <section ref="section3" class="mb-16">
-        <div class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl">
+        <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
           <div class="flex items-center gap-3 mb-6">
             <div
               class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center"
@@ -328,7 +328,7 @@
 
       <!-- Section 4: Interactive Element -->
       <section ref="section4" class="mb-16">
-        <div class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl">
+        <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
           <div class="flex items-center gap-3 mb-6">
             <div
               class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center"
@@ -374,7 +374,7 @@
 
       <!-- Section 5: Life Application -->
       <section ref="section5" class="mb-16">
-        <div class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl">
+        <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
           <div class="flex items-center gap-3 mb-6">
             <div
               class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center"
@@ -406,7 +406,7 @@
                 <p class="text-lg sm:text-xl text-neutral-800 dark:text-neutral-200 leading-relaxed font-medium">
                   {{ lesson.content.lifeApplication.challenge }}
                 </p>
-                <div v-if="lesson.content.lifeApplication.journaling" class="mt-6 p-6 bg-white dark:bg-neutral-900 rounded-xl border-2 border-emerald-200 dark:border-emerald-800 shadow-lg">
+                <div v-if="lesson.content.lifeApplication.journaling" class="mt-6 p-6 bg-emerald-50 dark:bg-neutral-900 rounded-xl border-2 border-emerald-200 dark:border-emerald-800 shadow-lg">
                   <p class="text-sm font-bold text-emerald-700 dark:text-emerald-400 mb-3 uppercase tracking-wide">Journal Prompt</p>
                   <p class="text-neutral-800 dark:text-neutral-200 italic text-lg leading-relaxed">{{ lesson.content.lifeApplication.journaling }}</p>
                 </div>
@@ -456,7 +456,7 @@
       <section ref="section6" class="mb-16">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <!-- Prayer -->
-          <div class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 shadow-2xl">
+          <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 shadow-xl border-2 border-neutral-200 dark:border-transparent">
             <div class="flex items-center gap-3 mb-6">
               <div
                 class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center"
@@ -473,7 +473,7 @@
           </div>
 
           <!-- Personal Notes -->
-          <div class="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 shadow-2xl">
+          <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 shadow-xl border-2 border-neutral-200 dark:border-transparent">
             <div class="flex items-center gap-3 mb-6">
               <svg class="w-8 h-8 text-neutral-600 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -488,7 +488,7 @@
             <textarea
               v-model="personalNotes"
               placeholder="Jot down insights, questions, or reflections..."
-              class="w-full h-48 p-4 rounded-xl border-2 border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:border-primary-500 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900/50 transition-all duration-200 resize-none"
+              class="w-full h-48 p-4 rounded-xl border-2 border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:border-primary-500 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900/50 transition-all duration-200 resize-none"
               @input="handleNotesInput"
               @blur="autoSaveNotes"
             ></textarea>
@@ -630,8 +630,8 @@ const section6 = ref<HTMLElement>()
 const gradientClass = computed(() => {
   if (!study.value) return 'bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900'
   return study.value.category === 'supporter'
-    ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 dark:from-neutral-950 dark:via-indigo-950 dark:to-purple-950'
-    : 'bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 dark:from-neutral-950 dark:via-blue-950 dark:to-indigo-950'
+    ? 'bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900'
+    : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900 dark:via-indigo-900 dark:to-purple-900'
 })
 
 const progressPercentage = computed(() => {

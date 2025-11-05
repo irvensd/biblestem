@@ -3,7 +3,7 @@
  * Remembers where the user left off in each study/lesson
  */
 
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 export interface ReadPosition {
