@@ -56,7 +56,7 @@
       <div class="mb-12">
         <button
           @click="router.back()"
-          class="mb-6 flex items-center gap-2 px-4 py-2 bg-white/20 dark:bg-neutral-900/20 backdrop-blur-md border border-white/30 dark:border-neutral-800/30 rounded-xl text-white hover:bg-white/30 dark:hover:bg-neutral-800/30 transition-all shadow-lg"
+          class="mb-6 flex items-center gap-2 px-4 py-2 bg-white dark:bg-neutral-900/20 backdrop-blur-md border border-neutral-300 dark:border-neutral-800/30 rounded-xl text-neutral-700 dark:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800/30 transition-all shadow-lg"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -65,14 +65,14 @@
         </button>
 
         <div class="mb-6">
-          <div class="inline-block px-3 py-1 bg-white/30 dark:bg-neutral-900/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4 border border-white/40">
+          <div class="inline-block px-3 py-1 bg-white dark:bg-neutral-900/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4 border border-neutral-300 dark:border-white/40 text-neutral-700 dark:text-white shadow-md">
             {{ study?.title }}
           </div>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg mb-4 leading-tight">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 dark:text-white mb-4 leading-tight">
             {{ lesson.title }}
           </h1>
-          <p class="text-white/90 text-lg mb-4 drop-shadow">{{ lesson.description }}</p>
-          <div class="flex items-center gap-4 text-white/80">
+          <p class="text-neutral-700 dark:text-white/90 text-lg mb-4">{{ lesson.description }}</p>
+          <div class="flex items-center gap-4 text-neutral-600 dark:text-white/80">
             <span class="flex items-center gap-2">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
