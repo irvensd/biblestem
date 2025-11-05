@@ -26,6 +26,9 @@ export const initSupabase = () => {
         detectSessionInUrl: true,
       },
     })
+
+    // Monitor token refresh - Supabase handles this via auth state change events
+    // The TOKEN_REFRESHED event will be handled in the auth store
   }
 
   return supabaseClient

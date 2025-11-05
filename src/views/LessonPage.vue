@@ -35,7 +35,13 @@
     </div>
     
     <!-- Actual Content -->
-    <div v-else-if="lesson" class="container-base py-8 sm:py-12">
+    <div v-else-if="study && lesson" class="min-h-screen">
+      <!-- Breadcrumbs -->
+      <div class="container-base pt-6">
+        <Breadcrumbs :items="breadcrumbs" />
+      </div>
+      
+      <div class="container-base pb-8 sm:pb-12">
       <!-- Enhanced Reading Progress -->
       <ReadingProgress
         :current-section="currentSection"
@@ -483,11 +489,12 @@
               v-model="personalNotes"
               placeholder="Jot down insights, questions, or reflections..."
               class="w-full h-48 p-4 rounded-xl border-2 border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:border-primary-500 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900/50 transition-all duration-200 resize-none"
+              @input="handleNotesInput"
               @blur="autoSaveNotes"
             ></textarea>
-            <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2">
-              💾 Auto-saved
-            </p>
+            <div class="mt-2">
+              <AutoSaveIndicator :state="notesSaveState" />
+            </div>
           </div>
         </div>
       </section>
@@ -529,6 +536,7 @@
           Complete This Lesson
         </button>
       </div>
+      </div>
     </div>
 
     <!-- Lesson Not Found -->
@@ -559,9 +567,13 @@ import ReadingProgress from '../components/ReadingProgress.vue'
 import VerseHighlighting from '../components/VerseHighlighting.vue'
 import EnhancedNoteTaking from '../components/EnhancedNoteTaking.vue'
 import StudyNavigation from '../components/StudyNavigation.vue'
+import AutoSaveIndicator from '../components/AutoSaveIndicator.vue'
+import type { AutoSaveState } from '../components/AutoSaveIndicator.vue'
 import EnhancedLoading from '../components/EnhancedLoading.vue'
 import { useHapticFeedback } from '../composables/useMobileGestures'
 import { useAuthStore } from '../stores/auth'
+import { useReadPosition } from '../composables/useReadPosition'
+import Breadcrumbs, { type BreadcrumbItem } from '../components/Breadcrumbs.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -577,6 +589,23 @@ const lesson = computed(() => getLessonById(route.params.studyId as string, rout
 const isLoading = ref(true)
 const hasError = ref(false)
 const errorMessage = ref('')
+
+// Breadcrumbs
+const breadcrumbs = computed<BreadcrumbItem[]>(() => {
+  const items: BreadcrumbItem[] = [
+    { label: 'Study Series', to: '/study-series' }
+  ]
+  
+  if (study.value) {
+    items.push({ label: study.value.title, to: `/study/${route.params.studyId}` })
+  }
+  
+  if (lesson.value) {
+    items.push({ label: lesson.value.title })
+  }
+  
+  return items
+})
 const showGreekHebrew = ref(false)
 const reflectionNotes = ref('')
 const personalNotes = ref('')
@@ -694,9 +723,35 @@ const autoSaveReflection = () => {
   }
 }
 
-const autoSaveNotes = () => {
-  if (personalNotes.value.trim()) {
-    notesStore.createNote({
+// Auto-save state tracking
+const notesSaveState = ref<AutoSaveState>('idle')
+let autoSaveTimeout: ReturnType<typeof setTimeout> | null = null
+
+// Handle notes input with debounced auto-save
+const handleNotesInput = () => {
+  notesSaveState.value = 'saving'
+  
+  // Clear existing timeout
+  if (autoSaveTimeout) {
+    clearTimeout(autoSaveTimeout)
+  }
+  
+  // Debounce auto-save (1 second after user stops typing)
+  autoSaveTimeout = setTimeout(async () => {
+    await autoSaveNotes()
+  }, 1000)
+}
+
+const autoSaveNotes = async () => {
+  if (!personalNotes.value.trim()) {
+    notesSaveState.value = 'idle'
+    return
+  }
+  
+  try {
+    notesSaveState.value = 'saving'
+    
+    await notesStore.createNote({
       studyId: route.params.studyId as string,
       lessonId: route.params.lessonId as string,
       content: personalNotes.value,
@@ -705,6 +760,21 @@ const autoSaveNotes = () => {
       isPrivate: true,
       type: 'general',
     })
+    
+    notesSaveState.value = 'saved'
+    
+    // Reset to idle after 2 seconds
+    setTimeout(() => {
+      notesSaveState.value = 'idle'
+    }, 2000)
+  } catch (error) {
+    console.error('Auto-save failed:', error)
+    notesSaveState.value = 'error'
+    
+    // Reset to idle after 3 seconds
+    setTimeout(() => {
+      notesSaveState.value = 'idle'
+    }, 3000)
   }
 }
 

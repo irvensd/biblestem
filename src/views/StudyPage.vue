@@ -7,6 +7,9 @@
     
     <!-- Actual Content -->
     <div v-else-if="study" class="max-w-4xl mx-auto">
+      <!-- Breadcrumbs -->
+      <Breadcrumbs :items="breadcrumbs" />
+      
       <!-- Study Header -->
       <div class="mb-8">
         <div class="flex items-center gap-3 mb-6">
@@ -18,6 +21,18 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
             <span class="font-medium">Back</span>
+          </button>
+          
+          <!-- Continue Reading Button -->
+          <button
+            v-if="lastReadLessonId"
+            @click="continueReading"
+            class="ml-auto group flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-primary-600 to-blue-600 text-white hover:shadow-lg transition-all"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            <span class="font-medium">Continue Reading</span>
           </button>
         </div>
         <h1 class="text-3xl sm:text-4xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">{{ study.title }}</h1>
@@ -242,7 +257,14 @@ const progressStore = useStudyProgressStore()
 const studyCache = useStudyCache()
 
 const study = ref<Study | null>(null)
+const lastReadLessonId = ref<string | null>(null)
 const loading = ref(true)
+
+// Breadcrumbs
+const breadcrumbs = computed<BreadcrumbItem[]>(() => [
+  { label: 'Study Series', to: '/study-series' },
+  { label: study.value?.title || 'Study' }
+])
 
 // Handle lesson visibility for virtual scrolling
 const handleLessonVisible = (lesson: any, index: number) => {
@@ -303,7 +325,15 @@ const confirmResetLesson = async () => {
   }
 }
 
+const continueReading = () => {
+  if (lastReadLessonId.value) {
+    router.push(`/study/${route.params.id}/lesson/${lastReadLessonId.value}`)
+  }
+}
+
 onMounted(async () => {
+  // Check for last read lesson
+  lastReadLessonId.value = getLastReadLesson(route.params.id as string)
   const studyId = route.params.id as string
   loading.value = true
 

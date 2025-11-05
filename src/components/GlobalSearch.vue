@@ -292,6 +292,8 @@ import { useTheme } from '@/composables/useTheme'
 import { sanitizeForHighlighting } from '@/utils/sanitize'
 import { useDebounce } from '@/composables/useDebounce'
 import { useCache } from '@/composables/useCache'
+import { useStudyProgressStore } from '@/stores/studyProgress'
+import { calculateRelevanceScore, sortByRelevance, highlightMatches, getSearchExcerpt, type SearchMatch } from '@/utils/searchScoring'
 
 const emit = defineEmits<{
   'search-close': []
@@ -400,7 +402,7 @@ watch(debouncedQuery, (newQuery) => {
   performSearch(query)
 })
 
-// Search function with caching
+// Search function with intelligent ranking
 const performSearch = (query: string) => {
   const lowerQuery = query.toLowerCase()
   const cacheKey = `search:${lowerQuery}`
@@ -412,29 +414,66 @@ const performSearch = (query: string) => {
     return
   }
 
-  // Perform search
-  const matchingStudies = allStudies.value.filter(
-    (study) =>
-      study.title.toLowerCase().includes(lowerQuery) ||
-      study.description.toLowerCase().includes(lowerQuery) ||
-      study.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)),
-  )
+  // Get user progress for relevance boosting
+  const progressStore = useStudyProgressStore()
+  const allProgress = progressStore.getAllStudyProgress()
 
-  const matchingLessons = allLessons.value.filter(
-    (lesson) =>
-      lesson.title.toLowerCase().includes(lowerQuery) ||
-      lesson.description.toLowerCase().includes(lowerQuery) ||
-      lesson.scripture.toLowerCase().includes(lowerQuery) ||
-      lesson.studyTitle.toLowerCase().includes(lowerQuery),
-  )
+  // Score and rank studies
+  const studyMatches: SearchMatch[] = []
+  allStudies.value.forEach(study => {
+    const match = calculateRelevanceScore(study, query, {
+      fields: ['title', 'description', 'tags'],
+      weights: { title: 10, description: 5, tags: 7 },
+      boostRecent: true,
+      boostPopular: true,
+      userProgress: allProgress[study.id],
+    })
+    
+    if (match.score > 0) {
+      studyMatches.push(match)
+    }
+  })
 
+  // Score and rank lessons
+  const lessonMatches: SearchMatch[] = []
+  allLessons.value.forEach(lesson => {
+    const match = calculateRelevanceScore(lesson, query, {
+      fields: ['title', 'description', 'scripture', 'studyTitle'],
+      weights: { title: 10, scripture: 8, description: 5, studyTitle: 6 },
+      boostRecent: true,
+      userProgress: allProgress[lesson.studyId],
+    })
+    
+    if (match.score > 0) {
+      lessonMatches.push(match)
+    }
+  })
+
+  // Score and rank notes
+  const noteMatches: SearchMatch[] = []
   const matchingNotes = notesStore.value?.searchNotes?.(query) || []
+  matchingNotes.forEach((note: StudyNote) => {
+    const match = calculateRelevanceScore(note, query, {
+      fields: ['content', 'tags', 'scripture'],
+      weights: { content: 8, tags: 6, scripture: 7 },
+      boostRecent: true,
+    })
+    
+    if (match.score > 0) {
+      noteMatches.push(match)
+    }
+  })
+
+  // Sort all matches by relevance
+  const sortedStudies = sortByRelevance(studyMatches)
+  const sortedLessons = sortByRelevance(lessonMatches)
+  const sortedNotes = sortByRelevance(noteMatches)
 
   const results: SearchResults = {
-    studies: matchingStudies.slice(0, 5), // Limit for dropdown
-    lessons: matchingLessons.slice(0, 5),
-    notes: matchingNotes.slice(0, 5),
-    total: matchingStudies.length + matchingLessons.length + matchingNotes.length,
+    studies: sortedStudies.slice(0, 5).map(m => m.item), // Top 5 for dropdown
+    lessons: sortedLessons.slice(0, 5).map(m => m.item),
+    notes: sortedNotes.slice(0, 5).map(m => m.item),
+    total: studyMatches.length + lessonMatches.length + noteMatches.length,
   }
 
   searchResults.value = results

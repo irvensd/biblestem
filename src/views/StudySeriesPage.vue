@@ -15,7 +15,15 @@
       <!-- Studies Skeleton -->
       <section class="py-16 bg-neutral-50 dark:bg-neutral-900">
         <div class="container mx-auto px-4">
-          <StudySectionSkeleton v-for="i in 3" :key="i" />
+          <div v-for="i in 3" :key="i" class="mb-12">
+            <!-- Section Title Skeleton -->
+            <div class="h-8 bg-neutral-200 dark:bg-neutral-700 rounded w-48 mb-6 animate-pulse"></div>
+            
+            <!-- Study Cards Grid Skeleton -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <StudyCardSkeleton v-for="j in 3" :key="j" />
+            </div>
+          </div>
         </div>
       </section>
     </div>

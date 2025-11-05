@@ -309,7 +309,13 @@ const handleSubmit = async () => {
 
   const result = await authStore.signUp(email.value, password.value, name.value)
   if (result.success) {
-    router.push('/dashboard')
+    // Check if email verification is required
+    if ((result as any).requiresVerification) {
+      // Redirect to verification page with email
+      router.push(`/verify-email?email=${encodeURIComponent(email.value)}`)
+    } else {
+      router.push('/dashboard')
+    }
   }
 }
 </script>

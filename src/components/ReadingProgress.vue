@@ -273,17 +273,8 @@ watch(() => props.currentSection, () => {
   updateReadingProgress()
 })
 
-// Lifecycle
-onMounted(() => {
-  updateReadingProgress()
-  
-  // Update time every second
-  const timeInterval = setInterval(updateTimeSpent, 1000)
-  
-  onUnmounted(() => {
-    clearInterval(timeInterval)
-  })
-})
+// Store interval reference for cleanup
+const timeInterval = ref<ReturnType<typeof setInterval> | null>(null)
 
 // Keyboard shortcuts
 const handleKeydown = (event: KeyboardEvent) => {
@@ -302,11 +293,25 @@ const handleKeydown = (event: KeyboardEvent) => {
   }
 }
 
+// Lifecycle
 onMounted(() => {
+  updateReadingProgress()
+  
+  // Update time every second
+  timeInterval.value = setInterval(updateTimeSpent, 1000)
+  
+  // Add keyboard event listener
   document.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
+  // Clear interval
+  if (timeInterval.value) {
+    clearInterval(timeInterval.value)
+    timeInterval.value = null
+  }
+  
+  // Remove keyboard event listener
   document.removeEventListener('keydown', handleKeydown)
 })
 </script>
