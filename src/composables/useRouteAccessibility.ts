@@ -4,14 +4,14 @@
  */
 
 import { watch, nextTick, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import type { Router } from 'vue-router'
 import { useAccessibility } from './useAccessibility'
 
 /**
  * Manage accessibility for route changes
+ * @param router - Vue Router instance
  */
-export function useRouteAccessibility() {
-  const router = useRouter()
+export function useRouteAccessibility(router?: Router) {
   const { announcePageChange, announceNavigation } = useAccessibility()
 
   /**
@@ -47,7 +47,7 @@ export function useRouteAccessibility() {
   /**
    * Announce route change to screen readers
    */
-  const announceRouteChange = (routeName: string, routePath: string) => {
+  const announceRouteChange = (routeName: string, routePath: string, routeMeta?: Record<string, unknown>) => {
     // Get page title from route or document
     const pageTitle = document.title || routeName
     
@@ -55,29 +55,38 @@ export function useRouteAccessibility() {
     announcePageChange(pageTitle)
     
     // Additional context if available
-    const routeMeta = router.currentRoute.value.meta
     if (routeMeta?.description) {
-      announceNavigation(router.currentRoute.value.name as string || '', routeName)
+      announceNavigation(routeName, routeName)
     }
   }
 
   /**
    * Initialize route accessibility
+   * @param routerInstance - Router instance to watch (optional if called from router setup)
    */
-  const initRouteAccessibility = () => {
+  const initRouteAccessibility = (routerInstance?: Router) => {
+    const activeRouter = routerInstance || router
+    
+    if (!activeRouter) {
+      console.warn('Router not available for accessibility initialization')
+      return
+    }
+
     // Watch for route changes
-    router.afterEach((to, from) => {
+    activeRouter.afterEach((to, from) => {
       // Announce route change
-      announceRouteChange(to.name as string || to.path, to.path)
+      announceRouteChange(to.name as string || to.path, to.path, to.meta)
       
       // Focus main content after route change
       focusMainContent()
     })
 
-    // Initial focus on mount
-    onMounted(() => {
-      focusMainContent()
-    })
+    // Initial focus on mount (only when used in component)
+    if (!routerInstance) {
+      onMounted(() => {
+        focusMainContent()
+      })
+    }
   }
 
   return {
