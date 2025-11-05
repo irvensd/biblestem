@@ -6,6 +6,7 @@ import { getSyncQueue } from '../composables/useSupabaseSync'
 import { getCurrentTimestamp, ensureValidTimestamp, syncWithServerTimestamp } from '../utils/timestamps'
 import { validateAndSanitizeNote } from '../utils/dataValidation'
 import { useOptimisticUpdates } from '../composables/useOptimisticUpdates'
+import { securityService } from '../services/securityService'
 
 export interface StudyNote {
   id: string
@@ -37,12 +38,28 @@ export const useNotesStore = defineStore('notes', () => {
 
   // Create a new note
   const createNote = async (noteData: Omit<StudyNote, 'id' | 'createdAt' | 'updatedAt'>) => {
+    const authStore = useAuthStore()
+    
+    // Rate limiting check
+    if (authStore.user) {
+      try {
+        await securityService.checkNotesRateLimit(authStore.user.id)
+      } catch (error) {
+        console.error('Rate limit exceeded:', error)
+        throw new Error('Too many notes created. Please wait a moment.')
+      }
+    }
+
     const id = generateNoteId()
     const now = getCurrentTimestamp() // Use centralized timestamp
+
+    // Sanitize content for XSS protection
+    const sanitizedContent = securityService.sanitizeNote(noteData.content)
 
     const note: StudyNote = {
       id,
       ...noteData,
+      content: sanitizedContent,
       createdAt: now,
       updatedAt: now,
     }
@@ -53,6 +70,16 @@ export const useNotesStore = defineStore('notes', () => {
     if (!validation.isValid) {
       console.error('Note validation failed:', validation.errors)
       throw new Error(`Invalid note data: ${validation.errors.join(', ')}`)
+    }
+    
+    // Additional security check
+    if (!securityService.isSafeInput(validatedNote.content)) {
+      securityService.logSecurityEvent({
+        type: 'xss_attempt',
+        userId: authStore.user?.id,
+        details: 'Potential XSS in note content'
+      })
+      throw new Error('Invalid content detected')
     }
 
     // Optimistic update - add to local state immediately
@@ -78,6 +105,11 @@ export const useNotesStore = defineStore('notes', () => {
   const updateNote = async (noteId: string, updates: Partial<Omit<StudyNote, 'id' | 'createdAt'>>) => {
     if (notesData.value[noteId]) {
       const now = getCurrentTimestamp() // Use centralized timestamp
+      
+      // Sanitize content if present
+      if (updates.content) {
+        updates.content = securityService.sanitizeNote(updates.content)
+      }
       
       const updatedNote = {
         ...notesData.value[noteId],

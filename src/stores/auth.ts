@@ -2,6 +2,8 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getSupabase, isSupabaseAvailable, handleSupabaseError, requiresReAuth } from '../lib/supabase'
 import { logger } from '../utils/logger'
+import { securityService } from '../services/securityService'
+import { sanitizeEmail, sanitizePlainText } from '../utils/sanitization'
 import type { User } from '@supabase/supabase-js'
 
 export interface UserProfile {
@@ -48,6 +50,24 @@ export const useAuthStore = defineStore('auth', () => {
     logger.debug('=== SIGNUP ===')
     logger.debug('Email:', email, 'Name:', name, 'Using Supabase:', useSupabase)
 
+    // Rate limiting
+    try {
+      await securityService.checkAuthRateLimit(email)
+    } catch (rateLimitError) {
+      return {
+        success: false,
+        error: 'Too many signup attempts. Please try again later.'
+      }
+    }
+
+    // Sanitize inputs
+    const sanitizedEmail = sanitizeEmail(email)
+    const sanitizedName = sanitizePlainText(name, { maxLength: 100, trim: true })
+
+    if (!sanitizedEmail) {
+      return { success: false, error: 'Invalid email address' }
+    }
+
     isLoading.value = true
     clearError()
 
@@ -56,13 +76,13 @@ export const useAuthStore = defineStore('auth', () => {
         const supabase = getSupabase()
         if (!supabase) throw new Error('Supabase client not available')
 
-        // Sign up with Supabase Auth
+        // Sign up with Supabase Auth (use sanitized inputs)
         const { data: authData, error: authError } = await supabase.auth.signUp({
-          email,
+          email: sanitizedEmail,
           password,
           options: {
             data: {
-              name,
+              name: sanitizedName,
             },
           },
         })
@@ -74,12 +94,12 @@ export const useAuthStore = defineStore('auth', () => {
           throw authError
         }
 
-          // Create user profile in database
+          // Create user profile in database (use sanitized inputs)
           if (authData.user) {
             const { error: profileError } = await supabase.from('users').insert({
               id: authData.user.id,
-              email,
-              name,
+              email: sanitizedEmail,
+              name: sanitizedName,
               has_supported: false,
             })
 
