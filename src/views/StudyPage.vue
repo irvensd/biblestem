@@ -241,20 +241,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getSupabase, handleSupabaseError } from '../lib/supabase'
 import { useStudyProgressStore } from '../stores/studyProgress'
 import { useStudyCache } from '../composables/useCache'
+import { useReadPosition } from '../composables/useReadPosition'
 import StudyPageSkeleton from '../components/skeletons/StudyPageSkeleton.vue'
 import ResetLessonModal from '../components/ResetLessonModal.vue'
 import VirtualScroll from '../components/VirtualScroll.vue'
+import Breadcrumbs, { type BreadcrumbItem } from '../components/Breadcrumbs.vue'
 import type { Study, Lesson } from '../data/studies'
 
 const route = useRoute()
 const router = useRouter()
 const progressStore = useStudyProgressStore()
 const studyCache = useStudyCache()
+const { getLastReadLesson } = useReadPosition()
 
 const study = ref<Study | null>(null)
 const lastReadLessonId = ref<string | null>(null)
