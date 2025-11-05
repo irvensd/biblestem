@@ -7,7 +7,7 @@
     <a href="#main-content" class="skip-link"> Skip to main content </a>
 
     <AppHeader />
-    <main id="main-content" class="pb-16 sm:pb-0" tabindex="-1">
+    <main id="main-content" class="pb-20 sm:pb-0 safe-area-bottom" tabindex="-1">
       <ErrorBoundary @error-caught="handleGlobalError" @error-retry="handleErrorRetry">
         <router-view v-if="isAppReady" v-slot="{ Component }">
           <component :is="Component" />
