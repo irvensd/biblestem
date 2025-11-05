@@ -286,7 +286,8 @@ const isCompleted = (lessonId: string) => {
 }
 
 const viewLesson = (lessonId: string) => {
-  router.push(`/study/${route.params.id}/lesson/${lessonId}`)
+  // Fixed: Use correct route format matching router definition
+  router.push(`/study/${route.params.id as string}/lesson/${lessonId}`)
 }
 
 const markAsIncomplete = async (lessonId: string) => {
@@ -330,7 +331,8 @@ const confirmResetLesson = async () => {
 
 const continueReading = () => {
   if (lastReadLessonId.value) {
-    router.push(`/study/${route.params.id}/lesson/${lastReadLessonId.value}`)
+    // Fixed: Use correct route format matching router definition
+    router.push(`/study/${route.params.id as string}/lesson/${lastReadLessonId.value}`)
   }
 }
 

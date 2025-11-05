@@ -1,184 +1,253 @@
-const CACHE_NAME = 'biblestem-v1.0.2-debug'
-const OFFLINE_URL = '/offline.html'
+/**
+ * Service Worker for BibleStem
+ * Handles caching strategies to prevent stale data
+ */
 
-// Resources to cache for offline use
-const STATIC_CACHE_URLS = [
+const CACHE_VERSION = 'v2.0.0'
+const CACHE_NAME = `biblestem-${CACHE_VERSION}`
+
+// Resources to cache immediately on install
+const STATIC_ASSETS = [
   '/',
-  '/offline.html',
-  '/manifest.json',
-  // Core app shell resources will be added by build process
+  '/index.html',
+  '/manifest.json'
 ]
 
-// API endpoints that can be cached
-const API_CACHE_PATTERNS = [
-  // Add API patterns here if needed
-]
+// Max age for different resource types (in milliseconds)
+const CACHE_MAX_AGE = {
+  static: 7 * 24 * 60 * 60 * 1000, // 7 days for static assets
+  api: 5 * 60 * 1000, // 5 minutes for API data
+  images: 30 * 24 * 60 * 60 * 1000, // 30 days for images
+}
 
-// Install event - cache static resources
+/**
+ * Install event - cache static assets
+ */
 self.addEventListener('install', (event) => {
-  console.log('[ServiceWorker] Install')
-
+  console.log('[ServiceWorker] Installing version:', CACHE_VERSION)
+  
   event.waitUntil(
-    (async () => {
-      const cache = await caches.open(CACHE_NAME)
-      console.log('[ServiceWorker] Caching app shell')
-      await cache.addAll(STATIC_CACHE_URLS)
-    })(),
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('[ServiceWorker] Caching static assets')
+      return cache.addAll(STATIC_ASSETS)
+    }).then(() => {
+      // Force the waiting service worker to become the active service worker
+      return self.skipWaiting()
+    })
   )
-
-  // Force the waiting service worker to become the active service worker
-  self.skipWaiting()
 })
 
-// Activate event - clean up old caches
+/**
+ * Activate event - clean up old caches
+ */
 self.addEventListener('activate', (event) => {
-  console.log('[ServiceWorker] Activate')
-
+  console.log('[ServiceWorker] Activating version:', CACHE_VERSION)
+  
   event.waitUntil(
-    (async () => {
-      // Clean up old caches
-      const cacheNames = await caches.keys()
-      await Promise.all(
-        cacheNames
-          .filter((cacheName) => cacheName !== CACHE_NAME)
-          .map((cacheName) => {
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
             console.log('[ServiceWorker] Deleting old cache:', cacheName)
             return caches.delete(cacheName)
-          }),
+          }
+        })
       )
-
-      // Take control of all pages
-      await self.clients.claim()
-    })(),
+    }).then(() => {
+      // Take control of all pages immediately
+      return self.clients.claim()
+    })
   )
 })
 
-// Fetch event - serve from cache, fallback to network
+/**
+ * Determine cache strategy based on request
+ */
+function getCacheStrategy(request) {
+  const url = new URL(request.url)
+  
+  // API requests - Network first, fallback to cache
+  if (url.pathname.includes('/api/') || url.origin.includes('supabase')) {
+    return 'network-first'
+  }
+  
+  // Images - Cache first
+  if (request.destination === 'image') {
+    return 'cache-first'
+  }
+  
+  // Static assets (JS, CSS) - Stale while revalidate
+  if (request.destination === 'script' || request.destination === 'style') {
+    return 'stale-while-revalidate'
+  }
+  
+  // HTML - Network first
+  if (request.destination === 'document') {
+    return 'network-first'
+  }
+  
+  // Default - Network first
+  return 'network-first'
+}
+
+/**
+ * Check if cached response is still fresh
+ */
+function isCacheFresh(cachedResponse, maxAge) {
+  if (!cachedResponse) return false
+  
+  const cachedTime = new Date(cachedResponse.headers.get('sw-cached-time'))
+  const now = new Date()
+  
+  return (now.getTime() - cachedTime.getTime()) < maxAge
+}
+
+/**
+ * Network first strategy - try network, fallback to cache
+ */
+async function networkFirst(request, maxAge = CACHE_MAX_AGE.api) {
+  try {
+    const networkResponse = await fetch(request)
+    
+    // Only cache successful responses
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = await caches.open(CACHE_NAME)
+      // Clone the response and add timestamp header
+      const responseToCache = networkResponse.clone()
+      const headers = new Headers(responseToCache.headers)
+      headers.append('sw-cached-time', new Date().toISOString())
+      
+      const cachedResponse = new Response(await responseToCache.blob(), {
+        status: responseToCache.status,
+        statusText: responseToCache.statusText,
+        headers: headers
+      })
+      
+      cache.put(request, cachedResponse)
+    }
+    
+    return networkResponse
+  } catch (error) {
+    console.log('[ServiceWorker] Network failed, trying cache:', request.url)
+    const cachedResponse = await caches.match(request)
+    
+    if (cachedResponse) {
+      return cachedResponse
+    }
+    
+    // Return offline page or error response
+    return new Response('Offline', {
+      status: 503,
+      statusText: 'Service Unavailable'
+    })
+  }
+}
+
+/**
+ * Cache first strategy - try cache, fallback to network
+ */
+async function cacheFirst(request, maxAge = CACHE_MAX_AGE.images) {
+  const cachedResponse = await caches.match(request)
+  
+  // Check if cache is still fresh
+  if (cachedResponse && isCacheFresh(cachedResponse, maxAge)) {
+    return cachedResponse
+  }
+  
+  try {
+    const networkResponse = await fetch(request)
+    
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = await caches.open(CACHE_NAME)
+      const headers = new Headers(networkResponse.headers)
+      headers.append('sw-cached-time', new Date().toISOString())
+      
+      const responseToCache = new Response(await networkResponse.clone().blob(), {
+        status: networkResponse.status,
+        statusText: networkResponse.statusText,
+        headers: headers
+      })
+      
+      cache.put(request, responseToCache)
+    }
+    
+    return networkResponse
+  } catch (error) {
+    // If network fails and we have stale cache, return it
+    if (cachedResponse) {
+      return cachedResponse
+    }
+    
+    throw error
+  }
+}
+
+/**
+ * Stale while revalidate - return cache immediately, update in background
+ */
+async function staleWhileRevalidate(request, maxAge = CACHE_MAX_AGE.static) {
+  const cachedResponse = await caches.match(request)
+  
+  // Fetch from network in background
+  const fetchPromise = fetch(request).then((networkResponse) => {
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = caches.open(CACHE_NAME).then((cache) => {
+        const headers = new Headers(networkResponse.headers)
+        headers.append('sw-cached-time', new Date().toISOString())
+        
+        const responseToCache = new Response(networkResponse.clone().blob(), {
+          status: networkResponse.status,
+          statusText: networkResponse.statusText,
+          headers: headers
+        })
+        
+        cache.put(request, responseToCache)
+      })
+    }
+    return networkResponse
+  })
+  
+  // Return cached version immediately if available
+  return cachedResponse || fetchPromise
+}
+
+/**
+ * Fetch event - handle requests with appropriate caching strategy
+ */
 self.addEventListener('fetch', (event) => {
-  // Skip non-GET requests
-  if (event.request.method !== 'GET') return
-
-  // Skip chrome-extension requests
-  if (event.request.url.startsWith('chrome-extension://')) return
-
-  // Skip cross-origin requests
-  if (!event.request.url.startsWith(self.location.origin)) return
-
-  event.respondWith(
-    (async () => {
-      try {
-        // Try cache first
-        const cachedResponse = await caches.match(event.request)
-        if (cachedResponse) {
-          console.log('[ServiceWorker] Serving from cache:', event.request.url)
-          return cachedResponse
-        }
-
-        // Try network
-        const networkResponse = await fetch(event.request)
-
-        // Cache successful responses
-        if (networkResponse.status === 200) {
-          const cache = await caches.open(CACHE_NAME)
-          console.log('[ServiceWorker] Caching new resource:', event.request.url)
-          cache.put(event.request, networkResponse.clone())
-        }
-
-        return networkResponse
-      } catch (error) {
-        console.log('[ServiceWorker] Network failed, serving offline page')
-
-        // For navigation requests, serve offline page
-        if (event.request.mode === 'navigate') {
-          return caches.match(OFFLINE_URL)
-        }
-
-        // For other requests, you might want to return a fallback
-        throw error
-      }
-    })(),
-  )
-})
-
-// Background sync for when connectivity is restored
-self.addEventListener('sync', (event) => {
-  console.log('[ServiceWorker] Background sync:', event.tag)
-
-  if (event.tag === 'sync-notes') {
-    event.waitUntil(syncNotes())
-  }
-
-  if (event.tag === 'sync-progress') {
-    event.waitUntil(syncProgress())
+  const { request } = event
+  const strategy = getCacheStrategy(request)
+  
+  if (strategy === 'network-first') {
+    event.respondWith(networkFirst(request))
+  } else if (strategy === 'cache-first') {
+    event.respondWith(cacheFirst(request))
+  } else if (strategy === 'stale-while-revalidate') {
+    event.respondWith(staleWhileRevalidate(request))
+  } else {
+    event.respondWith(fetch(request))
   }
 })
 
-// Push notifications (for future use)
-self.addEventListener('push', (event) => {
-  console.log('[ServiceWorker] Push received:', event)
-
-  const options = {
-    body: "Don't forget your daily Bible study!",
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/icon-72x72.png',
-    vibrate: [100, 50, 100],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: 1,
-    },
-    actions: [
-      {
-        action: 'open-study',
-        title: 'Start Study',
-        icon: '/icons/action-study.png',
-      },
-      {
-        action: 'close',
-        title: 'Dismiss',
-        icon: '/icons/action-close.png',
-      },
-    ],
-  }
-
-  event.waitUntil(self.registration.showNotification('BibleStem Reminder', options))
-})
-
-// Notification click handling
-self.addEventListener('notificationclick', (event) => {
-  console.log('[ServiceWorker] Notification click received.')
-
-  event.notification.close()
-
-  if (event.action === 'open-study') {
-    event.waitUntil(clients.openWindow('/dashboard'))
-  }
-})
-
-// Helper functions for background sync
-async function syncNotes() {
-  console.log('[ServiceWorker] Syncing notes...')
-  // Implementation would sync offline notes when connectivity is restored
-  // This would integrate with your notes store
-}
-
-async function syncProgress() {
-  console.log('[ServiceWorker] Syncing progress...')
-  // Implementation would sync study progress when connectivity is restored
-  // This would integrate with your progress store
-}
-
-// Message handling from main app
+/**
+ * Message event - handle messages from clients
+ */
 self.addEventListener('message', (event) => {
-  console.log('[ServiceWorker] Message received:', event.data)
-
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting()
   }
-
-  if (event.data && event.data.type === 'GET_VERSION') {
-    event.ports[0].postMessage({
-      type: 'VERSION',
-      version: CACHE_NAME,
-    })
+  
+  if (event.data && event.data.type === 'CLEAR_CACHE') {
+    event.waitUntil(
+      caches.keys().then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => caches.delete(cacheName))
+        )
+      }).then(() => {
+        return self.clients.matchAll()
+      }).then((clients) => {
+        clients.forEach((client) => client.postMessage({ type: 'CACHE_CLEARED' }))
+      })
+    )
   }
 })
