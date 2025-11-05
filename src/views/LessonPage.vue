@@ -53,10 +53,10 @@
         @time-update="handleTimeUpdate"
       />
       <!-- Header Section -->
-      <div class="mb-12">
+      <div class="mb-8">
         <button
           @click="router.back()"
-          class="mb-6 flex items-center gap-2 px-4 py-2 bg-white dark:bg-neutral-900/20 backdrop-blur-md border border-neutral-300 dark:border-neutral-800/30 rounded-xl text-neutral-700 dark:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800/30 transition-all shadow-lg"
+          class="mb-4 flex items-center gap-2 px-4 py-2 bg-white dark:bg-neutral-800 border-2 border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-700 dark:text-white hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-all"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -64,15 +64,15 @@
           Back to Study
         </button>
 
-        <div class="mb-6">
-          <div class="inline-block px-3 py-1 bg-white dark:bg-neutral-900/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4 border border-neutral-300 dark:border-white/40 text-neutral-700 dark:text-white shadow-md">
+        <div class="bg-white dark:bg-neutral-800 rounded-2xl p-6 shadow-xl border-2 border-neutral-200 dark:border-neutral-700">
+          <div class="inline-block px-3 py-1 bg-primary-50 dark:bg-primary-900/20 rounded-full text-sm font-medium mb-4 border border-primary-200 dark:border-primary-700 text-primary-700 dark:text-primary-300">
             {{ study?.title }}
           </div>
           <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 dark:text-white mb-4 leading-tight">
             {{ lesson.title }}
           </h1>
-          <p class="text-neutral-700 dark:text-white/90 text-lg mb-4">{{ lesson.description }}</p>
-          <div class="flex items-center gap-4 text-neutral-600 dark:text-white/80">
+          <p class="text-neutral-600 dark:text-neutral-300 text-lg mb-4">{{ lesson.description }}</p>
+          <div class="flex items-center gap-4 text-neutral-500 dark:text-neutral-400">
             <span class="flex items-center gap-2">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -628,10 +628,8 @@ const section6 = ref<HTMLElement>()
 
 // Computed properties
 const gradientClass = computed(() => {
-  if (!study.value) return 'bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900'
-  return study.value.category === 'supporter'
-    ? 'bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900'
-    : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900 dark:via-indigo-900 dark:to-purple-900'
+  // Use simple, clean background to match StudyPage
+  return 'bg-neutral-50 dark:bg-neutral-950'
 })
 
 const progressPercentage = computed(() => {
