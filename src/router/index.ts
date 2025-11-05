@@ -155,11 +155,21 @@ const router = createRouter({
 })
 
 // Navigation guard for auth
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   
+  // Wait for auth initialization if not already initialized
+  if (!authStore.isInitialized) {
+    try {
+      await authStore.initializeAuth()
+    } catch (error) {
+      console.error('Error initializing auth in router guard:', error)
+      // Continue anyway - auth might be unavailable
+    }
+  }
+  
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    next({ name: 'SignIn' })
+    next({ name: 'SignIn', query: { redirect: to.fullPath } })
   } else {
     next()
   }

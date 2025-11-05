@@ -190,10 +190,29 @@
     </div>
 
     <div v-else class="text-center py-16">
-      <p class="text-xl text-neutral-600 dark:text-gray-400">Study not found</p>
-      <router-link to="/dashboard" class="btn btn-primary mt-4">
-        Back to Dashboard
-      </router-link>
+      <div class="max-w-md mx-auto">
+        <svg class="w-16 h-16 mx-auto mb-4 text-neutral-400 dark:text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h2 class="text-2xl font-bold mb-2 text-neutral-900 dark:text-neutral-100">Study Not Found</h2>
+        <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-6">
+          The study you're looking for doesn't exist or may have been removed.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <router-link
+            to="/dashboard"
+            class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-primary-500 text-white font-medium hover:bg-primary-600 transition-colors"
+          >
+            Back to Dashboard
+          </router-link>
+          <router-link
+            to="/study-series"
+            class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+          >
+            Browse Studies
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -324,16 +343,29 @@ onMounted(async () => {
       if (studyError) {
         const errorInfo = handleSupabaseError(studyError, 'load study')
         console.error('Failed to load study from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
-        throw studyError
+        
+        // If study not found, set to null and continue to fallback
+        if (errorInfo.isNotFound) {
+          study.value = null
+        } else {
+          throw studyError
+        }
       }
 
       if (lessonsError) {
         const errorInfo = handleSupabaseError(lessonsError, 'load lessons')
         console.error('Failed to load lessons from Supabase:', errorInfo.userFriendlyMessage, errorInfo)
-        throw lessonsError
+        
+        // If lessons not found but study exists, use empty lessons array
+        if (errorInfo.isNotFound && studyData) {
+          // Continue with empty lessons
+        } else if (!errorInfo.isNotFound) {
+          throw lessonsError
+        }
       }
 
-      if (studyData && lessonsData) {
+      if (studyData) {
+        // Ensure studyData exists before creating study object
         study.value = {
           id: studyData.id,
           title: studyData.title,
@@ -345,7 +377,7 @@ onMounted(async () => {
           image: studyData.image || '',
           color: studyData.color || '',
           features: studyData.features || [],
-          lessons: lessonsData.map((lesson: any) => ({
+          lessons: (lessonsData || []).map((lesson: any) => ({
             id: lesson.id,
             title: lesson.title,
             duration: lesson.duration,
@@ -363,8 +395,9 @@ onMounted(async () => {
         
         console.log('Study loaded from Supabase:', study.value)
       } else {
-        console.warn('Supabase returned empty data, falling back to local data')
-        throw new Error('No data returned from Supabase')
+        // No study data found - set to null explicitly
+        study.value = null
+        console.warn('Supabase returned no study data, falling back to local data')
       }
     } else {
       // Fallback to local data if Supabase is not available
@@ -390,15 +423,21 @@ onMounted(async () => {
         if (foundStudy) {
           study.value = foundStudy
           console.log('Fallback: Study loaded from local data')
+        } else {
+          // Explicitly set to null if study not found in local data either
+          study.value = null
+          console.warn('Study not found in local data:', studyId)
         }
       } catch (fallbackError) {
         console.error('Fallback also failed:', fallbackError)
+        // Ensure study is null on complete failure
+        study.value = null
       }
     }
   } finally {
     loading.value = false
-    // Initialize first few lessons as visible immediately for better UX
-    
+    // Ensure study is null if still not set (shouldn't happen, but safety check)
+    // This prevents any template issues with undefined study
   }
 })
 </script>

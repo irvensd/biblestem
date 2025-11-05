@@ -214,7 +214,9 @@ const fetchStudiesFromSupabase = async (supabase: any): Promise<StudyWithCount[]
       .in('study_id', studyIds)
     
     if (lessonsError) {
-      console.warn('Error fetching lessons count:', lessonsError)
+      const errorInfo = handleSupabaseError(lessonsError, 'load lesson counts')
+      console.warn('Error fetching lessons count:', errorInfo.userFriendlyMessage, errorInfo)
+      // Continue without lesson counts - this is not critical
     }
     
     // Count lessons per study
