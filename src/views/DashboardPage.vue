@@ -280,7 +280,7 @@ import { useAuthStore } from '../stores/auth'
 import { useStudyProgressStore } from '../stores/studyProgress'
 import { useNotesStore, type StudyNote } from '../stores/notes'
 import { getAllStudies, getStudyById, type Study } from '../data/studies'
-import { getSupabase } from '../lib/supabase'
+import { getSupabase, handleSupabaseError } from '../lib/supabase'
 import DashboardSkeleton from '../components/skeletons/DashboardSkeleton.vue'
 
 const router = useRouter()
@@ -369,19 +369,29 @@ const loadDashboardData = async () => {
     if (authStore.user) {
       const supabase = getSupabase()
       if (supabase) {
-        const { data: notes } = await supabase
+        const { data: notes, error: notesError } = await supabase
           .from('study_notes')
           .select('*')
           .eq('user_id', authStore.user.id)
           .order('created_at', { ascending: false })
           .limit(5)
         
-        recentNotes.value = notes || []
+        if (notesError) {
+          const errorInfo = handleSupabaseError(notesError, 'load recent notes')
+          console.warn('Failed to load recent notes:', errorInfo.userFriendlyMessage, errorInfo)
+          // Continue without notes - not critical
+          recentNotes.value = []
+        } else {
+          recentNotes.value = notes || []
+        }
       }
     }
     
   } catch (error) {
-    console.error('Error loading dashboard data:', error)
+    const errorInfo = error && typeof error === 'object' && 'code' in error
+      ? handleSupabaseError(error, 'load dashboard data')
+      : null
+    console.error('Error loading dashboard data:', errorInfo?.userFriendlyMessage || (error instanceof Error ? error.message : 'Unknown error'), error)
   } finally {
     isLoading.value = false
   }
