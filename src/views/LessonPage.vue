@@ -56,7 +56,7 @@
       <div class="mb-12">
         <button
           @click="router.back()"
-          class="mb-6 flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+          class="mb-6 flex items-center gap-2 px-4 py-2 bg-white/20 dark:bg-neutral-900/20 backdrop-blur-md border border-white/30 dark:border-neutral-800/30 rounded-xl text-white hover:bg-white/30 dark:hover:bg-neutral-800/30 transition-all shadow-lg"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -65,14 +65,14 @@
         </button>
 
         <div class="mb-6">
-          <div class="inline-block px-3 py-1 bg-white/20 dark:bg-neutral-900/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4">
+          <div class="inline-block px-3 py-1 bg-white/30 dark:bg-neutral-900/20 backdrop-blur-sm rounded-full text-sm font-medium mb-4 border border-white/40">
             {{ study?.title }}
           </div>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg mb-4 leading-tight">
             {{ lesson.title }}
           </h1>
-          <p class="text-white/80 text-lg mb-4">{{ lesson.description }}</p>
-          <div class="flex items-center gap-4 text-white/70">
+          <p class="text-white/90 text-lg mb-4 drop-shadow">{{ lesson.description }}</p>
+          <div class="flex items-center gap-4 text-white/80">
             <span class="flex items-center gap-2">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -105,10 +105,10 @@
         class="mb-16"
         @scroll="updateCurrentSection"
       >
-        <div v-if="lesson.openingThought" class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
+        <div v-if="lesson.openingThought" class="bg-gradient-to-br from-white to-blue-50/50 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl border-2 border-blue-200 dark:border-transparent">
           <div class="flex items-center gap-3 mb-6">
             <div
-              class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-blue-600 flex items-center justify-center"
+              class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-blue-600 flex items-center justify-center shadow-lg"
             >
               <span class="text-white font-bold">01</span>
             </div>
@@ -126,11 +126,11 @@
 
       <!-- Section 2: Scripture Exploration -->
       <section ref="section2" class="mb-16">
-        <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
+        <div class="bg-gradient-to-br from-white to-emerald-50/40 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl border-2 border-emerald-200 dark:border-transparent">
           <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-3">
               <div
-                class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center"
+                class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg"
               >
                 <span class="text-white font-bold">02</span>
               </div>
@@ -185,7 +185,7 @@
                 <div
                   v-for="(tag, index) in lesson.content.taggedScripture"
                   :key="index"
-                  class="p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg border-2 border-neutral-200 dark:border-neutral-800"
+                  class="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:bg-neutral-900 rounded-lg border-2 border-blue-200 dark:border-neutral-800 shadow-md"
                 >
                   <div class="font-bold text-emerald-700 dark:text-emerald-400 mb-1">
                     {{ tag.data?.word }}
@@ -201,7 +201,7 @@
                 <div
                   v-for="(word, index) in lesson.content.hebrewGreekWords"
                   :key="index"
-                  class="p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg border-2 border-neutral-200 dark:border-neutral-800"
+                  class="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:bg-neutral-900 rounded-lg border-2 border-blue-200 dark:border-neutral-800 shadow-md"
                 >
                   <div class="font-bold text-primary-700 dark:text-primary-400 mb-1">
                     {{ word.word }}
@@ -220,10 +220,10 @@
 
       <!-- Section 3: Commentary / Teaching Points -->
       <section ref="section3" class="mb-16">
-        <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
+        <div class="bg-gradient-to-br from-white to-purple-50/40 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl border-2 border-purple-200 dark:border-transparent">
           <div class="flex items-center gap-3 mb-6">
             <div
-              class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center"
+              class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg"
             >
               <span class="text-white font-bold">03</span>
             </div>
@@ -328,10 +328,10 @@
 
       <!-- Section 4: Interactive Element -->
       <section ref="section4" class="mb-16">
-        <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
+        <div class="bg-gradient-to-br from-white to-orange-50/40 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl border-2 border-orange-200 dark:border-transparent">
           <div class="flex items-center gap-3 mb-6">
             <div
-              class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center"
+              class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-lg"
             >
               <span class="text-white font-bold">04</span>
             </div>
@@ -374,10 +374,10 @@
 
       <!-- Section 5: Life Application -->
       <section ref="section5" class="mb-16">
-        <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-xl border-2 border-neutral-200 dark:border-transparent">
+        <div class="bg-gradient-to-br from-white to-teal-50/40 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 lg:p-12 shadow-2xl border-2 border-teal-200 dark:border-transparent">
           <div class="flex items-center gap-3 mb-6">
             <div
-              class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center"
+              class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg"
             >
               <span class="text-white font-bold">05</span>
             </div>
@@ -456,10 +456,10 @@
       <section ref="section6" class="mb-16">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <!-- Prayer -->
-          <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 shadow-xl border-2 border-neutral-200 dark:border-transparent">
+          <div class="bg-gradient-to-br from-white to-blue-50/40 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border-2 border-blue-200 dark:border-transparent">
             <div class="flex items-center gap-3 mb-6">
               <div
-                class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center"
+                class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg"
               >
                 <span class="text-white font-bold">06</span>
               </div>
@@ -473,9 +473,9 @@
           </div>
 
           <!-- Personal Notes -->
-          <div class="bg-white dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 shadow-xl border-2 border-neutral-200 dark:border-transparent">
+          <div class="bg-gradient-to-br from-white to-purple-50/40 dark:bg-neutral-900/95 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border-2 border-purple-200 dark:border-transparent">
             <div class="flex items-center gap-3 mb-6">
-              <svg class="w-8 h-8 text-neutral-600 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-8 h-8 text-purple-600 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -523,7 +523,7 @@
       <div class="mb-16 text-center">
         <button
           @click="completeLesson"
-          class="px-8 py-4 bg-gradient-to-r from-primary-600 to-blue-600 text-white text-lg font-bold rounded-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-3 mx-auto"
+          class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-3 mx-auto hover:from-emerald-600 hover:to-teal-700"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
