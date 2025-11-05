@@ -4,6 +4,16 @@ import { useAuthStore } from './auth'
 import { getSupabase, isSupabaseAvailable, handleSupabaseError, requiresReAuth } from '../lib/supabase'
 import { getSyncQueue } from '../composables/useSupabaseSync'
 import { logger } from '../utils/logger'
+import { 
+  calculateCompletionPercentage, 
+  isStudyCompleted as checkStudyCompleted,
+  getStudyCompletionStatus,
+  validateCompletedLessons,
+  getTotalStudiesCompleted as calcTotalStudiesCompleted
+} from '../utils/progressCalculations'
+import { getCurrentTimestamp, ensureValidTimestamp, syncWithServerTimestamp } from '../utils/timestamps'
+import { validateAndSanitizeProgress } from '../utils/dataValidation'
+import { useOptimisticUpdates } from '../composables/useOptimisticUpdates'
 
 export interface StudyProgress {
   studyId: string
@@ -19,6 +29,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
   const progressData = ref<Record<string, StudyProgress>>({})
   const isInitialized = ref(false)
   const isInitializing = ref(false)
+  const { startUpdate, completeUpdate, failUpdate, getSyncState } = useOptimisticUpdates()
 
   // Ensure progressData is always initialized
   const ensureInitialized = () => {
@@ -162,7 +173,17 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     const progress = progressData.value[studyId]
     if (!progress) return 0
 
-    return Math.round((progress.completedLessons.length / totalLessons) * 100)
+    // Use centralized calculation for consistency
+    return calculateCompletionPercentage(progress.completedLessons, totalLessons)
+  }
+
+  // Check if study is completed (all lessons done)
+  const isStudyCompleted = (studyId: string, totalLessons: number): boolean => {
+    const progress = progressData.value[studyId]
+    if (!progress) return false
+
+    // Use centralized calculation for consistency
+    return checkStudyCompleted(progress.completedLessons, totalLessons)
   }
 
   const getAllStudyProgress = () => {
@@ -200,11 +221,42 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
       return
     }
 
-    const supabase = getSupabase()
-    if (!supabase) return
-
     const progress = progressData.value[studyId]
     if (!progress) return
+
+    // Check if offline - if so, queue immediately
+    const isOnline = navigator.onLine
+    if (!isOnline) {
+      logger.debug('Offline - queuing progress for sync when online')
+      const syncQueue = getSyncQueue()
+      syncQueue.queueOperation('progress_save', {
+        studyId,
+        completedLessons: progress.completedLessons,
+        currentLesson: progress.currentLesson,
+        startedAt: progress.startedAt,
+        lastAccessedAt: progress.lastAccessedAt,
+        totalTimeSpent: progress.totalTimeSpent,
+        acceptedChallenges: progress.acceptedChallenges,
+      }, progress.lastAccessedAt || new Date().toISOString())
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase) {
+      // Queue if Supabase client not available
+      logger.debug('Supabase client not available - queuing progress for sync')
+      const syncQueue = getSyncQueue()
+      syncQueue.queueOperation('progress_save', {
+        studyId,
+        completedLessons: progress.completedLessons,
+        currentLesson: progress.currentLesson,
+        startedAt: progress.startedAt,
+        lastAccessedAt: progress.lastAccessedAt,
+        totalTimeSpent: progress.totalTimeSpent,
+        acceptedChallenges: progress.acceptedChallenges,
+      }, progress.lastAccessedAt || new Date().toISOString())
+      return
+    }
 
     try {
       const { error } = await supabase
@@ -231,7 +283,15 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
         if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
           logger.warn('Queuing progress for later sync')
           const syncQueue = getSyncQueue()
-          syncQueue.queueOperation('progress_save', progress)
+          syncQueue.queueOperation('progress_save', {
+            studyId,
+            completedLessons: progress.completedLessons,
+            currentLesson: progress.currentLesson,
+            startedAt: progress.startedAt,
+            lastAccessedAt: progress.lastAccessedAt,
+            totalTimeSpent: progress.totalTimeSpent,
+            acceptedChallenges: progress.acceptedChallenges,
+          }, progress.lastAccessedAt || new Date().toISOString())
           return
         }
         
@@ -241,6 +301,23 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     } catch (error) {
       const errorInfo = handleSupabaseError(error, 'save progress')
       console.error('Failed to save progress to Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+      
+      // If it's a network error or we're offline, queue for sync
+      if (errorInfo.isNetworkError || !navigator.onLine) {
+        logger.warn('Network error - queuing progress for later sync')
+        const syncQueue = getSyncQueue()
+        syncQueue.queueOperation('progress_save', {
+          studyId,
+          completedLessons: progress.completedLessons,
+          currentLesson: progress.currentLesson,
+          startedAt: progress.startedAt,
+          lastAccessedAt: progress.lastAccessedAt,
+          totalTimeSpent: progress.totalTimeSpent,
+          acceptedChallenges: progress.acceptedChallenges,
+        }, progress.lastAccessedAt || new Date().toISOString())
+        return
+      }
+      
       // Don't throw RLS/auth errors - graceful degradation
       if (errorInfo.isRLSViolation || errorInfo.isAuthError) {
         return
@@ -285,21 +362,65 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
       }
 
       if (data && data.length > 0) {
-        // Convert Supabase data to local format
-        const progressMap: Record<string, StudyProgress> = {}
-        data.forEach((item: any) => {
-          progressMap[item.study_id] = {
-            studyId: item.study_id,
-            completedLessons: item.completed_lessons || [],
-            currentLesson: item.current_lesson,
-            startedAt: item.started_at,
-            lastAccessedAt: item.last_accessed_at,
-            totalTimeSpent: item.total_time_spent || 0,
-            acceptedChallenges: item.accepted_challenges || []
+        // Load local data for merging
+        loadFromLocalStorage()
+        
+        // Merge Supabase data with local data intelligently
+        data.forEach((record: any) => {
+          const studyId = record.study_id
+          const remoteProgress = {
+            studyId: record.study_id,
+            completedLessons: record.completed_lessons || [],
+            currentLesson: record.current_lesson,
+            startedAt: record.started_at,
+            lastAccessedAt: record.last_accessed_at,
+            totalTimeSpent: record.total_time_spent || 0,
+            acceptedChallenges: record.accepted_challenges || [],
+          }
+          
+          // If local data exists, merge intelligently
+          if (progressData.value[studyId]) {
+            const localProgress = progressData.value[studyId]
+            const localTime = new Date(localProgress.lastAccessedAt || 0).getTime()
+            const remoteTime = new Date(remoteProgress.lastAccessedAt || 0).getTime()
+            
+            // Merge completed lessons from both sources
+            const mergedCompletedLessons = [
+              ...new Set([...remoteProgress.completedLessons, ...localProgress.completedLessons])
+            ]
+            const mergedChallenges = [
+              ...new Set([...remoteProgress.acceptedChallenges, ...localProgress.acceptedChallenges])
+            ]
+            
+            // Use the most recent metadata
+            if (remoteTime > localTime) {
+              progressData.value[studyId] = {
+                ...remoteProgress,
+                completedLessons: mergedCompletedLessons,
+                acceptedChallenges: mergedChallenges,
+                totalTimeSpent: Math.max(remoteProgress.totalTimeSpent, localProgress.totalTimeSpent),
+              }
+            } else {
+              progressData.value[studyId] = {
+                ...localProgress,
+                completedLessons: mergedCompletedLessons,
+                acceptedChallenges: mergedChallenges,
+              }
+            }
+            
+            logger.debug(`Merged progress for study ${studyId} - Local: ${localProgress.completedLessons.length}, Remote: ${remoteProgress.completedLessons.length}, Merged: ${mergedCompletedLessons.length}`)
+          } else {
+            // No local data - use remote
+            progressData.value[studyId] = remoteProgress
           }
         })
-        progressData.value = progressMap
-        console.log('Progress loaded from Supabase:', progressMap)
+        
+        // Save merged data to localStorage
+        saveToStorage()
+        console.log('Progress loaded and merged from Supabase')
+        
+        // Set up real-time sync
+        setupRealtimeSync()
       } else {
         // No progress in Supabase, load from local storage or initialize
         loadFromLocalStorage()
@@ -412,10 +533,106 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
             })
   }
 
+  // Real-time sync subscription reference
+  let realtimeChannel: any = null
+
+  // Set up real-time sync for progress updates
+  const setupRealtimeSync = () => {
+    const useSupabase = isSupabaseAvailable()
+    const authStore = useAuthStore()
+    
+    if (!useSupabase || !authStore.user) {
+      logger.debug('Cannot setup realtime sync - not available or user not authenticated')
+      return
+    }
+
+    const supabase = getSupabase()
+    if (!supabase || realtimeChannel) {
+      return // Already set up or client not available
+    }
+
+    try {
+      // Subscribe to changes in study_progress table for this user
+      realtimeChannel = supabase
+        .channel('study_progress_changes')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'study_progress',
+            filter: `user_id=eq.${authStore.user.id}`
+          },
+          (payload: any) => {
+            logger.debug('Received real-time progress update:', payload)
+            
+            if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
+              const record = payload.new
+              const studyId = record.study_id
+              
+              const remoteProgress = {
+                studyId: record.study_id,
+                completedLessons: record.completed_lessons || [],
+                currentLesson: record.current_lesson,
+                startedAt: record.started_at,
+                lastAccessedAt: record.last_accessed_at,
+                totalTimeSpent: record.total_time_spent || 0,
+                acceptedChallenges: record.accepted_challenges || [],
+              }
+              
+              // Merge with local data
+              if (progressData.value[studyId]) {
+                const localProgress = progressData.value[studyId]
+                progressData.value[studyId] = {
+                  ...remoteProgress,
+                  completedLessons: [
+                    ...new Set([...remoteProgress.completedLessons, ...localProgress.completedLessons])
+                  ],
+                  acceptedChallenges: [
+                    ...new Set([...remoteProgress.acceptedChallenges, ...localProgress.acceptedChallenges])
+                  ],
+                }
+              } else {
+                progressData.value[studyId] = remoteProgress
+              }
+              
+              saveToStorage()
+              logger.debug('Progress synced from real-time update')
+            } else if (payload.eventType === 'DELETE') {
+              const studyId = payload.old.study_id
+              if (progressData.value[studyId]) {
+                delete progressData.value[studyId]
+                saveToStorage()
+                logger.debug('Progress deleted from real-time update')
+              }
+            }
+          }
+        )
+        .subscribe()
+
+      logger.debug('Real-time sync set up for study progress')
+    } catch (error) {
+      logger.error('Error setting up real-time sync:', error)
+    }
+  }
+
+  // Clean up real-time subscription
+  const cleanupRealtimeSync = () => {
+    if (realtimeChannel) {
+      const supabase = getSupabase()
+      if (supabase) {
+        supabase.removeChannel(realtimeChannel)
+      }
+      realtimeChannel = null
+      logger.debug('Real-time sync cleaned up')
+    }
+  }
+
   return {
     progressData,
     getStudyProgress,
     isLessonCompleted,
+    isStudyCompleted,
     completeLesson,
     incompleteLesson,
     startStudy,
@@ -429,5 +646,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     loadFromStorage,
     isChallengeAccepted,
     acceptChallenge,
+    cleanupRealtimeSync,
+    getSyncState,
   }
 })

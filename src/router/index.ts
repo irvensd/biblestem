@@ -84,6 +84,24 @@ const routes = [
     redirect: '/sign-up'
   },
   {
+    path: '/forgot-password',
+    name: 'ForgotPassword',
+    // Group auth pages together
+    component: () => import(/* webpackChunkName: "auth" */ '../views/ForgotPasswordPage.vue')
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    // Group auth pages together
+    component: () => import(/* webpackChunkName: "auth" */ '../views/ResetPasswordPage.vue')
+  },
+  {
+    path: '/verify-email',
+    name: 'VerifyEmail',
+    // Group auth pages together
+    component: () => import(/* webpackChunkName: "auth" */ '../views/VerifyEmailPage.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // Group static/info pages together
@@ -154,9 +172,16 @@ const router = createRouter({
   }
 })
 
+// Get auth store instance once (Pinia stores are singletons, but this is cleaner)
+let authStoreInstance: ReturnType<typeof useAuthStore> | null = null
+
 // Navigation guard for auth
 router.beforeEach(async (to, from, next) => {
-  const authStore = useAuthStore()
+  // Get store instance (singleton, but ensure we have a reference)
+  if (!authStoreInstance) {
+    authStoreInstance = useAuthStore()
+  }
+  const authStore = authStoreInstance
   
   // Wait for auth initialization if not already initialized
   if (!authStore.isInitialized) {
