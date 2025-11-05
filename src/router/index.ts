@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useRouteAccessibility } from '../composables/useRouteAccessibility'
 
 const routes = [
   {
@@ -171,6 +172,10 @@ const router = createRouter({
     return { top: 0 }
   }
 })
+
+// Initialize route accessibility
+const { initRouteAccessibility } = useRouteAccessibility()
+initRouteAccessibility()
 
 // Get auth store instance once (Pinia stores are singletons, but this is cleaner)
 let authStoreInstance: ReturnType<typeof useAuthStore> | null = null

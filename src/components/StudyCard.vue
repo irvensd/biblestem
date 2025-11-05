@@ -1,7 +1,9 @@
 <template>
-  <div
+  <article
     class="flex-shrink-0 w-full md:w-72 bg-white dark:bg-neutral-900 rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-600 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-[0_10px_40px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_10px_40px_rgba(0,0,0,0.6)] hover:scale-[1.03] hover:-translate-y-1 group cursor-pointer"
     @click="handleClick"
+    role="article"
+    :aria-label="`Study: ${study.title}`"
   >
     <!-- Study Header with Gradient -->
     <div
@@ -56,7 +58,7 @@
     <!-- Study Content -->
     <div class="p-5">
       <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2 min-h-[3.5rem]">
-        {{ study.title }}
+        <span class="sr-only">Study title: </span>{{ study.title }}
       </h3>
       <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-2 min-h-[2.5rem]">
         {{ study.description }}
@@ -83,16 +85,17 @@
       
       <!-- Start Study Button -->
       <button
-        class="w-full px-4 py-2.5 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 group-hover:scale-105"
+        class="w-full px-4 py-2.5 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 group-hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         @click.stop="handleClick"
+        :aria-label="`Start studying ${study.title}`"
       >
         <span>Start Study</span>
-        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
       </button>
     </div>
-  </div>
+  </article>
 </template>
 
 <script setup lang="ts">

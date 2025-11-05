@@ -38,6 +38,24 @@ export function useAccessibility(options: AccessibilityOptions = {}) {
   const isNavigating = ref(false)
   const currentPage = ref('')
   
+  // Get or create persistent live region
+  const getLiveRegion = (priority: 'polite' | 'assertive' = 'polite'): HTMLElement => {
+    const id = `a11y-live-${priority}`
+    let liveRegion = document.getElementById(id) as HTMLElement
+    
+    if (!liveRegion) {
+      liveRegion = document.createElement('div')
+      liveRegion.id = id
+      liveRegion.setAttribute('aria-live', priority)
+      liveRegion.setAttribute('aria-atomic', 'true')
+      liveRegion.className = 'sr-only'
+      liveRegion.setAttribute('role', priority === 'assertive' ? 'alert' : 'status')
+      document.body.appendChild(liveRegion)
+    }
+    
+    return liveRegion
+  }
+
   // Screen reader announcements
   const announce = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
     if (!defaultOptions.announceChanges) return
@@ -51,19 +69,16 @@ export function useAccessibility(options: AccessibilityOptions = {}) {
     
     announcements.value.push(announcement)
     
-    // Create live region for screen readers
-    const liveRegion = document.createElement('div')
-    liveRegion.setAttribute('aria-live', priority)
-    liveRegion.setAttribute('aria-atomic', 'true')
-    liveRegion.className = 'sr-only'
-    liveRegion.textContent = message
+    // Use persistent live region for better screen reader support
+    const liveRegion = getLiveRegion(priority)
     
-    document.body.appendChild(liveRegion)
+    // Clear and set new message (triggers announcement)
+    liveRegion.textContent = ''
     
-    // Remove after announcement
-    setTimeout(() => {
-      document.body.removeChild(liveRegion)
-    }, 1000)
+    // Use requestAnimationFrame to ensure announcement is read
+    requestAnimationFrame(() => {
+      liveRegion.textContent = message
+    })
     
     // Clean up old announcements
     setTimeout(() => {
