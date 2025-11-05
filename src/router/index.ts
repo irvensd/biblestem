@@ -173,9 +173,9 @@ const router = createRouter({
   }
 })
 
-// Initialize route accessibility
-const { initRouteAccessibility } = useRouteAccessibility()
-initRouteAccessibility()
+// Initialize route accessibility after router is created
+const { initRouteAccessibility } = useRouteAccessibility(router)
+initRouteAccessibility(router)
 
 // Get auth store instance once (Pinia stores are singletons, but this is cleaner)
 let authStoreInstance: ReturnType<typeof useAuthStore> | null = null
