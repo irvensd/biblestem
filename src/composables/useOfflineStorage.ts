@@ -1,4 +1,5 @@
 import { ref, computed, onUnmounted } from 'vue'
+import { getSyncQueue } from './useSupabaseSync'
 
 interface OfflineItem<T = any> {
   key: string
@@ -13,6 +14,8 @@ export function useOfflineStorage() {
   const storage = ref<Map<string, OfflineItem>>(new Map())
   const pendingSyncs = ref<Set<string>>(new Set())
   const isOnline = ref(navigator.onLine)
+  const cleanupInterval = ref<ReturnType<typeof setInterval> | null>(null)
+  const eventHandlers: Array<{ element: Window; event: string; handler: EventListener }> = []
 
   // Initialize storage from localStorage
   const initializeStorage = () => {
@@ -239,36 +242,87 @@ export function useOfflineStorage() {
     }
   }
 
-  // Simulate server sync
+  // Sync to server using Supabase sync queue
   const syncToServer = async (key: string, data: any): Promise<void> => {
-    // This would be replaced with actual API calls
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulate network request
-        if (Math.random() > 0.1) { // 90% success rate
-          resolve()
-        } else {
-          reject(new Error('Sync failed'))
-        }
-      }, 1000)
-    })
+    const syncQueue = getSyncQueue()
+    
+    // Determine operation type from key pattern
+    if (key.startsWith('study_progress_')) {
+      const studyId = key.replace('study_progress_', '')
+      syncQueue.queueOperation('progress_save', {
+        studyId,
+        ...data
+      })
+    } else if (key.startsWith('study_notes_')) {
+      // Extract studyId and lessonId from key pattern: study_notes_{studyId}_{lessonId}
+      const parts = key.replace('study_notes_', '').split('_')
+      if (parts.length >= 2) {
+        const studyId = parts[0]
+        const lessonId = parts.slice(1).join('_')
+        // Find the note in the notes store or create sync payload
+        syncQueue.queueOperation('note_update', {
+          studyId,
+          lessonId,
+          content: data,
+          updatedAt: new Date().toISOString()
+        })
+      }
+    } else if (key.startsWith('bookmark_')) {
+      const bookmarkId = key.replace('bookmark_', '')
+      syncQueue.queueOperation('bookmark_update', {
+        id: bookmarkId,
+        ...data
+      })
+    } else {
+      // Generic sync - try to determine type from data structure
+      if (data.type === 'note' || data.noteId) {
+        syncQueue.queueOperation('note_update', data)
+      } else if (data.studyId && data.completedLessons !== undefined) {
+        syncQueue.queueOperation('progress_save', data)
+      } else {
+        console.warn(`Unknown sync type for key: ${key}`)
+        // Still mark as synced to avoid retry loops
+        return Promise.resolve()
+      }
+    }
+    
+    // Return resolved promise - actual sync happens via queue
+    return Promise.resolve()
   }
 
   // Event listeners
-  window.addEventListener('online', handleOnline)
-  window.addEventListener('offline', handleOffline)
+  if (typeof window !== 'undefined') {
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+    
+    // Store handlers for cleanup
+    eventHandlers.push(
+      { element: window, event: 'online', handler: handleOnline },
+      { element: window, event: 'offline', handler: handleOffline },
+    )
+  }
 
   // Initialize
   initializeStorage()
 
   // Cleanup expired items every 5 minutes
-  const cleanupInterval = setInterval(cleanup, 5 * 60 * 1000)
+  if (typeof window !== 'undefined') {
+    cleanupInterval.value = setInterval(cleanup, 5 * 60 * 1000)
+  }
 
   // Cleanup on unmount
   onUnmounted(() => {
-    if (cleanupInterval) {
-      clearInterval(cleanupInterval)
+    // Clear interval
+    if (cleanupInterval.value) {
+      clearInterval(cleanupInterval.value)
+      cleanupInterval.value = null
     }
+    
+    // Remove event listeners
+    eventHandlers.forEach(({ element, event, handler }) => {
+      element.removeEventListener(event, handler)
+    })
+    eventHandlers.length = 0
   })
 
   return {

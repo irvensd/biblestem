@@ -3,6 +3,9 @@ import { defineStore } from 'pinia'
 import { useAuthStore } from './auth'
 import { getSupabase, isSupabaseAvailable, handleSupabaseError, requiresReAuth } from '../lib/supabase'
 import { getSyncQueue } from '../composables/useSupabaseSync'
+import { getCurrentTimestamp, ensureValidTimestamp, syncWithServerTimestamp } from '../utils/timestamps'
+import { validateAndSanitizeNote } from '../utils/dataValidation'
+import { useOptimisticUpdates } from '../composables/useOptimisticUpdates'
 
 export interface StudyNote {
   id: string
@@ -25,6 +28,7 @@ export const useNotesStore = defineStore('notes', () => {
   const notesData = ref<NotesData>({})
   const isLoaded = ref(false)
   const isInitializing = ref(false)
+  const { startUpdate, completeUpdate, failUpdate, getSyncState } = useOptimisticUpdates()
 
   // Generate unique note ID
   const generateNoteId = () => {
@@ -34,7 +38,7 @@ export const useNotesStore = defineStore('notes', () => {
   // Create a new note
   const createNote = async (noteData: Omit<StudyNote, 'id' | 'createdAt' | 'updatedAt'>) => {
     const id = generateNoteId()
-    const now = new Date().toISOString()
+    const now = getCurrentTimestamp() // Use centralized timestamp
 
     const note: StudyNote = {
       id,
@@ -43,39 +47,69 @@ export const useNotesStore = defineStore('notes', () => {
       updatedAt: now,
     }
 
-    notesData.value[id] = note
+    // Validate before saving
+    const { data: validatedNote, validation } = validateAndSanitizeNote(note)
+    
+    if (!validation.isValid) {
+      console.error('Note validation failed:', validation.errors)
+      throw new Error(`Invalid note data: ${validation.errors.join(', ')}`)
+    }
+
+    // Optimistic update - add to local state immediately
+    notesData.value[id] = validatedNote
     saveToStorage()
     
+    // Start sync status tracking
+    startUpdate(`note_${id}`, 'note')
+    
     // Try to sync to Supabase immediately, queue if it fails
-    saveNoteToSupabase(note).catch((error) => {
+    saveNoteToSupabase(validatedNote).catch((error) => {
       console.error('Failed to sync note to Supabase:', error)
       // Queue for later sync
       const syncQueue = getSyncQueue()
-      syncQueue.queueOperation('note_create', note)
+      syncQueue.queueOperation('note_create', validatedNote, validatedNote.createdAt)
+      completeUpdate(`note_${id}`)
     })
     
-    return note
+    return validatedNote
   }
 
   // Update an existing note
   const updateNote = async (noteId: string, updates: Partial<Omit<StudyNote, 'id' | 'createdAt'>>) => {
     if (notesData.value[noteId]) {
-      notesData.value[noteId] = {
+      const now = getCurrentTimestamp() // Use centralized timestamp
+      
+      const updatedNote = {
         ...notesData.value[noteId],
         ...updates,
-        updatedAt: new Date().toISOString(),
+        updatedAt: now,
       }
+      
+      // Validate before saving
+      const { data: validatedNote, validation } = validateAndSanitizeNote(updatedNote)
+      
+      if (!validation.isValid) {
+        console.error('Note validation failed:', validation.errors)
+        throw new Error(`Invalid note data: ${validation.errors.join(', ')}`)
+      }
+      
+      // Optimistic update - update local state immediately
+      notesData.value[noteId] = validatedNote
       saveToStorage()
       
+      // Start sync status tracking
+      startUpdate(`note_${noteId}`, 'note')
+      
       // Try to sync to Supabase immediately, queue if it fails
-      saveNoteToSupabase(notesData.value[noteId]).catch((error) => {
+      saveNoteToSupabase(validatedNote).catch((error) => {
         console.error('Failed to sync note update to Supabase:', error)
         // Queue for later sync
         const syncQueue = getSyncQueue()
-        syncQueue.queueOperation('note_update', notesData.value[noteId])
+        syncQueue.queueOperation('note_update', validatedNote, now)
+        completeUpdate(`note_${noteId}`)
       })
       
-      return notesData.value[noteId]
+      return validatedNote
     }
     return null
   }
@@ -214,8 +248,23 @@ export const useNotesStore = defineStore('notes', () => {
       return
     }
 
+    // Check if offline - if so, queue immediately
+    const isOnline = navigator.onLine
+    if (!isOnline) {
+      console.log('Offline - queuing note for sync when online')
+      const syncQueue = getSyncQueue()
+      syncQueue.queueOperation('note_update', note, note.updatedAt || note.createdAt || new Date().toISOString())
+      return
+    }
+
     const supabase = getSupabase()
-    if (!supabase) return
+    if (!supabase) {
+      // Queue if Supabase client not available
+      console.log('Supabase client not available - queuing note for sync')
+      const syncQueue = getSyncQueue()
+      syncQueue.queueOperation('note_update', note, note.updatedAt || note.createdAt || new Date().toISOString())
+      return
+    }
 
     try {
       const { error } = await supabase
@@ -240,11 +289,11 @@ export const useNotesStore = defineStore('notes', () => {
         const errorInfo = handleSupabaseError(error, 'save this note')
         console.error('Failed to save note to Supabase:', errorInfo.userFriendlyMessage, errorInfo)
         
-        // If RLS violation or auth error, queue for later sync
+        // If RLS violation, auth error, or network error, queue for later sync
         if (errorInfo.isRLSViolation || errorInfo.isAuthError || errorInfo.isNetworkError) {
           console.warn('Queuing note for later sync')
           const syncQueue = getSyncQueue()
-          syncQueue.queueOperation('note_update', note)
+          syncQueue.queueOperation('note_update', note, note.updatedAt || note.createdAt || new Date().toISOString())
           return
         }
         
@@ -254,6 +303,15 @@ export const useNotesStore = defineStore('notes', () => {
     } catch (error) {
       const errorInfo = handleSupabaseError(error, 'save this note')
       console.error('Failed to save note to Supabase:', errorInfo.userFriendlyMessage, errorInfo)
+      
+      // If it's a network error or we're offline, queue for sync
+      if (errorInfo.isNetworkError || !navigator.onLine) {
+        console.warn('Network error - queuing note for later sync')
+        const syncQueue = getSyncQueue()
+        syncQueue.queueOperation('note_update', note, note.updatedAt || note.createdAt || new Date().toISOString())
+        return
+      }
+      
       // Only throw if it's not an RLS/auth error (those are handled above)
       if (!errorInfo.isRLSViolation && !errorInfo.isAuthError) {
         throw error

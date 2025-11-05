@@ -9,6 +9,7 @@ interface CacheItem<T> {
 export function useCache() {
   const cache = ref<Map<string, CacheItem<any>>>(new Map())
   const maxAge = 5 * 60 * 1000 // 5 minutes default
+  const cleanupInterval = ref<ReturnType<typeof setInterval> | null>(null)
 
   const set = <T>(key: string, data: T, ttl?: number): void => {
     const expiresAt = Date.now() + (ttl || maxAge)
@@ -63,12 +64,15 @@ export function useCache() {
   const size = computed(() => cache.value.size)
 
   // Cleanup expired items every minute
-  const cleanupInterval = setInterval(cleanup, 60000)
+  if (typeof window !== 'undefined') {
+    cleanupInterval.value = setInterval(cleanup, 60000)
+  }
 
   // Cleanup on unmount
   onUnmounted(() => {
-    if (cleanupInterval) {
-      clearInterval(cleanupInterval)
+    if (cleanupInterval.value) {
+      clearInterval(cleanupInterval.value)
+      cleanupInterval.value = null
     }
   })
 

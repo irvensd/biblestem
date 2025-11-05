@@ -77,10 +77,19 @@
               <!-- Remember Me & Forgot Password -->
               <div class="flex items-center justify-between">
                 <label class="flex items-center">
-                  <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                  <input 
+                    v-model="rememberMe"
+                    type="checkbox" 
+                    class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" 
+                  />
                   <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
                 </label>
-                <a href="#" class="text-sm text-primary-600 hover:underline">Forgot password?</a>
+                <router-link 
+                  to="/forgot-password" 
+                  class="text-sm text-primary-600 hover:underline dark:text-primary-400"
+                >
+                  Forgot password?
+                </router-link>
               </div>
 
               <!-- Auth Error -->
@@ -140,15 +149,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { validateEmail, validateRequired } from '../utils/validation'
 
 const email = ref('')
 const password = ref('')
+const rememberMe = ref(false)
 const router = useRouter()
 const authStore = useAuthStore()
+
+// Load remembered email if available
+onMounted(() => {
+  const remembered = localStorage.getItem('biblestem_remember_me') === 'true'
+  const rememberedEmail = localStorage.getItem('biblestem_remembered_email')
+  
+  if (remembered && rememberedEmail) {
+    rememberMe.value = true
+    email.value = rememberedEmail
+  }
+  
+  // Check for session expiry reason
+  const urlParams = new URLSearchParams(window.location.search)
+  if (urlParams.get('reason') === 'session-expired') {
+    // Show notification that session expired
+    authStore.setError('Your session has expired. Please sign in again.', 'SESSION_EXPIRED')
+  }
+})
 
 // Validation errors
 const errors = ref<Record<string, string>>({})
@@ -194,8 +222,15 @@ const handleSubmit = async () => {
     return
   }
 
-  const result = await authStore.login(email.value, password.value)
+  const result = await authStore.login(email.value, password.value, rememberMe.value)
   if (result.success) {
+    // Remove session-expired query param if present
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('reason') === 'session-expired') {
+      urlParams.delete('reason')
+      const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '')
+      window.history.replaceState({}, '', newUrl)
+    }
     router.push('/dashboard')
   }
 }

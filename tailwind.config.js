@@ -42,16 +42,16 @@ export default {
           900: '#78350f',
         },
         neutral: {
-          50: '#fafafa',
-          100: '#f5f5f5',
-          200: '#e5e5e5',
-          300: '#d4d4d4',
-          400: '#a3a3a3',
-          500: '#737373',
-          600: '#525252',
-          700: '#404040',
-          800: '#262626',
-          900: '#171717',
+          50: '#fafaf9',  /* Warm white - stone-50 */
+          100: '#f5f5f4', /* Soft stone - stone-100 */
+          200: '#e7e5e4', /* Light stone - stone-200 */
+          300: '#d6d3d1', /* Medium stone - stone-300 */
+          400: '#a8a29e', /* Warm gray - stone-400 */
+          500: '#78716c', /* Stone - stone-500 */
+          600: '#57534e', /* Dark stone - stone-600 */
+          700: '#44403c', /* Darker stone - stone-700 */
+          800: '#292524', /* Warm black - stone-800 */
+          900: '#1c1917', /* Rich black - stone-900 */
         },
       },
       fontFamily: {

@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
+    class="min-h-screen bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100"
   >
     <!-- Skip Navigation for Screen Readers -->
     <a href="#main-content" class="skip-link"> Skip to main content </a>
@@ -21,6 +21,9 @@
 
     <!-- Global Notifications for errors and loading -->
     <GlobalNotifications />
+    
+    <!-- Sync Status Indicator -->
+    <SyncStatusIndicator />
 
     <!-- PWA Install Prompt -->
     <div
@@ -105,12 +108,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import AppHeader from './components/AppHeader.vue'
 import MobileNavigation from './components/MobileNavigation.vue'
 import GlobalNotifications from './components/GlobalNotifications.vue'
 import ErrorBoundary from './components/ErrorBoundary.vue'
 import EnhancedLoading from './components/EnhancedLoading.vue'
+import SyncStatusIndicator from './components/SyncStatusIndicator.vue'
 import { useTheme } from './composables/useTheme'
 import { preloadCriticalComposables } from './composables/lazy'
 import { useLazyComposable } from './composables/useComposableLoader'
@@ -220,9 +224,24 @@ const handleErrorRetry = () => {
   // The ErrorBoundary component will handle the retry logic
 }
 
+// Handle session expiry notification
+const handleSessionExpired = (event: Event) => {
+  const customEvent = event as CustomEvent
+  const message = customEvent.detail?.message || 'Your session has expired. Please sign in again.'
+  
+  // Show notification via GlobalNotifications if available
+  // For now, we'll use a simple approach - the redirect will happen from the store
+  console.warn('Session expired:', message)
+}
+
 // Initialize app when mounted
 onMounted(async () => {
   try {
+    // Listen for session expiry events
+    if (typeof window !== 'undefined') {
+      window.addEventListener('auth:session-expired', handleSessionExpired)
+    }
+    
     // Import auth store only when needed to avoid Pinia timing issues
     const { useAuthStore } = await import('./stores/auth')
     const authStore = useAuthStore()
@@ -238,6 +257,13 @@ onMounted(async () => {
     console.error('App initialization error:', error)
     // Still mark as ready to prevent infinite loading
     isAppReady.value = true
+  }
+})
+
+// Cleanup on unmount
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('auth:session-expired', handleSessionExpired)
   }
 })
 </script>
