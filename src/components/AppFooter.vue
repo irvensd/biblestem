@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-neutral-900 text-neutral-300 border-t border-neutral-800">
+  <footer class="bg-neutral-50 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-t border-neutral-200 dark:border-neutral-800">
     <div class="container mx-auto px-4 py-12">
       <!-- Main Footer Content -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -11,22 +11,22 @@
                 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z" />
               </svg>
             </div>
-            <span class="text-xl font-bold text-white">BibleStem</span>
+            <span class="text-xl font-bold text-neutral-900 dark:text-white">BibleStem</span>
           </div>
-          <p class="text-sm text-neutral-400">
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
             Interactive Bible study for every believer's journey. Explore foundational truths to deeper prophetic themes.
           </p>
         </div>
 
         <!-- Quick Links Column -->
         <div>
-          <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+          <h3 class="text-neutral-900 dark:text-white font-semibold mb-4">Quick Links</h3>
           <ul class="space-y-2">
             <li>
               <router-link 
                 to="/" 
                 @click="scrollToTop"
-                class="text-sm hover:text-primary-400 transition-colors"
+                class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 Home
               </router-link>
@@ -35,7 +35,7 @@
               <router-link 
                 to="/study-series" 
                 @click="scrollToTop"
-                class="text-sm hover:text-primary-400 transition-colors"
+                class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 Study Series
               </router-link>
@@ -44,7 +44,7 @@
               <router-link 
                 to="/about" 
                 @click="scrollToTop"
-                class="text-sm hover:text-primary-400 transition-colors"
+                class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 About
               </router-link>
@@ -53,7 +53,7 @@
               <router-link 
                 to="/contact" 
                 @click="scrollToTop"
-                class="text-sm hover:text-primary-400 transition-colors"
+                class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 Contact
               </router-link>
@@ -63,13 +63,13 @@
 
         <!-- Support Column -->
         <div>
-          <h3 class="text-white font-semibold mb-4">Support</h3>
+          <h3 class="text-neutral-900 dark:text-white font-semibold mb-4">Support</h3>
           <ul class="space-y-2">
             <li>
               <router-link 
                 to="/help" 
                 @click="scrollToTop"
-                class="text-sm hover:text-primary-400 transition-colors"
+                class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 Help Center
               </router-link>
@@ -87,7 +87,7 @@
               <router-link 
                 to="/contact" 
                 @click="scrollToTop"
-                class="text-sm hover:text-primary-400 transition-colors"
+                class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 Contact Us
               </router-link>
@@ -97,13 +97,13 @@
 
         <!-- Connect Column -->
         <div>
-          <h3 class="text-white font-semibold mb-4">Connect</h3>
+          <h3 class="text-neutral-900 dark:text-white font-semibold mb-4">Connect</h3>
           <div class="flex flex-wrap items-center gap-4">
             <a
               href="https://instagram.com/biblestem"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-10 h-10 rounded-lg bg-neutral-800 hover:bg-primary-600 flex items-center justify-center transition-colors"
+              class="w-10 h-10 rounded-lg bg-neutral-200 dark:bg-neutral-800 hover:bg-primary-500 dark:hover:bg-primary-600 flex items-center justify-center transition-colors text-neutral-700 dark:text-neutral-300"
               aria-label="Instagram"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -114,7 +114,7 @@
               href="https://youtube.com/@biblestem"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-10 h-10 rounded-lg bg-neutral-800 hover:bg-red-600 flex items-center justify-center transition-colors"
+              class="w-10 h-10 rounded-lg bg-neutral-200 dark:bg-neutral-800 hover:bg-red-500 dark:hover:bg-red-600 flex items-center justify-center transition-colors text-neutral-700 dark:text-neutral-300"
               aria-label="YouTube"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -125,7 +125,7 @@
               href="https://x.com/biblestem"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-10 h-10 rounded-lg bg-neutral-800 hover:bg-black flex items-center justify-center transition-colors"
+              class="w-10 h-10 rounded-lg bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-800 dark:hover:bg-black flex items-center justify-center transition-colors text-neutral-700 dark:text-neutral-300"
               aria-label="X (Twitter)"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -136,7 +136,7 @@
               href="https://threads.net/@biblestem"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-10 h-10 rounded-lg bg-neutral-800 hover:bg-neutral-700 flex items-center justify-center transition-colors"
+              class="w-10 h-10 rounded-lg bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 flex items-center justify-center transition-colors text-neutral-700 dark:text-neutral-300"
               aria-label="Threads"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -148,22 +148,22 @@
       </div>
 
       <!-- Bottom Bar -->
-      <div class="border-t border-neutral-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-sm text-neutral-400">
+      <div class="border-t border-neutral-200 dark:border-neutral-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">
           © {{ currentYear }} BibleStem. All rights reserved.
         </p>
         <div class="flex items-center gap-6">
           <router-link 
             to="/privacy" 
             @click="scrollToTop"
-            class="text-sm text-neutral-400 hover:text-primary-400 transition-colors"
+            class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
           >
             Privacy Policy
           </router-link>
           <router-link 
             to="/terms" 
             @click="scrollToTop"
-            class="text-sm text-neutral-400 hover:text-primary-400 transition-colors"
+            class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
           >
             Terms of Service
           </router-link>
