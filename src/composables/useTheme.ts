@@ -1,37 +1,60 @@
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 
 export type Theme = 'light' | 'dark' | 'system'
 
 // Global state - shared across all components
 const theme = ref<Theme>('system')
 const isDarkMode = ref(false)
+const isInitialized = ref(false)
 
-// Initialize theme on module load
+/**
+ * Initialize theme on module load
+ * Enhanced with proper error handling and persistence check
+ */
 function initTheme() {
-  // Load saved theme preference
-  const savedTheme = localStorage.getItem('biblestem_theme') as Theme | null
-  
-  if (savedTheme) {
-    theme.value = savedTheme
-  } else {
-    // Detect system preference
-    theme.value = 'system'
+  // Prevent double initialization
+  if (isInitialized.value) {
+    return
   }
   
-  applyTheme()
-  
-  // Watch for system theme changes
-  if (typeof window !== 'undefined') {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  try {
+    // Load saved theme preference from localStorage
+    const savedTheme = localStorage.getItem('biblestem_theme') as Theme | null
     
-    const handleChange = (e: MediaQueryListEvent) => {
-      if (theme.value === 'system') {
-        isDarkMode.value = e.matches
-        applyTheme()
-      }
+    if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
+      theme.value = savedTheme
+    } else {
+      // Detect system preference
+      theme.value = 'system'
+      // Save default preference
+      localStorage.setItem('biblestem_theme', 'system')
     }
     
-    mediaQuery.addEventListener('change', handleChange)
+    // Apply theme immediately
+    applyTheme()
+    
+    // Mark as initialized
+    isInitialized.value = true
+    
+    // Watch for system theme changes
+    if (typeof window !== 'undefined') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      
+      const handleChange = (e: MediaQueryListEvent) => {
+        if (theme.value === 'system') {
+          isDarkMode.value = e.matches
+          applyTheme()
+        }
+      }
+      
+      mediaQuery.addEventListener('change', handleChange)
+    }
+  } catch (error) {
+    console.error('Failed to initialize theme:', error)
+    // Fallback to system theme
+    theme.value = 'system'
+    applyTheme()
+    isInitialized.value = true
   }
 }
 
@@ -57,11 +80,18 @@ function applyTheme() {
   }
 }
 
-// Set theme
+/**
+ * Set theme preference
+ * Persists to localStorage and applies immediately
+ */
 function setTheme(newTheme: Theme) {
-  theme.value = newTheme
-  localStorage.setItem('biblestem_theme', newTheme)
-  applyTheme()
+  try {
+    theme.value = newTheme
+    localStorage.setItem('biblestem_theme', newTheme)
+    applyTheme()
+  } catch (error) {
+    console.error('Failed to set theme:', error)
+  }
 }
 
 // Toggle between light and dark
@@ -76,9 +106,15 @@ if (typeof window !== 'undefined') {
 }
 
 export function useTheme() {
+  // Ensure theme is initialized when composable is used
+  if (!isInitialized.value) {
+    initTheme()
+  }
+  
   return {
     theme,
     isDarkMode,
+    isInitialized,
     setTheme,
     toggleTheme,
     initTheme,

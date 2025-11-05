@@ -61,7 +61,7 @@ export interface SupabaseErrorInfo {
   isAuthError: boolean
   isNetworkError: boolean
   isNotFound: boolean
-  originalError: any
+  originalError: unknown
   userFriendlyMessage: string
 }
 
@@ -72,11 +72,13 @@ export interface SupabaseErrorInfo {
  * @returns Structured error information
  */
 export const handleSupabaseError = (
-  error: any,
+  error: unknown,
   context?: string,
 ): SupabaseErrorInfo => {
-  const errorCode = error?.code || ''
-  const errorMessage = error?.message || 'An unexpected error occurred'
+  // Type-safe error extraction
+  const errorObj = error && typeof error === 'object' ? error as Record<string, unknown> : null
+  const errorCode = errorObj?.code ? String(errorObj.code) : ''
+  const errorMessage = errorObj?.message ? String(errorObj.message) : 'An unexpected error occurred'
   
   // Log error to monitoring service
   errorLogger.logError(
@@ -159,7 +161,7 @@ export const handleSupabaseError = (
 /**
  * Check if error requires re-authentication
  */
-export const requiresReAuth = (error: any): boolean => {
+export const requiresReAuth = (error: unknown): boolean => {
   const errorInfo = handleSupabaseError(error)
   return errorInfo.isAuthError || errorInfo.isRLSViolation
 }
@@ -185,7 +187,7 @@ export const withSupabaseRetry = async <T>(
   const maxRetries = options?.maxRetries ?? 3
   const retryableErrors = options?.retryableErrors ?? ['NETWORK_ERROR', 'SERVER_ERROR', 'TIMEOUT_ERROR']
   
-  let lastError: any = null
+  let lastError: unknown = null
   
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
@@ -240,7 +242,7 @@ export const withSupabaseRetry = async <T>(
  * Convenience wrapper for common Supabase query patterns
  */
 export const executeSupabaseQuery = async <T>(
-  queryFn: () => Promise<{ data: T | null; error: any }>,
+  queryFn: () => Promise<{ data: T | null; error: unknown }>,
   context?: string
 ): Promise<T> => {
   return withSupabaseRetry(async () => {

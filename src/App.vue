@@ -25,6 +25,27 @@
     <!-- Sync Status Indicator -->
     <SyncStatusIndicator />
 
+    <!-- Service Worker Update Notification -->
+    <div
+      v-if="showUpdateNotification"
+      class="fixed top-20 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm bg-primary-500 text-white rounded-xl shadow-xl p-4 z-50 animate-slide-down"
+    >
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span class="text-sm font-medium">New version available!</span>
+        </div>
+        <button
+          @click="refreshApp"
+          class="px-3 py-1 bg-white text-primary-600 rounded-lg text-sm font-semibold hover:bg-neutral-100 transition-colors"
+        >
+          Refresh
+        </button>
+      </div>
+    </div>
+    
     <!-- PWA Install Prompt -->
     <div
       v-if="showInstallPrompt && !isInstalled"
@@ -144,6 +165,7 @@ const isInstalled = ref(false)
 const isOffline = ref(false)
 const updateAvailable = ref(false)
 const showInstallPrompt = ref(false)
+const showUpdateNotification = ref(false)
 const installPWA = async () => {
   await loadPWAModule()
   if (pwaModule.value) {
@@ -157,6 +179,10 @@ const updateServiceWorker = async () => {
     const { updateServiceWorker: update } = pwaModule.value
     await update()
   }
+}
+
+const refreshApp = () => {
+  window.location.reload()
 }
 
 // Error recovery (lazy loaded)

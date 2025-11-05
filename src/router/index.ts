@@ -177,6 +177,12 @@ let authStoreInstance: ReturnType<typeof useAuthStore> | null = null
 
 // Navigation guard for auth
 router.beforeEach(async (to, from, next) => {
+  // Prevent redirect loops - if already on sign-in page, don't redirect again
+  if (to.name === 'SignIn' && from.name === 'SignIn') {
+    next(false)
+    return
+  }
+  
   // Get store instance (singleton, but ensure we have a reference)
   if (!authStoreInstance) {
     authStoreInstance = useAuthStore()
@@ -184,17 +190,28 @@ router.beforeEach(async (to, from, next) => {
   const authStore = authStoreInstance
   
   // Wait for auth initialization if not already initialized
+  // But add a timeout to prevent infinite waiting
   if (!authStore.isInitialized) {
     try {
-      await authStore.initializeAuth()
+      const initPromise = authStore.initializeAuth()
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Auth initialization timeout')), 5000)
+      )
+      await Promise.race([initPromise, timeoutPromise])
     } catch (error) {
       console.error('Error initializing auth in router guard:', error)
       // Continue anyway - auth might be unavailable
     }
   }
   
+  // Check if route requires auth
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    next({ name: 'SignIn', query: { redirect: to.fullPath } })
+    // Prevent redirect loop - don't redirect to SignIn if already going there
+    if (to.name === 'SignIn') {
+      next()
+    } else {
+      next({ name: 'SignIn', query: { redirect: to.fullPath } })
+    }
   } else {
     next()
   }
