@@ -21,19 +21,23 @@
         <div class="flex items-center gap-2">
           <button
             @click="togglePreview"
-            class="px-3 py-1 text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+            class="px-3 py-1 text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+            :aria-label="showPreview ? 'Switch to edit mode' : 'Switch to preview mode'"
+            :aria-pressed="showPreview"
           >
             {{ showPreview ? 'Edit' : 'Preview' }}
           </button>
           <button
             @click="saveNote"
             :disabled="!noteContent.trim()"
-            class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+            class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            :aria-label="isEditing ? 'Update note' : 'Save note'"
+            :aria-disabled="!noteContent.trim()"
           >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
-            {{ isEditing ? 'Update' : 'Save' }}
+            <span>{{ isEditing ? 'Update' : 'Save' }}</span>
           </button>
         </div>
       </div>
@@ -46,6 +50,8 @@
             :class="{ 'active': isFormatActive('bold') }"
             class="toolbar-btn"
             title="Bold"
+            aria-label="Bold text"
+            :aria-pressed="isFormatActive('bold')"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z" />

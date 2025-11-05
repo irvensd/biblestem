@@ -1,9 +1,11 @@
 <template>
   <div
     v-if="showMobileNav"
-    class="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 z-50 sm:hidden"
+    class="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 z-50 sm:hidden safe-area-bottom"
+    role="navigation"
+    aria-label="Mobile navigation"
   >
-    <div class="grid grid-cols-5 h-20">
+    <div class="grid grid-cols-5 h-16 md:h-20">
       <!-- Dashboard -->
       <router-link
         to="/dashboard"
