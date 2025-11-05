@@ -92,9 +92,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, onErrorCaptured } from 'vue'
 import { useRouter } from 'vue-router'
 import { useHapticFeedback } from '../composables/useMobileGestures'
+import { errorLogger } from '../services/errorLogger'
 
 interface Props {
   fallback?: boolean
@@ -164,6 +165,20 @@ const handleError = (err: Error, info: any) => {
   
   // Log error for debugging
   console.error('ErrorBoundary caught an error:', err, info)
+  
+  // Log to error monitoring service
+  errorLogger.logError(
+    `ErrorBoundary: ${err.message}`,
+    err,
+    {
+      componentInfo: info.componentInfo,
+      componentInstance: info.componentInstance,
+      type: info.type,
+      ...info,
+    }
+  ).catch(() => {
+    // Silently fail if logging fails
+  })
   
   // Call custom error handler if provided
   if (props.onError) {
@@ -257,11 +272,34 @@ const globalErrorHandler = (event: ErrorEvent) => {
 }
 
 const unhandledRejectionHandler = (event: PromiseRejectionEvent) => {
-  handleError(new Error(event.reason), {
+  // Extract error message from rejection reason
+  const errorMessage = event.reason instanceof Error 
+    ? event.reason.message 
+    : typeof event.reason === 'string' 
+      ? event.reason 
+      : 'Unhandled promise rejection'
+      
+  const error = event.reason instanceof Error 
+    ? event.reason 
+    : new Error(errorMessage)
+    
+  handleError(error, {
     type: 'unhandledRejection',
-    reason: event.reason
+    reason: event.reason,
+    stack: event.reason instanceof Error ? event.reason.stack : undefined
   })
 }
+
+// Vue error captured hook - catches errors from child components
+onErrorCaptured((err: Error, instance, info: string) => {
+  handleError(err, {
+    type: 'componentError',
+    componentInfo: info,
+    componentInstance: instance?.$?.type?.__name || 'Unknown Component'
+  })
+  // Return false to prevent the error from propagating further
+  return false
+})
 
 // Lifecycle
 onMounted(() => {

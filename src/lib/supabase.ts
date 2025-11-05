@@ -5,6 +5,7 @@
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { config } from '../config'
+import { errorLogger } from '../services/errorLogger'
 
 let supabaseClient: SupabaseClient | null = null
 
@@ -73,6 +74,19 @@ export const handleSupabaseError = (
 ): SupabaseErrorInfo => {
   const errorCode = error?.code || ''
   const errorMessage = error?.message || 'An unexpected error occurred'
+  
+  // Log error to monitoring service
+  errorLogger.logError(
+    `Supabase error: ${errorMessage}`,
+    error instanceof Error ? error : new Error(errorMessage),
+    {
+      code: errorCode,
+      context: context || 'unknown',
+      supabaseError: true,
+    }
+  ).catch(() => {
+    // Silently fail if logging fails
+  })
   
   // Check for RLS policy violations
   // PGRST301 = no rows returned (often RLS)
@@ -145,5 +159,99 @@ export const handleSupabaseError = (
 export const requiresReAuth = (error: any): boolean => {
   const errorInfo = handleSupabaseError(error)
   return errorInfo.isAuthError || errorInfo.isRLSViolation
+}
+
+/**
+ * Execute a Supabase operation with automatic retry and error recovery
+ * This integrates network error recovery with Supabase retry logic
+ * 
+ * @param operation - Async function that performs the Supabase operation
+ * @param context - Context description for error messages
+ * @param options - Retry options
+ * @returns The result of the operation
+ */
+export const withSupabaseRetry = async <T>(
+  operation: () => Promise<T>,
+  context?: string,
+  options?: {
+    maxRetries?: number
+    retryableErrors?: string[]
+    onError?: (error: SupabaseErrorInfo) => void
+  }
+): Promise<T> => {
+  const maxRetries = options?.maxRetries ?? 3
+  const retryableErrors = options?.retryableErrors ?? ['NETWORK_ERROR', 'SERVER_ERROR', 'TIMEOUT_ERROR']
+  
+  let lastError: any = null
+  
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const result = await operation()
+      
+      // Success - return result
+      return result
+      
+    } catch (error) {
+      lastError = error
+      const errorInfo = handleSupabaseError(error, context)
+      
+      // Call custom error handler if provided
+      if (options?.onError) {
+        options.onError(errorInfo)
+      }
+      
+      // Don't retry non-retryable errors
+      if (!errorInfo.isNetworkError && 
+          !retryableErrors.includes(errorInfo.code) &&
+          !errorInfo.message.includes('fetch') &&
+          !errorInfo.message.includes('network')) {
+        throw error
+      }
+      
+      // Don't retry auth/RLS errors - they won't succeed on retry
+      if (errorInfo.isAuthError || errorInfo.isRLSViolation) {
+        throw error
+      }
+      
+      // If this is the last attempt, throw the error
+      if (attempt === maxRetries) {
+        throw error
+      }
+      
+      // Calculate exponential backoff delay
+      const delay = Math.min(1000 * Math.pow(2, attempt), 10000)
+      
+      // Wait before retrying
+      await new Promise(resolve => setTimeout(resolve, delay))
+      
+      console.log(`Retrying Supabase operation (attempt ${attempt + 1}/${maxRetries})...`, context)
+    }
+  }
+  
+  // Should never reach here, but TypeScript needs it
+  throw lastError
+}
+
+/**
+ * Execute a Supabase query with retry logic
+ * Convenience wrapper for common Supabase query patterns
+ */
+export const executeSupabaseQuery = async <T>(
+  queryFn: () => Promise<{ data: T | null; error: any }>,
+  context?: string
+): Promise<T> => {
+  return withSupabaseRetry(async () => {
+    const { data, error } = await queryFn()
+    
+    if (error) {
+      throw error
+    }
+    
+    if (data === null) {
+      throw new Error(`${context || 'Resource'} not found`)
+    }
+    
+    return data
+  }, context)
 }
 
