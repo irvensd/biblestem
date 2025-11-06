@@ -173,21 +173,23 @@
                   <p class="text-sm text-neutral-600 dark:text-neutral-400">Display Greek/Hebrew words by default</p>
                 </div>
               </div>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  v-model="showOriginalLanguages"
-                  @change="updateLanguageDisplay"
-                  class="sr-only peer"
-                />
+              <button
+                @click="showOriginalLanguages = !showOriginalLanguages; updateLanguageDisplay()"
+                type="button"
+                class="relative inline-flex items-center cursor-pointer"
+                :aria-checked="showOriginalLanguages"
+                role="switch"
+              >
                 <div
-                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1 bg-neutral-300 dark:bg-neutral-700 peer-checked:bg-primary-600"
+                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1"
+                  :class="showOriginalLanguages ? 'bg-primary-600' : 'bg-neutral-300 dark:bg-neutral-700'"
                 >
                   <div
-                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300 peer-checked:translate-x-6"
+                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300"
+                    :class="showOriginalLanguages ? 'translate-x-6' : 'translate-x-0'"
                   ></div>
                 </div>
-              </label>
+              </button>
             </div>
 
             <!-- Auto-save Notes -->
@@ -210,21 +212,23 @@
                   <p class="text-sm text-neutral-600 dark:text-neutral-400">Automatically save notes as you type</p>
                 </div>
               </div>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  v-model="autoSaveNotes"
-                  @change="updateAutoSave"
-                  class="sr-only peer"
-                />
+              <button
+                @click="autoSaveNotes = !autoSaveNotes; updateAutoSave()"
+                type="button"
+                class="relative inline-flex items-center cursor-pointer"
+                :aria-checked="autoSaveNotes"
+                role="switch"
+              >
                 <div
-                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1 bg-neutral-300 dark:bg-neutral-700 peer-checked:bg-green-600"
+                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1"
+                  :class="autoSaveNotes ? 'bg-green-600' : 'bg-neutral-300 dark:bg-neutral-700'"
                 >
                   <div
-                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300 peer-checked:translate-x-6"
+                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300"
+                    :class="autoSaveNotes ? 'translate-x-6' : 'translate-x-0'"
                   ></div>
                 </div>
-              </label>
+              </button>
             </div>
           </div>
         </div>
