@@ -176,13 +176,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useSEO } from '../composables/useSEO'
 
 const lastUpdated = computed(() => {
   return new Date().toLocaleDateString('en-US', { 
     year: 'numeric', 
     month: 'long', 
     day: 'numeric' 
+  })
+})
+
+// SEO Configuration
+const { applySEO } = useSEO()
+
+onMounted(() => {
+  applySEO({
+    title: 'Terms of Service - BibleStem | User Agreement',
+    description: 'BibleStem Terms of Service. Read our terms and conditions for using the platform, including user responsibilities, content usage, and service guidelines.',
+    keywords: 'terms of service, user agreement, terms and conditions, biblestem terms, service terms',
+    noindex: false // Allow indexing for transparency
   })
 })
 </script>

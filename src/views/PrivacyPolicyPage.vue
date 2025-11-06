@@ -139,13 +139,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useSEO } from '../composables/useSEO'
 
 const lastUpdated = computed(() => {
   return new Date().toLocaleDateString('en-US', { 
     year: 'numeric', 
     month: 'long', 
     day: 'numeric' 
+  })
+})
+
+// SEO Configuration
+const { applySEO } = useSEO()
+
+onMounted(() => {
+  applySEO({
+    title: 'Privacy Policy - BibleStem | How We Protect Your Data',
+    description: 'BibleStem Privacy Policy. Learn how we collect, use, and protect your personal information. We are committed to your privacy and data security.',
+    keywords: 'privacy policy, data protection, user privacy, biblestem privacy, information security',
+    noindex: false // Allow indexing for transparency
   })
 })
 </script>
