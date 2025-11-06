@@ -165,6 +165,10 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, nextTick, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useSEO } from '../composables/useSEO'
+
+// SEO Configuration
+const { applySEO, getBreadcrumbSchema } = useSEO()
 import { useAuthStore } from '@/stores/auth'
 import { useStudies } from '@/composables/useStudies'
 import StudySection from '@/components/StudySection.vue'
@@ -173,6 +177,19 @@ import StudySectionSkeleton from '@/components/skeletons/StudySectionSkeleton.vu
 const route = useRoute()
 const authStore = useAuthStore()
 const { categoriesWithStudies, isLoading, error, fetchStudies } = useStudies()
+
+// Apply SEO on mount
+onMounted(() => {
+  applySEO({
+    title: 'Bible Study Series - Free Interactive Studies | BibleStem',
+    description: 'Explore our collection of free interactive Bible studies including foundational studies, book studies, topical studies, and character studies. Learn Hebrew and Greek. 100% free.',
+    keywords: 'bible study series, free bible courses, topical bible study, book of the bible study, character studies, hebrew greek bible study, scripture courses',
+    structuredData: getBreadcrumbSchema([
+      { name: 'Home', url: 'https://biblestem.vercel.app/' },
+      { name: 'Study Series', url: 'https://biblestem.vercel.app/study-series' }
+    ])
+  })
+})
 
 const hasSupported = computed(() => authStore.hasSupported)
 

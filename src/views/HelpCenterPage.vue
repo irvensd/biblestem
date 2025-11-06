@@ -289,6 +289,27 @@ const toggleItem = (category: string, index: number) => {
   }
 }
 
+// Generate FAQ structured data
+const faqStructuredData = computed(() => {
+  const faqs = sections.flatMap(section => {
+    const items = filteredItems(section.id)
+    return items.map(item => ({
+      question: item.title,
+      answer: item.content.replace(/<[^>]*>/g, '') // Strip HTML tags
+    }))
+  })
+  return getFAQSchema(faqs)
+})
+
+onMounted(() => {
+  applySEO({
+    title: 'Help Center - BibleStem Support & FAQs | Bible Study Help',
+    description: 'Get help with BibleStem. Find answers to common questions about Bible studies, lessons, notes, account management, and technical support. Complete FAQ and support documentation.',
+    keywords: 'bible study help, biblestem faq, bible study questions, how to study bible, bible app help, christian learning support',
+    structuredData: faqStructuredData.value
+  })
+})
+
 const scrollToSection = (sectionId: string) => {
   const element = document.getElementById(sectionId)
   if (element) {

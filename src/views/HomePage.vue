@@ -496,6 +496,10 @@
 import { computed, onMounted, ref } from 'vue'
 import { getAllStudies } from '@/data/studies'
 import AppFooter from '@/components/AppFooter.vue'
+import { useSEO } from '../composables/useSEO'
+
+// SEO Configuration
+const { applySEO, getOrganizationSchema, getWebsiteSchema } = useSEO()
 
 // Study count for homepage display
 const allStudies = ref<any[]>([])
@@ -504,6 +508,20 @@ const freeStudiesCount = computed(() => allStudies.value.filter((s: any) => s.ca
 
 onMounted(() => {
   allStudies.value = getAllStudies()
+  
+  // Apply SEO
+  applySEO({
+    title: 'BibleStem - Free Interactive Bible Study Platform | Learn Hebrew & Greek',
+    description: '100% free Bible study platform with interactive lessons, Hebrew & Greek word studies, daily devotions, and comprehensive study guides. Donation-based ministry spreading God\'s Word freely.',
+    keywords: 'free bible study, interactive bible study, hebrew greek study, biblical insights, daily devotions, christian learning, bible lessons, scripture study, free theology, bible app, study the bible',
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        getOrganizationSchema(),
+        getWebsiteSchema()
+      ]
+    }
+  })
 })
 
 // Handle donation click - can be updated with actual payment integration

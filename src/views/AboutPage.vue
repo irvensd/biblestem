@@ -243,5 +243,18 @@
 </template>
 
 <script setup lang="ts">
-// About page - making Jesus famous through accessible Bible study
+import { onMounted } from 'vue'
+import { useSEO } from '../composables/useSEO'
+
+// SEO Configuration
+const { applySEO, getOrganizationSchema } = useSEO()
+
+onMounted(() => {
+  applySEO({
+    title: 'About BibleStem - Our Mission & Vision | Free Bible Study Ministry',
+    description: 'Learn about BibleStem\'s mission to make deep Bible study accessible to everyone, free of charge. We\'re a donation-based ministry committed to spreading God\'s Word through interactive learning.',
+    keywords: 'about biblestem, bible study mission, christian ministry, free bible education, donation based ministry, gospel spreading',
+    structuredData: getOrganizationSchema()
+  })
+})
 </script>
