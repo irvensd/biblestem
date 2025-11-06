@@ -238,24 +238,49 @@
       </div>
       
       <div class="container mx-auto px-4 text-center relative z-10">
-        <h2 class="text-4xl md:text-5xl font-bold mb-4">Ready to Start Studying?</h2>
-        <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-          Join thousands of believers who are deepening their understanding of Scripture daily
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <router-link 
-            to="/sign-up" 
-            class="btn bg-white text-primary-600 hover:bg-white/90 px-10 py-4 rounded-xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all"
-          >
-            Get Started Free →
-          </router-link>
-          <router-link 
-            to="/" 
-            class="btn border-2 border-white text-white hover:bg-white/10 px-10 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm"
-          >
-            Back to Home
-          </router-link>
-        </div>
+        <!-- For logged-in users -->
+        <template v-if="authStore.isAuthenticated">
+          <h2 class="text-4xl md:text-5xl font-bold mb-4">Continue Your Journey</h2>
+          <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+            Keep growing in your faith and understanding of God's Word
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <router-link 
+              to="/dashboard" 
+              class="btn bg-white text-primary-600 hover:bg-white/90 px-10 py-4 rounded-xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all"
+            >
+              Go to Dashboard →
+            </router-link>
+            <router-link 
+              to="/study-series" 
+              class="btn border-2 border-white text-white hover:bg-white/10 px-10 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm"
+            >
+              Browse Studies
+            </router-link>
+          </div>
+        </template>
+
+        <!-- For non-logged-in users -->
+        <template v-else>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4">Ready to Start Studying?</h2>
+          <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+            Join thousands of believers who are deepening their understanding of Scripture daily
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <router-link 
+              to="/sign-up" 
+              class="btn bg-white text-primary-600 hover:bg-white/90 px-10 py-4 rounded-xl text-lg font-semibold shadow-2xl transform hover:scale-105 transition-all"
+            >
+              Get Started Free →
+            </router-link>
+            <router-link 
+              to="/" 
+              class="btn border-2 border-white text-white hover:bg-white/10 px-10 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm"
+            >
+              Back to Home
+            </router-link>
+          </div>
+        </template>
       </div>
     </section>
   </div>
@@ -263,6 +288,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useAuthStore } from '../stores/auth'
+
+const authStore = useAuthStore()
 
 const form = ref({
   name: '',

@@ -177,42 +177,69 @@
           </div>
 
           <!-- Greek/Hebrew Words Display -->
-          <div v-if="showGreekHebrew && (lesson.content.taggedScripture || lesson.content.hebrewGreekWords)">
+          <div v-if="showGreekHebrew">
             <div class="mt-8 p-6 bg-amber-50 dark:bg-amber-900/20 rounded-xl border-2 border-amber-200 dark:border-amber-800">
-              <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+              <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+                <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
                 Word Study
               </h3>
-              <div v-if="lesson.content.taggedScripture" class="space-y-4">
-                <div
-                  v-for="(tag, index) in lesson.content.taggedScripture"
-                  :key="index"
-                  class="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-lg border-2 border-blue-200 dark:border-blue-800/50 shadow-md"
-                >
-                  <div class="font-bold text-emerald-700 dark:text-emerald-400 mb-1">
-                    {{ tag.data?.word }}
+              
+              <!-- Loading state -->
+              <div v-if="hebrewGreekWordsLoading" class="flex items-center justify-center py-8">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div>
+              </div>
+
+              <!-- Error state -->
+              <div v-else-if="hebrewGreekWordsError" class="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300">
+                <p>{{ hebrewGreekWordsError }}</p>
+              </div>
+
+              <!-- Static content from lesson data -->
+              <div v-else-if="lesson.content.taggedScripture || lesson.content.hebrewGreekWords">
+                <div v-if="lesson.content.taggedScripture" class="space-y-4">
+                  <div
+                    v-for="(tag, index) in lesson.content.taggedScripture"
+                    :key="index"
+                    class="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-lg border-2 border-blue-200 dark:border-blue-800/50 shadow-md"
+                  >
+                    <div class="font-bold text-emerald-700 dark:text-emerald-400 mb-1 text-lg" dir="auto">
+                      {{ tag.data?.word }}
+                    </div>
+                    <div class="text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
+                      <div><strong>Language:</strong> {{ tag.data?.language }}</div>
+                      <div v-if="tag.data?.transliteration"><strong>Transliteration:</strong> <em>{{ tag.data.transliteration }}</em></div>
+                      <div><strong>Meaning:</strong> {{ tag.data?.meaning }}</div>
+                      <div v-if="tag.data?.context"><strong>Context:</strong> {{ tag.data.context }}</div>
+                      <div v-if="tag.data?.strongsNumber" class="text-xs text-neutral-500 dark:text-neutral-500">Strong's: {{ tag.data.strongsNumber }}</div>
+                    </div>
                   </div>
-                  <div class="text-sm text-neutral-600 dark:text-neutral-400">
-                    <div><strong>Language:</strong> {{ tag.data?.language }}</div>
-                    <div><strong>Meaning:</strong> {{ tag.data?.meaning }}</div>
-                    <div v-if="tag.data?.context"><strong>Context:</strong> {{ tag.data.context }}</div>
+                </div>
+                <div v-if="lesson.content.hebrewGreekWords" class="grid grid-cols-1 md:grid-cols-2 gap-4" :class="{ 'mt-4': lesson.content.taggedScripture }">
+                  <div
+                    v-for="(word, index) in lesson.content.hebrewGreekWords"
+                    :key="index"
+                    class="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-lg border-2 border-blue-200 dark:border-blue-800/50 shadow-md"
+                  >
+                    <div class="font-bold text-primary-700 dark:text-primary-400 mb-1 text-lg" dir="auto">
+                      {{ word.word }}
+                    </div>
+                    <div class="text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
+                      <div><strong>Language:</strong> {{ word.language }}</div>
+                      <div v-if="word.transliteration"><strong>Transliteration:</strong> <em>{{ word.transliteration }}</em></div>
+                      <div><strong>Meaning:</strong> {{ word.meaning }}</div>
+                      <div v-if="word.context"><strong>Context:</strong> {{ word.context }}</div>
+                      <div v-if="word.strongsNumber" class="text-xs text-neutral-500 dark:text-neutral-500">Strong's: {{ word.strongsNumber }}</div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div v-if="lesson.content.hebrewGreekWords" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div
-                  v-for="(word, index) in lesson.content.hebrewGreekWords"
-                  :key="index"
-                  class="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-lg border-2 border-blue-200 dark:border-blue-800/50 shadow-md"
-                >
-                  <div class="font-bold text-primary-700 dark:text-primary-400 mb-1">
-                    {{ word.word }}
-                  </div>
-                  <div class="text-sm text-neutral-600 dark:text-neutral-400">
-                    <div><strong>Language:</strong> {{ word.language }}</div>
-                    <div><strong>Meaning:</strong> {{ word.meaning }}</div>
-                    <div v-if="word.context"><strong>Context:</strong> {{ word.context }}</div>
-                  </div>
-                </div>
+
+              <!-- No content message -->
+              <div v-else class="text-center py-8 text-neutral-600 dark:text-neutral-400">
+                <p class="mb-2">No Hebrew or Greek word studies available for this lesson yet.</p>
+                <p class="text-sm">Word studies are being added to more lessons.</p>
               </div>
             </div>
           </div>
@@ -494,7 +521,10 @@
               @blur="autoSaveNotes"
             ></textarea>
             <div class="mt-2">
-              <AutoSaveIndicator :state="notesSaveState" />
+              <AutoSaveIndicator v-if="isAutoSaveEnabled()" :state="notesSaveState" />
+              <div v-else class="text-xs text-neutral-500 dark:text-neutral-400 italic">
+                Auto-save disabled
+              </div>
             </div>
           </div>
         </div>
@@ -566,6 +596,7 @@ import { useStudyProgressStore } from '../stores/studyProgress'
 import { useNotesStore } from '../stores/notes'
 import ReadingProgress from '../components/ReadingProgress.vue'
 import VerseHighlighting from '../components/VerseHighlighting.vue'
+import { useHebrewGreekWords } from '../composables/useHebrewGreekWords'
 import EnhancedNoteTaking from '../components/EnhancedNoteTaking.vue'
 import StudyNavigation from '../components/StudyNavigation.vue'
 import AutoSaveIndicator from '../components/AutoSaveIndicator.vue'
@@ -607,7 +638,21 @@ const breadcrumbs = computed<BreadcrumbItem[]>(() => {
   
   return items
 })
-const showGreekHebrew = ref(false)
+// Load showOriginalLanguages preference from settings
+const loadShowOriginalLanguagesSetting = (): boolean => {
+  try {
+    const savedSettings = localStorage.getItem('biblestem_settings')
+    if (savedSettings) {
+      const settings = JSON.parse(savedSettings)
+      return settings.showOriginalLanguages || false
+    }
+  } catch (error) {
+    console.error('Error loading showOriginalLanguages setting:', error)
+  }
+  return false
+}
+
+const showGreekHebrew = ref(loadShowOriginalLanguagesSetting())
 const reflectionNotes = ref('')
 const personalNotes = ref('')
 const applicationComplete = ref(false)
@@ -618,6 +663,13 @@ const existingHighlights = ref<string[]>([])
 const existingNotes = ref<Record<string, string>>({})
 const lessonNotes = ref<any[]>([])
 const isBookmarked = ref(false)
+
+// Hebrew/Greek words functionality
+const {
+  words: hebrewGreekWords,
+  isLoading: hebrewGreekWordsLoading,
+  error: hebrewGreekWordsError,
+} = useHebrewGreekWords()
 
 // Section refs
 const section1 = ref<HTMLElement>()
@@ -709,6 +761,11 @@ const updateCurrentSection = () => {
 }
 
 const autoSaveReflection = () => {
+  // Check if auto-save is enabled
+  if (!isAutoSaveEnabled()) {
+    return
+  }
+
   if (reflectionNotes.value.trim()) {
     notesStore.createNote({
       studyId: route.params.studyId as string,
@@ -726,8 +783,28 @@ const autoSaveReflection = () => {
 const notesSaveState = ref<AutoSaveState>('idle')
 let autoSaveTimeout: ReturnType<typeof setTimeout> | null = null
 
+// Check if auto-save is enabled in settings
+const isAutoSaveEnabled = (): boolean => {
+  try {
+    const savedSettings = localStorage.getItem('biblestem_settings')
+    if (savedSettings) {
+      const settings = JSON.parse(savedSettings)
+      return settings.autoSaveNotes !== false
+    }
+  } catch (error) {
+    console.error('Error checking auto-save setting:', error)
+  }
+  return true // Default to enabled
+}
+
 // Handle notes input with debounced auto-save
 const handleNotesInput = () => {
+  // Check if auto-save is enabled
+  if (!isAutoSaveEnabled()) {
+    notesSaveState.value = 'idle'
+    return
+  }
+
   notesSaveState.value = 'saving'
   
   // Clear existing timeout
@@ -742,6 +819,12 @@ const handleNotesInput = () => {
 }
 
 const autoSaveNotes = async () => {
+  // Check if auto-save is enabled
+  if (!isAutoSaveEnabled()) {
+    notesSaveState.value = 'idle'
+    return
+  }
+
   if (!personalNotes.value.trim()) {
     notesSaveState.value = 'idle'
     return

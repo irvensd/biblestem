@@ -243,9 +243,15 @@
       </div>
 
       <!-- Recently Completed -->
-      <div class="mb-16">
+      <div v-if="completedStudies.length > 0" class="mb-16">
         <h2 class="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-6 sm:mb-8 text-center">Recently Completed</h2>
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border-2 border-neutral-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+        
+        <!-- Show Most Recently Completed Study -->
+        <div 
+          v-for="study in recentlyCompletedStudies" 
+          :key="study.id"
+          class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border-2 border-neutral-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 mb-4"
+        >
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
             <!-- Icon -->
             <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -257,7 +263,7 @@
             <!-- Content -->
             <div class="flex-1 min-w-0 w-full sm:w-auto">
               <h3 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white mb-2">
-                How to Study the Bible: The Preparation
+                {{ study.title }}
               </h3>
               <p class="text-sm sm:text-base text-emerald-500 dark:text-emerald-400 font-semibold mb-2 sm:mb-3 flex items-center gap-1">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -266,12 +272,15 @@
                 Completed Successfully
               </p>
               <p class="text-sm sm:text-base text-neutral-600 dark:text-gray-300 leading-relaxed">
-                You've completed this foundational study on Bible study preparation. Great job on building your spiritual foundation!
+                {{ study.description || `You've completed this ${study.difficulty || 'study'}. Great job on building your spiritual foundation!` }}
               </p>
             </div>
             
             <!-- Button -->
-            <button class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95 touch-target text-sm sm:text-base whitespace-nowrap">
+            <button 
+              @click="navigateToStudy(study.id)"
+              class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95 touch-target text-sm sm:text-base whitespace-nowrap"
+            >
               Review Study
             </button>
           </div>
@@ -321,6 +330,24 @@ const completedStudies = computed(() => {
   })
 })
 
+// Get most recently completed studies (sorted by last accessed date)
+const recentlyCompletedStudies = computed(() => {
+  return completedStudies.value
+    .map(study => {
+      const progress = progressStore.getStudyProgress(study.id)
+      return {
+        ...study,
+        completedAt: progress?.lastAccessedAt || new Date().toISOString()
+      }
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.completedAt).getTime()
+      const dateB = new Date(b.completedAt).getTime()
+      return dateB - dateA // Most recent first
+    })
+    .slice(0, 3) // Show up to 3 most recent
+})
+
 const inProgressStudies = computed(() => {
   return studies.value.filter(study => {
     const progress = progressStore.getStudyProgress(study.id)
@@ -363,20 +390,83 @@ const navigateToDailyStudy = () => {
   router.push('/my-studies')
 }
 
+const navigateToStudy = (studyId: string) => {
+  router.push(`/study/${studyId}`)
+}
+
 const loadDashboardData = async () => {
   try {
     isLoading.value = true
     
-    // Load studies
-    studies.value = getAllStudies()
+    // Load studies - try Supabase first, fallback to local data
+    const supabase = getSupabase()
+    if (supabase && authStore.user) {
+      try {
+        // Load studies from Supabase
+        const { data: studiesData, error: studiesError } = await supabase
+          .from('studies')
+          .select('*')
+          .order('title', { ascending: true })
+        
+        if (!studiesError && studiesData && studiesData.length > 0) {
+          // Transform Supabase data to match Study interface
+          studies.value = studiesData.map((study: any) => ({
+            id: study.id,
+            title: study.title,
+            description: study.description,
+            category: study.category,
+            lessons: [], // Will be loaded separately if needed
+            totalDuration: study.total_duration || 0,
+            difficulty: study.difficulty,
+            tags: study.tags || [],
+            image: study.image,
+            color: study.color,
+            features: study.features || [],
+            lessons_count: study.lessons_count || 0
+          }))
+          
+          // Also load lessons for each study to get full lesson count
+          const studyIds = studiesData.map((s: any) => s.id)
+          const { data: lessonsData } = await supabase
+            .from('lessons')
+            .select('study_id, id')
+            .in('study_id', studyIds)
+          
+          if (lessonsData) {
+            // Group lessons by study_id
+            const lessonsByStudy = lessonsData.reduce((acc: Record<string, any[]>, lesson: any) => {
+              if (!acc[lesson.study_id]) acc[lesson.study_id] = []
+              acc[lesson.study_id].push(lesson)
+              return acc
+            }, {})
+            
+            // Update studies with lesson counts
+            studies.value = studies.value.map(study => ({
+              ...study,
+              lessons: lessonsByStudy[study.id] || [],
+              lessons_count: (lessonsByStudy[study.id] || []).length
+            }))
+          }
+        } else {
+          // Fallback to local data if Supabase fails or no data
+          studies.value = getAllStudies()
+        }
+      } catch (error) {
+        console.warn('Failed to load studies from Supabase, using local data:', error)
+        studies.value = getAllStudies()
+      }
+    } else {
+      // No Supabase or not authenticated - use local data
+      studies.value = getAllStudies()
+    }
     
-    // Load progress data
+    // Load progress data from Supabase (with localStorage fallback)
+    // This will automatically load from Supabase if available and user is authenticated
     await progressStore.loadFromStorage()
     
-    // Load recent notes
-    if (authStore.user) {
-      const supabase = getSupabase()
-      if (supabase) {
+    // Load recent notes from Supabase
+    if (authStore.user && supabase) {
+      try {
         const { data: notes, error: notesError } = await supabase
           .from('study_notes')
           .select('*')
@@ -387,11 +477,13 @@ const loadDashboardData = async () => {
         if (notesError) {
           const errorInfo = handleSupabaseError(notesError, 'load recent notes')
           console.warn('Failed to load recent notes:', errorInfo.userFriendlyMessage, errorInfo)
-          // Continue without notes - not critical
           recentNotes.value = []
         } else {
           recentNotes.value = notes || []
         }
+      } catch (error) {
+        console.warn('Error loading recent notes:', error)
+        recentNotes.value = []
       }
     }
     
@@ -400,6 +492,14 @@ const loadDashboardData = async () => {
       ? handleSupabaseError(error, 'load dashboard data')
       : null
     console.error('Error loading dashboard data:', errorInfo?.userFriendlyMessage || (error instanceof Error ? error.message : 'Unknown error'), error)
+    
+    // Fallback: ensure we have at least local data
+    if (studies.value.length === 0) {
+      studies.value = getAllStudies()
+    }
+    if (!progressStore.isInitialized) {
+      await progressStore.loadFromStorage()
+    }
   } finally {
     isLoading.value = false
   }

@@ -135,42 +135,6 @@
               </div>
             </div>
 
-            <!-- Notifications Toggle -->
-            <div class="flex items-center justify-between p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
-              <div class="flex items-center gap-4">
-                <div
-                  class="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center"
-                >
-                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-semibold text-neutral-900 dark:text-neutral-100">Notifications</h3>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400">Receive study reminders and updates</p>
-                </div>
-              </div>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  v-model="enableNotifications"
-                  class="sr-only peer"
-                  @change="updateNotificationSetting"
-                />
-                <div
-                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1 bg-neutral-300 dark:bg-neutral-700 peer-checked:bg-primary-600"
-                >
-                  <div
-                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300 peer-checked:translate-x-6"
-                  ></div>
-                </div>
-              </label>
-            </div>
           </div>
         </div>
 
@@ -191,23 +155,6 @@
           </h2>
 
           <div class="space-y-4">
-            <!-- Bible Translation -->
-            <div class="p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
-              <label class="block font-semibold text-neutral-900 dark:text-neutral-100 mb-3">
-                Bible Translation
-              </label>
-              <select
-                v-model="bibleTranslation"
-                @change="updateTranslation"
-                class="w-full px-4 py-3 rounded-xl border-2 border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:border-primary-500 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900/50 transition-all"
-              >
-                <option value="KJV">King James Version (KJV)</option>
-                <option value="NIV">New International Version (NIV)</option>
-                <option value="ESV">English Standard Version (ESV)</option>
-                <option value="NASB">New American Standard Bible (NASB)</option>
-                <option value="NLT">New Living Translation (NLT)</option>
-              </select>
-            </div>
 
             <!-- Greek/Hebrew Display -->
             <div class="flex items-center justify-between p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
@@ -226,21 +173,23 @@
                   <p class="text-sm text-neutral-600 dark:text-neutral-400">Display Greek/Hebrew words by default</p>
                 </div>
               </div>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  v-model="showOriginalLanguages"
-                  @change="updateLanguageDisplay"
-                  class="sr-only peer"
-                />
+              <button
+                @click="showOriginalLanguages = !showOriginalLanguages; updateLanguageDisplay()"
+                type="button"
+                class="relative inline-flex items-center cursor-pointer"
+                :aria-checked="showOriginalLanguages"
+                role="switch"
+              >
                 <div
-                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1 bg-neutral-300 dark:bg-neutral-700 peer-checked:bg-primary-600"
+                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1"
+                  :class="showOriginalLanguages ? 'bg-primary-600' : 'bg-neutral-300 dark:bg-neutral-700'"
                 >
                   <div
-                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300 peer-checked:translate-x-6"
+                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300"
+                    :class="showOriginalLanguages ? 'translate-x-6' : 'translate-x-0'"
                   ></div>
                 </div>
-              </label>
+              </button>
             </div>
 
             <!-- Auto-save Notes -->
@@ -263,21 +212,23 @@
                   <p class="text-sm text-neutral-600 dark:text-neutral-400">Automatically save notes as you type</p>
                 </div>
               </div>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  v-model="autoSaveNotes"
-                  @change="updateAutoSave"
-                  class="sr-only peer"
-                />
+              <button
+                @click="autoSaveNotes = !autoSaveNotes; updateAutoSave()"
+                type="button"
+                class="relative inline-flex items-center cursor-pointer"
+                :aria-checked="autoSaveNotes"
+                role="switch"
+              >
                 <div
-                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1 bg-neutral-300 dark:bg-neutral-700 peer-checked:bg-green-600"
+                  class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1"
+                  :class="autoSaveNotes ? 'bg-green-600' : 'bg-neutral-300 dark:bg-neutral-700'"
                 >
                   <div
-                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300 peer-checked:translate-x-6"
+                    class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300"
+                    :class="autoSaveNotes ? 'translate-x-6' : 'translate-x-0'"
                   ></div>
                 </div>
-              </label>
+              </button>
             </div>
           </div>
         </div>
@@ -379,8 +330,6 @@ const { isDarkMode, toggleTheme } = useTheme()
 
 // Settings state
 const fontSize = ref(16)
-const enableNotifications = ref(true)
-const bibleTranslation = ref('KJV')
 const showOriginalLanguages = ref(false)
 const autoSaveNotes = ref(true)
 
@@ -391,8 +340,6 @@ onMounted(() => {
     try {
       const settings = JSON.parse(savedSettings)
       fontSize.value = settings.fontSize || 16
-      enableNotifications.value = settings.enableNotifications !== false
-      bibleTranslation.value = settings.bibleTranslation || 'KJV'
       showOriginalLanguages.value = settings.showOriginalLanguages || false
       autoSaveNotes.value = settings.autoSaveNotes !== false
     } catch (error) {
@@ -405,30 +352,27 @@ const updateFontSize = () => {
   document.documentElement.style.fontSize = `${fontSize.value}px`
 }
 
-const updateNotificationSetting = () => {
-  // TODO: Implement notification permission request
-  if (enableNotifications.value && 'Notification' in window && Notification.permission === 'default') {
-    Notification.requestPermission()
-  }
-}
 
-const updateTranslation = () => {
-  // Settings saved automatically on change
-}
 
 const updateLanguageDisplay = () => {
   // Settings saved automatically on change
 }
 
 const updateAutoSave = () => {
-  // Settings saved automatically on change
+  saveSettings()
+  
+  // Show feedback to user
+  const message = autoSaveNotes.value 
+    ? 'Auto-save enabled - Your notes will save automatically as you type'
+    : 'Auto-save disabled - Remember to save your notes manually'
+  
+  // Could use a toast notification here instead of alert
+  console.log(message)
 }
 
 const saveSettings = () => {
   const settings = {
     fontSize: fontSize.value,
-    enableNotifications: enableNotifications.value,
-    bibleTranslation: bibleTranslation.value,
     showOriginalLanguages: showOriginalLanguages.value,
     autoSaveNotes: autoSaveNotes.value,
   }
