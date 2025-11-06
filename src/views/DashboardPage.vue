@@ -243,9 +243,15 @@
       </div>
 
       <!-- Recently Completed -->
-      <div class="mb-16">
+      <div v-if="completedStudies.length > 0" class="mb-16">
         <h2 class="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-6 sm:mb-8 text-center">Recently Completed</h2>
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border-2 border-neutral-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+        
+        <!-- Show Most Recently Completed Study -->
+        <div 
+          v-for="study in recentlyCompletedStudies" 
+          :key="study.id"
+          class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border-2 border-neutral-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 mb-4"
+        >
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
             <!-- Icon -->
             <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -257,7 +263,7 @@
             <!-- Content -->
             <div class="flex-1 min-w-0 w-full sm:w-auto">
               <h3 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white mb-2">
-                How to Study the Bible: The Preparation
+                {{ study.title }}
               </h3>
               <p class="text-sm sm:text-base text-emerald-500 dark:text-emerald-400 font-semibold mb-2 sm:mb-3 flex items-center gap-1">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -266,12 +272,15 @@
                 Completed Successfully
               </p>
               <p class="text-sm sm:text-base text-neutral-600 dark:text-gray-300 leading-relaxed">
-                You've completed this foundational study on Bible study preparation. Great job on building your spiritual foundation!
+                {{ study.description || `You've completed this ${study.difficulty || 'study'}. Great job on building your spiritual foundation!` }}
               </p>
             </div>
             
             <!-- Button -->
-            <button class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95 touch-target text-sm sm:text-base whitespace-nowrap">
+            <button 
+              @click="navigateToStudy(study.id)"
+              class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95 touch-target text-sm sm:text-base whitespace-nowrap"
+            >
               Review Study
             </button>
           </div>
@@ -321,6 +330,24 @@ const completedStudies = computed(() => {
   })
 })
 
+// Get most recently completed studies (sorted by last accessed date)
+const recentlyCompletedStudies = computed(() => {
+  return completedStudies.value
+    .map(study => {
+      const progress = progressStore.getStudyProgress(study.id)
+      return {
+        ...study,
+        completedAt: progress?.lastAccessedAt || new Date().toISOString()
+      }
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.completedAt).getTime()
+      const dateB = new Date(b.completedAt).getTime()
+      return dateB - dateA // Most recent first
+    })
+    .slice(0, 3) // Show up to 3 most recent
+})
+
 const inProgressStudies = computed(() => {
   return studies.value.filter(study => {
     const progress = progressStore.getStudyProgress(study.id)
@@ -361,6 +388,10 @@ const navigateToBrowseStudies = () => {
 
 const navigateToDailyStudy = () => {
   router.push('/my-studies')
+}
+
+const navigateToStudy = (studyId: string) => {
+  router.push(`/study/${studyId}`)
 }
 
 const loadDashboardData = async () => {
