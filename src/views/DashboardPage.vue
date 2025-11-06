@@ -398,16 +398,75 @@ const loadDashboardData = async () => {
   try {
     isLoading.value = true
     
-    // Load studies
-    studies.value = getAllStudies()
+    // Load studies - try Supabase first, fallback to local data
+    const supabase = getSupabase()
+    if (supabase && authStore.user) {
+      try {
+        // Load studies from Supabase
+        const { data: studiesData, error: studiesError } = await supabase
+          .from('studies')
+          .select('*')
+          .order('title', { ascending: true })
+        
+        if (!studiesError && studiesData && studiesData.length > 0) {
+          // Transform Supabase data to match Study interface
+          studies.value = studiesData.map((study: any) => ({
+            id: study.id,
+            title: study.title,
+            description: study.description,
+            category: study.category,
+            lessons: [], // Will be loaded separately if needed
+            totalDuration: study.total_duration || 0,
+            difficulty: study.difficulty,
+            tags: study.tags || [],
+            image: study.image,
+            color: study.color,
+            features: study.features || [],
+            lessons_count: study.lessons_count || 0
+          }))
+          
+          // Also load lessons for each study to get full lesson count
+          const studyIds = studiesData.map((s: any) => s.id)
+          const { data: lessonsData } = await supabase
+            .from('lessons')
+            .select('study_id, id')
+            .in('study_id', studyIds)
+          
+          if (lessonsData) {
+            // Group lessons by study_id
+            const lessonsByStudy = lessonsData.reduce((acc: Record<string, any[]>, lesson: any) => {
+              if (!acc[lesson.study_id]) acc[lesson.study_id] = []
+              acc[lesson.study_id].push(lesson)
+              return acc
+            }, {})
+            
+            // Update studies with lesson counts
+            studies.value = studies.value.map(study => ({
+              ...study,
+              lessons: lessonsByStudy[study.id] || [],
+              lessons_count: (lessonsByStudy[study.id] || []).length
+            }))
+          }
+        } else {
+          // Fallback to local data if Supabase fails or no data
+          studies.value = getAllStudies()
+        }
+      } catch (error) {
+        console.warn('Failed to load studies from Supabase, using local data:', error)
+        studies.value = getAllStudies()
+      }
+    } else {
+      // No Supabase or not authenticated - use local data
+      studies.value = getAllStudies()
+    }
     
-    // Load progress data
+    // Load progress data from Supabase (with localStorage fallback)
+    // This will automatically load from Supabase if available and user is authenticated
     await progressStore.loadFromStorage()
     
-    // Load recent notes
-    if (authStore.user) {
-      const supabase = getSupabase()
-      if (supabase) {
+    // Load recent notes from Supabase
+    if (authStore.user && supabase) {
+      try {
         const { data: notes, error: notesError } = await supabase
           .from('study_notes')
           .select('*')
@@ -418,11 +477,13 @@ const loadDashboardData = async () => {
         if (notesError) {
           const errorInfo = handleSupabaseError(notesError, 'load recent notes')
           console.warn('Failed to load recent notes:', errorInfo.userFriendlyMessage, errorInfo)
-          // Continue without notes - not critical
           recentNotes.value = []
         } else {
           recentNotes.value = notes || []
         }
+      } catch (error) {
+        console.warn('Error loading recent notes:', error)
+        recentNotes.value = []
       }
     }
     
@@ -431,6 +492,14 @@ const loadDashboardData = async () => {
       ? handleSupabaseError(error, 'load dashboard data')
       : null
     console.error('Error loading dashboard data:', errorInfo?.userFriendlyMessage || (error instanceof Error ? error.message : 'Unknown error'), error)
+    
+    // Fallback: ensure we have at least local data
+    if (studies.value.length === 0) {
+      studies.value = getAllStudies()
+    }
+    if (!progressStore.isInitialized) {
+      await progressStore.loadFromStorage()
+    }
   } finally {
     isLoading.value = false
   }
