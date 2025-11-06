@@ -135,128 +135,6 @@
               </div>
             </div>
 
-            <!-- Notifications Toggle -->
-            <div class="p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
-              <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-4">
-                  <div
-                    class="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center"
-                  >
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 class="font-semibold text-neutral-900 dark:text-neutral-100">Notifications</h3>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Receive study reminders and updates</p>
-                  </div>
-                </div>
-                <label class="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    v-model="enableNotifications"
-                    class="sr-only peer"
-                    @change="updateNotificationSetting"
-                  />
-                  <div
-                    class="w-14 h-8 rounded-full transition-all duration-300 flex items-center p-1 bg-neutral-300 dark:bg-neutral-700 peer-checked:bg-primary-600"
-                  >
-                    <div
-                      class="w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300 peer-checked:translate-x-6"
-                    ></div>
-                  </div>
-                </label>
-              </div>
-              
-              <!-- Notification Status -->
-              <div v-if="notificationStatus" class="mt-3 p-3 rounded-lg text-sm" :class="notificationStatusClass">
-                <div class="flex items-center gap-2">
-                  <svg v-if="notificationStatus === 'granted'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
-                  <svg v-else-if="notificationStatus === 'denied'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                  </svg>
-                  <span>{{ notificationStatusMessage }}</span>
-                </div>
-              </div>
-
-              <!-- Notification Options (shown when enabled) -->
-              <div v-if="enableNotifications && notificationStatus === 'granted'" class="mt-4 space-y-3 pl-16 border-t border-neutral-200 dark:border-neutral-700 pt-4">
-                <!-- Daily Reminder -->
-                <div class="flex items-center justify-between">
-                  <div>
-                    <label class="text-sm font-medium text-neutral-900 dark:text-neutral-100">Daily Reminder</label>
-                    <p class="text-xs text-neutral-600 dark:text-neutral-400">Get reminded to study daily</p>
-                  </div>
-                  <label class="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      v-model="notificationPrefs.dailyReminder"
-                      class="sr-only peer"
-                      @change="updateNotificationPreferences"
-                    />
-                    <div class="w-11 h-6 rounded-full transition-all duration-300 flex items-center p-1 bg-neutral-300 dark:bg-neutral-700 peer-checked:bg-primary-600">
-                      <div class="w-4 h-4 bg-white rounded-full shadow-lg transform transition-transform duration-300 peer-checked:translate-x-5"></div>
-                    </div>
-                  </label>
-                </div>
-
-                <!-- Daily Reminder Time -->
-                <div v-if="notificationPrefs.dailyReminder" class="flex items-center justify-between">
-                  <label class="text-sm font-medium text-neutral-900 dark:text-neutral-100">Reminder Time</label>
-                  <input
-                    type="time"
-                    v-model="notificationPrefs.dailyReminderTime"
-                    @change="updateNotificationPreferences"
-                    class="px-3 py-1.5 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-900/50"
-                  />
-                </div>
-
-                <!-- Study Reminders -->
-                <div class="flex items-center justify-between">
-                  <div>
-                    <label class="text-sm font-medium text-neutral-900 dark:text-neutral-100">Study Reminders</label>
-                    <p class="text-xs text-neutral-600 dark:text-neutral-400">Remind if inactive for {{ notificationPrefs.studyReminderDays }} days</p>
-                  </div>
-                  <label class="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      v-model="notificationPrefs.studyReminders"
-                      class="sr-only peer"
-                      @change="updateNotificationPreferences"
-                    />
-                    <div class="w-11 h-6 rounded-full transition-all duration-300 flex items-center p-1 bg-neutral-300 dark:bg-neutral-700 peer-checked:bg-primary-600">
-                      <div class="w-4 h-4 bg-white rounded-full shadow-lg transform transition-transform duration-300 peer-checked:translate-x-5"></div>
-                    </div>
-                  </label>
-                </div>
-
-                <!-- Progress Updates -->
-                <div class="flex items-center justify-between">
-                  <div>
-                    <label class="text-sm font-medium text-neutral-900 dark:text-neutral-100">Progress Updates</label>
-                    <p class="text-xs text-neutral-600 dark:text-neutral-400">Notify when you complete studies</p>
-                  </div>
-                  <label class="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      v-model="notificationPrefs.progressUpdates"
-                      class="sr-only peer"
-                      @change="updateNotificationPreferences"
-                    />
-                    <div class="w-11 h-6 rounded-full transition-all duration-300 flex items-center p-1 bg-neutral-300 dark:bg-neutral-700 peer-checked:bg-primary-600">
-                      <div class="w-4 h-4 bg-white rounded-full shadow-lg transform transition-transform duration-300 peer-checked:translate-x-5"></div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -454,10 +332,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTheme } from '../composables/useTheme'
-import { notificationService } from '../services/notificationService'
 
 const router = useRouter()
 
@@ -466,44 +343,17 @@ const { isDarkMode, toggleTheme } = useTheme()
 
 // Settings state
 const fontSize = ref(16)
-const enableNotifications = ref(true)
 const bibleTranslation = ref('KJV')
 const showOriginalLanguages = ref(false)
 const autoSaveNotes = ref(true)
 
-// Notification preferences
-const notificationPrefs = ref(notificationService.getPreferences())
-const notificationStatus = ref<NotificationPermission | null>(null)
-
-// Notification status message and styling
-const notificationStatusMessage = computed(() => {
-  if (notificationStatus.value === 'granted') {
-    return 'Notifications enabled'
-  } else if (notificationStatus.value === 'denied') {
-    return 'Notifications blocked. Enable in browser settings.'
-  } else {
-    return 'Click to enable notifications'
-  }
-})
-
-const notificationStatusClass = computed(() => {
-  if (notificationStatus.value === 'granted') {
-    return 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
-  } else if (notificationStatus.value === 'denied') {
-    return 'bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300'
-  } else {
-    return 'bg-neutral-50 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400'
-  }
-})
-
 // Load settings from localStorage
-onMounted(async () => {
+onMounted(() => {
   const savedSettings = localStorage.getItem('biblestem_settings')
   if (savedSettings) {
     try {
       const settings = JSON.parse(savedSettings)
       fontSize.value = settings.fontSize || 16
-      enableNotifications.value = settings.enableNotifications !== false
       bibleTranslation.value = settings.bibleTranslation || 'KJV'
       showOriginalLanguages.value = settings.showOriginalLanguages || false
       autoSaveNotes.value = settings.autoSaveNotes !== false
@@ -511,57 +361,12 @@ onMounted(async () => {
       console.error('Error loading settings:', error)
     }
   }
-
-  // Load notification preferences
-  notificationPrefs.value = notificationService.getPreferences()
-  enableNotifications.value = notificationPrefs.value.enabled
-
-  // Check notification permission status
-  if ('Notification' in window) {
-    notificationStatus.value = Notification.permission
-  }
-
-  // Sync notification service with current settings
-  if (enableNotifications.value) {
-    await notificationService.setEnabled(true)
-    notificationService.scheduleNotifications()
-  }
 })
 
 const updateFontSize = () => {
   document.documentElement.style.fontSize = `${fontSize.value}px`
 }
 
-const updateNotificationSetting = async () => {
-  const success = await notificationService.setEnabled(enableNotifications.value)
-  
-  if (success) {
-    notificationStatus.value = 'granted'
-    notificationService.scheduleNotifications()
-  } else if (enableNotifications.value) {
-    // Permission was denied or not available
-    if ('Notification' in window) {
-      notificationStatus.value = Notification.permission
-    }
-    enableNotifications.value = false
-    notificationService.setEnabled(false)
-  } else {
-    // User disabled notifications
-    notificationService.cancelNotifications()
-    if ('Notification' in window) {
-      notificationStatus.value = Notification.permission
-    }
-  }
-
-  // Update preferences
-  notificationPrefs.value = notificationService.getPreferences()
-  saveSettings()
-}
-
-const updateNotificationPreferences = () => {
-  notificationService.updatePreferences(notificationPrefs.value)
-  saveSettings()
-}
 
 const updateTranslation = () => {
   // Settings saved automatically on change
@@ -578,7 +383,6 @@ const updateAutoSave = () => {
 const saveSettings = () => {
   const settings = {
     fontSize: fontSize.value,
-    enableNotifications: enableNotifications.value,
     bibleTranslation: bibleTranslation.value,
     showOriginalLanguages: showOriginalLanguages.value,
     autoSaveNotes: autoSaveNotes.value,

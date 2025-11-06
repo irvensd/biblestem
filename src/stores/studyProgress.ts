@@ -14,8 +14,6 @@ import {
 import { getCurrentTimestamp, ensureValidTimestamp, syncWithServerTimestamp } from '../utils/timestamps'
 import { validateAndSanitizeProgress } from '../utils/dataValidation'
 import { useOptimisticUpdates } from '../composables/useOptimisticUpdates'
-import { notificationService } from '../services/notificationService'
-import { getAllStudies, getStudyById } from '../data/studies'
 
 export interface StudyProgress {
   studyId: string
@@ -104,19 +102,6 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
     progress.totalTimeSpent += timeSpent
 
     saveToStorage()
-    
-    // Check if study is now completed and show notification
-    const study = getStudyById(studyId)
-    if (study && study.lessons.length > 0) {
-      const isCompleted = checkStudyCompleted(progress.completedLessons, study.lessons.length)
-      if (isCompleted) {
-        // Show completion notification
-        notificationService.showProgressUpdate(study.title, true).catch((error) =>
-          logger.warn('Failed to show progress notification:', error)
-        )
-      }
-    }
-    
     // Fire and forget Supabase sync - don't block UI
     saveProgressToSupabase(studyId).catch((error) =>
       logger.error('Failed to sync progress to Supabase:', error),
