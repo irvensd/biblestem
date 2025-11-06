@@ -613,6 +613,7 @@ const authStore = useAuthStore()
 const progressStore = useStudyProgressStore()
 const notesStore = useNotesStore()
 const { light, medium } = useHapticFeedback()
+const { applySEO, getArticleSchema, getBreadcrumbSchema } = useSEO()
 
 const study = computed(() => getStudyById(route.params.studyId as string))
 const lesson = computed(() => getLessonById(route.params.studyId as string, route.params.lessonId as string))
@@ -1091,10 +1092,36 @@ const loadLessonData = async () => {
        errorMessage.value = 'Failed to load lesson data. Please try again later.'
      }
 
-     updateCurrentSection()
-     isLoading.value = false
-   } catch (error) {
-     console.error('Error loading lesson:', error)
+    updateCurrentSection()
+    isLoading.value = false
+    
+    // Apply SEO for lesson page
+    if (lesson.value && study.value) {
+      applySEO({
+        title: `${lesson.value.title} - ${study.value.title} | BibleStem`,
+        description: lesson.value.description || `Study ${lesson.value.scripture} in depth with interactive lessons, Hebrew/Greek insights, and practical applications.`,
+        keywords: `${lesson.value.scripture}, ${lesson.value.title}, ${study.value.title}, bible lesson, scripture study, biblical teaching`,
+        ogType: 'article',
+        structuredData: {
+          '@context': 'https://schema.org',
+          '@graph': [
+            getArticleSchema({
+              title: lesson.value.title,
+              description: lesson.value.description || '',
+              datePublished: new Date().toISOString(),
+            }),
+            getBreadcrumbSchema([
+              { name: 'Home', url: 'https://biblestem.vercel.app/' },
+              { name: 'Study Series', url: 'https://biblestem.vercel.app/study-series' },
+              { name: study.value.title, url: `https://biblestem.vercel.app/study/${route.params.studyId}` },
+              { name: lesson.value.title, url: `https://biblestem.vercel.app/study/${route.params.studyId}/lesson/${route.params.lessonId}` }
+            ])
+          ]
+        }
+      })
+    }
+  } catch (error) {
+    console.error('Error loading lesson:', error)
      hasError.value = true
      errorMessage.value = error instanceof Error ? error.message : 'Failed to load lesson. Please try again later.'
      isLoading.value = false

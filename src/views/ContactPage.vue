@@ -287,10 +287,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
+import { useSEO } from '../composables/useSEO'
 
 const authStore = useAuthStore()
+
+// SEO Configuration
+const { applySEO } = useSEO()
+
+onMounted(() => {
+  applySEO({
+    title: 'Contact BibleStem - Get Help & Support | Bible Study Ministry',
+    description: 'Contact the BibleStem team for help, support, prayer requests, or partnership opportunities. We\'re here to help you grow in your faith and understanding of God\'s Word.',
+    keywords: 'contact biblestem, bible study help, christian support, ministry contact, prayer requests, bible questions',
+  })
+})
 
 const form = ref({
   name: '',

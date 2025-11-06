@@ -252,12 +252,14 @@ import ResetLessonModal from '../components/ResetLessonModal.vue'
 import VirtualScroll from '../components/VirtualScroll.vue'
 import Breadcrumbs, { type BreadcrumbItem } from '../components/Breadcrumbs.vue'
 import type { Study, Lesson } from '../data/studies'
+import { useSEO } from '../composables/useSEO'
 
 const route = useRoute()
 const router = useRouter()
 const progressStore = useStudyProgressStore()
 const studyCache = useStudyCache()
 const { getLastReadLesson } = useReadPosition()
+const { applySEO, getCourseSchema, getBreadcrumbSchema } = useSEO()
 
 const study = ref<Study | null>(null)
 const lastReadLessonId = ref<string | null>(null)
