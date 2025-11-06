@@ -740,6 +740,11 @@ const handleDonation = () => {
   alert('Thank you for your heart to support BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more Bible studies\n• Keeps the platform free for everyone\n• Spreads the Gospel freely worldwide\n• As a thank you: Access to 4 deeper studies\n\n✨ All basic studies remain 100% FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo\n\nWe\'re grateful for your prayers and support! ❤️')
 }
 
+const handleDonationFromMenu = () => {
+  closeUserMenu()
+  handleDonation()
+}
+
 // Close menus when clicking outside
 const handleClickOutside = (event: Event) => {
   const target = event.target as Element
