@@ -145,9 +145,8 @@
           </svg>
         </button>
 
-        <!-- Donation Heart Button (Desktop) -->
+        <!-- Donation Heart Button (Desktop) - Always visible -->
         <button
-          v-if="!authStore.isAuthenticated"
           @click="handleDonation"
           class="hidden lg:flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg mr-2"
           aria-label="Support our ministry"
@@ -156,7 +155,7 @@
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
           </svg>
-          <span class="text-xs">Donate</span>
+          <span class="text-xs">{{ authStore.hasSupported ? 'Donate Again' : 'Donate' }}</span>
         </button>
 
         <!-- CTA Buttons / User Menu -->
@@ -245,6 +244,18 @@
               >
                 Contact Us
               </router-link>
+              <div class="border-t border-neutral-200 dark:border-neutral-700 my-2"></div>
+              <button
+                @click="handleDonationFromMenu"
+                class="block w-full text-left px-4 py-2 text-sm text-accent-600 dark:text-accent-400 hover:bg-accent-50 dark:hover:bg-accent-900/20 transition-colors duration-200 font-medium"
+              >
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                  </svg>
+                  {{ authStore.hasSupported ? 'Support Us Again ❤️' : 'Support Our Ministry' }}
+                </div>
+              </button>
               <div class="border-t border-neutral-200 dark:border-neutral-700 my-2"></div>
               <button
                 @click="handleSignOut"
