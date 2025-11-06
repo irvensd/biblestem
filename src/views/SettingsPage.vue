@@ -359,7 +359,15 @@ const updateLanguageDisplay = () => {
 }
 
 const updateAutoSave = () => {
-  // Settings saved automatically on change
+  saveSettings()
+  
+  // Show feedback to user
+  const message = autoSaveNotes.value 
+    ? 'Auto-save enabled - Your notes will save automatically as you type'
+    : 'Auto-save disabled - Remember to save your notes manually'
+  
+  // Could use a toast notification here instead of alert
+  console.log(message)
 }
 
 const saveSettings = () => {

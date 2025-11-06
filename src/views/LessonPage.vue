@@ -521,7 +521,10 @@
               @blur="autoSaveNotes"
             ></textarea>
             <div class="mt-2">
-              <AutoSaveIndicator :state="notesSaveState" />
+              <AutoSaveIndicator v-if="isAutoSaveEnabled()" :state="notesSaveState" />
+              <div v-else class="text-xs text-neutral-500 dark:text-neutral-400 italic">
+                Auto-save disabled
+              </div>
             </div>
           </div>
         </div>
@@ -758,6 +761,11 @@ const updateCurrentSection = () => {
 }
 
 const autoSaveReflection = () => {
+  // Check if auto-save is enabled
+  if (!isAutoSaveEnabled()) {
+    return
+  }
+
   if (reflectionNotes.value.trim()) {
     notesStore.createNote({
       studyId: route.params.studyId as string,
@@ -775,8 +783,28 @@ const autoSaveReflection = () => {
 const notesSaveState = ref<AutoSaveState>('idle')
 let autoSaveTimeout: ReturnType<typeof setTimeout> | null = null
 
+// Check if auto-save is enabled in settings
+const isAutoSaveEnabled = (): boolean => {
+  try {
+    const savedSettings = localStorage.getItem('biblestem_settings')
+    if (savedSettings) {
+      const settings = JSON.parse(savedSettings)
+      return settings.autoSaveNotes !== false
+    }
+  } catch (error) {
+    console.error('Error checking auto-save setting:', error)
+  }
+  return true // Default to enabled
+}
+
 // Handle notes input with debounced auto-save
 const handleNotesInput = () => {
+  // Check if auto-save is enabled
+  if (!isAutoSaveEnabled()) {
+    notesSaveState.value = 'idle'
+    return
+  }
+
   notesSaveState.value = 'saving'
   
   // Clear existing timeout
@@ -791,6 +819,12 @@ const handleNotesInput = () => {
 }
 
 const autoSaveNotes = async () => {
+  // Check if auto-save is enabled
+  if (!isAutoSaveEnabled()) {
+    notesSaveState.value = 'idle'
+    return
+  }
+
   if (!personalNotes.value.trim()) {
     notesSaveState.value = 'idle'
     return
