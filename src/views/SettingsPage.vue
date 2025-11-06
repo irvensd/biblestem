@@ -155,23 +155,6 @@
           </h2>
 
           <div class="space-y-4">
-            <!-- Bible Translation -->
-            <div class="p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
-              <label class="block font-semibold text-neutral-900 dark:text-neutral-100 mb-3">
-                Bible Translation
-              </label>
-              <select
-                v-model="bibleTranslation"
-                @change="updateTranslation"
-                class="w-full px-4 py-3 rounded-xl border-2 border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:border-primary-500 focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900/50 transition-all"
-              >
-                <option value="KJV">King James Version (KJV)</option>
-                <option value="NIV">New International Version (NIV)</option>
-                <option value="ESV">English Standard Version (ESV)</option>
-                <option value="NASB">New American Standard Bible (NASB)</option>
-                <option value="NLT">New Living Translation (NLT)</option>
-              </select>
-            </div>
 
             <!-- Greek/Hebrew Display -->
             <div class="flex items-center justify-between p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all">
@@ -343,7 +326,6 @@ const { isDarkMode, toggleTheme } = useTheme()
 
 // Settings state
 const fontSize = ref(16)
-const bibleTranslation = ref('KJV')
 const showOriginalLanguages = ref(false)
 const autoSaveNotes = ref(true)
 
@@ -354,7 +336,6 @@ onMounted(() => {
     try {
       const settings = JSON.parse(savedSettings)
       fontSize.value = settings.fontSize || 16
-      bibleTranslation.value = settings.bibleTranslation || 'KJV'
       showOriginalLanguages.value = settings.showOriginalLanguages || false
       autoSaveNotes.value = settings.autoSaveNotes !== false
     } catch (error) {
@@ -368,9 +349,6 @@ const updateFontSize = () => {
 }
 
 
-const updateTranslation = () => {
-  // Settings saved automatically on change
-}
 
 const updateLanguageDisplay = () => {
   // Settings saved automatically on change
@@ -383,7 +361,6 @@ const updateAutoSave = () => {
 const saveSettings = () => {
   const settings = {
     fontSize: fontSize.value,
-    bibleTranslation: bibleTranslation.value,
     showOriginalLanguages: showOriginalLanguages.value,
     autoSaveNotes: autoSaveNotes.value,
   }
