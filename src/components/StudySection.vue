@@ -46,27 +46,6 @@
       >
         <StudyCard :study="study" />
       </div>
-      
-      <!-- View All Card (mobile only - hidden on desktop since header link exists) -->
-      <div
-        v-if="showViewAll"
-        class="flex-shrink-0 w-full md:hidden flex items-center justify-center"
-      >
-        <button
-          @click="handleViewAllClick"
-          class="w-full min-h-[400px] bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl flex flex-col items-center justify-center p-6 text-white hover:from-primary-600 hover:to-blue-700 transition-all duration-300 group"
-        >
-          <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold mb-2">View All</h3>
-          <p class="text-sm text-white/90 text-center">
-            Explore all {{ studies.length }} {{ category.title.toLowerCase() }}
-          </p>
-        </button>
-      </div>
     </div>
     
     <!-- Expanded Grid View (shown when expanded) -->
