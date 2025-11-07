@@ -159,6 +159,9 @@
         </svg>
       </button>
     </transition>
+    
+    <!-- Donation Modal -->
+    <DonationModal :is-open="showDonationModal" @close="showDonationModal = false" />
   </div>
 </template>
 
@@ -173,6 +176,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useStudies } from '@/composables/useStudies'
 import StudySection from '@/components/StudySection.vue'
 import StudySectionSkeleton from '@/components/skeletons/StudySectionSkeleton.vue'
+import DonationModal from '@/components/DonationModal.vue'
 
 const route = useRoute()
 const authStore = useAuthStore()
@@ -225,8 +229,10 @@ const getSectionGradient = (categoryId: string): string => {
 }
 
 // Handle support modal/message
+const showDonationModal = ref(false)
+
 const showSupportModal = () => {
-  alert('Thank you for your interest in supporting BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more Bible studies\n• Keeps the platform running for everyone\n• Spreads the Gospel freely worldwide\n• As a thank you, you\'ll get access to advanced studies with Hebrew & Greek insights\n\n✨ All basic studies remain 100% FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo\n\nWe\'re grateful for your prayers and support! ❤️')
+  showDonationModal.value = true
 }
 
 // Scroll to hash section
