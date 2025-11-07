@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-white dark:bg-neutral-900">
     <!-- Hero Section -->
     <section class="bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-16 md:py-20">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="max-w-3xl mx-auto text-center">
           <h1 class="text-4xl md:text-5xl font-bold mb-4">Terms of Service</h1>
           <p class="text-lg md:text-xl text-white/90">
@@ -14,7 +14,7 @@
 
     <!-- Content Section -->
     <section class="py-12 md:py-16">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert max-w-none">
           <div class="space-y-8">
             <div>

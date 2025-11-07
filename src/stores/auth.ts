@@ -30,6 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
   const isInitialized = ref(false)
   const useSupabase = isSupabaseAvailable()
   let authSubscription: { unsubscribe: () => void } | null = null
+  let handleTokenRefreshError: (() => void) | null = null
 
   const isAuthenticated = computed(() => !!user.value)
   const hasSupported = computed(() => user.value?.hasSupported === true)
@@ -127,8 +128,7 @@ export const useAuthStore = defineStore('auth', () => {
               user.value = null
               return { 
                 success: true, 
-                error: 'Please check your email to verify your account before signing in.',
-                requiresVerification: true 
+                error: 'Please check your email to verify your account before signing in.'
               }
             }
           }
@@ -387,7 +387,7 @@ export const useAuthStore = defineStore('auth', () => {
           }
 
           // Handle token refresh errors (defined before subscription)
-          const handleTokenRefreshError = () => {
+          handleTokenRefreshError = () => {
             console.warn('Token refresh failed')
             handleSessionExpiry()
           }
@@ -708,7 +708,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
     
     // Remove event listeners
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && handleTokenRefreshError) {
       window.removeEventListener('auth:token-refresh-failed', handleTokenRefreshError)
     }
   }

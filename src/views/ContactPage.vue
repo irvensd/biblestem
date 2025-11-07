@@ -7,7 +7,7 @@
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 1s"></div>
       </div>
       
-      <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 relative z-10">
         <div class="max-w-4xl mx-auto text-center">
           <div class="mb-6 animate-slide-up">
             <span class="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold border border-white/30">
@@ -26,7 +26,7 @@
 
     <!-- Contact Options -->
     <section class="py-20 bg-white dark:bg-neutral-900">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
           <!-- Email Card -->
           <div class="card card-interactive p-8 text-center transform hover:scale-105 transition-all">
@@ -190,7 +190,7 @@
 
     <!-- FAQ Section -->
     <section class="py-20 bg-gray-50 dark:bg-neutral-800">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="text-center mb-12">
           <h2 class="text-4xl font-bold mb-4">Frequently Asked Questions</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -237,7 +237,7 @@
         <div class="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
       </div>
       
-      <div class="container mx-auto px-4 text-center relative z-10">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 text-center relative z-10">
         <!-- For logged-in users -->
         <template v-if="authStore.isAuthenticated">
           <h2 class="text-4xl md:text-5xl font-bold mb-4">Continue Your Journey</h2>

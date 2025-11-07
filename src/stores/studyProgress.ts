@@ -630,6 +630,7 @@ export const useStudyProgressStore = defineStore('studyProgress', () => {
 
   return {
     progressData,
+    isInitialized,
     getStudyProgress,
     isLessonCompleted,
     isStudyCompleted,

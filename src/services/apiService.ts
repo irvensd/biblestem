@@ -6,6 +6,7 @@
 
 import { supabaseService } from './supabaseService'
 import { handleError, withErrorHandling, type AppError } from '../utils/errorHandler'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 /**
  * API Response wrapper
@@ -43,16 +44,17 @@ class ApiService {
    */
   protected async query<T>(
     table: string,
-    operation: (client: NonNullable<ReturnType<typeof supabaseService.client>>) => Promise<{ data: T | null; error: unknown }>,
+    operation: (client: SupabaseClient) => Promise<{ data: T | null; error: unknown }>,
     context?: string
   ): Promise<ApiResponse<T>> {
-    return withErrorHandling(async () => {
+    const result = await withErrorHandling(async () => {
       const client = supabaseService.client
       if (!client) {
         throw new Error('Supabase client not available')
       }
       return await supabaseService.executeQuery(() => operation(client), context)
     }, { context: `Query ${table}`, log: true })
+    return { ...result, success: !result.error }
   }
 
   /**
@@ -60,16 +62,17 @@ class ApiService {
    */
   protected async mutate<T>(
     table: string,
-    operation: (client: NonNullable<ReturnType<typeof supabaseService.client>>) => Promise<{ data: T | null; error: unknown }>,
+    operation: (client: SupabaseClient) => Promise<{ data: T | null; error: unknown }>,
     context?: string
   ): Promise<ApiResponse<T>> {
-    return withErrorHandling(async () => {
+    const result = await withErrorHandling(async () => {
       const client = supabaseService.client
       if (!client) {
         throw new Error('Supabase client not available')
       }
       return await supabaseService.executeMutation(() => operation(client), context)
     }, { context: `Mutation ${table}`, log: true })
+    return { ...result, success: !result.error }
   }
 
   /**
@@ -80,7 +83,8 @@ class ApiService {
       table,
       async (client) => {
         if (!client) throw new Error('Client not available')
-        return await client.from(table).select(select).eq('id', id).single()
+        const result = await client.from(table).select(select).eq('id', id).single()
+        return { data: result.data as T | null, error: result.error as unknown }
       },
       `Get ${table} by ID`
     )
@@ -116,7 +120,8 @@ class ApiService {
           query = query.range(from, to)
         }
         
-        return await query
+        const result = await query
+        return { data: result.data as T[] | null, error: result.error as unknown }
       },
       `Get all ${table}`
     )
@@ -130,7 +135,8 @@ class ApiService {
       table,
       async (client) => {
         if (!client) throw new Error('Client not available')
-        return await client.from(table).insert(data).select().single()
+        const result = await client.from(table).insert(data).select().single()
+        return { data: result.data as T | null, error: result.error as unknown }
       },
       `Create ${table}`
     )
@@ -144,7 +150,8 @@ class ApiService {
       table,
       async (client) => {
         if (!client) throw new Error('Client not available')
-        return await client.from(table).update(data).eq('id', id).select().single()
+        const result = await client.from(table).update(data).eq('id', id).select().single()
+        return { data: result.data as T | null, error: result.error as unknown }
       },
       `Update ${table}`
     )
@@ -158,7 +165,8 @@ class ApiService {
       table,
       async (client) => {
         if (!client) throw new Error('Client not available')
-        return await client.from(table).delete().eq('id', id)
+        const result = await client.from(table).delete().eq('id', id)
+        return { data: result.data as void | null, error: result.error as unknown }
       },
       `Delete ${table}`
     )
@@ -168,7 +176,7 @@ class ApiService {
    * Execute a custom query
    */
   async customQuery<T>(
-    queryFn: (client: NonNullable<ReturnType<typeof supabaseService.client>>) => Promise<{ data: T | null; error: unknown }>,
+    queryFn: (client: SupabaseClient) => Promise<{ data: T | null; error: unknown }>,
     context?: string
   ): Promise<ApiResponse<T>> {
     return this.query<T>('custom', queryFn, context)
