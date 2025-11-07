@@ -9,6 +9,7 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   ABOUT: '/about',
   CONTACT: '/contact',
+  DONATE_PAYPAL: '/donate/paypal',
   
   // Authentication routes
   SIGN_IN: '/sign-in',

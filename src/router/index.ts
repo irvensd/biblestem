@@ -140,6 +140,12 @@ const routes = [
     redirect: '/privacy'
   },
   {
+    path: '/donate/paypal',
+    name: 'DonatePayPal',
+    // Donation routes grouping
+    component: () => import(/* webpackChunkName: "donate-pages" */ '../views/donate/PaypalDonatePage.vue')
+  },
+  {
     path: '/terms',
     name: 'Terms',
     // Group static/info pages together

@@ -1,6 +1,6 @@
 <template>
   <article
-    class="w-full bg-white dark:bg-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out snap-start flex-shrink-0 hover:translate-y-[-4px] focus-visible:ring-2 focus-visible:ring-blue-500 group cursor-pointer"
+    class="w-full bg-white dark:bg-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out snap-start flex-shrink-0 hover:translate-y-[-4px] focus-visible:ring-2 focus-visible:ring-blue-500 group cursor-pointer flex flex-col h-full"
     @click="handleClick"
     role="article"
     :aria-label="`Study: ${study.title}`"
@@ -59,7 +59,7 @@
     </div>
     
     <!-- Study Content -->
-    <div class="p-5">
+    <div class="flex flex-col flex-1 p-5">
       <h3 class="text-lg font-semibold mb-2 text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
         <span class="sr-only">Study title: </span>{{ study.title }}
       </h3>
@@ -78,7 +78,7 @@
       
       <!-- Start Study Button -->
       <button
-        class="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-indigo-500 text-white hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        class="mt-auto w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-indigo-500 text-white hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         @click.stop="handleClick"
         :aria-label="`Start studying ${study.title}`"
       >
