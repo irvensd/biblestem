@@ -489,6 +489,9 @@
 
     <!-- Footer -->
     <AppFooter />
+    
+    <!-- Donation Modal -->
+    <DonationModal :is-open="showDonationModal" @close="showDonationModal = false" />
   </div>
 </template>
 
@@ -496,6 +499,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { getAllStudies } from '@/data/studies'
 import AppFooter from '@/components/AppFooter.vue'
+import DonationModal from '@/components/DonationModal.vue'
 import { useSEO } from '../composables/useSEO'
 
 // SEO Configuration
@@ -524,13 +528,10 @@ onMounted(() => {
   })
 })
 
+const showDonationModal = ref(false)
+
 // Handle donation click - can be updated with actual payment integration
 const handleDonation = () => {
-  // For now, show a message - you can replace this with actual donation page/modal
-  // Options: Stripe, PayPal, Buy Me a Coffee, Ko-fi, etc.
-  alert('Thank you for your heart to support BibleStem! 🙏\n\nDonation options coming soon:\n• PayPal\n• Stripe\n• Venmo\n• Buy Me a Coffee\n\nFor now, please contact us if you\'d like to donate.')
-  
-  // Future: Could open a modal or redirect to /donate page
-  // router.push('/donate')
+  showDonationModal.value = true
 }
 </script>

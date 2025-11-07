@@ -364,6 +364,9 @@
         </div>
       </div>
     </div>
+    
+    <!-- Donation Modal -->
+    <DonationModal :is-open="showDonationModal" @close="showDonationModal = false" />
   </div>
 </template>
 
@@ -372,6 +375,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useHapticFeedback } from '../composables/useMobileGestures'
+import DonationModal from './DonationModal.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -427,11 +431,11 @@ const closeProfile = () => {
   showProfile.value = false
 }
 
+const showDonationModal = ref(false)
+
 const handleSupportUs = () => {
   medium()
-  // TODO: Implement donation flow
-  // For now, show a message - we'll create a proper donation component later
-  alert('Thank you for considering supporting BibleStem! We are a donation-based ministry spreading the Gospel freely. Donation options coming soon!')
+  showDonationModal.value = true
   closeProfile()
 }
 

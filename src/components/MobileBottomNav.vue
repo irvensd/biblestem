@@ -167,11 +167,16 @@
         <span>Donate</span>
       </button>
     </nav>
+    
+    <!-- Donation Modal -->
+    <DonationModal :is-open="showDonationModal" @close="showDonationModal = false" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useAuthStore } from '../stores/auth'
+import DonationModal from './DonationModal.vue'
 
 const authStore = useAuthStore()
 
@@ -190,8 +195,10 @@ const handleTouchEnd = (event: TouchEvent) => {
   }, 150)
 }
 
+const showDonationModal = ref(false)
+
 const handleDonation = () => {
-  alert('Thank you for your heart to support BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more Bible studies\n• Keeps the platform free for everyone\n• Spreads the Gospel freely worldwide\n• As a thank you: Access to 4 deeper studies\n\n✨ All basic studies remain 100% FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo\n\nWe\'re grateful for your prayers and support! ❤️')
+  showDonationModal.value = true
 }
 </script>
 
