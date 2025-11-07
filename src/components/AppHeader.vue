@@ -4,7 +4,7 @@
     class="bg-white dark:bg-gray-900 backdrop-blur-md border-b border-neutral-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg"
     role="banner"
   >
-      <nav class="container-base" role="navigation" aria-label="Main navigation">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Main navigation">
       <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20">
         <!-- Logo -->
         <router-link
@@ -321,14 +321,24 @@
         </button>
       </div>
 
+      <!-- Mobile Menu Backdrop -->
+      <Teleport to="body">
+        <div
+          v-if="mobileMenuOpen"
+          class="fixed inset-0 bg-black/30 dark:bg-black/50 z-40 lg:hidden"
+          @click="closeMobileMenu"
+        ></div>
+      </Teleport>
+
       <!-- Mobile Menu -->
       <div
         v-if="mobileMenuOpen"
         id="mobile-menu"
-        class="lg:hidden border-t border-neutral-200 dark:border-neutral-800 animate-fade-in max-h-[calc(100vh-160px)] overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-neutral-100"
+        class="lg:hidden border-t border-neutral-200 dark:border-neutral-800 animate-fade-in max-h-[calc(100vh-160px)] overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-neutral-100 bg-white dark:bg-gray-900 relative z-50"
         @touchmove.stop
         @touchstart.passive="true"
         @touchend.passive="true"
+        @click.stop
         style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch"
         role="menu"
         aria-label="Mobile navigation menu"
@@ -748,9 +758,11 @@ const handleDonationFromMenu = () => {
 // Close menus when clicking outside
 const handleClickOutside = (event: Event) => {
   const target = event.target as Element
+  // Close user menu if clicking outside
   if (!target.closest('.relative')) {
     userMenuOpen.value = false
   }
+  // Mobile menu is handled by the backdrop click handler
 }
 
 // Single cleanup function for component unmount

@@ -7,7 +7,7 @@
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-10 animate-pulse" style="animation-delay: 1s"></div>
       </div>
       
-      <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 relative z-10">
         <div class="max-w-2xl mx-auto text-center">
           <h1 class="text-4xl md:text-6xl font-bold mb-4 animate-slide-up">
             Welcome Back
@@ -21,7 +21,7 @@
 
     <!-- Sign In Form -->
     <section class="py-12 md:py-16">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="max-w-md mx-auto">
           <!-- Sign In Card -->
           <div class="card p-8 animate-scale-in">

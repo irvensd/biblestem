@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 py-8">
     <!-- Loading Skeleton -->
     <div v-if="loading">
       <StudyPageSkeleton :lesson-count="5" />
@@ -258,7 +258,7 @@ const route = useRoute()
 const router = useRouter()
 const progressStore = useStudyProgressStore()
 const studyCache = useStudyCache()
-const { getLastReadLesson } = useReadPosition()
+const { getLastReadLesson } = useReadPosition(route.params.id as string)
 const { applySEO, getCourseSchema, getBreadcrumbSchema } = useSEO()
 
 const study = ref<Study | null>(null)

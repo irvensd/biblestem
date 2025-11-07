@@ -8,7 +8,7 @@
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 1s"></div>
       </div>
       
-      <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 relative z-10">
         <div class="max-w-5xl mx-auto">
           <div class="grid md:grid-cols-2 gap-12 items-center">
             <!-- Left Side - Text Content -->
@@ -108,7 +108,7 @@
 
     <!-- Study Categories Preview -->
     <section class="py-20 bg-gray-50 dark:bg-neutral-900">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="text-center mb-12">
           <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Study Categories</h2>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -154,7 +154,7 @@
 
     <!-- Sample Study Preview -->
     <section class="py-20 bg-white dark:bg-neutral-800">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="text-center mb-12">
           <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">See What You'll Learn</h2>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -276,7 +276,7 @@
 
     <!-- Features Section with Icons -->
     <section class="py-20 bg-gray-50 dark:bg-neutral-900">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <h2 class="text-4xl font-bold text-center mb-4 text-gray-900 dark:text-white">Why Choose BibleStem?</h2>
         <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
           Everything you need for deep, meaningful Bible study in one powerful platform
@@ -331,7 +331,7 @@
         <div class="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
       </div>
       
-      <div class="container mx-auto px-4 text-center relative z-10">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 text-center relative z-10">
         <h2 class="text-4xl md:text-5xl font-bold mb-4">Ready to Start Your Journey?</h2>
         <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
           Join thousands of believers who are deepening their understanding of Scripture every day — completely free!
@@ -382,7 +382,7 @@
 
     <!-- Donation/Support Section -->
     <section id="support" class="py-20 bg-white dark:bg-neutral-900 scroll-mt-20">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="max-w-4xl mx-auto">
           <div class="card p-8 md:p-12 text-center">
             <div class="w-20 h-20 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">

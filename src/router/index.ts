@@ -33,8 +33,13 @@ const routes = [
     path: '/daily-devotions',
     name: 'DailyDevotions',
     // Group authenticated content pages
-    component: () => import(/* webpackChunkName: "auth-pages" */ '../views/DailyDevotionsPage.vue'),
-    meta: { requiresAuth: true }
+    component: () => import(/* webpackChunkName: "auth-pages" */ '../views/DailyDevotionsPage.vue')
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    // Search page
+    component: () => import(/* webpackChunkName: "search" */ '../views/SearchPage.vue')
   },
   {
     path: '/study/:id',
