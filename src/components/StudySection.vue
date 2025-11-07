@@ -34,24 +34,68 @@
     <!-- Horizontal Scrolling Container (shown when NOT expanded) -->
     <div
       v-if="!isExpanded"
-      ref="scrollContainer"
-      class="grid grid-cols-2 md:flex gap-4 overflow-x-auto pb-4 px-4 scrollbar-hide md:snap-x md:snap-mandatory"
-      @scroll="handleScroll"
+      class="relative"
     >
-      <!-- Study Cards -->
+      <!-- Swipe Hint Right (All Screen Sizes) -->
       <div
-        v-for="(study, index) in studies"
-        :key="study.id"
-        class="flex-shrink-0 md:snap-start"
+        v-if="canScrollRight && studies.length > 1"
+        class="absolute top-0 right-4 z-10 flex items-center gap-2 px-3 py-1.5 bg-primary-500/90 backdrop-blur-sm text-white text-xs font-medium rounded-full shadow-lg"
       >
-        <StudyCard :study="study" />
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <span>Swipe for more</span>
+      </div>
+      
+      <!-- Swipe Hint Left (All Screen Sizes - when scrolled right) -->
+      <div
+        v-if="canScrollLeft && studies.length > 1"
+        class="absolute top-0 left-4 z-10 flex items-center gap-2 px-3 py-1.5 bg-primary-500/90 backdrop-blur-sm text-white text-xs font-medium rounded-full shadow-lg"
+      >
+        <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <span>Swipe back</span>
+      </div>
+      
+      <!-- Scroll Container with Fade Gradients -->
+      <div
+        ref="scrollContainer"
+        class="relative flex gap-0 overflow-x-auto pb-4 px-4 scrollbar-hide md:snap-x md:snap-mandatory"
+        @scroll="handleScroll"
+      >
+        <!-- Study Cards -->
+        <div
+          v-for="study in studies"
+          :key="study.id"
+          class="flex-shrink-0 w-[85vw] sm:w-[70vw] md:w-80 lg:w-96 md:snap-start pr-4 md:pr-6 last:pr-0"
+        >
+          <StudyCard :study="study" />
+        </div>
+      </div>
+      
+      <!-- Scroll Dots Indicator (All Screen Sizes) -->
+      <div
+        v-if="studies.length > 1"
+        class="flex items-center justify-center gap-2 mt-3"
+      >
+        <div
+          v-for="(study, index) in studies"
+          :key="study.id"
+          class="h-1.5 rounded-full transition-all duration-300"
+          :class="
+            getActiveDotIndex() === index
+              ? 'w-6 bg-primary-600 dark:bg-primary-400'
+              : 'w-1.5 bg-neutral-300 dark:bg-neutral-600'
+          "
+        ></div>
       </div>
     </div>
     
     <!-- Expanded Grid View (shown when expanded) -->
     <div
       v-else
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 pb-4"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-4 pb-4"
     >
       <div
         v-for="study in studies"
@@ -92,9 +136,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
 import StudyCard from './StudyCard.vue'
-import type { StudyWithCount, CategoryWithStudies } from '../composables/useStudies'
+import type { CategoryWithStudies } from '../composables/useStudies'
 
 interface Props {
   category: CategoryWithStudies
@@ -109,12 +152,12 @@ const props = withDefaults(defineProps<Props>(), {
   showScrollIndicators: false,
 })
 
-const router = useRouter()
 const studies = computed(() => props.category.studies)
 const scrollContainer = ref<HTMLElement | null>(null)
 const canScrollLeft = ref(false)
 const canScrollRight = ref(false)
 const isExpanded = ref(false)
+const activeDotIndex = ref(0)
 
 const getCategoryIcon = (categoryId: string): string => {
   const icons: Record<string, string> = {
@@ -151,42 +194,130 @@ const handleViewAllClick = (e: Event) => {
 }
 
 const checkScrollButtons = () => {
-  if (!scrollContainer.value || isExpanded.value) return
+  if (!scrollContainer.value || isExpanded.value) {
+    canScrollLeft.value = false
+    canScrollRight.value = false
+    return
+  }
   
   const { scrollLeft, scrollWidth, clientWidth } = scrollContainer.value
-  canScrollLeft.value = scrollLeft > 0
-  canScrollRight.value = scrollLeft < scrollWidth - clientWidth - 10
+  const maxScroll = scrollWidth - clientWidth
+  
+  // At the very beginning - be EXTREMELY strict: if scrollLeft is <= 10px, we're at the start
+  // This accounts for any padding, margins, or browser quirks
+  canScrollLeft.value = scrollLeft > 10
+  
+  // At the very end - be EXTREMELY strict: if we're within 10px of max scroll, we're at the end
+  canScrollRight.value = maxScroll > 0 && scrollLeft < maxScroll - 10
 }
 
 const handleScroll = () => {
   checkScrollButtons()
+  updateActiveDot()
+}
+
+const updateActiveDot = () => {
+  if (!scrollContainer.value) {
+    activeDotIndex.value = 0
+    return
+  }
+  
+  const container = scrollContainer.value
+  const scrollLeft = container.scrollLeft
+  const cardWidth = window.innerWidth < 768 
+    ? window.innerWidth * 0.85 
+    : window.innerWidth < 1024 
+      ? 320  // md:w-80 (320px) for iPad
+      : 384  // lg:w-96 (384px) for larger screens
+  const gap = window.innerWidth < 768 ? 16 : 24
+  
+  // Calculate which card is most visible
+  const cardIndex = Math.round(scrollLeft / (cardWidth + gap))
+  activeDotIndex.value = Math.min(cardIndex, studies.value.length - 1)
+}
+
+const getActiveDotIndex = (): number => {
+  return activeDotIndex.value
 }
 
 const scrollLeft = () => {
   if (!scrollContainer.value) return
-  const cardWidth = 288 + 16 // 72 * 4 (w-72) + gap-4 (16)
+  // Calculate card width based on viewport
+  const width = window.innerWidth
+  const cardWidth = width < 768 
+    ? width * 0.85  // Mobile: 85vw
+    : width < 1024 
+      ? 320  // iPad/Tablet: md:w-80 (320px)
+      : 384  // Large: lg:w-96 (384px)
+  const gap = width < 768 ? 16 : 24 // gap-4 (16px) on mobile, gap-6 (24px) on tablet
   scrollContainer.value.scrollBy({
-    left: -cardWidth,
+    left: -(cardWidth + gap),
     behavior: 'smooth',
   })
 }
 
 const scrollRight = () => {
   if (!scrollContainer.value) return
-  const cardWidth = 288 + 16 // 72 * 4 (w-72) + gap-4 (16)
+  // Calculate card width based on viewport
+  const width = window.innerWidth
+  const cardWidth = width < 768 
+    ? width * 0.85  // Mobile: 85vw
+    : width < 1024 
+      ? 320  // iPad/Tablet: md:w-80 (320px)
+      : 384  // Large: lg:w-96 (384px)
+  const gap = width < 768 ? 16 : 24 // gap-4 (16px) on mobile, gap-6 (24px) on tablet
   scrollContainer.value.scrollBy({
-    left: cardWidth,
+    left: cardWidth + gap,
     behavior: 'smooth',
   })
 }
 
-onMounted(() => {
+const handleResize = () => {
   checkScrollButtons()
-  window.addEventListener('resize', checkScrollButtons)
+  updateActiveDot()
+}
+
+onMounted(() => {
+  // Immediately set to false to prevent showing at start
+  canScrollLeft.value = false
+  canScrollRight.value = false
+  
+  // Use nextTick to ensure DOM is fully rendered
+  nextTick(() => {
+    checkScrollButtons()
+    updateActiveDot()
+    // Check multiple times to account for any layout shifts and browser quirks
+    setTimeout(() => {
+      checkScrollButtons()
+      updateActiveDot()
+    }, 50)
+    setTimeout(() => {
+      checkScrollButtons()
+      updateActiveDot()
+    }, 150)
+    setTimeout(() => {
+      checkScrollButtons()
+      updateActiveDot()
+    }, 300)
+    setTimeout(() => {
+      checkScrollButtons()
+      updateActiveDot()
+    }, 500)
+  })
+  window.addEventListener('resize', handleResize)
+  // Also listen for scroll events on the container to ensure we catch all scroll changes
+  nextTick(() => {
+    if (scrollContainer.value) {
+      scrollContainer.value.addEventListener('scroll', handleScroll, { passive: true })
+    }
+  })
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', checkScrollButtons)
+  window.removeEventListener('resize', handleResize)
+  if (scrollContainer.value) {
+    scrollContainer.value.removeEventListener('scroll', handleScroll)
+  }
 })
 </script>
 
@@ -218,5 +349,32 @@ onUnmounted(() => {
 /* Smooth momentum scrolling on touch devices */
 .scrollbar-hide {
   -webkit-overflow-scrolling: touch;
+}
+
+/* Fade out swipe hint after initial display */
+@keyframes fade-out {
+  0%, 80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Subtle bounce animation for swipe hint */
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
 }
 </style>

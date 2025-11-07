@@ -120,14 +120,15 @@
       </router-link>
 
       <!-- Search -->
-      <button
-        @click="toggleSearch"
+      <router-link
+        to="/search"
         class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 touch-manipulation active:scale-95 min-h-[64px]"
         :class="
-          showSearch
+          route.path === '/search'
             ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
             : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 active:bg-neutral-100 dark:active:bg-neutral-800'
         "
+        @touchstart="light"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -138,10 +139,34 @@
           />
         </svg>
         <span class="text-xs font-medium">Search</span>
-      </button>
+      </router-link>
 
-      <!-- Profile/Menu -->
+      <!-- Profile/Menu (authenticated) or Sign In (non-authenticated) -->
+      <router-link
+        v-if="!authStore.isAuthenticated"
+        to="/sign-in"
+        class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 touch-manipulation active:scale-95 min-h-[64px]"
+        :class="
+          route.path === '/sign-in'
+            ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 active:bg-neutral-100 dark:active:bg-neutral-800'
+        "
+        @touchstart="light"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+          />
+        </svg>
+        <span class="text-xs font-medium">Sign In</span>
+      </router-link>
+      
+      <!-- Profile Menu Button (authenticated users only) -->
       <button
+        v-else
         @click="toggleProfile"
         type="button"
         class="flex flex-col items-center justify-center space-y-1 py-3 px-2 transition-all duration-200 touch-manipulation active:scale-95 min-h-[64px]"
@@ -152,78 +177,52 @@
         "
       >
         <div
-          v-if="authStore.isAuthenticated"
           class="w-5 h-5 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
         >
           <span class="text-white text-xs font-bold">{{ authStore.user?.name.charAt(0) }}</span>
         </div>
-        <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-          />
-        </svg>
-        <span class="text-xs font-medium">{{
-          authStore.isAuthenticated ? 'Profile' : 'Sign In'
-        }}</span>
+        <span class="text-xs font-medium">Profile</span>
       </button>
     </div>
 
-    <!-- Mobile Search Overlay -->
+
+    <!-- Mobile Profile/Menu Overlay (Authenticated Users Only) -->
     <div
-      v-if="showSearch"
+      v-if="showProfile && authStore.isAuthenticated"
       class="fixed inset-0 bg-white dark:bg-neutral-900 z-60"
       style="bottom: 80px"
+      @click="closeProfile"
+      @touchstart="handleTouchStart"
+      @touchmove="handleTouchMove"
+      @touchend="handleTouchEnd"
     >
-      <div class="p-4 border-b border-neutral-200 dark:border-neutral-700">
-        <div class="flex items-center space-x-3">
-          <button @click="closeSearch" class="text-neutral-600 dark:text-neutral-400 touch-feedback touch-ripple p-2 rounded-lg">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Search</h2>
+      <!-- Top drag handle area -->
+      <div 
+        class="h-12 flex items-center justify-center cursor-pointer touch-manipulation"
+        @click="closeProfile"
+      >
+        <div class="w-12 h-1 bg-neutral-300 dark:bg-neutral-600 rounded-full"></div>
+      </div>
+      
+      <div class="h-[calc(100%-3rem)] overflow-y-auto" @click.stop>
+        <div class="p-4 border-b border-neutral-200 dark:border-neutral-700">
+          <div class="flex items-center space-x-3">
+            <button @click="closeProfile" class="text-neutral-600 dark:text-neutral-400 touch-feedback touch-ripple p-2 rounded-lg">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Profile</h2>
+          </div>
         </div>
-      </div>
-      <div class="p-4">
-        <GlobalSearch />
-      </div>
-    </div>
 
-    <!-- Mobile Profile/Menu Overlay -->
-    <div
-      v-if="showProfile"
-      class="fixed inset-0 bg-white dark:bg-neutral-900 z-60"
-      style="bottom: 80px"
-    >
-      <div class="p-4 border-b border-neutral-200 dark:border-neutral-700">
-        <div class="flex items-center space-x-3">
-          <button @click="closeProfile" class="text-neutral-600 dark:text-neutral-400 touch-feedback touch-ripple p-2 rounded-lg">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-            {{ authStore.isAuthenticated ? 'Profile' : 'Account' }}
-          </h2>
-        </div>
-      </div>
-
-      <div class="p-4">
-        <!-- Authenticated User Profile -->
-        <div v-if="authStore.isAuthenticated" class="space-y-4">
+        <div class="p-4">
+          <div class="space-y-4">
           <!-- User Info -->
           <div class="flex items-center space-x-3 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
             <div
@@ -361,38 +360,6 @@
               <span>Sign Out</span>
             </button>
           </div>
-        </div>
-
-        <!-- Non-authenticated User -->
-        <div v-else class="space-y-4">
-          <div class="text-center p-6">
-            <div
-              class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4"
-            >
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
-            </div>
-            <h3 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-              Join BibleStem
-            </h3>
-            <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-6">
-              Start your interactive Bible study journey today with our free account.
-            </p>
-
-            <div class="space-y-3">
-              <router-link to="/signin" @click="closeProfile" class="w-full btn-primary py-3">
-                Sign In
-              </router-link>
-              <router-link to="/signin" @click="closeProfile" class="w-full btn-secondary py-3">
-                Create Account
-              </router-link>
-            </div>
           </div>
         </div>
       </div>
@@ -405,7 +372,6 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useHapticFeedback } from '../composables/useMobileGestures'
-import GlobalSearch from './GlobalSearch.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -414,8 +380,35 @@ const authStore = useAuthStore()
 // Touch feedback
 const { light, medium } = useHapticFeedback()
 
-const showSearch = ref(false)
 const showProfile = ref(false)
+
+// Touch handlers for swipe down to close
+let touchStartY = 0
+let touchStartTime = 0
+
+const handleTouchStart = (e: TouchEvent) => {
+  touchStartY = e.touches[0].clientY
+  touchStartTime = Date.now()
+}
+
+const handleTouchMove = (e: TouchEvent) => {
+  // Prevent default scrolling if swiping down from top
+  if (e.touches[0].clientY > touchStartY + 10) {
+    e.preventDefault()
+  }
+}
+
+const handleTouchEnd = (e: TouchEvent) => {
+  const touchEndY = e.changedTouches[0].clientY
+  const touchEndTime = Date.now()
+  const deltaY = touchEndY - touchStartY
+  const deltaTime = touchEndTime - touchStartTime
+  
+  // Close if swiped down more than 100px or if quick swipe down
+  if (deltaY > 100 || (deltaY > 50 && deltaTime < 300)) {
+    closeProfile()
+  }
+}
 
 // Only show mobile nav on mobile screens and specific routes
 const showMobileNav = computed(() => {
@@ -424,21 +417,9 @@ const showMobileNav = computed(() => {
   return !hideOnRoutes.includes(route.path)
 })
 
-const toggleSearch = () => {
-  light()
-  showSearch.value = !showSearch.value
-  showProfile.value = false
-}
-
-const closeSearch = () => {
-  light()
-  showSearch.value = false
-}
-
 const toggleProfile = () => {
   medium()
   showProfile.value = !showProfile.value
-  showSearch.value = false
 }
 
 const closeProfile = () => {
@@ -463,7 +444,6 @@ const signOut = async () => {
 
 // Close overlays when route changes
 const handleRouteChange = () => {
-  showSearch.value = false
   showProfile.value = false
 }
 

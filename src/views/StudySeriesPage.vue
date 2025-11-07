@@ -4,7 +4,7 @@
     <div v-if="isLoading || error">
       <!-- Hero Skeleton -->
       <section class="relative bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-16 md:py-24 overflow-hidden">
-        <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 relative z-10">
           <div class="max-w-4xl mx-auto text-center animate-pulse">
             <div class="h-16 bg-white/20 rounded w-96 mx-auto mb-6"></div>
             <div class="h-6 bg-white/20 rounded w-full max-w-3xl mx-auto"></div>
@@ -14,7 +14,7 @@
       
       <!-- Studies Skeleton -->
       <section class="py-16 bg-neutral-50 dark:bg-neutral-900">
-        <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
           <div v-for="i in 3" :key="i" class="mb-12">
             <!-- Section Title Skeleton -->
             <div class="h-8 bg-neutral-200 dark:bg-neutral-700 rounded w-48 mb-6 animate-pulse"></div>
@@ -39,7 +39,7 @@
           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-purple-300/10 rounded-full blur-3xl"></div>
         </div>
         
-        <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 relative z-10">
           <div class="max-w-4xl mx-auto text-center">
             <!-- Top badge -->
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium mb-6 animate-slide-up">
@@ -76,7 +76,7 @@
           <div class="absolute w-72 h-72 bg-amber-500/5 rounded-full blur-3xl" style="top: 70%; left: 15%;"></div>
         </div>
         
-        <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 relative z-10">
           <!-- Category Sections -->
           <template v-if="categoriesWithStudies.length > 0">
             <div

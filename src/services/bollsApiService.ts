@@ -208,9 +208,9 @@ class BollsApiService {
       'James': 59, 'Jas': 59,
       '1 Peter': 60, '1Pet': 60, '1 Pet': 60,
       '2 Peter': 61, '2Pet': 61, '2 Pet': 61,
-      '1 John': 62, '1Jn': 62, '1 John': 62,
-      '2 John': 63, '2Jn': 63, '2 John': 63,
-      '3 John': 64, '3Jn': 64, '3 John': 64,
+      '1 John': 62, '1Jn': 62, '1Jhn': 62,
+      '2 John': 63, '2Jn': 63, '2Jhn': 63,
+      '3 John': 64, '3Jn': 64, '3Jhn': 64,
       'Jude': 65,
       'Revelation': 66, 'Rev': 66,
     }

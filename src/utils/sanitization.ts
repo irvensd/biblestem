@@ -4,6 +4,7 @@
  */
 
 import DOMPurify from 'dompurify'
+import type { Config } from 'dompurify'
 
 /**
  * Sanitization options
@@ -94,7 +95,7 @@ export function sanitizeHtml(input: string, options: SanitizationOptions = {}): 
   const allowedAttributes = options.allowedAttributes || DEFAULT_ALLOWED_ATTRIBUTES
 
   // Configure DOMPurify
-  const config: DOMPurify.Config = {
+  const config: Config = {
     ALLOWED_TAGS: allowedTags,
     ALLOWED_ATTR: Object.values(allowedAttributes).flat(),
     ALLOW_DATA_ATTR: false,
@@ -105,7 +106,7 @@ export function sanitizeHtml(input: string, options: SanitizationOptions = {}): 
   }
 
   // Sanitize with DOMPurify
-  let sanitized = DOMPurify.sanitize(input, config)
+  let sanitized = String(DOMPurify.sanitize(input, config))
 
   // Additional custom sanitization
   sanitized = sanitized

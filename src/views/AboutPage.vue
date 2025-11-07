@@ -8,7 +8,7 @@
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-white rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 1s"></div>
       </div>
       
-      <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 relative z-10">
         <div class="max-w-4xl mx-auto text-center">
           <div class="mb-6 animate-slide-up">
             <span class="inline-block px-5 py-2.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold border border-white/30">
@@ -30,7 +30,7 @@
 
     <!-- Personal Story Section -->
     <section class="py-20 bg-white dark:bg-neutral-900">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="max-w-3xl mx-auto">
           <div class="text-center mb-12">
             <h2 class="text-4xl font-bold mb-4">Why BibleStem Exists</h2>
@@ -91,7 +91,7 @@
 
     <!-- What Makes Us Different -->
     <section class="py-20 bg-gray-50 dark:bg-neutral-800">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <h2 class="text-4xl font-bold text-center mb-4">What Makes BibleStem Different</h2>
         <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
           We're not just another Bible app. We're a movement to make deep study accessible to everyone.
@@ -143,7 +143,7 @@
 
     <!-- Values Section -->
     <section class="py-20 bg-white dark:bg-neutral-900">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="text-center mb-12">
           <h2 class="text-4xl font-bold mb-4">Our Core Values</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -214,7 +214,7 @@
         <div class="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
       </div>
       
-      <div class="container mx-auto px-4 text-center relative z-10">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10 text-center relative z-10">
         <h2 class="text-4xl md:text-5xl font-bold mb-4">Join the Mission</h2>
         <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
           Help make Jesus famous by diving deeper into His Word. Every study, every lesson, every moment spent in Scripture brings us one step closer to knowing Him better.

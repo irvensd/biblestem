@@ -5,7 +5,7 @@
       <div class="mb-8 lg:mb-10">
         <div class="flex items-center gap-3 mb-4">
           <router-link
-            to="/dashboard"
+            :to="authStore.isAuthenticated ? '/dashboard' : '/'"
             class="p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
           >
             <svg class="w-6 h-6 text-neutral-600 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -16,10 +16,69 @@
             <h1 class="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white">
               Daily Devotions
             </h1>
-            <p class="text-neutral-600 dark:text-gray-300">{{ getGreeting() }} • Your daily spiritual growth</p>
+            <p class="text-neutral-600 dark:text-gray-300">{{ authStore.isAuthenticated ? getGreeting() + ' • Your daily spiritual growth' : 'Fresh devotions delivered daily' }}</p>
           </div>
         </div>
       </div>
+
+      <!-- Non-Authenticated User Message -->
+      <div v-if="!authStore.isAuthenticated" class="max-w-2xl mx-auto">
+        <div class="bg-white dark:bg-neutral-800 rounded-2xl p-8 sm:p-12 text-center shadow-xl border border-neutral-200 dark:border-neutral-700">
+          <div class="w-20 h-20 bg-gradient-to-br from-primary-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg>
+          </div>
+          
+          <h2 class="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white mb-4">
+            Fresh Devotions Daily
+          </h2>
+          
+          <p class="text-lg text-neutral-600 dark:text-neutral-300 mb-8 leading-relaxed">
+            We deliver fresh, inspiring devotions every day after you sign up. Start your spiritual journey with daily verses, reflections, and prayer prompts designed to deepen your faith.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <router-link
+              to="/sign-up"
+              class="px-8 py-4 bg-gradient-to-r from-primary-500 to-blue-600 hover:from-primary-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              Sign Up Free
+            </router-link>
+            <router-link
+              to="/sign-in"
+              class="px-8 py-4 bg-white dark:bg-neutral-700 border-2 border-neutral-300 dark:border-neutral-600 hover:border-primary-500 dark:hover:border-primary-500 text-neutral-900 dark:text-white font-semibold rounded-xl transition-all duration-300"
+            >
+              Sign In
+            </router-link>
+          </div>
+          
+          <div class="mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-700">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+              <div>
+                <div class="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">365</div>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">Days of Devotions</div>
+              </div>
+              <div>
+                <div class="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">Daily</div>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">Fresh Content</div>
+              </div>
+              <div>
+                <div class="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">Free</div>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">Forever</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Authenticated User Content -->
+      <div v-else>
 
       <!-- Today's Devotion (Large Hero Card) -->
       <div
@@ -187,6 +246,7 @@
             </router-link>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>

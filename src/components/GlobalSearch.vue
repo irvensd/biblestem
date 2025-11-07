@@ -1,8 +1,12 @@
 <template>
   <div :class="props.modalMode ? 'flex flex-col h-full' : 'relative'">
     <!-- Search Input -->
-    <div class="relative">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+    <div class="relative flex items-center border-2 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 rounded-xl focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 shadow-sm hover:shadow-md transition-all duration-200"
+         :class="{
+           'rounded-b-none': showResults && (searchQuery.trim() || recentSearches.length > 0) && !props.modalMode,
+           'border-primary-400 dark:border-primary-500': showResults,
+         }">
+      <div class="pl-4 pr-2 flex items-center pointer-events-none flex-shrink-0">
         <svg
           class="h-5 w-5 text-neutral-500 dark:text-neutral-400"
           fill="none"
@@ -22,7 +26,7 @@
         @focus="handleFocus"
         @blur="handleBlur"
         @keydown="handleKeydown"
-        type="search"
+        type="text"
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
@@ -33,15 +37,10 @@
         :aria-expanded="showResults"
         aria-haspopup="listbox"
         :aria-activedescendant="activeDescendant"
-        class="block w-full pl-10 pr-12 py-2.5 sm:py-3 border-2 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 placeholder-neutral-400 dark:placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white dark:focus:bg-neutral-800 text-base sm:text-base font-medium touch-manipulation shadow-sm hover:shadow-md transition-all duration-200"
+        class="flex-1 py-2.5 sm:py-3 pr-3 bg-transparent border-0 focus:outline-none placeholder-neutral-400 dark:placeholder-neutral-500 text-base sm:text-base font-medium touch-manipulation"
         :style="{ color: isDarkMode ? 'rgb(243 244 246)' : 'rgb(17 24 39)' }"
-        :class="{
-          'rounded-xl': !showResults || !(searchQuery.trim() || recentSearches.length > 0) || props.modalMode,
-          'rounded-b-none': showResults && (searchQuery.trim() || recentSearches.length > 0) && !props.modalMode,
-          'border-primary-400 dark:border-primary-500 bg-white dark:bg-neutral-800': showResults,
-        }"
       />
-      <div v-if="searchQuery" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+      <div v-if="searchQuery" class="pr-3 flex items-center flex-shrink-0">
         <button
           @click="clearSearch"
           class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors touch-manipulation p-2 -m-2 rounded-lg active:bg-neutral-100 dark:active:bg-neutral-700"
@@ -327,15 +326,44 @@ const { isDarkMode } = useTheme()
 const notesStore = ref<any>(null)
 
 onMounted(async () => {
-  try {
-    notesStore.value = useNotesStore()
-    if (notesStore.value?.loadFromStorage) {
-      await notesStore.value.loadFromStorage()
+  // Add resize listener
+  window.addEventListener('resize', handleResize)
+  
+  // Defer heavy operations on mobile
+  if (isMobile.value) {
+    // Use requestIdleCallback or setTimeout to defer loading
+    const initHeavyOperations = () => {
+      try {
+        notesStore.value = useNotesStore()
+        if (notesStore.value?.loadFromStorage) {
+          notesStore.value.loadFromStorage().catch((err: unknown) => {
+            console.warn('Notes store loading failed:', err)
+          })
+        }
+      } catch (error) {
+        console.warn('Notes store not available:', error)
+      }
+      loadRecentSearches()
     }
-  } catch (error) {
-    console.warn('Notes store not available:', error)
+    
+    // Use requestIdleCallback if available, otherwise setTimeout
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(initHeavyOperations, { timeout: 500 })
+    } else {
+      setTimeout(initHeavyOperations, 100)
+    }
+  } else {
+    // On desktop, load immediately
+    try {
+      notesStore.value = useNotesStore()
+      if (notesStore.value?.loadFromStorage) {
+        await notesStore.value.loadFromStorage()
+      }
+    } catch (error) {
+      console.warn('Notes store not available:', error)
+    }
+    loadRecentSearches()
   }
-  loadRecentSearches()
 })
 
 // Component state
@@ -346,21 +374,33 @@ const recentSearches = ref<string[]>([])
 const activeDescendant = ref('')
 const focusedIndex = ref(-1)
 
-// Debounced search query with adaptive timing
+// Debounced search query with adaptive timing (longer delay on mobile)
+const isMobileDevice = window.innerWidth < 768
 const { debouncedValue: debouncedQuery, isPending: isSearching } = useDebounce(searchQuery, {
-  delay: 300,
-  minDelay: 150,
-  maxDelay: 500,
+  delay: isMobileDevice ? 500 : 300,
+  minDelay: isMobileDevice ? 300 : 150,
+  maxDelay: isMobileDevice ? 1000 : 500,
   adaptive: true,
-  immediate: true,
-  maxWait: 1000
+  immediate: false, // Don't search immediately on mobile
+  maxWait: isMobileDevice ? 2000 : 1000
 })
 
 // Search cache for performance
 const { set: cacheSet, get: cacheGet } = useCache()
 
-// Detect mobile for better UX
-const isMobile = computed(() => window.innerWidth < 768)
+// Detect mobile for better UX (use ref instead of computed for performance)
+const isMobile = ref(window.innerWidth < 768)
+
+// Update isMobile on window resize (throttled)
+let resizeTimeout: number | null = null
+const handleResize = () => {
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout)
+  }
+  resizeTimeout = window.setTimeout(() => {
+    isMobile.value = window.innerWidth < 768
+  }, 250)
+}
 
 // Search results
 const searchResults = ref<SearchResults>({
@@ -370,20 +410,32 @@ const searchResults = ref<SearchResults>({
   total: 0,
 })
 
-// All available content
-const allStudies = computed(() => getAllStudies())
+// All available content (lazy loaded for better mobile performance)
+let cachedStudies: Study[] | null = null
+let cachedLessons: LessonSearchResult[] | null = null
+
+const allStudies = computed(() => {
+  if (!cachedStudies) {
+    cachedStudies = getAllStudies()
+  }
+  return cachedStudies
+})
+
 const allLessons = computed(() => {
-  const lessons: LessonSearchResult[] = []
-  allStudies.value.forEach((study) => {
-    study.lessons.forEach((lesson) => {
-      lessons.push({
-        ...lesson,
-        studyId: study.id,
-        studyTitle: study.title,
+  if (!cachedLessons) {
+    const lessons: LessonSearchResult[] = []
+    allStudies.value.forEach((study) => {
+      study.lessons.forEach((lesson) => {
+        lessons.push({
+          ...lesson,
+          studyId: study.id,
+          studyTitle: study.title,
+        })
       })
     })
-  })
-  return lessons
+    cachedLessons = lessons
+  }
+  return cachedLessons
 })
 
 // Watch debounced query and perform search
@@ -404,85 +456,95 @@ watch(debouncedQuery, (newQuery) => {
 
 // Search function with intelligent ranking
 const performSearch = (query: string) => {
-  const lowerQuery = query.toLowerCase()
-  const cacheKey = `search:${lowerQuery}`
+  // Use requestAnimationFrame on mobile for better performance
+  const executeSearch = () => {
+    const lowerQuery = query.toLowerCase()
+    const cacheKey = `search:${lowerQuery}`
 
-  // Check cache first (cache for 5 minutes)
-  const cached = cacheGet<SearchResults>(cacheKey)
-  if (cached) {
-    searchResults.value = cached
-    return
+    // Check cache first (cache for 5 minutes)
+    const cached = cacheGet<SearchResults>(cacheKey)
+    if (cached) {
+      searchResults.value = cached
+      return
+    }
+
+    // Get user progress for relevance boosting
+    const progressStore = useStudyProgressStore()
+    const allProgress = progressStore.getAllStudyProgress()
+
+    // Score and rank studies
+    const studyMatches: SearchMatch[] = []
+    allStudies.value.forEach(study => {
+      const match = calculateRelevanceScore(study, query, {
+        fields: ['title', 'description', 'tags'],
+        weights: { title: 10, description: 5, tags: 7 },
+        boostRecent: true,
+        boostPopular: true,
+        userProgress: allProgress[study.id],
+      })
+      
+      if (match.score > 0) {
+        studyMatches.push(match)
+      }
+    })
+
+    // Score and rank lessons
+    const lessonMatches: SearchMatch[] = []
+    allLessons.value.forEach(lesson => {
+      const match = calculateRelevanceScore(lesson, query, {
+        fields: ['title', 'description', 'scripture', 'studyTitle'],
+        weights: { title: 10, scripture: 8, description: 5, studyTitle: 6 },
+        boostRecent: true,
+        userProgress: allProgress[lesson.studyId],
+      })
+      
+      if (match.score > 0) {
+        lessonMatches.push(match)
+      }
+    })
+
+    // Score and rank notes
+    const noteMatches: SearchMatch[] = []
+    const matchingNotes = notesStore.value?.searchNotes?.(query) || []
+    matchingNotes.forEach((note: StudyNote) => {
+      const match = calculateRelevanceScore(note, query, {
+        fields: ['content', 'tags', 'scripture'],
+        weights: { content: 8, tags: 6, scripture: 7 },
+        boostRecent: true,
+      })
+      
+      if (match.score > 0) {
+        noteMatches.push(match)
+      }
+    })
+
+    // Sort all matches by relevance
+    const sortedStudies = sortByRelevance(studyMatches)
+    const sortedLessons = sortByRelevance(lessonMatches)
+    const sortedNotes = sortByRelevance(noteMatches)
+
+    const results: SearchResults = {
+      studies: sortedStudies.slice(0, 5).map(m => m.item), // Top 5 for dropdown
+      lessons: sortedLessons.slice(0, 5).map(m => m.item),
+      notes: sortedNotes.slice(0, 5).map(m => m.item),
+      total: studyMatches.length + lessonMatches.length + noteMatches.length,
+    }
+
+    searchResults.value = results
+
+    // Cache results (cache for 5 minutes = 300000ms)
+    cacheSet(cacheKey, results, 5 * 60 * 1000)
+
+    // Add to recent searches
+    addToRecentSearches(query)
   }
-
-  // Get user progress for relevance boosting
-  const progressStore = useStudyProgressStore()
-  const allProgress = progressStore.getAllStudyProgress()
-
-  // Score and rank studies
-  const studyMatches: SearchMatch[] = []
-  allStudies.value.forEach(study => {
-    const match = calculateRelevanceScore(study, query, {
-      fields: ['title', 'description', 'tags'],
-      weights: { title: 10, description: 5, tags: 7 },
-      boostRecent: true,
-      boostPopular: true,
-      userProgress: allProgress[study.id],
-    })
-    
-    if (match.score > 0) {
-      studyMatches.push(match)
-    }
-  })
-
-  // Score and rank lessons
-  const lessonMatches: SearchMatch[] = []
-  allLessons.value.forEach(lesson => {
-    const match = calculateRelevanceScore(lesson, query, {
-      fields: ['title', 'description', 'scripture', 'studyTitle'],
-      weights: { title: 10, scripture: 8, description: 5, studyTitle: 6 },
-      boostRecent: true,
-      userProgress: allProgress[lesson.studyId],
-    })
-    
-    if (match.score > 0) {
-      lessonMatches.push(match)
-    }
-  })
-
-  // Score and rank notes
-  const noteMatches: SearchMatch[] = []
-  const matchingNotes = notesStore.value?.searchNotes?.(query) || []
-  matchingNotes.forEach((note: StudyNote) => {
-    const match = calculateRelevanceScore(note, query, {
-      fields: ['content', 'tags', 'scripture'],
-      weights: { content: 8, tags: 6, scripture: 7 },
-      boostRecent: true,
-    })
-    
-    if (match.score > 0) {
-      noteMatches.push(match)
-    }
-  })
-
-  // Sort all matches by relevance
-  const sortedStudies = sortByRelevance(studyMatches)
-  const sortedLessons = sortByRelevance(lessonMatches)
-  const sortedNotes = sortByRelevance(noteMatches)
-
-  const results: SearchResults = {
-    studies: sortedStudies.slice(0, 5).map(m => m.item), // Top 5 for dropdown
-    lessons: sortedLessons.slice(0, 5).map(m => m.item),
-    notes: sortedNotes.slice(0, 5).map(m => m.item),
-    total: studyMatches.length + lessonMatches.length + noteMatches.length,
+  
+  // Use RAF on mobile for smoother performance
+  if (isMobile.value) {
+    requestAnimationFrame(executeSearch)
+  } else {
+    executeSearch()
   }
-
-  searchResults.value = results
-
-  // Cache results (cache for 5 minutes = 300000ms)
-  cacheSet(cacheKey, results, 5 * 60 * 1000)
-
-  // Add to recent searches
-  addToRecentSearches(query)
 }
 
 // Navigation functions
@@ -637,10 +699,10 @@ const handleFocus = () => {
   showResults.value = true
   focusedIndex.value = -1
   activeDescendant.value = ''
-  // On mobile, consider showing full screen search
-  if (isMobile.value && searchQuery.value.trim()) {
-    showFullResults.value = true
-  }
+  // Don't auto-show full results on mobile - let user type first
+  // if (isMobile.value && searchQuery.value.trim()) {
+  //   showFullResults.value = true
+  // }
 }
 
 const clearSearch = () => {
@@ -667,6 +729,12 @@ const handleBlur = () => {
 onUnmounted(() => {
   // Clear any pending search operations
   // The debounce composable handles its own cleanup
+  
+  // Remove resize listener
+  window.removeEventListener('resize', handleResize)
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout)
+  }
 })
 </script>
 
@@ -686,5 +754,16 @@ mark {
 
 .dark mark {
   background-color: rgba(251, 191, 36, 0.2);
+}
+
+/* Hide native browser search clear button */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="search"]::-ms-clear {
+  display: none;
 }
 </style>

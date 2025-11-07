@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-white dark:bg-neutral-900">
     <!-- Hero Section -->
     <section class="bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 text-white py-16 md:py-20">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="max-w-4xl mx-auto text-center">
           <h1 class="text-4xl md:text-5xl font-bold mb-4">Help Center</h1>
           <p class="text-lg md:text-xl text-white/90 mb-8">
@@ -34,7 +34,7 @@
 
     <!-- Quick Navigation -->
     <section class="py-12 bg-neutral-50 dark:bg-neutral-800">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
           <a
             v-for="section in sections"
@@ -53,7 +53,7 @@
 
     <!-- FAQ Sections -->
     <section class="py-12">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="max-w-4xl mx-auto">
           <!-- Getting Started -->
           <div :id="'getting-started'" class="mb-12 scroll-mt-24">
@@ -124,7 +124,7 @@
 
     <!-- Still Need Help -->
     <section class="py-16 bg-gradient-to-br from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20">
-      <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-6 md:px-8 lg:px-10">
         <div class="max-w-2xl mx-auto text-center">
           <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
             Still Need Help?
@@ -156,6 +156,9 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import HelpAccordionItem from '@/components/HelpAccordionItem.vue'
+import { useSEO } from '@/composables/useSEO'
+
+const { applySEO, getFAQSchema } = useSEO()
 
 const route = useRoute()
 const searchQuery = ref('')

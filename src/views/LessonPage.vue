@@ -212,7 +212,6 @@
                       <div v-if="tag.data?.transliteration"><strong>Transliteration:</strong> <em>{{ tag.data.transliteration }}</em></div>
                       <div><strong>Meaning:</strong> {{ tag.data?.meaning }}</div>
                       <div v-if="tag.data?.context"><strong>Context:</strong> {{ tag.data.context }}</div>
-                      <div v-if="tag.data?.strongsNumber" class="text-xs text-neutral-500 dark:text-neutral-500">Strong's: {{ tag.data.strongsNumber }}</div>
                     </div>
                   </div>
                 </div>
@@ -230,7 +229,6 @@
                       <div v-if="word.transliteration"><strong>Transliteration:</strong> <em>{{ word.transliteration }}</em></div>
                       <div><strong>Meaning:</strong> {{ word.meaning }}</div>
                       <div v-if="word.context"><strong>Context:</strong> {{ word.context }}</div>
-                      <div v-if="word.strongsNumber" class="text-xs text-neutral-500 dark:text-neutral-500">Strong's: {{ word.strongsNumber }}</div>
                     </div>
                   </div>
                 </div>
@@ -606,6 +604,7 @@ import { useHapticFeedback } from '../composables/useMobileGestures'
 import { useAuthStore } from '../stores/auth'
 import { useReadPosition } from '../composables/useReadPosition'
 import Breadcrumbs, { type BreadcrumbItem } from '../components/Breadcrumbs.vue'
+import { useSEO } from '../composables/useSEO'
 
 const route = useRoute()
 const router = useRouter()
