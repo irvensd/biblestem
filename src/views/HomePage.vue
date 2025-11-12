@@ -487,9 +487,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <AppFooter />
-    
     <!-- Donation Modal -->
     <DonationModal :is-open="showDonationModal" @close="showDonationModal = false" />
   </div>
@@ -498,7 +495,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { getAllStudies } from '@/data/studies'
-import AppFooter from '@/components/AppFooter.vue'
 import DonationModal from '@/components/DonationModal.vue'
 import { useSEO } from '../composables/useSEO'
 
