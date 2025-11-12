@@ -159,8 +159,8 @@
           <!-- BibleStem Community -->
           <div class="relative bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800/50 dark:to-neutral-800/30 rounded-2xl p-8 shadow-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600">
             <div class="absolute top-4 right-4">
-              <span class="px-3 py-1 text-xs font-bold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 rounded-full">
-                LAUNCH PREVIEW
+              <span class="px-3 py-1 text-xs font-bold bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300 rounded-full">
+                IN PLANNING
               </span>
             </div>
             <div class="flex items-center gap-4 mb-4 opacity-75">
@@ -177,7 +177,7 @@
               </div>
             </div>
             <p class="text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed">
-              Faith-based space for study discussions, testimonies and future membership platform.
+              Faith-based space for study discussions, testimonies and a future membership platform.
             </p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="text-xs px-2 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 rounded">Discussion Groups</span>
