@@ -153,8 +153,8 @@
                       <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
                     </svg>
                     <span class="font-medium">BibleStem Threads</span>
-                    <span class="text-[10px] uppercase tracking-wide text-yellow-500 dark:text-yellow-300">
-                      Coming Soon
+                    <span class="text-[10px] uppercase tracking-wide text-amber-500 dark:text-amber-300">
+                      Launch Preview
                     </span>
                   </div>
                   <div class="text-xs text-neutral-500 dark:text-neutral-400 ml-6">Join the launch list</div>
@@ -271,8 +271,8 @@
                       <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
                     </svg>
                     <span class="font-medium">BibleStem Threads</span>
-                    <span class="text-[10px] uppercase tracking-wide text-yellow-500 dark:text-yellow-300">
-                      Coming Soon
+                    <span class="text-[10px] uppercase tracking-wide text-amber-500 dark:text-amber-300">
+                      Launch Preview
                     </span>
                   </div>
                   <div class="text-xs text-neutral-500 dark:text-neutral-400 ml-6">Join the launch list</div>

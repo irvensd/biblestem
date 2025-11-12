@@ -43,8 +43,8 @@
                 class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm flex items-center gap-2"
               >
                 <span>BibleStem Threads</span>
-                <span class="text-xs uppercase tracking-wide text-yellow-300">
-                  Coming Soon
+                <span class="text-xs uppercase tracking-wide text-amber-300">
+                  Launch Preview
                 </span>
               </a>
             </li>

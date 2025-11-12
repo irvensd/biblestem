@@ -159,8 +159,8 @@
           <!-- BibleStem Community -->
           <div class="relative bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800/50 dark:to-neutral-800/30 rounded-2xl p-8 shadow-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600">
             <div class="absolute top-4 right-4">
-              <span class="px-3 py-1 text-xs font-bold bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-400 rounded-full">
-                COMING SOON
+              <span class="px-3 py-1 text-xs font-bold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 rounded-full">
+                LAUNCH PREVIEW
               </span>
             </div>
             <div class="flex items-center gap-4 mb-4 opacity-75">

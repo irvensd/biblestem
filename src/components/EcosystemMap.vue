@@ -178,7 +178,7 @@ const branches = reactive<Branch[]>([
     id: 'threads',
     name: 'BibleStem Threads',
     category: 'Inspire + Fund',
-    status: 'Coming Soon',
+    status: 'Launch Preview',
     timeline: 'Launching soon · Join the launch list',
     description: 'Faith-inspired apparel crafted in small batches—join the email list to be notified when drops go live.',
     focus: 'Collects early supporters while building a funding stream for free studies.',
