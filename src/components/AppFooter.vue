@@ -36,8 +36,13 @@
               </router-link>
             </li>
             <li>
-              <a href="#" class="text-neutral-500 hover:text-neutral-400 transition-colors duration-200 text-sm cursor-not-allowed">
-                BibleStem Threads <span class="text-xs">(Soon)</span>
+              <a
+                href="https://biblestem.shop"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm"
+              >
+                BibleStem Threads
               </a>
             </li>
             <li>

@@ -143,17 +143,18 @@
                   <div class="text-xs text-neutral-500 dark:text-neutral-400 ml-6">Interactive study platform</div>
                 </router-link>
                 <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-neutral-400 dark:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 cursor-not-allowed"
+                  href="https://biblestem.shop"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors duration-200"
                 >
                   <div class="flex items-center gap-2">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
                     </svg>
                     <span class="font-medium">BibleStem Threads</span>
-                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
                   </div>
-                  <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Faith-inspired apparel</div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400 ml-6">Faith-inspired apparel</div>
                 </a>
                 <a
                   href="#"
@@ -253,17 +254,18 @@
                   <div class="text-xs text-neutral-500 dark:text-neutral-400 ml-6">Interactive study platform</div>
                 </router-link>
                 <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-neutral-400 dark:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 cursor-not-allowed"
+                  href="https://biblestem.shop"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors duration-200"
                 >
                   <div class="flex items-center gap-2">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
                     </svg>
                     <span class="font-medium">BibleStem Threads</span>
-                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
                   </div>
-                  <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Faith-inspired apparel</div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400 ml-6">Faith-inspired apparel</div>
                 </a>
                 <a
                   href="#"

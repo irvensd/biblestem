@@ -83,13 +83,13 @@
           </div>
 
           <!-- BibleStem Threads -->
-          <div class="relative bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800/50 dark:to-neutral-800/30 rounded-2xl p-8 shadow-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 overflow-hidden">
+          <div class="relative bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800/50 dark:to-neutral-800/30 rounded-2xl p-8 shadow-lg border-2 border-neutral-200 dark:border-neutral-600 overflow-hidden">
             <div class="absolute top-4 right-4">
-              <span class="px-3 py-1 text-xs font-bold bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-400 rounded-full">
-                COMING SOON
+              <span class="px-3 py-1 text-xs font-bold bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-full">
+                NOW LIVE
               </span>
             </div>
-            <div class="flex items-center gap-4 mb-4 opacity-75">
+            <div class="flex items-center gap-4 mb-4">
               <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center">
                 <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
@@ -102,17 +102,25 @@
                 </span>
               </div>
             </div>
-            <p class="text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed">
-              Apparel line featuring faith-inspired design. Every purchase funds free Bible studies.
+            <p class="text-neutral-600 dark:text-neutral-300 mb-4 leading-relaxed">
+              Faith-inspired apparel crafted in small batches. Every piece funds free Bible studies.
             </p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="text-xs px-2 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 rounded">Premium Apparel</span>
               <span class="text-xs px-2 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 rounded">Small Batches</span>
               <span class="text-xs px-2 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 rounded">Mission-Driven</span>
             </div>
-            <p class="text-sm text-neutral-500 dark:text-neutral-500 italic">
-              Launching Winter 2026
-            </p>
+            <a
+              href="https://biblestem.shop"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            >
+              Shop BibleStem Threads
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
           </div>
 
           <!-- BibleStem Studios -->
