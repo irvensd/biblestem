@@ -40,9 +40,12 @@
                 href="https://biblestem.shop"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm"
+                class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm flex items-center gap-2"
               >
-                BibleStem Threads
+                <span>BibleStem Threads</span>
+                <span class="text-xs uppercase tracking-wide bg-yellow-100/20 text-yellow-300 px-1.5 py-0.5 rounded-full">
+                  Coming Soon
+                </span>
               </a>
             </li>
             <li>
