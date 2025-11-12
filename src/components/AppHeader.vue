@@ -53,35 +53,136 @@
             >
               Dashboard
             </router-link>
-            <router-link
-              to="/study-series"
-              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/study-series' }"
-              role="menuitem"
-              :aria-current="$route.path === '/study-series' ? 'page' : undefined"
-            >
-              Study Series
-            </router-link>
-            <router-link
-              to="/my-studies"
-              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{ 'text-primary-600 dark:text-blue-400 border-b-2 border-primary-600 dark:border-blue-400 pb-1': $route.path === '/my-studies' }"
-              role="menuitem"
-              :aria-current="$route.path === '/my-studies' ? 'page' : undefined"
-            >
-              My Studies
-            </router-link>
-            <router-link
-              to="/daily-devotions"
-              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{
-                'text-primary-600 dark:text-blue-400 border-b-2 border-primary-600 dark:border-blue-400 pb-1': $route.path === '/daily-devotions',
-              }"
-              role="menuitem"
-              :aria-current="$route.path === '/daily-devotions' ? 'page' : undefined"
-            >
-              Daily Devotions
-            </router-link>
+            <div class="relative">
+              <button
+                @click="toggleStudiesMenu"
+                class="flex items-center gap-1 text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+                :class="{
+                  'text-primary-600 dark:text-blue-400 border-b-2 border-primary-600 dark:border-blue-400 pb-1':
+                    studiesMenuOpen || isRouteActive(['/study-series', '/my-studies', '/daily-devotions', '/study']),
+                }"
+                role="menuitem"
+                :aria-expanded="studiesMenuOpen"
+                aria-haspopup="true"
+              >
+                <span>Studies</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div
+                v-if="studiesMenuOpen"
+                class="absolute top-full left-0 mt-2 w-60 bg-white dark:bg-neutral-800 rounded-lg shadow-strong border border-neutral-200 dark:border-neutral-700 py-2 z-50 animate-fade-in"
+                @click="closeStudiesMenu"
+              >
+                <router-link
+                  to="/study-series"
+                  class="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors duration-200"
+                >
+                  <div class="font-medium">Study Series</div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400">Browse all Bible studies</div>
+                </router-link>
+                <router-link
+                  to="/my-studies"
+                  class="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors duration-200"
+                >
+                  <div class="font-medium">My Studies</div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400">Continue where you left off</div>
+                </router-link>
+                <router-link
+                  to="/daily-devotions"
+                  class="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors duration-200"
+                >
+                  <div class="font-medium">Daily Devotions</div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400">Fresh Scripture daily</div>
+                </router-link>
+              </div>
+            </div>
+            <!-- Ecosystem Dropdown -->
+            <div class="relative">
+              <button
+                @click="toggleEcosystemMenu"
+                class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base flex items-center gap-1"
+                :class="{ 'text-primary-600 dark:text-blue-400': ecosystemMenuOpen || $route.path === '/ecosystem' }"
+                :aria-expanded="ecosystemMenuOpen"
+              >
+                <span>Ecosystem</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              <!-- Ecosystem Dropdown Menu -->
+              <div
+                v-if="ecosystemMenuOpen"
+                class="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-neutral-800 rounded-lg shadow-strong border border-neutral-200 dark:border-neutral-700 py-2 z-50 animate-fade-in"
+                @click="closeEcosystemMenu"
+              >
+                <div class="px-4 py-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+                  BibleStem Ecosystem
+                </div>
+                <router-link
+                  to="/ecosystem"
+                  class="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors duration-200"
+                >
+                  <div class="font-medium">Overview</div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400">Explore our vision</div>
+                </router-link>
+                <div class="border-t border-neutral-200 dark:border-neutral-700 my-2"></div>
+                <router-link
+                  :to="studiesRoute"
+                  class="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors duration-200"
+                  @click="closeEcosystemMenu"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z" />
+                    </svg>
+                    <span class="font-medium">BibleStem Studies</span>
+                  </div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400 ml-6">Interactive study platform</div>
+                </router-link>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-neutral-400 dark:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 cursor-not-allowed"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
+                    </svg>
+                    <span class="font-medium">BibleStem Threads</span>
+                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                  </div>
+                  <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Faith-inspired apparel</div>
+                </a>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-neutral-400 dark:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 cursor-not-allowed"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z" />
+                    </svg>
+                    <span class="font-medium">BibleStem Studios</span>
+                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                  </div>
+                  <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Cinematic Bible films</div>
+                </a>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-neutral-400 dark:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 cursor-not-allowed"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg>
+                    <span class="font-medium">BibleStem Community</span>
+                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                  </div>
+                  <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Faith community platform</div>
+                </a>
+              </div>
+            </div>
           </template>
 
           <!-- Guest User Navigation -->
@@ -107,6 +208,91 @@
             >
               About
             </router-link>
+            <!-- Ecosystem Dropdown -->
+            <div class="relative">
+              <button
+                @click="toggleEcosystemMenu"
+                class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base flex items-center gap-1"
+                :class="{ 'text-primary-600 dark:text-blue-400': ecosystemMenuOpen || $route.path === '/ecosystem' }"
+                :aria-expanded="ecosystemMenuOpen"
+              >
+                <span>Ecosystem</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              <!-- Ecosystem Dropdown Menu -->
+              <div
+                v-if="ecosystemMenuOpen"
+                class="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-neutral-800 rounded-lg shadow-strong border border-neutral-200 dark:border-neutral-700 py-2 z-50 animate-fade-in"
+                @click="closeEcosystemMenu"
+              >
+                <div class="px-4 py-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+                  BibleStem Ecosystem
+                </div>
+                <router-link
+                  to="/ecosystem"
+                  class="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors duration-200"
+                >
+                  <div class="font-medium">Overview</div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400">Explore our vision</div>
+                </router-link>
+                <div class="border-t border-neutral-200 dark:border-neutral-700 my-2"></div>
+                <router-link
+                  :to="studiesRoute"
+                  class="block px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors duration-200"
+                  @click="closeEcosystemMenu"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-1h7v1zm3-2H7v-1h10v1zm0-2H7V9h10v4zm0-6H7V6h10v1z" />
+                    </svg>
+                    <span class="font-medium">BibleStem Studies</span>
+                  </div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400 ml-6">Interactive study platform</div>
+                </router-link>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-neutral-400 dark:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 cursor-not-allowed"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
+                    </svg>
+                    <span class="font-medium">BibleStem Threads</span>
+                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                  </div>
+                  <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Faith-inspired apparel</div>
+                </a>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-neutral-400 dark:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 cursor-not-allowed"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z" />
+                    </svg>
+                    <span class="font-medium">BibleStem Studios</span>
+                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                  </div>
+                  <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Cinematic Bible films</div>
+                </a>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-neutral-400 dark:text-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200 cursor-not-allowed"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg>
+                    <span class="font-medium">BibleStem Community</span>
+                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                  </div>
+                  <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Faith community platform</div>
+                </a>
+              </div>
+            </div>
             <router-link
               to="/contact"
               class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
@@ -430,6 +616,29 @@
             </router-link>
           </div>
 
+          <!-- Ecosystem Section -->
+          <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4">
+            <div class="mb-2">
+              <h3 class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-2">
+                Ecosystem
+              </h3>
+              <router-link
+                to="/ecosystem"
+                @click="closeMobileMenu"
+                class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200 flex items-center gap-2"
+                :class="{
+                  'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                    $route.path === '/ecosystem',
+                }"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                <span>View Ecosystem</span>
+              </router-link>
+            </div>
+          </div>
+
           <!-- Account Actions -->
           <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4 pb-6">
             <div class="flex flex-col space-y-3">
@@ -519,6 +728,29 @@
             >
               Contact
             </router-link>
+          </div>
+
+          <!-- Ecosystem Section -->
+          <div class="px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4">
+            <div class="mb-2">
+              <h3 class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-2">
+                Ecosystem
+              </h3>
+              <router-link
+                to="/ecosystem"
+                @click="closeMobileMenu"
+                class="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg font-medium transition-all duration-200 flex items-center gap-2"
+                :class="{
+                  'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20':
+                    $route.path === '/ecosystem',
+                }"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                <span>View Ecosystem</span>
+              </router-link>
+            </div>
           </div>
 
           <!-- Auth Actions -->
@@ -642,7 +874,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useHapticFeedback } from '../composables/useMobileGestures'
 import { useTheme } from '../composables/useTheme'
@@ -650,6 +882,7 @@ import GlobalSearch from './GlobalSearch.vue'
 import DonationModal from './DonationModal.vue'
 
 const router = useRouter()
+const route = useRoute()
 
 // Initialize stores
 const authStore = useAuthStore()
@@ -663,6 +896,11 @@ const { light, medium } = useHapticFeedback()
 const mobileMenuOpen = ref(false)
 const userMenuOpen = ref(false)
 const searchModalOpen = ref(false)
+const ecosystemMenuOpen = ref(false)
+const studiesMenuOpen = ref(false)
+const studiesRoute = computed(() => (authStore.isAuthenticated ? '/study-series' : '/'))
+const isRouteActive = (paths: string[]) =>
+  paths.some((path) => route.path === path || route.path.startsWith(`${path}/`))
 
 const toggleSearchModal = () => {
   medium()
@@ -715,6 +953,8 @@ const toggleMobileMenu = () => {
   medium()
   mobileMenuOpen.value = !mobileMenuOpen.value
   userMenuOpen.value = false
+  studiesMenuOpen.value = false
+  ecosystemMenuOpen.value = false
 
   // Prevent body scroll when mobile menu is open
   if (mobileMenuOpen.value) {
@@ -734,11 +974,38 @@ const toggleUserMenu = () => {
   light()
   userMenuOpen.value = !userMenuOpen.value
   mobileMenuOpen.value = false
+  studiesMenuOpen.value = false
+  ecosystemMenuOpen.value = false
 }
 
 const closeUserMenu = () => {
   light()
   userMenuOpen.value = false
+}
+
+const toggleEcosystemMenu = () => {
+  light()
+  ecosystemMenuOpen.value = !ecosystemMenuOpen.value
+  userMenuOpen.value = false
+  mobileMenuOpen.value = false
+  studiesMenuOpen.value = false
+}
+
+const closeEcosystemMenu = () => {
+  light()
+  ecosystemMenuOpen.value = false
+}
+
+const toggleStudiesMenu = () => {
+  light()
+  studiesMenuOpen.value = !studiesMenuOpen.value
+  userMenuOpen.value = false
+  ecosystemMenuOpen.value = false
+}
+
+const closeStudiesMenu = () => {
+  light()
+  studiesMenuOpen.value = false
 }
 
 const handleSignOut = () => {
@@ -767,6 +1034,8 @@ const handleClickOutside = (event: Event) => {
   // Close user menu if clicking outside
   if (!target.closest('.relative')) {
     userMenuOpen.value = false
+    ecosystemMenuOpen.value = false
+    studiesMenuOpen.value = false
   }
   // Mobile menu is handled by the backdrop click handler
 }

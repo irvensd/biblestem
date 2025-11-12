@@ -130,6 +130,12 @@ const routes = [
     redirect: '/help'
   },
   {
+    path: '/ecosystem',
+    name: 'Ecosystem',
+    // Group static/info pages together
+    component: () => import(/* webpackChunkName: "static-pages" */ '../views/EcosystemPage.vue')
+  },
+  {
     path: '/privacy',
     name: 'Privacy',
     // Group static/info pages together

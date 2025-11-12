@@ -17,6 +17,7 @@
         </div>
       </ErrorBoundary>
     </main>
+    <AppFooter />
     <MobileNavigation />
 
     <!-- Global Notifications for errors and loading -->
@@ -131,6 +132,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import AppHeader from './components/AppHeader.vue'
+import AppFooter from './components/AppFooter.vue'
 import MobileNavigation from './components/MobileNavigation.vue'
 import GlobalNotifications from './components/GlobalNotifications.vue'
 import ErrorBoundary from './components/ErrorBoundary.vue'
