@@ -85,8 +85,8 @@
           <!-- BibleStem Threads -->
           <div class="relative bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800/50 dark:to-neutral-800/30 rounded-2xl p-8 shadow-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 overflow-hidden">
             <div class="absolute top-4 right-4">
-              <span class="px-3 py-1 text-xs font-bold bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-400 rounded-full">
-                COMING SOON
+              <span class="px-3 py-1 text-xs font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-full">
+                IN DEVELOPMENT
               </span>
             </div>
             <div class="flex items-center gap-4 mb-4 opacity-75">
@@ -126,8 +126,8 @@
           <!-- BibleStem Studios -->
           <div class="relative bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800/50 dark:to-neutral-800/30 rounded-2xl p-8 shadow-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 overflow-hidden">
             <div class="absolute top-4 right-4">
-              <span class="px-3 py-1 text-xs font-bold bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-400 rounded-full">
-                COMING SOON
+              <span class="px-3 py-1 text-xs font-bold bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300 rounded-full">
+                IN PLANNING
               </span>
             </div>
             <div class="flex items-center gap-4 mb-4 opacity-75">

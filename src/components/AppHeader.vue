@@ -168,7 +168,9 @@
                       <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z" />
                     </svg>
                     <span class="font-medium">BibleStem Studios</span>
-                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                    <span class="text-[10px] uppercase tracking-wide text-blue-500 dark:text-blue-300">
+                      In Development
+                    </span>
                   </div>
                   <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Cinematic Bible films</div>
                 </a>
@@ -181,7 +183,9 @@
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
                     </svg>
                     <span class="font-medium">BibleStem Community</span>
-                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                    <span class="text-[10px] uppercase tracking-wide text-teal-500 dark:text-teal-300">
+                      In Planning
+                    </span>
                   </div>
                   <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Faith community platform</div>
                 </a>
@@ -282,7 +286,9 @@
                       <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z" />
                     </svg>
                     <span class="font-medium">BibleStem Studios</span>
-                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                    <span class="text-[10px] uppercase tracking-wide text-blue-500 dark:text-blue-300">
+                      In Development
+                    </span>
                   </div>
                   <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Cinematic Bible films</div>
                 </a>
@@ -295,7 +301,9 @@
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
                     </svg>
                     <span class="font-medium">BibleStem Community</span>
-                    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">Soon</span>
+                    <span class="text-[10px] uppercase tracking-wide text-teal-500 dark:text-teal-300">
+                      In Planning
+                    </span>
                   </div>
                   <div class="text-xs text-neutral-400 dark:text-neutral-500 ml-6">Faith community platform</div>
                 </a>

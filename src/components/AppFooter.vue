@@ -49,13 +49,15 @@
               </a>
             </li>
             <li>
-              <a href="#" class="text-neutral-500 hover:text-neutral-400 transition-colors duration-200 text-sm cursor-not-allowed">
-                BibleStem Studios <span class="text-xs">(Soon)</span>
+              <a href="#" class="text-neutral-500 hover:text-neutral-400 transition-colors duration-200 text-sm cursor-not-allowed flex items-center gap-2">
+                <span>BibleStem Studios</span>
+                <span class="text-xs uppercase tracking-wide text-blue-300">In Development</span>
               </a>
             </li>
             <li>
-              <a href="#" class="text-neutral-500 hover:text-neutral-400 transition-colors duration-200 text-sm cursor-not-allowed">
-                BibleStem Community <span class="text-xs">(Soon)</span>
+              <a href="#" class="text-neutral-500 hover:text-neutral-400 transition-colors duration-200 text-sm cursor-not-allowed flex items-center gap-2">
+                <span>BibleStem Community</span>
+                <span class="text-xs uppercase tracking-wide text-teal-300">In Planning</span>
               </a>
             </li>
           </ul>
