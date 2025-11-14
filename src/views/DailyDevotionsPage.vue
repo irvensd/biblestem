@@ -135,6 +135,7 @@
             <!-- Action Items -->
             <div class="flex flex-wrap gap-3 mt-6">
               <button
+                data-save-devotion
                 @click="saveDevotion"
                 class="px-4 py-2 bg-white dark:bg-white/20 hover:bg-blue-50 dark:hover:bg-white/30 backdrop-blur-sm rounded-lg font-medium transition-all duration-200 flex items-center gap-2 border border-blue-200 dark:border-transparent text-blue-700 dark:text-white"
               >
@@ -149,6 +150,7 @@
                 Save
               </button>
               <button
+                data-share-devotion
                 @click="shareDevotion"
                 class="px-4 py-2 bg-white dark:bg-white/20 hover:bg-blue-50 dark:hover:bg-white/30 backdrop-blur-sm rounded-lg font-medium transition-all duration-200 flex items-center gap-2 border border-blue-200 dark:border-transparent text-blue-700 dark:text-white"
               >
@@ -183,7 +185,16 @@
           </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div v-if="isLoadingRecentDevotions" class="text-center py-8">
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+          <p class="mt-4 text-neutral-600 dark:text-neutral-400">Loading recent devotions...</p>
+        </div>
+        
+        <div v-else-if="recentDevotions.length === 0" class="text-center py-8">
+          <p class="text-neutral-600 dark:text-neutral-400">No recent devotions available.</p>
+        </div>
+        
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <div
             v-for="(devotion, index) in recentDevotions"
             :key="index"
@@ -192,7 +203,7 @@
           >
             <div class="mb-4">
               <p class="text-sm font-semibold text-primary-600 dark:text-primary-400 mb-1">
-                {{ devotion.date }}
+                {{ devotion.dateLabel }}
               </p>
               <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">
                 {{ devotion.title }}
@@ -256,11 +267,16 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { useNotesStore } from '../stores/notes'
+import { getTodaysDevotion, type DailyDevotion } from '../services/dailyDevotionService'
+import { getRecentDevotions } from '../services/devotionaliumApiService'
+import { logger } from '../utils/logger'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const notesStore = useNotesStore()
 
-const devotion = ref({
+const devotion = ref<DailyDevotion>({
   scripture: 'Jeremiah 29:11',
   text: 'For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future.',
   reflection:
@@ -274,26 +290,14 @@ const todayDate = ref(
   new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
 )
 
-const recentDevotions = ref([
-  {
-    date: 'Yesterday',
-    title: 'Trusting in His Timing',
-    scripture: 'Proverbs 3:5-6',
-    excerpt: 'Trust in the Lord with all your heart and lean not on your own understanding. In all your ways submit to him...',
-  },
-  {
-    date: '2 days ago',
-    title: 'Finding Peace in Chaos',
-    scripture: 'John 14:27',
-    excerpt: 'Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled...',
-  },
-  {
-    date: '3 days ago',
-    title: 'Strength in Weakness',
-    scripture: '2 Corinthians 12:9',
-    excerpt: 'But he said to me, "My grace is sufficient for you, for my power is made perfect in weakness." Therefore...',
-  },
-])
+const recentDevotions = ref<Array<{
+  date: string
+  dateLabel: string
+  title: string
+  scripture: string
+  excerpt: string
+}>>([])
+const isLoadingRecentDevotions = ref(false)
 
 const getGreeting = () => {
   const hour = new Date().getHours()
@@ -302,34 +306,130 @@ const getGreeting = () => {
   return 'Good evening'
 }
 
-const saveDevotion = () => {
-  console.log('Devotion saved')
-  // TODO: Implement save functionality
-}
+const saveDevotion = async () => {
+  if (!authStore.isAuthenticated) {
+    router.push('/sign-in')
+    return
+  }
 
-const shareDevotion = () => {
-  if (navigator.share) {
-    navigator.share({
-      title: "Today's Devotion",
-      text: devotion.value.text,
-      url: window.location.href,
+  try {
+    // Save as a note/bookmark
+    const devotionNote = `Daily Devotion - ${devotion.value.date}\n\nScripture: ${devotion.value.scripture}\n\n"${devotion.value.text}"\n\nReflection:\n${devotion.value.reflection}\n\nPrayer:\n${devotion.value.prayer}`
+    
+    await notesStore.createNote({
+      studyId: 'daily-devotions',
+      lessonId: `devotion-${new Date().toISOString().split('T')[0]}`,
+      content: devotionNote,
+      scripture: devotion.value.scripture,
+      tags: ['devotion', 'daily', 'prayer'],
+      isPrivate: false,
+      type: 'reflection',
     })
-  } else {
-    // Fallback: copy to clipboard
-    navigator.clipboard.writeText(devotion.value.text)
-    alert('Devotion copied to clipboard!')
+    
+    // Show success feedback (could use a toast notification)
+    const saveButton = document.querySelector('[data-save-devotion]') as HTMLElement
+    if (saveButton) {
+      const originalText = saveButton.textContent
+      saveButton.textContent = 'Saved!'
+      saveButton.classList.add('bg-green-500')
+      setTimeout(() => {
+        saveButton.textContent = originalText
+        saveButton.classList.remove('bg-green-500')
+      }, 2000)
+    }
+  } catch (error) {
+    logger.error('Error saving devotion:', error)
+    alert('Failed to save devotion. Please try again.')
   }
 }
 
-const viewDevotion = (date: string) => {
-  console.log('Viewing devotion from:', date)
-  // TODO: Navigate to specific devotion view
+const shareDevotion = async () => {
+  const shareText = `Daily Devotion - ${devotion.value.scripture}\n\n"${devotion.value.text}"\n\n${window.location.href}`
+  
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "Today's Devotion",
+        text: shareText,
+        url: window.location.href,
+      })
+    } catch (error) {
+      // User cancelled or error occurred
+      if ((error as Error).name !== 'AbortError') {
+        logger.error('Error sharing devotion:', error)
+      }
+    }
+  } else {
+    // Fallback: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(shareText)
+      // Show success feedback
+      const shareButton = document.querySelector('[data-share-devotion]') as HTMLElement
+      if (shareButton) {
+        const originalText = shareButton.textContent
+        shareButton.textContent = 'Copied!'
+        setTimeout(() => {
+          shareButton.textContent = originalText
+        }, 2000)
+      }
+    } catch (error) {
+      logger.error('Error copying to clipboard:', error)
+      alert('Failed to copy devotion. Please try again.')
+    }
+  }
+}
+
+const viewDevotion = async (date: string) => {
+  // Could navigate to a specific devotion view or show in modal
+  // For now, we'll just reload the devotion for that date
+  try {
+    const { getDevotionForDate } = await import('../services/dailyDevotionService')
+    const dateObj = new Date(date)
+    const pastDevotion = await getDevotionForDate(dateObj)
+    devotion.value = pastDevotion
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  } catch (error) {
+    logger.error('Error loading devotion for date:', error)
+  }
+}
+
+const loadRecentDevotions = async () => {
+  if (!authStore.isAuthenticated) return
+  
+  isLoadingRecentDevotions.value = true
+  try {
+    const recent = await getRecentDevotions(3)
+    recentDevotions.value = recent
+      .filter(item => item.verse !== null)
+      .map(item => ({
+        date: item.date,
+        dateLabel: item.dateLabel,
+        title: `${item.verse!.reference} - Daily Devotion`,
+        scripture: item.verse!.reference,
+        excerpt: `"${item.verse!.text.substring(0, 100)}${item.verse!.text.length > 100 ? '...' : ''}"`,
+      }))
+  } catch (error) {
+    logger.error('Error loading recent devotions:', error)
+    // Keep empty array on error
+    recentDevotions.value = []
+  } finally {
+    isLoadingRecentDevotions.value = false
+  }
 }
 
 onMounted(async () => {
   // Wait for auth to be ready
   if (!authStore.isInitialized) {
     await authStore.initializeAuth()
+  }
+  
+  // Load today's devotion (now async)
+  devotion.value = await getTodaysDevotion()
+  
+  // Load recent devotions if authenticated
+  if (authStore.isAuthenticated) {
+    await loadRecentDevotions()
   }
 })
 </script>

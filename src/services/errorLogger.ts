@@ -185,8 +185,8 @@ class ErrorLoggerService {
    * Log to Sentry (if available)
    */
   private async logToSentry(log: ErrorLog): Promise<void> {
-    if (typeof window !== 'undefined' && (window as any).Sentry) {
-      const Sentry = (window as any).Sentry
+    try {
+      const { captureException, captureMessage } = await import('./monitoring')
 
       const context = {
         ...log.context,
@@ -196,22 +196,13 @@ class ErrorLoggerService {
       }
 
       if (log.level === 'error' && log.error) {
-        Sentry.captureException(log.error, {
-          level: 'error',
-          tags: {
-            source: 'errorLogger',
-          },
-          extra: context,
-        })
+        captureException(log.error, context)
       } else {
-        Sentry.captureMessage(log.message, {
-          level: log.level === 'warning' ? 'warning' : 'info',
-          tags: {
-            source: 'errorLogger',
-          },
-          extra: context,
-        })
+        captureMessage(log.message, log.level === 'warning' ? 'warning' : 'info')
       }
+    } catch (error) {
+      // Sentry not available or not initialized
+      console.debug('Sentry not available for error logging')
     }
   }
 

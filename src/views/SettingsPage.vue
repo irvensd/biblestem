@@ -308,13 +308,56 @@
           </button>
           <button
             @click="saveSettings"
-            class="px-6 py-3 rounded-xl bg-gradient-to-r from-primary-600 to-blue-600 text-white font-semibold hover:shadow-lg transition-all flex items-center gap-2"
+            :disabled="isSaving"
+            class="px-6 py-3 rounded-xl bg-gradient-to-r from-primary-600 to-blue-600 text-white font-semibold hover:shadow-lg transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Save Changes
+            <svg
+              v-if="isSaving"
+              class="animate-spin w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+            <svg
+              v-else-if="saveSuccess"
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            {{ isSaving ? 'Saving...' : saveSuccess ? 'Saved!' : 'Save Changes' }}
           </button>
         </div>
       </div>
     </div>
+
+    <!-- Delete Account Modal -->
+    <DeleteAccountModal
+      :is-open="showDeleteModal"
+      @update:is-open="showDeleteModal = $event"
+      @deleted="handleAccountDeleted"
+    />
+
+    <!-- Export Data Modal -->
+    <ExportDataModal
+      :is-open="showExportModal"
+      @update:is-open="showExportModal = $event"
+      @exported="handleDataExported"
+    />
   </div>
 </template>
 
@@ -322,6 +365,8 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTheme } from '../composables/useTheme'
+import DeleteAccountModal from '../components/DeleteAccountModal.vue'
+import ExportDataModal from '../components/ExportDataModal.vue'
 
 const router = useRouter()
 
@@ -332,6 +377,10 @@ const { isDarkMode, toggleTheme } = useTheme()
 const fontSize = ref(16)
 const showOriginalLanguages = ref(false)
 const autoSaveNotes = ref(true)
+const showDeleteModal = ref(false)
+const showExportModal = ref(false)
+const isSaving = ref(false)
+const saveSuccess = ref(false)
 
 // Load settings from localStorage
 onMounted(() => {
@@ -342,20 +391,26 @@ onMounted(() => {
       fontSize.value = settings.fontSize || 16
       showOriginalLanguages.value = settings.showOriginalLanguages || false
       autoSaveNotes.value = settings.autoSaveNotes !== false
+      
+      // Apply font size on load
+      document.documentElement.style.fontSize = `${fontSize.value}px`
     } catch (error) {
       console.error('Error loading settings:', error)
     }
+  } else {
+    // Apply default font size if no settings exist
+    document.documentElement.style.fontSize = `${fontSize.value}px`
   }
 })
 
 const updateFontSize = () => {
+  // Update DOM immediately for visual feedback
   document.documentElement.style.fontSize = `${fontSize.value}px`
+  // Note: Settings will be saved when "Save Changes" is clicked
 }
 
-
-
 const updateLanguageDisplay = () => {
-  // Settings saved automatically on change
+  // Note: Settings will be saved when "Save Changes" is clicked
 }
 
 const updateAutoSave = () => {
@@ -370,26 +425,52 @@ const updateAutoSave = () => {
   console.log(message)
 }
 
-const saveSettings = () => {
-  const settings = {
-    fontSize: fontSize.value,
-    showOriginalLanguages: showOriginalLanguages.value,
-    autoSaveNotes: autoSaveNotes.value,
-  }
+const saveSettings = async () => {
+  isSaving.value = true
+  saveSuccess.value = false
+  
+  try {
+    const settings = {
+      fontSize: fontSize.value,
+      showOriginalLanguages: showOriginalLanguages.value,
+      autoSaveNotes: autoSaveNotes.value,
+    }
 
-  localStorage.setItem('biblestem_settings', JSON.stringify(settings))
-  alert('Settings saved successfully!')
+    localStorage.setItem('biblestem_settings', JSON.stringify(settings))
+    
+    // Apply font size to ensure it's persisted
+    document.documentElement.style.fontSize = `${fontSize.value}px`
+    
+    // Show success feedback
+    saveSuccess.value = true
+    
+    // Reset success state after 2 seconds
+    setTimeout(() => {
+      saveSuccess.value = false
+    }, 2000)
+  } catch (error) {
+    console.error('Error saving settings:', error)
+    alert('Failed to save settings. Please try again.')
+  } finally {
+    isSaving.value = false
+  }
 }
 
 const exportData = () => {
-  // TODO: Implement data export
-  alert('Data export feature coming soon!')
+  showExportModal.value = true
+}
+
+const handleDataExported = () => {
+  // Data was successfully exported, modal will handle closing
+  showExportModal.value = false
 }
 
 const deleteAccount = () => {
-  if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-    // TODO: Implement account deletion
-    alert('Account deletion feature coming soon!')
-  }
+  showDeleteModal.value = true
+}
+
+const handleAccountDeleted = () => {
+  // Account was successfully deleted, modal will handle redirect
+  showDeleteModal.value = false
 }
 </script>

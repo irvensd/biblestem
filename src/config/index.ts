@@ -63,6 +63,10 @@ export const config = {
       environment: import.meta.env.VITE_SENTRY_ENVIRONMENT || 'development',
       isConfigured: !!import.meta.env.VITE_SENTRY_DSN,
     },
+    googleAnalytics: {
+      measurementId: import.meta.env.VITE_GA_MEASUREMENT_ID || '',
+      isConfigured: !!import.meta.env.VITE_GA_MEASUREMENT_ID,
+    },
   },
 }
 

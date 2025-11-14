@@ -4,6 +4,8 @@ import { getSupabase, isSupabaseAvailable, handleSupabaseError, requiresReAuth }
 import { logger } from '../utils/logger'
 import { securityService } from '../services/securityService'
 import { sanitizeEmail, sanitizePlainText } from '../utils/sanitization'
+import { getTotalStudiesCompleted } from '../utils/progressCalculations'
+import { getAllStudies } from '../data/studies'
 import type { User } from '@supabase/supabase-js'
 
 export interface UserProfile {
@@ -34,6 +36,38 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isAuthenticated = computed(() => !!user.value)
   const hasSupported = computed(() => user.value?.hasSupported === true)
+
+  /**
+   * Calculate studies completed count from study_progress
+   */
+  const calculateStudiesCompleted = async (): Promise<number> => {
+    try {
+      // Import stores dynamically to avoid circular dependencies
+      const { useStudyProgressStore } = await import('./studyProgress')
+      const progressStore = useStudyProgressStore()
+
+      // Ensure progress is initialized
+      if (!progressStore.isInitialized) {
+        await progressStore.loadFromStorage()
+      }
+
+      // Get all studies with their lessons
+      const allStudies = getAllStudies()
+      const studiesData: Record<string, { lessons: any[] }> = {}
+      allStudies.forEach((study) => {
+        studiesData[study.id] = { lessons: study.lessons || [] }
+      })
+
+      // Get all progress data
+      const progressData = progressStore.getAllStudyProgress()
+
+      // Calculate completed studies
+      return getTotalStudiesCompleted(progressData, studiesData)
+    } catch (error) {
+      logger.error('Error calculating studies completed:', error)
+      return 0
+    }
+  }
 
   const clearError = () => {
     error.value = null
@@ -116,7 +150,7 @@ export const useAuthStore = defineStore('auth', () => {
               name,
               email: authData.user.email!,
               hasSupported: false,
-              studiesCompleted: 0,
+              studiesCompleted: await calculateStudiesCompleted(),
               joinDate: authData.user.created_at || new Date().toISOString(),
               emailVerified: authData.user.email_confirmed_at ? true : false,
             }
@@ -134,6 +168,18 @@ export const useAuthStore = defineStore('auth', () => {
           }
 
         logger.debug('Signup successful with Supabase:', user.value)
+        
+        // Track signup in analytics
+        import('../services/analytics').then(({ analytics }) => {
+          analytics.trackSignup('email')
+          if (user.value) {
+            analytics.setUserProperties(user.value.id, {
+              email: user.value.email,
+              name: user.value.name,
+            })
+          }
+        })
+        
         return { success: true }
       } else {
         // Supabase is required for sign up
@@ -213,7 +259,7 @@ export const useAuthStore = defineStore('auth', () => {
               avatar: profile.avatar,
               bio: profile.bio,
               hasSupported: profile.has_supported || false,
-              studiesCompleted: 0, // TODO: Calculate from study_progress
+              studiesCompleted: await calculateStudiesCompleted(),
               joinDate: profile.created_at,
               emailVerified: profile.email_verified,
             }
@@ -224,13 +270,32 @@ export const useAuthStore = defineStore('auth', () => {
               name: authData.user.user_metadata.name || email.split('@')[0],
               email: authData.user.email!,
               hasSupported: false,
-              studiesCompleted: 0,
+              studiesCompleted: await calculateStudiesCompleted(),
               joinDate: new Date().toISOString(),
               emailVerified: !!authData.user.email_confirmed_at,
             }
           }
 
                         logger.debug('Login successful with Supabase:', user.value)
+          
+          // Track login in analytics
+          import('../services/analytics').then(({ analytics }) => {
+            analytics.trackLogin('email')
+            if (user.value) {
+              analytics.setUserProperties(user.value.id, {
+                email: user.value.email,
+                name: user.value.name,
+              })
+            }
+          })
+          
+          // Set Sentry user context
+          import('../services/monitoring').then(({ setSentryUser }) => {
+            if (user.value) {
+              setSentryUser(user.value.id, user.value.email, user.value.name)
+            }
+          })
+          
           return { success: true }
         }
 
@@ -254,6 +319,16 @@ export const useAuthStore = defineStore('auth', () => {
     clearError()
 
     try {
+      // Clear analytics user
+      import('../services/analytics').then(({ analytics }) => {
+        analytics.clearUserProperties()
+      })
+      
+      // Clear Sentry user context
+      import('../services/monitoring').then(({ clearSentryUser }) => {
+        clearSentryUser()
+      })
+      
       // Cleanup auth subscription
       if (authSubscription) {
         authSubscription.unsubscribe()
@@ -363,7 +438,7 @@ export const useAuthStore = defineStore('auth', () => {
                 avatar: profile.avatar,
                 bio: profile.bio,
                 hasSupported: profile.has_supported || false,
-                studiesCompleted: 0, // TODO: Calculate from study_progress
+                studiesCompleted: await calculateStudiesCompleted(),
                 joinDate: profile.created_at,
                 emailVerified: profile.email_verified,
               }
@@ -375,7 +450,7 @@ export const useAuthStore = defineStore('auth', () => {
                 name: session.user.user_metadata.name || session.user.email!.split('@')[0],
                 email: session.user.email!,
                 hasSupported: false,
-                studiesCompleted: 0,
+                studiesCompleted: await calculateStudiesCompleted(),
                 joinDate: session.user.created_at,
                 emailVerified: !!session.user.email_confirmed_at,
               }

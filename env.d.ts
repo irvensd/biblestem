@@ -31,6 +31,8 @@ interface ImportMetaEnv {
   readonly VITE_EMAIL_SERVICE_URL: string
   readonly VITE_SENTRY_DSN: string
   readonly VITE_SENTRY_ENVIRONMENT: string
+  readonly VITE_SENTRY_DEBUG: string
+  readonly VITE_GA_MEASUREMENT_ID: string
 }
 
 interface ImportMeta {

@@ -3,6 +3,8 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { initSupabase } from './lib/supabase'
+import { initSentry } from './services/monitoring'
+import { analytics } from './services/analytics'
 import App from './App.vue'
 import router from './router'
 
@@ -14,6 +16,10 @@ const pinia = createPinia()
 
 app.use(pinia)
 app.use(router)
+
+// Initialize monitoring and analytics (must be after router)
+initSentry(app, router)
+analytics.init()
 
 app.mount('#app')
 

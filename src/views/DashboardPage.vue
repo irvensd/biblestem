@@ -63,12 +63,12 @@
                 </div>
                 
                 <blockquote class="text-xl sm:text-2xl leading-relaxed mb-6 font-serif italic">
-                  "For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."
+                  "{{ todaysVerse.text }}"
                 </blockquote>
                 
                 <div class="flex items-center justify-between">
                   <cite class="text-white/80 font-semibold not-italic">
-                    — Jeremiah 29:11
+                    — {{ todaysVerse.reference }}
                   </cite>
                   <button 
                     @click="navigateToDailyDevotion"
@@ -298,6 +298,9 @@ import { useStudyProgressStore } from '../stores/studyProgress'
 import { useNotesStore, type StudyNote } from '../stores/notes'
 import { getAllStudies, getStudyById, type Study } from '../data/studies'
 import { getSupabase, handleSupabaseError } from '../lib/supabase'
+import { getTodaysVerse, type DailyVerse } from '../services/dailyVerseService'
+import { getTodaysVerseFromAPI } from '../services/devotionaliumApiService'
+import { logger } from '../utils/logger'
 import DashboardSkeleton from '../components/skeletons/DashboardSkeleton.vue'
 
 const router = useRouter()
@@ -309,7 +312,7 @@ const notesStore = useNotesStore()
 const isLoading = ref(true)
 const studies = ref<Study[]>([])
 const recentNotes = ref<StudyNote[]>([])
-const todaysVerse = ref({
+const todaysVerse = ref<DailyVerse>({
   text: "For I know the plans I have for you,\" declares the Lord, \"plans to prosper you and not to harm you, plans to give you hope and a future.",
   reference: "Jeremiah 29:11"
 })
@@ -359,15 +362,63 @@ const inProgressStudies = computed(() => {
 })
 
 const totalStudyTime = computed(() => {
-  return completedStudies.value.reduce((total, study) => {
-    const totalDuration = study.lessons.reduce((sum, lesson) => sum + (lesson.duration || 0), 0)
-    return total + totalDuration
+  // Calculate total time from all studies (completed + in progress)
+  const allStudiesWithProgress = [...completedStudies.value, ...inProgressStudies.value]
+  return allStudiesWithProgress.reduce((total, study) => {
+    const progress = progressStore.getStudyProgress(study.id)
+    if (!progress) return total
+    
+    // Sum up time spent on completed lessons
+    const completedLessons = study.lessons.filter(lesson => 
+      progress.completedLessons.includes(lesson.id)
+    )
+    const timeSpent = completedLessons.reduce((sum, lesson) => sum + (lesson.duration || 0), 0)
+    
+    return total + timeSpent
   }, 0)
 })
 
 const studyStreak = computed(() => {
-  // This would be calculated based on actual usage data
-  return 2
+  // Calculate study streak based on last accessed dates
+  if (!progressStore.isInitialized) return 0
+  
+  const allProgress = progressStore.getAllStudyProgress()
+  const accessDates = Object.values(allProgress)
+    .map(p => p.lastAccessedAt)
+    .filter(Boolean)
+    .map(date => new Date(date).toDateString())
+  
+  // Get unique dates and sort
+  const uniqueDates = [...new Set(accessDates)].sort((a, b) => 
+    new Date(b).getTime() - new Date(a).getTime()
+  )
+  
+  if (uniqueDates.length === 0) return 0
+  
+  // Check if user studied today or yesterday
+  const today = new Date().toDateString()
+  const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toDateString()
+  
+  // If no study today or yesterday, streak is 0
+  if (uniqueDates[0] !== today && uniqueDates[0] !== yesterday) return 0
+  
+  // Count consecutive days
+  let streak = uniqueDates[0] === today ? 1 : 0
+  let currentDate = uniqueDates[0] === today 
+    ? new Date() 
+    : new Date(Date.now() - 24 * 60 * 60 * 1000)
+  
+  for (let i = 1; i < uniqueDates.length; i++) {
+    const expectedDate = new Date(currentDate.getTime() - 24 * 60 * 60 * 1000).toDateString()
+    if (uniqueDates[i] === expectedDate) {
+      streak++
+      currentDate = new Date(uniqueDates[i])
+    } else {
+      break
+    }
+  }
+  
+  return streak
 })
 
 // Methods
@@ -397,6 +448,19 @@ const navigateToStudy = (studyId: string) => {
 const loadDashboardData = async () => {
   try {
     isLoading.value = true
+    
+    // Load today's verse - try API first, fallback to local
+    try {
+      const apiVerse = await getTodaysVerseFromAPI()
+      if (apiVerse) {
+        todaysVerse.value = apiVerse
+      } else {
+        todaysVerse.value = getTodaysVerse()
+      }
+    } catch (error) {
+      logger.warn('Failed to fetch verse from API, using local verse:', error)
+      todaysVerse.value = getTodaysVerse()
+    }
     
     // Load studies - try Supabase first, fallback to local data
     const supabase = getSupabase()

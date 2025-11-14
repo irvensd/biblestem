@@ -194,6 +194,14 @@ const router = createRouter({
 const { initRouteAccessibility } = useRouteAccessibility(router)
 initRouteAccessibility(router)
 
+// Track page views for analytics
+router.afterEach((to) => {
+  // Track page view in analytics
+  import('../services/analytics').then(({ analytics }) => {
+    analytics.trackPageView(to.path, to.name?.toString())
+  })
+})
+
 // Get auth store instance once (Pinia stores are singletons, but this is cleaner)
 let authStoreInstance: ReturnType<typeof useAuthStore> | null = null
 

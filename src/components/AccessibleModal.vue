@@ -148,7 +148,7 @@ const modalClasses = computed(() => {
 })
 
 const backdropClasses = computed(() => {
-  const classes = ['absolute inset-0 bg-black/50 backdrop-blur-sm']
+  const classes = ['fixed inset-0 bg-black/50 backdrop-blur-sm']
   
   if (props.transition === 'fade') {
     classes.push('transition-opacity duration-300')
@@ -381,11 +381,11 @@ onUnmounted(() => {
 
 <style scoped>
 .accessible-modal {
-  @apply relative;
+  @apply fixed inset-0 z-50 flex items-center justify-center p-4;
 }
 
 .modal-backdrop {
-  @apply absolute inset-0;
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm;
 }
 
 .modal-content {

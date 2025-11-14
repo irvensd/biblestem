@@ -209,13 +209,6 @@
             >
               Study Series
             </router-link>
-            <router-link
-              to="/about"
-              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
-              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/about' }"
-            >
-              About
-            </router-link>
             <!-- Ecosystem Dropdown -->
             <div class="relative">
               <button
@@ -309,6 +302,13 @@
                 </a>
               </div>
             </div>
+            <router-link
+              to="/about"
+              class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"
+              :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/about' }"
+            >
+              About
+            </router-link>
             <router-link
               to="/contact"
               class="text-neutral-700 dark:text-white hover:text-primary-600 dark:hover:text-blue-400 font-medium transition-colors duration-200 text-sm xl:text-base"

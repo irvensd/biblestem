@@ -71,11 +71,64 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { getSupabase, isSupabaseAvailable } from '@/lib/supabase'
 
+const router = useRouter()
+const authStore = useAuthStore()
 const paypalUrl = 'https://paypal.me/biblestem'
 
 const openPayPalPortal = () => {
+  // Track donation click
+  import('@/services/analytics').then(({ analytics }) => {
+    analytics.trackEvent({
+      action: 'donation_clicked',
+      category: 'monetization',
+      label: 'paypal',
+    })
+  })
+
   window.open(paypalUrl, '_blank', 'noopener,noreferrer')
+  
+  // After donation, mark user as supporter (this would typically be done via webhook)
+  // For now, we'll show a message
+  setTimeout(() => {
+    if (confirm('After completing your donation, your account will be updated to Supporter status. Thank you for your support!')) {
+      router.push('/profile')
+    }
+  }, 2000)
+}
+
+const markAsSupporter = async () => {
+  if (!authStore.user || !isSupabaseAvailable()) return
+
+  const supabase = getSupabase()
+  if (!supabase) return
+
+  try {
+    const { error } = await supabase
+      .from('users')
+      .update({ has_supported: true })
+      .eq('id', authStore.user.id)
+
+    if (!error) {
+      // Update local store
+      if (authStore.user) {
+        authStore.user.hasSupported = true
+      }
+      
+      // Track in analytics
+      import('@/services/analytics').then(({ analytics }) => {
+        analytics.trackDonation(0, 'USD') // Amount would come from webhook
+        analytics.setUserProperties(authStore.user!.id, {
+          has_supported: true,
+        })
+      })
+    }
+  } catch (error) {
+    console.error('Error updating supporter status:', error)
+  }
 }
 
 onMounted(() => {

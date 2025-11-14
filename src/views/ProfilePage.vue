@@ -452,12 +452,17 @@ const handleUpdateProfile = async () => {
 }
 
 const supportMinistry = () => {
-  // TODO: Implement donation flow
-  const message = authStore.hasSupported 
-    ? 'Thank you for being a faithful supporter! 🙏\n\nYour previous donation helps us:\n• Create more Bible studies\n• Keep the platform free for everyone\n• Spread the Gospel worldwide\n\nWould you like to donate again?\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo'
-    : 'Thank you for considering supporting BibleStem! 🙏\n\n💝 What Your Support Provides:\n• Helps us create more studies\n• Keeps the platform free for everyone\n• Spreads the Gospel freely\n• As a thank you: Access to 4 deeper studies\n\n✨ All basic content remains FREE forever!\n\nDonation options coming soon:\n• PayPal • Stripe • Venmo'
+  // Navigate to PayPal donation page
+  router.push('/donate/paypal')
   
-  alert(message)
+  // Track donation intent in analytics
+  import('../services/analytics').then(({ analytics }) => {
+    analytics.trackEvent({
+      action: 'donation_intent',
+      category: 'monetization',
+      label: authStore.hasSupported ? 'repeat_donor' : 'first_time_donor',
+    })
+  })
 }
 
 const handleSignOut = async () => {
