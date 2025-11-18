@@ -614,8 +614,34 @@ const notesStore = useNotesStore()
 const { light, medium } = useHapticFeedback()
 const { applySEO, getArticleSchema, getBreadcrumbSchema } = useSEO()
 
-const study = computed(() => getStudyById(route.params.studyId as string))
-const lesson = computed(() => getLessonById(route.params.studyId as string, route.params.lessonId as string))
+const study = computed(() => {
+  const studyId = route.params.studyId as string
+  if (!studyId) {
+    console.error('Study ID is missing from route params')
+    return null
+  }
+  try {
+    return getStudyById(studyId)
+  } catch (error) {
+    console.error('Error getting study:', error)
+    return null
+  }
+})
+
+const lesson = computed(() => {
+  const studyId = route.params.studyId as string
+  const lessonId = route.params.lessonId as string
+  if (!studyId || !lessonId) {
+    console.error('Study ID or Lesson ID is missing from route params', { studyId, lessonId })
+    return null
+  }
+  try {
+    return getLessonById(studyId, lessonId)
+  } catch (error) {
+    console.error('Error getting lesson:', error)
+    return null
+  }
+})
 
 // State
 const isLoading = ref(true)
@@ -873,19 +899,38 @@ const completeLesson = async () => {
   const studyId = route.params.studyId as string
   const lessonId = route.params.lessonId as string
 
-  // Mark lesson as completed
-  progressStore.completeLesson(studyId, lessonId)
-
-  // Save all notes
-  if (reflectionNotes.value.trim()) {
-    autoSaveReflection()
-  }
-  if (personalNotes.value.trim()) {
-    autoSaveNotes()
+  if (!studyId || !lessonId) {
+    console.error('Cannot complete lesson: missing studyId or lessonId', { studyId, lessonId })
+    return
   }
 
-  // Navigate back to study page
-  router.push(`/study/${studyId}`)
+  try {
+    // Mark lesson as completed
+    await progressStore.completeLesson(studyId, lessonId)
+
+    // Save all notes
+    if (reflectionNotes.value.trim()) {
+      autoSaveReflection()
+    }
+    if (personalNotes.value.trim()) {
+      autoSaveNotes()
+    }
+
+    // Navigate back to study page
+    router.push(`/study/${studyId}`).catch((error) => {
+      console.error('Navigation error:', error)
+      // Fallback navigation
+      router.push('/study-series').catch(() => {
+        router.push('/')
+      })
+    })
+  } catch (error) {
+    console.error('Error completing lesson:', error)
+    // Still try to navigate even if completion fails
+    router.push(`/study/${studyId}`).catch(() => {
+      router.push('/study-series')
+    })
+  }
 }
 
 // Enhanced component event handlers
@@ -980,7 +1025,18 @@ const handleNoteDelete = (id: string) => {
 
 const handleLessonNavigate = (lessonId: string) => {
   medium()
-  router.push(`/study/${route.params.studyId}/lesson/${lessonId}`)
+  const studyId = route.params.studyId as string
+  if (!studyId || !lessonId) {
+    console.error('Cannot navigate to lesson: missing studyId or lessonId', { studyId, lessonId })
+    return
+  }
+  
+  router.push(`/study/${studyId}/lesson/${lessonId}`).catch((error) => {
+    console.error('Navigation error:', error)
+    router.push(`/study/${studyId}`).catch(() => {
+      router.push('/study-series')
+    })
+  })
 }
 
 const handleLessonComplete = (lessonId: string) => {
@@ -1008,7 +1064,17 @@ const handleLessonShare = (lessonId: string) => {
 
 const handleStudyOverview = () => {
   light()
-  router.push(`/study/${route.params.studyId}`)
+  const studyId = route.params.studyId as string
+  if (!studyId) {
+    console.error('Cannot navigate: missing studyId')
+    router.push('/study-series').catch(() => router.push('/'))
+    return
+  }
+  
+  router.push(`/study/${studyId}`).catch((error) => {
+    console.error('Navigation error:', error)
+    router.push('/study-series').catch(() => router.push('/'))
+  })
 }
 
 const handleViewNotes = (lessonId: string) => {

@@ -442,7 +442,17 @@ const navigateToDailyStudy = () => {
 }
 
 const navigateToStudy = (studyId: string) => {
-  router.push(`/study/${studyId}`)
+  if (!studyId) {
+    console.error('Cannot navigate: missing studyId')
+    return
+  }
+  
+  router.push(`/study/${studyId}`).catch((error) => {
+    console.error('Navigation error:', error)
+    router.push('/study-series').catch(() => {
+      router.push('/')
+    })
+  })
 }
 
 const loadDashboardData = async () => {

@@ -42,7 +42,7 @@
             <svg class="w-4 h-4 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            <span class="text-neutral-700 dark:text-neutral-300">{{ study.lessons.length }} lessons</span>
+            <span class="text-neutral-700 dark:text-neutral-300">{{ (study.lessons || []).length }} lessons</span>
           </div>
           <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,7 +65,7 @@
         
         <!-- Virtual Scrolling for large lists (20+ items) -->
         <VirtualScroll
-          v-if="study.lessons.length >= 20"
+          v-if="study.lessons && Array.isArray(study.lessons) && study.lessons.length >= 20"
           :items="study.lessons"
           :item-height="180"
           :container-height="600"
@@ -138,7 +138,7 @@
         </VirtualScroll>
         
         <!-- Regular list for smaller sets (< 20 items) -->
-        <div v-else class="space-y-4">
+        <div v-else-if="study.lessons && Array.isArray(study.lessons)" class="space-y-4">
           <div
             v-for="(lesson, index) in study.lessons"
             :key="lesson.id"
@@ -288,16 +288,38 @@ const isCompleted = (lessonId: string) => {
 }
 
 const viewLesson = (lessonId: string) => {
+  // Validate route params and lessonId
+  const studyId = route.params.id as string
+  if (!studyId || !lessonId) {
+    console.error('Invalid route params or lessonId:', { studyId, lessonId })
+    return
+  }
+  
   // Fixed: Use correct route format matching router definition
-  router.push(`/study/${route.params.id as string}/lesson/${lessonId}`)
+  router.push(`/study/${studyId}/lesson/${lessonId}`).catch((error) => {
+    console.error('Navigation error:', error)
+    // Fallback: try navigating to study page if lesson navigation fails
+    router.push(`/study/${studyId}`).catch(() => {
+      router.push('/study-series')
+    })
+  })
 }
 
 const markAsIncomplete = async (lessonId: string) => {
-  if (!study.value) return
+  if (!study.value || !lessonId) return
+  
+  // Ensure lessons array exists and is valid
+  if (!study.value.lessons || !Array.isArray(study.value.lessons)) {
+    console.error('Study lessons array is invalid:', study.value)
+    return
+  }
   
   // Find the lesson title for the modal
-  const lesson = study.value.lessons.find(l => l.id === lessonId)
-  if (!lesson) return
+  const lesson = study.value.lessons.find(l => l && l.id === lessonId)
+  if (!lesson || !lesson.title) {
+    console.error('Lesson not found or invalid:', lessonId)
+    return
+  }
   
   // Set modal data and show modal
   selectedLessonId.value = lessonId
@@ -332,20 +354,49 @@ const confirmResetLesson = async () => {
 }
 
 const continueReading = () => {
-  if (lastReadLessonId.value) {
-    // Fixed: Use correct route format matching router definition
-    router.push(`/study/${route.params.id as string}/lesson/${lastReadLessonId.value}`)
+  const studyId = route.params.id as string
+  if (!studyId || !lastReadLessonId.value) {
+    console.error('Cannot continue reading: missing studyId or lessonId', { studyId, lessonId: lastReadLessonId.value })
+    return
   }
+  
+  // Fixed: Use correct route format matching router definition
+  router.push(`/study/${studyId}/lesson/${lastReadLessonId.value}`).catch((error) => {
+    console.error('Navigation error:', error)
+    // Fallback: navigate to study page if lesson navigation fails
+    router.push(`/study/${studyId}`).catch(() => {
+      router.push('/study-series')
+    })
+  })
 }
 
 onMounted(async () => {
-  // Check for last read lesson
-  lastReadLessonId.value = getLastReadLesson(route.params.id as string)
+  // Validate route params first
   const studyId = route.params.id as string
+  if (!studyId) {
+    console.error('Study ID is missing from route params')
+    loading.value = false
+    study.value = null
+    return
+  }
+  
+  // Check for last read lesson
+  try {
+    lastReadLessonId.value = getLastReadLesson(studyId)
+  } catch (error) {
+    console.error('Error getting last read lesson:', error)
+    lastReadLessonId.value = null
+  }
+  
   loading.value = true
 
   // Initialize progress store (now async)
-  await progressStore.loadFromStorage()
+  try {
+    await progressStore.loadFromStorage()
+  } catch (error) {
+    console.error('Error loading progress from storage:', error)
+    // Continue anyway - progress will be empty
+  }
 
   try {
     const supabase = getSupabase()
@@ -403,26 +454,40 @@ onMounted(async () => {
 
       if (studyData) {
         // Ensure studyData exists before creating study object
+        // Validate required fields
+        if (!studyData.id || !studyData.title) {
+          console.error('Invalid study data: missing required fields', studyData)
+          study.value = null
+          return
+        }
+        
         study.value = {
           id: studyData.id,
           title: studyData.title,
-          description: studyData.description,
-          category: studyData.category,
-          totalDuration: studyData.total_duration,
-          difficulty: studyData.difficulty,
-          tags: studyData.tags || [],
+          description: studyData.description || '',
+          category: studyData.category || 'foundational',
+          totalDuration: studyData.total_duration || 0,
+          difficulty: studyData.difficulty || 'beginner',
+          tags: Array.isArray(studyData.tags) ? studyData.tags : [],
           image: studyData.image || '',
           color: studyData.color || '',
-          features: studyData.features || [],
-          lessons: (lessonsData || []).map((lesson: any) => ({
-            id: lesson.id,
-            title: lesson.title,
-            duration: lesson.duration,
-            scripture: lesson.scripture,
-            description: lesson.description,
-            content: lesson.content,
-            completed: false,
-          })),
+          features: Array.isArray(studyData.features) ? studyData.features : [],
+          lessons: (Array.isArray(lessonsData) ? lessonsData : []).map((lesson: any) => {
+            // Validate lesson data
+            if (!lesson || !lesson.id || !lesson.title) {
+              console.warn('Invalid lesson data skipped:', lesson)
+              return null
+            }
+            return {
+              id: lesson.id,
+              title: lesson.title,
+              duration: lesson.duration || 0,
+              scripture: lesson.scripture || '',
+              description: lesson.description || '',
+              content: lesson.content || {},
+              completed: false,
+            }
+          }).filter((lesson): lesson is Lesson => lesson !== null), // Filter out null lessons
         }
         
         // Cache the study for future use (cache for 30 minutes)

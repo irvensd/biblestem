@@ -136,7 +136,18 @@ const gradientClass = computed(() => {
 const isBookmarked = computed(() => checkIsBookmarked(props.study.id))
 
 const handleClick = () => {
-  router.push(`/study/${props.study.id}`)
+  if (!props.study || !props.study.id) {
+    console.error('Cannot navigate: invalid study data', props.study)
+    return
+  }
+  
+  router.push(`/study/${props.study.id}`).catch((error) => {
+    console.error('Navigation error:', error)
+    // Fallback to study series page
+    router.push('/study-series').catch(() => {
+      router.push('/')
+    })
+  })
 }
 
 const handleBookmarkClick = async () => {
