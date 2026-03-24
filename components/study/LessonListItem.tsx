@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import type { Lesson } from '@/lib/mock-data'
+import { formatLessonDuration, lessonProgressLabel } from '@/lib/product-queries'
+import type { Lesson } from '@/lib/types/product'
 
 interface LessonListItemProps {
   studySlug: string
@@ -8,6 +9,8 @@ interface LessonListItemProps {
 }
 
 export function LessonListItem({ studySlug, lesson, index }: LessonListItemProps) {
+  const stateLabel = lessonProgressLabel(lesson.progressState)
+
   return (
     <li className="border-b border-zinc-200/90 last:border-b-0">
       <Link
@@ -17,13 +20,15 @@ export function LessonListItem({ studySlug, lesson, index }: LessonListItemProps
         <div className="min-w-0 flex-1">
           <p className="text-xs font-medium text-zinc-500">
             Lesson {index + 1}
-            {lesson.state !== 'Not started' ? <span className="text-zinc-400"> · {lesson.state}</span> : null}
+            {lesson.progressState && lesson.progressState !== 'not_started' ? (
+              <span className="text-zinc-400"> · {stateLabel}</span>
+            ) : null}
           </p>
           <p className="mt-1 text-base font-semibold tracking-tight text-zinc-900 group-hover:text-zinc-950">{lesson.title}</p>
           <p className="mt-1 text-sm leading-relaxed text-zinc-600">{lesson.summary}</p>
         </div>
         <div className="flex shrink-0 items-center gap-4 text-sm text-zinc-500">
-          <span>{lesson.duration}</span>
+          <span>{formatLessonDuration(lesson.durationMinutes)}</span>
           <span className="flex items-center gap-1 font-medium text-blue-800 group-hover:text-blue-900">
             Open
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>

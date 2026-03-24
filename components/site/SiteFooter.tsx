@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const productLinks = [
   { href: '/study-library', label: 'Study Library' },
-  { href: '/categories', label: 'Categories' },
+  { href: '/paths', label: 'Paths' },
   { href: '/sign-in', label: 'Sign In' },
 ]
 

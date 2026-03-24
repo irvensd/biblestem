@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { DemoAuthProvider } from '@/components/auth/DemoAuthProvider'
 import { SiteHeader } from '@/components/site/SiteHeader'
 import { SiteFooter } from '@/components/site/SiteFooter'
 
@@ -15,9 +16,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SiteHeader />
-        <main>{children}</main>
-        <SiteFooter />
+        <DemoAuthProvider>
+          <SiteHeader />
+          <main>{children}</main>
+          <SiteFooter />
+        </DemoAuthProvider>
       </body>
     </html>
   )

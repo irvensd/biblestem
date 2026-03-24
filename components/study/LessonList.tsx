@@ -1,4 +1,4 @@
-import type { Lesson } from '@/lib/mock-data'
+import type { Lesson } from '@/lib/types/product'
 import { LessonListItem } from '@/components/study/LessonListItem'
 
 interface LessonListProps {

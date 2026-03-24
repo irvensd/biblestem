@@ -45,7 +45,7 @@ export function WordStudyPopover({ surface, study }: WordStudyPopoverProps) {
           id={panelId}
           role="dialog"
           aria-label="Word study"
-          className="absolute left-0 top-full z-20 mt-2 w-[min(100vw-2rem,20rem)] rounded-xl border border-zinc-200/90 bg-white p-4 text-left shadow-sm ring-1 ring-zinc-950/[0.06]"
+          className="fixed inset-x-4 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-[60] max-h-[42vh] overflow-y-auto rounded-xl border border-zinc-200/90 bg-white p-4 text-left shadow-lg ring-1 ring-zinc-950/[0.06] md:absolute md:inset-x-auto md:bottom-auto md:left-0 md:right-auto md:top-full md:z-50 md:mt-2 md:max-h-[min(70vh,24rem)] md:w-[min(100vw-2rem,20rem)]"
         >
           <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-400">Word study</p>
           <p className="mt-2 text-sm font-semibold text-zinc-900">
@@ -54,7 +54,6 @@ export function WordStudyPopover({ surface, study }: WordStudyPopoverProps) {
           <p className="mt-2 text-sm leading-relaxed text-zinc-600">{study.meaning}</p>
           <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-zinc-500">
             <span className="rounded border border-zinc-200 px-1.5 py-0.5">Strong&apos;s {study.strongs}</span>
-            <span className="rounded border border-zinc-200 px-1.5 py-0.5">Lemma</span>
           </div>
           <p className="mt-3 text-xs leading-relaxed text-zinc-500">{study.note}</p>
         </span>

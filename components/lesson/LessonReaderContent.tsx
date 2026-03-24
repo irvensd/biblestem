@@ -1,103 +1,98 @@
 'use client'
 
-import { MetadataRow } from '@/components/site/MetadataRow'
-import { PageHeader, type BreadcrumbItem } from '@/components/site/PageHeader'
-import { WordStudyPopover } from '@/components/lesson/WordStudyPopover'
+import Link from 'next/link'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { CompletionScreen } from '@/components/lesson/CompletionScreen'
+import { LessonHeader } from '@/components/lesson/LessonHeader'
+import { LessonStepNavigation } from '@/components/lesson/LessonStepNavigation'
+import { LessonLayout } from '@/components/lesson/LessonLayout'
+import { LessonSectionRenderer } from '@/components/lesson/LessonSectionRenderer'
+import { buildLessonSteps } from '@/lib/lesson-steps'
+import { getNextLessonInSeries } from '@/lib/product-queries'
 import type { LessonReaderContent as LessonContent } from '@/lib/lesson-content'
-import type { Lesson, StudySeries } from '@/lib/mock-data'
+import type { Lesson, StudySeries } from '@/lib/types/product'
 
 interface LessonReaderContentProps {
   study: StudySeries
   lesson: Lesson
   content: LessonContent
-  breadcrumbItems: BreadcrumbItem[]
 }
 
-export function LessonReaderContent({ study, lesson, content, breadcrumbItems }: LessonReaderContentProps) {
-  const word = content.wordStudy
+export function LessonReaderContent({ study, lesson, content }: LessonReaderContentProps) {
+  const steps = useMemo(() => buildLessonSteps(content), [content])
+  const total = steps.length
+  const [index, setIndex] = useState(0)
+  const [complete, setComplete] = useState(false)
+
+  const nextLesson = useMemo(() => getNextLessonInSeries(study, lesson.slug), [study, lesson.slug])
+
+  const progress = complete ? 1 : (index + 1) / total
+
+  const handleContinue = useCallback(() => {
+    if (complete) return
+    if (index < total - 1) {
+      setIndex((i) => i + 1)
+    } else {
+      setComplete(true)
+    }
+  }, [complete, index, total])
+
+  const handlePreviousStep = useCallback(() => {
+    if (complete) return
+    setIndex((i) => Math.max(0, i - 1))
+  }, [complete])
+
+  const reflectionKey = `biblestem-reflection-${study.slug}-${lesson.slug}`
+  const backHref = `/study-library/${study.slug}`
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [index, complete])
 
   return (
-    <div className="border-b border-zinc-200/80 bg-stone-50 pb-14 pt-12 md:pb-16 md:pt-16">
-      <div className="container-shell">
-        <div className="mx-auto max-w-3xl">
-          <PageHeader items={breadcrumbItems} />
-          <h1 className="mt-8 text-3xl font-semibold tracking-[-0.02em] text-zinc-950 md:text-4xl md:leading-tight">{lesson.title}</h1>
-          <p className="mt-3 text-lg leading-relaxed text-zinc-600">{lesson.summary}</p>
-          <div className="mt-6">
-            <MetadataRow
-              items={[
-                { label: 'Series', value: study.title },
-                { label: 'Reading', value: lesson.duration },
-                { label: 'Passage', value: lesson.scripture },
-              ]}
-            />
+    <LessonLayout progress={progress}>
+      <LessonHeader
+        backHref={backHref}
+        seriesTitle={study.title}
+        lessonTitle={lesson.title}
+        stepLabel={complete ? '' : `Step ${index + 1} of ${total}`}
+        showCompleteLabel={complete}
+      />
+
+      <main className={`min-h-[50vh] ${complete ? 'pb-8' : 'pb-32'}`}>
+        {complete ? (
+          <CompletionScreen
+            seriesSlug={study.slug}
+            seriesTitle={study.title}
+            lessonTitle={lesson.title}
+            nextLesson={nextLesson}
+          />
+        ) : (
+          <div key={index} className="transition-opacity duration-200 ease-out">
+            <LessonSectionRenderer step={steps[index]!} reflectionStorageKey={reflectionKey} />
+          </div>
+        )}
+      </main>
+
+      {complete ? (
+        <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-zinc-200/90 bg-stone-50/95 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-sm md:static md:z-0 md:border-t-0 md:bg-transparent md:pb-0 md:pt-8 md:backdrop-blur-none">
+          <div className="mx-auto w-full max-w-[700px] px-5 sm:px-6 md:px-0">
+            <Link
+              href={backHref}
+              className="flex w-full items-center justify-center rounded-xl border border-zinc-300 bg-white py-3.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50"
+            >
+              Back to series
+            </Link>
           </div>
         </div>
-      </div>
-
-      <div className="container-shell mt-12 md:mt-14">
-        <article className="mx-auto max-w-3xl">
-          <section className="border-t border-zinc-200 pt-10">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Opening thought</h2>
-            <p className="mt-4 text-lg leading-[1.75] text-zinc-800">{content.openingThought}</p>
-          </section>
-
-          <section className="mt-14 border-t border-zinc-200 pt-10">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Scripture</h2>
-            <p className="mt-3 text-sm text-zinc-500">{content.scriptureRef}</p>
-            <blockquote className="mt-6 border-l-2 border-blue-800/25 pl-5 font-serif text-[17px] leading-[1.75] text-zinc-800">
-              {content.scriptureQuote}
-            </blockquote>
-          </section>
-
-          <section className="mt-14 border-t border-zinc-200 pt-10">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Teaching points</h2>
-            <ul className="mt-5 space-y-4 text-base leading-[1.75] text-zinc-700">
-              {content.teachingPoints.map((point) => (
-                <li key={point} className="pl-1">
-                  {point}
-                </li>
-              ))}
-            </ul>
-            {word ? (
-              <p className="mt-6 text-base leading-[1.75] text-zinc-700">
-                Key term:{' '}
-                <WordStudyPopover
-                  surface={word.surface}
-                  study={{
-                    lemma: word.lemma,
-                    transliteration: word.transliteration,
-                    meaning: word.meaning,
-                    strongs: word.strongs,
-                    note: word.note,
-                  }}
-                />
-              </p>
-            ) : null}
-          </section>
-
-          <section className="mt-14 border-t border-zinc-200 pt-10">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Reflect & journal</h2>
-            <p className="mt-4 text-base leading-relaxed text-zinc-600">{content.reflectPrompt}</p>
-            <textarea
-              className="mt-5 min-h-36 w-full rounded-xl border border-zinc-300/90 bg-white p-4 text-sm leading-relaxed text-zinc-800 outline-none ring-blue-200/80 focus:ring-2 focus:ring-offset-0"
-              placeholder="Write your reflection..."
-              aria-label="Reflection notes"
-            />
-            <p className="mt-2 text-xs text-zinc-500">Saved on this device</p>
-          </section>
-
-          <section className="mt-14 border-t border-zinc-200 pt-10">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Life application</h2>
-            <p className="mt-4 text-base leading-[1.75] text-zinc-700">{content.lifeApplication}</p>
-          </section>
-
-          <section className="mt-14 border-t border-zinc-200 pb-4 pt-10">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Prayer</h2>
-            <p className="mt-4 text-lg leading-[1.75] text-zinc-800">{content.prayer}</p>
-          </section>
-        </article>
-      </div>
-    </div>
+      ) : (
+        <LessonStepNavigation
+          continueLabel={index === total - 1 ? 'Finish lesson' : 'Continue'}
+          onContinue={handleContinue}
+          showPrevious={index > 0}
+          onPrevious={handlePreviousStep}
+        />
+      )}
+    </LessonLayout>
   )
 }

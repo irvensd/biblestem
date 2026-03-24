@@ -5,13 +5,14 @@ import { PageIntro } from '@/components/site/PageIntro'
 import { PageHeader } from '@/components/site/PageHeader'
 import { MetadataRow } from '@/components/site/MetadataRow'
 import { SectionHeading } from '@/components/site/SectionHeading'
-import { studies } from '@/lib/mock-data'
+import { getSeriesWithPathBySlug } from '@/lib/product-queries'
 
 export default async function StudyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const study = studies.find((item) => item.slug === slug)
-  if (!study) return notFound()
+  const data = getSeriesWithPathBySlug(slug)
+  if (!data) return notFound()
 
+  const { studyPath, ...study } = data
   const firstLesson = study.lessons[0]
 
   return (
@@ -36,21 +37,27 @@ export default async function StudyDetailPage({ params }: { params: Promise<{ sl
             <MetadataRow
               items={[
                 { label: 'Lessons', value: String(study.lessonsCount) },
-                { label: 'Duration', value: study.duration },
+                { label: 'Duration', value: study.durationSummary },
                 { label: 'Level', value: study.level },
-                { label: 'Category', value: study.category },
+                { label: 'Path', value: studyPath.name },
               ]}
             />
           </div>
           <div className="mt-10 flex flex-wrap gap-3">
             <Button href={`/study-library/${study.slug}/lesson/${firstLesson.slug}`}>Start study</Button>
             <Button href="/study-library" variant="secondary">
-              Browse more
+              Browse library
             </Button>
             <Button href="/sign-in" variant="ghost">
               Save for later
             </Button>
           </div>
+          <p className="mt-6 text-sm text-zinc-500">
+            Path:{' '}
+            <a href={`/paths/${studyPath.slug}`} className="font-medium text-blue-800 hover:text-blue-900">
+              {studyPath.name}
+            </a>
+          </p>
         </div>
       </section>
 
