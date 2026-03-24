@@ -166,7 +166,7 @@ export function HomePageContent() {
                 A modern Bible study platform for deep, structured, Scripture-first learning.
               </p>
 
-              <h1 className="mt-8 max-w-[17ch] text-5xl font-semibold tracking-[-0.03em] text-zinc-950 leading-[1.06] sm:text-6xl lg:text-[3.5rem] xl:text-[3.75rem]">
+              <h1 className="mt-8 max-w-[17ch] text-4xl font-semibold leading-[1.08] tracking-[-0.03em] text-zinc-950 sm:text-5xl sm:leading-[1.06] md:text-6xl lg:text-[3.5rem] xl:text-[3.75rem]">
                 Deep Bible study made simple.
               </h1>
 

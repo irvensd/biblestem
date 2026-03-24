@@ -14,7 +14,7 @@ const ministryLinks = [
 export function SiteFooter() {
   return (
     <footer className="border-t border-zinc-200 bg-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-3 md:px-8 lg:px-10">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 sm:py-16 md:grid-cols-3 md:px-8 lg:px-10">
         <div>
           <p className="text-base font-semibold text-zinc-900">BibleStem</p>
           <p className="mt-3 max-w-sm text-sm leading-6 text-zinc-600">

@@ -20,8 +20,8 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   const titleClass =
     size === 'lg'
-      ? 'text-3xl font-semibold tracking-tight text-zinc-900 md:text-[2rem] md:leading-tight'
-      : 'text-xl font-semibold tracking-tight text-zinc-900'
+      ? 'break-words text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl md:text-[2rem] md:leading-tight'
+      : 'break-words text-lg font-semibold tracking-tight text-zinc-900 sm:text-xl'
 
   return (
     <div className={`max-w-2xl ${className}`}>

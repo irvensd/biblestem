@@ -8,13 +8,13 @@ export function HeaderAuthControls() {
 
   if (!isReady) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2">
         <span
-          className="inline-flex h-9 min-w-[4.5rem] items-center justify-center rounded-xl bg-zinc-100/80"
+          className="inline-flex h-9 min-w-[3rem] items-center justify-center rounded-xl bg-zinc-100/80 sm:min-w-[4.5rem]"
           aria-hidden
         />
         <span
-          className="inline-flex h-9 min-w-[6.5rem] items-center justify-center rounded-xl bg-zinc-100/80"
+          className="inline-flex h-9 min-w-[4rem] items-center justify-center rounded-xl bg-zinc-100/80 sm:min-w-[6.5rem]"
           aria-hidden
         />
       </div>
@@ -23,9 +23,9 @@ export function HeaderAuthControls() {
 
   if (user) {
     return (
-      <div className="flex max-w-[min(100vw-8rem,20rem)] items-center justify-end gap-2 sm:gap-3">
+      <div className="flex max-w-[min(100vw-8rem,18rem)] items-center justify-end gap-1.5 sm:max-w-none sm:gap-3">
         <span
-          className="hidden max-w-[11rem] truncate text-sm text-zinc-600 md:inline"
+          className="hidden max-w-[11rem] truncate text-sm text-zinc-600 lg:inline"
           title={user.email}
         >
           {user.email}
@@ -36,7 +36,7 @@ export function HeaderAuthControls() {
         <button
           type="button"
           onClick={() => logout()}
-          className="rounded-xl px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-zinc-900"
+          className="min-h-[44px] min-w-[44px] rounded-xl px-2 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-zinc-900 sm:min-w-0 sm:px-3"
         >
           Sign out
         </button>
@@ -45,11 +45,13 @@ export function HeaderAuthControls() {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <Button href="/sign-in" variant="ghost" className="inline-flex">
+    <div className="flex items-center gap-1 sm:gap-2">
+      <Button href="/sign-in" variant="ghost" className="inline-flex min-h-[44px] px-2.5 text-xs sm:px-4 sm:text-sm">
         Sign in
       </Button>
-      <Button href="/get-started">Get started</Button>
+      <Button href="/get-started" className="inline-flex min-h-[44px] whitespace-nowrap px-3 text-xs sm:px-5 sm:text-sm">
+        Get started
+      </Button>
     </div>
   )
 }
