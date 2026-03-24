@@ -8,6 +8,13 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+
+# Environment (never commit secrets)
+.env
+.env.*
+!env.example
+
+.next
 .DS_Store
 dist
 dist-ssr
