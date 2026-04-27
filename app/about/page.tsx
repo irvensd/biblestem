@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { HomeExploreStudiesButton } from '@/components/home/HomeExploreStudiesButton'
 import { Button } from '@/components/ui/Button'
 import { PageIntro } from '@/components/site/PageIntro'
 
@@ -152,7 +153,7 @@ export default function AboutPage() {
               Start with BibleStem Studies and follow along as the rest of the ecosystem develops.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <Button href="/study-library">Explore studies</Button>
+              <HomeExploreStudiesButton variant="primary" />
               <Button href="/support" variant="secondary">
                 Support the ministry
               </Button>

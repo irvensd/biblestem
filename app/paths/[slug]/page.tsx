@@ -2,14 +2,21 @@ import { notFound } from 'next/navigation'
 import { StudyCard } from '@/components/study/StudyCard'
 import { PageIntro } from '@/components/site/PageIntro'
 import { PageHeader } from '@/components/site/PageHeader'
-import { getSeriesForPathSlug, getStudyPathBySlug } from '@/lib/product-queries'
+import {
+  getSeriesForPathSlugFromCatalog,
+  getStudyPathBySlugFromCatalog,
+  loadCatalog,
+  shouldShowCatalogFallbackNotice,
+} from '@/lib/catalog/load-catalog'
+import { CatalogSourceNotice } from '@/components/site/CatalogSourceNotice'
 
 export default async function PathDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const path = getStudyPathBySlug(slug)
+  const catalog = await loadCatalog()
+  const path = getStudyPathBySlugFromCatalog(catalog, slug)
   if (!path) return notFound()
 
-  const seriesList = getSeriesForPathSlug(slug)
+  const seriesList = getSeriesForPathSlugFromCatalog(catalog, slug)
 
   return (
     <>
@@ -29,6 +36,11 @@ export default async function PathDetailPage({ params }: { params: Promise<{ slu
             description={path.description}
             showRule
           />
+          {shouldShowCatalogFallbackNotice(catalog) ? (
+            <div className="mt-4 max-w-xl">
+              <CatalogSourceNotice source={catalog.source} />
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -39,7 +51,7 @@ export default async function PathDetailPage({ params }: { params: Promise<{ slu
           ) : (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {seriesList.map((study) => (
-                <StudyCard key={study.slug} study={study} />
+                <StudyCard key={study.slug} study={study} paths={catalog.paths} />
               ))}
             </div>
           )}

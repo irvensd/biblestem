@@ -14,8 +14,12 @@ export function useSiteNavLinks(): { logoHref: string; links: SiteNavLink[] } {
 
   const links: SiteNavLink[] = [
     { href: logoHref, label: isReady ? firstLabel : 'Home' },
-    { href: '/study-library', label: 'Study Library' },
-    { href: '/paths', label: 'Paths' },
+    ...(user
+      ? [
+          { href: '/study-library', label: 'Study Library' } satisfies SiteNavLink,
+          { href: '/paths', label: 'Paths' } satisfies SiteNavLink,
+        ]
+      : []),
     { href: '/about', label: 'About' },
     { href: '/support', label: 'Support' },
   ]

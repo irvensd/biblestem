@@ -1,185 +1,58 @@
-# Fusion Vue Tailwind Starter
+# BibleStem — Agent / contributor guide
 
-A production-ready Vue.js application template with TypeScript, TailwindCSS 3, and modern tooling.
+This repository is a **Next.js** (App Router) application, not Vue/Vite. Use this file when orienting tools or new contributors.
 
-## Tech Stack
+## Stack
 
-- **Frontend**: Vue 3.5.17 + TypeScript + TailwindCSS 3.4.11
-- **Styling**: TailwindCSS 3 with PostCSS + Autoprefixer
-- **Testing**: Vitest with Vue Test Utils for component testing
-- **Build Tool**: Vite 7 with Vue plugin
-- **Package Manager**: npm
-- **Linting**: ESLint 9 + Prettier
-- **Type Checking**: TypeScript 5 + vue-tsc
-- **Development Tools**: Vue DevTools integration
+| Layer | Technology |
+|--------|------------|
+| Framework | **Next.js** 16+ (App Router), **React** 19 |
+| Language | **TypeScript** |
+| Styling | **Tailwind CSS** 3, PostCSS |
+| Data / auth (optional) | **Supabase** (`@supabase/supabase-js`) — catalog + optional Auth + user progress |
+| Lint / format | ESLint 9, Prettier |
 
-## Project Structure
+## Project layout (high level)
 
 ```
-src/                     # Vue application source
-├── App.vue             # Main app component
-├── main.ts             # Application entry point
-├── assets/             # Static assets
-│   ├── base.css        # Base styles
-│   ├── logo.svg        # Logo asset
-│   └── main.css        # Main styles with TailwindCSS imports
-├── components/         # Vue components
-│   ├── __tests__/      # Component tests
-│   └── icons/          # Icon components
-├── env.d.ts            # TypeScript declarations
-└── ...                 # Other source files
-
+app/                    # Routes: page.tsx, layout.tsx, loading.tsx
+components/             # React components (UI, lesson, dashboard, site, auth)
+lib/                    # Catalog loading, lesson content, dashboard logic, Supabase helpers
+hooks/                  # Client hooks
+supabase/               # SQL migrations, seed.sql, archived split seeds
+scripts/                # Node/tsx tooling (e.g. sync reader content, lesson copy checks)
 public/                 # Static assets
-├── favicon.ico         # Site favicon
-└── ...                 # Other static files
 ```
 
-## Key Features
+- **Catalog**: `lib/catalog/load-catalog.ts` (Supabase when configured, else mock from `lib/product-mock.ts`).
+- **Lesson copy**: `lib/lesson-content.ts`; DB mirror via `supabase/seed.sql` / `npm run sync:supabase:reader`.
+- **Env**: Public keys use the **`NEXT_PUBLIC_`** prefix (see `env.example`). Service role keys stay **server-only** (scripts), never in client bundles.
 
-### Vue 3 Composition API
-
-The application uses Vue 3's modern Composition API with TypeScript:
-
-- `<script setup>` syntax for concise component logic
-- TypeScript integration throughout
-- Reactive state management with Vue's reactivity system
-- Component-based architecture
-
-### Styling System
-
-- **Primary**: TailwindCSS 3.4.11 utility classes
-- **PostCSS**: Autoprefixer for cross-browser compatibility
-- **Configuration**: `tailwind.config.js` for custom theming
-
-```vue
-<!-- Example of TailwindCSS usage in Vue components -->
-<template>
-  <div
-    class="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200"
-  >
-    <div class="text-center">
-      <h1 class="text-2xl font-semibold text-slate-800">Welcome to Fusion</h1>
-    </div>
-  </div>
-</template>
-
-<script setup lang="ts">
-// Component logic here
-</script>
-```
-
-### Development Commands
+## Commands
 
 ```bash
-npm run dev          # Start development server
-npm run build        # Production build
-npm run preview      # Preview production build
-npm run type-check   # Type check with vue-tsc
-npm run test:unit    # Run tests with Vitest
-npm run lint         # Lint with ESLint
-npm run format       # Format with Prettier
+npm run dev              # Next dev server (webpack; see package.json for dev:turbo)
+npm run build            # Production build → .next/
+npm run start            # Run production server (after build)
+npm run type-check       # tsc --noEmit
+npm run lint             # ESLint
+npm run check:lesson-copy   # Lesson copy style (e.g. no em dashes in authored text)
+npm run check:app-readiness # type-check + lint + check:lesson-copy
 ```
 
-## Adding Features
+Do **not** assume Vue SFCs, `vite`, `src/main.ts`, or `VITE_*` env vars — those belong to an older template and are **not** used here.
 
-### New Components
+## Conventions
 
-1. Create component in `src/components/`:
+- Prefer **server components** by default; add `'use client'` only when hooks or browser APIs are required.
+- Match existing patterns for imports (`@/…`), Tailwind utility styling, and file naming.
+- Before shipping content changes, follow `docs/APP_READINESS_CHECKLIST.md` and run `npm run check:app-readiness`.
 
-```vue
-<!-- src/components/MyComponent.vue -->
-<template>
-  <div class="rounded-lg bg-white p-4 shadow">
-    <h2 class="text-xl font-bold text-gray-900">{{ title }}</h2>
-    <p class="text-gray-600">{{ description }}</p>
-  </div>
-</template>
+## Docs map
 
-<script setup lang="ts">
-interface Props {
-  title?: string
-  description?: string
-}
-
-withDefaults(defineProps<Props>(), {
-  title: 'Default Title',
-  description: 'Default description',
-})
-</script>
-```
-
-2. Import in your app:
-
-```vue
-<template>
-  <MyComponent title="Custom Title" description="Custom description" />
-</template>
-
-<script setup lang="ts">
-import MyComponent from '@/components/MyComponent.vue'
-</script>
-```
-
-### Custom TailwindCSS Configuration
-
-1. Update `tailwind.config.js` for custom theming:
-
-```javascript
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  theme: {
-    extend: {
-      colors: {
-        primary: '#3b82f6',
-        secondary: '#64748b',
-      },
-    },
-  },
-  plugins: [],
-}
-```
-
-2. Add custom styles in `src/assets/main.css`:
-
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-  .btn-primary {
-    @apply rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700;
-  }
-}
-```
-
-## Testing
-
-The project includes comprehensive testing setup:
-
-- **Unit Testing**: Vitest for fast unit tests
-- **Component Testing**: Vue Test Utils for Vue component testing
-- **Type Checking**: vue-tsc for TypeScript validation
-
-```bash
-npm run test:unit    # Run unit tests
-```
-
-## Production Deployment
-
-- **Development**: `npm run dev` for local development
-- **Build**: `npm run build` creates optimized production build
-- **Preview**: `npm run preview` to preview production build
-- **Type Check**: `npm run type-check` for TypeScript validation
-
-## Architecture Notes
-
-- Vue 3.5.17 with Composition API for modern reactive components
-- TypeScript throughout the application
-- TailwindCSS 3.4.11 for utility-first styling
-- Vite 7 for fast development and optimized builds
-- Vitest + Vue Test Utils for comprehensive testing
-- ESLint + Prettier for code quality
-- Vue DevTools integration for development debugging
-- Single-page application (SPA) architecture
+| Doc | Purpose |
+|-----|---------|
+| `docs/APP_READINESS_CHECKLIST.md` | Pre-release checks |
+| `docs/SEEDING_WORKFLOW.md` | Catalog / seed / reader content flow |
+| `env.example` | Environment variable template |
+| `DEPLOYMENT.md` / `MONITORING.md` | Hosting and observability (Next-oriented) |

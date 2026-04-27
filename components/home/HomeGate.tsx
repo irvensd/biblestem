@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect, type ReactNode } from 'react'
+import { startTransition, useEffect, type ReactNode } from 'react'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 
 export function HomeGate({ children }: { children: ReactNode }) {
@@ -10,7 +10,9 @@ export function HomeGate({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isReady && user) {
-      router.replace('/dashboard')
+      startTransition(() => {
+        router.replace('/dashboard')
+      })
     }
   }, [isReady, user, router])
 

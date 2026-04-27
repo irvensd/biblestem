@@ -7,9 +7,44 @@
 create extension if not exists "pgcrypto";
 
 -- -----------------------------------------------------------------------------
+-- Remove legacy catalog (migrations/20250224000001_study_series_schema.sql) if present.
+-- That migration uses the same table names (study_series, lessons) but different
+-- columns, so CREATE TABLE below would fail with "already exists".
+-- App schema uses study_path_id on study_series; legacy uses collection_id.
+-- -----------------------------------------------------------------------------
+do $$
+begin
+  -- Full legacy stack (collections/categories schema)
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'study_series'
+      and column_name = 'collection_id'
+  ) then
+    drop table if exists public.lessons cascade;
+    drop table if exists public.study_series cascade;
+    drop table if exists public.categories cascade;
+    drop table if exists public.collections cascade;
+
+  -- Wrong-shape lessons only (keep 001 study_series / study_paths if already created)
+  elsif exists (select 1 from information_schema.tables where table_schema = 'public' and table_name = 'lessons')
+    and not exists (
+      select 1
+      from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'lessons'
+        and column_name = 'study_series_id'
+    )
+  then
+    drop table if exists public.lessons cascade;
+  end if;
+end $$;
+
+-- -----------------------------------------------------------------------------
 -- Profiles (1:1 with auth.users)
 -- -----------------------------------------------------------------------------
-create table public.profiles (
+create table if not exists public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   display_name text,
   avatar_url text,
@@ -22,7 +57,7 @@ comment on table public.profiles is 'Public profile row for each authenticated u
 -- -----------------------------------------------------------------------------
 -- Content hierarchy: paths → series → lessons → sections
 -- -----------------------------------------------------------------------------
-create table public.study_paths (
+create table if not exists public.study_paths (
   id uuid primary key default gen_random_uuid(),
   slug text not null unique,
   name text not null,
@@ -31,12 +66,14 @@ create table public.study_paths (
   created_at timestamptz not null default now()
 );
 
-create table public.study_series (
+create table if not exists public.study_series (
   id uuid primary key default gen_random_uuid(),
   study_path_id uuid not null references public.study_paths (id) on delete restrict,
   slug text not null unique,
   title text not null,
   description text not null,
+  short_description text,
+  long_description text,
   level text not null check (level in ('Beginner', 'Intermediate', 'Advanced')),
   duration_summary text not null,
   lessons_count int not null default 0 check (lessons_count >= 0),
@@ -46,9 +83,9 @@ create table public.study_series (
   created_at timestamptz not null default now()
 );
 
-create index study_series_path_id_idx on public.study_series (study_path_id);
+create index if not exists study_series_path_id_idx on public.study_series (study_path_id);
 
-create table public.lessons (
+create table if not exists public.lessons (
   id uuid primary key default gen_random_uuid(),
   study_series_id uuid not null references public.study_series (id) on delete cascade,
   slug text not null,
@@ -58,12 +95,13 @@ create table public.lessons (
   scripture text not null,
   sort_order int not null default 0,
   created_at timestamptz not null default now(),
+  reader_content jsonb,
   unique (study_series_id, slug)
 );
 
-create index lessons_series_id_idx on public.lessons (study_series_id);
+create index if not exists lessons_series_id_idx on public.lessons (study_series_id);
 
-create table public.lesson_sections (
+create table if not exists public.lesson_sections (
   id uuid primary key default gen_random_uuid(),
   lesson_id uuid not null references public.lessons (id) on delete cascade,
   sort_order int not null,
@@ -74,12 +112,12 @@ create table public.lesson_sections (
   )
 );
 
-create index lesson_sections_lesson_id_idx on public.lesson_sections (lesson_id);
+create index if not exists lesson_sections_lesson_id_idx on public.lesson_sections (lesson_id);
 
 -- -----------------------------------------------------------------------------
 -- Word studies (reusable) + link to lessons/sections
 -- -----------------------------------------------------------------------------
-create table public.word_studies (
+create table if not exists public.word_studies (
   id uuid primary key default gen_random_uuid(),
   lemma text not null,
   transliteration text,
@@ -89,7 +127,7 @@ create table public.word_studies (
   created_at timestamptz not null default now()
 );
 
-create table public.lesson_word_links (
+create table if not exists public.lesson_word_links (
   id uuid primary key default gen_random_uuid(),
   lesson_id uuid not null references public.lessons (id) on delete cascade,
   word_study_id uuid not null references public.word_studies (id) on delete cascade,
@@ -98,12 +136,12 @@ create table public.lesson_word_links (
   unique (lesson_id, word_study_id)
 );
 
-create index lesson_word_links_lesson_id_idx on public.lesson_word_links (lesson_id);
+create index if not exists lesson_word_links_lesson_id_idx on public.lesson_word_links (lesson_id);
 
 -- -----------------------------------------------------------------------------
 -- User progress
 -- -----------------------------------------------------------------------------
-create table public.user_series_progress (
+create table if not exists public.user_series_progress (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.profiles (id) on delete cascade,
   study_series_id uuid not null references public.study_series (id) on delete cascade,
@@ -114,9 +152,9 @@ create table public.user_series_progress (
   unique (user_id, study_series_id)
 );
 
-create index user_series_progress_user_id_idx on public.user_series_progress (user_id);
+create index if not exists user_series_progress_user_id_idx on public.user_series_progress (user_id);
 
-create table public.user_lesson_progress (
+create table if not exists public.user_lesson_progress (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.profiles (id) on delete cascade,
   lesson_id uuid not null references public.lessons (id) on delete cascade,
@@ -125,12 +163,12 @@ create table public.user_lesson_progress (
   unique (user_id, lesson_id)
 );
 
-create index user_lesson_progress_user_id_idx on public.user_lesson_progress (user_id);
+create index if not exists user_lesson_progress_user_id_idx on public.user_lesson_progress (user_id);
 
 -- -----------------------------------------------------------------------------
 -- Notes & highlights
 -- -----------------------------------------------------------------------------
-create table public.notes (
+create table if not exists public.notes (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.profiles (id) on delete cascade,
   lesson_id uuid references public.lessons (id) on delete set null,
@@ -139,9 +177,9 @@ create table public.notes (
   updated_at timestamptz not null default now()
 );
 
-create index notes_user_id_idx on public.notes (user_id);
+create index if not exists notes_user_id_idx on public.notes (user_id);
 
-create table public.highlights (
+create table if not exists public.highlights (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.profiles (id) on delete cascade,
   lesson_id uuid references public.lessons (id) on delete set null,
@@ -150,7 +188,7 @@ create table public.highlights (
   updated_at timestamptz not null default now()
 );
 
-create index highlights_user_id_idx on public.highlights (user_id);
+create index if not exists highlights_user_id_idx on public.highlights (user_id);
 
 -- -----------------------------------------------------------------------------
 -- Row Level Security (enable + policies when wiring Supabase Auth)

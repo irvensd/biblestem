@@ -2,12 +2,9 @@ import { Button } from '@/components/ui/Button'
 import { CTASection } from '@/components/CTASection'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { SupportCard } from '@/components/SupportCard'
-import { PathCard } from '@/components/study/PathCard'
-import { StudyCard } from '@/components/study/StudyCard'
-import { getStudyPaths, seriesCountForPathSlug } from '@/lib/product-queries'
-import { studies } from '@/lib/mock-data'
-
-const featuredStudies = studies.filter((study) => study.featured).slice(0, 3)
+import { HomeCatalogSections } from '@/components/home/HomeCatalogSections'
+import { HomeExploreStudiesButton } from '@/components/home/HomeExploreStudiesButton'
+import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
 
 const trustItems = [
   {
@@ -103,8 +100,8 @@ function HeroProductVisual() {
           <div className="flex items-center justify-between gap-3 border-b border-zinc-100 pb-3">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-400">Lesson</p>
-              <p className="text-sm font-semibold text-zinc-900">The Word Made Flesh</p>
-              <p className="mt-0.5 text-xs text-zinc-500">John 1:1–18 · 25 min</p>
+              <p className="text-sm font-semibold text-zinc-900">A Book Unlike Any Other</p>
+              <p className="mt-0.5 text-xs text-zinc-500">John 1:1 · Luke 24:27 · 22 min</p>
             </div>
             <span className="rounded-md border border-zinc-200 bg-zinc-50 px-2 py-1 text-[11px] font-medium text-zinc-600">
               In progress
@@ -136,8 +133,8 @@ function HeroProductVisual() {
 
           <div className="rounded-xl border border-zinc-200 bg-zinc-50/80 p-4 shadow-sm ring-1 ring-zinc-950/5">
             <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-400">Featured</p>
-            <p className="mt-2 text-sm font-semibold text-zinc-900">The Gospel of John</p>
-            <p className="mt-1 line-clamp-2 text-xs leading-5 text-zinc-600">Twelve lessons · Foundations · Beginner</p>
+            <p className="mt-2 text-sm font-semibold text-zinc-900">The Bible — God’s Living Word</p>
+            <p className="mt-1 line-clamp-2 text-xs leading-5 text-zinc-600">Two lessons · Foundations · Beginner</p>
             <div className="mt-3 h-1 w-full rounded-full bg-zinc-200">
               <div className="h-1 w-[38%] rounded-full bg-blue-800/80" />
             </div>
@@ -149,9 +146,11 @@ function HeroProductVisual() {
   )
 }
 
-export function HomePageContent() {
-  const paths = getStudyPaths()
+interface HomePageContentProps {
+  catalog: LoadedCatalog
+}
 
+export function HomePageContent({ catalog }: HomePageContentProps) {
   return (
     <>
       <section className="border-b border-zinc-200/80 bg-stone-50 pb-20 pt-20 md:pb-24 md:pt-24 lg:pb-28 lg:pt-28">
@@ -176,9 +175,7 @@ export function HomePageContent() {
 
               <div className="mt-9 flex flex-wrap gap-3">
                 <Button href="/get-started">Get started free</Button>
-                <Button href="/study-library" variant="secondary">
-                  Explore studies
-                </Button>
+                <HomeExploreStudiesButton />
               </div>
               <p className="mt-5 text-sm font-medium text-zinc-600">100% free. Donation-supported.</p>
             </div>
@@ -236,27 +233,7 @@ export function HomePageContent() {
         </div>
       </section>
 
-      <section className="section-space bg-white">
-        <div className="container-shell">
-          <SectionHeading eyebrow="Browse" title="Study paths" />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {paths.map((path) => (
-              <PathCard key={path.id} path={path} seriesCount={seriesCountForPathSlug(path.slug)} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-space">
-        <div className="container-shell">
-          <SectionHeading title="Featured study series" description="Curated starting points for structured learning." />
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {featuredStudies.map((study) => (
-              <StudyCard key={study.slug} study={study} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <HomeCatalogSections catalog={catalog} />
 
       <section className="section-space bg-white">
         <div className="container-shell">

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { HomeExploreStudiesButton } from '@/components/home/HomeExploreStudiesButton'
 import { PageIntro } from '@/components/site/PageIntro'
 import { SupportCard } from '@/components/SupportCard'
 import { Button } from '@/components/ui/Button'
@@ -75,8 +76,7 @@ export default function SupportPage() {
               description="If BibleStem has served your study, your support helps keep it free for others and helps us build with care."
               ctaHref="#"
               ctaLabel="Support BibleStem"
-              secondaryHref="/study-library"
-              secondaryLabel="Explore studies"
+              secondaryAction={<HomeExploreStudiesButton variant="secondary" />}
               variant="default"
               ctaVariant="primary"
             />
@@ -140,9 +140,7 @@ export default function SupportPage() {
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Button href="#">Support BibleStem</Button>
-              <Button href="/study-library" variant="secondary">
-                Return to study library
-              </Button>
+              <HomeExploreStudiesButton variant="secondary">Return to study library</HomeExploreStudiesButton>
             </div>
           </section>
         </div>

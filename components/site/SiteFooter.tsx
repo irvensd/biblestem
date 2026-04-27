@@ -1,10 +1,5 @@
 import Link from 'next/link'
-
-const productLinks = [
-  { href: '/study-library', label: 'Study Library' },
-  { href: '/paths', label: 'Paths' },
-  { href: '/sign-in', label: 'Sign In' },
-]
+import { SiteFooterProductLinks } from '@/components/site/SiteFooterProductLinks'
 
 const ministryLinks = [
   { href: '/about', label: 'About' },
@@ -23,15 +18,7 @@ export function SiteFooter() {
         </div>
         <div>
           <p className="text-sm font-medium text-zinc-900">Product</p>
-          <ul className="mt-3 space-y-2">
-            {productLinks.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="text-sm text-zinc-600 hover:text-zinc-900">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <SiteFooterProductLinks />
         </div>
         <div>
           <p className="text-sm font-medium text-zinc-900">Ministry</p>

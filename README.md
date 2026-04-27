@@ -1,45 +1,40 @@
-# fusion-vue-tailwind-starter
+# BibleStem
 
-This template should help get you started developing with Vue 3 in Vite.
+Scripture-first Bible study on the web — **Next.js** (App Router), React, TypeScript, and Tailwind CSS.
 
-## Recommended IDE Setup
+## Prerequisites
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Node.js 20** (see `package.json` `engines`)
 
-## Type Support for `.vue` Imports in TS
+## Setup
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
 npm install
+cp env.example .env.local   # add Supabase URL + anon key if using live catalog / auth
 ```
 
-### Compile and Hot-Reload for Development
+## Development
 
-```sh
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Open [http://localhost:3000](http://localhost:3000).
 
-```sh
-npm run build
-```
+## Scripts
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+| Command | Description |
+|--------|-------------|
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm run type-check` | TypeScript |
+| `npm run lint` | ESLint |
+| `npm run check:app-readiness` | Typecheck + lint + lesson copy checks |
 
-```sh
-npm run test:unit
-```
+## Environment variables
 
-### Lint with [ESLint](https://eslint.org/)
+See **`env.example`**. Client-safe values use **`NEXT_PUBLIC_*`**. Never put the Supabase **service role** key in client code; it is for server-side scripts only (e.g. `npm run sync:supabase:reader`).
 
-```sh
-npm run lint
-```
+## Contributing / agents
+
+Read **`AGENTS.md`** for stack details and repo layout (this is **not** a Vue/Vite project).

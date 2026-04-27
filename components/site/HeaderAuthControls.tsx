@@ -1,9 +1,11 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 
 export function HeaderAuthControls() {
+  const router = useRouter()
   const { user, isReady, logout } = useDemoAuth()
 
   if (!isReady) {
@@ -30,12 +32,19 @@ export function HeaderAuthControls() {
         >
           {user.email}
         </span>
-        <span className="rounded-md bg-zinc-200/90 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-600">
-          Demo
-        </span>
+        {!user.id ? (
+          <span className="rounded-md bg-zinc-200/90 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-600">
+            Demo
+          </span>
+        ) : null}
         <button
           type="button"
-          onClick={() => logout()}
+          onClick={() => {
+            void (async () => {
+              await logout()
+              router.replace('/')
+            })()
+          }}
           className="min-h-[44px] min-w-[44px] rounded-xl px-2 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-zinc-900 sm:min-w-0 sm:px-3"
         >
           Sign out

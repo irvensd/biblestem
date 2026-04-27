@@ -1,17 +1,22 @@
 import {
-  dashboardMock,
   formatStudyMinutes,
   getGreetingPeriod,
   greetingLabel,
 } from '@/lib/dashboard-mock-data'
 
-interface DashboardHeaderProps {
-  userName: string
+export type DashboardHeaderStats = {
+  streakDays: number
+  lessonsCompleted: number
+  totalMinutesStudied: number
 }
 
-export function DashboardHeader({ userName }: DashboardHeaderProps) {
+interface DashboardHeaderProps {
+  userName: string
+  headerStats: DashboardHeaderStats
+}
+
+export function DashboardHeader({ userName, headerStats }: DashboardHeaderProps) {
   const period = getGreetingPeriod()
-  const { headerStats } = dashboardMock
 
   return (
     <div className="flex flex-col gap-8 border-b border-zinc-200/80 pb-10 md:flex-row md:items-end md:justify-between md:gap-10">

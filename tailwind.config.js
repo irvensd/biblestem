@@ -60,8 +60,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
         serif: ['Crimson Text', 'Georgia', 'serif'],
+        scripture: ['var(--font-scripture)', 'Georgia', 'ui-serif', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       fontSize: {

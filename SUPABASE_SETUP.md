@@ -1,69 +1,41 @@
-# Supabase Setup Guide for BibleStem
+# Supabase setup (BibleStem)
 
-## Step 1: Create Supabase Project
+This app uses **Next.js**. Public Supabase values belong in **`.env.local`** with the **`NEXT_PUBLIC_`** prefix (see `env.example`). Do **not** use `VITE_*` variable names; those are for Vite projects only.
 
-1. Go to [supabase.com](https://supabase.com)
-2. Sign up or log in
-3. Click "New Project"
-4. Fill in the project details:
-   - **Name**: biblestem
-   - **Database Password**: (choose a strong password)
-   - **Region**: Choose closest region
-   - **Pricing Plan**: Free tier is fine for development
+## 1. Create a Supabase project
 
-## Step 2: Get Your Credentials
+1. Go to [supabase.com](https://supabase.com) and create a project.
+2. In **Settings → API**, copy:
+   - **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
+   - **anon public** key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-Once your project is created:
+## 2. Apply database schema
 
-1. Go to **Settings** → **API**
-2. Copy these values:
-   - **Project URL** → `VITE_SUPABASE_URL`
-   - **anon public key** → `VITE_SUPABASE_ANON_KEY`
+Run the SQL migrations in `supabase/migrations/` in order (e.g. via Supabase **SQL Editor** or `supabase db push`), then seed with **`supabase/seed.sql`** or your chosen workflow (see `docs/SEEDING_WORKFLOW.md`).
 
-## Step 3: Run Database Schema
+## 3. Configure the app locally
 
-1. In Supabase dashboard, go to **SQL Editor**
-2. Open the file `src/lib/supabase.sql` from this project
-3. Copy and paste the entire SQL into the editor
-4. Click **Run**
-5. Verify tables were created in **Table Editor**
-
-## Step 4: Configure Environment Variables
-
-1. Create a `.env` file in the project root (use `.env.example` as template)
-2. Add your Supabase credentials:
-
-```env
-VITE_SUPABASE_URL=your-project-url-here
-VITE_SUPABASE_ANON_KEY=your-anon-key-here
-VITE_IS_MOCK_MODE=false
+```bash
+cp env.example .env.local
 ```
 
-## Step 5: Test Connection
+Set at minimum:
 
-Run the development server and check the console for any connection errors.
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-## Database Schema Overview
+Optional: `NEXT_PUBLIC_SITE_URL` for absolute URLs.
 
-### Tables Created:
-- **users** - User profiles and settings
-- **studies** - Bible study metadata
-- **lessons** - Individual lessons for each study
-- **study_progress** - User progress tracking
-- **notes** - User notes and reflections
+## 4. Service role (scripts only)
 
-### Security:
-- Row Level Security (RLS) enabled on all tables
-- Users can only access their own data
-- Studies and lessons are publicly readable
-- Progress and notes are private to each user
+`SUPABASE_SERVICE_ROLE_KEY` is for **server-side scripts** (e.g. `npm run sync:supabase:reader`) only. Never expose it in client code or `NEXT_PUBLIC_*` variables.
 
-## Next Steps:
+## 5. Auth URL configuration
 
-1. ✅ Create Supabase project
-2. ✅ Run SQL schema
-3. ⏳ Update environment variables
-4. ⏳ Test the connection
-5. ⏳ Migrate data from mock mode
-6. ⏳ Build content management interface
+In Supabase **Authentication → URL Configuration**, set **Site URL** and **Redirect URLs** to match your production domain (and localhost for development).
 
+## 6. Verify
+
+Run `npm run dev` and confirm the app loads the catalog (or shows the catalog fallback notice if Supabase is unreachable).

@@ -10,6 +10,7 @@ export function SiteHeaderNav() {
     <div className="flex min-w-0 flex-1 items-center gap-4">
       <Link
         href={logoHref}
+        prefetch
         className="truncate text-base font-semibold tracking-tight text-zinc-900 sm:text-lg"
       >
         BibleStem
@@ -20,6 +21,7 @@ export function SiteHeaderNav() {
           <Link
             key={`${link.href}-${link.label}`}
             href={link.href}
+            prefetch
             className="shrink-0 text-sm text-zinc-600 transition-colors hover:text-zinc-900"
           >
             {link.label}

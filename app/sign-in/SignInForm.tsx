@@ -1,38 +1,30 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { type FormEvent, useEffect, useState } from 'react'
+import { type FormEvent, useState } from 'react'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import { Button } from '@/components/ui/Button'
 import { inputClassName } from '@/components/ui/form-styles'
 import { DEMO_LOGIN_EMAIL, DEMO_LOGIN_PASSWORD } from '@/lib/demo-auth'
+import { isSupabaseConfigured } from '@/lib/supabase/client'
 
 export function SignInForm() {
-  const router = useRouter()
-  const { user, isReady, login } = useDemoAuth()
+  const { isReady, login } = useDemoAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
-
-  useEffect(() => {
-    if (isReady && user) {
-      router.replace('/dashboard')
-    }
-  }, [isReady, user, router])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError(null)
     setPending(true)
     try {
-      const ok = await login(email, password)
-      if (!ok) {
-        setError('That email or password does not match the demo account.')
+      const result = await login(email, password)
+      if (!result.ok) {
+        setError(result.message)
         return
       }
-      router.push('/dashboard')
     } finally {
       setPending(false)
     }
@@ -46,10 +38,6 @@ export function SignInForm() {
         <div className="mt-4 h-10 animate-pulse rounded-lg bg-zinc-100" />
       </div>
     )
-  }
-
-  if (user) {
-    return null
   }
 
   return (
@@ -108,9 +96,11 @@ export function SignInForm() {
       </div>
 
       <div className="mt-6 rounded-lg border border-dashed border-zinc-200/90 bg-stone-50/90 px-4 py-4 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Demo account</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Try BibleStem</p>
         <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-          Use these credentials until full accounts launch. Nothing is sent to a server yet.
+          {isSupabaseConfigured()
+            ? 'With Supabase enabled, sign in with an account that exists in Supabase Auth (create it under Get started or in the Supabase dashboard). The demo email only works if that user exists.'
+            : 'Use the shared credentials below in the form. Your session stays on this device.'}
         </p>
         <p className="mt-3 font-mono text-xs text-zinc-800">
           <span className="text-zinc-500">Email</span>{' '}

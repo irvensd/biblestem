@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import { RequireAuth } from '@/components/auth/RequireAuth'
 
 export const metadata: Metadata = {
   title: 'Study paths · BibleStem',
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function PathsLayout({ children }: { children: ReactNode }) {
-  return children
+  return <RequireAuth>{children}</RequireAuth>
 }

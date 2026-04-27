@@ -3,6 +3,8 @@
  * UI and mock data should use these types; API layer maps DB rows ↔ these shapes.
  */
 
+import type { LessonReaderContent } from '@/lib/lesson-content'
+
 export type StudyLevel = 'Beginner' | 'Intermediate' | 'Advanced'
 
 export type LessonCompletionState = 'not_started' | 'in_progress' | 'complete'
@@ -36,7 +38,14 @@ export interface StudySeries {
   slug: string
   studyPathId: string
   title: string
+  /** Overview / long copy; also fallback when optional fields below are unset. */
   description: string
+  /** Card teaser; falls back to `description` in the UI. */
+  shortDescription?: string
+  /** Study overview “About this study” body; falls back to `description`. */
+  longDescription?: string
+  /** Optional shorter line under the title on overview pages. Falls back to description lead. */
+  subtitle?: string
   level: StudyLevel
   /** Human-readable e.g. "6 weeks" */
   durationSummary: string
@@ -46,6 +55,10 @@ export interface StudySeries {
   collectionLabel: string | null
   sortOrder: number
   createdAt?: string
+  /** Overview bullets; optional in DB (e.g. JSON array) with mock/catalog fallback. */
+  whatYouWillLearn?: string[]
+  /** When false, hide from library (future Supabase flag). Omitted means published. */
+  isPublished?: boolean
   /** Populated in mock / API responses */
   lessons: Lesson[]
 }
@@ -62,6 +75,11 @@ export interface Lesson {
   sortOrder: number
   createdAt?: string
   sections: LessonSection[]
+  /**
+   * From `lessons.reader_content` (Supabase). When set and `sections` is empty, drives the guided reader.
+   * Prefer authoring here over static `lib/lesson-content.ts` for production.
+   */
+  readerContent?: LessonReaderContent
   /** Optional overlay from user_lesson_progress for current user */
   progressState?: LessonCompletionState
 }

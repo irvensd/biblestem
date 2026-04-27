@@ -14,7 +14,10 @@
     "preview": "next start",
     "type-check": "tsc --noEmit",
     "lint": "eslint .",
+    "check:lesson-copy": "tsx scripts/check-lesson-copy-style.ts",
+    "check:app-readiness": "npm run type-check && npm run lint && npm run check:lesson-copy",
     "format": "prettier --write .",
+    "sync:supabase:reader": "tsx scripts/sync-reader-content-to-supabase.ts",
     "deploy:netlify": "./scripts/deploy.sh production netlify",
     "deploy:vercel": "./scripts/deploy.sh production vercel",
     "docker:build": "./scripts/build-docker.sh",
@@ -37,6 +40,8 @@
     "eslint-config-next": "^16.2.1",
     "postcss": "^8.5.6",
     "prettier": "3.5.3",
+    "dotenv": "^16.4.7",
+    "tsx": "^4.19.3",
     "tailwindcss": "^3.4.11",
     "typescript": "~5.8.0"
   }

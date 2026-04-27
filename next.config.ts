@@ -8,7 +8,7 @@ const isVercel = Boolean(process.env.VERCEL)
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  /** Default; set explicitly so deploys never assume `dist` (Vite). */
+  /** Default; explicit so deploys never assume a non-Next output folder. */
   distDir: '.next',
   /**
    * Standalone output is for Docker/Node (`node server.js`). Vercel sets `VERCEL=1` and

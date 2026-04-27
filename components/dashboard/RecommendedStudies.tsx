@@ -1,17 +1,13 @@
 import { StudyCard } from '@/components/study/StudyCard'
-import { getSeriesBySlug } from '@/lib/product-queries'
-import type { StudySeries } from '@/lib/types/product'
+import type { StudyPath, StudySeries } from '@/lib/types/product'
 
 interface RecommendedStudiesProps {
-  slugs: string[]
+  studies: StudySeries[]
+  paths?: StudyPath[]
 }
 
-export function RecommendedStudies({ slugs }: RecommendedStudiesProps) {
-  const list: StudySeries[] = []
-  for (const slug of slugs) {
-    const s = getSeriesBySlug(slug)
-    if (s) list.push(s)
-  }
+export function RecommendedStudies({ studies, paths }: RecommendedStudiesProps) {
+  const list = studies
 
   return (
     <section>
@@ -24,7 +20,7 @@ export function RecommendedStudies({ slugs }: RecommendedStudiesProps) {
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
         {list.map((study) => (
-          <StudyCard key={study.slug} study={study} />
+          <StudyCard key={study.slug} study={study} paths={paths} />
         ))}
       </div>
     </section>

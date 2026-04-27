@@ -37,8 +37,8 @@ Complete guide for deploying BibleStem to various platforms.
 # Install dependencies
 npm ci
 
-# Run tests
-npm run test:unit:run
+# Validate (optional)
+npm run check:app-readiness
 
 # Build
 npm run build
@@ -60,10 +60,10 @@ npm run build
    - Connect your GitHub repository
    - Select branch: `production`
 
-2. **Build Settings** (Auto-detected from `netlify.toml`)
+2. **Build Settings** (see `netlify.toml` — uses `@netlify/plugin-nextjs`)
    - Build command: `npm run build`
-   - Publish directory: `dist`
-   - Node version: `18`
+   - Framework: **Next.js** (plugin handles output; do not use a static `dist` folder)
+   - Node version: **20** (see `package.json` `engines`)
 
 3. **Environment Variables**
    - Go to Site settings → Environment variables
@@ -81,17 +81,15 @@ npm install -g netlify-cli
 # Login
 netlify login
 
-# Deploy
-netlify deploy --dir=dist --prod
+# Deploy (after local build; prefer Git-connected deploy for Next.js)
+netlify deploy --prod
 ```
 
 #### Configuration
 
 The `netlify.toml` file includes:
-- Build configuration
-- Redirect rules for SPA routing
+- Next.js plugin and build settings
 - Security headers
-- Cache headers for static assets
 
 ---
 
@@ -105,10 +103,10 @@ The `netlify.toml` file includes:
    - Import your GitHub repository
    - Select branch: `production`
 
-2. **Build Settings** (Auto-detected from `vercel.json`)
-   - Framework: Vite
+2. **Build Settings** (see `vercel.json`)
+   - Framework: **Next.js**
    - Build command: `npm run build`
-   - Output directory: `dist`
+   - Output: **`.next`** (Vercel handles this automatically)
    - Install command: `npm install`
 
 3. **Environment Variables**
@@ -134,9 +132,7 @@ vercel --prod
 #### Configuration
 
 The `vercel.json` file includes:
-- Build configuration
-- SPA routing rules
-- Framework detection
+- `framework: "nextjs"` and install/build commands
 
 ---
 
@@ -160,8 +156,8 @@ docker run -p 80:80 biblestem:latest
 
 # With environment variables
 docker run -p 80:80 \
-  -e VITE_SUPABASE_URL=your-url \
-  -e VITE_SUPABASE_ANON_KEY=your-key \
+  -e NEXT_PUBLIC_SUPABASE_URL=your-url \
+  -e NEXT_PUBLIC_SUPABASE_ANON_KEY=your-key \
   biblestem:latest
 
 # Using docker-compose
@@ -208,10 +204,10 @@ docker-compose down
 
 2. **Environment Variables**
    - Add environment variables as repository secrets:
-     - `VITE_SUPABASE_URL`
-     - `VITE_SUPABASE_ANON_KEY`
-     - `VITE_SENTRY_DSN`
-     - `VITE_GA_MEASUREMENT_ID`
+     - `NEXT_PUBLIC_SUPABASE_URL`
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+     - `NEXT_PUBLIC_SENTRY_DSN`
+     - `NEXT_PUBLIC_GA_MEASUREMENT_ID`
      - And others as needed
 
 3. **Workflows**
@@ -243,20 +239,19 @@ You can manually trigger deployment:
 
 ```bash
 # Supabase
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 
-# Environment
-VITE_ENVIRONMENT=production
-VITE_IS_MOCK_MODE=false
+# Site URL (optional; used for absolute URLs in some setups)
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
 
 # Analytics (optional but recommended)
-VITE_ENABLE_ANALYTICS=true
-VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_ENABLE_ANALYTICS=true
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 
 # Sentry (optional but recommended)
-VITE_SENTRY_DSN=https://xxx@sentry.io/xxx
-VITE_SENTRY_ENVIRONMENT=production
+NEXT_PUBLIC_SENTRY_DSN=https://xxx@sentry.io/xxx
+NEXT_PUBLIC_SENTRY_ENVIRONMENT=production
 ```
 
 ### Platform-Specific Setup
@@ -274,7 +269,7 @@ VITE_SENTRY_ENVIRONMENT=production
 #### Docker
 Pass as environment variables when running:
 ```bash
-docker run -e VITE_SUPABASE_URL=... -e VITE_SUPABASE_ANON_KEY=... ...
+docker run -e NEXT_PUBLIC_SUPABASE_URL=... -e NEXT_PUBLIC_SUPABASE_ANON_KEY=... ...
 ```
 
 Or use `.env` file:
@@ -351,14 +346,14 @@ npm run type-check
 - Check browser console for errors
 
 **Issue**: Analytics not tracking
-- Verify `VITE_ENABLE_ANALYTICS=true`
+- Verify `NEXT_PUBLIC_ENABLE_ANALYTICS=true`
 - Check GA Measurement ID is correct
 - Use browser DevTools → Network to see GA requests
 
 **Issue**: Errors not appearing in Sentry
 - Verify Sentry DSN is correct
 - Check Sentry project settings
-- Verify environment matches `VITE_SENTRY_ENVIRONMENT`
+- Verify environment matches `NEXT_PUBLIC_SENTRY_ENVIRONMENT`
 
 ### Docker Issues
 
@@ -414,10 +409,9 @@ Use feature flags for gradual feature rollouts:
 
 ### Build Optimization
 
-- Code splitting (already configured)
-- Tree shaking (automatic with Vite)
+- Code splitting and optimization (Next.js production build)
 - Minification (automatic in production)
-- Asset optimization (configured in Vite)
+- Image and font handling (see [Next.js docs](https://nextjs.org/docs))
 
 ### Runtime Optimization
 
@@ -505,4 +499,4 @@ docker restart biblestem
 - [Vercel Documentation](https://vercel.com/docs)
 - [Docker Documentation](https://docs.docker.com/)
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [Vite Deployment Guide](https://vitejs.dev/guide/static-deploy.html)
+- [Next.js Deployment](https://nextjs.org/docs/app/building-your-application/deploying)

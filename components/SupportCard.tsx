@@ -10,6 +10,8 @@ interface SupportCardProps {
   /** Optional second action (e.g. Explore studies). */
   secondaryHref?: string
   secondaryLabel?: string
+  /** Overrides secondaryHref/Label when set (e.g. auth-aware button). */
+  secondaryAction?: ReactNode
   variant?: 'default' | 'muted'
   /** Primary blue CTA (e.g. dedicated support page); homepage ministry block uses secondary. */
   ctaVariant?: 'primary' | 'secondary'
@@ -24,6 +26,7 @@ export function SupportCard({
   ctaLabel,
   secondaryHref,
   secondaryLabel,
+  secondaryAction,
   variant = 'default',
   ctaVariant = 'secondary',
   className = '',
@@ -42,11 +45,15 @@ export function SupportCard({
         <Button href={ctaHref} variant={ctaVariant}>
           {ctaLabel}
         </Button>
-        {secondaryHref && secondaryLabel ? (
-          <Button href={secondaryHref} variant="secondary">
-            {secondaryLabel}
-          </Button>
-        ) : null}
+        {secondaryAction
+          ? secondaryAction
+          : secondaryHref && secondaryLabel
+            ? (
+                <Button href={secondaryHref} variant="secondary">
+                  {secondaryLabel}
+                </Button>
+              )
+            : null}
       </div>
     </div>
   )

@@ -61,8 +61,9 @@ export function seriesCountForPathSlug(pathSlug: string): number {
   return getSeriesForPathSlug(pathSlug).length
 }
 
-export function getPathNameForSeries(series: StudySeries): string {
-  return getStudyPathById(series.studyPathId)?.name ?? 'Path'
+export function getPathNameForSeries(series: StudySeries, pathsOverride?: StudyPath[]): string {
+  const paths = pathsOverride ?? studyPaths
+  return paths.find((p) => p.id === series.studyPathId)?.name ?? 'Path'
 }
 
 export function findLessonInCatalog(
@@ -93,11 +94,13 @@ export type LibraryFilters = {
 export function filterSeriesForLibrary(
   seriesList: StudySeries[],
   filters: LibraryFilters,
+  pathsOverride?: StudyPath[],
 ): StudySeries[] {
+  const paths = pathsOverride ?? studyPaths
   let list = [...seriesList]
 
   if (filters.pathSlug) {
-    const path = getStudyPathBySlug(filters.pathSlug)
+    const path = paths.find((p) => p.slug === filters.pathSlug)
     if (path) {
       list = list.filter((s) => s.studyPathId === path.id)
     }
@@ -107,13 +110,15 @@ export function filterSeriesForLibrary(
     list = list.filter((s) => s.level === filters.level)
   }
 
+  list = list.filter((s) => s.isPublished !== false)
+
   const q = filters.query.trim().toLowerCase()
   if (q) {
     list = list.filter(
       (s) =>
         s.title.toLowerCase().includes(q) ||
         s.description.toLowerCase().includes(q) ||
-        getPathNameForSeries(s).toLowerCase().includes(q),
+        getPathNameForSeries(s, paths).toLowerCase().includes(q),
     )
   }
 
@@ -131,16 +136,18 @@ export function filterSeriesForLibrary(
   return list
 }
 
-const collectionOrder = ['Foundational Studies', 'Growth Studies', 'Advanced Studies'] as const
+/** Buckets rendered in Study Library section headings; anything else maps to Other so series are never dropped. */
+const LIBRARY_COLLECTION_BUCKETS = ['Foundational Studies', 'Growth Studies', 'Advanced Studies'] as const
 
 export function groupSeriesByCollection(seriesList: StudySeries[]): Map<string, StudySeries[]> {
   const map = new Map<string, StudySeries[]>()
-  for (const label of collectionOrder) {
+  for (const label of LIBRARY_COLLECTION_BUCKETS) {
     map.set(label, [])
   }
+  map.set('Other', [])
   for (const s of seriesList) {
-    const key = s.collectionLabel ?? 'Other'
-    if (!map.has(key)) map.set(key, [])
+    const raw = s.collectionLabel?.trim() || 'Other'
+    const key = (LIBRARY_COLLECTION_BUCKETS as readonly string[]).includes(raw) ? raw : 'Other'
     map.get(key)!.push(s)
   }
   return map
@@ -148,5 +155,10 @@ export function groupSeriesByCollection(seriesList: StudySeries[]): Map<string, 
 
 /** Recommended series slugs for dashboard (mock progression). */
 export function getRecommendedSeriesSlugs(): string[] {
-  return ['romans-foundations', 'sermon-on-the-mount', 'daniel-and-hope']
+  return [
+    'bible-gods-living-word',
+    'three-angels-messages',
+    'knowing-christ-in-scripture',
+    'faith-that-shows-up',
+  ]
 }

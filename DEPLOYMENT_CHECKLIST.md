@@ -1,165 +1,58 @@
-# BibleStem Production Deployment Checklist
+# Production deployment checklist
 
-## Issue: "Unable to connect to the server" on biblestem.io
+Use this when the live site cannot reach Supabase or env vars are missing.
 
-### Root Cause
-The production site at biblestem.io cannot connect to Supabase because:
-1. The domain might not be whitelisted in Supabase
-2. Environment variables might not be set on the hosting platform
+## Common causes
 
----
+1. Production domain not listed in Supabase **Authentication → URL Configuration**
+2. **`NEXT_PUBLIC_SUPABASE_URL`** / **`NEXT_PUBLIC_SUPABASE_ANON_KEY`** not set on the host (Vercel, Netlify, Docker, etc.)
+3. Redeploy needed after changing env vars
 
-## ✅ Fix Steps
+> **Naming:** This is a **Next.js** app. Use **`NEXT_PUBLIC_*`** for client-visible config. Do not use `VITE_*` (Vite-only).
 
-### 1. Configure Supabase for biblestem.io
+## Fix: Supabase dashboard
 
-1. Go to: https://supabase.com/dashboard/project/gquebqxkjuearohkmqwc
-2. Navigate to **Authentication** → **URL Configuration**
-3. Set **Site URL** to: `https://biblestem.io`
-4. Add to **Redirect URLs**:
-   - `https://biblestem.io/**`
-   - `https://biblestem.io/auth/callback`
-   - `https://www.biblestem.io/**` (if you use www)
-5. Click **Save**
+1. Open your project in the [Supabase dashboard](https://supabase.com/dashboard).
+2. **Authentication** → **URL Configuration**
+3. Set **Site URL** to your public origin, e.g. `https://your-domain.com`
+4. Add **Redirect URLs** for your app (including `http://localhost:3000` for local dev if needed).
 
-### 2. Set Environment Variables on Hosting Platform
+## Fix: hosting environment variables
 
-#### If using Vercel:
-1. Go to: https://vercel.com/dashboard
-2. Select your biblestem project
-3. Go to **Settings** → **Environment Variables**
-4. Add these variables for **Production**:
-   ```
-   VITE_SUPABASE_URL=https://gquebqxkjuearohkmqwc.supabase.co
-   VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxdWVicXhranVlYXJvaGttcXdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE1OTU4MjMsImV4cCI6MjA3NzE3MTgyM30.gAO71IVezP-Z9UKjYyFGP5oO5oi-GA8KvKfmN49SitA
-   VITE_ENVIRONMENT=production
-   VITE_IS_MOCK_MODE=false
-   ```
-5. Click **Save**
-6. Go to **Deployments** and click **Redeploy** on the latest deployment
+### Vercel
 
-#### If using Netlify:
-1. Go to: https://app.netlify.com
-2. Select your biblestem site
-3. Go to **Site settings** → **Environment variables**
-4. Click **Add a variable** and add:
-   ```
-   VITE_SUPABASE_URL=https://gquebqxkjuearohkmqwc.supabase.co
-   VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdxdWVicXhranVlYXJvaGttcXdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE1OTU4MjMsImV4cCI6MjA3NzE3MTgyM30.gAO71IVezP-Z9UKjYyFGP5oO5oi-GA8KvKfmN49SitA
-   VITE_ENVIRONMENT=production
-   VITE_IS_MOCK_MODE=false
-   ```
-5. Click **Save**
-6. Go to **Deploys** and click **Trigger deploy** → **Clear cache and deploy site**
+1. Project → **Settings** → **Environment Variables**
+2. Add for **Production** (and Preview if needed):
 
-#### If using another host:
-- Add the same environment variables in your hosting platform's environment configuration
-- Make sure they're available during the build process
-- Redeploy after adding them
-
-### 3. Verify the Fix
-
-After redeploying:
-
-1. Open https://biblestem.io in an incognito/private window
-2. Open browser DevTools (F12) → Console tab
-3. Try to sign in
-4. Check the console for any errors
-5. Check the Network tab to see if requests to Supabase are successful
-
-### 4. Additional Checks
-
-#### Check CORS Headers
-The Supabase endpoint should return these headers:
-```
-access-control-allow-origin: *
-access-control-allow-methods: GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS
-```
-
-#### Verify Build Output
-After rebuilding, check that the config is properly embedded:
 ```bash
-# In your dist folder, search for the Supabase URL
-grep -r "gquebqxkjuearohkmqwc" dist/assets/
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
----
+3. Redeploy.
 
-## 🔍 Debugging
+### Netlify
 
-If the issue persists:
+1. **Site settings** → **Environment variables**
+2. Add the same `NEXT_PUBLIC_*` variables as above.
+3. Trigger a new deploy (clear cache if the build still embeds old values).
 
-### Check Browser Console
-1. Open DevTools (F12)
-2. Go to Console tab
-3. Look for errors like:
-   - `Failed to fetch`
-   - `CORS error`
-   - `Network error`
-   - `Supabase is not configured`
+### Other hosts
 
-### Check Network Tab
-1. Open DevTools → Network tab
-2. Try to sign in
-3. Look for requests to `supabase.co`
-4. Check if they're blocked or failing
-5. Look at the response status codes
+Ensure these variables are available at **build time** (Next.js inlines `NEXT_PUBLIC_*` into the client bundle).
 
-### Test Supabase Connection
-Open browser console on biblestem.io and run:
-```javascript
-fetch('https://gquebqxkjuearohkmqwc.supabase.co/auth/v1/health')
-  .then(r => console.log('Status:', r.status))
-  .catch(e => console.error('Error:', e))
-```
+## Verify
 
----
+1. Open the site in a private window.
+2. DevTools → **Network**: requests to `*.supabase.co` should succeed.
+3. Confirm catalog loads or, if Supabase is down, the amber **catalog fallback** notice appears (see `CatalogSourceNotice`).
 
-## 📝 Why This Happens
+## Security
 
-1. **Local works**: Your `.env` file has the credentials
-2. **Production fails**: The hosting platform doesn't have access to your local `.env` file
-3. **Solution**: Set environment variables on the hosting platform
+- The **anon** key is intended to be public in the browser; protect data with **RLS** in Supabase.
+- Never commit **service role** keys or put them in `NEXT_PUBLIC_*`.
 
----
+## Build output note
 
-## ⚠️ Security Note
-
-The `VITE_SUPABASE_ANON_KEY` is safe to expose in client-side code. It's designed to be public and is protected by Row Level Security (RLS) policies in your Supabase database.
-
-However, NEVER commit your `.env` file to git or expose any `SERVICE_ROLE` keys.
-
----
-
-## 🎯 Quick Test
-
-After completing the steps above, test with these credentials:
-- Email: irvensdupuy@gmail.com
-- Password: [your password]
-
-Expected result: Successful login and redirect to dashboard.
-
----
-
-## 📞 Still Having Issues?
-
-If you're still seeing the error:
-
-1. Check that biblestem.io is pointing to the correct deployment
-2. Clear your browser cache completely
-3. Try a different browser or incognito mode
-4. Check your domain DNS settings
-5. Verify SSL certificate is valid for biblestem.io
-6. Check hosting platform logs for build errors
-
----
-
-## ✅ Success Indicators
-
-You'll know it's fixed when:
-- ✅ No "Unable to connect to the server" error
-- ✅ Login form submits without errors
-- ✅ Successful authentication redirects to dashboard
-- ✅ No CORS errors in browser console
-- ✅ Network tab shows successful requests to Supabase
-
+Next.js writes to **`.next/`**, not `dist/`. Use your host’s Next.js integration (e.g. Netlify Next plugin, Vercel) rather than publishing a static `dist` folder.

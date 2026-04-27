@@ -169,26 +169,17 @@ await supabase.from('table').insert(sanitizedData)
 
 ### Displaying User Content
 
-Always escape or sanitize before rendering:
+Always escape or sanitize before rendering. In **React/Next.js**, text in JSX is escaped by default:
 
-```vue
-<template>
-  <!-- ✅ Safe: Vue automatically escapes -->
-  <p>{{ userContent }}</p>
-  
-  <!-- ❌ Dangerous: Raw HTML -->
-  <div v-html="userContent"></div>
-  
-  <!-- ✅ Safe: Sanitized HTML -->
-  <div v-html="sanitizedContent"></div>
-</template>
+```tsx
+// ✅ Safe: React escapes text nodes
+<p>{userContent}</p>
 
-<script setup>
-import { computed } from 'vue'
-import { sanitizeHtml } from '@/utils/sanitization'
+// ❌ Dangerous: arbitrary HTML
+<div dangerouslySetInnerHTML={{ __html: userContent }} />
 
-const sanitizedContent = computed(() => sanitizeHtml(userContent))
-</script>
+// ✅ Safe: only if sanitized server- or client-side first
+<div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />
 ```
 
 ## Security Checklist
