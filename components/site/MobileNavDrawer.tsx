@@ -2,11 +2,16 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { useSiteNavLinks } from '@/hooks/useSiteNavLinks'
+import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
+import { useSiteNavLinks, type SiteNavLink } from '@/hooks/useSiteNavLinks'
 
 export function MobileNavDrawer() {
   const [open, setOpen] = useState(false)
   const { links } = useSiteNavLinks()
+  const { user } = useDemoAuth()
+  const drawerLinks: SiteNavLink[] = user
+    ? [...links, { href: '/settings', label: 'Settings' }]
+    : links
 
   useEffect(() => {
     if (!open) return
@@ -54,7 +59,7 @@ export function MobileNavDrawer() {
             className="fixed left-0 right-0 top-[calc(4rem+env(safe-area-inset-top))] z-[45] max-h-[min(70vh,calc(100dvh-4rem-env(safe-area-inset-top)))] overflow-y-auto border-b border-zinc-200/90 bg-stone-50 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-lg"
           >
             <nav aria-label="Primary mobile" className="flex flex-col gap-1">
-              {links.map((link) => (
+              {drawerLinks.map((link) => (
                 <Link
                   key={`${link.href}-${link.label}`}
                   href={link.href}

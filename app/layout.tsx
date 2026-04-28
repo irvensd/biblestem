@@ -11,6 +11,11 @@ const lora = Lora({ subsets: ['latin'], variable: '--font-scripture' })
 export const metadata: Metadata = {
   title: 'BibleStem',
   description: 'Deep Bible study made simple.',
+  icons: {
+    icon: [{ url: '/favicon.png?v=4', type: 'image/png' }],
+    shortcut: '/favicon.png?v=4',
+    apple: [{ url: '/favicon.png?v=4', type: 'image/png' }],
+  },
 }
 
 export const viewport: Viewport = {

@@ -28,7 +28,8 @@ function dispatchProgressEvent(): void {
   window.dispatchEvent(new Event('biblestem-progress'))
 }
 
-function mergeProgressSnapshots(
+/** Union completed lessons, activity days, and newest `lastLesson` (for dashboard + sync). */
+export function mergeProgressSnapshots(
   a: LocalDashboardProgress,
   b: LocalDashboardProgress,
 ): LocalDashboardProgress {
@@ -106,10 +107,13 @@ export function persistSaveLessonProgress(
 ): Promise<void> {
   const supabase = getSupabaseBrowserClient()
   if (userId && supabase) {
-    return upsertLessonProgressRemote(supabase, userId, seriesSlug, lessonSlug, stepIndex, totalSteps).then(() => {
-      // Mirror into localStorage so client UIs that read `readLocalProgress()` (e.g. study overview) stay in sync.
-      saveLessonProgress(seriesSlug, lessonSlug, stepIndex, totalSteps)
-    })
+    return upsertLessonProgressRemote(supabase, userId, seriesSlug, lessonSlug, stepIndex, totalSteps)
+      .catch(() => {
+        /* network / RLS / missing table: still keep device progress */
+      })
+      .finally(() => {
+        saveLessonProgress(seriesSlug, lessonSlug, stepIndex, totalSteps)
+      })
   }
   saveLessonProgress(seriesSlug, lessonSlug, stepIndex, totalSteps)
   return Promise.resolve()
@@ -123,10 +127,13 @@ export function persistMarkLessonComplete(
 ): Promise<void> {
   const supabase = getSupabaseBrowserClient()
   if (userId && supabase) {
-    return markLessonCompleteRemote(supabase, userId, seriesSlug, lessonSlug, totalSteps).then(() => {
-      // Mirror into localStorage so study overview / lesson list progress updates without a full reload.
-      markLessonComplete(seriesSlug, lessonSlug)
-    })
+    return markLessonCompleteRemote(supabase, userId, seriesSlug, lessonSlug, totalSteps)
+      .catch(() => {
+        /* network / RLS / missing table */
+      })
+      .finally(() => {
+        markLessonComplete(seriesSlug, lessonSlug)
+      })
   }
   markLessonComplete(seriesSlug, lessonSlug)
   return Promise.resolve()
@@ -135,9 +142,13 @@ export function persistMarkLessonComplete(
 export function persistTouchDashboardActivity(userId: string | undefined): Promise<void> {
   const supabase = getSupabaseBrowserClient()
   if (userId && supabase) {
-    return touchDashboardActivityRemote(supabase, userId).then(() => {
-      touchDashboardActivity()
-    })
+    return touchDashboardActivityRemote(supabase, userId)
+      .catch(() => {
+        /* Supabase optional for streak */
+      })
+      .finally(() => {
+        touchDashboardActivity()
+      })
   }
   touchDashboardActivity()
   return Promise.resolve()

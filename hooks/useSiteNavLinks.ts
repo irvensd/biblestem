@@ -21,7 +21,7 @@ export function useSiteNavLinks(): { logoHref: string; links: SiteNavLink[] } {
         ]
       : []),
     { href: '/about', label: 'About' },
-    { href: '/support', label: 'Support' },
+    { href: '/donate', label: 'Donate' },
   ]
 
   return { logoHref, links }

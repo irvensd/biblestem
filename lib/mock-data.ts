@@ -21,6 +21,8 @@ export {
   getStudyPathBySlug,
   getStudyPaths,
   groupSeriesByCollection,
+  groupStudiesByLevelOrSection,
+  STUDY_LIBRARY_SECTION_ORDER,
   lessonProgressLabel,
   seriesCountForPathSlug,
 } from '@/lib/product-queries'

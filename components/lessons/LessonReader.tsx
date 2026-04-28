@@ -1,10 +1,12 @@
 'use client'
 
+import Link from 'next/link'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { CompletionScreen } from '@/components/lessons/CompletionScreen'
 import { LessonHeader } from '@/components/lessons/LessonHeader'
 import { LessonMobileMap } from '@/components/lessons/LessonMobileMap'
 import { LessonNavigation } from '@/components/lessons/LessonNavigation'
+import { LessonQuizStep } from '@/components/lessons/LessonQuizStep'
 import { LessonLayout } from '@/components/lessons/LessonLayout'
 import { LessonSidebar } from '@/components/lessons/LessonSidebar'
 import { LessonStepRenderer } from '@/components/lessons/LessonStepRenderer'
@@ -16,6 +18,10 @@ import { countWordInsightsInContent } from '@/lib/lesson-insight-count'
 import { lessonNoteStorageKey, countLocalLessonNotes } from '@/lib/lesson-notes'
 import { getNextLessonInSeries } from '@/lib/product-queries'
 import { computeSeriesProgressPercent } from '@/lib/studies/progress'
+import { extractScriptureChainsFromLessonContent } from '@/lib/lesson-scripture-chains'
+import { findMisunderstoodPassage } from '@/lib/misunderstood-passages'
+import { extractWordInsightsForCompletion } from '@/lib/word-insights-completion'
+import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/report-issue-href'
 import type { StudyOverviewLessonRow } from '@/lib/studies/types'
 import type { LessonReaderContent as LessonContent } from '@/lib/lesson-content'
 import type { Lesson, StudySeries } from '@/lib/types/product'
@@ -24,10 +30,12 @@ export interface LessonReaderProps {
   study: StudySeries
   lesson: Lesson
   content: LessonContent
+  /** From URL `?step=` (0-based). Clamped to available steps in the effect below. */
+  initialStepIndex?: number
 }
 
 /** Single global guided lesson reader: layout, steps, sidebar, completion, and progress. */
-export function LessonReader({ study, lesson, content }: LessonReaderProps) {
+export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: LessonReaderProps) {
   const { user } = useDemoAuth()
   const userId = user?.id
 
@@ -38,12 +46,24 @@ export function LessonReader({ study, lesson, content }: LessonReaderProps) {
     return buildLessonSteps(content)
   }, [lesson.sections, lesson.scripture, content])
   const total = steps.length
-  const [index, setIndex] = useState(0)
+  const startIndex = useMemo(
+    () => (total > 0 ? Math.min(Math.max(0, initialStepIndex), total - 1) : 0),
+    [total, initialStepIndex],
+  )
+  const [index, setIndex] = useState(startIndex)
   const [complete, setComplete] = useState(false)
   const [progressTick, setProgressTick] = useState(0)
   const [notesTick, setNotesTick] = useState(0)
+  const [quizRequiredPassed, setQuizRequiredPassed] = useState(false)
+
+  const setLessonStepIndex = useCallback((next: number | ((prev: number) => number)) => {
+    setQuizRequiredPassed(false)
+    setIndex(next)
+  }, [])
 
   const nextLesson = useMemo(() => getNextLessonInSeries(study, lesson.slug), [study, lesson.slug])
+  // `?step=` is applied via `key` on the parent page + `initialStepIndex` into `useState` initializer.
+  // TODO(lesson-nav): optional `useRouter` replaceState to keep `?step=` in sync while stepping (shareable deep links).
 
   const progress = complete ? 1 : (index + 1) / total
 
@@ -84,6 +104,7 @@ export function LessonReader({ study, lesson, content }: LessonReaderProps) {
   }, [])
 
   const wordInsightCount = useMemo(() => countWordInsightsInContent(content), [content])
+
   const notesCount = useMemo(() => {
     if (typeof window === 'undefined') return 0
     return countLocalLessonNotes(study.slug, lesson.slug, total)
@@ -92,16 +113,16 @@ export function LessonReader({ study, lesson, content }: LessonReaderProps) {
   const handleContinue = useCallback(() => {
     if (complete) return
     if (index < total - 1) {
-      setIndex((i) => i + 1)
+      setLessonStepIndex((i) => i + 1)
     } else {
       setComplete(true)
     }
-  }, [complete, index, total])
+  }, [complete, index, total, setLessonStepIndex])
 
   const handlePreviousStep = useCallback(() => {
     if (complete) return
-    setIndex((i) => Math.max(0, i - 1))
-  }, [complete])
+    setLessonStepIndex((i) => Math.max(0, i - 1))
+  }, [complete, setLessonStepIndex])
 
   const reflectionLegacyKey = `biblestem-reflection-${study.slug}-${lesson.slug}`
   const stepNoteKey = lessonNoteStorageKey(study.slug, lesson.slug, index)
@@ -125,10 +146,28 @@ export function LessonReader({ study, lesson, content }: LessonReaderProps) {
   useEffect(() => {
     if (!complete) return
     void persistMarkLessonComplete(study.slug, lesson.slug, total, userId)
-    setProgressTick((t) => t + 1)
   }, [complete, study.slug, lesson.slug, total, userId])
 
+  const scriptureChainsForLesson = useMemo(
+    () => extractScriptureChainsFromLessonContent(content, lesson.sections).slice(0, 3),
+    [content, lesson.sections],
+  )
+
+  const misunderstoodPassage = useMemo(
+    () => findMisunderstoodPassage(study.slug, lesson.slug),
+    [study.slug, lesson.slug],
+  )
+
+  const wordInsightLines = useMemo(() => extractWordInsightsForCompletion(content), [content])
+
   const stepThroughPct = total > 0 ? Math.round(((index + 1) / total) * 100) : 0
+  const currentStep = steps[index]
+  const isQuizStep = currentStep?.type === 'quiz_review'
+  const continueQuizBlocked =
+    isQuizStep &&
+    currentStep.type === 'quiz_review' &&
+    currentStep.quiz.settings.quizRequired &&
+    !quizRequiredPassed
 
   const sideRail =
     !complete && total > 0 ? (
@@ -140,13 +179,13 @@ export function LessonReader({ study, lesson, content }: LessonReaderProps) {
         notesCount={notesCount}
         estimatedMinutes={lesson.durationMinutes}
         studyTitle={study.title}
-        onGoToNextStep={index < total - 1 ? () => setIndex((i) => i + 1) : undefined}
+        onGoToNextStep={index < total - 1 ? () => setLessonStepIndex((i) => i + 1) : undefined}
       />
     ) : null
 
   const mobileMap =
     !complete && total > 1 ? (
-      <LessonMobileMap steps={steps} currentIndex={index} onSelectStep={(i) => setIndex(i)} />
+      <LessonMobileMap steps={steps} currentIndex={index} onSelectStep={(i) => setLessonStepIndex(i)} />
     ) : null
 
   return (
@@ -171,6 +210,8 @@ export function LessonReader({ study, lesson, content }: LessonReaderProps) {
         {complete ? (
           <CompletionScreen
             seriesSlug={study.slug}
+            lessonSlug={lesson.slug}
+            lessonStepCount={total}
             seriesTitle={study.title}
             lessonTitle={lesson.title}
             nextLesson={nextLesson}
@@ -180,6 +221,18 @@ export function LessonReader({ study, lesson, content }: LessonReaderProps) {
             studyProgressPercent={seriesProgressPercent}
             reviewLessonHref={reviewHref}
             backToSeriesHref={backHref}
+            scriptureChains={scriptureChainsForLesson.length > 0 ? scriptureChainsForLesson : undefined}
+            wordInsightLines={wordInsightLines.length > 0 ? wordInsightLines : undefined}
+            misunderstoodPassage={misunderstoodPassage}
+          />
+        ) : isQuizStep && currentStep?.type === 'quiz_review' ? (
+          <LessonQuizStep
+            key={`quiz-${lesson.slug}-${index}`}
+            step={currentStep}
+            studySlug={study.slug}
+            lessonSlug={lesson.slug}
+            userId={userId}
+            onPassingChange={setQuizRequiredPassed}
           />
         ) : (
           <div key={index} className="transition-opacity duration-200 ease-out">
@@ -198,12 +251,29 @@ export function LessonReader({ study, lesson, content }: LessonReaderProps) {
         )}
       </main>
 
+      {!complete ? (
+        <div className="border-t border-zinc-200/70 bg-stone-50/50 px-4 py-3 text-center">
+          <Link
+            href={supportReportHref({
+              type: 'content-correction',
+              study: study.slug,
+              lesson: lesson.slug,
+              step: String(index + 1),
+            })}
+            className={`${REPORT_ISSUE_LINK_CLASSNAME} text-xs`}
+          >
+            Report an issue with this lesson
+          </Link>
+        </div>
+      ) : null}
+
       {complete ? null : (
         <LessonNavigation
           continueLabel={index === total - 1 ? 'Finish lesson' : 'Continue'}
           onContinue={handleContinue}
           showPrevious={index > 0}
           onPrevious={handlePreviousStep}
+          continueDisabled={continueQuizBlocked}
         />
       )}
     </LessonLayout>

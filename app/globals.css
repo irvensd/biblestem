@@ -21,3 +21,12 @@ body {
 .section-space {
   @apply py-16 md:py-24;
 }
+
+/**
+ * SVG logos beside backdrop-blur can look soft; promote a crisp compositing layer.
+ * https://bugs.chromium.org — backdrop-filter can affect sibling rasterization.
+ */
+.biblestem-logo-img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}

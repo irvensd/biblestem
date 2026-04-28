@@ -32,7 +32,7 @@ export function HomeCatalogSections({ catalog }: Props) {
               <CatalogSourceNotice source={catalog.source} />
             </div>
           ) : null}
-          <SectionHeading eyebrow="Browse" title="Study paths" />
+          <SectionHeading eyebrow="Browse" title="Learning paths" />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {paths.map((path) => (
               <PathCard

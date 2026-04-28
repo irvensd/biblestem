@@ -4,15 +4,17 @@ import { useEffect, useState } from 'react'
 import {
   emptyLocalProgress,
   readLocalProgress,
+  replaceLocalDashboardProgressSilent,
   type LocalDashboardProgress,
 } from '@/lib/dashboard-local-progress'
-import { migrateLocalProgressForUserOnce } from '@/lib/dashboard-progress-sync'
+import { mergeProgressSnapshots, migrateLocalProgressForUserOnce } from '@/lib/dashboard-progress-sync'
 import { getSupabaseBrowserClient } from '@/lib/supabase/client'
 import { fetchProgressState } from '@/lib/supabase/user-progress'
 
 /**
  * Dashboard progress: Supabase-backed when `userId` is set (authenticated with Supabase),
- * otherwise localStorage (demo mode without Supabase env).
+ * merged with the same localStorage snapshot the lesson reader writes so stats stay accurate
+ * even if a network upsert fails or the server is briefly behind.
  */
 export function useDashboardProgress(userId: string | undefined): {
   progress: LocalDashboardProgress
@@ -48,29 +50,44 @@ export function useDashboardProgress(userId: string | undefined): {
     }
 
     let cancelled = false
+    queueMicrotask(() => {
+      if (cancelled) return
+      setReady(false)
+      setRemote(null)
+    })
 
-    function refreshRemote() {
+    async function loadMergedProgress(): Promise<LocalDashboardProgress> {
       const client = getSupabaseBrowserClient()
-      if (!client) return
+      if (!client) return readLocalProgress()
+      const fromRemote = await fetchProgressState(client, uid)
+      return mergeProgressSnapshots(fromRemote, readLocalProgress())
+    }
+
+    function applyMerged(merged: LocalDashboardProgress): void {
+      replaceLocalDashboardProgressSilent(merged)
+      setRemote(merged)
+    }
+
+    function refreshMerged(): void {
       void (async () => {
-        const next = await fetchProgressState(client, uid)
-        if (!cancelled) setRemote(next)
+        const merged = await loadMergedProgress()
+        if (!cancelled) applyMerged(merged)
       })()
     }
 
     void (async () => {
       await migrateLocalProgressForUserOnce(uid)
-      const next = await fetchProgressState(supabase, uid)
+      const merged = await loadMergedProgress()
       if (!cancelled) {
-        setRemote(next)
+        applyMerged(merged)
         setReady(true)
       }
     })()
 
-    window.addEventListener('biblestem-progress', refreshRemote)
+    window.addEventListener('biblestem-progress', refreshMerged)
     return () => {
       cancelled = true
-      window.removeEventListener('biblestem-progress', refreshRemote)
+      window.removeEventListener('biblestem-progress', refreshMerged)
     }
   }, [userId])
 

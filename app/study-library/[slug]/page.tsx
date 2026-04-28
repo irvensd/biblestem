@@ -42,6 +42,7 @@ export default async function StudySeriesOverviewPage({ params }: { params: Prom
   return (
     <StudyOverviewShell
       overview={overview}
+      studySeries={data}
       relatedStudies={relatedStudies}
       studyPaths={catalog.paths}
       showCatalogFallback={shouldShowCatalogFallbackNotice(catalog)}

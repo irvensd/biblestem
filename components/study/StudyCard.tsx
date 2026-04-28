@@ -13,15 +13,17 @@ interface StudyCardProps {
 export function StudyCard({ study, paths }: StudyCardProps) {
   const pathName = getPathNameForSeries(study, paths)
   const durationLabel = formatStudyTotalDurationLabel(effectiveStudySeriesMinutes(study))
+  const cardTeaser =
+    study.shortDescription?.trim() ||
+    study.subtitle?.trim() ||
+    'Open the study for lessons, an overview, and study tools.'
 
   return (
     <article className="rounded-xl border border-zinc-200/90 bg-white p-6 shadow-sm ring-1 ring-zinc-950/[0.03] transition-shadow duration-200 hover:shadow-md">
       <div className="mb-3 h-1 w-10 rounded-full bg-blue-800/60" />
       <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">{pathName}</p>
       <h3 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900">{study.title}</h3>
-      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-zinc-600">
-        {study.shortDescription?.trim() || study.description}
-      </p>
+      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-zinc-600">{cardTeaser}</p>
       <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-xs text-zinc-500">
         <span>{study.lessonsCount} lessons</span>
         <span>{durationLabel}</span>

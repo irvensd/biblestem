@@ -11,9 +11,18 @@ export function SiteHeaderNav() {
       <Link
         href={logoHref}
         prefetch
-        className="truncate text-base font-semibold tracking-tight text-zinc-900 sm:text-lg"
+        className="relative isolate z-[1] flex min-w-0 shrink-0 items-center gap-2.5 rounded-sm outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-blue-800 sm:gap-3"
       >
-        BibleStem
+        <img
+          src="/logo.png"
+          alt=""
+          width={96}
+          height={96}
+          className="biblestem-logo-img h-11 w-11 shrink-0 sm:h-12 sm:w-12"
+          decoding="async"
+          fetchPriority="high"
+        />
+        <span className="truncate text-base font-semibold tracking-tight text-zinc-900 sm:text-lg">BibleStem</span>
       </Link>
 
       <nav className="hidden items-center gap-5 md:flex lg:gap-6" aria-label="Primary">

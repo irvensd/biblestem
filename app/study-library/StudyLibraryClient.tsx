@@ -4,21 +4,30 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { StudyCard } from '@/components/study/StudyCard'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { EmptyState } from '@/components/EmptyState'
+import { Button } from '@/components/ui/Button'
 import { inputClassName } from '@/components/ui/form-styles'
 import {
   filterSeriesForLibrary,
-  groupSeriesByCollection,
+  groupStudiesByLevelOrSection,
+  STUDY_LIBRARY_SECTION_ORDER,
   type LibraryFilters,
 } from '@/lib/product-queries'
 import type { StudyLevel, StudyPath, StudySeries } from '@/lib/types/product'
 
 const levels: StudyLevel[] = ['Beginner', 'Intermediate', 'Advanced']
 
-const collectionOrder = ['Foundational Studies', 'Growth Studies', 'Advanced Studies', 'Other'] as const
+const collectionDescription: Record<(typeof STUDY_LIBRARY_SECTION_ORDER)[number], string> = {
+  'Foundational Studies': 'Start here if you are new to BibleStem or want to build a clear foundation for deeper study.',
+  'Intermediate Studies': 'Build on the basics with studies that go further in application, narrative, and skill.',
+  'Advanced Studies': 'Go deeper into prophecy, doctrine, and passages that require careful Scripture-to-Scripture study.',
+  Other: 'Series grouped here when the level label is unexpected.',
+}
 
 interface StudyLibraryClientProps {
   paths: StudyPath[]
   allSeries: StudySeries[]
+  /** When opening `/study-library?path=…` from a path, pre-select that filter. */
+  initialPathSlug?: string
 }
 
 type SelectOption = {
@@ -112,10 +121,11 @@ function FilterSelect({ value, options, ariaLabel, onChange }: FilterSelectProps
   )
 }
 
-export function StudyLibraryClient({ paths, allSeries }: StudyLibraryClientProps) {
-
+export function StudyLibraryClient({ paths, allSeries, initialPathSlug = '' }: StudyLibraryClientProps) {
+  const validInitial =
+    initialPathSlug && paths.some((p) => p.slug === initialPathSlug) ? initialPathSlug : ''
   const [query, setQuery] = useState('')
-  const [pathSlug, setPathSlug] = useState<string>('')
+  const [pathSlug, setPathSlug] = useState<string>(validInitial)
   const [level, setLevel] = useState<string>('')
   const [sort, setSort] = useState<LibraryFilters['sort']>('recommended')
 
@@ -132,7 +142,7 @@ export function StudyLibraryClient({ paths, allSeries }: StudyLibraryClientProps
     )
   }, [allSeries, pathSlug, level, sort, query, paths])
 
-  const grouped = useMemo(() => groupSeriesByCollection(filtered), [filtered])
+  const grouped = useMemo(() => groupStudiesByLevelOrSection(filtered), [filtered])
   const pathOptions = useMemo<SelectOption[]>(
     () => [{ value: '', label: 'All paths' }, ...paths.map((p) => ({ value: p.slug, label: p.name }))],
     [paths],
@@ -174,7 +184,28 @@ export function StudyLibraryClient({ paths, allSeries }: StudyLibraryClientProps
       </div>
 
       <div className="section-space">
-        <div className="space-y-16 md:space-y-20">
+        <aside
+          aria-label="Featured collection"
+          className="mb-10 rounded-xl border border-zinc-200/90 bg-white p-4 shadow-sm ring-1 ring-zinc-950/[0.03] md:mb-12 md:flex md:items-center md:justify-between md:gap-8 md:p-5"
+        >
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">Featured collection</p>
+            <h2 className="mt-2 text-base font-semibold tracking-tight text-zinc-900 md:text-[1.05rem]">
+              Misunderstood Passages
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600">
+              Slow down commonly quoted Bible texts and study them in context with Scripture chains, word insights, and
+              guided lessons.
+            </p>
+          </div>
+          <div className="mt-4 shrink-0 md:mt-0">
+            <Button href="/misunderstood-passages" className="px-4 py-2 text-sm">
+              Browse passages
+            </Button>
+          </div>
+        </aside>
+
+        <div className="space-y-12 md:space-y-16">
           {filtered.length === 0 ? (
             <EmptyState
               title="No studies match your filters"
@@ -182,17 +213,24 @@ export function StudyLibraryClient({ paths, allSeries }: StudyLibraryClientProps
               className="mt-4"
             />
           ) : (
-            collectionOrder.map((collection) => {
+            STUDY_LIBRARY_SECTION_ORDER.map((collection) => {
               const list = grouped.get(collection) ?? []
               if (list.length === 0) return null
+              const oneCard = list.length === 1
               return (
                 <section key={collection}>
                   <SectionHeading
                     size="sm"
                     title={collection}
-                    description="Thoughtful learning paths with clear structure."
+                    description={collectionDescription[collection]}
                   />
-                  <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:mt-10 lg:grid-cols-3">
+                  <div
+                    className={`grid gap-6 ${
+                      oneCard
+                        ? 'mt-5 grid-cols-1 sm:max-w-2xl md:mt-6'
+                        : 'mt-6 grid-cols-1 md:mt-7 md:grid-cols-2 lg:mt-9 lg:grid-cols-3'
+                    }`}
+                  >
                     {list.map((study) => (
                       <StudyCard key={study.slug} study={study} paths={paths} />
                     ))}

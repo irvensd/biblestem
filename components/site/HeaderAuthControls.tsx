@@ -1,11 +1,11 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
+import { dashboardDisplayName } from '@/lib/dashboard-mock-data'
 
 export function HeaderAuthControls() {
-  const router = useRouter()
   const { user, isReady, logout } = useDemoAuth()
 
   if (!isReady) {
@@ -24,25 +24,32 @@ export function HeaderAuthControls() {
   }
 
   if (user) {
+    const displayLabel = dashboardDisplayName(user.email, user.firstName)
     return (
       <div className="flex max-w-[min(100vw-8rem,18rem)] items-center justify-end gap-1.5 sm:max-w-none sm:gap-3">
         <span
-          className="hidden max-w-[11rem] truncate text-sm text-zinc-600 lg:inline"
+          className="max-w-[min(42vw,11rem)] truncate text-sm text-zinc-600 sm:max-w-[13rem]"
           title={user.email}
         >
-          {user.email}
+          {displayLabel}
         </span>
         {!user.id ? (
           <span className="rounded-md bg-zinc-200/90 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-600">
             Demo
           </span>
         ) : null}
+        <Link
+          href="/settings"
+          prefetch
+          className="hidden min-h-[44px] items-center rounded-xl px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-zinc-900 sm:inline-flex"
+        >
+          Settings
+        </Link>
         <button
           type="button"
           onClick={() => {
             void (async () => {
-              await logout()
-              router.replace('/')
+              await logout({ navigateTo: '/' })
             })()
           }}
           className="min-h-[44px] min-w-[44px] rounded-xl px-2 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-zinc-900 sm:min-w-0 sm:px-3"

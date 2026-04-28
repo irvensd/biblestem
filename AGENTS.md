@@ -31,7 +31,7 @@ public/                 # Static assets
 ## Commands
 
 ```bash
-npm run dev              # Next dev server (webpack; see package.json for dev:turbo)
+npm run dev              # Next dev server (Turbopack; `npm run dev:webpack` for webpack)
 npm run build            # Production build → .next/
 npm run start            # Run production server (after build)
 npm run type-check       # tsc --noEmit

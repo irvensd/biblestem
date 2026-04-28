@@ -3,8 +3,20 @@ import { CatalogSourceNotice } from '@/components/site/CatalogSourceNotice'
 import { PageIntro } from '@/components/site/PageIntro'
 import { loadCatalog, shouldShowCatalogFallbackNotice } from '@/lib/catalog/load-catalog'
 
-export default async function StudyLibraryPage() {
+type StudyLibraryPageProps = {
+  searchParams: Promise<{ path?: string | string[] }>
+}
+
+function normalizePathQuery(pathParam: string | string[] | undefined): string {
+  if (pathParam == null) return ''
+  if (Array.isArray(pathParam)) return pathParam[0] ?? ''
+  return pathParam
+}
+
+export default async function StudyLibraryPage({ searchParams }: StudyLibraryPageProps) {
   const catalog = await loadCatalog()
+  const sp = await searchParams
+  const initialPathSlug = normalizePathQuery(sp.path)
   const showCatalogFallback = shouldShowCatalogFallbackNotice(catalog)
   return (
     <>
@@ -13,7 +25,7 @@ export default async function StudyLibraryPage() {
           <PageIntro
             eyebrow="Library"
             title="Study Library"
-            description="Browse every series—filter by path and level, search by title, then open a study to see lessons."
+            description="Your full catalog of study series. Search and filter, then open a study to work through its lessons."
           />
           {showCatalogFallback ? (
             <div className="mt-4 max-w-xl">
@@ -24,7 +36,11 @@ export default async function StudyLibraryPage() {
       </section>
 
       <div className="container-shell">
-        <StudyLibraryClient paths={catalog.paths} allSeries={catalog.allSeries} />
+        <StudyLibraryClient
+          paths={catalog.paths}
+          allSeries={catalog.allSeries}
+          initialPathSlug={initialPathSlug}
+        />
       </div>
     </>
   )

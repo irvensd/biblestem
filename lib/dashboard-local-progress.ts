@@ -82,6 +82,24 @@ export function replaceLocalDashboardProgress(p: LocalDashboardProgress): void {
   })
 }
 
+/** Same as `replaceLocalDashboardProgress` but does not dispatch `biblestem-progress` (avoids feedback loops). */
+export function replaceLocalDashboardProgressSilent(p: LocalDashboardProgress): void {
+  if (p.v !== 1) return
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        v: 1,
+        completedKeys: [...p.completedKeys],
+        lastLesson: p.lastLesson ? { ...p.lastLesson } : null,
+        activityDays: [...p.activityDays],
+      }),
+    )
+  } catch {
+    /* quota / private mode */
+  }
+}
+
 function todayLocalDate(): string {
   const d = new Date()
   const y = d.getFullYear()
@@ -148,4 +166,9 @@ export function touchDashboardActivity(): void {
 
 export function isLessonComplete(seriesSlug: string, lessonSlug: string): boolean {
   return readLocalProgress().completedKeys.includes(lessonKey(seriesSlug, lessonSlug))
+}
+
+/** Clear progress / streak data on this device (settings → reset on this device). */
+export function clearLocalDashboardProgress(): void {
+  writeLocalProgress(defaultProgress())
 }

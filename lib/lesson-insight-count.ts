@@ -13,7 +13,8 @@ function countWordInsightBlocks(blocks: LessonContentBlock[] | undefined): numbe
 /** Word-study surfaces counted for side rail (approximate engagement hints). */
 export function countWordInsightsInContent(content: LessonReaderContent): number {
   let n = content.scriptureWordInsights?.length ?? 0
-  if (content.wordStudy) n += 1
+  if (content.wordStudyInsights?.length) n += content.wordStudyInsights.length
+  else if (content.wordStudy) n += 1
   for (const row of content.teachingWordInsights ?? []) {
     n += row.insights.length
   }

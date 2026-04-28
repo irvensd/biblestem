@@ -31,25 +31,43 @@ truncate table public.lesson_word_links,
 cascade;
 
 insert into public.study_paths (id, slug, name, description, sort_order) values
-  ('b1000001-0000-4000-8000-000000000001', 'foundations', 'Foundations', 'Core doctrines, first principles, and clarity for new readers.', 1),
-  ('b1000001-0000-4000-8000-000000000002', 'prophecy', 'Prophecy', 'Last-day themes in Scripture, read with care and hope.', 2),
-  ('b1000001-0000-4000-8000-000000000003', 'theology', 'Theology', 'Doctrine rooted in Scripture, with clarity and humility.', 3),
-  ('b1000001-0000-4000-8000-000000000004', 'life-application', 'Life Application', 'Wisdom for daily choices, habits, and relationships.', 4),
-  ('b1000001-0000-4000-8000-000000000005', 'state-of-the-dead', 'State of the Dead', 'What Scripture teaches about death, the soul, resurrection, and eternal life in Christ.', 5);
+  ('b1000001-0000-4000-8000-000000000001', 'foundations', 'Foundations', 'For new readers who want to understand Scripture clearly and build a strong foundation.', 1),
+  ('b1000001-0000-4000-8000-000000000002', 'prophecy', 'Prophecy', 'For readers who want to study Daniel, Revelation, worship, judgment, and last-day messages with care.', 2),
+  ('b1000001-0000-4000-8000-000000000003', 'theology', 'Theology', 'For deeper doctrinal studies that require careful context and Scripture-to-Scripture reasoning.', 3),
+  ('b1000001-0000-4000-8000-000000000004', 'life-application', 'Life Application', 'For practical studies on prayer, character, temptation, habits, relationships, and daily obedience.', 4);
 
 insert into public.study_series (
   id, study_path_id, slug, title, description, short_description, long_description,
   level, duration_summary, lessons_count, featured, collection_label, sort_order
 ) values (
-  'e4000001-0000-4000-8000-000000000010',
+  'e4000001-0000-4000-8000-000000000060',
   'b1000001-0000-4000-8000-000000000001',
-  'bible-gods-living-word',
-  'The Bible — God’s Living Word',
-  'Discover Scripture as one unified story across time—written by many, yet pointing in one direction: toward God, and toward Christ.',
-  'Discover Scripture as one unified story across time—written by many, yet pointing in one direction: toward God, and toward Christ.',
-  null,
+  'origin-of-evil',
+  'The Origin of Evil',
+  'This BibleStem study explains where evil came from, who Satan is, how Lucifer fell, why God allowed sin to unfold, how deception works, and how Christ will finally end evil forever. The study is Scripture-first, practical, and focused on God''s character.',
+  'A clear Bible study on Lucifer, Satan, sin, deception, free will, and God''s character.',
+  'This BibleStem study explains where evil came from, who Satan is, how Lucifer fell, why God allowed sin to unfold, how deception works, and how Christ will finally end evil forever. The study is Scripture-first, practical, and focused on God''s character.',
+  'Intermediate',
+  '80 min total',
+  7,
+  false,
+  'Growth Studies',
+  2
+);
+
+insert into public.study_series (
+  id, study_path_id, slug, title, description, short_description, long_description,
+  level, duration_summary, lessons_count, featured, collection_label, sort_order
+) values (
+  'e4000001-0000-4000-8000-000000000070',
+  'b1000001-0000-4000-8000-000000000001',
+  'god-is-love',
+  'God Is Love',
+  'This beginner-friendly BibleStem study explores the character of God through Scripture. It shows that love requires communication, that the Bible is God''s self-revelation, that prophecy gives a rational basis for trust, and that every true doctrine reveals something about God''s heart. The goal is not merely to learn religious information, but to know God personally.',
+  'Discover why Scripture, prophecy, doctrine, and salvation all begin with one central truth: God is love.',
+  'This beginner-friendly BibleStem study explores the character of God through Scripture. It shows that love requires communication, that the Bible is God''s self-revelation, that prophecy gives a rational basis for trust, and that every true doctrine reveals something about God''s heart. The goal is not merely to learn religious information, but to know God personally.',
   'Beginner',
-  '56 min total',
+  '75 min total',
   7,
   true,
   'Foundational Studies',
@@ -98,73 +116,143 @@ insert into public.lessons (
   id, study_series_id, slug, title, summary, duration_minutes, scripture, sort_order
 ) values
   (
-    'd3000007-0000-4000-8000-000000000001',
-    'e4000001-0000-4000-8000-000000000010',
-    'a-book-unlike-any-other',
-    'A Book Unlike Any Other',
-    'Awakening wonder: one book, many voices, one message.',
-    8,
-    'John 1:1 · Luke 24:27',
+    'd3000007-0000-4000-8000-000000000601',
+    'e4000001-0000-4000-8000-000000000060',
+    'did-god-create-the-devil',
+    'Did God Create the Devil?',
+    'Learn how the Bible explains Satan''s origin and why God is not the author of evil.',
+    10,
+    '1 John 3:8 · Revelation 12:9 · Ezekiel 28:15',
     1
   ),
   (
-    'd3000007-0000-4000-8000-000000000002',
-    'e4000001-0000-4000-8000-000000000010',
-    'how-the-bible-came-to-us',
-    'How the Bible Came to Us',
-    'How did this book reach us? A gentle path into authors, manuscripts, and trust.',
-    8,
-    '2 Timothy 3:16',
+    'd3000007-0000-4000-8000-000000000602',
+    'e4000001-0000-4000-8000-000000000060',
+    'lucifer-before-the-fall',
+    'Lucifer Before the Fall',
+    'Study Lucifer''s original beauty, wisdom, position, and purpose before sin was found in him.',
+    10,
+    'Isaiah 14:12 · Luke 10:18 · Ezekiel 28:12 to 15',
     2
   ),
   (
-    'd3000007-0000-4000-8000-000000000003',
-    'e4000001-0000-4000-8000-000000000010',
-    'can-the-bible-be-trusted',
-    'Can the Bible Be Trusted?',
-    'Why confidence in Scripture is grounded in history, preservation, and truth.',
-    8,
-    'Isaiah 40:8 · Psalm 119:160 · Matthew 5:18',
+    'd3000007-0000-4000-8000-000000000603',
+    'e4000001-0000-4000-8000-000000000060',
+    'the-birth-of-pride',
+    'The Birth of Pride',
+    'See how pride, jealousy, and self-exaltation turned Lucifer''s heart against God.',
+    10,
+    'Ezekiel 28:17 · Isaiah 14:13 to 14 · Matthew 4:8 to 10',
     3
   ),
   (
-    'd3000007-0000-4000-8000-000000000004',
-    'e4000001-0000-4000-8000-000000000010',
-    'how-to-read-the-bible',
-    'How to Read the Bible',
-    'A practical, Scripture-first rhythm to read with clarity, patience, and attention.',
-    8,
-    'Psalm 119:105 · James 1:5 · 2 Timothy 2:15',
+    'd3000007-0000-4000-8000-000000000604',
+    'e4000001-0000-4000-8000-000000000060',
+    'war-in-heaven',
+    'War in Heaven',
+    'Understand why Lucifer was cast out and how rebellion spread among the angels.',
+    11,
+    'Revelation 12:7 to 9 · Revelation 12:4 · John 8:44',
     4
   ),
   (
-    'd3000007-0000-4000-8000-000000000005',
-    'e4000001-0000-4000-8000-000000000010',
-    'the-bibles-central-theme',
-    'The Bible’s Central Theme',
-    'One unified story centered on Christ, from beginning to fulfillment.',
-    8,
-    'Luke 24:27 · John 5:39',
+    'd3000007-0000-4000-8000-000000000605',
+    'e4000001-0000-4000-8000-000000000060',
+    'the-first-lie-on-earth',
+    'The First Lie on Earth',
+    'Study how Satan deceived Eve and introduced sin, suffering, and death to humanity.',
+    11,
+    'Genesis 2:16 to 17 · Genesis 3:1 · Genesis 3:4 to 5 · Genesis 3:22 to 24',
     5
   ),
   (
-    'd3000007-0000-4000-8000-000000000006',
-    'e4000001-0000-4000-8000-000000000010',
-    'the-bible-as-a-living-word',
-    'The Bible as a Living Word',
-    'Scripture not just as information, but as living truth that transforms from within.',
-    8,
-    'Hebrews 4:12 · John 6:63 · Isaiah 55:11',
+    'd3000007-0000-4000-8000-000000000606',
+    'e4000001-0000-4000-8000-000000000060',
+    'how-satan-deceives-today',
+    'How Satan Deceives Today',
+    'Learn Satan''s methods of deception and how Scripture protects believers from counterfeit light.',
+    11,
+    '2 Corinthians 11:14 to 15 · Matthew 4:5 to 7 · Revelation 16:13 to 14 · 1 Peter 5:8',
     6
   ),
   (
-    'd3000007-0000-4000-8000-000000000007',
-    'e4000001-0000-4000-8000-000000000010',
-    'your-response',
-    'Your Response',
-    'Move from understanding to response by acting on what God has made clear.',
-    8,
-    'James 1:22 · Joshua 1:8 · Luke 11:28',
+    'd3000007-0000-4000-8000-000000000607',
+    'e4000001-0000-4000-8000-000000000060',
+    'how-god-ends-sin-forever',
+    'How God Ends Sin Forever',
+    'See how God will end sin, vindicate His character, and restore creation through Christ.',
+    11,
+    'Revelation 20:10 · Matthew 25:41 · Ezekiel 28:18 to 19 · Philippians 2:10 to 11 · Nahum 1:9',
+    7
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000611',
+    'e4000001-0000-4000-8000-000000000070',
+    'the-logic-of-love',
+    'The Logic of Love',
+    'See why love requires communication and why a God of love would want to be known.',
+    10,
+    '1 John 4:8 · Genesis 1:27 · John 15:15 · 2 Timothy 3:16',
+    1
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000612',
+    'e4000001-0000-4000-8000-000000000070',
+    'a-god-who-speaks',
+    'A God Who Speaks',
+    'See how God speaks through prophets, apostles, and Scripture so His love can be known with clarity.',
+    10,
+    'Hebrews 1:1 to 2 · 2 Peter 1:21 · 2 Timothy 3:16 · John 17:17',
+    2
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000613',
+    'e4000001-0000-4000-8000-000000000070',
+    'a-god-who-knows-the-future',
+    'A God Who Knows the Future',
+    'Walk through Daniel 2 and see prophecy as confidence in the God who knows the end from the beginning.',
+    12,
+    'Daniel 2:27 to 28 · Daniel 2:44 · Isaiah 46:9 to 10 · John 14:29',
+    3
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000614',
+    'e4000001-0000-4000-8000-000000000070',
+    'a-god-who-can-be-known',
+    'A God Who Can Be Known',
+    'See why eternal life is knowing God through Jesus Christ, not merely endless time or bare facts.',
+    10,
+    'John 17:3 · Jeremiah 9:23 to 24 · Hosea 6:3 · John 14:7',
+    4
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000615',
+    'e4000001-0000-4000-8000-000000000070',
+    'truth-has-a-center',
+    'Truth Has a Center',
+    'See how all true doctrine reveals God''s character, because Scripture''s center is the God who is love.',
+    10,
+    '1 John 4:16 · John 5:39 · Luke 24:27 · Psalm 89:14',
+    5
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000616',
+    'e4000001-0000-4000-8000-000000000070',
+    'jesus-reveals-the-father',
+    'Jesus Reveals the Father',
+    'See Jesus as the clearest revelation of the Father''s character: mercy, truth, and love made visible.',
+    10,
+    'John 14:8 to 9 · Hebrews 1:3 · Colossians 1:15 · John 1:18',
+    6
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000617',
+    'e4000001-0000-4000-8000-000000000070',
+    'the-invitation-to-friendship',
+    'The Invitation to Friendship',
+    'Respond to God''s invitation into friendship: trust, obedience, nearness, and life with Him through Christ.',
+    10,
+    'John 15:13 to 15 · Revelation 21:3 · James 2:23 · Psalm 25:14',
     7
   ),
   (
@@ -433,8 +521,8 @@ insert into public.lessons (
     'rachels-departing-soul',
     'Rachel''s Departing Soul',
     'Understand the biblical meaning of soul, spirit, breath, and life through Genesis 35:18 and related passages.',
-    10,
-    'Genesis 35:18 · Genesis 2:7',
+    12,
+    'Genesis 35:18 · Genesis 2:7 · Ecclesiastes 12:7 · James 2:26',
     2
   ),
   (
@@ -442,9 +530,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'a-thief-and-a-witch',
     'A Thief and a Witch',
-    'Study the thief on the cross and the witch of Endor without assuming conscious life after death.',
-    10,
-    'Luke 23:42–43 · 1 Samuel 28',
+    'The thief on the cross, Paradise, John 20:17, the witch of Endor, and reading by clear Scripture, not appearances.',
+    12,
+    'Luke 23:42 to 43 · John 20:17 · 1 Samuel 28:13 to 14 · Deuteronomy 18:10 to 12',
     3
   ),
   (
@@ -452,9 +540,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'absent-from-the-body',
     'Absent from the Body',
-    'Examine Paul''s words in 2 Corinthians 5 and what it means to be present with the Lord.',
-    10,
-    '2 Corinthians 5:6–8 · Philippians 3:20–21',
+    '2 Corinthians 5, the tent, the building, being clothed, and resurrection hope with 1 Corinthians 15.',
+    12,
+    '2 Corinthians 5:1 · 2 Corinthians 5:4 · 2 Corinthians 5:8 to 10 · 1 Corinthians 15:52 to 54',
     4
   ),
   (
@@ -462,9 +550,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'pauls-desire-to-depart',
     'Paul''s Desire to Depart',
-    'Study Philippians 1 and Paul''s hope in resurrection, not natural immortality.',
-    10,
-    'Philippians 1:21–24',
+    'Paul, departure, the return of Christ, and why the next moment for the believer is resurrection hope.',
+    11,
+    'Philippians 1:21 to 23 · 2 Timothy 4:6 to 8 · 1 Thessalonians 4:16 to 17',
     5
   ),
   (
@@ -472,9 +560,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'the-souls-under-the-altar',
     'The Souls Under the Altar',
-    'Understand Revelation 6 through biblical symbolism, sacrifice, martyrdom, and justice.',
-    10,
-    'Revelation 6:9–11 · Genesis 4:10',
+    'Revelation 6, sanctuary imagery, martyrs, blood, justice, and Scripture explaining Scripture.',
+    12,
+    'Revelation 6:9 to 11 · Genesis 4:10 · Leviticus 17:11',
     6
   ),
   (
@@ -482,9 +570,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'the-spirits-of-just-men',
     'The Spirits of Just Men',
-    'Explore Hebrews 12 and what it means for the faithful to be made perfect.',
-    10,
-    'Hebrews 12:22–24 · Hebrews 11:39–40',
+    'Hebrews 12, the assembly above, Christ the mediator, the new covenant, and spirits of just men made perfect.',
+    12,
+    'Hebrews 12:22 to 24 · Hebrews 11:39 to 40 · Hebrews 10:14',
     7
   ),
   (
@@ -492,9 +580,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'preaching-to-the-spirits-in-prison',
     'Preaching to the Spirits in Prison',
-    'Study 1 Peter 3 and identify who the spirits in prison are.',
-    10,
-    '1 Peter 3:18–22 · Genesis 6',
+    '1 Peter 3, Noah, the Spirit, preaching, resurrection, and Christ''s victory in context.',
+    12,
+    '1 Peter 3:18 to 20 · 2 Peter 2:5 · Genesis 6:3',
     8
   ),
   (
@@ -502,9 +590,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'three-doctrines-that-belong-together',
     'Three Doctrines That Belong Together',
-    'See how the judgment, the state of the dead, and the second coming fit together.',
-    10,
-    'Ecclesiastes 9:5 · John 5:28–29 · 1 Thessalonians 4:16–17',
+    'Judgment, the state of the dead, the second coming, and keeping those doctrines with Scripture together.',
+    11,
+    'Genesis 2:7 · Ecclesiastes 12:7 · Daniel 12:2 · 2 Corinthians 5:10 · Revelation 22:12',
     9
   ),
   (
@@ -512,9 +600,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'the-dead-who-stand-before-god',
     'The Dead Who Stand Before God',
-    'Understand Revelation 20 and the judgment of the dead.',
-    10,
-    'Revelation 20:11–15 · John 5:28–29',
+    'Revelation 20, the judgment books, the millennium, resurrection, the second death, and Hades.',
+    12,
+    'Revelation 20:11 to 12 · Revelation 20:13 to 15 · Daniel 7:10',
     10
   ),
   (
@@ -522,9 +610,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'the-resurrection-and-the-life',
     'The Resurrection and the Life',
-    'Study John 11 and the hope Jesus gave at the tomb of Lazarus.',
-    10,
-    'John 11:25–26 · John 11:43–44',
+    'John 11, Lazarus, resurrection, Christ over death, and the tie to the rich man and Lazarus in Luke 16.',
+    12,
+    'John 11:11 to 14 · John 11:23 to 26 · John 11:43 to 44',
     11
   ),
   (
@@ -532,9 +620,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'the-keys-of-hades',
     'The Keys of Hades',
-    'Learn the meaning of Sheol and Hades and why they refer to the grave, not eternal torment.',
-    10,
-    'Revelation 1:18 · Psalm 16:10',
+    'Sheol, Hades, the grave, translation, resurrection, and Christ''s authority over death.',
+    12,
+    'Psalm 16:10 · Acts 2:27 · Hosea 13:14 · 1 Corinthians 15:54 to 55 · Revelation 1:18',
     12
   ),
   (
@@ -542,9 +630,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'the-rich-man-and-lazarus',
     'The Rich Man and Lazarus',
-    'Study the parable of the rich man and Lazarus in context.',
-    10,
-    'Luke 16:19–31',
+    'Luke 16, the Pharisees, parable, Moses and the prophets, resurrection, and Scripture as enough.',
+    12,
+    'Luke 16:19 to 21 · Luke 16:29 to 31 · John 11:43 to 44',
     13
   ),
   (
@@ -552,9 +640,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'all-live-to-him',
     'All Live to Him',
-    'Understand Luke 20 and how God speaks of the faithful in light of resurrection.',
-    10,
-    'Luke 20:37–38 · Exodus 3:6',
+    'Luke 20, the Sadducees, the God of Abraham, Isaac, and Jacob, resurrection, and all live to Him.',
+    11,
+    'Luke 20:37 to 38 · Matthew 22:29 · Acts 23:8 · Hebrews 11:13',
     14
   ),
   (
@@ -562,9 +650,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'the-worm-and-the-fire',
     'The Worm and the Fire',
-    'Study biblical language about unquenchable fire, undying worm, and final destruction.',
-    10,
-    'Mark 9:43–48 · Isaiah 66:24',
+    'Everlasting fire, unquenchable fire, the worm, final destruction, and God as just and good.',
+    12,
+    'Matthew 25:41 · Matthew 25:46 · Mark 9:43 to 44 · Jude 7 · 2 Peter 2:6',
     15
   ),
   (
@@ -572,9 +660,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'immortality-or-resurrection',
     'Immortality or Resurrection?',
-    'Contrast the biblical hope of resurrection with the idea of natural immortality.',
-    10,
-    '1 Corinthians 15:51–54 · 1 Timothy 6:15–16',
+    'Natural immortality versus resurrection: 1 Corinthians 15, athanasia, and Christ as the giver of life.',
+    12,
+    '1 Corinthians 15:16 to 18 · 1 Corinthians 15:20 to 22 · 2 Timothy 1:10 · 1 Timothy 6:15 to 16',
     16
   ),
   (
@@ -582,9 +670,9 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'the-first-lie',
     'The First Lie',
-    'Trace the first deception in Eden and how it shapes false views of death.',
-    10,
-    'Genesis 3:1–4 · Genesis 2:17',
+    'Genesis 3, mot tamut, Satan, the senses, and holding to what God has said in His Word.',
+    12,
+    'Genesis 2:16 to 17 · Genesis 3:1 · Genesis 3:4 to 5 · Genesis 3:6',
     17
   ),
   (
@@ -592,208 +680,12 @@ insert into public.lessons (
     'e4000001-0000-4000-8000-000000000050',
     'spirits-of-devils',
     'Spirits of Devils',
-    'Study spiritualism, deception, and why Scripture must be our final authority.',
-    10,
-    'Revelation 16:13–14 · Isaiah 8:20',
+    'Revelation 16, daimonia, false signs, Isaiah 8, and Scripture as the test of every spirit.',
+    12,
+    'Revelation 16:13 to 14 · Matthew 24:23 to 25 · Isaiah 8:19 to 20',
     18
   );
 
-update public.lessons
-set reader_content = $json_l1$
-{
-  "openingThought": "The Bible is one of the most read books in the world.\n\nMany people own one.\nSome read it often.\nOthers have tried and stopped.\n\nBut very few pause to ask a simple question.\n\nWhat actually makes this book different?\n\nIt was written across centuries.\nBy different people.\nIn different places.\n\nAnd yet it speaks with a sense of unity.\n\nThat raises a real question.\n\nHow can one book, written by many authors, carry one consistent message?",
-  "scriptureRef": "John 1:1 (ESV)",
-  "scriptureQuote": "In the beginning was the Word, and the Word was with God, and the Word was God.",
-  "scriptureAfterPrimary": "That word \"Word\" carries deeper meaning.\n\nIn the original Greek, it is the word logos.\n\nIt does not just mean speech or text.\n\nIt points to reason, meaning, and expression.\n\nSomething that communicates what is unseen.\n\nJohn is not simply saying words exist.\n\nHe is saying that from the beginning, God has made Himself known.\n\nAnd that expression is not just written.\n\nIt is personal.",
-  "scriptureAfterPrimaryEmphasisPhrases": [
-    "logos"
-  ],
-  "scriptureWordInsights": [
-    {
-      "surface": "Word",
-      "lemma": "λόγος",
-      "transliteration": "logos",
-      "meaning": "Reason, meaning, and expression.",
-      "strongs": "G3056",
-      "note": "John uses logos to show God making Himself known in a personal way."
-    }
-  ],
-  "teachingPoints": [
-    "The Bible was written over a long period of time.\nYet its message remains connected from beginning to end.",
-    "It includes different types of writing.\nHistory, poetry, prophecy, and personal letters.",
-    "Even with different authors, the direction stays consistent.\nIt continues to point toward God and His work.",
-    "This raises an important question.\nIs this just a collection of writings, or something more?"
-  ],
-  "studyInsight": {
-    "placement": "after_teaching",
-    "body": "Most books are written by one person with one perspective.\n\nThe Bible is different.\n\nIt was written by many people who lived in different times and places.\n\nThey did not all know each other.\n\nYet when their writings are brought together, they form a connected message.\n\nThis kind of unity is not common.\n\nIt invites a deeper look."
-  },
-  "reflectPrompt": "Think about your own experience.\n\nWhen you look at the Bible,\n\nwhat do you see?\n\nA book of rules?\nA historical record?\nSomething confusing?\n\nOr something worth understanding?\n\nWhat has shaped the way you see it?",
-  "lifeApplication": "This week, take a simple step.\n\nChoose a short passage to read.\n\nDo not rush it.\n\nRead slowly.\n\nPay attention to what stands out.\n\nYou do not need to understand everything right away.\n\nJust begin.",
-  "prayer": "Lord,\n\nThank You for giving us Your Word.\n\nHelp me approach it with an open mind.\n\nGive me a desire to understand it,\n\nand patience as I begin.\n\nTeach me as I read,\n\nand guide me into what is true.\n\nAmen."
-}
-$json_l1$::jsonb
-where slug = 'a-book-unlike-any-other';
-
-update public.lessons
-set reader_content = $json_l2$
-{
-  "openingThought": "When you hold a Bible in your hands, it's easy to assume it just appeared.\n\nA finished book.\nBound pages.\nComplete.\n\nBut that's not how it began.\n\nBefore it was printed\nbefore it was translated\nbefore it was even collected\n\nIt was written.\n\nAcross generations.\nThrough real people.\nIn real moments of history.\n\nSo the question is honest:\n\nWhere did these words actually come from?\n\nAre they simply human thoughts about God?\n\nOr something more?",
-  "scriptureRef": "2 Timothy 3:16 (ESV)",
-  "scriptureQuote": "All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness.",
-  "scriptureSecondaryRef": "2 Peter 1:21 (ESV)",
-  "scriptureSecondaryQuote": "For no prophecy was ever produced by the will of man, but men spoke from God as they were carried along by the Holy Spirit.",
-  "scriptureAfterPrimary": "That phrase matters:\n\n\"Breathed out by God.\"\n\nThe original word means something that comes directly from God Himself.\n\nNot invented.\nNot guessed.\n\nGiven.",
-  "scriptureAfterPrimaryEmphasisPhrases": [
-    "Breathed out by God."
-  ],
-  "scriptureAfterSecondary": "Notice the balance:\n\nMen spoke.\nBut they were guided.\n\nMoved.\nCarried.\n\nNot controlled like machines\nbut not left on their own either.\n\nGod was actively leading.",
-  "teachingPoints": [
-    "The Bible was written through real people.\nTheir language, their personality, their experience. God used all of it.",
-    "This was not random inspiration or personal opinion.\nGod guided the message while working through human writers.",
-    "Different voices, same direction.\nAcross time, the message stays aligned and consistent.",
-    "Because of its source, Scripture carries authority.\nNot just helpful words, but reliable truth."
-  ],
-  "studyInsight": {
-    "placement": "after_teaching",
-    "body": "The Bible did not just survive history. It was preserved through it.\n\nToday, there are thousands of ancient copies of biblical manuscripts.\n\nNot just one version.\nNot just one source.\n\nMany.\n\nAnd when they are compared, the message stays consistent.\n\nEven discoveries like the Dead Sea Scrolls, written over 2,000 years ago, show that what we read today closely matches what was written long ago.\n\nThat matters.\n\nIt means the Bible has not been quietly changed over time.\n\nIt has been carefully passed down.\n\nPreserved.\n\nProtected."
-  },
-  "reflectPrompt": "If these words were not just written by people\nbut guided by God\n\nWhat does that mean for how you read them?\n\nDo you approach the Bible like any other book?\n\nOr with expectation?\n\nWhat would change if you truly believed\nGod is speaking through it?",
-  "lifeApplication": "This week, shift your approach.\n\nBefore you read, pause.\n\nSlow down.\n\nInstead of rushing through a passage, read with intention.\n\nNot just to understand words\nbut to hear what is being said.\n\nAsk yourself:\n\n\"What is God showing me here?\"\n\nThen take your time.",
-  "prayer": "Lord,\n\nThank You for not leaving us without direction.\n\nThank You for speaking through Your Word.\n\nHelp me trust what You have given\neven when I do not fully understand it yet.\n\nOpen my mind.\nSoften my heart.\n\nTeach me to read with attention\nand to receive what You are saying.\n\nAmen."
-}
-$json_l2$::jsonb
-where slug = 'how-the-bible-came-to-us';
-
-update public.lessons
-set reader_content = $json_l3$
-{
-  "openingThought": "We trust many things without thinking twice.\n\nA map.\nA memory.\nA message from someone we know.\n\nBut when it comes to the Bible, the question often changes.\n\nCan this really be trusted?\n\nNot just spiritually, but historically.\n\nAfter all, it was written long ago.\nCopied by hand.\nPassed down through generations.\n\nSo it is fair to ask:\n\nHas it changed?\nHas it been altered?\nOr has it truly been preserved?",
-  "scriptureRef": "Isaiah 40:8 (ESV)",
-  "scriptureQuote": "The grass withers, the flower fades, but the word of our God will stand forever.",
-  "scriptureSecondaryRef": "Psalm 119:160 (ESV)",
-  "scriptureSecondaryQuote": "The sum of your word is truth, and every one of your righteous rules endures forever.",
-  "scriptureAfterSecondary": "Jesus Himself spoke with confidence about Scripture:\n\nMatthew 5:18 (ESV)\n\"Until heaven and earth pass away, not an iota, not a dot, will pass from the Law until all is accomplished.\"\n\nScripture does not present itself as fragile.\n\nIt presents itself as enduring.\n\nNot temporary.\nBut lasting.",
-  "teachingPoints": [
-    "The Bible was not preserved by accident.\nIt was copied with care, often by trained scribes who treated the text as sacred.",
-    "Today, we have thousands of ancient manuscripts of the Bible.\nFar more than any other ancient work.",
-    "When these manuscripts are compared, they show strong consistency.\nNot confusion, but alignment.",
-    "This does not remove every question.\nBut it builds real confidence that what we read reflects what was written."
-  ],
-  "studyInsight": {
-    "placement": "after_teaching",
-    "body": "In 1947, a discovery was made in caves near the Dead Sea.\n\nAncient scrolls were found, some over 2,000 years old.\n\nAmong them was a copy of the book of Isaiah.\n\nWhen it was compared with later manuscripts, something stood out.\n\nThe message had not changed.\n\nAcross centuries of copying, the text remained remarkably consistent.\n\nNot perfect in every small detail of handwriting.\n\nBut faithful in meaning.\n\nThe same message.\nThe same truth.\nPreserved through time."
-  },
-  "reflectPrompt": "If the Bible has been preserved this carefully,\n\nthen the question becomes more personal.\n\nNot just\nHas it changed?\n\nBut\nAm I willing to trust what it says?\n\nBe honest with yourself.\n\nDo you approach Scripture with confidence,\nor with quiet hesitation?\n\nWhat would change if you truly believed\nthese words have been preserved for you?",
-  "lifeApplication": "This week, take a different approach.\n\nInstead of reading casually,\nread with intention.\n\nChoose one passage.\n\nRead it slowly.\n\nSit with it.\n\nAnd ask yourself:\n\nIf this has been faithfully preserved,\nwhat is it asking of me?\n\nDo not rush past the question.",
-  "prayer": "Lord,\n\nYou have preserved Your Word through time.\n\nThrough generations, through history, through human hands,\nYou have kept Your message.\n\nHelp me not to stand at a distance in doubt,\n\nbut to come closer with trust.\n\nGive me confidence in what You have spoken,\n\nand a heart willing to receive it.\n\nAmen."
-}
-$json_l3$::jsonb
-where slug = 'can-the-bible-be-trusted';
-
-update public.lessons
-set reader_content = $json_l4$
-{
-  "openingThought": "Most people don't struggle because they don't have a Bible.\n\nThey struggle because they don't know how to read it.\n\nWhere do you start?\nWhat does it mean?\nWhat if you don't understand it?\n\nSo reading becomes inconsistent.\nOr it stops altogether.\n\nBut the Bible was never meant to feel distant or confusing.\n\nIt was given to be understood.\n\nNot all at once.\nNot perfectly.\n\nBut personally.",
-  "scriptureRef": "Psalm 119:105 (ESV)",
-  "scriptureQuote": "Your word is a lamp to my feet and a light to my path.",
-  "scriptureSecondaryRef": "James 1:5 (ESV)",
-  "scriptureSecondaryQuote": "If any of you lacks wisdom, let him ask God… and it will be given him.",
-  "scriptureAfterSecondary": "2 Timothy 2:15 (ESV)\n\"Do your best to present yourself to God… rightly handling the word of truth.\"\n\nThe Bible is not meant to overwhelm you.\n\nIt is meant to guide you.\n\nStep by step.\n\nLike a lamp.\n\nNot lighting everything at once,\n\nbut giving enough light for what is in front of you.",
-  "teachingPoints": [
-    "Start with a posture, not just a plan.\nCome willing to listen, not just analyze.",
-    "Let Scripture explain Scripture.\nThe Bible connects with itself. One passage often brings clarity to another.",
-    "Look for what it reveals about God.\nEven when you do not understand everything, you can understand who He is.",
-    "Do not rush the process.\nUnderstanding grows over time."
-  ],
-  "studyInsight": {
-    "placement": "after_teaching",
-    "body": "The Bible was written in real moments of history.\n\nDifferent people.\nDifferent settings.\nDifferent situations.\n\nSo context matters.\n\nWho is speaking?\nWho are they speaking to?\nWhat is happening?\n\nThese questions do not make Scripture harder.\n\nThey make it clearer.\n\nThe Bible is not random.\n\nIt is connected.\n\nWhen you read it patiently, that connection begins to unfold."
-  },
-  "reflectPrompt": "Be honest for a moment.\n\nWhen you read the Bible,\n\ndo you rush through it?\nDo you avoid the parts you do not understand?\nDo you expect instant clarity?\n\nOr are you willing to slow down\n\nand let it unfold?\n\nWhat might change if you approached Scripture\n\nless like a task\n\nand more like a conversation?",
-  "lifeApplication": "Try this simple rhythm this week.\n\nChoose one short passage.\n\nBefore you read, pause.\n\nAsk:\n\n\"God, what are You showing me about Yourself?\"\n\nRead slowly.\n\nIf something stands out, stay there.\n\nThink about it.\nWrite it down if needed.\n\nLet it settle.\n\nYou do not need to read more.\n\nYou need to see more in what you read.",
-  "prayer": "Lord,\n\nTeach me how to read Your Word.\n\nNot quickly, not carelessly,\n\nbut with attention.\n\nGive me understanding where I lack it,\n\nand patience where I rush.\n\nHelp me to hear You clearly,\n\nand to recognize Your voice in what I read.\n\nForm in me a desire not just to learn,\n\nbut to know You.\n\nAmen."
-}
-$json_l4$::jsonb
-where slug = 'how-to-read-the-bible';
-
-update public.lessons
-set reader_content = $json_l5$
-{
-  "openingThought": "It is possible to read the Bible and still miss what it is about.\n\nYou can follow the stories.\nLearn the commands.\nUnderstand the history.\n\nAnd still feel like something is missing.\n\nBecause the Bible is not just a collection of ideas.\n\nIt is one unified story.\n\nAnd at the center of that story is a Person.\n\nIf you miss Him, you may understand parts of Scripture,\n\nbut not its meaning.",
-  "scriptureRef": "Luke 24:27 (ESV)",
-  "scriptureQuote": "And beginning with Moses and all the Prophets, he interpreted to them in all the Scriptures the things concerning himself.",
-  "scriptureSecondaryRef": "John 5:39 (ESV)",
-  "scriptureSecondaryQuote": "You search the Scriptures… and it is they that bear witness about me.",
-  "scriptureAfterSecondary": "After His resurrection, Jesus did something important.\n\nHe walked through the Scriptures\n\nand showed that they were pointing to Him.\n\nNot just a few passages.\n\nNot isolated moments.\n\nBut a consistent direction.\n\nToward Christ.",
-  "teachingPoints": [
-    "The Bible tells one unfolding story.\nA story of God restoring what was broken.",
-    "Jesus is not introduced halfway through.\nHe is present from the beginning, promised and revealed over time.",
-    "Every part of Scripture finds meaning in Him.\nLaw, prophecy, sacrifice, and promise all point beyond themselves.",
-    "Without Christ, the Bible can feel like separate pieces.\nWith Him, it becomes one clear message."
-  ],
-  "studyInsight": {
-    "placement": "after_teaching",
-    "body": "From the beginning, Scripture has been moving in one direction.\n\nA promise given.\nA problem revealed.\nA solution unfolding.\n\nWhat seems hidden early becomes clearer later.\n\nWhat is introduced in one place is fulfilled in another.\n\nDifferent books.\nDifferent writers.\n\nBut one message.\n\nGod revealing Himself and making a way to restore what was lost.\n\nWhen you read the Bible this way, it begins to connect.\n\nNot as separate parts,\n\nbut as one story moving toward fulfillment."
-  },
-  "reflectPrompt": "When you read the Bible,\n\nwhat are you actually looking for?\n\nRules?\nAnswers?\nUnderstanding?\n\nOr are you looking for Christ?\n\nBe honest.\n\nHave you been reading Scripture\n\nwithout expecting to find Him there?\n\nWhat might change if every passage became an invitation\n\nto know Him more clearly?",
-  "lifeApplication": "The next time you read the Bible, try this.\n\nDo not just ask,\n\"What does this mean?\"\n\nAlso ask,\n\n\"How does this point me to Jesus?\"\n\nYou may not always see it right away.\n\nThat is okay.\n\nStay with the question.\n\nOver time, you will begin to notice something.\n\nThe Bible is not leading you in many directions.\n\nIt is leading you to one.",
-  "prayer": "Lord,\n\nOpen my eyes to see what I have missed.\n\nNot just words on a page,\n\nbut the One those words reveal.\n\nTeach me to read Scripture in a way that leads me to You.\n\nLet me not settle for information\n\nwhen You are offering relationship.\n\nReveal Yourself to me more clearly,\n\nand draw me closer as I read.\n\nAmen."
-}
-$json_l5$::jsonb
-where slug = 'the-bibles-central-theme';
-
-update public.lessons
-set reader_content = $json_l6$
-{
-  "openingThought": "It is possible to read the Bible and remain unchanged.\n\nTo understand it.\nTo think about it.\nEven to agree with it.\n\nAnd still nothing shifts.\n\nBut the Bible was never meant to be only read.\n\nIt was meant to be received.\n\nBecause Scripture is not just information.\n\nIt is alive.\n\nAnd living things do not leave us the same.",
-  "scriptureRef": "Hebrews 4:12 (ESV)",
-  "scriptureQuote": "For the word of God is living and active, sharper than any two-edged sword...",
-  "scriptureSecondaryRef": "John 6:63 (ESV)",
-  "scriptureSecondaryQuote": "The words that I have spoken to you are spirit and life.",
-  "scriptureAfterSecondary": "Isaiah 55:11 (ESV)\n\"My word... shall not return to me empty, but it shall accomplish that which I purpose.\"\n\nThe Bible does not describe itself as passive.\n\nIt speaks.\nIt works.\nIt accomplishes something.\n\nNot just around us,\n\nbut within us.",
-  "teachingPoints": [
-    "The Bible does more than inform.\nIt transforms.",
-    "Change does not come from reading quickly, but from receiving deeply.\nThe difference is not exposure, it is openness.",
-    "God works through His Word.\nIt is one of the ways He reaches us personally.",
-    "Transformation is often quiet before it is visible.\nWhat begins within will shape how you live."
-  ],
-  "studyInsight": {
-    "placement": "after_teaching",
-    "body": "Jesus often described truth using things that grow.\n\nSeeds.\nLight.\nWater.\n\nSomething small, carrying life within it.\n\nWhen a seed is planted, nothing seems to happen at first.\n\nBut beneath the surface, something begins.\n\nNot forced.\nNot rushed.\n\nAlive.\n\nIn the same way, Scripture works in us.\n\nSlowly.\nQuietly.\nDeeply.\n\nIt does not only inform.\n\nIt changes."
-  },
-  "reflectPrompt": "When you read the Bible,\n\nwhat are you expecting?\n\nInsight?\nClarity?\nAnswers?\n\nOr change?\n\nBe honest.\n\nHave you been reading without expecting it to affect you?\n\nWhat would happen if you approached Scripture\n\nbelieving it could actually reshape your thoughts, your habits, your direction?",
-  "lifeApplication": "This week, shift your approach.\n\nBefore you read, pause and ask:\n\n\"What in me needs to change?\"\n\nThen read a short passage.\n\nWhen something stands out, stay there.\n\nDo not move past it quickly.\n\nLet it challenge you.\nLet it correct you.\nLet it encourage you.\n\nThen choose one small response.\n\nA decision.\nA change in attitude.\nAn action.\n\nThe Word becomes alive in you\n\nwhen it is lived, not just read.",
-  "prayer": "Lord,\n\nLet Your Word do more than pass through my mind.\n\nLet it reach deeper.\n\nWhere I need correction, show me.\nWhere I need change, lead me.\nWhere I resist, soften me.\n\nPlant Your truth in me,\n\nand bring forth something new in my life.\n\nAmen."
-}
-$json_l6$::jsonb
-where slug = 'the-bible-as-a-living-word';
-
-update public.lessons
-set reader_content = $json_l7$
-{
-  "openingThought": "You have taken time to read.\nTo think.\nTo reflect.\n\nYou have seen what the Bible is.\nWhere it came from.\nWhy it can be trusted.\nHow to read it.\nWho it reveals.\nAnd what it does.\n\nNow the question changes.\n\nIt is no longer\n\"What is the Bible?\"\n\nIt becomes:\n\n\"What will I do with it?\"\n\nBecause at some point, understanding is not enough.\n\nA response is required.",
-  "scriptureRef": "James 1:22 (ESV)",
-  "scriptureQuote": "But be doers of the word, and not hearers only, deceiving yourselves.",
-  "scriptureSecondaryRef": "Joshua 1:8 (ESV)",
-  "scriptureSecondaryQuote": "This Book of the Law shall not depart from your mouth, but you shall meditate on it day and night...",
-  "scriptureAfterSecondary": "Luke 11:28 (ESV)\n\"Blessed rather are those who hear the word of God and keep it.\"\n\nThe Bible does not call for passive agreement.\n\nIt calls for response.\n\nNot just hearing,\n\nbut living.",
-  "teachingPoints": [
-    "Understanding Scripture is only the beginning.\nIts purpose is to guide your life.",
-    "Growth happens when truth is acted on.\nEven small steps begin to shape your direction.",
-    "Delay feels small, but it slowly weakens response.\nWhat is clear today should not be ignored.",
-    "God does not force change.\nHe invites it, and the invitation is meant to be answered."
-  ],
-  "studyInsight": {
-    "placement": "after_teaching",
-    "body": "Throughout Scripture, people who encountered truth were brought to a decision.\n\nNot pressure.\n\nClarity.\n\nSome responded.\nSome hesitated.\nSome walked away.\n\nThe difference was not what they heard.\n\nIt was what they chose to do with it.\n\nTruth carries weight.\n\nAnd with it,\n\nresponsibility."
-  },
-  "reflectPrompt": "Take a moment and be honest.\n\nWhat has stood out to you most through these studies?\n\nNot everything.\n\nJust one thing.\n\nNow ask yourself:\n\nHave I responded to it?\n\nOr have I simply noticed it and moved on?\n\nWhat is one step you already know you should take,\n\nbut have not taken yet?",
-  "lifeApplication": "Do not overcomplicate this.\n\nStart simple, but be clear.\n\nChoose one response.\n\nSet a consistent time to read.\nAct on something you have learned.\nReturn to a passage and apply it.\nSlow down and listen instead of rushing.\n\nWrite it down.\n\nMake it specific.\n\nThen follow through.\n\nReal change begins when you act on what you already know.",
-  "prayer": "Lord,\n\nThank You for speaking through Your Word.\n\nNot just to inform me,\n\nbut to lead me.\n\nShow me clearly what my response should be.\n\nGive me the willingness not just to hear,\n\nbut to act.\n\nHelp me take what I have learned\n\nand live it out, one step at a time.\n\nAmen."
-}
-$json_l7$::jsonb
-where slug = 'your-response';
 
 update public.lessons
 set reader_content = $json_ta_l1$

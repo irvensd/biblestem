@@ -114,12 +114,16 @@ export function filterSeriesForLibrary(
 
   const q = filters.query.trim().toLowerCase()
   if (q) {
-    list = list.filter(
-      (s) =>
+    list = list.filter((s) => {
+      const pathName = getPathNameForSeries(s, paths).toLowerCase()
+      const short = s.shortDescription?.toLowerCase() ?? ''
+      return (
         s.title.toLowerCase().includes(q) ||
         s.description.toLowerCase().includes(q) ||
-        getPathNameForSeries(s, paths).toLowerCase().includes(q),
-    )
+        short.includes(q) ||
+        pathName.includes(q)
+      )
+    })
   }
 
   if (filters.sort === 'lessons') {
@@ -136,7 +140,7 @@ export function filterSeriesForLibrary(
   return list
 }
 
-/** Buckets rendered in Study Library section headings; anything else maps to Other so series are never dropped. */
+/** Legacy: buckets by `collectionLabel` only (can mix levels under one shelf). Prefer `groupStudiesByLevelOrSection`. */
 const LIBRARY_COLLECTION_BUCKETS = ['Foundational Studies', 'Growth Studies', 'Advanced Studies'] as const
 
 export function groupSeriesByCollection(seriesList: StudySeries[]): Map<string, StudySeries[]> {
@@ -153,12 +157,41 @@ export function groupSeriesByCollection(seriesList: StudySeries[]): Map<string, 
   return map
 }
 
+/** Study Library shelf headings — ordered display; each shelf matches `StudySeries.level` so Beginner/Intermediate/Advanced are never mixed. */
+export const STUDY_LIBRARY_SECTION_ORDER = [
+  'Foundational Studies',
+  'Intermediate Studies',
+  'Advanced Studies',
+  'Other',
+] as const
+
+export type StudyLibrarySectionKey = (typeof STUDY_LIBRARY_SECTION_ORDER)[number]
+
+/**
+ * Groups series into library shelves by difficulty level (not `collectionLabel`).
+ * Beginner → Foundational Studies; Intermediate → Intermediate Studies; Advanced → Advanced Studies.
+ */
+export function groupStudiesByLevelOrSection(seriesList: StudySeries[]): Map<string, StudySeries[]> {
+  const map = new Map<string, StudySeries[]>()
+  for (const label of STUDY_LIBRARY_SECTION_ORDER) {
+    map.set(label, [])
+  }
+  for (const s of seriesList) {
+    let key: StudyLibrarySectionKey
+    if (s.level === 'Beginner') key = 'Foundational Studies'
+    else if (s.level === 'Intermediate') key = 'Intermediate Studies'
+    else if (s.level === 'Advanced') key = 'Advanced Studies'
+    else key = 'Other'
+    map.get(key)!.push(s)
+  }
+  return map
+}
+
 /** Recommended series slugs for dashboard (mock progression). */
 export function getRecommendedSeriesSlugs(): string[] {
   return [
-    'bible-gods-living-word',
+    'god-is-love',
     'three-angels-messages',
-    'knowing-christ-in-scripture',
-    'faith-that-shows-up',
+    'death-resurrection-hope-of-life',
   ]
 }

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { StudyCard } from '@/components/study/StudyCard'
 import { PageIntro } from '@/components/site/PageIntro'
@@ -47,7 +48,19 @@ export default async function PathDetailPage({ params }: { params: Promise<{ slu
       <div className="section-space">
         <div className="container-shell">
           {seriesList.length === 0 ? (
-            <p className="text-center text-sm text-zinc-600">No series in this path yet.</p>
+            <div className="mx-auto max-w-md rounded-xl border border-zinc-200/90 bg-stone-50/40 px-6 py-10 text-center">
+              <p className="text-sm font-medium text-zinc-900">Coming soon</p>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                Studies for this path are in preparation. Browse everything in the Study Library, or try a recommended
+                study first.
+              </p>
+              <Link
+                href="/study-library"
+                className="mt-5 inline-block text-sm font-medium text-blue-800 hover:text-blue-900"
+              >
+                Open Study Library
+              </Link>
+            </div>
           ) : (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {seriesList.map((study) => (

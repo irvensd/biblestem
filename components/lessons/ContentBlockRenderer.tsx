@@ -3,6 +3,7 @@ import { ReflectionNotes } from '@/components/lessons/ReflectionNotes'
 import { ScriptureBlock } from '@/components/lessons/ScriptureBlock'
 import { ScriptureChain } from '@/components/lessons/ScriptureChain'
 import { StudyInsightCard } from '@/components/lessons/StudyInsightCard'
+import { StudyVisualBlock } from '@/components/lessons/StudyVisualBlock'
 import { TeachingPointsBlock } from '@/components/lessons/TeachingPointsBlock'
 import { WordInsight } from '@/components/lessons/WordInsight'
 import { WordInsightCard } from '@/components/lessons/WordInsightCard'
@@ -121,6 +122,8 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
       return <LessonTextRenderer text={block.text} />
     case 'prayer':
       return <LessonTextRenderer text={block.text} tone="prayer" />
+    case 'studyVisual':
+      return <StudyVisualBlock block={block} />
     default:
       return null
   }

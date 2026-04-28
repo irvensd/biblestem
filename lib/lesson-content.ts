@@ -4,6 +4,10 @@
  * This file is the fallback when the DB has no payload (local dev, legacy slugs).
  */
 import { deathHopeSeriesLessonLibrary } from '@/lib/lesson-content-death-hope'
+import { godIsLoveSeriesLessonLibrary } from '@/lib/lesson-content-god-is-love'
+import { originOfEvilSeriesLessonLibrary } from '@/lib/lesson-content-origin-of-evil'
+import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
+import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
 
 /** Clickable Greek/Hebrew “word insight” (popover). */
 export interface WordInsight {
@@ -78,6 +82,11 @@ export interface LessonReaderContent {
     reference?: string
   }
   /**
+   * Multiple Word Insight cards on the Word Insight step. When set, this list drives that step
+   * (instead of a single `wordStudy` card). `wordStudy` may still be used for scripture tappables.
+   */
+  wordStudyInsights?: WordInsight[]
+  /**
    * When true with a full word-study step and `studyInsight` after teaching,
    * the word study screen comes before the Study Insight screen.
    */
@@ -104,7 +113,11 @@ export interface LessonReaderContent {
   /** Optional verse chain on the Scripture step (e.g. cross-refs). */
   scriptureChain?: { reference: string }[]
   /** Optional study blocks below the scripture block on the Scripture step (Word Insight, chains, etc.). */
-  scriptureSupplementBlocks?: import('@/lib/lesson-content-blocks').LessonContentBlock[]
+  scriptureSupplementBlocks?: LessonContentBlock[]
+  /** Optional structured blocks rendered after Teaching Points on that step (e.g. `studyVisual`). */
+  afterTeachingBlocks?: LessonContentBlock[]
+  /** Optional structured blocks rendered after the Study Insight card on that step (when `studyInsight` is set). */
+  studyInsightBlocks?: LessonContentBlock[]
   reflectPrompt: string
   lifeApplication: string
   prayer: string
@@ -114,6 +127,8 @@ export interface LessonReaderContent {
   forwardQuestion?: string
   /** Overrides the default “series complete” card and CTAs on the last lesson. */
   seriesCompleteScreen?: SeriesCompleteScreenCopy
+  /** Optional quick review after Life Application (and Prayer when present). See `buildLessonSteps`. */
+  lessonQuiz?: LessonQuizPayload
 }
 
 export function wordStudyToInsight(ws: NonNullable<LessonReaderContent['wordStudy']>): WordInsight {
@@ -5583,6 +5598,8 @@ Amen.`,
       secondaryCta: { label: 'Explore more prophecy studies', href: '/paths/prophecy' },
     },
   },
+  ...godIsLoveSeriesLessonLibrary,
+  ...originOfEvilSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {
     openingThought: 'Approach this passage slowly. Let the text set the terms before you draw conclusions.',
@@ -5672,6 +5689,85 @@ function parseStudyInsightVariant(raw: unknown): StudyInsightVariant | undefined
   return STUDY_INSIGHT_VARIANTS.has(raw as StudyInsightVariant) ? (raw as StudyInsightVariant) : undefined
 }
 
+function parseLessonQuiz(raw: unknown): LessonQuizPayload | undefined {
+  if (raw == null || typeof raw !== 'object') return undefined
+  const o = raw as Record<string, unknown>
+  const st = o.settings
+  if (typeof st !== 'object' || st === null) return undefined
+  const s = st as Record<string, unknown>
+  const quizRequired = typeof s.quizRequired === 'boolean' ? s.quizRequired : false
+  const passingScoreRaw = typeof s.passingScore === 'number' ? s.passingScore : 70
+  const passingScore = Math.min(100, Math.max(0, Math.round(passingScoreRaw)))
+  const allowRetake = typeof s.allowRetake === 'boolean' ? s.allowRetake : true
+
+  if (!Array.isArray(o.questions) || o.questions.length === 0) return undefined
+  const questions: LessonQuizQuestion[] = []
+  for (const q of o.questions) {
+    if (q == null || typeof q !== 'object') continue
+    const qr = q as Record<string, unknown>
+    if (typeof qr.prompt !== 'string' || !qr.prompt.trim()) continue
+    const id =
+      typeof qr.id === 'string' && qr.id.trim()
+        ? qr.id.trim()
+        : `quiz-q-${questions.length + 1}`
+
+    const kind = qr.kind
+    if (kind === 'reflection') {
+      const explanation = typeof qr.explanation === 'string' ? qr.explanation : undefined
+      questions.push({
+        id,
+        kind: 'reflection',
+        prompt: qr.prompt.trim(),
+        ...(explanation !== undefined ? { explanation } : {}),
+      })
+      continue
+    }
+
+    const opts = qr.options
+    if (!Array.isArray(opts) || opts.length !== 4 || !opts.every((x) => typeof x === 'string')) continue
+    const optTuple = opts as [string, string, string, string]
+
+    if (kind === 'multi' || Array.isArray(qr.correctIndices)) {
+      const rawIdx = qr.correctIndices
+      if (!Array.isArray(rawIdx) || rawIdx.length === 0) continue
+      const idxs: number[] = []
+      for (const x of rawIdx) {
+        if (typeof x !== 'number' || x !== Math.floor(x) || x < 0 || x > 3) continue
+        idxs.push(x)
+      }
+      const uniq = [...new Set(idxs)].sort((a, b) => a - b)
+      if (uniq.length === 0) continue
+      questions.push({
+        id,
+        kind: 'multi',
+        prompt: qr.prompt.trim(),
+        options: optTuple,
+        correctIndices: uniq as [number, ...number[]],
+      })
+      continue
+    }
+
+    const ci = qr.correctIndex
+    if (ci !== 0 && ci !== 1 && ci !== 2 && ci !== 3) continue
+    questions.push({
+      id,
+      prompt: qr.prompt.trim(),
+      options: optTuple,
+      correctIndex: ci,
+    })
+  }
+  if (!questions.length) return undefined
+
+  const payload: LessonQuizPayload = {
+    settings: { quizRequired, passingScore, allowRetake },
+    questions,
+  }
+  if (typeof o.eyebrow === 'string' && o.eyebrow.trim()) payload.eyebrow = o.eyebrow.trim()
+  if (typeof o.title === 'string' && o.title.trim()) payload.title = o.title.trim()
+  if (typeof o.description === 'string' && o.description.trim()) payload.description = o.description.trim()
+  return payload
+}
+
 /**
  * Parse `lessons.reader_content` from Supabase. Returns null if shape is invalid so the UI can fall back.
  */
@@ -5751,6 +5847,10 @@ export function parseLessonReaderContent(raw: unknown): LessonReaderContent | nu
   }
   if (wordStudy) out.wordStudy = wordStudy
   if (typeof r.wordStudyFullStep === 'boolean') out.wordStudyFullStep = r.wordStudyFullStep
+  if (Array.isArray(r.wordStudyInsights)) {
+    const list = r.wordStudyInsights.map(parseWordInsight).filter((x): x is WordInsight => x != null)
+    if (list.length) out.wordStudyInsights = list
+  }
   if (Array.isArray(r.scriptureWordInsights)) {
     const list = r.scriptureWordInsights.map(parseWordInsight).filter((x): x is WordInsight => x != null)
     if (list.length) out.scriptureWordInsights = list
@@ -5791,9 +5891,13 @@ export function parseLessonReaderContent(raw: unknown): LessonReaderContent | nu
     if (chain.length) out.scriptureChain = chain
   }
   if (Array.isArray(r.scriptureSupplementBlocks) && r.scriptureSupplementBlocks.length > 0) {
-    out.scriptureSupplementBlocks = r.scriptureSupplementBlocks as NonNullable<
-      LessonReaderContent['scriptureSupplementBlocks']
-    >
+    out.scriptureSupplementBlocks = r.scriptureSupplementBlocks as LessonContentBlock[]
+  }
+  if (Array.isArray(r.afterTeachingBlocks) && r.afterTeachingBlocks.length > 0) {
+    out.afterTeachingBlocks = r.afterTeachingBlocks as LessonContentBlock[]
+  }
+  if (Array.isArray(r.studyInsightBlocks) && r.studyInsightBlocks.length > 0) {
+    out.studyInsightBlocks = r.studyInsightBlocks as LessonContentBlock[]
   }
   if (typeof r.completionSummary === 'string') out.completionSummary = r.completionSummary
   if (typeof r.forwardQuestion === 'string') out.forwardQuestion = r.forwardQuestion
@@ -5811,6 +5915,8 @@ export function parseLessonReaderContent(raw: unknown): LessonReaderContent | nu
   if (typeof r.lifeApplicationStepTitle === 'string' && r.lifeApplicationStepTitle.trim()) {
     out.lifeApplicationStepTitle = r.lifeApplicationStepTitle.trim()
   }
+  const parsedQuiz = parseLessonQuiz(r.lessonQuiz)
+  if (parsedQuiz) out.lessonQuiz = parsedQuiz
   return out
 }
 

@@ -1,11 +1,5 @@
 import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
-import type {
-  ActiveStudyState,
-  DashboardNote,
-  ProgressTotals,
-  StudyPathItem,
-  TodayFocus,
-} from '@/lib/dashboard-mock-data'
+import type { ActiveStudyState, CurrentPathInfo, ProgressTotals, TodayFocus } from '@/lib/dashboard-mock-data'
 import type { Lesson, StudySeries } from '@/lib/types/product'
 import type { LocalDashboardProgress } from '@/lib/dashboard-local-progress'
 import { lessonKey } from '@/lib/dashboard-local-progress'
@@ -59,6 +53,100 @@ function findNextIncomplete(
   return null
 }
 
+/** Prefer the most recent incomplete lesson if it still matches local “last lesson,” else first incomplete. */
+function resolveActiveLesson(
+  seriesList: StudySeries[],
+  p: LocalDashboardProgress,
+): { series: StudySeries; lesson: Lesson } | null {
+  if (p.lastLesson) {
+    const hit = findLesson(seriesList, p.lastLesson.seriesSlug, p.lastLesson.lessonSlug)
+    if (hit) {
+      const k = lessonKey(hit.series.slug, hit.lesson.slug)
+      if (!p.completedKeys.includes(k)) {
+        return hit
+      }
+    }
+  }
+  return findNextIncomplete(seriesList, p)
+}
+
+function primaryScriptureLine(lesson: Lesson): string {
+  const first = lesson.scripture
+    .split('·')
+    .map((s) => s.trim())
+    .filter(Boolean)[0]
+  return first ?? lesson.scripture
+}
+
+/** Primary = first ·-segment; related = rest, comma-separated for display. */
+function splitScriptureParts(lesson: Lesson): { primary: string; related: string } {
+  const parts = lesson.scripture
+    .split('·')
+    .map((s) => s.trim())
+    .filter(Boolean)
+  const primary = parts[0] ?? lesson.scripture.trim()
+  const related = parts.length > 1 ? parts.slice(1).join(', ') : ''
+  return { primary, related }
+}
+
+function focusSentenceForLesson(lesson: Lesson, lessonTitle: string): string {
+  const s = lesson.summary?.trim()
+  if (s) return s.length > 160 ? `${s.slice(0, 157)}…` : s
+  return `Stay in “${lessonTitle}”: one clear step today is enough.`
+}
+
+function studyLessonsProgressLine(series: StudySeries, p: LocalDashboardProgress): string {
+  const lessons = sortedLessons(series)
+  const done = lessons.filter((l) => p.completedKeys.includes(lessonKey(series.slug, l.slug))).length
+  return `${done} of ${lessons.length} lessons completed`
+}
+
+function startedSeriesInPath(
+  pathId: string,
+  seriesList: StudySeries[],
+  p: LocalDashboardProgress,
+): number {
+  const inPath = seriesList.filter((s) => s.studyPathId === pathId)
+  let n = 0
+  for (const s of inPath) {
+    const has =
+      s.lessons.some((l) => p.completedKeys.includes(lessonKey(s.slug, l.slug))) ||
+      p.lastLesson?.seriesSlug === s.slug
+    if (has) n++
+  }
+  return n
+}
+
+function findPathIdForSeriesSlug(catalog: LoadedCatalog, seriesSlug: string): string | null {
+  const s = catalog.allSeries.find((x) => x.slug === seriesSlug)
+  if (!s) return null
+  return s.studyPathId
+}
+
+function computeCurrentPath(
+  catalog: LoadedCatalog,
+  p: LocalDashboardProgress,
+  active: ActiveStudyState | null,
+): CurrentPathInfo | null {
+  const seriesSlug = p.lastLesson?.seriesSlug ?? active?.studySlug
+  if (!seriesSlug) return null
+  const pathId = findPathIdForSeriesSlug(catalog, seriesSlug)
+  if (!pathId) return null
+  const path = catalog.paths.find((x) => x.id === pathId)
+  if (!path) return null
+  const series = catalog.allSeries.find((s) => s.slug === seriesSlug)
+  if (!series) return null
+
+  return {
+    pathSlug: path.slug,
+    pathName: path.name,
+    viewPathHref: `/paths/${path.slug}`,
+    activeStudyCount: startedSeriesInPath(pathId, catalog.allSeries, p),
+    currentStudyTitle: series.title,
+    studyProgressLine: studyLessonsProgressLine(series, p),
+  }
+}
+
 function buildActiveState(series: StudySeries, lesson: Lesson, p: LocalDashboardProgress): ActiveStudyState {
   const k = lessonKey(series.slug, lesson.slug)
   const done = p.completedKeys.includes(k)
@@ -68,16 +156,40 @@ function buildActiveState(series: StudySeries, lesson: Lesson, p: LocalDashboard
 
   let progressPercent = 0
   let minutesRemaining = lesson.durationMinutes
+  let currentStepLine = 'Not started'
+  let stepIndex = 0
+  let totalStepsKnown = 0
 
   if (done) {
     progressPercent = 100
     minutesRemaining = 0
+    currentStepLine = 'Lesson complete'
+    if (isCurrentLast && last) {
+      stepIndex = Math.min(last.stepIndex, last.totalSteps - 1)
+      totalStepsKnown = last.totalSteps
+    }
   } else if (isCurrentLast) {
     const total = last!.totalSteps
     const step = Math.min(last!.stepIndex, total - 1)
+    totalStepsKnown = total
+    stepIndex = step
     progressPercent = Math.min(99, Math.round(((step + 1) / total) * 100))
     minutesRemaining = Math.max(1, Math.round(lesson.durationMinutes * (1 - (step + 1) / total)))
+    currentStepLine = `Step ${step + 1} of ${total}`
+  } else {
+    // Incomplete lesson, no in-reader position yet: still default to first step in URL.
+    currentStepLine = 'Step 1'
+    // TODO(lesson-progress): when reader never opened, show total from lesson model once steps are estimable.
   }
+
+  const stepQuery =
+    !done && totalStepsKnown > 0
+      ? `?step=${stepIndex}`
+      : !done
+        ? `?step=0`
+        : ''
+  const continueHref = `/study-library/${series.slug}/lesson/${lesson.slug}${stepQuery}`
+  const { primary: scripturePrimary, related: scriptureRelated } = splitScriptureParts(lesson)
 
   return {
     studySlug: series.slug,
@@ -85,8 +197,15 @@ function buildActiveState(series: StudySeries, lesson: Lesson, p: LocalDashboard
     lessonSlug: lesson.slug,
     lessonTitle: lesson.title,
     scripture: lesson.scripture,
+    primaryScripture: scripturePrimary,
+    relatedScripture: scriptureRelated,
     progressPercent,
     minutesRemaining,
+    currentStepLine,
+    stepIndex,
+    totalStepsKnown,
+    studyLessonsProgressLine: studyLessonsProgressLine(series, p),
+    continueHref,
   }
 }
 
@@ -137,98 +256,43 @@ export function computeProgressTotals(seriesList: StudySeries[], p: LocalDashboa
 }
 
 export function computeActiveStudy(
-  seriesList: StudySeries[],
+  catalog: LoadedCatalog,
   p: LocalDashboardProgress,
 ): ActiveStudyState | null {
+  const seriesList = catalog.allSeries
   if (seriesList.length === 0) return null
 
-  const next = findNextIncomplete(seriesList, p)
+  const next = resolveActiveLesson(seriesList, p)
   if (!next) return null
 
   return buildActiveState(next.series, next.lesson, p)
 }
 
-export function computeHeaderStats(progress: ProgressTotals): {
-  streakDays: number
-  lessonsCompleted: number
-  totalMinutesStudied: number
-} {
-  return {
-    streakDays: progress.streakDays,
-    lessonsCompleted: progress.lessonsCompleted,
-    totalMinutesStudied: progress.totalMinutes,
-  }
-}
-
-export function buildStudyPathNavItems(paths: import('@/lib/types/product').StudyPath[]): StudyPathItem[] {
-  if (paths.length === 0) return []
-  const firstSlug = [...paths].sort((a, b) => a.sortOrder - b.sortOrder)[0]!.slug
-  return paths.map((p) => ({
-    id: p.slug,
-    label: p.name,
-    description: p.description,
-    href: `/paths/${p.slug}`,
-    isCurrent: p.slug === firstSlug,
-    isRecommended: false,
-  }))
-}
-
-const REFLECTION_PREFIX = 'biblestem-reflection-'
-
-export function computeReflectionNotesPreview(seriesList: StudySeries[], limit: number): DashboardNote[] {
-  if (typeof window === 'undefined') return []
-  const out: DashboardNote[] = []
-  try {
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-      if (!key?.startsWith(REFLECTION_PREFIX)) continue
-      const raw = localStorage.getItem(key)
-      if (!raw?.trim()) continue
-
-      const rest = key.slice(REFLECTION_PREFIX.length)
-      let matched: { series: StudySeries; lesson: Lesson } | null = null
-      for (const series of sortedSeries(seriesList)) {
-        const prefix = `${series.slug}-`
-        if (rest.startsWith(prefix)) {
-          const lessonSlug = rest.slice(prefix.length)
-          const lesson = series.lessons.find((l) => l.slug === lessonSlug)
-          if (lesson) {
-            matched = { series, lesson }
-            break
-          }
-        }
-      }
-
-      const refLabel = matched
-        ? `${matched.lesson.scripture.split('·')[0]?.trim() ?? matched.lesson.title} · ${matched.lesson.title}`
-        : 'Reflection'
-      const snippet = raw.trim().slice(0, 200) + (raw.length > 200 ? '…' : '')
-      out.push({
-        id: key,
-        reference: refLabel,
-        snippet,
-        updatedLabel: 'Saved on this device',
-      })
-      if (out.length >= limit) break
-    }
-  } catch {
-    return []
-  }
-  return out
-}
-
 export function computeTodayFocus(seriesList: StudySeries[], active: ActiveStudyState | null): TodayFocus {
   if (active) {
     const hit = findLesson(seriesList, active.studySlug, active.lessonSlug)
-    const verse = hit
-      ? `“${hit.lesson.scripture.split('·')[0]?.trim() ?? hit.lesson.scripture}”`
-      : '“Your word is a lamp to my feet and a light to my path.”'
+    const ref = hit ? primaryScriptureLine(hit.lesson) : active.primaryScripture
+    const line = hit
+      ? focusSentenceForLesson(hit.lesson, active.lessonTitle)
+      : `Stay in “${active.lessonTitle}”: one clear step today is enough.`
     return {
       eyebrow: 'Today’s focus',
-      verse,
-      reflection: `Continue “${active.lessonTitle}” when you have a quiet moment—consistency matters more than length.`,
+      reference: ref,
+      line,
       ctaLabel: active.progressPercent >= 100 ? 'Review lesson' : 'Open lesson',
-      lessonHref: `/study-library/${active.studySlug}/lesson/${active.lessonSlug}`,
+      lessonHref: active.continueHref,
+    }
+  }
+
+  const starter = findLesson(seriesList, 'god-is-love', 'the-logic-of-love')
+  if (starter) {
+    const ref = primaryScriptureLine(starter.lesson)
+    return {
+      eyebrow: 'Today’s focus',
+      reference: ref,
+      line: focusSentenceForLesson(starter.lesson, starter.lesson.title),
+      ctaLabel: 'Open first lesson',
+      lessonHref: `/study-library/${starter.series.slug}/lesson/${starter.lesson.slug}?step=0`,
     }
   }
 
@@ -238,17 +302,17 @@ export function computeTodayFocus(seriesList: StudySeries[], active: ActiveStudy
   if (s && l) {
     return {
       eyebrow: 'Today’s focus',
-      verse: '“Your word is a lamp to my feet and a light to my path.”',
-      reflection: `Start with “${l.title}” in ${s.title}—one step is enough for today.`,
+      reference: primaryScriptureLine(l),
+      line: focusSentenceForLesson(l, l.title),
       ctaLabel: 'Open first lesson',
-      lessonHref: `/study-library/${s.slug}/lesson/${l.slug}`,
+      lessonHref: `/study-library/${s.slug}/lesson/${l.slug}?step=0`,
     }
   }
 
   return {
     eyebrow: 'Today’s focus',
-    verse: '“Man shall not live by bread alone, but by every word that comes from the mouth of God.”',
-    reflection: 'Pick a study in the library and open the first lesson when you are ready.',
+    reference: 'Study',
+    line: 'Pick a study in the library and open the first lesson when you are ready.',
     ctaLabel: 'Browse library',
     lessonHref: '/study-library',
   }
@@ -257,10 +321,8 @@ export function computeTodayFocus(seriesList: StudySeries[], active: ActiveStudy
 export type DashboardBundle = {
   progress: ProgressTotals
   activeStudy: ActiveStudyState | null
-  headerStats: ReturnType<typeof computeHeaderStats>
   todayFocus: TodayFocus
-  studyPathsNav: StudyPathItem[]
-  notes: DashboardNote[]
+  currentPath: CurrentPathInfo | null
   /** Total lesson rows across all series in the catalog (for “caught up” detection). */
   totalLessonsInCatalog: number
   /** True when every catalog lesson is marked complete locally. */
@@ -274,21 +336,17 @@ function totalLessonsInCatalog(seriesList: StudySeries[]): number {
 export function buildDashboardBundle(catalog: LoadedCatalog, local: LocalDashboardProgress): DashboardBundle {
   const seriesList = catalog.allSeries
   const progress = computeProgressTotals(seriesList, local)
-  const activeStudy = computeActiveStudy(seriesList, local)
-  const headerStats = computeHeaderStats(progress)
+  const activeStudy = computeActiveStudy(catalog, local)
   const todayFocus = computeTodayFocus(seriesList, activeStudy)
-  const studyPathsNav = buildStudyPathNavItems(catalog.paths)
-  const reflectionNotes = computeReflectionNotesPreview(seriesList, 5)
+  const currentPath = computeCurrentPath(catalog, local, activeStudy)
   const totalLessons = totalLessonsInCatalog(seriesList)
   const allLessonsComplete = totalLessons > 0 && progress.lessonsCompleted === totalLessons
 
   return {
     progress,
     activeStudy,
-    headerStats,
     todayFocus,
-    studyPathsNav,
-    notes: reflectionNotes,
+    currentPath,
     totalLessonsInCatalog: totalLessons,
     allLessonsComplete,
   }

@@ -3,10 +3,14 @@ import type { StudySeries } from '@/lib/types/product'
 
 /** Shared dashboard UI types and formatting helpers. Progress is computed in `dashboard-compute`. */
 
+/** Recent reflection rows for the dashboard — populated from `lib/reflection-notes-dashboard.ts`. */
 export type DashboardNote = {
   id: string
-  reference: string
+  studyTitle: string
+  lessonTitle: string
+  stepLabel: string
   snippet: string
+  openHref: string
   updatedLabel: string
 }
 
@@ -15,15 +19,39 @@ export type ActiveStudyState = {
   studyTitle: string
   lessonSlug: string
   lessonTitle: string
+  /** Passages line from the lesson; primary line is the first ref before · */
   scripture: string
+  /** First scripture reference in the row (e.g. John 1:1) */
+  primaryScripture: string
+  /** Remaining references joined with `, ` (empty if only one block) */
+  relatedScripture: string
   progressPercent: number
   minutesRemaining: number
+  /** Human string e.g. “Step 3 of 7” or “Not started” */
+  currentStepLine: string
+  stepIndex: number
+  totalStepsKnown: number
+  /** `series lessons completed` of `total` */
+  studyLessonsProgressLine: string
+  /** Open lesson, including `?step=` when step index is known */
+  continueHref: string
+}
+
+export type CurrentPathInfo = {
+  pathSlug: string
+  pathName: string
+  viewPathHref: string
+  activeStudyCount: number
+  currentStudyTitle: string
+  studyProgressLine: string
 }
 
 export type TodayFocus = {
   eyebrow: string
-  verse: string
-  reflection: string
+  /** e.g. John 1:1 */
+  reference: string
+  /** One short focus line */
+  line: string
   ctaLabel: string
   lessonHref: string
 }

@@ -5,6 +5,8 @@ export type LessonNavigationProps = {
   onContinue: () => void
   showPrevious: boolean
   onPrevious: () => void
+  /** When true, disables Continue (e.g. required quiz not yet passed). */
+  continueDisabled?: boolean
 }
 
 const btnBase = `inline-flex min-h-11 w-full items-center justify-center rounded-xl text-sm font-medium transition-colors duration-200 ${READER_FOCUS_RING}`
@@ -15,6 +17,7 @@ export function LessonNavigation({
   onContinue,
   showPrevious,
   onPrevious,
+  continueDisabled = false,
 }: LessonNavigationProps) {
   return (
     <div className="mt-4 border-t border-zinc-200/90 bg-[#fbfbfa]/95 pb-[max(1.75rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur-sm">
@@ -31,7 +34,9 @@ export function LessonNavigation({
             <button
               type="button"
               onClick={onContinue}
-              className={`${btnBase} min-w-0 bg-blue-800 px-5 text-white hover:bg-blue-900`}
+              disabled={continueDisabled}
+              aria-disabled={continueDisabled}
+              className={`${btnBase} min-w-0 bg-blue-800 px-5 text-white hover:bg-blue-900 disabled:pointer-events-none disabled:opacity-50`}
             >
               {continueLabel}
             </button>
@@ -40,7 +45,9 @@ export function LessonNavigation({
           <button
             type="button"
             onClick={onContinue}
-            className={`${btnBase} w-full bg-blue-800 px-5 text-white hover:bg-blue-900`}
+            disabled={continueDisabled}
+            aria-disabled={continueDisabled}
+            className={`${btnBase} w-full bg-blue-800 px-5 text-white hover:bg-blue-900 disabled:pointer-events-none disabled:opacity-50`}
           >
             {continueLabel}
           </button>

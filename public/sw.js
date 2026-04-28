@@ -3,7 +3,7 @@
  * Handles caching strategies to prevent stale data
  */
 
-const CACHE_VERSION = 'v2.0.0'
+const CACHE_VERSION = 'v2.0.2'
 const CACHE_NAME = `biblestem-${CACHE_VERSION}`
 
 // Resources to cache immediately on install

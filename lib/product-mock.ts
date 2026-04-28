@@ -1,6 +1,6 @@
 /**
  * Mock catalog fallback when Supabase is empty or unavailable.
- * Series: “The Bible — God’s Living Word” (Foundations), “The Three Angels' Messages” (Prophecy).
+ * Foundations include God Is Love and related series; prophecy includes Three Angels’ Messages.
  */
 
 import type {
@@ -22,36 +22,33 @@ export const studyPaths: StudyPath[] = [
     id: 'b1000001-0000-4000-8000-000000000001',
     slug: 'foundations',
     name: 'Foundations',
-    description: 'Core doctrines, first principles, and clarity for new readers.',
+    description:
+      'For new readers who want to understand Scripture clearly and build a strong foundation.',
     sortOrder: 1,
   },
   {
     id: 'b1000001-0000-4000-8000-000000000002',
     slug: 'prophecy',
     name: 'Prophecy',
-    description: 'Last-day themes in Scripture, read with care and hope.',
+    description:
+      'For readers who want to study Daniel, Revelation, worship, judgment, and last-day messages with care.',
     sortOrder: 2,
   },
   {
     id: 'b1000001-0000-4000-8000-000000000003',
     slug: 'theology',
     name: 'Theology',
-    description: 'Doctrine rooted in Scripture, with clarity and humility.',
+    description:
+      'For deeper doctrinal studies that require careful context and Scripture-to-Scripture reasoning.',
     sortOrder: 3,
   },
   {
     id: 'b1000001-0000-4000-8000-000000000004',
     slug: 'life-application',
     name: 'Life Application',
-    description: 'Wisdom for daily choices, habits, and relationships.',
+    description:
+      'For practical studies on prayer, character, temptation, habits, relationships, and daily obedience.',
     sortOrder: 4,
-  },
-  {
-    id: 'b1000001-0000-4000-8000-000000000005',
-    slug: 'state-of-the-dead',
-    name: 'State of the Dead',
-    description: 'What Scripture teaches about death, the soul, resurrection, and eternal life in Christ.',
-    sortOrder: 5,
   },
 ]
 
@@ -66,121 +63,272 @@ const wordStudies: WordStudy[] = [
   },
 ]
 
-const lessonBible1: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000001',
-  slug: 'a-book-unlike-any-other',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000010',
-  title: 'A Book Unlike Any Other',
-  summary: 'Awakening wonder: one book, many voices, one message.',
-  durationMinutes: 8,
-  scripture: 'John 1:1 · Luke 24:27',
+const lessonOrigin1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000601',
+  slug: 'did-god-create-the-devil',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
+  title: 'Did God Create the Devil?',
+  summary:
+    'Learn how the Bible explains Satan’s origin and why God is not the author of evil.',
+  durationMinutes: 10,
+  scripture: '1 John 3:8 · Revelation 12:9 · Ezekiel 28:15',
   sortOrder: 1,
   progressState: 'not_started',
   sections: [],
 }
 
-const lessonBible2: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000002',
-  slug: 'how-the-bible-came-to-us',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000010',
-  title: 'How the Bible Came to Us',
-  summary: 'How did this book reach us? A gentle path into authors, manuscripts, and trust.',
-  durationMinutes: 8,
-  scripture: '2 Timothy 3:16',
+const lessonOrigin2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000602',
+  slug: 'lucifer-before-the-fall',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
+  title: 'Lucifer Before the Fall',
+  summary:
+    'Study Lucifer’s original beauty, wisdom, position, and purpose before sin was found in him.',
+  durationMinutes: 10,
+  scripture: 'Isaiah 14:12 · Luke 10:18 · Ezekiel 28:12 to 15',
   sortOrder: 2,
   progressState: 'not_started',
   sections: [],
 }
 
-const lessonBible3: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000003',
-  slug: 'can-the-bible-be-trusted',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000010',
-  title: 'Can the Bible Be Trusted?',
-  summary: 'Why confidence in Scripture is grounded in history, preservation, and truth.',
-  durationMinutes: 8,
-  scripture: 'Isaiah 40:8 · Psalm 119:160 · Matthew 5:18',
+const lessonOrigin3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000603',
+  slug: 'the-birth-of-pride',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
+  title: 'The Birth of Pride',
+  summary:
+    'See how pride, jealousy, and self-exaltation turned Lucifer’s heart against God.',
+  durationMinutes: 10,
+  scripture: 'Ezekiel 28:17 · Isaiah 14:13 to 14 · Matthew 4:8 to 10',
   sortOrder: 3,
   progressState: 'not_started',
   sections: [],
 }
 
-const lessonBible4: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000004',
-  slug: 'how-to-read-the-bible',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000010',
-  title: 'How to Read the Bible',
-  summary: 'A practical, Scripture-first rhythm to read with clarity, patience, and attention.',
-  durationMinutes: 8,
-  scripture: 'Psalm 119:105 · James 1:5 · 2 Timothy 2:15',
+const lessonOrigin4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000604',
+  slug: 'war-in-heaven',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
+  title: 'War in Heaven',
+  summary:
+    'Understand why Lucifer was cast out and how rebellion spread among the angels.',
+  durationMinutes: 11,
+  scripture: 'Revelation 12:7 to 9 · Revelation 12:4 · John 8:44',
   sortOrder: 4,
   progressState: 'not_started',
   sections: [],
 }
 
-const lessonBible5: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000005',
-  slug: 'the-bibles-central-theme',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000010',
-  title: 'The Bible’s Central Theme',
-  summary: 'One unified story centered on Christ, from beginning to fulfillment.',
-  durationMinutes: 8,
-  scripture: 'Luke 24:27 · John 5:39',
+const lessonOrigin5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000605',
+  slug: 'the-first-lie-on-earth',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
+  title: 'The First Lie on Earth',
+  summary:
+    'Study how Satan deceived Eve and introduced sin, suffering, and death to humanity.',
+  durationMinutes: 11,
+  scripture: 'Genesis 2:16 to 17 · Genesis 3:1 · Genesis 3:4 to 5 · Genesis 3:22 to 24',
   sortOrder: 5,
   progressState: 'not_started',
   sections: [],
 }
 
-const lessonBible6: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000006',
-  slug: 'the-bible-as-a-living-word',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000010',
-  title: 'The Bible as a Living Word',
-  summary: 'Scripture not just as information, but as living truth that transforms from within.',
-  durationMinutes: 8,
-  scripture: 'Hebrews 4:12 · John 6:63 · Isaiah 55:11',
+const lessonOrigin6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000606',
+  slug: 'how-satan-deceives-today',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
+  title: 'How Satan Deceives Today',
+  summary:
+    'Learn Satan’s methods of deception and how Scripture protects believers from counterfeit light.',
+  durationMinutes: 11,
+  scripture: '2 Corinthians 11:14 to 15 · Matthew 4:5 to 7 · Revelation 16:13 to 14 · 1 Peter 5:8',
   sortOrder: 6,
   progressState: 'not_started',
   sections: [],
 }
 
-const lessonBible7: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000007',
-  slug: 'your-response',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000010',
-  title: 'Your Response',
-  summary: 'Move from understanding to response by acting on what God has made clear.',
-  durationMinutes: 8,
-  scripture: 'James 1:22 · Joshua 1:8 · Luke 11:28',
+const lessonOrigin7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000607',
+  slug: 'how-god-ends-sin-forever',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
+  title: 'How God Ends Sin Forever',
+  summary:
+    'See how God will end sin, vindicate His character, and restore creation through Christ.',
+  durationMinutes: 11,
+  scripture: 'Revelation 20:10 · Matthew 25:41 · Ezekiel 28:18 to 19 · Philippians 2:10 to 11 · Nahum 1:9',
   sortOrder: 7,
   progressState: 'not_started',
   sections: [],
 }
 
-const seriesBibleLivingWord: StudySeries = {
-  id: 'e4000001-0000-4000-8000-000000000010',
-  slug: 'bible-gods-living-word',
+const lessonGodLove1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000611',
+  slug: 'the-logic-of-love',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000070',
+  title: 'The Logic of Love',
+  summary:
+    'See why love requires communication and why a God of love would want to be known.',
+  durationMinutes: 10,
+  scripture: '1 John 4:8 · Genesis 1:27 · John 15:15 · 2 Timothy 3:16',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonGodLove2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000612',
+  slug: 'a-god-who-speaks',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000070',
+  title: 'A God Who Speaks',
+  summary:
+    'See how God speaks through prophets, apostles, and Scripture so His love can be known with clarity.',
+  durationMinutes: 10,
+  scripture: 'Hebrews 1:1 to 2 · 2 Peter 1:21 · 2 Timothy 3:16 · John 17:17',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonGodLove3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000613',
+  slug: 'a-god-who-knows-the-future',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000070',
+  title: 'A God Who Knows the Future',
+  summary:
+    'Walk through Daniel 2 and see prophecy as confidence in the God who knows the end from the beginning.',
+  durationMinutes: 12,
+  scripture: 'Daniel 2:27 to 28 · Daniel 2:44 · Isaiah 46:9 to 10 · John 14:29',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonGodLove4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000614',
+  slug: 'a-god-who-can-be-known',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000070',
+  title: 'A God Who Can Be Known',
+  summary:
+    'See why eternal life is knowing God through Jesus Christ, not merely endless time or bare facts.',
+  durationMinutes: 10,
+  scripture: 'John 17:3 · Jeremiah 9:23 to 24 · Hosea 6:3 · John 14:7',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonGodLove5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000615',
+  slug: 'truth-has-a-center',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000070',
+  title: 'Truth Has a Center',
+  summary:
+    'See how all true doctrine reveals God’s character, because Scripture’s center is the God who is love.',
+  durationMinutes: 10,
+  scripture: '1 John 4:16 · John 5:39 · Luke 24:27 · Psalm 89:14',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonGodLove6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000616',
+  slug: 'jesus-reveals-the-father',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000070',
+  title: 'Jesus Reveals the Father',
+  summary:
+    'See Jesus as the clearest revelation of the Father’s character: mercy, truth, and love made visible.',
+  durationMinutes: 10,
+  scripture: 'John 14:8 to 9 · Hebrews 1:3 · Colossians 1:15 · John 1:18',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonGodLove7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000617',
+  slug: 'the-invitation-to-friendship',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000070',
+  title: 'The Invitation to Friendship',
+  summary:
+    'Respond to God’s invitation into friendship: trust, obedience, nearness, and life with Him through Christ.',
+  durationMinutes: 10,
+  scripture: 'John 15:13 to 15 · Revelation 21:3 · James 2:23 · Psalm 25:14',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const godIsLoveLongDescription = `This beginner-friendly BibleStem study explores the character of God through Scripture. It shows that love requires communication, that the Bible is God’s self-revelation, that prophecy gives a rational basis for trust, and that every true doctrine reveals something about God’s heart. The goal is not merely to learn religious information, but to know God personally.`
+
+const seriesGodIsLove: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000070',
+  slug: 'god-is-love',
   studyPathId: 'b1000001-0000-4000-8000-000000000001',
-  title: 'The Bible — God’s Living Word',
-  subtitle: 'One story, many voices, grounded in Christ.',
+  title: 'God Is Love',
+  subtitle: 'Scripture, prophecy, doctrine, and salvation through the lens of God’s love.',
   shortDescription:
-    'Discover Scripture as one unified story across time—written by many, yet pointing in one direction: toward God, and toward Christ.',
-  description:
-    'Discover Scripture as one unified story across time—written by many, yet pointing in one direction: toward God, and toward Christ.',
+    'Discover why Scripture, prophecy, doctrine, and salvation all begin with one central truth: God is love.',
+  longDescription: godIsLoveLongDescription,
+  description: godIsLoveLongDescription,
   level: 'Beginner',
-  durationSummary: '56 min total',
+  durationSummary: '75 min total',
   lessonsCount: 7,
   featured: true,
   collectionLabel: 'Foundational Studies',
   sortOrder: 0,
   whatYouWillLearn: [
-    'See how the Bible holds together as one narrative across many authors and centuries.',
-    'Understand how Scripture was formed and why it can be read with confidence.',
-    'Practice a simple, sustainable rhythm for reading with context and humility.',
-    'Recognize Christ as the center of the Bible’s storyline from beginning to fulfillment.',
-    'Move from insight to obedience as the Spirit applies the Word to everyday life.',
+    'Help users see Bible truth through the central reality that God is love.',
+    'Learn why communication matters if God is love, and how Scripture reveals Him honestly.',
+    'See prophecy as evidence that God orders history and invites trust.',
+    'Ground doctrine in Christ so teaching stays warm and personal.',
+    'Respond to Jesus’s invitation into friendship shaped by grace and truth.',
   ],
-  lessons: [lessonBible1, lessonBible2, lessonBible3, lessonBible4, lessonBible5, lessonBible6, lessonBible7],
+  lessons: [
+    lessonGodLove1,
+    lessonGodLove2,
+    lessonGodLove3,
+    lessonGodLove4,
+    lessonGodLove5,
+    lessonGodLove6,
+    lessonGodLove7,
+  ],
+}
+
+const originOfEvilLongDescription = `This BibleStem study explains where evil came from, who Satan is, how Lucifer fell, why God allowed sin to unfold, how deception works, and how Christ will finally end evil forever. The study is Scripture-first, practical, and focused on God’s character.`
+
+const seriesOriginOfEvil: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000060',
+  slug: 'origin-of-evil',
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Origin of Evil',
+  subtitle: 'God created Lucifer perfect, but Lucifer chose pride, rebellion, and deception.',
+  shortDescription:
+    'A clear Bible study on Lucifer, Satan, sin, deception, free will, and God’s character.',
+  longDescription: originOfEvilLongDescription,
+  description: originOfEvilLongDescription,
+  level: 'Intermediate',
+  durationSummary: '80 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Growth Studies',
+  sortOrder: 2,
+  whatYouWillLearn: [
+    'Help users understand that God did not create the devil. God created Lucifer perfect, but Lucifer chose pride, rebellion, and deception.',
+    'Trace Satan’s origin and methods using Scripture rather than speculation.',
+    'See how pride and self-exaltation corrupt trusted roles.',
+    'Recognize deception’s patterns from Eden to today.',
+    'Anchor hope in Christ’s final defeat of evil and God’s restored creation.',
+  ],
+  lessons: [
+    lessonOrigin1,
+    lessonOrigin2,
+    lessonOrigin3,
+    lessonOrigin4,
+    lessonOrigin5,
+    lessonOrigin6,
+    lessonOrigin7,
+  ],
 }
 
 const lessonThreeAngels1: Lesson = {
@@ -554,8 +702,8 @@ const lessonDeathHope2: Lesson = {
   title: 'Rachel’s Departing Soul',
   summary:
     'Understand the biblical meaning of soul, spirit, breath, and life through Genesis 35:18 and related passages.',
-  durationMinutes: 10,
-  scripture: 'Genesis 35:18 · Genesis 2:7',
+  durationMinutes: 12,
+  scripture: 'Genesis 35:18 · Genesis 2:7 · Ecclesiastes 12:7 · James 2:26',
   sortOrder: 2,
   progressState: 'not_started',
   sections: [],
@@ -565,10 +713,9 @@ const lessonDeathHope3: Lesson = {
   slug: 'a-thief-and-a-witch',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'A Thief and a Witch',
-  summary:
-    'Study the thief on the cross and the witch of Endor without assuming conscious life after death.',
-  durationMinutes: 10,
-  scripture: 'Luke 23:42–43 · 1 Samuel 28',
+  summary: 'The thief on the cross, Paradise, John 20:17, the witch of Endor, and reading by clear Scripture, not appearances.',
+  durationMinutes: 12,
+  scripture: 'Luke 23:42 to 43 · John 20:17 · 1 Samuel 28:13 to 14 · Deuteronomy 18:10 to 12',
   sortOrder: 3,
   progressState: 'not_started',
   sections: [],
@@ -578,9 +725,11 @@ const lessonDeathHope4: Lesson = {
   slug: 'absent-from-the-body',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'Absent from the Body',
-  summary: 'Examine Paul’s words in 2 Corinthians 5 and what it means to be present with the Lord.',
-  durationMinutes: 10,
-  scripture: '2 Corinthians 5:6–8 · Philippians 3:20–21',
+  summary:
+    '2 Corinthians 5, the tent, the building, being clothed, and resurrection hope with 1 Corinthians 15.',
+  durationMinutes: 12,
+  scripture:
+    '2 Corinthians 5:1 · 2 Corinthians 5:4 · 2 Corinthians 5:8 to 10 · 1 Corinthians 15:52 to 54',
   sortOrder: 4,
   progressState: 'not_started',
   sections: [],
@@ -590,9 +739,10 @@ const lessonDeathHope5: Lesson = {
   slug: 'pauls-desire-to-depart',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'Paul’s Desire to Depart',
-  summary: 'Study Philippians 1 and Paul’s hope in resurrection, not natural immortality.',
-  durationMinutes: 10,
-  scripture: 'Philippians 1:21–24',
+  summary:
+    'Paul, departure, the return of Christ, and why the next moment for the believer is resurrection hope.',
+  durationMinutes: 11,
+  scripture: 'Philippians 1:21 to 23 · 2 Timothy 4:6 to 8 · 1 Thessalonians 4:16 to 17',
   sortOrder: 5,
   progressState: 'not_started',
   sections: [],
@@ -603,9 +753,9 @@ const lessonDeathHope6: Lesson = {
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'The Souls Under the Altar',
   summary:
-    'Understand Revelation 6 through biblical symbolism, sacrifice, martyrdom, and justice.',
-  durationMinutes: 10,
-  scripture: 'Revelation 6:9–11 · Genesis 4:10',
+    'Revelation 6, sanctuary imagery, martyrs, blood, justice, and Scripture explaining Scripture.',
+  durationMinutes: 12,
+  scripture: 'Revelation 6:9 to 11 · Genesis 4:10 · Leviticus 17:11',
   sortOrder: 6,
   progressState: 'not_started',
   sections: [],
@@ -615,9 +765,10 @@ const lessonDeathHope7: Lesson = {
   slug: 'the-spirits-of-just-men',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'The Spirits of Just Men',
-  summary: 'Explore Hebrews 12 and what it means for the faithful to be made perfect.',
-  durationMinutes: 10,
-  scripture: 'Hebrews 12:22–24 · Hebrews 11:39–40',
+  summary:
+    'Hebrews 12, the assembly above, Christ the mediator, the new covenant, and spirits of just men made perfect.',
+  durationMinutes: 12,
+  scripture: 'Hebrews 12:22 to 24 · Hebrews 11:39 to 40 · Hebrews 10:14',
   sortOrder: 7,
   progressState: 'not_started',
   sections: [],
@@ -627,9 +778,10 @@ const lessonDeathHope8: Lesson = {
   slug: 'preaching-to-the-spirits-in-prison',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'Preaching to the Spirits in Prison',
-  summary: 'Study 1 Peter 3 and identify who the spirits in prison are.',
-  durationMinutes: 10,
-  scripture: '1 Peter 3:18–22 · Genesis 6',
+  summary:
+    "1 Peter 3, Noah, the Spirit, preaching, resurrection, and Christ's victory in context.",
+  durationMinutes: 12,
+  scripture: '1 Peter 3:18 to 20 · 2 Peter 2:5 · Genesis 6:3',
   sortOrder: 8,
   progressState: 'not_started',
   sections: [],
@@ -639,9 +791,11 @@ const lessonDeathHope9: Lesson = {
   slug: 'three-doctrines-that-belong-together',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'Three Doctrines That Belong Together',
-  summary: 'See how the judgment, the state of the dead, and the second coming fit together.',
-  durationMinutes: 10,
-  scripture: 'Ecclesiastes 9:5 · John 5:28–29 · 1 Thessalonians 4:16–17',
+  summary:
+    'Judgment, the state of the dead, the second coming, and keeping those doctrines with Scripture together.',
+  durationMinutes: 11,
+  scripture:
+    'Genesis 2:7 · Ecclesiastes 12:7 · Daniel 12:2 · 2 Corinthians 5:10 · Revelation 22:12',
   sortOrder: 9,
   progressState: 'not_started',
   sections: [],
@@ -651,9 +805,10 @@ const lessonDeathHope10: Lesson = {
   slug: 'the-dead-who-stand-before-god',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'The Dead Who Stand Before God',
-  summary: 'Understand Revelation 20 and the judgment of the dead.',
-  durationMinutes: 10,
-  scripture: 'Revelation 20:11–15 · John 5:28–29',
+  summary:
+    'Revelation 20, the judgment books, the millennium, resurrection, the second death, and Hades.',
+  durationMinutes: 12,
+  scripture: 'Revelation 20:11 to 12 · Revelation 20:13 to 15 · Daniel 7:10',
   sortOrder: 10,
   progressState: 'not_started',
   sections: [],
@@ -663,9 +818,10 @@ const lessonDeathHope11: Lesson = {
   slug: 'the-resurrection-and-the-life',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'The Resurrection and the Life',
-  summary: 'Study John 11 and the hope Jesus gave at the tomb of Lazarus.',
-  durationMinutes: 10,
-  scripture: 'John 11:25–26 · John 11:43–44',
+  summary:
+    'John 11, Lazarus, resurrection, Christ over death, and the tie to the rich man and Lazarus in Luke 16.',
+  durationMinutes: 12,
+  scripture: 'John 11:11 to 14 · John 11:23 to 26 · John 11:43 to 44',
   sortOrder: 11,
   progressState: 'not_started',
   sections: [],
@@ -675,9 +831,11 @@ const lessonDeathHope12: Lesson = {
   slug: 'the-keys-of-hades',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'The Keys of Hades',
-  summary: 'Learn the meaning of Sheol and Hades and why they refer to the grave, not eternal torment.',
-  durationMinutes: 10,
-  scripture: 'Revelation 1:18 · Psalm 16:10',
+  summary:
+    "Sheol, Hades, the grave, translation, resurrection, and Christ's authority over death.",
+  durationMinutes: 12,
+  scripture:
+    'Psalm 16:10 · Acts 2:27 · Hosea 13:14 · 1 Corinthians 15:54 to 55 · Revelation 1:18',
   sortOrder: 12,
   progressState: 'not_started',
   sections: [],
@@ -687,9 +845,10 @@ const lessonDeathHope13: Lesson = {
   slug: 'the-rich-man-and-lazarus',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'The Rich Man and Lazarus',
-  summary: 'Study the parable of the rich man and Lazarus in context.',
-  durationMinutes: 10,
-  scripture: 'Luke 16:19–31',
+  summary:
+    'Luke 16, the Pharisees, parable, Moses and the prophets, resurrection, and Scripture as enough.',
+  durationMinutes: 12,
+  scripture: 'Luke 16:19 to 21 · Luke 16:29 to 31 · John 11:43 to 44',
   sortOrder: 13,
   progressState: 'not_started',
   sections: [],
@@ -699,9 +858,10 @@ const lessonDeathHope14: Lesson = {
   slug: 'all-live-to-him',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'All Live to Him',
-  summary: 'Understand Luke 20 and how God speaks of the faithful in light of resurrection.',
-  durationMinutes: 10,
-  scripture: 'Luke 20:37–38 · Exodus 3:6',
+  summary:
+    'Luke 20, the Sadducees, the God of Abraham, Isaac, and Jacob, resurrection, and all live to Him.',
+  durationMinutes: 11,
+  scripture: 'Luke 20:37 to 38 · Matthew 22:29 · Acts 23:8 · Hebrews 11:13',
   sortOrder: 14,
   progressState: 'not_started',
   sections: [],
@@ -711,9 +871,11 @@ const lessonDeathHope15: Lesson = {
   slug: 'the-worm-and-the-fire',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'The Worm and the Fire',
-  summary: 'Study biblical language about unquenchable fire, undying worm, and final destruction.',
-  durationMinutes: 10,
-  scripture: 'Mark 9:43–48 · Isaiah 66:24',
+  summary:
+    'Everlasting fire, unquenchable fire, the worm, final destruction, and God as just and good.',
+  durationMinutes: 12,
+  scripture:
+    'Matthew 25:41 · Matthew 25:46 · Mark 9:43 to 44 · Jude 7 · 2 Peter 2:6',
   sortOrder: 15,
   progressState: 'not_started',
   sections: [],
@@ -723,9 +885,11 @@ const lessonDeathHope16: Lesson = {
   slug: 'immortality-or-resurrection',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'Immortality or Resurrection?',
-  summary: 'Contrast the biblical hope of resurrection with the idea of natural immortality.',
-  durationMinutes: 10,
-  scripture: '1 Corinthians 15:51–54 · 1 Timothy 6:15–16',
+  summary:
+    'Natural immortality versus resurrection: 1 Corinthians 15, athanasia, and Christ as the giver of life.',
+  durationMinutes: 12,
+  scripture:
+    '1 Corinthians 15:16 to 18 · 1 Corinthians 15:20 to 22 · 2 Timothy 1:10 · 1 Timothy 6:15 to 16',
   sortOrder: 16,
   progressState: 'not_started',
   sections: [],
@@ -735,9 +899,10 @@ const lessonDeathHope17: Lesson = {
   slug: 'the-first-lie',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'The First Lie',
-  summary: 'Trace the first deception in Eden and how it shapes false views of death.',
-  durationMinutes: 10,
-  scripture: 'Genesis 3:1–4 · Genesis 2:17',
+  summary:
+    'Genesis 3, mot tamut, Satan, the senses, and holding to what God has said in His Word.',
+  durationMinutes: 12,
+  scripture: 'Genesis 2:16 to 17 · Genesis 3:1 · Genesis 3:4 to 5 · Genesis 3:6',
   sortOrder: 17,
   progressState: 'not_started',
   sections: [],
@@ -747,9 +912,10 @@ const lessonDeathHope18: Lesson = {
   slug: 'spirits-of-devils',
   studySeriesId: 'e4000001-0000-4000-8000-000000000050',
   title: 'Spirits of Devils',
-  summary: 'Study spiritualism, deception, and why Scripture must be our final authority.',
-  durationMinutes: 10,
-  scripture: 'Revelation 16:13–14 · Isaiah 8:20',
+  summary:
+    'Revelation 16, daimonia, false signs, Isaiah 8, and Scripture as the test of every spirit.',
+  durationMinutes: 12,
+  scripture: 'Revelation 16:13 to 14 · Matthew 24:23 to 25 · Isaiah 8:19 to 20',
   sortOrder: 18,
   progressState: 'not_started',
   sections: [],
@@ -911,7 +1077,7 @@ const lessonFaith3: Lesson = {
 const seriesFaithThatShowsUp: StudySeries = {
   id: 'e4000001-0000-4000-8000-000000000040',
   slug: 'faith-that-shows-up',
-  studyPathId: 'b1000001-0000-4000-8000-000000000004',
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
   title: 'Faith That Shows Up',
   subtitle: 'Letting Scripture reshape habits, words, and money.',
   shortDescription:
@@ -922,7 +1088,7 @@ const seriesFaithThatShowsUp: StudySeries = {
   durationSummary: '27 min total',
   lessonsCount: 3,
   featured: false,
-  collectionLabel: 'Growth Studies',
+  collectionLabel: 'Foundational Studies',
   sortOrder: 2,
   whatYouWillLearn: [
     'Name the difference between quiet trust and spiritual performance.',
@@ -988,7 +1154,8 @@ const seriesThreeAngelsMessages: StudySeries = {
 
 /** All series in the mock catalog. */
 export const studySeriesCatalog: StudySeries[] = [
-  seriesBibleLivingWord,
+  seriesGodIsLove,
+  seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,
   seriesKnowingChristInScripture,
@@ -1003,10 +1170,10 @@ export const mockUserSeriesProgress: UserSeriesProgress[] = [
   {
     id: 'g6000001-0000-4000-8000-000000000001',
     userId: demoUserId,
-    studySeriesId: seriesBibleLivingWord.id,
+    studySeriesId: seriesGodIsLove.id,
     startedAt: '2025-03-01T12:00:00.000Z',
     completedAt: null,
-    lastLessonSlug: lessonBible1.slug,
+    lastLessonSlug: lessonGodLove1.slug,
     percentComplete: 38,
   },
 ]
@@ -1015,7 +1182,7 @@ export const mockUserLessonProgress: UserLessonProgress[] = [
   {
     id: 'h7000001-0000-4000-8000-000000000001',
     userId: demoUserId,
-    lessonId: lessonBible1.id,
+    lessonId: lessonGodLove1.id,
     state: 'in_progress',
     updatedAt: '2025-03-21T10:00:00.000Z',
   },
@@ -1025,9 +1192,9 @@ export const mockNotes: Note[] = [
   {
     id: 'n8000001-0000-4000-8000-000000000001',
     userId: demoUserId,
-    lessonId: lessonBible1.id,
-    verseReference: 'John 1:1',
-    body: 'One story, many voices—come back to this when the chapter feels crowded.',
+    lessonId: lessonGodLove1.id,
+    verseReference: '1 John 4:8',
+    body: 'Come back to this line when the lesson feels crowded.',
     updatedAt: '2025-03-21T15:00:00.000Z',
   },
 ]
@@ -1036,9 +1203,9 @@ export const mockHighlights: Highlight[] = [
   {
     id: 'i9000001-0000-4000-8000-000000000001',
     userId: demoUserId,
-    lessonId: lessonBible1.id,
-    verseReference: 'John 1:1',
-    body: 'In the beginning was the Word, and the Word was with God, and the Word was God.',
+    lessonId: lessonGodLove1.id,
+    verseReference: '1 John 4:8',
+    body: 'He who does not love does not know God, for God is love.',
     updatedAt: '2025-03-20T08:00:00.000Z',
   },
 ]

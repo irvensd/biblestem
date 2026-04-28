@@ -133,8 +133,8 @@ function HeroProductVisual() {
 
           <div className="rounded-xl border border-zinc-200 bg-zinc-50/80 p-4 shadow-sm ring-1 ring-zinc-950/5">
             <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-400">Featured</p>
-            <p className="mt-2 text-sm font-semibold text-zinc-900">The Bible — God’s Living Word</p>
-            <p className="mt-1 line-clamp-2 text-xs leading-5 text-zinc-600">Two lessons · Foundations · Beginner</p>
+            <p className="mt-2 text-sm font-semibold text-zinc-900">God Is Love</p>
+            <p className="mt-1 line-clamp-2 text-xs leading-5 text-zinc-600">Seven lessons · Foundations · Beginner</p>
             <div className="mt-3 h-1 w-full rounded-full bg-zinc-200">
               <div className="h-1 w-[38%] rounded-full bg-blue-800/80" />
             </div>
@@ -240,7 +240,8 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
           <SupportCard
             title="Always free, supported by generosity."
             description="BibleStem is donation-supported so serious Bible study remains accessible to everyone."
-            ctaHref="/support"
+            primaryCta="link"
+            ctaHref="/donate"
             ctaLabel="Support the ministry"
             variant="muted"
           />

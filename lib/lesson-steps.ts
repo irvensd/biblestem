@@ -5,6 +5,7 @@ import {
   type WordInsight,
   wordStudyToInsight,
 } from '@/lib/lesson-content'
+import type { LessonQuizPayload } from '@/lib/lesson-quiz-types'
 import type { LessonSection, LessonSectionType } from '@/lib/types/product'
 
 export type LessonStepType =
@@ -18,6 +19,12 @@ export type LessonStepType =
   | 'prayer'
 
 export type WordStudyPayload = NonNullable<LessonReaderContent['wordStudy']>
+
+function wordStepInsightsFromContent(content: LessonReaderContent): WordInsight[] {
+  if (content.wordStudyInsights?.length) return content.wordStudyInsights
+  if (content.wordStudy) return [wordStudyToInsight(content.wordStudy)]
+  return []
+}
 
 export type LessonStep =
   | {
@@ -54,12 +61,26 @@ export type LessonStep =
       title: string
       points: string[]
       teachingInsights: { pointIndex: number; insights: WordInsight[] }[]
+      appendBlocks?: LessonContentBlock[]
     }
-  | { type: 'word_study'; title: string; intro: string; data: WordStudyPayload }
-  | { type: 'study_insight'; title: string; body: string; variant?: StudyInsightVariant }
+  | { type: 'word_study'; title: string; intro: string; insights: WordInsight[] }
+  | {
+      type: 'study_insight'
+      title: string
+      body: string
+      variant?: StudyInsightVariant
+      appendBlocks?: LessonContentBlock[]
+    }
   | { type: 'reflect_journal'; title: string; prompt: string }
   | { type: 'life_application'; title: string; body: string }
   | { type: 'prayer'; title: string; body: string }
+  | {
+      type: 'quiz_review'
+      eyebrow: string
+      title: string
+      description: string
+      quiz: LessonQuizPayload
+    }
 
 /** One step per row from `lesson_sections` (Supabase or mock with sections). */
 function tryParseStructuredBlocks(raw: string): LessonContentBlock[] | undefined {
@@ -109,13 +130,13 @@ function scriptureInsightsFromContent(content: LessonReaderContent): WordInsight
 }
 
 function includeFullWordStudyStep(content: LessonReaderContent): boolean {
-  return Boolean(content.wordStudy && content.wordStudyFullStep !== false)
+  if (content.wordStudyFullStep === false) return false
+  return wordStepInsightsFromContent(content).length > 0
 }
 
 /** Ordered steps for the guided lesson flow (one screen at a time). */
 export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
   const steps: LessonStep[] = []
-  const ws = content.wordStudy ?? null
   const insightPlacement = content.studyInsight?.placement ?? 'after_teaching'
   const si = content.studyInsight
 
@@ -147,6 +168,7 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
       title: si.title ?? SECTION_TITLES.study_insight,
       body: si.body,
       variant: si.variant,
+      appendBlocks: content.studyInsightBlocks,
     })
   }
 
@@ -155,17 +177,19 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
     title: SECTION_TITLES.teaching_points,
     points: content.teachingPoints,
     teachingInsights: content.teachingWordInsights ?? [],
+    appendBlocks: content.afterTeachingBlocks,
   })
 
   const wordStudyIntroDefault = 'Take a closer look at the term that unlocks part of this passage.'
+  const stepInsights = wordStepInsightsFromContent(content)
   const wsStep: LessonStep | null =
-    includeFullWordStudyStep(content) && ws
+    includeFullWordStudyStep(content) && stepInsights.length
       ? {
           type: 'word_study',
           title: content.wordStudyStepTitle ?? SECTION_TITLES.word_study,
           intro:
             content.wordStudyStepIntro !== undefined ? content.wordStudyStepIntro : wordStudyIntroDefault,
-          data: ws,
+          insights: stepInsights,
         }
       : null
 
@@ -175,6 +199,7 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
       title: si.title ?? SECTION_TITLES.study_insight,
       body: si.body,
       variant: si.variant,
+      appendBlocks: content.studyInsightBlocks,
     }
     if (content.wordStudyBeforeStudyInsight && wsStep) {
       steps.push(wsStep, insightStep)
@@ -203,6 +228,17 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
       type: 'prayer',
       title: SECTION_TITLES.prayer,
       body: content.prayer,
+    })
+  }
+
+  const endQuiz = content.lessonQuiz
+  if (endQuiz?.questions?.length) {
+    steps.push({
+      type: 'quiz_review',
+      eyebrow: endQuiz.eyebrow ?? 'CHECK YOUR UNDERSTANDING',
+      title: endQuiz.title ?? 'Quick Review',
+      description: endQuiz.description ?? 'Check your understanding before moving on.',
+      quiz: endQuiz,
     })
   }
 

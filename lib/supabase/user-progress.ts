@@ -127,6 +127,20 @@ export async function touchDashboardActivityRemote(supabase: SupabaseClient, use
   await recordActivityDayRemote(supabase, userId)
 }
 
+/** Wipe all per-lesson progress and activity days for a single user (settings → reset). */
+export async function clearAllProgressRemote(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  const [progRes, dayRes] = await Promise.all([
+    supabase.from('user_study_progress').delete().eq('user_id', userId),
+    supabase.from('user_activity_days').delete().eq('user_id', userId),
+  ])
+  if (progRes.error) return { ok: false, message: progRes.error.message }
+  if (dayRes.error) return { ok: false, message: dayRes.error.message }
+  return { ok: true }
+}
+
 export async function mergeLocalProgressIntoRemote(
   supabase: SupabaseClient,
   userId: string,

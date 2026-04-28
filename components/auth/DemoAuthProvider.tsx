@@ -27,7 +27,9 @@ type DemoAuthContextValue = {
   isReady: boolean
   login: (email: string, password: string) => Promise<AuthActionResult>
   register: (email: string, password: string, fullName: string) => Promise<AuthActionResult>
-  logout: () => Promise<void>
+  logout: (options?: { navigateTo?: string }) => Promise<void>
+  /** Persist a new first name (Supabase `profiles.display_name` when configured, otherwise local profile). */
+  updateFirstName: (firstName: string) => Promise<AuthActionResult>
 }
 
 const DemoAuthContext = createContext<DemoAuthContextValue | null>(null)
@@ -241,18 +243,56 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
     return { ok: false, message: 'Could not complete sign-up. Try again or sign in if you already have an account.' }
   }, [])
 
-  const logout = useCallback(async () => {
+  const logout = useCallback(async (options?: { navigateTo?: string }) => {
     const supabase = getSupabaseBrowserClient()
     if (supabase) {
       await supabase.auth.signOut()
     }
     safeStorageRemove(STORAGE_KEY)
+    // Full-page navigation resets client state; skip setUser(null) so protected layouts never
+    // flash “Redirecting…” between auth clearing and unload.
+    if (typeof window !== 'undefined' && options?.navigateTo) {
+      window.location.href = options.navigateTo
+      return
+    }
     setUser(null)
   }, [])
 
+  const updateFirstName = useCallback(
+    async (firstName: string): Promise<AuthActionResult> => {
+      const trimmed = firstName.trim()
+      if (!trimmed) return { ok: false, message: 'Enter a name first.' }
+
+      const current = user
+      if (!current) return { ok: false, message: 'You need to be signed in.' }
+
+      if (!isSupabaseConfigured() || !current.id) {
+        saveProfile(current.email, trimmed)
+        setUser({ ...current, firstName: trimmed })
+        return { ok: true }
+      }
+
+      const supabase = getSupabaseBrowserClient()
+      if (!supabase) return { ok: false, message: 'Could not connect to authentication.' }
+      const { error } = await supabase.from('profiles').upsert(
+        {
+          id: current.id,
+          display_name: trimmed,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'id' },
+      )
+      if (error) return { ok: false, message: error.message }
+      setUser({ ...current, firstName: trimmed })
+      saveProfile(current.email, trimmed)
+      return { ok: true }
+    },
+    [user],
+  )
+
   const value = useMemo(
-    () => ({ user, isReady, login, register, logout }),
-    [user, isReady, login, register, logout],
+    () => ({ user, isReady, login, register, logout, updateFirstName }),
+    [user, isReady, login, register, logout, updateFirstName],
   )
 
   return <DemoAuthContext.Provider value={value}>{children}</DemoAuthContext.Provider>

@@ -63,3 +63,34 @@ export async function upsertLessonNoteRemote(
   }
   return true
 }
+
+export type RecentLessonNoteRow = {
+  id: string
+  study_id: string
+  lesson_id: string
+  step_number: number
+  content: string
+  created_at: string
+  updated_at: string
+}
+
+/** Recent rows for dashboard merge; returns [] when Supabase is unavailable or query fails. */
+export async function fetchRecentLessonNotesRemote(userId: string, limit: number): Promise<RecentLessonNoteRow[]> {
+  if (!isSupabaseConfigured()) return []
+  const supabase = getSupabaseBrowserClient()
+  if (!supabase) return []
+  const { data, error } = await supabase
+    .from('user_notes')
+    .select('id, study_id, lesson_id, step_number, content, created_at, updated_at')
+    .eq('user_id', userId)
+    .order('updated_at', { ascending: false })
+    .limit(limit)
+
+  if (error) {
+    if (isMissingTableOrRlsError(error)) return []
+    console.warn('[user_notes] list', error.message)
+    return []
+  }
+  if (!data?.length) return []
+  return data as RecentLessonNoteRow[]
+}

@@ -10,10 +10,17 @@ import {
 
 export default async function LessonReaderPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string; lessonSlug: string }>
+  searchParams: Promise<{ step?: string | string[] }>
 }) {
   const { slug, lessonSlug } = await params
+  const sp = await searchParams
+  const raw = Array.isArray(sp.step) ? sp.step[0] : sp.step
+  const parsed = raw != null && /^\d+$/.test(String(raw)) ? parseInt(String(raw), 10) : 0
+  const initialStepIndex = Number.isFinite(parsed) && parsed >= 0 ? parsed : 0
+
   const catalog = await loadCatalog()
   const data = findLessonInCatalogFromCatalog(catalog, slug, lessonSlug)
   if (!data) return notFound()
@@ -32,7 +39,13 @@ export default async function LessonReaderPage({
           </div>
         </div>
       ) : null}
-      <LessonReader study={series} lesson={lesson} content={content} />
+      <LessonReader
+        key={`${slug}-${lessonSlug}-${initialStepIndex}`}
+        study={series}
+        lesson={lesson}
+        content={content}
+        initialStepIndex={initialStepIndex}
+      />
     </>
   )
 }

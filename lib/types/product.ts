@@ -7,6 +7,16 @@ import type { LessonReaderContent } from '@/lib/lesson-content'
 
 export type StudyLevel = 'Beginner' | 'Intermediate' | 'Advanced'
 
+/** Optional Study Library subgroup for Beginner-level series (chips when many beginners). */
+export const BEGINNER_TRACK_VALUES = [
+  'Start Here',
+  'Core Beliefs',
+  'Spiritual Life',
+  'Hope and Restoration',
+] as const
+
+export type BeginnerTrack = (typeof BEGINNER_TRACK_VALUES)[number]
+
 export type LessonCompletionState = 'not_started' | 'in_progress' | 'complete'
 
 export type LessonSectionType = 'scripture' | 'teaching' | 'reflection' | 'word_study' | 'other'

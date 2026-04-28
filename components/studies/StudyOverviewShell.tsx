@@ -24,12 +24,17 @@ import {
   primaryCtaHref,
   primaryCtaLabel,
 } from '@/lib/studies/progress'
+import { extractScriptureChainsFromStudy } from '@/lib/lesson-scripture-chains'
 import type { CatalogSource } from '@/lib/catalog/load-catalog'
 import type { StudyOverviewStatic } from '@/lib/studies/types'
-import type { StudyPath, StudySeries } from '@/lib/types/product'
+import type { StudyPath, StudySeries, StudySeriesWithPath } from '@/lib/types/product'
+import { ScriptureChain } from '@/components/lessons/ScriptureChain'
+import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/report-issue-href'
 
 interface StudyOverviewShellProps {
   overview: StudyOverviewStatic
+  /** Full catalog series (lessons with reader_content / sections) for Scripture chain aggregation when study is complete. */
+  studySeries?: StudySeriesWithPath
   relatedStudies: StudySeries[]
   studyPaths: StudyPath[]
   showCatalogFallback: boolean
@@ -79,6 +84,7 @@ function currentLessonTitleFromProgress(
 
 export function StudyOverviewShell({
   overview,
+  studySeries,
   relatedStudies,
   studyPaths,
   showCatalogFallback,
@@ -101,6 +107,11 @@ export function StudyOverviewShell({
     () => allLessonsCompleted(overview.seriesSlug, overview.lessons, progress),
     [overview.lessons, overview.seriesSlug, progress],
   )
+
+  const studyScriptureChains = useMemo(() => {
+    if (!studySeries?.lessons?.length) return []
+    return extractScriptureChainsFromStudy(studySeries)
+  }, [studySeries])
 
   const primaryAction = useMemo(
     () => getPrimaryAction(overview.seriesSlug, overview.lessons, progress),
@@ -184,19 +195,44 @@ export function StudyOverviewShell({
       {seriesComplete ? (
         <div className="border-b border-zinc-200/80 bg-white">
           <div className="container-shell max-w-5xl py-8">
-            <div className="rounded-xl border border-zinc-200/90 bg-stone-50/80 p-6 ring-1 ring-zinc-950/[0.03] md:p-8">
-              <h2 className="text-lg font-semibold tracking-tight text-zinc-900">Study complete</h2>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                You have completed {overview.title}.
-              </p>
-              <div className="mt-6 flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Button href={`#lessons`} className="w-full sm:w-auto">
-                  Review lessons
-                </Button>
-                <Button href="/study-library" variant="secondary" className="w-full sm:w-auto">
-                  Explore related studies
-                </Button>
+            <div className="space-y-6">
+              <div className="rounded-xl border border-zinc-200/90 bg-stone-50/80 p-6 ring-1 ring-zinc-950/[0.03] md:p-8">
+                <h2 className="text-lg font-semibold tracking-tight text-zinc-900">Study complete</h2>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                  You have completed {overview.title}.
+                </p>
+                <div className="mt-6 flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <Button href={`#lessons`} className="w-full sm:w-auto">
+                    Review lessons
+                  </Button>
+                  <Button href="/study-library" variant="secondary" className="w-full sm:w-auto">
+                    Explore related studies
+                  </Button>
+                </div>
               </div>
+
+              {studySeries && studyScriptureChains.length > 0 ? (
+                <div className="rounded-xl border border-zinc-200/90 bg-stone-50/80 p-6 ring-1 ring-zinc-950/[0.03] md:p-8">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">SCRIPTURE CHAINS</p>
+                  <h3 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900">Connections you studied</h3>
+                  {studyScriptureChains.length > 5 ? (
+                    <p className="mt-3 text-sm leading-relaxed text-zinc-600">
+                      You studied {studyScriptureChains.length} Scripture chains in this study.
+                    </p>
+                  ) : null}
+                  <div className="mt-5 flex flex-col gap-4">
+                    {studyScriptureChains.slice(0, 5).map((chain) => (
+                      <ScriptureChain
+                        key={chain.id}
+                        title={chain.title}
+                        takeaway={chain.takeaway}
+                        verses={chain.verses}
+                        references={chain.references}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -238,6 +274,17 @@ export function StudyOverviewShell({
             <div className="mt-6">
               <LessonList studySlug={overview.seriesSlug} lessons={overview.lessons} getStatus={getStatus} />
             </div>
+            <p className="mt-8 text-center sm:text-left">
+              <Link
+                href={supportReportHref({
+                  type: 'content-correction',
+                  study: overview.seriesSlug,
+                })}
+                className={REPORT_ISSUE_LINK_CLASSNAME}
+              >
+                Report an issue with this study
+              </Link>
+            </p>
           </section>
         </div>
 

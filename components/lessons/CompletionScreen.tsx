@@ -1,12 +1,22 @@
 import Link from 'next/link'
+import { CopyMisunderstoodSummaryButton } from '@/components/lessons/CopyMisunderstoodSummaryButton'
 import { READER_FOCUS_RING } from '@/components/lessons/lesson-reader-focus'
+import { ScriptureChain } from '@/components/lessons/ScriptureChain'
 import { Button } from '@/components/ui/Button'
-import { formatLessonDuration } from '@/lib/product-queries'
+import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/report-issue-href'
 import type { SeriesCompleteScreenCopy } from '@/lib/lesson-content'
+import type { LessonScriptureChainRecap } from '@/lib/lesson-scripture-chains'
+import { buildMisunderstoodPassageCopyText, type MisunderstoodPassage } from '@/lib/misunderstood-passages'
+import { formatLessonDuration } from '@/lib/product-queries'
+import type { WordInsightCompletionLine } from '@/lib/word-insights-completion'
 import type { Lesson } from '@/lib/types/product'
 
 interface CompletionScreenProps {
   seriesSlug: string
+  /** Lesson slug for contextual issue reporting. */
+  lessonSlug: string
+  /** Total steps in this lesson (used as step hint when lesson is complete). */
+  lessonStepCount: number
   seriesTitle: string
   lessonTitle: string
   nextLesson: Lesson | null
@@ -20,10 +30,18 @@ interface CompletionScreenProps {
   studyProgressPercent?: number
   reviewLessonHref: string
   backToSeriesHref: string
+  /** Up to 3 recap chains from this lesson’s reader content (see `extractScriptureChainsFromLessonContent`). */
+  scriptureChains?: LessonScriptureChainRecap[]
+  /** Word-study recap when the lesson includes insights (see `extractWordInsightsForCompletion`). */
+  wordInsightLines?: WordInsightCompletionLine[]
+  /** Misunderstood Passages recap when this lesson is in that curated list. */
+  misunderstoodPassage?: MisunderstoodPassage
 }
 
 export function CompletionScreen({
   seriesSlug,
+  lessonSlug,
+  lessonStepCount,
   seriesTitle,
   lessonTitle,
   nextLesson,
@@ -33,6 +51,9 @@ export function CompletionScreen({
   studyProgressPercent,
   reviewLessonHref,
   backToSeriesHref,
+  scriptureChains,
+  wordInsightLines,
+  misunderstoodPassage,
 }: CompletionScreenProps) {
   const isSeriesComplete = !nextLesson
   const useSeriesCompleteScreen = isSeriesComplete && seriesCompleteScreen
@@ -97,6 +118,66 @@ export function CompletionScreen({
         </div>
       </div>
 
+      {scriptureChains?.length ? (
+        <section className="rounded-xl border border-zinc-200/90 bg-white px-5 py-6 ring-1 ring-zinc-950/[0.03] md:px-8 md:py-7">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">SCRIPTURE CHAINS</p>
+          <h3 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900">Connections from this lesson</h3>
+          <div className="mt-5 flex flex-col gap-4">
+            {scriptureChains.map((chain) => (
+              <ScriptureChain
+                key={chain.id}
+                title={chain.title}
+                takeaway={chain.takeaway}
+                verses={chain.verses}
+                references={chain.references}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {wordInsightLines?.length ? (
+        <section className="rounded-xl border border-zinc-200/90 bg-white px-5 py-6 ring-1 ring-zinc-950/[0.03] md:px-8 md:py-7">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">WORD INSIGHTS</p>
+          <h3 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900">Terms from this lesson</h3>
+          <ul className="mt-4 space-y-3 text-sm leading-relaxed">
+            {wordInsightLines.map((line) => (
+              <li key={line.id} className="border-b border-zinc-100 pb-3 last:border-b-0 last:pb-0">
+                <p className="font-medium text-zinc-900">{line.headline}</p>
+                <p className="mt-1 text-zinc-600">{line.meaning}</p>
+                {line.subtitle ? <p className="mt-1 text-xs text-zinc-400">{line.subtitle}</p> : null}
+                {line.reference ? <p className="mt-1 text-xs text-zinc-400">{line.reference}</p> : null}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {misunderstoodPassage ? (
+        <section className="rounded-xl border border-zinc-200/90 bg-white px-5 py-6 ring-1 ring-zinc-950/[0.03] md:px-8 md:py-7">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">MISUNDERSTOOD PASSAGE</p>
+          <h3 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900">What this lesson clarified</h3>
+          <div className="mt-4 space-y-3 text-sm leading-relaxed">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">Passage</p>
+              <p className="mt-1 font-medium text-zinc-900">{misunderstoodPassage.title}</p>
+              <p className="mt-1 text-zinc-500">{misunderstoodPassage.reference}</p>
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">Common view</p>
+              <p className="mt-1 text-zinc-600">{misunderstoodPassage.commonView}</p>
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">Scripture pattern</p>
+              <p className="mt-1 text-zinc-600">{misunderstoodPassage.scripturePattern}</p>
+            </div>
+          </div>
+          <div className="mt-5">
+            <CopyMisunderstoodSummaryButton text={buildMisunderstoodPassageCopyText(misunderstoodPassage)} />
+          </div>
+        </section>
+      ) : null}
+
       {forwardQuestion ? (
         <div className="rounded-xl border border-zinc-200/90 bg-white px-6 py-5 ring-1 ring-zinc-950/[0.03] md:px-8 md:py-6">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Before you continue</p>
@@ -155,6 +236,20 @@ export function CompletionScreen({
           </Link>
         </div>
       )}
+
+      <p className="text-center">
+        <Link
+          href={supportReportHref({
+            type: 'content-correction',
+            study: seriesSlug,
+            lesson: lessonSlug,
+            step: String(lessonStepCount),
+          })}
+          className={REPORT_ISSUE_LINK_CLASSNAME}
+        >
+          Report an issue with this lesson
+        </Link>
+      </p>
     </div>
   )
 }

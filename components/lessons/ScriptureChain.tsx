@@ -1,4 +1,8 @@
+'use client'
+
+import { useCallback, useState } from 'react'
 import type { ScriptureChainVerse } from '@/lib/lesson-content-blocks'
+import { READER_FOCUS_RING } from '@/components/lessons/lesson-reader-focus'
 
 export type { ScriptureChainVerse }
 
@@ -9,6 +13,8 @@ export interface ScriptureChainProps {
   verses?: ScriptureChainVerse[]
   /** Legacy: references only, simple chain. */
   references?: { reference: string }[]
+  /** Optional one-line summary included only in “Copy chain” output (not shown in the card UI). */
+  takeaway?: string
   className?: string
 }
 
@@ -17,10 +23,12 @@ function normalizeVerses(
   references: { reference: string }[] | undefined,
 ): ScriptureChainVerse[] {
   if (verses?.length) {
-    return verses.map((v) => ({
-      reference: v.reference.trim(),
-      shortNote: v.shortNote?.trim() || undefined,
-    })).filter((v) => v.reference.length > 0)
+    return verses
+      .map((v) => ({
+        reference: v.reference.trim(),
+        shortNote: v.shortNote?.trim() || undefined,
+      }))
+      .filter((v) => v.reference.length > 0)
   }
   if (references?.length) {
     return references
@@ -30,9 +38,45 @@ function normalizeVerses(
   return []
 }
 
+/** Plain text for clipboard — matches product copy spec (title / takeaway lines omitted when unset). */
+export function buildScriptureChainPlainText(
+  list: ScriptureChainVerse[],
+  opts: { title?: string; takeaway?: string },
+): string {
+  const lines: string[] = ['BibleStem Scripture Chain']
+  const title = opts.title?.trim()
+  if (title) lines.push(title)
+
+  lines.push(list.map((v) => v.reference).join(' → '))
+
+  for (const v of list) {
+    if (v.shortNote?.trim()) {
+      lines.push(`${v.reference}: ${v.shortNote.trim()}`)
+    }
+  }
+
+  const takeaway = opts.takeaway?.trim()
+  if (takeaway) lines.push(`Takeaway: ${takeaway}`)
+
+  return lines.join('\n')
+}
+
 /** Connected passages — horizontal on desktop, stacked on small screens. */
-export function ScriptureChain({ title, verses, references, className = '' }: ScriptureChainProps) {
+export function ScriptureChain({ title, verses, references, takeaway, className = '' }: ScriptureChainProps) {
   const list = normalizeVerses(verses, references)
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = useCallback(async () => {
+    const text = buildScriptureChainPlainText(list, { title: title?.trim(), takeaway })
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2000)
+    } catch {
+      /* ignore */
+    }
+  }, [list, title, takeaway])
+
   if (list.length < 2) return null
 
   const heading = title?.trim() || 'Scripture chain'
@@ -41,7 +85,16 @@ export function ScriptureChain({ title, verses, references, className = '' }: Sc
     <div
       className={`rounded-xl border border-zinc-200/80 bg-white/80 px-4 py-3.5 md:px-5 md:py-4 ${className}`.trim()}
     >
-      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">{heading}</p>
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <p className="min-w-0 flex-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">{heading}</p>
+        <button
+          type="button"
+          onClick={() => void handleCopy()}
+          className={`shrink-0 rounded-lg border border-zinc-200/90 bg-white px-2.5 py-1 text-[11px] font-medium text-zinc-600 transition-colors hover:bg-zinc-50 ${READER_FOCUS_RING}`}
+        >
+          {copied ? 'Copied' : 'Copy chain'}
+        </button>
+      </div>
 
       {/* Mobile: stacked cards */}
       <div className="mt-3 flex flex-col gap-2 md:hidden">

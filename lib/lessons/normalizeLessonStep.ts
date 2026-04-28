@@ -1,5 +1,4 @@
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
-import { wordStudyToInsight } from '@/lib/lesson-content'
 import type { LessonStep } from '@/lib/lesson-steps'
 
 /** Alias for CMS / normalized step blocks (same as `LessonContentBlock`). */
@@ -65,24 +64,29 @@ function lessonStepToBlocks(step: LessonStep): LessonContentBlock[] {
       }
       return blocks
     }
-    case 'teaching_points':
-      return [
+    case 'teaching_points': {
+      const blocks: LessonContentBlock[] = [
         {
           type: 'teachingPoints',
           points: step.points,
           teachingInsights: step.teachingInsights,
         },
       ]
+      if (step.appendBlocks?.length) blocks.push(...step.appendBlocks)
+      return blocks
+    }
     case 'word_study': {
       const blocks: LessonContentBlock[] = []
       if (step.intro.trim()) {
         blocks.push({ type: 'paragraph', text: step.intro })
       }
-      blocks.push({ type: 'wordInsight', insight: wordStudyToInsight(step.data) })
+      for (const insight of step.insights) {
+        blocks.push({ type: 'wordInsight', insight })
+      }
       return blocks
     }
-    case 'study_insight':
-      return [
+    case 'study_insight': {
+      const blocks: LessonContentBlock[] = [
         {
           type: 'studyInsight',
           title: step.title,
@@ -90,12 +94,17 @@ function lessonStepToBlocks(step: LessonStep): LessonContentBlock[] {
           variant: step.variant,
         },
       ]
+      if (step.appendBlocks?.length) blocks.push(...step.appendBlocks)
+      return blocks
+    }
     case 'reflect_journal':
       return [{ type: 'reflection', prompt: step.prompt }]
     case 'life_application':
       return [{ type: 'lifeApplication', text: step.body }]
     case 'prayer':
       return [{ type: 'prayer', text: step.body }]
+    case 'quiz_review':
+      return []
     default:
       return []
   }
