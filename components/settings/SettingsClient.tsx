@@ -240,21 +240,20 @@ function SecuritySection({ onSignOutThisDevice }: { onSignOutThisDevice: () => P
 
   async function onChangePassword(e: FormEvent) {
     e.preventDefault()
-    if (!supabaseConfigured) return
     setBanner(null)
+    if (!supabaseConfigured) {
+      setBanner({
+        kind: 'error',
+        text: 'Password changes require Supabase. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY for this deployment.',
+      })
+      return
+    }
     if (password.length < 8) {
       setBanner({ kind: 'error', text: 'Use at least 8 characters.' })
       return
     }
     if (password !== confirm) {
       setBanner({ kind: 'error', text: 'Passwords don’t match.' })
-      return
-    }
-    if (!supabaseConfigured) {
-      setBanner({
-        kind: 'error',
-        text: 'Password changes need Supabase. In offline demo mode, the shared demo password is fixed.',
-      })
       return
     }
     const supabase = getSupabaseBrowserClient()
@@ -282,7 +281,7 @@ function SecuritySection({ onSignOutThisDevice }: { onSignOutThisDevice: () => P
     if (!supabaseConfigured) {
       setBanner({
         kind: 'error',
-        text: 'Sign out everywhere needs Supabase. In offline demo mode, just sign out from this device.',
+        text: 'Sign out everywhere requires Supabase. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY for this deployment.',
       })
       return
     }
@@ -366,7 +365,9 @@ function SecuritySection({ onSignOutThisDevice }: { onSignOutThisDevice: () => P
           </div>
         </div>
         {!accountBackedBySupabase ? (
-          <p className="text-xs text-zinc-500">Password change and sign-out everywhere are not available in demo mode. Coming soon.</p>
+          <p className="text-xs text-zinc-500">
+            Password change and sign-out everywhere require Supabase keys on this deployment.
+          </p>
         ) : null}
 
         <div className="flex w-full flex-wrap items-center justify-between gap-3">
@@ -425,7 +426,8 @@ function StudyDataSection({ userId }: { userId?: string }) {
     if (!remoteAvailable) {
       setBanner({
         kind: 'error',
-        text: 'Cloud reset needs Supabase. In offline demo mode, use “Reset on this device” instead.',
+        text:
+          'Cloud reset requires a signed-in Supabase account. Use “Reset on this device” for progress stored only on this browser.',
       })
       return
     }

@@ -10,14 +10,17 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { validateDemoCredentials } from '@/lib/demo-auth'
 import { firstNameFromFullName } from '@/lib/name-utils'
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client'
 
 const STORAGE_KEY = 'biblestem-demo-session'
 const PROFILE_KEY = 'biblestem-demo-profile'
 
-/** `id` is set when signed in with Supabase Auth; omitted for local demo mode. */
+/** Shown when NEXT_PUBLIC_SUPABASE_* env vars are missing at build time. */
+export const AUTH_REQUIRES_SUPABASE_MESSAGE =
+  'Sign-in is unavailable: Supabase is not configured for this deployment. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your host (e.g. Vercel → Environment Variables), then redeploy.'
+
+/** `id` is set when signed in with Supabase Auth. */
 export type DemoUser = { id?: string; email: string; firstName?: string }
 
 export type AuthActionResult = { ok: true } | { ok: false; message: string }
@@ -83,23 +86,6 @@ function saveProfile(email: string, firstName: string): void {
   )
 }
 
-function readStoredUser(): DemoUser | null {
-  if (typeof window === 'undefined') return null
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return null
-    const parsed = JSON.parse(raw) as { email?: unknown }
-    if (typeof parsed.email === 'string' && parsed.email.includes('@')) {
-      const email = parsed.email
-      const firstName = readProfileFirstName(email)
-      return firstName ? { email, firstName } : { email }
-    }
-  } catch {
-    /* ignore */
-  }
-  return null
-}
-
 async function mapSessionToUser(session: Session): Promise<DemoUser> {
   const email = session.user.email ?? ''
   const supabase = getSupabaseBrowserClient()
@@ -122,8 +108,10 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
+      safeStorageRemove(STORAGE_KEY)
+      safeStorageRemove(PROFILE_KEY)
       queueMicrotask(() => {
-        setUser(readStoredUser())
+        setUser(null)
         setIsReady(true)
       })
       return
@@ -164,19 +152,7 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(async (email: string, password: string): Promise<AuthActionResult> => {
     if (!isSupabaseConfigured()) {
-      if (!validateDemoCredentials(email, password)) {
-        return {
-          ok: false,
-          message:
-            'Offline demo mode only accepts the demo email and password shown on this page. Use those exactly.',
-        }
-      }
-      const normalized = email.trim().toLowerCase()
-      const firstName = readProfileFirstName(normalized)
-      const next: DemoUser = firstName ? { email: normalized, firstName } : { email: normalized }
-      safeStorageSet(STORAGE_KEY, JSON.stringify({ email: normalized }))
-      setUser(next)
-      return { ok: true }
+      return { ok: false, message: AUTH_REQUIRES_SUPABASE_MESSAGE }
     }
 
     const supabase = getSupabaseBrowserClient()
@@ -199,22 +175,7 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
 
   const register = useCallback(async (email: string, password: string, fullName: string): Promise<AuthActionResult> => {
     if (!isSupabaseConfigured()) {
-      if (!validateDemoCredentials(email, password)) {
-        return {
-          ok: false,
-          message:
-            'Offline demo mode only accepts the demo email and password shown below, plus your name for the greeting.',
-        }
-      }
-      const firstName = firstNameFromFullName(fullName)
-      if (!firstName) {
-        return { ok: false, message: 'Enter your first and last name so we can greet you on the dashboard.' }
-      }
-      const normalized = email.trim().toLowerCase()
-      saveProfile(normalized, firstName)
-      safeStorageSet(STORAGE_KEY, JSON.stringify({ email: normalized }))
-      setUser({ email: normalized, firstName })
-      return { ok: true }
+      return { ok: false, message: AUTH_REQUIRES_SUPABASE_MESSAGE }
     }
 
     const supabase = getSupabaseBrowserClient()
@@ -266,10 +227,11 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
       const current = user
       if (!current) return { ok: false, message: 'You need to be signed in.' }
 
-      if (!isSupabaseConfigured() || !current.id) {
-        saveProfile(current.email, trimmed)
-        setUser({ ...current, firstName: trimmed })
-        return { ok: true }
+      if (!isSupabaseConfigured()) {
+        return { ok: false, message: AUTH_REQUIRES_SUPABASE_MESSAGE }
+      }
+      if (!current.id) {
+        return { ok: false, message: 'Profile updates require signing in with Supabase.' }
       }
 
       const supabase = getSupabaseBrowserClient()

@@ -5,7 +5,7 @@ import { useEffect, type ReactNode } from 'react'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 
 /**
- * Client gate: study catalog routes require a session (demo localStorage auth).
+ * Client gate: study catalog routes require a Supabase session (or configured auth).
  * Redirects signed-out users to the home page.
  */
 export function RequireAuth({ children }: { children: ReactNode }) {

@@ -33,11 +33,6 @@ export function HeaderAuthControls() {
         >
           {displayLabel}
         </span>
-        {!user.id ? (
-          <span className="rounded-md bg-zinc-200/90 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-600">
-            Demo
-          </span>
-        ) : null}
         <Link
           href="/settings"
           prefetch
