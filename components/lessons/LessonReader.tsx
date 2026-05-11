@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { CompletionScreen } from '@/components/lessons/CompletionScreen'
 import { LessonHeader } from '@/components/lessons/LessonHeader'
@@ -38,6 +39,8 @@ export interface LessonReaderProps {
 export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: LessonReaderProps) {
   const { user } = useDemoAuth()
   const userId = user?.id
+  const router = useRouter()
+  const pathname = usePathname()
 
   const steps = useMemo(() => {
     if (lesson.sections.length > 0) {
@@ -62,8 +65,14 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
   }, [])
 
   const nextLesson = useMemo(() => getNextLessonInSeries(study, lesson.slug), [study, lesson.slug])
-  // `?step=` is applied via `key` on the parent page + `initialStepIndex` into `useState` initializer.
-  // TODO(lesson-nav): optional `useRouter` replaceState to keep `?step=` in sync while stepping (shareable deep links).
+  useEffect(() => {
+    if (typeof window === 'undefined' || !pathname) return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('step') === String(index)) return
+    params.set('step', String(index))
+    const qs = params.toString()
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+  }, [index, pathname, router])
 
   const progress = complete ? 1 : (index + 1) / total
 
@@ -84,6 +93,8 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
 
   const seriesProgressPercent = useMemo(() => {
     if (typeof window === 'undefined') return 0
+    void progressTick
+    void complete
     return computeSeriesProgressPercent(study.slug, lessonRows, readLocalProgress())
   }, [study.slug, lessonRows, progressTick, complete])
 
@@ -107,8 +118,9 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
 
   const notesCount = useMemo(() => {
     if (typeof window === 'undefined') return 0
+    void notesTick
     return countLocalLessonNotes(study.slug, lesson.slug, total)
-  }, [study.slug, lesson.slug, total, notesTick, index])
+  }, [study.slug, lesson.slug, total, notesTick])
 
   const handleContinue = useCallback(() => {
     if (complete) return
@@ -279,8 +291,3 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
     </LessonLayout>
   )
 }
-
-/** @deprecated Use `LessonReader`. */
-export const LessonReaderContent = LessonReader
-/** @deprecated Use `LessonReaderProps`. */
-export type LessonReaderContentProps = LessonReaderProps

@@ -1,6 +1,1 @@
-export {
-  LessonReader,
-  LessonReaderContent,
-  type LessonReaderProps,
-  type LessonReaderContentProps,
-} from '@/components/lessons/LessonReader'
+export { LessonReader, type LessonReaderProps } from '@/components/lessons/LessonReader'

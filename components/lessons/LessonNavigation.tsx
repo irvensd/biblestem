@@ -56,8 +56,3 @@ export function LessonNavigation({
     </div>
   )
 }
-
-/** @deprecated Use `LessonNavigation`. */
-export const LessonStepNavigation = LessonNavigation
-/** @deprecated Use `LessonNavigationProps`. */
-export type LessonStepNavigationProps = LessonNavigationProps

@@ -1,26 +1,5 @@
-import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonReaderContent } from '@/lib/lesson-content'
 import type { LessonQuizPayload } from '@/lib/lesson-quiz-types'
-
-/** Reserved visual slot (replace in a later art pass). */
-const STUDY_VISUAL_PLACEHOLDER: LessonContentBlock[] = [
-  {
-    type: 'studyVisual',
-    title: 'Study visual (placeholder)',
-    subtitle: 'Diagram or artwork to come',
-    description:
-      'This frame holds space for a calm graphic that supports the lesson goal. Until then, keep Scripture as the guide.',
-    accent: 'sage',
-    payload: {
-      variant: 'sequence',
-      steps: [
-        { label: 'Read', subtitle: 'Let the text speak' },
-        { label: 'See', subtitle: 'Notice what God reveals' },
-        { label: 'Respond', subtitle: 'Trust and worship' },
-      ],
-    },
-  },
-]
 
 function stubQuiz(idPrefix: string, focus: string): LessonQuizPayload {
   return {

@@ -2,6 +2,7 @@ import {
   studyPaths,
   studySeriesCatalog,
 } from '@/lib/product-mock'
+import { compareFoundationLibraryRecommendedOrder, orderFoundationStudies } from '@/lib/foundation-path'
 import type { Lesson, LessonCompletionState, StudyPath, StudySeries, StudySeriesWithPath } from '@/lib/types/product'
 
 export function formatLessonDuration(minutes: number): string {
@@ -98,6 +99,20 @@ export function filterSeriesForLibrary(
 ): StudySeries[] {
   const paths = pathsOverride ?? studyPaths
   let list = [...seriesList]
+  const foundationsPathId = paths.find((p) => p.slug === 'foundations')?.id
+  const foundationRank = new Map(
+    orderFoundationStudies(
+      list.filter((s) => s.level === 'Beginner' && s.studyPathId === foundationsPathId),
+    ).map((s, i) => [s.slug, i]),
+  )
+  const compareFoundationRank = (a: StudySeries, b: StudySeries): number | null => {
+    const aRank = foundationRank.get(a.slug)
+    const bRank = foundationRank.get(b.slug)
+    if (aRank !== undefined && bRank !== undefined) return aRank - bRank
+    if (aRank !== undefined) return -1
+    if (bRank !== undefined) return 1
+    return null
+  }
 
   if (filters.pathSlug) {
     const path = paths.find((p) => p.slug === filters.pathSlug)
@@ -127,12 +142,24 @@ export function filterSeriesForLibrary(
   }
 
   if (filters.sort === 'lessons') {
-    list.sort((a, b) => b.lessonsCount - a.lessonsCount)
+    list.sort((a, b) => {
+      const rank = compareFoundationRank(a, b)
+      if (rank !== null) return rank
+      return b.lessonsCount - a.lessonsCount
+    })
   } else if (filters.sort === 'newest') {
-    list.sort((a, b) => b.sortOrder - a.sortOrder)
+    list.sort((a, b) => {
+      const rank = compareFoundationRank(a, b)
+      if (rank !== null) return rank
+      return b.sortOrder - a.sortOrder
+    })
   } else {
     list.sort((a, b) => {
+      const rank = compareFoundationRank(a, b)
+      if (rank !== null) return rank
       if (a.featured !== b.featured) return a.featured ? -1 : 1
+      const guided = compareFoundationLibraryRecommendedOrder(a, b, foundationsPathId)
+      if (guided !== 0 && guided !== null) return guided
       return a.title.localeCompare(b.title)
     })
   }

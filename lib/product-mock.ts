@@ -1370,6 +1370,420 @@ const seriesMadeForMore: StudySeries = {
   ],
 }
 
+const lessonWarHeaven1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000831',
+  slug: 'a-conflict-bigger-than-earth',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000073',
+  title: 'A Conflict Bigger Than Earth',
+  summary:
+    'The Bible introduces a cosmic conflict between good and evil that reaches beyond humanity and into the unseen spiritual world.',
+  durationMinutes: 8,
+  scripture: 'Revelation 12:7 · Ephesians 6:12 · Hebrews 1:14',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonWarHeaven2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000832',
+  slug: 'the-rise-of-lucifer',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000073',
+  title: 'The Rise of Lucifer',
+  summary:
+    'Lucifer was created good, beautiful, and close to God, but pride and self-exaltation led to rebellion.',
+  durationMinutes: 8,
+  scripture: 'Isaiah 14:12 to 14 · Ezekiel 28:12 to 17',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonWarHeaven3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000833',
+  slug: 'the-war-over-gods-character',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000073',
+  title: 'The War Over God’s Character',
+  summary:
+    'The conflict in heaven was not mainly physical. It was a battle over truth, trust, and the character of God.',
+  durationMinutes: 8,
+  scripture: 'Revelation 12:9 · John 8:44 · Romans 13:10',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonWarHeaven4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000834',
+  slug: 'why-evil-and-suffering-exist',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000073',
+  title: 'Why Evil and Suffering Exist',
+  summary: 'The Bible explains evil through the misuse of freedom and the rejection of God’s love.',
+  durationMinutes: 8,
+  scripture: '1 John 4:8 · Matthew 22:37 to 40 · Ecclesiastes 7:29',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonWarHeaven5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000835',
+  slug: 'love-freedom-and-risk',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000073',
+  title: 'Love, Freedom, and Risk',
+  summary:
+    'Love requires freedom, and freedom introduces the possibility of rebellion, selfishness, and pain.',
+  durationMinutes: 8,
+  scripture: 'Galatians 5:22 to 23 · James 1:17 · Matthew 13:28',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonWarHeaven6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000836',
+  slug: 'jesus-enters-the-battle',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000073',
+  title: 'Jesus Enters the Battle',
+  summary: 'Jesus came to reveal the truth about God and confront evil through self-giving love.',
+  durationMinutes: 8,
+  scripture: 'Luke 11:21 to 22 · 1 John 3:8 · John 13:34',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonWarHeaven7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000837',
+  slug: 'the-final-defeat-of-evil',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000073',
+  title: 'The Final Defeat of Evil',
+  summary:
+    'Evil is temporary. Scripture points forward to a restored world where love and truth reign forever.',
+  durationMinutes: 8,
+  scripture: 'Psalm 37:9 · Isaiah 11:9 · Revelation 21:4',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+}
+
+/** Slug avoids collision with bundled reader key \`the-first-lie\` (Death / Hope advanced study). */
+const lessonFallHumanity1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000841',
+  slug: 'the-first-humanity-lie',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000074',
+  title: 'The First Lie',
+  summary:
+    'Explore how Satan introduced deception in Eden by attacking God’s character and questioning His goodness.',
+  durationMinutes: 8,
+  scripture: 'Genesis 3:1 to 5 · Revelation 12:9',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonFallHumanity2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000842',
+  slug: 'when-trust-was-broken',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000074',
+  title: 'When Trust Was Broken',
+  summary:
+    'Discover how sin fractured humanity’s relationship with God and introduced fear, shame, and hiding.',
+  durationMinutes: 7,
+  scripture: 'Genesis 3:6 to 12 · Genesis 3:8 to 10',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonFallHumanity3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000843',
+  slug: 'the-birth-of-shame',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000074',
+  title: 'The Birth of Shame',
+  summary:
+    'Learn how guilt, blame, fear, and self-protection entered the human experience after the Fall.',
+  durationMinutes: 7,
+  scripture: 'Genesis 3:7 to 13 · Romans 3:23',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonFallHumanity4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000844',
+  slug: 'what-sin-really-is',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000074',
+  title: 'What Sin Really Is',
+  summary:
+    'Understand sin not merely as rule-breaking, but as life disconnected from God’s self-giving love.',
+  durationMinutes: 7,
+  scripture: 'Romans 3:23 · 1 John 4:8 · Romans 13:10',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonFallHumanity5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000845',
+  slug: 'how-lies-shape-lives',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000074',
+  title: 'How Lies Shape Lives',
+  summary:
+    'Examine how beliefs influence thoughts, emotions, and actions, and how deception about God reshapes human behavior.',
+  durationMinutes: 7,
+  scripture: 'Proverbs 4:23 · John 8:44 · Genesis 3:6',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonFallHumanity6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000846',
+  slug: 'jesus-reversed-the-fall',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000074',
+  title: 'Jesus Reversed the Fall',
+  summary:
+    'See how Jesus succeeded where humanity failed by fully trusting the Father and remaining faithful in love.',
+  durationMinutes: 7,
+  scripture: 'Matthew 4:4 · Matthew 4:10 · Romans 5:19 · John 8:32',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonFallHumanity7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000847',
+  slug: 'restored-through-truth-and-love',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000074',
+  title: 'Restored Through Truth and Love',
+  summary:
+    'Discover how Jesus restores trust in God and begins healing the perceptual, relational, and moral effects of sin.',
+  durationMinutes: 7,
+  scripture: 'John 17:3 · 1 Timothy 2:4 · 2 Corinthians 5:17 · John 8:32',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonPromiseKept1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000848',
+  slug: 'god-came-looking',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000075',
+  title: 'God Came Looking',
+  summary:
+    'After Adam and Eve sinned, God moved toward them with grace instead of abandoning them in fear and shame.',
+  durationMinutes: 9,
+  scripture: 'Genesis 3:9 to 11 · Romans 5:8',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonPromiseKept2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000849',
+  slug: 'the-first-gospel-promise',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000075',
+  title: 'The First Gospel Promise',
+  summary:
+    'Genesis 3:15 reveals the first promise of a coming Deliverer who would defeat the enemy and rescue humanity.',
+  durationMinutes: 9,
+  scripture: 'Genesis 3:15 · 1 John 3:8 · Hebrews 2:14',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonPromiseKept3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000850',
+  slug: 'the-promised-seed',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000075',
+  title: 'The Promised Seed',
+  summary:
+    'Scripture unfolds the promise of the coming Messiah through the language of the Seed, the One who would bring victory and restoration.',
+  durationMinutes: 9,
+  scripture: 'Genesis 3:15 · Galatians 3:16 · John 12:31 to 32',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonPromiseKept4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000851',
+  slug: 'promise-through-the-prophets',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000075',
+  title: 'Promise Through the Prophets',
+  summary:
+    'The Old Testament carries the promise forward through Moses, David, Isaiah, and the prophets, pointing to the character and mission of the Messiah.',
+  durationMinutes: 9,
+  scripture: 'Isaiah 53:5 · Deuteronomy 18:15 · Psalm 22:1 · Luke 24:27',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonPromiseKept5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000852',
+  slug: 'the-messiah-timeline',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000075',
+  title: 'The Messiah Timeline',
+  summary:
+    'Daniel 9 reveals a prophetic timeline pointing to the appearing, ministry, and sacrifice of the Messiah.',
+  durationMinutes: 9,
+  scripture: 'Daniel 9:25 · Daniel 9:26 to 27 · Ezra 7:13 · Matthew 3:16 to 17',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonPromiseKept6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000853',
+  slug: 'cut-off-not-for-himself',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000075',
+  title: 'Cut Off, Not for Himself',
+  summary:
+    'Daniel foretold that the Messiah would be cut off, not for Himself, revealing the depth of God’s faithful love at the cross.',
+  durationMinutes: 9,
+  scripture: 'Daniel 9:26 · Romans 5:8 · 1 John 3:16 · Matthew 27:46',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+const lessonPromiseKept7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000854',
+  slug: 'every-promise-says-yes-in-jesus',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000075',
+  title: 'Every Promise Says Yes in Jesus',
+  summary:
+    'Jesus is the fulfillment of God\'s promise of faithful love. In Him, the story of Scripture becomes promise made and promise kept.',
+  durationMinutes: 9,
+  scripture: '2 Corinthians 1:20 · John 3:16 · John 14:6 · 1 Timothy 2:4',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const fallOfHumanityLongDescription = `This study explores how sin entered the human story through deception, distrust, and self-centeredness. Beginning in Eden, humanity’s fall affected the way we think, relate, and live. But Scripture also reveals how Jesus came to restore what was broken and reveal the truth about God’s character.`
+
+const seriesFallOfHumanity: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000074',
+  slug: 'the-fall-of-humanity',
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Fall of Humanity',
+  subtitle: 'Sin, deception, broken trust—and Christ’s restorative truth and love.',
+  shortDescription:
+    'Humanity’s fall began with deception about God’s character and led to broken trust, broken relationships, and moral rebellion.',
+  longDescription: fallOfHumanityLongDescription,
+  description: fallOfHumanityLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 50 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 6,
+  foundationOrder: 5,
+  whatYouWillLearn: [
+    'Themes: sin, humanity, Eden, deception, trust, salvation, genesis, fall, redemption.',
+    'How deception about God fractured trust after Eden.',
+    'Shame, fear, relational strain, and what sin truly is.',
+    'How beliefs about God reshape daily life—and how Jesus restores trust.',
+  ],
+  lessons: [
+    lessonFallHumanity1,
+    lessonFallHumanity2,
+    lessonFallHumanity3,
+    lessonFallHumanity4,
+    lessonFallHumanity5,
+    lessonFallHumanity6,
+    lessonFallHumanity7,
+  ],
+}
+
+const promiseKeptLongDescription = `After humanity fell, God did not abandon the world to sin, shame, and death. He gave the first gospel promise: a coming Deliverer would defeat the enemy and rescue humanity.
+
+This study traces that promise from Eden to the cross. It shows how the Old Testament points forward to Jesus, how Daniel’s 70-week timeline foretold the Messiah’s mission, and how Christ fulfilled God’s promise of faithful love through His life, death, and resurrection.
+
+The story of Scripture is not God giving up on humanity. It is God keeping His promise at great cost to Himself.`
+
+const seriesThePromiseKept: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000075',
+  slug: 'the-promise-kept',
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Promise Kept',
+  subtitle: 'From Eden’s first gospel promise to the cross: how God kept His word in Jesus.',
+  shortDescription:
+    'God promised to rescue humanity, and Jesus is that promise fulfilled.',
+  longDescription: promiseKeptLongDescription,
+  description: promiseKeptLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 7,
+  foundationOrder: 6,
+  whatYouWillLearn: [
+    'Themes: Jesus, promise, gospel, Messiah, Genesis 3:15, covenant, prophecy, Daniel 9, cross, redemption, salvation.',
+    'Trace God’s rescue promise from Eden through the Old Testament toward Christ.',
+    'See how Daniel’s prophecy frames the Messiah’s mission and timeline.',
+    'Understand the cross as God’s faithful love keeping covenant at great cost.',
+  ],
+  lessons: [
+    lessonPromiseKept1,
+    lessonPromiseKept2,
+    lessonPromiseKept3,
+    lessonPromiseKept4,
+    lessonPromiseKept5,
+    lessonPromiseKept6,
+    lessonPromiseKept7,
+  ],
+}
+
+const warInHeavenLongDescription = `Why does evil exist if God is good?
+
+Scripture presents a cosmic conflict that began before humanity and continues in the world today. At the center of this conflict is the character of God and the question of whether His kingdom truly operates on love.
+
+This study explores the rebellion of Lucifer, the origin of sin, the meaning of free will, and the Bible’s explanation for suffering and evil. Most importantly, it reveals how Jesus entered the battle on our behalf and demonstrated the victory of love over deception, selfishness, and fear.
+
+This beginner Foundations study is designed to help users understand the biblical storyline behind the struggle between good and evil while pointing them toward the hope found in Christ.`
+
+const seriesWarInHeaven: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000073',
+  slug: 'war-in-heaven',
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'War in Heaven',
+  subtitle: 'Conflict between love and selfishness: where evil began and how Scripture points to hope in Christ.',
+  shortDescription:
+    'The Bible reveals that our world is caught in a conflict between love and selfishness, truth and deception. This study explores where evil came from, why suffering exists, and how Jesus confronts darkness with truth and self-giving love.',
+  longDescription: warInHeavenLongDescription,
+  description: warInHeavenLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 52 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 5,
+  foundationOrder: 4,
+  whatYouWillLearn: [
+    'Themes: cosmic conflict, spiritual warfare, and redemption in Christ.',
+    'Lucifer’s rise, Satan’s work, rebellion, deception, and the character of God.',
+    'Freedom, love, moral risk, and why suffering exists.',
+    'How Jesus confronted evil through truth and self-giving love.',
+    'Heaven’s hope: the end of evil and a world where love reigns.',
+  ],
+  lessons: [
+    lessonWarHeaven1,
+    lessonWarHeaven2,
+    lessonWarHeaven3,
+    lessonWarHeaven4,
+    lessonWarHeaven5,
+    lessonWarHeaven6,
+    lessonWarHeaven7,
+  ],
+}
+
 const seriesThreeAngelsMessages: StudySeries = {
   id: 'e4000001-0000-4000-8000-000000000020',
   slug: 'three-angels-messages',
@@ -1428,6 +1842,9 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesGodIsLove,
   seriesTheGodWhoWantsToBeKnown,
   seriesMadeForMore,
+  seriesWarInHeaven,
+  seriesFallOfHumanity,
+  seriesThePromiseKept,
   seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,

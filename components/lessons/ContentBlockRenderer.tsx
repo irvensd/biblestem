@@ -7,6 +7,7 @@ import { StudyVisualBlock } from '@/components/lessons/StudyVisualBlock'
 import { TeachingPointsBlock } from '@/components/lessons/TeachingPointsBlock'
 import { WordInsight } from '@/components/lessons/WordInsight'
 import { WordInsightCard } from '@/components/lessons/WordInsightCard'
+import { ProphecyTimeline } from '@/components/study/ProphecyTimeline'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 
 export interface ReflectionNotesContext {
@@ -37,9 +38,6 @@ export function ContentBlockRenderer({ blocks, className = '', reflectionContext
     </div>
   )
 }
-
-/** @deprecated Use `ContentBlockRenderer`; name kept for gradual migration. */
-export const LessonContentBlocks = ContentBlockRenderer
 
 function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNotesContext) {
   switch (block.type) {
@@ -124,6 +122,16 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
       return <LessonTextRenderer text={block.text} tone="prayer" />
     case 'studyVisual':
       return <StudyVisualBlock block={block} />
+    case 'prophecyTimeline':
+      return (
+        <ProphecyTimeline
+          id={block.id}
+          label={block.label}
+          heading={block.heading}
+          items={block.items}
+          footerNotes={block.footerNotes}
+        />
+      )
     default:
       return null
   }

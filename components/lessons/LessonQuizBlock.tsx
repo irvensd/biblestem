@@ -285,6 +285,9 @@ function QuizQuestionBlock({
           )
         })}
       </div>
+      {submitted && sq.explanation ? (
+        <p className="mt-3 border-t border-zinc-100 pt-3 text-sm leading-relaxed text-zinc-600">{sq.explanation}</p>
+      ) : null}
     </fieldset>
   )
 }

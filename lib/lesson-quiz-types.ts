@@ -7,6 +7,8 @@ export type LessonQuizQuestionSingle = {
   prompt: string
   options: [string, string, string, string]
   correctIndex: 0 | 1 | 2 | 3
+  /** Shown after submit (e.g. “show explanations”). */
+  explanation?: string
 }
 
 /** Select all correct options (exact set match). */

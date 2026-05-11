@@ -9,6 +9,9 @@ export const FOUNDATION_GUIDED_SLUG_ORDER = [
   'god-is-love',
   'the-god-who-wants-to-be-known',
   'made-for-more',
+  'war-in-heaven',
+  'the-fall-of-humanity',
+  'the-promise-kept',
   'the-bible-gods-living-word',
   'origin-of-evil',
 ] as const
@@ -78,6 +81,22 @@ export function orderFoundationStudies(studies: StudySeries[]): StudySeries[] {
 
   rest.sort((a, b) => sortKey(a, slugRank) - sortKey(b, slugRank))
   return [...ordered, ...rest]
+}
+
+/**
+ * For Study Library sorting: compare two Foundations-path beginner studies using guided journey order.
+ * Returns null when ordering should fall through (other paths, levels, or unknown path id).
+ */
+export function compareFoundationLibraryRecommendedOrder(
+  a: StudySeries,
+  b: StudySeries,
+  foundationsPathId: string | undefined,
+): number | null {
+  if (!foundationsPathId) return null
+  if (a.level !== 'Beginner' || b.level !== 'Beginner') return null
+  if (a.studyPathId !== foundationsPathId || b.studyPathId !== foundationsPathId) return null
+  const guided = orderFoundationStudies([a, b])
+  return guided.findIndex((s) => s.slug === a.slug) - guided.findIndex((s) => s.slug === b.slug)
 }
 
 export function getOrderedFoundationPathStudies(catalog: LoadedCatalog): StudySeries[] {

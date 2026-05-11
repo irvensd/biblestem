@@ -1,4 +1,5 @@
 import type { StudyInsightVariant, WordInsight } from '@/lib/lesson-content'
+import type { ProphecyTimelineItem } from '@/lib/prophecy-timeline-types'
 
 /** Fields for the signature `WordInsight` study card (Greek/Hebrew). */
 export type StudyToolWordInsightFields = {
@@ -118,6 +119,16 @@ export type LessonContentBlock =
   | { type: 'reflection'; prompt: string }
   | { type: 'lifeApplication'; text: string }
   | { type: 'prayer'; text: string }
+  | {
+      type: 'prophecyTimeline'
+      /** Eyebrow / subtitle above the heading (e.g. “490 Years / 70 Weeks”). */
+      label?: string
+      /** Visible title replacing the default “Timeline” heading. */
+      heading?: string
+      id?: string
+      items: ProphecyTimelineItem[]
+      footerNotes?: string[]
+    }
   | StudyVisualLessonBlock
 
 /** Best-effort parse for `reader_content.scriptureSupplementBlocks` from JSONB. */

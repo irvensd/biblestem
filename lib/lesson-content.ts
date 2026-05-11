@@ -6,8 +6,11 @@
 import { deathHopeSeriesLessonLibrary } from '@/lib/lesson-content-death-hope'
 import { godIsLoveSeriesLessonLibrary } from '@/lib/lesson-content-god-is-love'
 import { madeForMoreSeriesLessonLibrary } from '@/lib/lesson-content-made-for-more'
+import { warInHeavenSeriesLessonLibrary } from '@/lib/lesson-content-war-in-heaven'
 import { theGodWhoWantsToBeKnownSeriesLessonLibrary } from '@/lib/lesson-content-the-god-who-wants-to-be-known'
 import { originOfEvilSeriesLessonLibrary } from '@/lib/lesson-content-origin-of-evil'
+import { fallOfHumanitySeriesLessonLibrary } from '@/lib/lesson-content-fall-of-humanity'
+import { thePromiseKeptSeriesLessonLibrary } from '@/lib/lesson-content-the-promise-kept'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
 
@@ -5603,6 +5606,9 @@ Amen.`,
   ...godIsLoveSeriesLessonLibrary,
   ...theGodWhoWantsToBeKnownSeriesLessonLibrary,
   ...madeForMoreSeriesLessonLibrary,
+  ...warInHeavenSeriesLessonLibrary,
+  ...fallOfHumanitySeriesLessonLibrary,
+  ...thePromiseKeptSeriesLessonLibrary,
   ...originOfEvilSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {
@@ -5753,11 +5759,13 @@ function parseLessonQuiz(raw: unknown): LessonQuizPayload | undefined {
 
     const ci = qr.correctIndex
     if (ci !== 0 && ci !== 1 && ci !== 2 && ci !== 3) continue
+    const explanation = typeof qr.explanation === 'string' && qr.explanation.trim() ? qr.explanation.trim() : undefined
     questions.push({
       id,
       prompt: qr.prompt.trim(),
       options: optTuple,
       correctIndex: ci,
+      ...(explanation ? { explanation } : {}),
     })
   }
   if (!questions.length) return undefined

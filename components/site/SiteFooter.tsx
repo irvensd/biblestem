@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { SiteFooterProductLinks } from '@/components/site/SiteFooterProductLinks'
 import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/report-issue-href'
@@ -16,13 +17,12 @@ export function SiteFooter() {
             href="/"
             className="inline-flex items-center gap-2.5 rounded-sm outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-blue-800"
           >
-            <img
+            <Image
               src="/logo.png"
               alt=""
               width={96}
               height={96}
               className="biblestem-logo-img h-11 w-11 shrink-0"
-              decoding="async"
             />
             <span className="text-base font-semibold text-zinc-900">BibleStem</span>
           </Link>
