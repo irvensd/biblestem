@@ -1099,6 +1099,277 @@ const seriesFaithThatShowsUp: StudySeries = {
   lessons: [lessonFaith1, lessonFaith2, lessonFaith3],
 }
 
+const lessonTgwk1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000701',
+  slug: 'why-names-matter',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000071',
+  title: 'Why Names Matter',
+  summary:
+    'Show that names in Scripture often reveal identity, character, and story, preparing you for God’s revealed name.',
+  durationMinutes: 10,
+  scripture: 'Genesis 1:1 · Genesis 2:7 · Genesis 32:27 to 28 · Matthew 1:21',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonTgwk2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000702',
+  slug: 'elohim-the-first-name-we-meet',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000071',
+  title: 'Elohim: The First Name We Meet',
+  summary:
+    'Meet Elohim in Genesis 1:1 as Creator, trace His voice in creation, and see dignity and relationship woven into the opening chapter.',
+  durationMinutes: 10,
+  scripture: 'Genesis 1:1 · Genesis 1:26 to 27 · Psalm 100:3',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonTgwk3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000703',
+  slug: 'love-at-the-heart-of-god',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000071',
+  title: 'God Is Love',
+  summary:
+    'See that love is not merely something God does, but central to who He is, from John’s letters and Scripture’s portrait of love.',
+  durationMinutes: 10,
+  scripture: '1 John 4:7 to 8 · 1 John 4:16 · 1 Corinthians 13:4 to 5 · Jeremiah 31:3',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonTgwk4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000704',
+  slug: 'one-god-more-than-alone',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000071',
+  title: 'One God, More Than Alone',
+  summary:
+    'Hold together Deuteronomy’s one LORD with Genesis and the Gospels, where Father, Son, and Holy Spirit appear in loving unity.',
+  durationMinutes: 11,
+  scripture: 'Deuteronomy 6:4 · Genesis 1:26 · Matthew 3:16 to 17 · Matthew 28:19',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonTgwk5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000705',
+  slug: 'love-has-always-existed',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000071',
+  title: 'Love Has Always Existed',
+  summary:
+    'See that God did not become loving after creation: love belongs to His eternal life before the foundation of the world.',
+  durationMinutes: 10,
+  scripture: 'John 17:24 · 1 John 4:8 · John 1:1 to 3 · Ephesians 1:4 to 5',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonTgwk6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000706',
+  slug: 'jesus-makes-god-visible',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000071',
+  title: 'Jesus Makes God Visible',
+  summary:
+    'See Jesus as the clearest revelation of God’s heart, character, and love through His words, compassion, sacrifice, and the Father made known.',
+  durationMinutes: 10,
+  scripture: 'John 14:8 to 9 · John 1:18 · Colossians 1:15 · Hebrews 1:3',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonTgwk7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000707',
+  slug: 'the-invitation-to-come-near',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000071',
+  title: 'The Invitation to Come Near',
+  summary:
+    'Respond to God’s revelation with trust and nearness: draw near to Him, abide in His love, and look toward His dwelling with His people.',
+  durationMinutes: 10,
+  scripture: 'James 4:8 · Hebrews 4:16 · John 17:3 · 1 John 4:16 · Revelation 21:3',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonMadeForMore1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000801',
+  slug: 'more-than-mere-survival',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000072',
+  title: 'More Than Mere Survival',
+  summary:
+    'Introduce the question of human identity and show that Scripture gives humanity dignity beyond survival.',
+  durationMinutes: 10,
+  scripture: 'Psalm 8:3 to 5 · Genesis 1:1',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonMadeForMore2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000802',
+  slug: 'created-in-gods-image',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000072',
+  title: 'Created in God’s Image',
+  summary:
+    'Explain Genesis 1:26 to 28 and show that every human life carries God-given dignity and purpose.',
+  durationMinutes: 10,
+  scripture: 'Genesis 1:26 to 28 · Genesis 5:1 to 2 · James 3:9',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonMadeForMore3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000803',
+  slug: 'made-for-relationship',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000072',
+  title: 'Made for Relationship',
+  summary:
+    'Show that being made in God’s image includes the capacity for love, relationship, and community.',
+  durationMinutes: 11,
+  scripture: 'Genesis 1:27 · 1 John 4:16',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: true,
+}
+
+const lessonMadeForMore4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000804',
+  slug: 'free-moral-agents',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000072',
+  title: 'Free Moral Agents',
+  summary: 'Explain why love requires freedom and why God created humans with meaningful choice.',
+  durationMinutes: 10,
+  scripture: 'Deuteronomy 30:19 · Joshua 24:15 · Genesis 2:16 to 17 · John 14:15',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonMadeForMore5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000805',
+  slug: 'why-every-life-matters',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000072',
+  title: 'Why Every Life Matters',
+  summary:
+    'Show that every person is seen, known, valued, and significant to God.',
+  durationMinutes: 10,
+  scripture: 'Psalm 139:1 to 14 · Matthew 10:29 to 31 · Acts 17:26 to 28',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonMadeForMore6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000806',
+  slug: 'jesus-the-true-image',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000072',
+  title: 'Jesus, the True Image',
+  summary:
+    'Show that Jesus reveals both God’s character and what humanity was created to be.',
+  durationMinutes: 10,
+  scripture: 'Colossians 1:15 · Hebrews 1:3 · 2 Corinthians 4:4 · John 14:9 · Romans 8:29',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const lessonMadeForMore7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000807',
+  slug: 'restored-into-his-image',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000072',
+  title: 'Restored Into His Image',
+  summary:
+    'Show that God’s purpose is to restore His image in us as we behold Christ.',
+  durationMinutes: 10,
+  scripture: '2 Corinthians 3:18 · 1 Corinthians 15:49 · Romans 8:29 · Colossians 3:10',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+}
+
+const theGodWhoWantsLongDescription = `A beginner-friendly BibleStem study on God’s character, His revealed name, His relational love, and the way Father, Son, and Spirit invite humanity into trust and nearness. This study helps learners see that God does not hide behind power. He reveals Himself so He can be known.`
+
+const seriesTheGodWhoWantsToBeKnown: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000071',
+  slug: 'the-god-who-wants-to-be-known',
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The God Who Wants to Be Known',
+  subtitle: 'Names, love, Trinity-shaped revelation, and Christ as God made visible.',
+  shortDescription:
+    'Discover a God who is not distant or cold, but relational, loving, and revealed through Scripture, Jesus, and the beauty of His name.',
+  longDescription: theGodWhoWantsLongDescription,
+  description: theGodWhoWantsLongDescription,
+  level: 'Beginner',
+  durationSummary: '71 min total',
+  lessonsCount: 7,
+  featured: true,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 3,
+  whatYouWillLearn: [
+    'See why names and titles in Scripture point toward God’s character.',
+    'Begin with Elohim and move toward Father, Son, and Spirit without rushing past the text.',
+    'Ground love in God’s being, not human mood alone.',
+    'Follow Jesus as the clearest revelation of the Father’s heart.',
+    'Respond to Scripture’s invitation to draw near in trust and worship.',
+  ],
+  lessons: [
+    lessonTgwk1,
+    lessonTgwk2,
+    lessonTgwk3,
+    lessonTgwk4,
+    lessonTgwk5,
+    lessonTgwk6,
+    lessonTgwk7,
+  ],
+}
+
+const madeForMoreLongDescription = `A beginner-friendly BibleStem study on human identity, dignity, purpose, moral responsibility, and restoration through Jesus. This study helps learners see that humanity was created for more than survival. We were made in God’s image, called to reflect His love, and invited to be restored through Christ.`
+
+const seriesMadeForMore: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000072',
+  slug: 'made-for-more',
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'Made for More',
+  subtitle: 'Human identity, dignity, purpose, and restoration through Jesus.',
+  shortDescription:
+    'Discover what it means to be human through Scripture’s teaching that we are created in the image of God.',
+  longDescription: madeForMoreLongDescription,
+  description: madeForMoreLongDescription,
+  level: 'Beginner',
+  durationSummary: '73 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 4,
+  foundationOrder: 3,
+  whatYouWillLearn: [
+    'Humanity',
+    'Image of God',
+    'Identity',
+    'Purpose',
+    'Creation',
+    'Jesus',
+    'Foundations',
+  ],
+  lessons: [
+    lessonMadeForMore1,
+    lessonMadeForMore2,
+    lessonMadeForMore3,
+    lessonMadeForMore4,
+    lessonMadeForMore5,
+    lessonMadeForMore6,
+    lessonMadeForMore7,
+  ],
+}
+
 const seriesThreeAngelsMessages: StudySeries = {
   id: 'e4000001-0000-4000-8000-000000000020',
   slug: 'three-angels-messages',
@@ -1155,6 +1426,8 @@ const seriesThreeAngelsMessages: StudySeries = {
 /** All series in the mock catalog. */
 export const studySeriesCatalog: StudySeries[] = [
   seriesGodIsLove,
+  seriesTheGodWhoWantsToBeKnown,
+  seriesMadeForMore,
   seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,

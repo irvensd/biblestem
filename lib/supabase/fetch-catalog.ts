@@ -1,5 +1,5 @@
 import type { Lesson, LessonSection, LessonSectionType, StudyPath, StudySeries } from '@/lib/types/product'
-import { parseLessonReaderContent } from '@/lib/lesson-content'
+import { isDraftShellReaderContent, parseLessonReaderContent } from '@/lib/lesson-content'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 import { isTransientNetworkError, TransientCatalogFetchError } from '@/lib/supabase/transient-errors'
 
@@ -103,7 +103,8 @@ function mapSection(row: SectionRow): LessonSection {
 }
 
 function mapLesson(row: LessonRow, sections: LessonSection[]): Lesson {
-  const readerContent = parseLessonReaderContent(row.reader_content) ?? undefined
+  const contentPending = isDraftShellReaderContent(row.reader_content)
+  const readerContent = contentPending ? undefined : (parseLessonReaderContent(row.reader_content) ?? undefined)
   return {
     id: row.id,
     slug: row.slug,
@@ -116,6 +117,7 @@ function mapLesson(row: LessonRow, sections: LessonSection[]): Lesson {
     createdAt: row.created_at,
     sections,
     readerContent,
+    ...(contentPending ? { contentPending: true as const } : {}),
   }
 }
 

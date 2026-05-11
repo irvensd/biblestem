@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/Button'
 import type { StudyLevel } from '@/lib/types/product'
 import { StudySummaryCard } from '@/components/studies/StudySummaryCard'
+import { studyPathPageHref } from '@/lib/path-routes'
 
 interface StudyOverviewHeroProps {
   studyTitle: string
@@ -48,7 +49,7 @@ export function StudyOverviewHero({
                 {level}
               </span>
               <Link
-                href={`/paths/${pathSlug}`}
+                href={studyPathPageHref(pathSlug)}
                 className="inline-flex items-center rounded-full border border-zinc-200/90 bg-white px-3 py-1 text-xs font-medium text-zinc-700 transition-colors hover:border-zinc-300 hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800"
               >
                 {pathLabel}

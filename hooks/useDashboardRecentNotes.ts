@@ -9,6 +9,14 @@ import {
   mapReflectionNotesToDashboard,
 } from '@/lib/reflection-notes-dashboard'
 
+function scheduleIdle(fn: () => void): void {
+  if (typeof requestIdleCallback === 'function') {
+    requestIdleCallback(fn, { timeout: 2500 })
+  } else {
+    setTimeout(fn, 1)
+  }
+}
+
 /**
  * Recent reflection notes for the dashboard — same sources as lesson {@link ReflectionNotes}
  * (localStorage + optional Supabase `user_notes`).
@@ -16,14 +24,19 @@ import {
 export function useDashboardRecentNotes(catalog: LoadedCatalog, userId: string | undefined): DashboardNote[] {
   const [notes, setNotes] = useState<DashboardNote[]>([])
 
-  const refresh = useCallback(async () => {
+  const refresh = useCallback(() => {
     setNotes(mapReflectionNotesToDashboard(getSortedLocalReflectionNotesPreview(catalog, 3)))
-    try {
-      const merged = await getRecentReflectionNotes(catalog, { userId, limit: 3 })
-      setNotes(mapReflectionNotesToDashboard(merged))
-    } catch {
-      /* keep latest sync snapshot */
-    }
+    if (!userId) return
+    scheduleIdle(() => {
+      void (async () => {
+        try {
+          const merged = await getRecentReflectionNotes(catalog, { userId, limit: 3 })
+          setNotes(mapReflectionNotesToDashboard(merged))
+        } catch {
+          /* keep latest sync snapshot */
+        }
+      })()
+    })
   }, [catalog, userId])
 
   useEffect(() => {

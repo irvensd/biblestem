@@ -3,6 +3,7 @@ import type { ActiveStudyState, CurrentPathInfo, ProgressTotals, TodayFocus } fr
 import type { Lesson, StudySeries } from '@/lib/types/product'
 import type { LocalDashboardProgress } from '@/lib/dashboard-local-progress'
 import { lessonKey } from '@/lib/dashboard-local-progress'
+import { studyPathPageHref } from '@/lib/path-routes'
 
 function findLesson(
   seriesList: StudySeries[],
@@ -140,7 +141,7 @@ function computeCurrentPath(
   return {
     pathSlug: path.slug,
     pathName: path.name,
-    viewPathHref: `/paths/${path.slug}`,
+    viewPathHref: studyPathPageHref(path.slug),
     activeStudyCount: startedSeriesInPath(pathId, catalog.allSeries, p),
     currentStudyTitle: series.title,
     studyProgressLine: studyLessonsProgressLine(series, p),

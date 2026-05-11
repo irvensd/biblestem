@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { PathJourneyMeta } from '@/lib/paths-journey'
 import { formatPathStudyCountLine } from '@/lib/paths-journey'
 import type { StudyPath, StudySeries } from '@/lib/types/product'
+import { studyPathPageHref } from '@/lib/path-routes'
 
 type LearningPathCardProps = {
   path: StudyPath
@@ -12,7 +13,7 @@ type LearningPathCardProps = {
 export function LearningPathCard({ path, series, journey }: LearningPathCardProps) {
   const countLine = formatPathStudyCountLine(series.length, journey.isComingSoon)
   const ctaDisabled = journey.isComingSoon
-  const href = `/paths/${path.slug}`
+  const href = studyPathPageHref(path.slug)
 
   return (
     <article className="flex h-full flex-col rounded-xl border border-zinc-200/90 bg-white p-6 shadow-sm ring-1 ring-zinc-950/[0.03]">

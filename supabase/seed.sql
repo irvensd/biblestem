@@ -78,6 +78,44 @@ insert into public.study_series (
   id, study_path_id, slug, title, description, short_description, long_description,
   level, duration_summary, lessons_count, featured, collection_label, sort_order
 ) values (
+  'e4000001-0000-4000-8000-000000000071',
+  'b1000001-0000-4000-8000-000000000001',
+  'the-god-who-wants-to-be-known',
+  'The God Who Wants to Be Known',
+  'A beginner-friendly BibleStem study on God''s character, His revealed name, His relational love, and the way Father, Son, and Spirit invite humanity into trust and nearness. This study helps learners see that God does not hide behind power. He reveals Himself so He can be known.',
+  'Discover a God who is not distant or cold, but relational, loving, and revealed through Scripture, Jesus, and the beauty of His name.',
+  'A beginner-friendly BibleStem study on God''s character, His revealed name, His relational love, and the way Father, Son, and Spirit invite humanity into trust and nearness. This study helps learners see that God does not hide behind power. He reveals Himself so He can be known.',
+  'Beginner',
+  '74 min total',
+  7,
+  true,
+  'Foundational Studies',
+  3
+);
+
+insert into public.study_series (
+  id, study_path_id, slug, title, description, short_description, long_description,
+  level, duration_summary, lessons_count, featured, collection_label, sort_order
+) values (
+  'e4000001-0000-4000-8000-000000000072',
+  'b1000001-0000-4000-8000-000000000001',
+  'made-for-more',
+  'Made for More',
+  'A beginner-friendly BibleStem study on human identity, dignity, purpose, moral responsibility, and restoration through Jesus. This study helps learners see that humanity was created for more than survival. We were made in God''s image, called to reflect His love, and invited to be restored through Christ.',
+  'Discover what it means to be human through Scripture''s teaching that we are created in the image of God.',
+  'A beginner-friendly BibleStem study on human identity, dignity, purpose, moral responsibility, and restoration through Jesus. This study helps learners see that humanity was created for more than survival. We were made in God''s image, called to reflect His love, and invited to be restored through Christ.',
+  'Beginner',
+  '73 min total',
+  7,
+  false,
+  'Foundational Studies',
+  4
+);
+
+insert into public.study_series (
+  id, study_path_id, slug, title, description, short_description, long_description,
+  level, duration_summary, lessons_count, featured, collection_label, sort_order
+) values (
   'e4000001-0000-4000-8000-000000000020',
   'b1000001-0000-4000-8000-000000000002',
   'three-angels-messages',
@@ -253,6 +291,76 @@ insert into public.lessons (
     'Respond to God''s invitation into friendship: trust, obedience, nearness, and life with Him through Christ.',
     10,
     'John 15:13 to 15 · Revelation 21:3 · James 2:23 · Psalm 25:14',
+    7
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000701',
+    'e4000001-0000-4000-8000-000000000071',
+    'why-names-matter',
+    'Why Names Matter',
+    'Show that names in Scripture often reveal identity, character, and story, preparing you for God''s revealed name.',
+    10,
+    'Genesis 1:1 · Genesis 2:7 · Genesis 32:27 to 28 · Matthew 1:21',
+    1
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000702',
+    'e4000001-0000-4000-8000-000000000071',
+    'elohim-the-first-name-we-meet',
+    'Elohim: The First Name We Meet',
+    'Meet Elohim in Genesis 1:1 as Creator, trace His voice in creation, and see dignity and relationship woven into the opening chapter.',
+    10,
+    'Genesis 1:1 · Genesis 1:26 to 27 · Psalm 100:3',
+    2
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000703',
+    'e4000001-0000-4000-8000-000000000071',
+    'love-at-the-heart-of-god',
+    'God Is Love',
+    'See that love is not merely something God does, but central to who He is, from John’s letters and Scripture’s portrait of love.',
+    10,
+    '1 John 4:7 to 8 · 1 John 4:16 · 1 Corinthians 13:4 to 5 · Jeremiah 31:3',
+    3
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000704',
+    'e4000001-0000-4000-8000-000000000071',
+    'one-god-more-than-alone',
+    'One God, More Than Alone',
+    'Hold together Deuteronomy’s one LORD with Genesis and the Gospels, where Father, Son, and Holy Spirit appear in loving unity.',
+    11,
+    'Deuteronomy 6:4 · Genesis 1:26 · Matthew 3:16 to 17 · Matthew 28:19',
+    4
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000705',
+    'e4000001-0000-4000-8000-000000000071',
+    'love-has-always-existed',
+    'Love Has Always Existed',
+    'See that God did not become loving after creation: love belongs to His eternal life before the foundation of the world.',
+    10,
+    'John 17:24 · 1 John 4:8 · John 1:1 to 3 · Ephesians 1:4 to 5',
+    5
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000706',
+    'e4000001-0000-4000-8000-000000000071',
+    'jesus-makes-god-visible',
+    'Jesus Makes God Visible',
+    'See Jesus as the clearest revelation of God’s heart, character, and love through His words, compassion, sacrifice, and the Father made known.',
+    10,
+    'John 14:8 to 9 · John 1:18 · Colossians 1:15 · Hebrews 1:3',
+    6
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000707',
+    'e4000001-0000-4000-8000-000000000071',
+    'the-invitation-to-come-near',
+    'The Invitation to Come Near',
+    'Respond to God’s revelation with trust and nearness: draw near to Him, abide in His love, and look toward His dwelling with His people.',
+    10,
+    'James 4:8 · Hebrews 4:16 · John 17:3 · 1 John 4:16 · Revelation 21:3',
     7
   ),
   (
@@ -684,7 +792,102 @@ insert into public.lessons (
     12,
     'Revelation 16:13 to 14 · Matthew 24:23 to 25 · Isaiah 8:19 to 20',
     18
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000801',
+    'e4000001-0000-4000-8000-000000000072',
+    'more-than-mere-survival',
+    'More Than Mere Survival',
+    'Introduce the question of human identity and show that Scripture gives humanity dignity beyond survival.',
+    10,
+    'Psalm 8:3 to 5 · Genesis 1:1',
+    1
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000802',
+    'e4000001-0000-4000-8000-000000000072',
+    'created-in-gods-image',
+    'Created in God''s Image',
+    'Explain Genesis 1:26 to 28 and show that every human life carries God-given dignity and purpose.',
+    10,
+    'Genesis 1:26 to 28 · Genesis 5:1 to 2 · James 3:9',
+    2
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000803',
+    'e4000001-0000-4000-8000-000000000072',
+    'made-for-relationship',
+    'Made for Relationship',
+    'Show that being made in God''s image includes the capacity for love, relationship, and community.',
+    11,
+    'Genesis 1:27 · 1 John 4:16',
+    3
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000804',
+    'e4000001-0000-4000-8000-000000000072',
+    'free-moral-agents',
+    'Free Moral Agents',
+    'Explain why love requires freedom and why God created humans with meaningful choice.',
+    10,
+    'Deuteronomy 30:19 · Joshua 24:15 · Genesis 2:16 to 17 · John 14:15',
+    4
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000805',
+    'e4000001-0000-4000-8000-000000000072',
+    'why-every-life-matters',
+    'Why Every Life Matters',
+    'Show that every person is seen, known, valued, and significant to God.',
+    11,
+    'Psalm 139:1 to 14 · Matthew 10:29 to 31 · Acts 17:26 to 28',
+    5
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000806',
+    'e4000001-0000-4000-8000-000000000072',
+    'jesus-the-true-image',
+    'Jesus, the True Image',
+    'Show that Jesus reveals both God''s character and what humanity was created to be.',
+    10,
+    'Colossians 1:15 · Hebrews 1:3 · 2 Corinthians 4:4',
+    6
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000807',
+    'e4000001-0000-4000-8000-000000000072',
+    'restored-into-his-image',
+    'Restored Into His Image',
+    'Show that God''s purpose is to restore His image in us as we behold Christ.',
+    10,
+    '2 Corinthians 3:18 · 1 Corinthians 15:49 · Romans 8:29',
+    7
   );
+
+
+update public.lessons
+set reader_content = '{"draftShell": true}'::jsonb
+where study_series_id = 'e4000001-0000-4000-8000-000000000072'
+  and slug not in ('more-than-mere-survival', 'created-in-gods-image', 'free-moral-agents');
+
+update public.lessons
+set reader_content = $mfm_l1_reader$
+{"openingThought":"Every person eventually asks the same question.\n\nWho am I?\n\nNot just,\n\nWhat is my name?\n\nNot just,\n\nWhat do I do?\n\nBut,\n\nWhat am I?\n\nWhy am I here?\n\nDo I matter?\n\nThe world gives different answers.\n\nSome say human life is only biology.\n\nA short life.\n\nA few urges.\n\nA little pleasure.\n\nA little pain.\n\nThen death.\n\nBut Scripture tells a different story.\n\nHumanity is not an accident.\n\nYou are not merely a survival machine.\n\nYou were created by God.\n\nAnd if that is true,\n\nthen your life carries dignity,\n\npurpose,\n\nresponsibility,\n\nand hope.","scriptureRef":"Psalm 8:3 to 5","scriptureQuote":"When I consider Your heavens,\n\nthe work of Your fingers,\n\nthe moon and the stars,\n\nwhich You have ordained,\n\nwhat is man that You are mindful of him,\n\nand the son of man that You visit him?\n\nFor You have made him a little lower than the angels,\n\nand You have crowned him with glory and honor.","scriptureSecondaryRef":"Genesis 1:1","scriptureSecondaryQuote":"In the beginning God created the heavens and the earth.","scriptureWordInsights":[{"surface":"mindful","lemma":"זָכַר","transliteration":"zakar","meaning":"to remember, call to mind, be mindful","strongs":"H2142","reference":"Psalm 8:4","language":"Hebrew","note":"In Psalm 8,\n\nDavid asks,\n\n\"What is man that You are mindful of him?\"\n\nThe idea is not that God occasionally remembers humanity,\n\nas if He almost forgot.\n\nIt points to God's attentive care.\n\nThe Creator of the heavens notices human beings.\n\nHe is mindful of us.\n\nThat means your life is not invisible to God.\n\nYou are seen.\n\nKnown.\n\nConsidered.\n\nAnd valued."}],"scriptureSupplementBlocks":[{"type":"scripture","reference":"Genesis 1:26","quote":"Then God said,\n\nLet Us make man in Our image,\n\naccording to Our likeness."},{"type":"scripture","reference":"Acts 17:26 to 28","quote":"And He has made from one blood every nation of men\n\nto dwell on all the face of the earth,\n\nand has determined their preappointed times\n\nand the boundaries of their dwellings,\n\nso that they should seek the Lord,\n\nin the hope that they might grope for Him\n\nand find Him,\n\nthough He is not far from each one of us;\n\nfor in Him we live and move and have our being."},{"type":"paragraph","text":"Scripture begins with God as Creator.\n\nThat means human identity begins with Him."},{"type":"scriptureChain","title":"Made for More","references":[{"reference":"Psalm 8:3 to 5"},{"reference":"Genesis 1:1"},{"reference":"Genesis 1:26"},{"reference":"Acts 17:26 to 28"}]},{"type":"paragraph","text":"Human life is not random or disposable. Scripture begins our identity with the Creator who sees, values, and calls us to seek Him."}],"teachingPoints":["The Bible asks the human identity question.\n\nPsalm 8 looks at the vastness of creation and asks why God cares about humanity.","Human life begins with God.\n\nGenesis does not begin with accident, chaos, or meaninglessness. It begins with the Creator.","Humanity carries dignity.\n\nPsalm 8 says God crowns human beings with glory and honor.","Humanity was made for relationship with God.\n\nActs 17 says God arranged life so people would seek Him and find Him.","The Bible gives a better story than survival.\n\nWe are not merely living, consuming, and dying. We are made by God and for God."],"wordStudyBeforeStudyInsight":true,"wordStudyStepTitle":"Word Insight","wordStudyStepIntro":"Psalm 8 uses a careful Hebrew word when it speaks about God being \"mindful\" of us. Take a closer look.","wordStudyInsights":[{"surface":"mindful","lemma":"זָכַר","transliteration":"zakar","meaning":"to remember, call to mind, be mindful","strongs":"H2142","reference":"Psalm 8:4","language":"Hebrew","note":"In Psalm 8,\n\nDavid asks,\n\n\"What is man that You are mindful of him?\"\n\nThe idea is not that God occasionally remembers humanity,\n\nas if He almost forgot.\n\nIt points to God's attentive care.\n\nThe Creator of the heavens notices human beings.\n\nHe is mindful of us.\n\nThat means your life is not invisible to God.\n\nYou are seen.\n\nKnown.\n\nConsidered.\n\nAnd valued."}],"studyInsight":{"title":"Study Insight","placement":"after_teaching","variant":"doctrine_clarity","body":"There are two very different ways to tell the story of humanity.\n\nOne story says we are here by accident.\n\nWe live for a little while.\n\nWe follow desire.\n\nWe compete.\n\nWe survive if we can.\n\nThen we disappear.\n\nThe Bible tells a different story.\n\nIt says creation has a Creator.\n\nHuman life has meaning.\n\nEvery person carries worth.\n\nOur choices matter.\n\nLove matters.\n\nJustice matters.\n\nMercy matters.\n\nWhy?\n\nBecause human beings were made by God.\n\nThat does not answer every question in one lesson.\n\nBut it gives us the right starting place.\n\nYou are not random.\n\nYou are not disposable.\n\nYou are not merely what you feel,\n\nwhat you own,\n\nwhat you achieve,\n\nor what others think of you.\n\nYou were made for more."},"studyInsightBlocks":[{"type":"studyVisual","title":"Two Stories of Humanity","accent":"stone","payload":{"variant":"comparison","leftTitle":"Mere Survival","rightTitle":"Made by God","leftItems":["accident","appetite","competition","death"],"rightItems":["dignity","purpose","relationship","hope"]},"footnote":"Mere survival: This story leaves human life without lasting meaning. Made by God: Scripture says humanity begins with the Creator."}],"reflectPrompt":"When you think about human life,\n\ndo you usually see it as random or purposeful?\n\nWhat does Psalm 8 show you about God's view of humanity?\n\nHave you ever struggled to believe your life matters?\n\nWhat changes when your identity begins with God instead of achievement,\n\nappearance,\n\nsuccess,\n\nor other people's opinions?","lifeApplicationStepTitle":"Life Application and Prayer","lifeApplication":"This week,\n\nread Psalm 8 slowly.\n\nDo not rush through the question.\n\n\"What is man that You are mindful of him?\"\n\nLet that question sit with you.\n\nThen answer it from Scripture.\n\nYou are seen by God.\n\nYou are known by God.\n\nYou were created by God.\n\nYou were made for more than survival.","prayer":"","lessonQuiz":{"eyebrow":"CHECK YOUR UNDERSTANDING","title":"Quick Review","description":"Check your understanding before moving on.","settings":{"quizRequired":false,"passingScore":70,"allowRetake":true},"questions":[{"id":"mfm-l1-q1","prompt":"What question does Psalm 8 ask about humanity?","options":["Why are humans better at building cities?","What is man that God is mindful of him?","Why do humans need no guidance?","What nation is strongest?"],"correctIndex":1},{"id":"mfm-l1-q2","prompt":"How does Genesis 1:1 begin the story of reality?","options":["With human achievement","With God as Creator","With meaninglessness","With Israel's kings"],"correctIndex":1},{"id":"mfm-l1-q3","prompt":"According to Psalm 8, God crowns humanity with what?","options":["Glory and honor","Fear and confusion","Wealth and control","Silence and distance"],"correctIndex":0},{"id":"mfm-l1-q4","kind":"multi","prompt":"Which statements fit this lesson?","options":["Human identity begins with God","Scripture gives humanity dignity","Human life is only meaningless survival","God is mindful of humanity"],"correctIndices":[0,1,3]},{"id":"mfm-l1-q5","kind":"reflection","prompt":"What does it mean to you that your life begins with God's purpose rather than accident?","explanation":"This reflection helps the learner connect Scripture's teaching on humanity with personal identity and worth."}]},"completionSummary":"You began with a simple idea: Scripture gives humanity a story that is deeper than survival. Keep that anchor as you move forward."}
+$mfm_l1_reader$::jsonb
+where slug = 'more-than-mere-survival';
+
+update public.lessons
+set reader_content = $mfm_l2_reader$
+{"openingThought":"The Bible does not describe human beings as accidents.\n\nIt does not begin our identity with status,\n\nmoney,\n\nappearance,\n\nrace,\n\ntalent,\n\nachievement,\n\nor failure.\n\nIt begins deeper.\n\nHumanity was created in the image of God.\n\nThat means every person carries dignity before they accomplish anything.\n\nBefore a resume.\n\nBefore a title.\n\nBefore applause.\n\nBefore success.\n\nBefore anyone knows their name.\n\nHuman worth begins with the Creator.\n\nTo be human is to carry meaning.\n\nNot because we made ourselves important,\n\nbut because God made us in His image.","scriptureRef":"Genesis 1:26 to 28","scriptureQuote":"Then God said,\n\nLet Us make man in Our image,\n\naccording to Our likeness;\n\nlet them have dominion over the fish of the sea,\n\nover the birds of the air,\n\nand over the cattle,\n\nover all the earth\n\nand over every creeping thing that creeps on the earth.\n\nSo God created man in His own image;\n\nin the image of God He created him;\n\nmale and female He created them.\n\nThen God blessed them,\n\nand God said to them,\n\nBe fruitful and multiply;\n\nfill the earth and subdue it;\n\nhave dominion over the fish of the sea,\n\nover the birds of the air,\n\nand over every living thing that moves on the earth.","scriptureSecondaryRef":"Genesis 5:1 to 2","scriptureSecondaryQuote":"In the day that God created man,\n\nHe made him in the likeness of God.\n\nHe created them male and female,\n\nand blessed them\n\nand called them Mankind\n\nin the day they were created.","scriptureWordInsights":[{"surface":"image","lemma":"צֶלֶם אֱלֹהִים","transliteration":"tselem Elohim","meaning":"image of God","strongs":"H6754","reference":"Genesis 1:26 to 27","language":"Hebrew","note":"The Hebrew word tselem can mean image,\n\nlikeness,\n\nor representation.\n\nGenesis says humanity was made in the image of God.\n\nThis does not mean we are God.\n\nIt means human beings were created to reflect something about Him.\n\nWe were made to represent His character in the world.\n\nHis love.\n\nHis wisdom.\n\nHis care.\n\nHis justice.\n\nHis creativity.\n\nHis relational nature.\n\nTo bear God's image is a gift,\n\nbut it is also a calling."}],"scriptureSupplementBlocks":[{"type":"scripture","reference":"James 3:9","quote":"With it we bless our God and Father,\n\nand with it we curse men,\n\nwho have been made in the similitude of God."},{"type":"paragraph","text":"Scripture grounds human dignity in creation.\n\nHuman beings matter because they bear God's image."},{"type":"scriptureChain","title":"Created in God's Image","references":[{"reference":"Genesis 1:26 to 28"},{"reference":"Genesis 5:1 to 2"},{"reference":"James 3:9"}]},{"type":"paragraph","text":"Every human being carries God-given dignity because humanity was created in the image and likeness of God."}],"teachingPoints":["Humanity was created by God.\n\nOur identity begins with the Creator, not with human opinion.","Humanity was made in God's image.\n\nThis gives every person dignity, value, and purpose.","Male and female are both included.\n\nGenesis says God created humanity in His image, male and female.","God blessed humanity.\n\nHuman life begins under divine blessing, not meaninglessness.","The image of God affects how we treat people.\n\nJames warns against cursing human beings who are made in God's likeness."],"wordStudyBeforeStudyInsight":true,"wordStudyStepTitle":"Word Insight","wordStudyStepIntro":"Genesis ties human dignity to one striking Hebrew phrase. Take a closer look at what \"image\" means here.","wordStudyInsights":[{"surface":"image","lemma":"צֶלֶם אֱלֹהִים","transliteration":"tselem Elohim","meaning":"image of God","strongs":"H6754","reference":"Genesis 1:26 to 27","language":"Hebrew","note":"The Hebrew word tselem can mean image,\n\nlikeness,\n\nor representation.\n\nGenesis says humanity was made in the image of God.\n\nThis does not mean we are God.\n\nIt means human beings were created to reflect something about Him.\n\nWe were made to represent His character in the world.\n\nHis love.\n\nHis wisdom.\n\nHis care.\n\nHis justice.\n\nHis creativity.\n\nHis relational nature.\n\nTo bear God's image is a gift,\n\nbut it is also a calling."}],"studyInsight":{"title":"Study Insight","placement":"after_teaching","variant":"doctrine_clarity","body":"Genesis 1 gives humanity a high calling.\n\nGod creates a world filled with life,\n\nbeauty,\n\norder,\n\nand purpose.\n\nThen He creates human beings in His image.\n\nThat means people are not disposable.\n\nNo human being is merely a body.\n\nNo human being is merely a number.\n\nNo human being is merely useful or useless.\n\nEvery person carries God-given worth.\n\nThis truth also gives responsibility.\n\nIf we are made in God's image,\n\nthen our lives are meant to reflect Him.\n\nThe way we speak matters.\n\nThe way we treat others matters.\n\nThe way we use power matters.\n\nThe way we care for creation matters.\n\nThe way we love matters.\n\nBeing made in God's image is not only about feeling valuable.\n\nIt is about living as someone created to reflect the God who made you."},"studyInsightBlocks":[{"type":"studyVisual","title":"Image of God","accent":"sage","payload":{"variant":"sequence","steps":[{"label":"Dignity","subtitle":"Every person has value because God made them."},{"label":"Relationship","subtitle":"We were made to know God and love others."},{"label":"Responsibility","subtitle":"We are called to represent God's character."},{"label":"Purpose","subtitle":"Human life is meant to reflect God in the world."}]},"footnote":"The image of God means human life has worth, calling, and responsibility."}],"reflectPrompt":"What usually shapes the way people define their worth?\n\nHow does Genesis 1 correct shallow views of human identity?\n\nWhat changes when you see every person as made in God's image?\n\nWhere do you need to treat yourself or someone else with more dignity?","lifeApplicationStepTitle":"Life Application and Prayer","lifeApplication":"This week,\n\npractice seeing people through Genesis 1.\n\nThe person in traffic.\n\nThe coworker.\n\nThe stranger.\n\nThe difficult family member.\n\nThe person you disagree with.\n\nThe person in the mirror.\n\nAsk:\n\nHow would I treat this person if I remembered they were made in God's image?","prayer":"","lessonQuiz":{"eyebrow":"CHECK YOUR UNDERSTANDING","title":"Quick Review","description":"Check your understanding before moving on.","settings":{"quizRequired":false,"passingScore":70,"allowRetake":true},"questions":[{"id":"mfm-l2-q1","prompt":"According to Genesis 1:26 to 27, humanity was created in whose image?","options":["The image of angels","The image of God","The image of animals","The image of kings"],"correctIndex":1},{"id":"mfm-l2-q2","prompt":"What does being made in God's image give every person?","options":["God-given dignity and purpose","Permission to mistreat others","Freedom from responsibility","Worth only after success"],"correctIndex":0},{"id":"mfm-l2-q3","prompt":"What does James 3:9 warn about?","options":["Cursing people made in God's likeness","Reading Genesis too slowly","Naming animals","Forgetting geography"],"correctIndex":0},{"id":"mfm-l2-q4","kind":"multi","prompt":"Which statements fit this lesson?","options":["Humanity was created by God","Male and female are both included in God's image","The image of God affects how we treat people","Human worth depends only on achievement"],"correctIndices":[0,1,2]},{"id":"mfm-l2-q5","kind":"reflection","prompt":"What is one way you can honor the image of God in someone this week?","explanation":"This reflection helps the learner apply human dignity to real relationships and daily choices."}]},"completionSummary":"You anchored dignity where Scripture anchors it: in God's image. Carry that lens into how you see yourself and others."}
+$mfm_l2_reader$::jsonb
+where slug = 'created-in-gods-image';
+
+update public.lessons
+set reader_content = $mfm_l4_reader$
+{"openingThought":"Love cannot be forced.\n\nObedience can be forced.\n\nBehavior can be controlled.\n\nWords can be repeated.\n\nActions can be pressured.\n\nBut love must be chosen.\n\nThat is why freedom matters.\n\nGod did not create human beings as machines.\n\nHe did not make us puppets.\n\nHe created us with the ability to think,\n\nrespond,\n\ntrust,\n\nchoose,\n\nand love.\n\nThat freedom makes love meaningful.\n\nBut it also makes rebellion possible.\n\nThe same freedom that allows love to be real\n\nalso allows sin to be chosen.\n\nThat is serious.\n\nBut without freedom,\n\nthere can be no real relationship.","scriptureRef":"Deuteronomy 30:19","scriptureQuote":"I call heaven and earth as witnesses today against you,\n\nthat I have set before you life and death,\n\nblessing and cursing;\n\ntherefore choose life,\n\nthat both you and your descendants may live.","scriptureSecondaryRef":"Joshua 24:15","scriptureSecondaryQuote":"And if it seems evil to you to serve the LORD,\n\nchoose for yourselves this day whom you will serve.","scriptureWordInsights":[{"surface":"choose","lemma":"בָּחַר","transliteration":"bachar","meaning":"to choose, select, decide","strongs":"H977","reference":"Joshua 24:15","language":"Hebrew","note":"Joshua tells the people,\n\n\"Choose for yourselves this day whom you will serve.\"\n\nThe Hebrew word bachar points to a real act of choosing.\n\nGod does not treat people as machines.\n\nHe calls them to respond.\n\nThis matters because love,\n\nworship,\n\nand loyalty only have meaning when they are chosen.\n\nGod invites.\n\nGod warns.\n\nGod teaches.\n\nBut He does not force the heart."}],"scriptureSupplementBlocks":[{"type":"scripture","reference":"Genesis 2:16 to 17","quote":"And the LORD God commanded the man,\n\nsaying,\n\nOf every tree of the garden you may freely eat;\n\nbut of the tree of the knowledge of good and evil you shall not eat,\n\nfor in the day that you eat of it\n\nyou shall surely die."},{"type":"scripture","reference":"John 14:15","quote":"If you love Me,\n\nkeep My commandments."},{"type":"paragraph","text":"God gives commands,\n\nbut He also gives meaningful choice.\n\nLove responds freely."},{"type":"scriptureChain","title":"Choose Life","references":[{"reference":"Deuteronomy 30:19"},{"reference":"Joshua 24:15"},{"reference":"Genesis 2:16 to 17"},{"reference":"John 14:15"}]},{"type":"paragraph","text":"Love requires freedom, and Scripture calls us to use that freedom to choose life, trust, and relationship with God."}],"teachingPoints":["God created humans with moral freedom.\n\nWe are able to choose, respond, trust, obey, or reject.","Choice makes love meaningful.\n\nForced love is not love. Real love requires freedom.","God clearly shows the path of life.\n\nHe does not leave people without guidance.","Freedom comes with responsibility.\n\nOur choices matter because they shape life, character, and relationship.","Obedience is meant to flow from love.\n\nJesus said, \"If you love Me, keep My commandments.\""],"wordStudyBeforeStudyInsight":true,"wordStudyStepTitle":"Word Insight","wordStudyStepIntro":"Joshua uses a Hebrew word when he asks Israel whom they will serve. Take a closer look.","wordStudyInsights":[{"surface":"choose","lemma":"בָּחַר","transliteration":"bachar","meaning":"to choose, select, decide","strongs":"H977","reference":"Joshua 24:15","language":"Hebrew","note":"Joshua tells the people,\n\n\"Choose for yourselves this day whom you will serve.\"\n\nThe Hebrew word bachar points to a real act of choosing.\n\nGod does not treat people as machines.\n\nHe calls them to respond.\n\nThis matters because love,\n\nworship,\n\nand loyalty only have meaning when they are chosen.\n\nGod invites.\n\nGod warns.\n\nGod teaches.\n\nBut He does not force the heart."}],"studyInsight":{"title":"Study Insight","placement":"after_teaching","variant":"doctrine_clarity","body":"Freedom is one of the most powerful gifts God gave humanity.\n\nBut freedom is not the same as independence from God.\n\nA fish is free in water,\n\nnot on dry land.\n\nA bird is free in the sky,\n\nnot underwater.\n\nHuman beings are free when they live in harmony with the God who made them.\n\nSin presents freedom as doing whatever we want.\n\nScripture presents freedom as choosing life.\n\nChoosing truth.\n\nChoosing love.\n\nChoosing the Creator.\n\nThat is why God's commands are not random restrictions.\n\nThey are boundaries that protect life and love.\n\nGod gives choice,\n\nbut He also tells the truth about where choices lead.\n\nLife or death.\n\nBlessing or curse.\n\nTrust or rebellion.\n\nLove cannot be forced.\n\nBut love can be invited."},"studyInsightBlocks":[{"type":"studyVisual","title":"Choice and Direction","accent":"sky","payload":{"variant":"comparison","leftTitle":"Life","rightTitle":"Death","leftItems":["trust","love","obedience","relationship"],"rightItems":["distrust","rebellion","selfishness","separation"]},"footnote":"God invites us to choose life. Sin promises freedom but leads away from life."}],"reflectPrompt":"Why does love require freedom?\n\nHave you ever thought of God's commands as protection rather than control?\n\nWhere are you currently facing a meaningful choice?\n\nWhat would it look like to choose life in that area?","lifeApplicationStepTitle":"Life Application and Prayer","lifeApplication":"This week,\n\npay attention to one choice that keeps coming up.\n\nIt may be a habit.\n\nA relationship.\n\nA temptation.\n\nA thought pattern.\n\nA decision you keep delaying.\n\nAsk:\n\nDoes this choice lead me closer to life with God,\n\nor farther from it?\n\nThen choose one step toward life.\n\nPrayer:\n\nLord,\n\nThank You for creating me with the ability to choose.\n\nTeach me to use freedom wisely.\n\nHelp me see Your commands as love,\n\nnot control.\n\nGive me courage to choose life,\n\ntruth,\n\nobedience,\n\nand relationship with You.\n\nShape my heart so my choices reflect Your love.\n\nAmen.","prayer":"","lessonQuiz":{"eyebrow":"CHECK YOUR UNDERSTANDING","title":"Quick Review","description":"Check your understanding before moving on.","settings":{"quizRequired":false,"passingScore":70,"allowRetake":true},"questions":[{"id":"mfm-l4-q1","prompt":"Why does freedom matter for love?","options":["Because love must be chosen","Because love works best when forced","Because choices do not matter","Because God wants confusion"],"correctIndex":0},{"id":"mfm-l4-q2","prompt":"What does Deuteronomy 30:19 tell people to choose?","options":["Popularity","Life","Fear","Wealth"],"correctIndex":1},{"id":"mfm-l4-q3","prompt":"What does the Hebrew word bachar mean?","options":["To choose or decide","To hide","To destroy","To forget"],"correctIndex":0},{"id":"mfm-l4-q4","kind":"multi","prompt":"Which statements fit this lesson?","options":["God created humans with moral freedom","Choice makes love meaningful","Freedom comes with responsibility","God forces the heart to love Him"],"correctIndices":[0,1,2]},{"id":"mfm-l4-q5","kind":"reflection","prompt":"What is one area where God is inviting you to choose life?","explanation":"This reflection helps the learner apply moral freedom to a real decision."}]},"completionSummary":"You saw that love requires freedom, and that God invites us to choose life, trust, and obedience in relationship with Him."}
+$mfm_l4_reader$::jsonb
+where slug = 'free-moral-agents';
+
 
 
 update public.lessons

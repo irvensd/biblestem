@@ -1,10 +1,35 @@
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client'
 
+export type RecentLessonNoteRow = {
+  id: string
+  study_id: string
+  lesson_id: string
+  step_number: number
+  content: string
+  created_at: string
+  updated_at: string
+}
+
+/** In-memory only; avoids repeating the recent-notes list query on every dashboard mount / auth settle. */
+const RECENT_NOTES_LIST_TTL_MS = 5 * 60 * 1000
+const recentNotesListCache = new Map<
+  string,
+  { fetchedAt: number; queryLimit: number; rows: RecentLessonNoteRow[] }
+>()
+
+/** Call after a successful remote save so dashboard merges pick up new ordering. */
+export function invalidateRecentLessonNotesListCache(userId?: string): void {
+  if (userId) recentNotesListCache.delete(userId)
+  else recentNotesListCache.clear()
+}
+
 function isMissingTableOrRlsError(err: { message?: string; code?: string } | null): boolean {
   if (!err) return false
   const msg = (err.message ?? '').toLowerCase()
   if (err.code === '42P01') return true
   if (msg.includes('relation') && msg.includes('does not exist')) return true
+  // PostgREST when the table was never migrated / not exposed to API
+  if (msg.includes('could not find') && msg.includes('schema cache')) return true
   if (msg.includes('permission denied')) return true
   return false
 }
@@ -61,17 +86,8 @@ export async function upsertLessonNoteRemote(
     console.warn('[user_notes] upsert', error.message)
     return false
   }
+  invalidateRecentLessonNotesListCache(userId)
   return true
-}
-
-export type RecentLessonNoteRow = {
-  id: string
-  study_id: string
-  lesson_id: string
-  step_number: number
-  content: string
-  created_at: string
-  updated_at: string
 }
 
 /** Recent rows for dashboard merge; returns [] when Supabase is unavailable or query fails. */
@@ -79,18 +95,30 @@ export async function fetchRecentLessonNotesRemote(userId: string, limit: number
   if (!isSupabaseConfigured()) return []
   const supabase = getSupabaseBrowserClient()
   if (!supabase) return []
+
+  const queryLimit = Math.min(Math.max(limit, 1), 100)
+  const cached = recentNotesListCache.get(userId)
+  if (
+    cached &&
+    Date.now() - cached.fetchedAt < RECENT_NOTES_LIST_TTL_MS &&
+    cached.queryLimit >= queryLimit
+  ) {
+    return cached.rows
+  }
+
   const { data, error } = await supabase
     .from('user_notes')
     .select('id, study_id, lesson_id, step_number, content, created_at, updated_at')
     .eq('user_id', userId)
     .order('updated_at', { ascending: false })
-    .limit(limit)
+    .limit(queryLimit)
 
   if (error) {
     if (isMissingTableOrRlsError(error)) return []
     console.warn('[user_notes] list', error.message)
     return []
   }
-  if (!data?.length) return []
-  return data as RecentLessonNoteRow[]
+  const rows = (data ?? []) as RecentLessonNoteRow[]
+  recentNotesListCache.set(userId, { fetchedAt: Date.now(), queryLimit, rows })
+  return rows
 }

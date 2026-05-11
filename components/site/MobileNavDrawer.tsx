@@ -3,12 +3,40 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
+import { Button } from '@/components/ui/Button'
 import { useSiteNavLinks, type SiteNavLink } from '@/hooks/useSiteNavLinks'
+import { dashboardDisplayName } from '@/lib/dashboard-mock-data'
+
+function IconMenu({ className }: { className?: string }) {
+  return (
+    <svg className={className} width={22} height={22} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M4 7h16M4 12h16M4 17h16"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+function IconClose({ className }: { className?: string }) {
+  return (
+    <svg className={className} width={22} height={22} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
 
 export function MobileNavDrawer() {
   const [open, setOpen] = useState(false)
   const { links } = useSiteNavLinks()
-  const { user } = useDemoAuth()
+  const { user, isReady, logout } = useDemoAuth()
   const drawerLinks: SiteNavLink[] = user
     ? [...links, { href: '/settings', label: 'Settings' }]
     : links
@@ -41,9 +69,9 @@ export function MobileNavDrawer() {
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
         aria-label={open ? 'Close menu' : 'Open menu'}
-        className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-zinc-200/90 bg-white px-3 text-sm font-medium text-zinc-800 shadow-sm ring-1 ring-zinc-950/[0.04] transition-colors hover:bg-zinc-50"
+        className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl bg-zinc-100/75 text-zinc-800 transition-colors hover:bg-zinc-200/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-2"
       >
-        {open ? 'Close' : 'Menu'}
+        {open ? <IconClose className="shrink-0" /> : <IconMenu className="shrink-0" />}
       </button>
 
       {open ? (
@@ -70,6 +98,46 @@ export function MobileNavDrawer() {
                 </Link>
               ))}
             </nav>
+            {!isReady ? null : user ? (
+              <div className="mt-4 border-t border-zinc-200/90 pt-4">
+                <p className="px-4 pb-3 text-xs text-zinc-500">
+                  Signed in as{' '}
+                  <span className="font-medium text-zinc-800">
+                    {dashboardDisplayName(user.email, user.firstName)}
+                  </span>
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    void (async () => {
+                      await logout({ navigateTo: '/' })
+                      setOpen(false)
+                    })()
+                  }}
+                  className="flex min-h-[44px] w-full items-center justify-center rounded-xl px-4 text-sm font-medium text-zinc-800 transition-colors hover:bg-zinc-100"
+                >
+                  Sign out
+                </button>
+              </div>
+            ) : (
+              <div className="mt-4 flex flex-col gap-2 border-t border-zinc-200/90 pt-4">
+                <Button
+                  href="/sign-in"
+                  variant="secondary"
+                  className="min-h-[44px] w-full justify-center px-4 text-sm font-medium"
+                  onClick={() => setOpen(false)}
+                >
+                  Sign in
+                </Button>
+                <Button
+                  href="/get-started"
+                  className="min-h-[44px] w-full justify-center px-4 text-sm font-medium"
+                  onClick={() => setOpen(false)}
+                >
+                  Get started
+                </Button>
+              </div>
+            )}
           </div>
         </>
       ) : null}

@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
+import { LessonContentPending } from '@/components/lessons/LessonContentPending'
 import { LessonReader } from '@/components/lessons/LessonReader'
 import { CatalogSourceNotice } from '@/components/site/CatalogSourceNotice'
-import { getLessonReaderContent } from '@/lib/lesson-content'
+import { getLessonReaderContent, hasBundledLessonReaderContent } from '@/lib/lesson-content'
 import {
   findLessonInCatalogFromCatalog,
   loadCatalog,
@@ -26,6 +27,26 @@ export default async function LessonReaderPage({
   if (!data) return notFound()
 
   const { series, lesson } = data
+
+  // Supabase may still store `draftShell` until re-seeded; bundled library copy should still render.
+  const showDraftPlaceholder = lesson.contentPending && !hasBundledLessonReaderContent(lessonSlug)
+  if (showDraftPlaceholder) {
+    return (
+      <>
+        {shouldShowCatalogFallbackNotice(catalog) ? (
+          <div className="border-b border-amber-200/50 bg-amber-50/40">
+            <div className="container-shell py-2.5">
+              <div className="max-w-xl">
+                <CatalogSourceNotice source={catalog.source} />
+              </div>
+            </div>
+          </div>
+        ) : null}
+        <LessonContentPending studySlug={series.slug} lessonTitle={lesson.title} />
+      </>
+    )
+  }
+
   const content = lesson.readerContent ?? getLessonReaderContent(lessonSlug)
 
   return (

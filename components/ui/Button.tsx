@@ -10,7 +10,8 @@ interface ButtonProps {
   variant?: Variant
   className?: string
   disabled?: boolean
-  onClick?: MouseEventHandler<HTMLButtonElement>
+  /** When `href` is set, forwarded to the underlying `Link`. */
+  onClick?: MouseEventHandler<HTMLButtonElement & HTMLAnchorElement>
 }
 
 const styles: Record<Variant, string> = {
@@ -32,7 +33,7 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes} aria-disabled={disabled}>
+      <Link href={href} className={classes} aria-disabled={disabled} onClick={onClick}>
         {children}
       </Link>
     )

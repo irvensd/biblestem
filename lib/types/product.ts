@@ -67,6 +67,8 @@ export interface StudySeries {
   createdAt?: string
   /** Overview bullets; optional in DB (e.g. JSON array) with mock/catalog fallback. */
   whatYouWillLearn?: string[]
+  /** Optional ordering within the Foundations guided path (lower comes first). */
+  foundationOrder?: number
   /** When false, hide from library (future Supabase flag). Omitted means published. */
   isPublished?: boolean
   /** Populated in mock / API responses */
@@ -92,6 +94,11 @@ export interface Lesson {
   readerContent?: LessonReaderContent
   /** Optional overlay from user_lesson_progress for current user */
   progressState?: LessonCompletionState
+  /**
+   * When true, guided reader content is not ready yet (`draftShell` in DB or mock shells).
+   * UI shows a “coming soon” state instead of generic fallback content.
+   */
+  contentPending?: boolean
 }
 
 /** Structured block inside a lesson (public.lesson_sections). */

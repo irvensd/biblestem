@@ -5,6 +5,8 @@
  */
 import { deathHopeSeriesLessonLibrary } from '@/lib/lesson-content-death-hope'
 import { godIsLoveSeriesLessonLibrary } from '@/lib/lesson-content-god-is-love'
+import { madeForMoreSeriesLessonLibrary } from '@/lib/lesson-content-made-for-more'
+import { theGodWhoWantsToBeKnownSeriesLessonLibrary } from '@/lib/lesson-content-the-god-who-wants-to-be-known'
 import { originOfEvilSeriesLessonLibrary } from '@/lib/lesson-content-origin-of-evil'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
@@ -5599,6 +5601,8 @@ Amen.`,
     },
   },
   ...godIsLoveSeriesLessonLibrary,
+  ...theGodWhoWantsToBeKnownSeriesLessonLibrary,
+  ...madeForMoreSeriesLessonLibrary,
   ...originOfEvilSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {
@@ -5769,6 +5773,15 @@ function parseLessonQuiz(raw: unknown): LessonQuizPayload | undefined {
 }
 
 /**
+ * Sentinel stored in `lessons.reader_content` while a lesson shell exists without authored reader JSON yet.
+ * Keeps Supabase lessons from falling through to generic `_fallback` copy.
+ */
+export function isDraftShellReaderContent(raw: unknown): boolean {
+  if (raw == null || typeof raw !== 'object') return false
+  return (raw as Record<string, unknown>).draftShell === true
+}
+
+/**
  * Parse `lessons.reader_content` from Supabase. Returns null if shape is invalid so the UI can fall back.
  */
 export function parseLessonReaderContent(raw: unknown): LessonReaderContent | null {
@@ -5922,6 +5935,12 @@ export function parseLessonReaderContent(raw: unknown): LessonReaderContent | nu
 
 export function getLessonReaderContent(lessonSlug: string): LessonReaderContent {
   return library[lessonSlug] ?? library._fallback
+}
+
+/** True when authored reader JSON exists in the local library for this slug (not the generic `_fallback`). */
+export function hasBundledLessonReaderContent(lessonSlug: string): boolean {
+  if (lessonSlug === '_fallback') return false
+  return Object.prototype.hasOwnProperty.call(library, lessonSlug)
 }
 
 /** Lesson 1 of “The Bible — God’s Living Word” — for tests and CMS handoff. */
