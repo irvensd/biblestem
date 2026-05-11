@@ -9,6 +9,28 @@ export function isSupabaseConfigured(): boolean {
 
 let browserSingleton: SupabaseClient | null = null
 
+/** Supabase persists the JWT under keys like `sb-<project-ref>-auth-token`. */
+export function clearSupabaseBrowserAuthStorage(): void {
+  if (typeof window === 'undefined') return
+  try {
+    const toRemove: string[] = []
+    for (let i = 0; i < window.localStorage.length; i++) {
+      const key = window.localStorage.key(i)
+      if (key?.startsWith('sb-') && key.endsWith('-auth-token')) toRemove.push(key)
+    }
+    for (const key of toRemove) {
+      window.localStorage.removeItem(key)
+    }
+  } catch {
+    /* Safari private mode / blocked storage */
+  }
+}
+
+/** Drops the singleton so the next client does not reuse a stale in-memory session (e.g. after logout). */
+export function resetSupabaseBrowserClient(): void {
+  browserSingleton = null
+}
+
 /**
  * Single browser client for auth + user-scoped tables (RLS). Returns null when env is not set.
  */

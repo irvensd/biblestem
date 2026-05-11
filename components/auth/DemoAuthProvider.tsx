@@ -11,7 +11,12 @@ import {
   type ReactNode,
 } from 'react'
 import { firstNameFromFullName } from '@/lib/name-utils'
-import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client'
+import {
+  clearSupabaseBrowserAuthStorage,
+  getSupabaseBrowserClient,
+  isSupabaseConfigured,
+  resetSupabaseBrowserClient,
+} from '@/lib/supabase/client'
 
 const STORAGE_KEY = 'biblestem-demo-session'
 const PROFILE_KEY = 'biblestem-demo-profile'
@@ -206,14 +211,31 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(async (options?: { navigateTo?: string }) => {
     const supabase = getSupabaseBrowserClient()
+    const navigateTo = options?.navigateTo
+
     if (supabase) {
-      await supabase.auth.signOut()
+      // Network stalls or revoked-session edge cases must not block logout UX.
+      const signOutDeadline = new Promise<void>((resolve) => {
+        setTimeout(resolve, 5000)
+      })
+      try {
+        await Promise.race([
+          supabase.auth.signOut({ scope: 'local' }).catch(() => undefined),
+          signOutDeadline,
+        ])
+      } catch {
+        /* proceed with local teardown */
+      }
     }
+
+    clearSupabaseBrowserAuthStorage()
     safeStorageRemove(STORAGE_KEY)
+    resetSupabaseBrowserClient()
+
     // Full-page navigation resets client state; skip setUser(null) so protected layouts never
     // flash “Redirecting…” between auth clearing and unload.
-    if (typeof window !== 'undefined' && options?.navigateTo) {
-      window.location.href = options.navigateTo
+    if (typeof window !== 'undefined' && navigateTo) {
+      window.location.assign(navigateTo)
       return
     }
     setUser(null)
