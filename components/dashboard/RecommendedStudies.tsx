@@ -36,20 +36,37 @@ function CompactRec({ study, paths }: { study: StudySeries; paths?: StudyPath[] 
 export function RecommendedStudies({ studies, paths }: RecommendedStudiesProps) {
   const list = studies.slice(0, 2)
 
-  if (list.length === 0) return null
-
   return (
-    <section>
+    <section id="dashboard-recommended" className="scroll-mt-24">
       <div className="mb-5">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Recommended next</p>
         <h2 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900 md:text-xl">Based on your progress</h2>
-        <p className="mt-1 text-sm text-zinc-500">Up to two studies. Your active lesson lives in “Continue studying” above.</p>
+        <p className="mt-1 text-sm text-zinc-500">
+          Suggested follow-up studies. Your current lesson stays saved in Continue studying above.
+        </p>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {list.map((study) => (
-          <CompactRec key={study.slug} study={study} paths={paths} />
-        ))}
-      </div>
+      {list.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-zinc-200/90 bg-stone-50/50 px-6 py-10 text-center">
+          <p className="text-sm font-medium text-zinc-800">No suggestions yet</p>
+          <p className="mt-2 text-sm text-zinc-600">
+            Browse the library or a learning path to find your next series.
+          </p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-4">
+            <Link href="/study-library" className="text-sm font-medium text-blue-800 hover:text-blue-900">
+              Study library
+            </Link>
+            <Link href="/paths" className="text-sm font-medium text-blue-800 hover:text-blue-900">
+              View paths
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {list.map((study) => (
+            <CompactRec key={study.slug} study={study} paths={paths} />
+          ))}
+        </div>
+      )}
     </section>
   )
 }

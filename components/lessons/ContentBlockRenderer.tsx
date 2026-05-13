@@ -125,7 +125,13 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
     case 'studyVisual':
       return <StudyVisualBlock block={block} />
     case 'sanctuaryJourneyMap':
-      return <SanctuaryJourneyMap highlightedIndices={block.highlightedIndices} />
+      return (
+        <SanctuaryJourneyMap
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+        />
+      )
     case 'studyCta':
       return (
         <div className="max-w-none pt-2">

@@ -7,6 +7,10 @@ export interface SanctuaryJourneyMapProps {
   stages?: readonly SanctuaryJourneyStageData[]
   /** 0-based indices into `stages` to emphasize (focus ring + slight elevation). */
   highlightedIndices?: readonly number[]
+  /** Optional heading above the grid. */
+  title?: string
+  /** Optional line under `title`. */
+  subtitle?: string
   /** Optional stable id for aria-labelledby when embedded without a section heading. */
   labelledBy?: string
 }
@@ -24,17 +28,28 @@ function clampHighlightSet(indices: readonly number[] | undefined, len: number):
 export function SanctuaryJourneyMap({
   stages = SANCTUARY_JOURNEY_STAGES,
   highlightedIndices,
+  title,
+  subtitle,
   labelledBy,
 }: SanctuaryJourneyMapProps) {
   const list = stages.length > 0 ? stages : SANCTUARY_JOURNEY_STAGES
   const focus = clampHighlightSet(highlightedIndices, list.length)
+  const headingId = labelledBy ?? (title ? 'sanctuary-journey-map-heading' : undefined)
 
   return (
     <section
       className="w-full max-w-3xl"
-      aria-labelledby={labelledBy}
-      aria-label={labelledBy ? undefined : 'Sanctuary journey stages'}
+      aria-labelledby={headingId}
+      aria-label={headingId ? undefined : 'Sanctuary journey stages'}
     >
+      {title ? (
+        <header className="mb-4">
+          <h3 id={headingId} className="text-lg font-semibold tracking-tight text-zinc-900 md:text-xl">
+            {title}
+          </h3>
+          {subtitle ? <p className="mt-2 text-sm leading-relaxed text-zinc-600 md:text-[0.9375rem]">{subtitle}</p> : null}
+        </header>
+      ) : null}
       <ol className="grid list-none gap-3 sm:grid-cols-2 sm:gap-3.5">
         {list.map((stage, index) => {
           const emphasized = focus.has(index)

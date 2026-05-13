@@ -1712,12 +1712,7 @@ const lessonWayBack1: Lesson = {
   scripture: 'Psalm 77:13 · Isaiah 59:2 · John 14:6',
   sortOrder: 1,
   progressState: 'not_started',
-  sections: [
-    wayBackPlaceholderShellSection(
-      'd3000007-0000-4000-8000-000000000855',
-      'f5000001-0000-4000-8000-000000000911',
-    ),
-  ],
+  sections: [],
 }
 
 const lessonWayBack2: Lesson = {

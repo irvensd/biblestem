@@ -14,7 +14,7 @@ export function ContinueStudyCard({ active, allLessonsComplete }: ContinueStudyC
   if (!active) {
     if (allLessonsComplete) {
       return (
-        <section className="rounded-xl border border-zinc-200/90 bg-white p-8 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-10">
+        <section id="dashboard-continue-studying" className="scroll-mt-24 rounded-xl border border-zinc-200/90 bg-white p-8 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-10">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Continue studying</p>
           <h2 className="mt-4 text-xl font-semibold tracking-tight text-zinc-900 md:text-2xl">You&apos;re all caught up</h2>
           <p className="mt-3 max-w-lg text-sm leading-relaxed text-zinc-600">
@@ -27,7 +27,7 @@ export function ContinueStudyCard({ active, allLessonsComplete }: ContinueStudyC
       )
     }
     return (
-      <section className="rounded-xl border border-zinc-200/90 bg-white p-8 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-10">
+      <section id="dashboard-continue-studying" className="scroll-mt-24 rounded-xl border border-zinc-200/90 bg-white p-8 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-10">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Start your first study</p>
         <h2 className="mt-4 text-xl font-semibold tracking-tight text-zinc-900 md:text-2xl">Begin with Scripture</h2>
         <p className="mt-3 max-w-lg text-sm leading-relaxed text-zinc-600">
@@ -48,7 +48,7 @@ export function ContinueStudyCard({ active, allLessonsComplete }: ContinueStudyC
   const continueLabel = active.progressPercent >= 100 ? 'Review lesson' : 'Continue lesson'
 
   return (
-    <section className="rounded-xl border border-zinc-200/90 bg-white p-8 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-10">
+    <section id="dashboard-continue-studying" className="scroll-mt-24 rounded-xl border border-zinc-200/90 bg-white p-8 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-10">
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Continue studying</p>
       <p className="mt-3 text-sm font-medium text-zinc-500">{active.studyTitle}</p>
       <h2 className="mt-2 text-xl font-semibold tracking-tight text-zinc-900 md:text-2xl">{active.lessonTitle}</h2>

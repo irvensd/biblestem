@@ -11,6 +11,7 @@ import { theGodWhoWantsToBeKnownSeriesLessonLibrary } from '@/lib/lesson-content
 import { originOfEvilSeriesLessonLibrary } from '@/lib/lesson-content-origin-of-evil'
 import { fallOfHumanitySeriesLessonLibrary } from '@/lib/lesson-content-fall-of-humanity'
 import { thePromiseKeptSeriesLessonLibrary } from '@/lib/lesson-content-the-promise-kept'
+import { theWayBackToGodSeriesLessonLibrary } from '@/lib/lesson-content-the-way-back-to-god'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
 
@@ -5609,6 +5610,7 @@ Amen.`,
   ...warInHeavenSeriesLessonLibrary,
   ...fallOfHumanitySeriesLessonLibrary,
   ...thePromiseKeptSeriesLessonLibrary,
+  ...theWayBackToGodSeriesLessonLibrary,
   ...originOfEvilSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {

@@ -133,6 +133,10 @@ export type LessonContentBlock =
       type: 'sanctuaryJourneyMap'
       /** 0-based indices into the canonical sanctuary journey order. */
       highlightedIndices?: number[]
+      /** Optional heading above the map (e.g. study title). */
+      title?: string
+      /** Optional subheading under the title. */
+      subtitle?: string
     }
   | { type: 'studyCta'; label: string; href: string }
   | StudyVisualLessonBlock
