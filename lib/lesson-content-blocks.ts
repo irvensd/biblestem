@@ -129,6 +129,12 @@ export type LessonContentBlock =
       items: ProphecyTimelineItem[]
       footerNotes?: string[]
     }
+  | {
+      type: 'sanctuaryJourneyMap'
+      /** 0-based indices into the canonical sanctuary journey order. */
+      highlightedIndices?: number[]
+    }
+  | { type: 'studyCta'; label: string; href: string }
   | StudyVisualLessonBlock
 
 /** Best-effort parse for `reader_content.scriptureSupplementBlocks` from JSONB. */

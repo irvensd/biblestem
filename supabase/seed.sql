@@ -189,6 +189,29 @@ insert into public.study_series (
   id, study_path_id, slug, title, description, short_description, long_description,
   level, duration_summary, lessons_count, featured, collection_label, sort_order
 ) values (
+  'e4000001-0000-4000-8000-000000000076',
+  'b1000001-0000-4000-8000-000000000001',
+  'the-way-back-to-god',
+  'The Way Back to God',
+  'Sin separated humanity from God, but Scripture shows that God has made a way back. The sanctuary was more than an ancient religious structure. It was a living map of salvation.' || E'\n\n' ||
+  'Through its spaces, symbols, sacrifices, priestly ministry, and Day of Atonement, the sanctuary pointed forward to Jesus. He is the Door, the Lamb, the Bread of Life, the Light of the world, our Intercessor, our High Priest, and the One who writes God''s law of love in our hearts.' || E'\n\n' ||
+  'This study helps beginners understand the sanctuary as a Christ-centered journey from separation to restoration.',
+  'The sanctuary reveals the path God opened through Jesus to bring humanity back into restored relationship with Him.',
+  'Sin separated humanity from God, but Scripture shows that God has made a way back. The sanctuary was more than an ancient religious structure. It was a living map of salvation.' || E'\n\n' ||
+  'Through its spaces, symbols, sacrifices, priestly ministry, and Day of Atonement, the sanctuary pointed forward to Jesus. He is the Door, the Lamb, the Bread of Life, the Light of the world, our Intercessor, our High Priest, and the One who writes God''s law of love in our hearts.' || E'\n\n' ||
+  'This study helps beginners understand the sanctuary as a Christ-centered journey from separation to restoration.',
+  'Beginner',
+  'Approx. 55–70 min total',
+  7,
+  false,
+  'Foundational Studies',
+  8
+);
+
+insert into public.study_series (
+  id, study_path_id, slug, title, description, short_description, long_description,
+  level, duration_summary, lessons_count, featured, collection_label, sort_order
+) values (
   'e4000001-0000-4000-8000-000000000020',
   'b1000001-0000-4000-8000-000000000002',
   'three-angels-messages',
@@ -1154,6 +1177,129 @@ insert into public.lessons (
   9,
   '2 Corinthians 1:20 · John 3:16 · John 14:6 · 1 Timothy 2:4',
   7
+);
+
+insert into public.lessons (
+  id, study_series_id, slug, title, summary, duration_minutes, scripture, sort_order, reader_content
+) values (
+  'd3000007-0000-4000-8000-000000000855',
+  'e4000001-0000-4000-8000-000000000076',
+  'a-map-back-to-god',
+  'A Map Back to God',
+  'The sanctuary shows that God has made a path for separated humanity to return to restored relationship with Him.',
+  9,
+  'Psalm 77:13 · Isaiah 59:2 · John 14:6',
+  1,
+  null
+),
+(
+  'd3000007-0000-4000-8000-000000000856',
+  'e4000001-0000-4000-8000-000000000076',
+  'the-door-and-the-sacrifice',
+  'The Door and the Sacrifice',
+  'The courtyard points to Jesus as the only way in and the Lamb who gave His life for our sins.',
+  8,
+  'John 10:9 · John 1:29 · Hebrews 10:19 to 20',
+  2,
+  '{"draftShell": true}'::jsonb
+),
+(
+  'd3000007-0000-4000-8000-000000000857',
+  'e4000001-0000-4000-8000-000000000076',
+  'washed-and-made-new',
+  'Washed and Made New',
+  'The laver points to cleansing, renewal, and the transforming work of the Holy Spirit.',
+  8,
+  'Titus 3:5 · Ezekiel 36:25 to 27 · 1 John 1:9',
+  3,
+  '{"draftShell": true}'::jsonb
+),
+(
+  'd3000007-0000-4000-8000-000000000858',
+  'e4000001-0000-4000-8000-000000000076',
+  'bread-light-and-prayer',
+  'Bread, Light, and Prayer',
+  'The Holy Place reveals Jesus as the Bread of Life, the Light of the world, and the One who brings our prayers before God.',
+  9,
+  'John 6:35 · John 8:12 · Revelation 8:3 to 4',
+  4,
+  null
+),
+(
+  'd3000007-0000-4000-8000-000000000859',
+  'e4000001-0000-4000-8000-000000000076',
+  'gods-love-written-within',
+  'God''s Love Written Within',
+  'The Most Holy Place points to God''s desire to write His law of love in the hearts and minds of His people.',
+  8,
+  'Hebrews 10:16 · Jeremiah 31:33 · Exodus 25:21 to 22',
+  5,
+  null
+),
+(
+  'd3000007-0000-4000-8000-000000000860',
+  'e4000001-0000-4000-8000-000000000076',
+  'the-daily-path-of-grace',
+  'The Daily Path of Grace',
+  'The daily sanctuary service showed the seriousness of sin, the need for a substitute, and the ongoing ministry of grace.',
+  8,
+  'Leviticus 4:27 to 31 · Hebrews 9:22 · 1 Peter 1:18 to 19',
+  6,
+  '{"draftShell": true}'::jsonb
+),
+(
+  'd3000007-0000-4000-8000-000000000861',
+  'e4000001-0000-4000-8000-000000000076',
+  'the-final-cleansing',
+  'The Final Cleansing',
+  'The Day of Atonement points to God''s final work of cleansing, judgment, restoration, and the complete removal of evil.',
+  8,
+  'Leviticus 16:15 to 22 · Daniel 7:9 to 10 · Revelation 14:6 to 7 · Hebrews 10:19 to 25',
+  7,
+  null
+);
+
+insert into public.lesson_sections (
+  id, lesson_id, sort_order, heading, body, section_type
+) values (
+  'f5000001-0000-4000-8000-000000000911',
+  'd3000007-0000-4000-8000-000000000855',
+  1,
+  'Lesson content coming soon',
+  $wb_way_back_l1$
+{"blocks":[{"type":"paragraph","text":"This lesson has been created, but the study content has not been added yet."},{"type":"sanctuaryJourneyMap"},{"type":"studyCta","label":"Back to study overview","href":"/study-library/the-way-back-to-god"}]}
+$wb_way_back_l1$,
+  'other'
+),
+(
+  'f5000001-0000-4000-8000-000000000912',
+  'd3000007-0000-4000-8000-000000000858',
+  1,
+  'Lesson content coming soon',
+  $wb_way_back_l4$
+{"blocks":[{"type":"paragraph","text":"This lesson has been created, but the study content has not been added yet."},{"type":"sanctuaryJourneyMap","highlightedIndices":[3,4,5]},{"type":"studyCta","label":"Back to study overview","href":"/study-library/the-way-back-to-god"}]}
+$wb_way_back_l4$,
+  'other'
+),
+(
+  'f5000001-0000-4000-8000-000000000913',
+  'd3000007-0000-4000-8000-000000000859',
+  1,
+  'Lesson content coming soon',
+  $wb_way_back_l5$
+{"blocks":[{"type":"paragraph","text":"This lesson has been created, but the study content has not been added yet."},{"type":"sanctuaryJourneyMap","highlightedIndices":[6]},{"type":"studyCta","label":"Back to study overview","href":"/study-library/the-way-back-to-god"}]}
+$wb_way_back_l5$,
+  'other'
+),
+(
+  'f5000001-0000-4000-8000-000000000914',
+  'd3000007-0000-4000-8000-000000000861',
+  1,
+  'Lesson content coming soon',
+  $wb_way_back_l7$
+{"blocks":[{"type":"paragraph","text":"This lesson has been created, but the study content has not been added yet."},{"type":"sanctuaryJourneyMap","highlightedIndices":[7]},{"type":"studyCta","label":"Back to study overview","href":"/study-library/the-way-back-to-god"}]}
+$wb_way_back_l7$,
+  'other'
 );
 
 update public.lessons

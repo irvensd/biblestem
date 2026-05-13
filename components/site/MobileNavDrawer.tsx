@@ -1,10 +1,11 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import { Button } from '@/components/ui/Button'
-import { useSiteNavLinks, type SiteNavLink } from '@/hooks/useSiteNavLinks'
+import { isSiteNavActive, useSiteNavLinks, type SiteNavLink } from '@/hooks/useSiteNavLinks'
 import { dashboardDisplayName } from '@/lib/dashboard-mock-data'
 
 function IconMenu({ className }: { className?: string }) {
@@ -34,6 +35,7 @@ function IconClose({ className }: { className?: string }) {
 }
 
 export function MobileNavDrawer() {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const { links } = useSiteNavLinks()
   const { user, isReady, logout } = useDemoAuth()
@@ -87,16 +89,41 @@ export function MobileNavDrawer() {
             className="fixed left-0 right-0 top-[calc(4rem+env(safe-area-inset-top))] z-[45] max-h-[min(70vh,calc(100dvh-4rem-env(safe-area-inset-top)))] overflow-y-auto border-b border-zinc-200/90 bg-stone-50 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-lg"
           >
             <nav aria-label="Primary mobile" className="flex flex-col gap-1">
-              {drawerLinks.map((link) => (
-                <Link
-                  key={`${link.href}-${link.label}`}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="block min-h-[44px] rounded-xl px-4 py-3 text-base font-medium text-zinc-800 transition-colors hover:bg-zinc-100"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {drawerLinks.map((link) => {
+                const active = isSiteNavActive(pathname, link.href)
+                const base =
+                  'block min-h-[44px] rounded-xl px-4 py-3 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50'
+
+                if (link.emphasis === 'cta') {
+                  return (
+                    <Link
+                      key={`${link.href}-${link.label}`}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      aria-current={active ? 'page' : undefined}
+                      className={`${base} border text-center font-semibold ${
+                        active
+                          ? 'border-blue-900 bg-blue-900 text-white hover:bg-blue-950'
+                          : 'border-blue-800/40 bg-blue-800/[0.07] text-blue-950 hover:bg-blue-800/12'
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  )
+                }
+
+                return (
+                  <Link
+                    key={`${link.href}-${link.label}`}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    aria-current={active ? 'page' : undefined}
+                    className={`${base} ${active ? 'bg-zinc-200/90 text-zinc-950' : 'text-zinc-800 hover:bg-zinc-100'}`}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
             </nav>
             {!isReady ? null : user ? (
               <div className="mt-4 border-t border-zinc-200/90 pt-4">

@@ -6,6 +6,7 @@
 import type {
   Highlight,
   Lesson,
+  LessonSection,
   LessonWordLink,
   Note,
   StudyPath,
@@ -14,6 +15,7 @@ import type {
   UserSeriesProgress,
   WordStudy,
 } from '@/lib/types/product'
+import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 
 const demoUserId = '00000000-0000-4000-8000-000000000001'
 
@@ -1665,7 +1667,165 @@ const lessonPromiseKept7: Lesson = {
   contentPending: false,
 }
 
-const fallOfHumanityLongDescription = `This study explores how sin entered the human story through deception, distrust, and self-centeredness. Beginning in Eden, humanity’s fall affected the way we think, relate, and live. But Scripture also reveals how Jesus came to restore what was broken and reveal the truth about God’s character.`
+const WAY_BACK_STUDY_SLUG = 'the-way-back-to-god'
+const WAY_BACK_OVERVIEW_HREF = `/study-library/${WAY_BACK_STUDY_SLUG}`
+
+function wayBackPlaceholderShellSection(
+  lessonId: string,
+  sectionId: string,
+  highlight?: number[],
+): LessonSection {
+  const mapBlock: LessonContentBlock =
+    highlight != null && highlight.length > 0
+      ? { type: 'sanctuaryJourneyMap', highlightedIndices: highlight }
+      : { type: 'sanctuaryJourneyMap' }
+
+  const body = JSON.stringify({
+    blocks: [
+      {
+        type: 'paragraph',
+        text: 'This lesson has been created, but the study content has not been added yet.',
+      },
+      mapBlock,
+      { type: 'studyCta', label: 'Back to study overview', href: WAY_BACK_OVERVIEW_HREF },
+    ],
+  })
+
+  return {
+    id: sectionId,
+    lessonId,
+    sortOrder: 1,
+    heading: 'Lesson content coming soon',
+    body,
+    sectionType: 'other',
+  }
+}
+
+const lessonWayBack1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000855',
+  slug: 'a-map-back-to-god',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000076',
+  title: 'A Map Back to God',
+  summary:
+    'The sanctuary shows that God has made a path for separated humanity to return to restored relationship with Him.',
+  durationMinutes: 9,
+  scripture: 'Psalm 77:13 · Isaiah 59:2 · John 14:6',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [
+    wayBackPlaceholderShellSection(
+      'd3000007-0000-4000-8000-000000000855',
+      'f5000001-0000-4000-8000-000000000911',
+    ),
+  ],
+}
+
+const lessonWayBack2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000856',
+  slug: 'the-door-and-the-sacrifice',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000076',
+  title: 'The Door and the Sacrifice',
+  summary:
+    'The courtyard points to Jesus as the only way in and the Lamb who gave His life for our sins.',
+  durationMinutes: 8,
+  scripture: 'John 10:9 · John 1:29 · Hebrews 10:19-20',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: true,
+}
+
+const lessonWayBack3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000857',
+  slug: 'washed-and-made-new',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000076',
+  title: 'Washed and Made New',
+  summary:
+    'The laver points to cleansing, renewal, and the transforming work of the Holy Spirit.',
+  durationMinutes: 8,
+  scripture: 'Titus 3:5 · Ezekiel 36:25-27 · 1 John 1:9',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: true,
+}
+
+const lessonWayBack4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000858',
+  slug: 'bread-light-and-prayer',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000076',
+  title: 'Bread, Light, and Prayer',
+  summary:
+    'The Holy Place reveals Jesus as the Bread of Life, the Light of the world, and the One who brings our prayers before God.',
+  durationMinutes: 9,
+  scripture: 'John 6:35 · John 8:12 · Revelation 8:3-4',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [
+    wayBackPlaceholderShellSection(
+      'd3000007-0000-4000-8000-000000000858',
+      'f5000001-0000-4000-8000-000000000912',
+      [3, 4, 5],
+    ),
+  ],
+}
+
+const lessonWayBack5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000859',
+  slug: 'gods-love-written-within',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000076',
+  title: "God's Love Written Within",
+  summary:
+    "The Most Holy Place points to God's desire to write His law of love in the hearts and minds of His people.",
+  durationMinutes: 8,
+  scripture: 'Hebrews 10:16 · Jeremiah 31:33 · Exodus 25:21-22',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [
+    wayBackPlaceholderShellSection(
+      'd3000007-0000-4000-8000-000000000859',
+      'f5000001-0000-4000-8000-000000000913',
+      [6],
+    ),
+  ],
+}
+
+const lessonWayBack6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000860',
+  slug: 'the-daily-path-of-grace',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000076',
+  title: 'The Daily Path of Grace',
+  summary:
+    'The daily sanctuary service showed the seriousness of sin, the need for a substitute, and the ongoing ministry of grace.',
+  durationMinutes: 8,
+  scripture: 'Leviticus 4:27-31 · Hebrews 9:22 · 1 Peter 1:18-19',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: true,
+}
+
+const lessonWayBack7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000861',
+  slug: 'the-final-cleansing',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000076',
+  title: 'The Final Cleansing',
+  summary:
+    "The Day of Atonement points to God's final work of cleansing, judgment, restoration, and the complete removal of evil.",
+  durationMinutes: 8,
+  scripture: 'Leviticus 16:15-22 · Daniel 7:9-10 · Revelation 14:6-7 · Hebrews 10:19-25',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [
+    wayBackPlaceholderShellSection(
+      'd3000007-0000-4000-8000-000000000861',
+      'f5000001-0000-4000-8000-000000000914',
+      [7],
+    ),
+  ],
+}
+
+const fallOfHumanityLongDescription = `This study explores how sin entered the human story through deception, distrust, and self-centeredness. Beginning in Eden, humanity's fall affected the way we think, relate, and live. But Scripture also reveals how Jesus came to restore what was broken and reveal the truth about God's character.`
 
 const seriesFallOfHumanity: StudySeries = {
   id: 'e4000001-0000-4000-8000-000000000074',
@@ -1738,6 +1898,47 @@ const seriesThePromiseKept: StudySeries = {
     lessonPromiseKept5,
     lessonPromiseKept6,
     lessonPromiseKept7,
+  ],
+}
+
+const wayBackLongDescription = `Sin separated humanity from God, but Scripture shows that God has made a way back. The sanctuary was more than an ancient religious structure. It was a living map of salvation.
+
+Through its spaces, symbols, sacrifices, priestly ministry, and Day of Atonement, the sanctuary pointed forward to Jesus. He is the Door, the Lamb, the Bread of Life, the Light of the world, our Intercessor, our High Priest, and the One who writes God's law of love in our hearts.
+
+This study helps beginners understand the sanctuary as a Christ-centered journey from separation to restoration.`
+
+const seriesTheWayBackToGod: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000076',
+  slug: WAY_BACK_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Way Back to God',
+  subtitle:
+    'The sanctuary reveals the path God opened through Jesus to bring humanity back into restored relationship with Him.',
+  shortDescription:
+    'The sanctuary reveals the path God opened through Jesus to bring humanity back into restored relationship with Him.',
+  longDescription: wayBackLongDescription,
+  description: wayBackLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 8,
+  foundationOrder: 7,
+  whatYouWillLearn: [
+    'Themes: sanctuary, salvation, Jesus, restoration, atonement, prayer, cleansing, worship, law of love, high priest, judgment, relationship with God.',
+    'See the sanctuary as a Christ-centered map from separation to restoration.',
+    'Follow courtyard, Holy Place, and Most Holy Place symbols toward Jesus.',
+    'Connect daily ministry and the Day of Atonement to grace and final cleansing.',
+  ],
+  lessons: [
+    lessonWayBack1,
+    lessonWayBack2,
+    lessonWayBack3,
+    lessonWayBack4,
+    lessonWayBack5,
+    lessonWayBack6,
+    lessonWayBack7,
   ],
 }
 
@@ -1845,6 +2046,7 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesWarInHeaven,
   seriesFallOfHumanity,
   seriesThePromiseKept,
+  seriesTheWayBackToGod,
   seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,

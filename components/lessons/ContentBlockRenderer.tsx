@@ -8,6 +8,8 @@ import { TeachingPointsBlock } from '@/components/lessons/TeachingPointsBlock'
 import { WordInsight } from '@/components/lessons/WordInsight'
 import { WordInsightCard } from '@/components/lessons/WordInsightCard'
 import { ProphecyTimeline } from '@/components/study/ProphecyTimeline'
+import { SanctuaryJourneyMap } from '@/components/study/SanctuaryJourneyMap'
+import { Button } from '@/components/ui/Button'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 
 export interface ReflectionNotesContext {
@@ -122,6 +124,16 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
       return <LessonTextRenderer text={block.text} tone="prayer" />
     case 'studyVisual':
       return <StudyVisualBlock block={block} />
+    case 'sanctuaryJourneyMap':
+      return <SanctuaryJourneyMap highlightedIndices={block.highlightedIndices} />
+    case 'studyCta':
+      return (
+        <div className="max-w-none pt-2">
+          <Button href={block.href} variant="primary">
+            {block.label}
+          </Button>
+        </div>
+      )
     case 'prophecyTimeline':
       return (
         <ProphecyTimeline

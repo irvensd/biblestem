@@ -12,6 +12,7 @@ export const FOUNDATION_GUIDED_SLUG_ORDER = [
   'war-in-heaven',
   'the-fall-of-humanity',
   'the-promise-kept',
+  'the-way-back-to-god',
   'the-bible-gods-living-word',
   'origin-of-evil',
 ] as const
