@@ -13,6 +13,8 @@ import { fallOfHumanitySeriesLessonLibrary } from '@/lib/lesson-content-fall-of-
 import { thePromiseKeptSeriesLessonLibrary } from '@/lib/lesson-content-the-promise-kept'
 import { theWayBackToGodSeriesLessonLibrary } from '@/lib/lesson-content-the-way-back-to-god'
 import { whatHappensWhenWeDieSeriesLessonLibrary } from '@/lib/lesson-content-what-happens-when-we-die'
+import { whenDeathDiedSeriesLessonLibrary } from '@/lib/lesson-content-when-death-died'
+import { madeNewInChristSeriesLessonLibrary } from '@/lib/lesson-content-made-new-in-christ'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
 
@@ -5613,6 +5615,8 @@ Amen.`,
   ...thePromiseKeptSeriesLessonLibrary,
   ...theWayBackToGodSeriesLessonLibrary,
   ...whatHappensWhenWeDieSeriesLessonLibrary,
+  ...whenDeathDiedSeriesLessonLibrary,
+  ...madeNewInChristSeriesLessonLibrary,
   ...originOfEvilSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {

@@ -20,6 +20,7 @@ import {
   orderFoundationStudies,
 } from '@/lib/foundation-path'
 import { readLocalProgress, type LocalDashboardProgress } from '@/lib/dashboard-local-progress'
+import { effectiveStudySeriesMinutes, formatStudyTotalDurationLabel } from '@/lib/studies/derive-overview'
 import type { StudyLevel, StudyPath, StudySeries } from '@/lib/types/product'
 
 const levels: StudyLevel[] = ['Beginner', 'Intermediate', 'Advanced']
@@ -38,6 +39,10 @@ interface StudyLibraryClientProps {
   initialPathSlug?: string
 }
 
+/** First N studies use full cards; the rest render as compact rows to avoid a long scroll. */
+const FOUNDATIONS_CARD_COUNT = 6
+const FOUNDATIONS_PAGE_SIZE = 10
+
 /** Pagination resets when filters change (`key` on this component drives remount). */
 function FoundationStudiesExpandableShelf({
   paths,
@@ -48,14 +53,19 @@ function FoundationStudiesExpandableShelf({
   orderedFoundations: StudySeries[]
   localProgress: LocalDashboardProgress
 }) {
-  const [foundationsVisibleCount, setFoundationsVisibleCount] = useState(10)
+  const [foundationsVisibleCount, setFoundationsVisibleCount] = useState(FOUNDATIONS_CARD_COUNT)
   const displayedFoundations =
     orderedFoundations.length > foundationsVisibleCount
       ? orderedFoundations.slice(0, foundationsVisibleCount)
       : orderedFoundations
+  const cardStudies = displayedFoundations.slice(0, FOUNDATIONS_CARD_COUNT)
+  const listStudies = displayedFoundations.slice(FOUNDATIONS_CARD_COUNT)
   const currentFoundationsStudy = currentFoundationStudy(orderedFoundations, localProgress)
   const foundationsCompletedCount = completedFoundationStudyCount(orderedFoundations, localProgress)
-  const oneCard = displayedFoundations.length === 1
+  const oneCard = cardStudies.length === 1
+  const canShowMore = orderedFoundations.length > foundationsVisibleCount
+  const canShowLess =
+    foundationsVisibleCount > FOUNDATIONS_CARD_COUNT && orderedFoundations.length > FOUNDATIONS_CARD_COUNT
 
   return (
     <>
@@ -105,10 +115,10 @@ function FoundationStudiesExpandableShelf({
       </div>
       <div
         className={`grid gap-6 ${
-          oneCard ? 'mt-5 grid-cols-1 sm:max-w-lg' : 'mt-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+          oneCard ? 'mt-5 grid-cols-1 sm:max-w-lg' : 'mt-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
         }`}
       >
-        {displayedFoundations.map((study, index) => {
+        {cardStudies.map((study, index) => {
           const complete = isStudyFullyComplete(study, localProgress)
           const current = !complete && currentFoundationsStudy?.slug === study.slug
           const progressionState = complete ? 'completed' : current ? 'current' : 'upcoming'
@@ -125,15 +135,85 @@ function FoundationStudiesExpandableShelf({
           )
         })}
       </div>
-      {orderedFoundations.length > foundationsVisibleCount ? (
-        <div className="mt-4">
-          <Button
-            variant="secondary"
-            onClick={() => setFoundationsVisibleCount((n) => Math.min(n + 10, orderedFoundations.length))}
-            className="px-4 py-2 text-sm"
+      {listStudies.length > 0 ? (
+        <>
+          <p className="mt-8 text-xs font-medium uppercase tracking-wide text-zinc-500">
+            Continue the foundations path
+          </p>
+          <ul
+            className="mt-3 divide-y divide-zinc-200/90 overflow-hidden rounded-xl border border-zinc-200/90 bg-white shadow-sm ring-1 ring-zinc-950/[0.03]"
+            aria-label="More foundational studies"
           >
-            Show more studies ({orderedFoundations.length - foundationsVisibleCount} remaining)
-          </Button>
+          {listStudies.map((study, offset) => {
+            const index = FOUNDATIONS_CARD_COUNT + offset
+            const complete = isStudyFullyComplete(study, localProgress)
+            const current = !complete && currentFoundationsStudy?.slug === study.slug
+            const progressionState = complete ? 'completed' : current ? 'current' : 'upcoming'
+            const stateLabel =
+              progressionState === 'completed'
+                ? 'Completed'
+                : progressionState === 'current'
+                  ? 'Current'
+                  : 'Upcoming'
+            const durationLabel = formatStudyTotalDurationLabel(effectiveStudySeriesMinutes(study))
+            return (
+              <li key={study.slug}>
+                <Link
+                  href={`/study-library/${study.slug}`}
+                  className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3.5 transition-colors hover:bg-zinc-50/80"
+                >
+                  <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-zinc-50 text-xs font-semibold text-zinc-700">
+                    {index + 1}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-semibold text-zinc-900">{study.title}</span>
+                    <span className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-zinc-500">
+                      <span>
+                        Step {index + 1} of {orderedFoundations.length}
+                      </span>
+                      <span aria-hidden className="text-zinc-300">
+                        ·
+                      </span>
+                      <span>{stateLabel}</span>
+                      <span aria-hidden className="text-zinc-300">
+                        ·
+                      </span>
+                      <span>
+                        {study.lessonsCount} lessons · {durationLabel} · {study.level}
+                      </span>
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-sm font-medium text-blue-800">View study</span>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+        </>
+      ) : null}
+      {canShowMore || canShowLess ? (
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          {canShowMore ? (
+            <Button
+              variant="secondary"
+              onClick={() =>
+                setFoundationsVisibleCount((n) => Math.min(n + FOUNDATIONS_PAGE_SIZE, orderedFoundations.length))
+              }
+              className="px-4 py-2 text-sm"
+            >
+              Show more studies ({orderedFoundations.length - foundationsVisibleCount} remaining)
+            </Button>
+          ) : null}
+          {canShowLess ? (
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setFoundationsVisibleCount(FOUNDATIONS_CARD_COUNT)}
+              className="px-4 py-2 text-sm"
+            >
+              Show fewer studies
+            </Button>
+          ) : null}
         </div>
       ) : null}
     </>

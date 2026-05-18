@@ -2063,6 +2063,346 @@ const seriesTheWayBackToGod: StudySeries = {
   ],
 }
 
+const WHEN_DEATH_DIED_STUDY_SLUG = 'when-death-died'
+const WHEN_DEATH_DIED_OVERVIEW_HREF = `/study-library/${WHEN_DEATH_DIED_STUDY_SLUG}`
+
+function whenDeathDiedPlaceholderShellSection(
+  lessonId: string,
+  sectionId: string,
+): LessonSection {
+  const body = JSON.stringify({
+    blocks: [
+      {
+        type: 'paragraph',
+        text: 'This lesson has been created, but the study content has not been added yet.',
+      },
+      { type: 'studyCta', label: 'Back to study overview', href: WHEN_DEATH_DIED_OVERVIEW_HREF },
+    ],
+  })
+
+  return {
+    id: sectionId,
+    lessonId,
+    sortOrder: 1,
+    heading: 'Lesson content coming soon',
+    body,
+    sectionType: 'other',
+  }
+}
+
+const lessonWhenDeathDied1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000880',
+  slug: 'he-entered-death',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000078',
+  title: 'He Entered Death',
+  summary: 'Jesus did not avoid death. He stepped into the full reality of it on our behalf.',
+  durationMinutes: 8,
+  scripture: 'Matthew 26:36-39 · Isaiah 53:4-6 · 2 Corinthians 5:21',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhenDeathDied2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000881',
+  slug: 'the-weight-of-sin',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000078',
+  title: 'The Weight of Sin',
+  summary: 'At the cross, Jesus carried sin, guilt, and separation so humanity could be restored.',
+  durationMinutes: 8,
+  scripture: 'Matthew 27:46 · Isaiah 53:10-12 · Psalm 88:3-12',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhenDeathDied3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000882',
+  slug: 'he-chose-the-cross',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000078',
+  title: 'He Chose the Cross',
+  summary: 'Jesus was not forced into death. He willingly laid down His life because of love.',
+  durationMinutes: 8,
+  scripture: 'John 10:17-18 · Matthew 26:53 · Ephesians 3:19',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhenDeathDied4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000883',
+  slug: 'death-had-no-claim',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000078',
+  title: 'Death Had No Claim',
+  summary: 'Because Jesus was sinless, death had no rightful power to hold Him.',
+  durationMinutes: 8,
+  scripture: 'Acts 2:24 · Romans 6:23 · Romans 8:1-4',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhenDeathDied5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000884',
+  slug: 'the-power-of-death-broken',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000078',
+  title: 'The Power of Death Broken',
+  summary:
+    'Through His death and resurrection, Jesus destroyed the power of death and freed humanity from fear.',
+  durationMinutes: 8,
+  scripture: 'Hebrews 2:14-15 · 2 Timothy 1:10 · Revelation 1:18 · 1 Corinthians 15:26',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhenDeathDied6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000885',
+  slug: 'victory-secured',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000078',
+  title: 'Victory Secured',
+  summary: 'The resurrection guarantees eternal life and the future victory over death.',
+  durationMinutes: 9,
+  scripture: '1 Corinthians 15:51-55 · Revelation 20:6 · Revelation 2:11',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhenDeathDied7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000886',
+  slug: 'live-from-victory',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000078',
+  title: 'Live From Victory',
+  summary: 'Because Jesus defeated death, believers can live with confidence, freedom, and hope.',
+  durationMinutes: 8,
+  scripture: 'Romans 8:38-39 · 1 John 4:19 · John 11:25-26',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const whenDeathDiedLongDescription = `Death feels final. The grave looks like the end.
+
+But Jesus didn't avoid death—He entered it.
+
+This study reveals what really happened at the cross. Christ bore the full weight of sin, experienced separation, and voluntarily gave His life. But death could not hold Him.
+
+When Death Died shows that the resurrection is not just hope—it is proof. Sin was overcome, death was broken, and eternal life is now offered to anyone who trusts in Him.`
+
+const seriesWhenDeathDied: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000078',
+  slug: WHEN_DEATH_DIED_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'When Death Died',
+  subtitle:
+    'The cross, the empty tomb, and the victory Jesus won over sin, death, and fear.',
+  shortDescription:
+    'Jesus stepped into death, carried sin\'s full weight, and rose again proving death itself has been defeated.',
+  longDescription: whenDeathDiedLongDescription,
+  description: whenDeathDiedLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 10,
+  foundationOrder: 9,
+  whatYouWillLearn: [
+    'Themes: death, resurrection, cross, Jesus, victory, second death, sin, guilt, eternal life, salvation, hope.',
+    'See how Jesus entered death on our behalf at the cross.',
+    'Understand sin\'s weight, Christ\'s willing sacrifice, and death\'s power broken.',
+    'Live from resurrection victory with confidence, freedom, and hope in Jesus.',
+  ],
+  lessons: [
+    lessonWhenDeathDied1,
+    lessonWhenDeathDied2,
+    lessonWhenDeathDied3,
+    lessonWhenDeathDied4,
+    lessonWhenDeathDied5,
+    lessonWhenDeathDied6,
+    lessonWhenDeathDied7,
+  ],
+}
+
+const MADE_NEW_IN_CHRIST_STUDY_SLUG = 'made-new-in-christ'
+const MADE_NEW_IN_CHRIST_OVERVIEW_HREF = `/study-library/${MADE_NEW_IN_CHRIST_STUDY_SLUG}`
+
+function madeNewInChristPlaceholderShellSection(
+  lessonId: string,
+  sectionId: string,
+): LessonSection {
+  const body = JSON.stringify({
+    blocks: [
+      {
+        type: 'paragraph',
+        text: 'This lesson has been created, but the study content has not been added yet.',
+      },
+      { type: 'studyCta', label: 'Back to study overview', href: MADE_NEW_IN_CHRIST_OVERVIEW_HREF },
+    ],
+  })
+
+  return {
+    id: sectionId,
+    lessonId,
+    sortOrder: 1,
+    heading: 'Lesson content coming soon',
+    body,
+    sectionType: 'other',
+  }
+}
+
+const lessonMadeNewInChrist1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000887',
+  slug: 'good-news-not-good-advice',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000079',
+  title: 'Good News, Not Good Advice',
+  summary:
+    'The gospel is not a self-improvement plan. It is the announcement of what God has already done in Jesus.',
+  durationMinutes: 8,
+  scripture: '1 Corinthians 15:1-4 · Romans 3:24 · Ephesians 2:8-10',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonMadeNewInChrist2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000888',
+  slug: 'what-jesus-already-finished',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000079',
+  title: 'What Jesus Already Finished',
+  summary:
+    'Jesus lived, died, rose, and ascended as humanity\'s representative, accomplishing salvation before we ever responded.',
+  durationMinutes: 8,
+  scripture: 'Ephesians 1:3-7 · Ephesians 2:4-6 · 2 Corinthians 5:14-15',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonMadeNewInChrist3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000889',
+  slug: 'the-new-representative',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000079',
+  title: 'The New Representative',
+  summary:
+    'Adam represents fallen humanity, but Christ becomes the new representative head who restores what Adam lost.',
+  durationMinutes: 8,
+  scripture: '1 Corinthians 15:21-22 · 1 Corinthians 15:45-49 · Romans 5:17-19',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonMadeNewInChrist4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000890',
+  slug: 'all-things-new',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000079',
+  title: 'All Things New',
+  summary: 'In Christ, God reconciles us to Himself and begins making every part of life new.',
+  durationMinutes: 8,
+  scripture: '2 Corinthians 5:14-19 · Galatians 2:20 · Colossians 1:13-14',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonMadeNewInChrist5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000891',
+  slug: 'faith-receives-the-facts',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000079',
+  title: 'Faith Receives the Facts',
+  summary:
+    'Faith does not create salvation. Faith receives and rests in the salvation already accomplished in Christ.',
+  durationMinutes: 8,
+  scripture: 'Galatians 2:20 · 2 Timothy 1:8-10 · Titus 3:3-8',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonMadeNewInChrist6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000892',
+  slug: 'grace-trains-the-life',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000079',
+  title: 'Grace Trains the Life',
+  summary: 'Good works do not earn salvation, but saving grace teaches us how to live in a new way.',
+  durationMinutes: 8,
+  scripture: 'Titus 2:11-14 · Ephesians 2:10 · Philippians 2:12-13',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonMadeNewInChrist7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000893',
+  slug: 'living-as-a-new-creation',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000079',
+  title: 'Living as a New Creation',
+  summary:
+    'Because of Christ, believers can live from a new identity, a new motive, and a restored relationship with God.',
+  durationMinutes: 8,
+  scripture: '2 Corinthians 5:17 · 1 John 4:19 · Romans 8:1-4',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const madeNewInChristLongDescription = `Many people think Christianity is mainly about trying harder, behaving better, or fixing themselves. But the gospel begins somewhere else.
+
+Made New in Christ shows that salvation is not earned by right doing. It is received by faith in what Jesus has already accomplished. Through His life, death, resurrection, and ascension, Christ became the new representative head of humanity.
+
+This study explores how the gospel changes our identity, reconciles us to God, creates a new life within us, and teaches us to live from grace instead of striving for acceptance.`
+
+const seriesMadeNewInChrist: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000079',
+  slug: MADE_NEW_IN_CHRIST_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'Made New in Christ',
+  subtitle:
+    'The gospel of grace: what Jesus finished, who we become in Him, and how to live from new life.',
+  shortDescription:
+    'The gospel is not advice about what we must do. It is good news about what Jesus has already done.',
+  longDescription: madeNewInChristLongDescription,
+  description: madeNewInChristLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 11,
+  foundationOrder: 10,
+  whatYouWillLearn: [
+    'Themes: gospel, salvation, grace, faith, new creation, Jesus, identity, transformation, reconciliation, second Adam, good works, life in Christ.',
+    'See that salvation is received by faith in what Christ has already accomplished.',
+    'Understand Christ as the new representative head and our reconciliation to God.',
+    'Learn to live from grace, new identity, and the life Christ creates within us.',
+  ],
+  lessons: [
+    lessonMadeNewInChrist1,
+    lessonMadeNewInChrist2,
+    lessonMadeNewInChrist3,
+    lessonMadeNewInChrist4,
+    lessonMadeNewInChrist5,
+    lessonMadeNewInChrist6,
+    lessonMadeNewInChrist7,
+  ],
+}
+
 const whatHappensLongDescription = `Death raises one of life's deepest questions: what happens when we die?
 
 This study explores the Bible's teaching on the first death, the unconscious sleep of the dead, the resurrection, and the second death. It also shows why Scripture warns against attempts to communicate with the dead and why our hope is not found in fear, speculation, or superstition, but in Jesus.
@@ -2210,6 +2550,8 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesThePromiseKept,
   seriesTheWayBackToGod,
   seriesWhatHappensWhenWeDie,
+  seriesWhenDeathDied,
+  seriesMadeNewInChrist,
   seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,

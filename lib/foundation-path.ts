@@ -14,6 +14,8 @@ export const FOUNDATION_GUIDED_SLUG_ORDER = [
   'the-promise-kept',
   'the-way-back-to-god',
   'what-happens-when-we-die',
+  'when-death-died',
+  'made-new-in-christ',
   'the-bible-gods-living-word',
   'origin-of-evil',
 ] as const
