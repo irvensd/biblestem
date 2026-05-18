@@ -1,4 +1,6 @@
 import type { StudyInsightVariant, WordInsight } from '@/lib/lesson-content'
+import type { DeathResurrectionStageData } from '@/lib/death-resurrection-flow-stages'
+import type { SanctuaryJourneyStageData } from '@/lib/sanctuary-journey-stages'
 import type { ProphecyTimelineItem } from '@/lib/prophecy-timeline-types'
 
 /** Fields for the signature `WordInsight` study card (Greek/Hebrew). */
@@ -131,12 +133,22 @@ export type LessonContentBlock =
     }
   | {
       type: 'sanctuaryJourneyMap'
-      /** 0-based indices into the canonical sanctuary journey order. */
+      /** 0-based indices into the rendered stage list (`stages` when set, otherwise the Foundations map order). */
       highlightedIndices?: number[]
       /** Optional heading above the map (e.g. study title). */
       title?: string
       /** Optional subheading under the title. */
       subtitle?: string
+      /** When set (non-empty), replaces the default Foundations list for this block only (e.g. lesson-specific refs or extra tiles). */
+      stages?: SanctuaryJourneyStageData[]
+    }
+  | {
+      type: 'deathResurrectionFlow'
+      /** 0-based indices into the rendered stage list (`stages` when set, otherwise the Foundations flow order). */
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      stages?: DeathResurrectionStageData[]
     }
   | { type: 'studyCta'; label: string; href: string }
   | StudyVisualLessonBlock

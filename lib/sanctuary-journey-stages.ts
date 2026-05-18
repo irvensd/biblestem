@@ -58,7 +58,7 @@ export const SANCTUARY_JOURNEY_STAGES: readonly SanctuaryJourneyStageData[] = [
     location: 'Most Holy Place',
     symbol: "God's presence and law of love",
     meaning: 'God desires to dwell with His people and write His law in their hearts.',
-    scriptures: ['Hebrews 10:16', 'Exodus 25:21-22'],
+    scriptures: ['Hebrews 10:16', 'Jeremiah 31:33', 'Exodus 25:21-22', 'Romans 13:10'],
   },
   {
     stageName: 'The Day of Atonement',

@@ -8,6 +8,7 @@ import { TeachingPointsBlock } from '@/components/lessons/TeachingPointsBlock'
 import { WordInsight } from '@/components/lessons/WordInsight'
 import { WordInsightCard } from '@/components/lessons/WordInsightCard'
 import { ProphecyTimeline } from '@/components/study/ProphecyTimeline'
+import { DeathResurrectionFlow } from '@/components/study/DeathResurrectionFlow'
 import { SanctuaryJourneyMap } from '@/components/study/SanctuaryJourneyMap'
 import { Button } from '@/components/ui/Button'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
@@ -127,6 +128,16 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
     case 'sanctuaryJourneyMap':
       return (
         <SanctuaryJourneyMap
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+        />
+      )
+    case 'deathResurrectionFlow':
+      return (
+        <DeathResurrectionFlow
+          stages={'stages' in block ? block.stages : undefined}
           highlightedIndices={block.highlightedIndices}
           title={block.title}
           subtitle={block.subtitle}

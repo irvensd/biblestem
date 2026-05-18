@@ -3,9 +3,9 @@
 import { SANCTUARY_JOURNEY_STAGES, type SanctuaryJourneyStageData } from '@/lib/sanctuary-journey-stages'
 
 export interface SanctuaryJourneyMapProps {
-  /** Defaults to the canonical Foundations sanctuary journey. */
+  /** Defaults to the canonical Foundations sanctuary journey unless `stages` is passed non-empty. */
   stages?: readonly SanctuaryJourneyStageData[]
-  /** 0-based indices into `stages` to emphasize (focus ring + slight elevation). */
+  /** 0-based indices into the rendered stage list (`stages` when set, otherwise Foundations order). */
   highlightedIndices?: readonly number[]
   /** Optional heading above the grid. */
   title?: string
@@ -26,13 +26,14 @@ function clampHighlightSet(indices: readonly number[] | undefined, len: number):
 
 /** Responsive sanctuary journey overview: stacks on small screens; grid from `sm` up. */
 export function SanctuaryJourneyMap({
-  stages = SANCTUARY_JOURNEY_STAGES,
+  stages,
   highlightedIndices,
   title,
   subtitle,
   labelledBy,
 }: SanctuaryJourneyMapProps) {
-  const list = stages.length > 0 ? stages : SANCTUARY_JOURNEY_STAGES
+  const list =
+    stages !== undefined && stages.length > 0 ? stages : SANCTUARY_JOURNEY_STAGES
   const focus = clampHighlightSet(highlightedIndices, list.length)
   const headingId = labelledBy ?? (title ? 'sanctuary-journey-map-heading' : undefined)
 

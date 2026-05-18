@@ -1701,6 +1701,147 @@ function wayBackPlaceholderShellSection(
   }
 }
 
+const WHAT_HAPPENS_STUDY_SLUG = 'what-happens-when-we-die'
+const WHAT_HAPPENS_OVERVIEW_HREF = `/study-library/${WHAT_HAPPENS_STUDY_SLUG}`
+
+function whatHappensPlaceholderShellSection(
+  lessonId: string,
+  sectionId: string,
+  highlight?: number[],
+): LessonSection {
+  const blocks: LessonContentBlock[] = [
+    {
+      type: 'paragraph',
+      text: 'This lesson has been created, but the study content has not been added yet.',
+    },
+  ]
+  if (highlight != null && highlight.length > 0) {
+    blocks.push({
+      type: 'deathResurrectionFlow',
+      highlightedIndices: highlight,
+      title: 'Death and Resurrection',
+      subtitle:
+        'A simple overview of life, death, resurrection, judgment, and eternal hope in Christ.',
+    })
+  }
+  blocks.push({ type: 'studyCta', label: 'Back to study overview', href: WHAT_HAPPENS_OVERVIEW_HREF })
+
+  const body = JSON.stringify({ blocks })
+
+  return {
+    id: sectionId,
+    lessonId,
+    sortOrder: 1,
+    heading: 'Lesson content coming soon',
+    body,
+    sectionType: 'other',
+  }
+}
+
+const lessonWhatHappens1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000870',
+  slug: 'death-is-not-the-end',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000077',
+  title: 'Death Is Not the End',
+  summary:
+    'The Bible introduces death with clarity and hope, showing that the first death is not final for those who trust in Christ.',
+  durationMinutes: 8,
+  scripture: 'Revelation 2:11 · Revelation 20:6 · John 11:25-26',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhatHappens2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000871',
+  slug: 'the-first-death-is-sleep',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000077',
+  title: 'The First Death Is Sleep',
+  summary:
+    'Jesus describes the first death as sleep, pointing forward to the resurrection when the dead will be awakened.',
+  durationMinutes: 8,
+  scripture: 'Luke 8:52-53 · John 11:11-14 · John 11:23-26',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhatHappens3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000872',
+  slug: 'what-the-dead-know',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000077',
+  title: 'What the Dead Know',
+  summary:
+    'Scripture teaches that the dead are unconscious and do not return to communicate with the living.',
+  durationMinutes: 8,
+  scripture: 'Ecclesiastes 9:5-6 · Psalm 146:3-4 · Job 7:9-10',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhatHappens4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000873',
+  slug: 'why-god-warns-against-speaking-to-the-dead',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000077',
+  title: 'Why God Warns Against Speaking to the Dead',
+  summary:
+    'The Bible warns against necromancy and spiritualistic deception because the dead cannot communicate with the living.',
+  durationMinutes: 8,
+  scripture: 'Deuteronomy 18:9-12 · Deuteronomy 32:16-17 · 2 Corinthians 11:14',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhatHappens5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000874',
+  slug: 'the-second-death',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000077',
+  title: 'The Second Death',
+  summary:
+    'The second death is different from the first death. It is the final destruction of sin and those who refuse God\'s mercy.',
+  durationMinutes: 8,
+  scripture: 'Matthew 10:28 · Revelation 20:6 · Revelation 20:14',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhatHappens6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000875',
+  slug: 'the-resurrection-hope',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000077',
+  title: 'The Resurrection Hope',
+  summary: 'Jesus promises that all who are in the graves will hear His voice and be raised.',
+  durationMinutes: 9,
+  scripture: 'John 5:28-29 · 1 Thessalonians 4:13-18 · 1 Corinthians 15:51-55',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhatHappens7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000876',
+  slug: 'forgiven-and-free',
+  studySeriesId: 'e4000001-0000-4000-8000-000000000077',
+  title: 'Forgiven and Free',
+  summary:
+    'Jesus tasted death for everyone so we can be forgiven, freed from guilt, and restored before God.',
+  durationMinutes: 8,
+  scripture: 'Hebrews 2:9 · Colossians 1:13-14 · Psalm 32:1-2 · 2 Corinthians 5:10',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
 const lessonWayBack1: Lesson = {
   id: 'd3000007-0000-4000-8000-000000000855',
   slug: 'a-map-back-to-god',
@@ -1727,7 +1868,7 @@ const lessonWayBack2: Lesson = {
   sortOrder: 2,
   progressState: 'not_started',
   sections: [],
-  contentPending: true,
+  contentPending: false,
 }
 
 const lessonWayBack3: Lesson = {
@@ -1742,7 +1883,7 @@ const lessonWayBack3: Lesson = {
   sortOrder: 3,
   progressState: 'not_started',
   sections: [],
-  contentPending: true,
+  contentPending: false,
 }
 
 const lessonWayBack4: Lesson = {
@@ -1753,16 +1894,11 @@ const lessonWayBack4: Lesson = {
   summary:
     'The Holy Place reveals Jesus as the Bread of Life, the Light of the world, and the One who brings our prayers before God.',
   durationMinutes: 9,
-  scripture: 'John 6:35 · John 8:12 · Revelation 8:3-4',
+  scripture: 'John 6:35 · John 8:12 · Revelation 8:3-4 · Hebrews 7:25',
   sortOrder: 4,
   progressState: 'not_started',
-  sections: [
-    wayBackPlaceholderShellSection(
-      'd3000007-0000-4000-8000-000000000858',
-      'f5000001-0000-4000-8000-000000000912',
-      [3, 4, 5],
-    ),
-  ],
+  sections: [],
+  contentPending: false,
 }
 
 const lessonWayBack5: Lesson = {
@@ -1773,16 +1909,11 @@ const lessonWayBack5: Lesson = {
   summary:
     "The Most Holy Place points to God's desire to write His law of love in the hearts and minds of His people.",
   durationMinutes: 8,
-  scripture: 'Hebrews 10:16 · Jeremiah 31:33 · Exodus 25:21-22',
+  scripture: 'Hebrews 10:16 · Jeremiah 31:33 · Exodus 25:21-22 · Romans 13:10',
   sortOrder: 5,
   progressState: 'not_started',
-  sections: [
-    wayBackPlaceholderShellSection(
-      'd3000007-0000-4000-8000-000000000859',
-      'f5000001-0000-4000-8000-000000000913',
-      [6],
-    ),
-  ],
+  sections: [],
+  contentPending: false,
 }
 
 const lessonWayBack6: Lesson = {
@@ -1793,11 +1924,11 @@ const lessonWayBack6: Lesson = {
   summary:
     'The daily sanctuary service showed the seriousness of sin, the need for a substitute, and the ongoing ministry of grace.',
   durationMinutes: 8,
-  scripture: 'Leviticus 4:27-31 · Hebrews 9:22 · 1 Peter 1:18-19',
+  scripture: 'Leviticus 4:31 · Hebrews 9:22 · 1 Peter 1:18-19 · Hebrews 7:25',
   sortOrder: 6,
   progressState: 'not_started',
   sections: [],
-  contentPending: true,
+  contentPending: false,
 }
 
 const lessonWayBack7: Lesson = {
@@ -1808,16 +1939,11 @@ const lessonWayBack7: Lesson = {
   summary:
     "The Day of Atonement points to God's final work of cleansing, judgment, restoration, and the complete removal of evil.",
   durationMinutes: 8,
-  scripture: 'Leviticus 16:15-22 · Daniel 7:9-10 · Revelation 14:6-7 · Hebrews 10:19-25',
+  scripture: 'Leviticus 16:30 · Daniel 7:9-10 · Revelation 14:6-7 · Hebrews 10:22',
   sortOrder: 7,
   progressState: 'not_started',
-  sections: [
-    wayBackPlaceholderShellSection(
-      'd3000007-0000-4000-8000-000000000861',
-      'f5000001-0000-4000-8000-000000000914',
-      [7],
-    ),
-  ],
+  sections: [],
+  contentPending: false,
 }
 
 const fallOfHumanityLongDescription = `This study explores how sin entered the human story through deception, distrust, and self-centeredness. Beginning in Eden, humanity's fall affected the way we think, relate, and live. But Scripture also reveals how Jesus came to restore what was broken and reveal the truth about God's character.`
@@ -1937,6 +2063,47 @@ const seriesTheWayBackToGod: StudySeries = {
   ],
 }
 
+const whatHappensLongDescription = `Death raises one of life's deepest questions: what happens when we die?
+
+This study explores the Bible's teaching on the first death, the unconscious sleep of the dead, the resurrection, and the second death. It also shows why Scripture warns against attempts to communicate with the dead and why our hope is not found in fear, speculation, or superstition, but in Jesus.
+
+Most importantly, this study reveals that Christ tasted death for everyone, conquered the power of guilt, and offers complete forgiveness, resurrection hope, and eternal life to all who trust Him.`
+
+const seriesWhatHappensWhenWeDie: StudySeries = {
+  id: 'e4000001-0000-4000-8000-000000000077',
+  slug: WHAT_HAPPENS_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'What Happens When We Die?',
+  subtitle:
+    'Scripture on death, sleep, resurrection, judgment, and the hope Jesus gives over sin, guilt, and fear.',
+  shortDescription:
+    'The Bible gives a clear and hopeful answer about death, resurrection, judgment, and the victory Jesus gives over sin and guilt.',
+  longDescription: whatHappensLongDescription,
+  description: whatHappensLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 9,
+  foundationOrder: 8,
+  whatYouWillLearn: [
+    'Themes: death, resurrection, sleep, second death, judgment, forgiveness, hope, state of the dead, Jesus, eternal life, deception, spiritualism.',
+    'See how Scripture describes the first death and the hope beyond it.',
+    'Understand why the dead do not communicate with the living.',
+    'Follow Jesus from death conquered to forgiveness, resurrection, and eternal life.',
+  ],
+  lessons: [
+    lessonWhatHappens1,
+    lessonWhatHappens2,
+    lessonWhatHappens3,
+    lessonWhatHappens4,
+    lessonWhatHappens5,
+    lessonWhatHappens6,
+    lessonWhatHappens7,
+  ],
+}
+
 const warInHeavenLongDescription = `Why does evil exist if God is good?
 
 Scripture presents a cosmic conflict that began before humanity and continues in the world today. At the center of this conflict is the character of God and the question of whether His kingdom truly operates on love.
@@ -2042,6 +2209,7 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesFallOfHumanity,
   seriesThePromiseKept,
   seriesTheWayBackToGod,
+  seriesWhatHappensWhenWeDie,
   seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,
