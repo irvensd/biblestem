@@ -8,6 +8,10 @@ import { TeachingPointsBlock } from '@/components/lessons/TeachingPointsBlock'
 import { WordInsight } from '@/components/lessons/WordInsight'
 import { WordInsightCard } from '@/components/lessons/WordInsightCard'
 import { ProphecyTimeline } from '@/components/study/ProphecyTimeline'
+import { CreationRestPattern } from '@/components/study/CreationRestPattern'
+import { GivingCirclePattern } from '@/components/study/GivingCirclePattern'
+import { WholePersonHealthPattern } from '@/components/study/WholePersonHealthPattern'
+import { BaptismMeaningPattern } from '@/components/study/BaptismMeaningPattern'
 import { DeathResurrectionFlow } from '@/components/study/DeathResurrectionFlow'
 import { SanctuaryJourneyMap } from '@/components/study/SanctuaryJourneyMap'
 import { Button } from '@/components/ui/Button'
@@ -141,6 +145,46 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
           highlightedIndices={block.highlightedIndices}
           title={block.title}
           subtitle={block.subtitle}
+        />
+      )
+    case 'creationRestPattern':
+      return (
+        <CreationRestPattern
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'givingCirclePattern':
+      return (
+        <GivingCirclePattern
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'wholePersonHealthPattern':
+      return (
+        <WholePersonHealthPattern
+          areas={'areas' in block ? block.areas : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'baptismMeaningPattern':
+      return (
+        <BaptismMeaningPattern
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
         />
       )
     case 'studyCta':

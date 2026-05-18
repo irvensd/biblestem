@@ -43,8 +43,8 @@ export default async function FoundationsPathPage() {
         </div>
       </section>
 
-      <div className="section-space">
-        <div className="container-shell max-w-4xl">
+      <div className="pb-16 pt-8 md:pb-24 md:pt-10">
+        <div className="container-shell max-w-[68rem]">
           {foundationStudies.length === 0 ? (
             <div className="mx-auto max-w-lg rounded-xl border border-zinc-200/90 bg-white px-6 py-12 text-center shadow-sm ring-1 ring-zinc-950/[0.03]">
               <p className="text-sm font-medium text-zinc-900">No foundation studies are available yet.</p>
@@ -62,7 +62,7 @@ export default async function FoundationsPathPage() {
             <FoundationsPathSection studies={foundationStudies} />
           )}
 
-          <div className="mx-auto mt-14 max-w-4xl border-t border-zinc-200/80 pt-10">
+          <div className="mx-auto mt-14 max-w-[68rem] border-t border-zinc-200/80 pt-10">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500">Available studies</h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600">
               This Path focuses on beginner Foundations content already in the catalog. Explore every series,

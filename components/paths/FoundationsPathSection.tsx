@@ -4,44 +4,30 @@ import Link from 'next/link'
 import { useMemo } from 'react'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import { useDashboardProgress } from '@/hooks/useDashboardProgress'
-import type { StudySeries } from '@/lib/types/product'
+import type { Lesson, StudySeries } from '@/lib/types/product'
 import {
+  chapterCompletedStudyCount,
   completedFoundationStudyCount,
   currentFoundationStudy,
   firstIncompleteLesson,
-  foundationPathEstimatedMinutes,
   isStudyFullyComplete,
   isStudyStarted,
-  studyEstimatedMinutes,
+  nextIncompleteFoundationStudyAfterCurrent,
+  partitionFoundationStudiesIntoChapters,
 } from '@/lib/foundation-path'
+import type { LocalDashboardProgress } from '@/lib/dashboard-local-progress'
+import { effectiveStudySeriesMinutes } from '@/lib/studies/derive-overview'
+import { getStudyLibrarySummaryLine } from '@/lib/study-summary-line'
 
-function purposeLine(series: StudySeries): string {
-  const line = series.shortDescription?.trim() || series.subtitle?.trim() || ''
-  if (line) return line.length > 160 ? `${line.slice(0, 157)}…` : line
-  const d = series.description?.trim() ?? ''
-  if (!d) return ''
-  return d.length > 160 ? `${d.slice(0, 157)}…` : d
+type JourneyBadge = 'completed' | 'current' | 'next' | 'available'
+
+function sortedLessonsForStudy(study: StudySeries): Lesson[] {
+  return [...study.lessons].sort((a, b) => a.sortOrder - b.sortOrder)
 }
 
-function StatusBadge({ status }: { status: 'completed' | 'current' | 'not_started' }) {
-  const styles =
-    status === 'completed'
-      ? 'bg-emerald-50 text-emerald-900 ring-emerald-200/90'
-      : status === 'current'
-        ? 'bg-blue-50 text-blue-900 ring-blue-200/90'
-        : 'bg-zinc-50 text-zinc-700 ring-zinc-200/90'
-  const label =
-    status === 'completed' ? 'Completed' : status === 'current' ? 'Current' : 'Not started'
+function JourneyCheckIcon({ className }: { className?: string }) {
   return (
-    <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${styles}`}>
-      {label}
-    </span>
-  )
-}
-
-function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width={18} height={18} viewBox="0 0 24 24" fill="none" aria-hidden>
+    <svg className={className} width={14} height={14} viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
         d="M20 6L9 17l-5-5"
         stroke="currentColor"
@@ -53,171 +39,305 @@ function CheckIcon({ className }: { className?: string }) {
   )
 }
 
+function RowStatusBadge({ kind }: { kind: JourneyBadge }) {
+  if (kind === 'available') return null
+
+  const styles =
+    kind === 'completed'
+      ? 'bg-emerald-50/90 text-emerald-900 ring-emerald-200/85'
+      : kind === 'current'
+        ? 'bg-blue-50 text-blue-900 ring-blue-200/90'
+        : 'bg-blue-50/40 text-blue-950/85 ring-blue-100/90'
+
+  const label =
+    kind === 'completed' ? 'Completed' : kind === 'current' ? 'Current' : 'Recommended next'
+
+  return (
+    <span
+      className={`inline-flex max-w-full rounded-full px-2 py-0.5 text-[10px] font-medium leading-snug ring-1 ring-inset sm:max-w-none sm:text-[11px] sm:leading-tight ${styles}`}
+    >
+      {label}
+    </span>
+  )
+}
+
+function rowHrefSet(study: StudySeries, progress: LocalDashboardProgress) {
+  const sortedLessons = sortedLessonsForStudy(study)
+  const firstLesson = sortedLessons[0]
+  const nextLesson = firstIncompleteLesson(study, progress)
+  const overviewHref = `/study-library/${study.slug}`
+  const continueHref =
+    nextLesson != null ? `/study-library/${study.slug}/lesson/${nextLesson.slug}` : overviewHref
+  const startHref =
+    firstLesson != null ? `/study-library/${study.slug}/lesson/${firstLesson.slug}` : overviewHref
+  return { overviewHref, continueHref, startHref }
+}
+
+/** CTA derived from badge + status (badge = status only; label matches spec). */
+function rowCta(
+  study: StudySeries,
+  badge: JourneyBadge,
+  progress: LocalDashboardProgress,
+): { label: string; href: string } {
+  const { overviewHref, continueHref, startHref } = rowHrefSet(study, progress)
+  switch (badge) {
+    case 'completed':
+      return { label: 'Review', href: overviewHref }
+    case 'current':
+      return { label: 'Continue', href: continueHref }
+    case 'next':
+      return { label: 'Start', href: startHref }
+    default:
+      return { label: 'Open', href: overviewHref }
+  }
+}
+
+function rowBadge(props: {
+  study: StudySeries
+  ordered: StudySeries[]
+  nextAfterCurrent: StudySeries | null
+  currentStudy: StudySeries | null
+  progress: LocalDashboardProgress
+}): JourneyBadge {
+  const complete = isStudyFullyComplete(props.study, props.progress)
+  if (complete) return 'completed'
+  if (props.currentStudy?.slug === props.study.slug) return 'current'
+  if (props.nextAfterCurrent?.slug === props.study.slug) return 'next'
+  return 'available'
+}
+
+function progressPrimaryCta(
+  current: StudySeries | null,
+  progress: LocalDashboardProgress,
+  ordered: StudySeries[],
+  allDone: boolean,
+): { label: string; href: string } | null {
+  if (ordered.length === 0) return null
+  if (allDone) {
+    const last = ordered[ordered.length - 1]
+    return { label: 'Review study', href: `/study-library/${last.slug}` }
+  }
+  if (!current) return null
+  if (isStudyStarted(current, progress)) {
+    const { continueHref } = rowHrefSet(current, progress)
+    return { label: 'Continue study', href: continueHref }
+  }
+  const { startHref } = rowHrefSet(current, progress)
+  return { label: 'Start study', href: startHref }
+}
+
+function FoundationsJourneySkeleton() {
+  return (
+    <div className="mx-auto w-full max-w-[68rem]">
+      <div className="rounded-lg border border-zinc-200/90 bg-white p-4 ring-1 ring-zinc-950/[0.03] sm:p-5">
+        <div className="flex animate-pulse flex-col gap-3">
+          <div className="h-4 w-48 rounded bg-zinc-100" />
+          <div className="h-14 rounded-lg bg-zinc-100" />
+          <div className="h-24 rounded-lg bg-zinc-100" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export type FoundationsPathSectionProps = {
   studies: StudySeries[]
 }
 
-export function FoundationsPathSection({ studies }: FoundationsPathSectionProps) {
+export function FoundationsPathSection({ studies: orderedStudies }: FoundationsPathSectionProps) {
   const { user, isReady } = useDemoAuth()
   const { progress, ready } = useDashboardProgress(user?.id)
 
-  const stats = useMemo(() => {
-    const minutesTotal = foundationPathEstimatedMinutes(studies)
-    const done = completedFoundationStudyCount(studies, progress)
-    const current = currentFoundationStudy(studies, progress)
-    const allDone = studies.length > 0 && done === studies.length
-    return {
-      minutesTotal,
-      studiesCompleted: done,
-      total: studies.length,
-      currentTitle: allDone ? null : current?.title ?? null,
-      allDone,
-    }
-  }, [studies, progress])
+  const foundationsCompletedCount = completedFoundationStudyCount(orderedStudies, progress)
+  const currentFoundationsStudy = currentFoundationStudy(orderedStudies, progress)
+  const nextAfterCurrent = nextIncompleteFoundationStudyAfterCurrent(orderedStudies, progress)
+
+  const chapters = useMemo(
+    () => partitionFoundationStudiesIntoChapters(orderedStudies),
+    [orderedStudies],
+  )
+
+  const indexBySlug = useMemo(() => {
+    const m = new Map<string, number>()
+    orderedStudies.forEach((s, i) => m.set(s.slug, i))
+    return m
+  }, [orderedStudies])
+
+  const allStudiesComplete =
+    orderedStudies.length > 0 && foundationsCompletedCount >= orderedStudies.length
+  const progressPct =
+    orderedStudies.length > 0 ? (foundationsCompletedCount / orderedStudies.length) * 100 : 0
+
+  const primaryCta = progressPrimaryCta(
+    currentFoundationsStudy,
+    progress,
+    orderedStudies,
+    allStudiesComplete,
+  )
 
   if (!isReady || !ready) {
-    return (
-      <div className="mt-10 rounded-xl border border-zinc-200/90 bg-white p-8 ring-1 ring-zinc-950/[0.03]">
-        <div className="flex animate-pulse flex-col gap-3">
-          <div className="h-4 w-48 rounded bg-zinc-100" />
-          <div className="h-24 rounded-lg bg-zinc-100" />
-          <div className="h-40 rounded-lg bg-zinc-100" />
-        </div>
-      </div>
-    )
+    return <FoundationsJourneySkeleton />
+  }
+
+  if (orderedStudies.length === 0) {
+    return null
   }
 
   return (
-    <div className="mt-10">
-      <div className="rounded-xl border border-zinc-200/90 bg-white p-5 shadow-sm ring-1 ring-zinc-950/[0.03] sm:p-6">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500">Progress summary</h2>
-        <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <dt className="text-xs font-medium text-zinc-500">Studies completed</dt>
-            <dd className="mt-1 text-lg font-semibold tabular-nums text-zinc-900">
-              {stats.studiesCompleted}
-              <span className="text-sm font-normal text-zinc-500"> of {stats.total}</span>
-            </dd>
+    <div className="mx-auto w-full max-w-[68rem]">
+      <div className="min-w-0 max-w-full rounded-lg border border-zinc-200/90 bg-white px-3.5 py-3 shadow-sm ring-1 ring-zinc-950/[0.025] sm:px-4 sm:py-3.5">
+        <div className="flex min-w-0 flex-wrap items-start justify-between gap-x-4 gap-y-1">
+          <p className="text-sm font-semibold text-zinc-900">Foundations journey progress</p>
+          <p className="text-sm tabular-nums text-zinc-700">
+            {foundationsCompletedCount} / {orderedStudies.length}{' '}
+            <span className="font-normal text-zinc-500">complete</span>
+          </p>
+        </div>
+
+        {orderedStudies.length > 0 ? (
+          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-zinc-100" role="presentation">
+            <div
+              className="h-full rounded-full bg-blue-700 transition-[width] duration-300"
+              style={{ width: `${progressPct}%` }}
+            />
           </div>
-          <div>
-            <dt className="text-xs font-medium text-zinc-500">Recommended next</dt>
-            <dd className="mt-1 text-sm font-medium leading-snug text-zinc-900">
-              {stats.allDone
-                ? 'You have finished every study on this path.'
-                : stats.currentTitle ?? 'Choose your first study below.'}
-            </dd>
+        ) : null}
+
+        {!allStudiesComplete && currentFoundationsStudy ? (
+          <div className="mt-3 min-w-0">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-400">Recommended next</p>
+            <p className="mt-0.5 break-words text-sm font-semibold leading-snug text-zinc-900">{currentFoundationsStudy.title}</p>
           </div>
-          <div>
-            <dt className="text-xs font-medium text-zinc-500">Available studies</dt>
-            <dd className="mt-1 text-lg font-semibold tabular-nums text-zinc-900">{stats.total}</dd>
+        ) : allStudiesComplete ? (
+          <p className="mt-3 text-xs text-zinc-600">You have finished every study on this path.</p>
+        ) : null}
+
+        {primaryCta ? (
+          <div className="mt-3 flex min-w-0 flex-col gap-x-4 gap-y-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-y-1">
+            <Link
+              href={primaryCta.href}
+              className="inline-flex min-h-[44px] items-center py-2 text-sm font-semibold text-blue-800 underline-offset-2 hover:text-blue-950 hover:underline sm:min-h-0 sm:py-0"
+            >
+              {primaryCta.label}
+            </Link>
+            {!allStudiesComplete && currentFoundationsStudy ? (
+              <Link
+                href={`/study-library/${currentFoundationsStudy.slug}`}
+                className="inline-flex min-h-[44px] items-center py-2 text-xs font-medium text-zinc-500 underline-offset-2 hover:text-zinc-800 hover:underline sm:min-h-0 sm:py-0"
+              >
+                Study overview
+              </Link>
+            ) : null}
           </div>
-          <div>
-            <dt className="text-xs font-medium text-zinc-500">Estimated time</dt>
-            <dd className="mt-1 text-lg font-semibold tabular-nums text-zinc-900">
-              {stats.total === 0 ? '—' : `${stats.minutesTotal} min`}
-            </dd>
-          </div>
-        </dl>
+        ) : null}
       </div>
 
-      <div className="mt-12">
-        <h2 className="text-base font-semibold text-zinc-900">Foundations Path Map</h2>
-        <p className="mt-1 text-sm text-zinc-600">Walk these studies in order at your own pace.</p>
+      <div className="mt-6 space-y-2.5">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+          Your foundations journey
+        </h2>
+        <div className="space-y-3 sm:space-y-3.5">
+          {chapters.map((chapter) => {
+            const chDone = chapterCompletedStudyCount(chapter.studies, progress)
+            const total = chapter.studies.length
+            return (
+              <article
+                key={`${chapter.chapterLabel}:${chapter.title}`}
+                className="overflow-hidden rounded-lg border border-zinc-200/80 bg-white ring-1 ring-zinc-950/[0.02]"
+              >
+                <header className="border-b border-zinc-200/75 px-3 py-2 sm:px-3.5 sm:py-2.5">
+                  {chapter.chapterLabel ? (
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-400">
+                      {chapter.chapterLabel}
+                    </p>
+                  ) : null}
+                  <h3 className="mt-0.5 text-[15px] font-semibold tracking-tight text-zinc-900">{chapter.title}</h3>
+                  <p className="mt-0.5 text-xs tabular-nums text-zinc-600">
+                    {chDone} of {total} complete
+                  </p>
+                </header>
 
-        <div className="relative mt-8 pl-2">
-          <div className="absolute bottom-4 left-[21px] top-4 w-px bg-zinc-200" aria-hidden />
+                <ul className="divide-y divide-zinc-100 bg-white/80" aria-label={`Studies in ${chapter.title}`}>
+                  {chapter.studies.map((study) => {
+                    const journeyStep = indexBySlug.get(study.slug)! + 1
+                    const badge = rowBadge({
+                      study,
+                      ordered: orderedStudies,
+                      nextAfterCurrent,
+                      currentStudy: currentFoundationsStudy,
+                      progress,
+                    })
+                    const complete = isStudyFullyComplete(study, progress)
+                    const { label: ctaLabel, href: ctaHref } = rowCta(study, badge, progress)
+                    const descText = getStudyLibrarySummaryLine(study)
 
-          <ul className="relative flex flex-col gap-10">
-            {studies.map((series, index) => {
-              const lessonsDone = series.lessons.filter((l) =>
-                progress.completedKeys.includes(`${series.slug}::${l.slug}`),
-              ).length
-              const complete = isStudyFullyComplete(series, progress)
-              const current = currentFoundationStudy(studies, progress)
-              const isCurrent = !complete && current?.slug === series.slug
-              const startedElsewhere =
-                isStudyStarted(series, progress) && !complete && !isCurrent && lessonsDone > 0
+                    const mins = effectiveStudySeriesMinutes(study)
+                    const metaDuration =
+                      mins > 0 ? `${mins} min` : study.durationSummary.trim() || `${study.lessonsCount} lessons`
+                    const rowHighlight =
+                      badge === 'current' && !complete ? 'bg-blue-50/40' : 'bg-white hover:bg-zinc-50/40'
 
-              const status: 'completed' | 'current' | 'not_started' = complete
-                ? 'completed'
-                : isCurrent
-                  ? 'current'
-                  : 'not_started'
+                    const rowCtaClass =
+                      badge === 'current'
+                        ? 'text-sm font-semibold text-blue-800 underline-offset-2 hover:text-blue-950 hover:underline'
+                        : badge === 'completed'
+                          ? 'text-sm font-medium text-zinc-600 underline-offset-2 hover:text-zinc-900 hover:underline'
+                          : 'text-sm font-medium text-zinc-700 underline-offset-2 hover:text-zinc-900 hover:underline'
 
-              const nextLesson = firstIncompleteLesson(series, progress)
-              const sortedLessons = [...series.lessons].sort((a, b) => a.sortOrder - b.sortOrder)
-              const firstLesson = sortedLessons[0]
-              const line = purposeLine(series)
+                    const rowCtaInteractiveClass = `${rowCtaClass} inline-flex min-h-[44px] items-center leading-snug sm:min-h-0`
 
-              const continueHref =
-                nextLesson != null ? `/study-library/${series.slug}/lesson/${nextLesson.slug}` : `/study-library/${series.slug}`
-              const startHref =
-                firstLesson != null
-                  ? `/study-library/${series.slug}/lesson/${firstLesson.slug}`
-                  : `/study-library/${series.slug}`
-              const reviewHref = `/study-library/${series.slug}`
+                    return (
+                      <li key={study.slug}>
+                        <div
+                          className={`flex min-w-0 flex-col px-2.5 py-2.5 sm:flex-row sm:items-start sm:gap-3 sm:px-3 sm:py-2 ${rowHighlight}`}
+                        >
+                          <div className="flex min-w-0 flex-1 items-start gap-2">
+                            <div
+                              className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[11px] font-semibold tabular-nums sm:mt-0 ${
+                                complete
+                                  ? 'border-emerald-200/90 bg-emerald-50/80 text-emerald-800'
+                                  : badge === 'current'
+                                    ? 'border-blue-300/80 bg-white text-blue-900'
+                                    : 'border-zinc-200 bg-zinc-50 text-zinc-600'
+                              }`}
+                              aria-hidden
+                            >
+                              {complete ? <JourneyCheckIcon className="text-emerald-700" /> : journeyStep}
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <h4 className="break-words text-sm font-semibold leading-tight text-zinc-900 sm:truncate">
+                                {study.title}
+                              </h4>
+                              <p className="mt-0.5 line-clamp-2 text-xs leading-snug text-zinc-600 sm:line-clamp-1">
+                                {descText}
+                              </p>
+                              <p className="mt-1 min-w-0 break-words text-[11px] leading-relaxed tabular-nums text-zinc-500 sm:text-xs">
+                                {study.lessonsCount} lessons · {metaDuration} · {study.level}
+                              </p>
 
-              let ctaLabel = 'Start study'
-              let ctaHref = startHref
-              if (complete) {
-                ctaLabel = 'Review'
-                ctaHref = reviewHref
-              } else if (isCurrent || startedElsewhere) {
-                ctaLabel = 'Continue'
-                ctaHref = continueHref
-              }
+                              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 sm:hidden">
+                                <RowStatusBadge kind={badge} />
+                                <Link href={ctaHref} className={`${rowCtaInteractiveClass} w-fit shrink-0`}>
+                                  {ctaLabel}
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
 
-              const minutes = studyEstimatedMinutes(series)
-
-              const tileRing =
-                isCurrent && !complete
-                  ? 'ring-2 ring-blue-800/25 shadow-[0_0_0_1px_rgba(30,64,175,0.08)]'
-                  : 'ring-1 ring-zinc-950/[0.04]'
-
-              return (
-                <li key={series.slug} className="relative flex gap-4">
-                  <div className="relative z-[1] flex shrink-0 flex-col items-center pt-0.5">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 shadow-sm">
-                      {complete ? (
-                        <CheckIcon className="text-emerald-700" />
-                      ) : (
-                        <span className="text-sm font-semibold tabular-nums">{index + 1}</span>
-                      )}
-                    </div>
-                  </div>
-
-                  <article
-                    className={`min-w-0 flex-1 rounded-xl border border-zinc-200/90 bg-white p-5 shadow-sm ${tileRing}`}
-                  >
-                    <div className="flex flex-wrap items-start justify-between gap-2">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">Study {index + 1}</p>
-                      <StatusBadge status={status} />
-                    </div>
-                    <h3 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900">{series.title}</h3>
-                    {line ? <p className="mt-2 text-sm leading-relaxed text-zinc-600">{line}</p> : null}
-                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-500">
-                      <span>{series.lessons.length} lessons</span>
-                      <span>{minutes > 0 ? `~${minutes} min` : series.durationSummary}</span>
-                      <span className="text-zinc-500">
-                        Progress: {lessonsDone}/{series.lessons.length}
-                      </span>
-                    </div>
-                    {startedElsewhere ? (
-                      <p className="mt-2 text-xs text-zinc-500">You have saved progress in this study.</p>
-                    ) : null}
-                    <div className="mt-4">
-                      <Link
-                        href={ctaHref}
-                        className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-blue-800 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-900"
-                      >
-                        {ctaLabel}
-                      </Link>
-                    </div>
-                  </article>
-                </li>
-              )
-            })}
-          </ul>
+                          <div className="hidden shrink-0 flex-col items-end justify-start gap-1.5 pt-2 sm:flex sm:pt-0">
+                            <RowStatusBadge kind={badge} />
+                            <Link href={ctaHref} className={`${rowCtaInteractiveClass} whitespace-nowrap`}>
+                              {ctaLabel}
+                            </Link>
+                          </div>
+                        </div>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </article>
+            )
+          })}
         </div>
       </div>
     </div>

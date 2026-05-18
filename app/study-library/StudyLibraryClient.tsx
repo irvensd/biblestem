@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { StudyCard } from '@/components/study/StudyCard'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { EmptyState } from '@/components/EmptyState'
@@ -16,12 +16,121 @@ import {
 import {
   completedFoundationStudyCount,
   currentFoundationStudy,
-  isStudyFullyComplete,
   orderFoundationStudies,
 } from '@/lib/foundation-path'
 import { readLocalProgress, type LocalDashboardProgress } from '@/lib/dashboard-local-progress'
-import { effectiveStudySeriesMinutes, formatStudyTotalDurationLabel } from '@/lib/studies/derive-overview'
 import type { StudyLevel, StudyPath, StudySeries } from '@/lib/types/product'
+
+function FoundationalStudiesShelf({
+  orderedList,
+  paths,
+  libraryPathSlug,
+  onBrowseAllFoundations,
+  onCollapseFoundationBrowse,
+}: {
+  orderedList: StudySeries[]
+  paths: StudyPath[]
+  libraryPathSlug: string
+  onBrowseAllFoundations: () => void
+  onCollapseFoundationBrowse: () => void
+}) {
+  const showFoundationStudyCards = libraryPathSlug === 'foundations'
+  const [progress, setProgress] = useState<LocalDashboardProgress>(() => readLocalProgress())
+
+  useEffect(() => {
+    function refresh() {
+      setProgress(readLocalProgress())
+    }
+    refresh()
+    window.addEventListener('storage', refresh)
+    window.addEventListener('biblestem-progress', refresh)
+    return () => {
+      window.removeEventListener('storage', refresh)
+      window.removeEventListener('biblestem-progress', refresh)
+    }
+  }, [])
+
+  const completed = completedFoundationStudyCount(orderedList, progress)
+  const total = orderedList.length
+  const current = currentFoundationStudy(orderedList, progress)
+  const allDone = total > 0 && completed >= total
+
+  const recommendedTitle =
+    total === 0 ? null : allDone ? 'Every study complete' : (current?.title ?? null)
+
+  const gridExpandedClasses =
+    showFoundationStudyCards && orderedList.length === 1
+      ? 'mt-6 grid grid-cols-1 gap-6 sm:max-w-2xl'
+      : 'mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'
+
+  return (
+    <>
+      <div className="mt-4 min-w-0 max-w-full rounded-xl border border-zinc-200/90 bg-white p-4 shadow-sm ring-1 ring-zinc-950/[0.03] sm:p-5">
+        <div className="flex min-w-0 flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
+          <div className="min-w-0 flex-1">
+            <h3 className="text-base font-semibold tracking-tight text-zinc-900">Foundations Path</h3>
+            <p className="mt-1 max-w-xl text-sm leading-relaxed text-zinc-600">
+              Follow the beginner studies in a clear guided order.
+            </p>
+            <p className="mt-2 max-w-xl text-xs leading-relaxed text-zinc-500">
+              The path keeps these studies in the recommended order.
+            </p>
+            <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-3 sm:gap-4">
+              <div className="min-w-0">
+                <dt className="text-xs font-medium text-zinc-500">Studies available</dt>
+                <dd className="mt-0.5 font-semibold tabular-nums text-zinc-900">{total}</dd>
+              </div>
+              <div className="min-w-0">
+                <dt className="text-xs font-medium text-zinc-500">Completed</dt>
+                <dd className="mt-0.5 font-semibold tabular-nums text-zinc-900">
+                  {completed} / {total}
+                </dd>
+              </div>
+              <div className="min-w-0 sm:col-span-1">
+                <dt className="text-xs font-medium text-zinc-500">Recommended next</dt>
+                <dd className="mt-0.5 break-words font-medium leading-snug text-zinc-900">
+                  {recommendedTitle ?? '—'}
+                </dd>
+              </div>
+            </dl>
+          </div>
+          <div className="flex w-full min-w-0 shrink-0 flex-col gap-2 lg:w-60 lg:shrink-0">
+            <Button href="/paths/foundations" className="min-h-[44px] w-full justify-center px-4 text-center text-sm lg:w-full">
+              Open Foundations Path
+            </Button>
+            {showFoundationStudyCards ? (
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={onCollapseFoundationBrowse}
+                className="min-h-[44px] w-full justify-center whitespace-normal px-4 text-center text-sm lg:w-full lg:whitespace-nowrap"
+              >
+                Hide Foundation Studies
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={onBrowseAllFoundations}
+                className="min-h-[44px] w-full justify-center whitespace-normal px-4 text-center text-sm lg:w-full lg:whitespace-nowrap"
+              >
+                Browse Foundation Studies
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {showFoundationStudyCards ? (
+        <div className={`min-w-0 max-w-full ${gridExpandedClasses}`}>
+          {orderedList.map((study) => (
+            <StudyCard key={study.slug} study={study} paths={paths} variant="default" />
+          ))}
+        </div>
+      ) : null}
+    </>
+  )
+}
 
 const levels: StudyLevel[] = ['Beginner', 'Intermediate', 'Advanced']
 
@@ -35,189 +144,6 @@ const collectionDescription: Record<(typeof STUDY_LIBRARY_SECTION_ORDER)[number]
 interface StudyLibraryClientProps {
   paths: StudyPath[]
   allSeries: StudySeries[]
-  /** When opening `/study-library?path=…` from a path, pre-select that filter. */
-  initialPathSlug?: string
-}
-
-/** First N studies use full cards; the rest render as compact rows to avoid a long scroll. */
-const FOUNDATIONS_CARD_COUNT = 6
-const FOUNDATIONS_PAGE_SIZE = 10
-
-/** Pagination resets when filters change (`key` on this component drives remount). */
-function FoundationStudiesExpandableShelf({
-  paths,
-  orderedFoundations,
-  localProgress,
-}: {
-  paths: StudyPath[]
-  orderedFoundations: StudySeries[]
-  localProgress: LocalDashboardProgress
-}) {
-  const [foundationsVisibleCount, setFoundationsVisibleCount] = useState(FOUNDATIONS_CARD_COUNT)
-  const displayedFoundations =
-    orderedFoundations.length > foundationsVisibleCount
-      ? orderedFoundations.slice(0, foundationsVisibleCount)
-      : orderedFoundations
-  const cardStudies = displayedFoundations.slice(0, FOUNDATIONS_CARD_COUNT)
-  const listStudies = displayedFoundations.slice(FOUNDATIONS_CARD_COUNT)
-  const currentFoundationsStudy = currentFoundationStudy(orderedFoundations, localProgress)
-  const foundationsCompletedCount = completedFoundationStudyCount(orderedFoundations, localProgress)
-  const oneCard = cardStudies.length === 1
-  const canShowMore = orderedFoundations.length > foundationsVisibleCount
-  const canShowLess =
-    foundationsVisibleCount > FOUNDATIONS_CARD_COUNT && orderedFoundations.length > FOUNDATIONS_CARD_COUNT
-
-  return (
-    <>
-      <div className="mt-4 rounded-xl border border-zinc-200/90 bg-white p-4 shadow-sm ring-1 ring-zinc-950/[0.03]">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="text-sm font-medium text-zinc-900">
-            Foundations journey: {foundationsCompletedCount} / {orderedFoundations.length} complete
-          </p>
-          {currentFoundationsStudy ? (
-            <p className="text-xs text-zinc-600">Current recommended: {currentFoundationsStudy.title}</p>
-          ) : (
-            <p className="text-xs text-zinc-600">All studies complete.</p>
-          )}
-        </div>
-        <div className="mt-3 h-1.5 w-full rounded-full bg-zinc-100">
-          <div
-            className="h-1.5 rounded-full bg-blue-700 transition-[width] duration-300"
-            style={{
-              width: `${orderedFoundations.length > 0 ? (foundationsCompletedCount / orderedFoundations.length) * 100 : 0}%`,
-            }}
-          />
-        </div>
-        <ol className="mt-4 flex gap-2 overflow-x-auto pb-1">
-          {orderedFoundations.map((series, index) => {
-            const complete = isStudyFullyComplete(series, localProgress)
-            const current = !complete && currentFoundationsStudy?.slug === series.slug
-            const chipClass = complete
-              ? 'border-emerald-200 bg-emerald-50 text-emerald-800'
-              : current
-                ? 'border-blue-200 bg-blue-50 text-blue-800'
-                : 'border-zinc-200 bg-zinc-50 text-zinc-600'
-            return (
-              <li key={series.slug}>
-                <Link
-                  href={`/study-library/${series.slug}`}
-                  className={`inline-flex min-w-[12rem] items-center gap-2 rounded-lg border px-3 py-2 text-xs transition-colors hover:border-zinc-300 ${chipClass}`}
-                >
-                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-current/30 text-[11px] font-semibold">
-                    {index + 1}
-                  </span>
-                  <span className="truncate">{series.title}</span>
-                </Link>
-              </li>
-            )
-          })}
-        </ol>
-      </div>
-      <div
-        className={`grid gap-6 ${
-          oneCard ? 'mt-5 grid-cols-1 sm:max-w-lg' : 'mt-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-        }`}
-      >
-        {cardStudies.map((study, index) => {
-          const complete = isStudyFullyComplete(study, localProgress)
-          const current = !complete && currentFoundationsStudy?.slug === study.slug
-          const progressionState = complete ? 'completed' : current ? 'current' : 'upcoming'
-          return (
-            <StudyCard
-              key={study.slug}
-              study={study}
-              paths={paths}
-              variant="compact"
-              stepNumber={index + 1}
-              stepTotal={orderedFoundations.length}
-              progressionState={progressionState}
-            />
-          )
-        })}
-      </div>
-      {listStudies.length > 0 ? (
-        <>
-          <p className="mt-8 text-xs font-medium uppercase tracking-wide text-zinc-500">
-            Continue the foundations path
-          </p>
-          <ul
-            className="mt-3 divide-y divide-zinc-200/90 overflow-hidden rounded-xl border border-zinc-200/90 bg-white shadow-sm ring-1 ring-zinc-950/[0.03]"
-            aria-label="More foundational studies"
-          >
-          {listStudies.map((study, offset) => {
-            const index = FOUNDATIONS_CARD_COUNT + offset
-            const complete = isStudyFullyComplete(study, localProgress)
-            const current = !complete && currentFoundationsStudy?.slug === study.slug
-            const progressionState = complete ? 'completed' : current ? 'current' : 'upcoming'
-            const stateLabel =
-              progressionState === 'completed'
-                ? 'Completed'
-                : progressionState === 'current'
-                  ? 'Current'
-                  : 'Upcoming'
-            const durationLabel = formatStudyTotalDurationLabel(effectiveStudySeriesMinutes(study))
-            return (
-              <li key={study.slug}>
-                <Link
-                  href={`/study-library/${study.slug}`}
-                  className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3.5 transition-colors hover:bg-zinc-50/80"
-                >
-                  <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-zinc-50 text-xs font-semibold text-zinc-700">
-                    {index + 1}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-semibold text-zinc-900">{study.title}</span>
-                    <span className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-zinc-500">
-                      <span>
-                        Step {index + 1} of {orderedFoundations.length}
-                      </span>
-                      <span aria-hidden className="text-zinc-300">
-                        ·
-                      </span>
-                      <span>{stateLabel}</span>
-                      <span aria-hidden className="text-zinc-300">
-                        ·
-                      </span>
-                      <span>
-                        {study.lessonsCount} lessons · {durationLabel} · {study.level}
-                      </span>
-                    </span>
-                  </span>
-                  <span className="shrink-0 text-sm font-medium text-blue-800">View study</span>
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
-        </>
-      ) : null}
-      {canShowMore || canShowLess ? (
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          {canShowMore ? (
-            <Button
-              variant="secondary"
-              onClick={() =>
-                setFoundationsVisibleCount((n) => Math.min(n + FOUNDATIONS_PAGE_SIZE, orderedFoundations.length))
-              }
-              className="px-4 py-2 text-sm"
-            >
-              Show more studies ({orderedFoundations.length - foundationsVisibleCount} remaining)
-            </Button>
-          ) : null}
-          {canShowLess ? (
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => setFoundationsVisibleCount(FOUNDATIONS_CARD_COUNT)}
-              className="px-4 py-2 text-sm"
-            >
-              Show fewer studies
-            </Button>
-          ) : null}
-        </div>
-      ) : null}
-    </>
-  )
 }
 
 type SelectOption = {
@@ -311,15 +237,26 @@ function FilterSelect({ value, options, ariaLabel, onChange }: FilterSelectProps
   )
 }
 
-export function StudyLibraryClient({ paths, allSeries, initialPathSlug = '' }: StudyLibraryClientProps) {
-  const validInitial =
-    initialPathSlug && paths.some((p) => p.slug === initialPathSlug) ? initialPathSlug : ''
+export function StudyLibraryClient({ paths, allSeries }: StudyLibraryClientProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const pathSlug = useMemo(() => {
+    const raw = searchParams.get('path') ?? ''
+    return raw && paths.some((p) => p.slug === raw) ? raw : ''
+  }, [searchParams, paths])
+
+  const applyLibraryPathSlug = (next: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (next) params.set('path', next)
+    else params.delete('path')
+    const qs = params.toString()
+    router.replace(qs ? `/study-library?${qs}` : '/study-library', { scroll: false })
+  }
+
   const [query, setQuery] = useState('')
-  const [pathSlug, setPathSlug] = useState<string>(validInitial)
   const [level, setLevel] = useState<string>('')
   const [sort, setSort] = useState<LibraryFilters['sort']>('recommended')
-  const [localProgress, setLocalProgress] = useState<LocalDashboardProgress>(() => readLocalProgress())
-
   const filtered = useMemo(() => {
     return filterSeriesForLibrary(
       allSeries,
@@ -335,18 +272,6 @@ export function StudyLibraryClient({ paths, allSeries, initialPathSlug = '' }: S
 
   const grouped = useMemo(() => groupStudiesByLevelOrSection(filtered), [filtered])
 
-  useEffect(() => {
-    function refreshProgress() {
-      setLocalProgress(readLocalProgress())
-    }
-    refreshProgress()
-    window.addEventListener('storage', refreshProgress)
-    window.addEventListener('biblestem-progress', refreshProgress)
-    return () => {
-      window.removeEventListener('storage', refreshProgress)
-      window.removeEventListener('biblestem-progress', refreshProgress)
-    }
-  }, [])
   const pathOptions = useMemo<SelectOption[]>(
     () => [{ value: '', label: 'All paths' }, ...paths.map((p) => ({ value: p.slug, label: p.name }))],
     [paths],
@@ -366,8 +291,8 @@ export function StudyLibraryClient({ paths, allSeries, initialPathSlug = '' }: S
 
   return (
     <>
-      <div className="mt-10 rounded-xl border border-zinc-200/90 bg-white p-4 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-5">
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-10 min-w-0 rounded-xl border border-zinc-200/90 bg-white p-4 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-5">
+        <div className="grid min-w-0 gap-3 [&>*]:min-w-0 md:grid-cols-2 lg:grid-cols-4">
           <input
             type="search"
             value={query}
@@ -376,7 +301,7 @@ export function StudyLibraryClient({ paths, allSeries, initialPathSlug = '' }: S
             className={inputClassName}
             aria-label="Search studies"
           />
-          <FilterSelect value={pathSlug} options={pathOptions} ariaLabel="Filter by path" onChange={setPathSlug} />
+          <FilterSelect value={pathSlug} options={pathOptions} ariaLabel="Filter by path" onChange={applyLibraryPathSlug} />
           <FilterSelect value={level} options={levelOptions} ariaLabel="Filter by level" onChange={setLevel} />
           <FilterSelect
             value={sort}
@@ -419,38 +344,51 @@ export function StudyLibraryClient({ paths, allSeries, initialPathSlug = '' }: S
           ) : (
             STUDY_LIBRARY_SECTION_ORDER.map((collection) => {
               const list = grouped.get(collection) ?? []
-              if (list.length === 0) return null
+              if (list.length === 0) {
+                if (collection !== 'Foundational Studies') return null
+                return (
+                  <section key={collection}>
+                    <SectionHeading size="sm" title={collection} description={collectionDescription[collection]} />
+                    <EmptyState
+                      title="No Foundation studies available yet"
+                      description="Foundation studies will appear here as they are added."
+                      className="mt-5"
+                      action={<Button href="/study-library">Browse all studies</Button>}
+                    />
+                  </section>
+                )
+              }
               const isFoundationsSection = collection === 'Foundational Studies'
-              const orderedFoundations = isFoundationsSection ? orderFoundationStudies(list) : list
-              const foundationsPaginationResetKey = [query, pathSlug, level, sort].join('|')
-              const oneCard = orderedFoundations.length === 1
+              const orderedList = isFoundationsSection ? orderFoundationStudies(list) : list
+              const oneCard = orderedList.length === 1
+
+              if (isFoundationsSection) {
+                return (
+                  <section key={collection}>
+                    <SectionHeading size="sm" title={collection} description={collectionDescription[collection]} />
+                    <FoundationalStudiesShelf
+                      orderedList={orderedList}
+                      paths={paths}
+                      libraryPathSlug={pathSlug}
+                      onBrowseAllFoundations={() => applyLibraryPathSlug('foundations')}
+                      onCollapseFoundationBrowse={() => applyLibraryPathSlug('')}
+                    />
+                  </section>
+                )
+              }
+
+              const gridClasses = oneCard
+                ? 'mt-5 grid grid-cols-1 gap-6 sm:max-w-2xl md:mt-6'
+                : 'mt-6 grid grid-cols-1 gap-6 md:mt-7 md:grid-cols-2 lg:mt-9 lg:grid-cols-3'
+
               return (
                 <section key={collection}>
-                  <SectionHeading
-                    size="sm"
-                    title={collection}
-                    description={collectionDescription[collection]}
-                  />
-                  {isFoundationsSection ? (
-                    <FoundationStudiesExpandableShelf
-                      key={foundationsPaginationResetKey}
-                      paths={paths}
-                      orderedFoundations={orderedFoundations}
-                      localProgress={localProgress}
-                    />
-                  ) : (
-                    <div
-                      className={`grid gap-6 ${
-                        oneCard
-                          ? 'mt-5 grid-cols-1 sm:max-w-2xl md:mt-6'
-                          : 'mt-6 grid-cols-1 md:mt-7 md:grid-cols-2 lg:mt-9 lg:grid-cols-3'
-                      }`}
-                    >
-                      {orderedFoundations.map((study) => (
-                        <StudyCard key={study.slug} study={study} paths={paths} variant="default" />
-                      ))}
-                    </div>
-                  )}
+                  <SectionHeading size="sm" title={collection} description={collectionDescription[collection]} />
+                  <div className={gridClasses}>
+                    {orderedList.map((study) => (
+                      <StudyCard key={study.slug} study={study} paths={paths} variant="default" />
+                    ))}
+                  </div>
                 </section>
               )
             })

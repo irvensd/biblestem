@@ -16,6 +16,11 @@ export const FOUNDATION_GUIDED_SLUG_ORDER = [
   'what-happens-when-we-die',
   'when-death-died',
   'made-new-in-christ',
+  'the-law-of-love',
+  'the-rest-god-gives',
+  'the-life-that-gives',
+  'designed-to-thrive',
+  'buried-and-raised',
   'the-bible-gods-living-word',
   'origin-of-evil',
 ] as const
@@ -146,4 +151,121 @@ export function currentFoundationStudy(
 
 export function completedFoundationStudyCount(orderedStudies: StudySeries[], p: LocalDashboardProgress): number {
   return orderedStudies.filter((s) => isStudyFullyComplete(s, p)).length
+}
+
+/** Guided journey chapters; slugs not listed here follow in catalog order under a trailing bucket. */
+export const FOUNDATIONS_JOURNEY_CHAPTERS: readonly {
+  chapterLabel: string
+  title: string
+  slugs: readonly string[]
+}[] = [
+  {
+    chapterLabel: 'Chapter 1',
+    title: 'Knowing God',
+    slugs: ['god-is-love', 'the-god-who-wants-to-be-known', 'made-for-more'],
+  },
+  {
+    chapterLabel: 'Chapter 2',
+    title: 'The Conflict Begins',
+    slugs: ['war-in-heaven', 'the-fall-of-humanity', 'the-promise-kept'],
+  },
+  {
+    chapterLabel: 'Chapter 3',
+    title: 'The Way Back',
+    slugs: [
+      'the-way-back-to-god',
+      'what-happens-when-we-die',
+      'when-death-died',
+      'made-new-in-christ',
+    ],
+  },
+  {
+    chapterLabel: 'Chapter 4',
+    title: 'Walking With God',
+    slugs: ['the-law-of-love', 'the-rest-god-gives', 'the-life-that-gives'],
+  },
+  {
+    chapterLabel: 'Chapter 5',
+    title: 'New Life in Christ',
+    slugs: ['designed-to-thrive', 'buried-and-raised'],
+  },
+]
+
+export type FoundationJourneyChapter = {
+  chapterLabel: string
+  title: string
+  studies: StudySeries[]
+}
+
+/**
+ * Partition ordered beginner Foundations studies into named chapters plus a trailing bucket for anything not listed.
+ * Skips chapters with no catalog matches.
+ */
+export function partitionFoundationStudiesIntoChapters(orderedStudies: StudySeries[]): FoundationJourneyChapter[] {
+  if (orderedStudies.length === 0) return []
+
+  const definedSlugs = new Set<string>()
+  for (const def of FOUNDATIONS_JOURNEY_CHAPTERS) {
+    for (const slug of def.slugs) definedSlugs.add(slug)
+  }
+
+  const chapters: FoundationJourneyChapter[] = []
+
+  for (const def of FOUNDATIONS_JOURNEY_CHAPTERS) {
+    const slugSet = new Set(def.slugs)
+    const picks = orderedStudies.filter((s) => slugSet.has(s.slug))
+    if (picks.length === 0) continue
+    chapters.push({
+      chapterLabel: def.chapterLabel,
+      title: def.title,
+      studies: picks,
+    })
+  }
+
+  const remainder = orderedStudies.filter((s) => !definedSlugs.has(s.slug))
+
+  // No catalog matches for the predefined chapters: render one cohesive list instead of labeling it "chapter 4".
+  if (chapters.length === 0 && remainder.length > 0) {
+    return [
+      {
+        chapterLabel: '',
+        title: 'Foundations Journey',
+        studies: remainder,
+      },
+    ]
+  }
+
+  if (remainder.length > 0) {
+    chapters.push({
+      chapterLabel: `Chapter ${chapters.length + 1}`,
+      title: 'Continuing the Journey',
+      studies: remainder,
+    })
+  }
+
+  return chapters
+}
+
+/** First incomplete study after the current recommendation (exclusive), in journey order. */
+export function nextIncompleteFoundationStudyAfterCurrent(
+  orderedStudies: StudySeries[],
+  p: LocalDashboardProgress,
+): StudySeries | null {
+  const cur = currentFoundationStudy(orderedStudies, p)
+  if (!cur) return null
+
+  let seenCurrent = false
+  for (const s of orderedStudies) {
+    if (!seenCurrent) {
+      if (s.slug === cur.slug) seenCurrent = true
+      continue
+    }
+    if (!isStudyFullyComplete(s, p)) return s
+  }
+  return null
+}
+
+/** Fully complete studies inside a subset (e.g. one chapter). */
+export function chapterCompletedStudyCount(subset: StudySeries[], p: LocalDashboardProgress): number {
+  return subset.filter((s) => isStudyFullyComplete(s, p)).length
 }

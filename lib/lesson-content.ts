@@ -15,6 +15,11 @@ import { theWayBackToGodSeriesLessonLibrary } from '@/lib/lesson-content-the-way
 import { whatHappensWhenWeDieSeriesLessonLibrary } from '@/lib/lesson-content-what-happens-when-we-die'
 import { whenDeathDiedSeriesLessonLibrary } from '@/lib/lesson-content-when-death-died'
 import { madeNewInChristSeriesLessonLibrary } from '@/lib/lesson-content-made-new-in-christ'
+import { theLawOfLoveSeriesLessonLibrary } from '@/lib/lesson-content-the-law-of-love'
+import { theRestGodGivesSeriesLessonLibrary } from '@/lib/lesson-content-the-rest-god-gives'
+import { theLifeThatGivesSeriesLessonLibrary } from '@/lib/lesson-content-the-life-that-gives'
+import { designedToThriveSeriesLessonLibrary } from '@/lib/lesson-content-designed-to-thrive'
+import { buriedAndRaisedSeriesLessonLibrary } from '@/lib/lesson-content-buried-and-raised'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
 
@@ -5617,6 +5622,11 @@ Amen.`,
   ...whatHappensWhenWeDieSeriesLessonLibrary,
   ...whenDeathDiedSeriesLessonLibrary,
   ...madeNewInChristSeriesLessonLibrary,
+  ...theLawOfLoveSeriesLessonLibrary,
+  ...theRestGodGivesSeriesLessonLibrary,
+  ...theLifeThatGivesSeriesLessonLibrary,
+  ...designedToThriveSeriesLessonLibrary,
+  ...buriedAndRaisedSeriesLessonLibrary,
   ...originOfEvilSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {

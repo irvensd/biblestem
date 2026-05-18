@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getPathNameForSeries } from '@/lib/product-queries'
 import { effectiveStudySeriesMinutes, formatStudyTotalDurationLabel } from '@/lib/studies/derive-overview'
+import { getStudyLibrarySummaryLine } from '@/lib/study-summary-line'
 import type { StudyPath, StudySeries } from '@/lib/types/product'
 
 interface StudyCardProps {
@@ -24,10 +25,7 @@ export function StudyCard({
 }: StudyCardProps) {
   const pathName = getPathNameForSeries(study, paths)
   const durationLabel = formatStudyTotalDurationLabel(effectiveStudySeriesMinutes(study))
-  const cardTeaser =
-    study.shortDescription?.trim() ||
-    study.subtitle?.trim() ||
-    'Open the study for lessons, an overview, and study tools.'
+  const cardTeaser = getStudyLibrarySummaryLine(study)
   const compact = variant === 'compact'
   const stateLabel =
     progressionState === 'completed'
@@ -40,7 +38,7 @@ export function StudyCard({
 
   return (
     <article
-      className={`rounded-xl border border-zinc-200/90 bg-white shadow-sm ring-1 ring-zinc-950/[0.03] transition-shadow duration-200 hover:shadow-md ${
+      className={`min-w-0 max-w-full rounded-xl border border-zinc-200/90 bg-white shadow-sm ring-1 ring-zinc-950/[0.03] transition-shadow duration-200 hover:shadow-md ${
         compact ? 'p-4 md:p-4' : 'p-6'
       }`}
     >
@@ -63,7 +61,7 @@ export function StudyCard({
       </div>
       <Link
         href={`/study-library/${study.slug}`}
-        className={`inline-block text-sm font-medium text-blue-800 hover:text-blue-900 ${compact ? 'mt-3' : 'mt-5'}`}
+        className={`inline-flex min-h-[44px] items-center text-sm font-medium text-blue-800 hover:text-blue-900 sm:min-h-0 ${compact ? 'mt-3' : 'mt-5'}`}
       >
         View study
       </Link>

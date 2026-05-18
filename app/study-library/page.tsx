@@ -7,16 +7,8 @@ type StudyLibraryPageProps = {
   searchParams: Promise<{ path?: string | string[] }>
 }
 
-function normalizePathQuery(pathParam: string | string[] | undefined): string {
-  if (pathParam == null) return ''
-  if (Array.isArray(pathParam)) return pathParam[0] ?? ''
-  return pathParam
-}
-
-export default async function StudyLibraryPage({ searchParams }: StudyLibraryPageProps) {
+export default async function StudyLibraryPage(_props: StudyLibraryPageProps) {
   const catalog = await loadCatalog()
-  const sp = await searchParams
-  const initialPathSlug = normalizePathQuery(sp.path)
   const showCatalogFallback = shouldShowCatalogFallbackNotice(catalog)
   return (
     <>
@@ -36,11 +28,7 @@ export default async function StudyLibraryPage({ searchParams }: StudyLibraryPag
       </section>
 
       <div className="container-shell">
-        <StudyLibraryClient
-          paths={catalog.paths}
-          allSeries={catalog.allSeries}
-          initialPathSlug={initialPathSlug}
-        />
+        <StudyLibraryClient paths={catalog.paths} allSeries={catalog.allSeries} />
       </div>
     </>
   )

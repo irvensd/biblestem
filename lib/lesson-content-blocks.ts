@@ -1,4 +1,8 @@
 import type { StudyInsightVariant, WordInsight } from '@/lib/lesson-content'
+import type { CreationRestPatternStageData } from '@/lib/creation-rest-pattern-stages'
+import type { GivingCirclePatternStageData } from '@/lib/giving-circle-pattern-stages'
+import type { WholePersonHealthAreaData } from '@/lib/whole-person-health-pattern-stages'
+import type { BaptismMeaningPatternStageData } from '@/lib/baptism-meaning-pattern-stages'
 import type { DeathResurrectionStageData } from '@/lib/death-resurrection-flow-stages'
 import type { SanctuaryJourneyStageData } from '@/lib/sanctuary-journey-stages'
 import type { ProphecyTimelineItem } from '@/lib/prophecy-timeline-types'
@@ -149,6 +153,42 @@ export type LessonContentBlock =
       title?: string
       subtitle?: string
       stages?: DeathResurrectionStageData[]
+    }
+  | {
+      type: 'creationRestPattern'
+      /** 0-based indices into the rendered stage list (`stages` when set, otherwise the canonical pattern order). */
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: CreationRestPatternStageData[]
+    }
+  | {
+      type: 'givingCirclePattern'
+      /** 0-based indices into the rendered stage list (`stages` when set, otherwise the canonical pattern order). */
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: GivingCirclePatternStageData[]
+    }
+  | {
+      type: 'wholePersonHealthPattern'
+      /** 0-based indices into the rendered area list (`areas` when set, otherwise the canonical pattern order). */
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      areas?: WholePersonHealthAreaData[]
+    }
+  | {
+      type: 'baptismMeaningPattern'
+      /** 0-based indices into the rendered stage list (`stages` when set, otherwise the canonical pattern order). */
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: BaptismMeaningPatternStageData[]
     }
   | { type: 'studyCta'; label: string; href: string }
   | StudyVisualLessonBlock

@@ -16,6 +16,10 @@ import type {
   WordStudy,
 } from '@/lib/types/product'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
+import {
+  foundationLessonShellSection,
+  FOUNDATION_SHELL_PLACEHOLDER_LEGACY,
+} from '@/lib/foundation-lesson-shell'
 
 const demoUserId = '00000000-0000-4000-8000-000000000001'
 
@@ -270,7 +274,7 @@ const seriesGodIsLove: StudySeries = {
   title: 'God Is Love',
   subtitle: 'Scripture, prophecy, doctrine, and salvation through the lens of God’s love.',
   shortDescription:
-    'Discover why Scripture, prophecy, doctrine, and salvation all begin with one central truth: God is love.',
+    'Begin with the character of God as the foundation for all truth.',
   longDescription: godIsLoveLongDescription,
   description: godIsLoveLongDescription,
   level: 'Beginner',
@@ -1306,7 +1310,7 @@ const seriesTheGodWhoWantsToBeKnown: StudySeries = {
   title: 'The God Who Wants to Be Known',
   subtitle: 'Names, love, Trinity-shaped revelation, and Christ as God made visible.',
   shortDescription:
-    'Discover a God who is not distant or cold, but relational, loving, and revealed through Scripture, Jesus, and the beauty of His name.',
+    'Discover how Scripture reveals a personal God who speaks, loves, and invites trust.',
   longDescription: theGodWhoWantsLongDescription,
   description: theGodWhoWantsLongDescription,
   level: 'Beginner',
@@ -1342,7 +1346,7 @@ const seriesMadeForMore: StudySeries = {
   title: 'Made for More',
   subtitle: 'Human identity, dignity, purpose, and restoration through Jesus.',
   shortDescription:
-    'Discover what it means to be human through Scripture’s teaching that we are created in the image of God.',
+    'Learn what it means to be created in God’s image with dignity, purpose, and hope.',
   longDescription: madeForMoreLongDescription,
   description: madeForMoreLongDescription,
   level: 'Beginner',
@@ -1955,7 +1959,7 @@ const seriesFallOfHumanity: StudySeries = {
   title: 'The Fall of Humanity',
   subtitle: 'Sin, deception, broken trust—and Christ’s restorative truth and love.',
   shortDescription:
-    'Humanity’s fall began with deception about God’s character and led to broken trust, broken relationships, and moral rebellion.',
+    'Understand how sin entered the human story and damaged God\'s good design.',
   longDescription: fallOfHumanityLongDescription,
   description: fallOfHumanityLongDescription,
   level: 'Beginner',
@@ -1995,7 +1999,7 @@ const seriesThePromiseKept: StudySeries = {
   title: 'The Promise Kept',
   subtitle: 'From Eden’s first gospel promise to the cross: how God kept His word in Jesus.',
   shortDescription:
-    'God promised to rescue humanity, and Jesus is that promise fulfilled.',
+    'Follow God\'s promise of redemption from Eden to Christ.',
   longDescription: promiseKeptLongDescription,
   description: promiseKeptLongDescription,
   level: 'Beginner',
@@ -2036,7 +2040,7 @@ const seriesTheWayBackToGod: StudySeries = {
   subtitle:
     'The sanctuary reveals the path God opened through Jesus to bring humanity back into restored relationship with Him.',
   shortDescription:
-    'The sanctuary reveals the path God opened through Jesus to bring humanity back into restored relationship with Him.',
+    'Learn how God restores sinners through grace, repentance, and trust.',
   longDescription: wayBackLongDescription,
   description: wayBackLongDescription,
   level: 'Beginner',
@@ -2205,7 +2209,7 @@ const seriesWhenDeathDied: StudySeries = {
   subtitle:
     'The cross, the empty tomb, and the victory Jesus won over sin, death, and fear.',
   shortDescription:
-    'Jesus stepped into death, carried sin\'s full weight, and rose again proving death itself has been defeated.',
+    'See how Christ\'s resurrection defeats death and anchors Christian hope.',
   longDescription: whenDeathDiedLongDescription,
   description: whenDeathDiedLongDescription,
   level: 'Beginner',
@@ -2376,7 +2380,7 @@ const seriesMadeNewInChrist: StudySeries = {
   subtitle:
     'The gospel of grace: what Jesus finished, who we become in Him, and how to live from new life.',
   shortDescription:
-    'The gospel is not advice about what we must do. It is good news about what Jesus has already done.',
+    'Discover the new life Jesus gives through forgiveness, renewal, and faith.',
   longDescription: madeNewInChristLongDescription,
   description: madeNewInChristLongDescription,
   level: 'Beginner',
@@ -2403,6 +2407,764 @@ const seriesMadeNewInChrist: StudySeries = {
   ],
 }
 
+const THE_LAW_OF_LOVE_STUDY_SLUG = 'the-law-of-love'
+const THE_LAW_OF_LOVE_OVERVIEW_HREF = `/study-library/${THE_LAW_OF_LOVE_STUDY_SLUG}`
+
+function theLawOfLovePlaceholderShellSection(lessonId: string, sectionId: string): LessonSection {
+  const body = JSON.stringify({
+    blocks: [
+      { type: 'paragraph', text: 'This lesson content has not been added yet.' },
+      { type: 'studyCta', label: 'Back to study overview', href: THE_LAW_OF_LOVE_OVERVIEW_HREF },
+    ],
+  })
+
+  return {
+    id: sectionId,
+    lessonId,
+    sortOrder: 1,
+    heading: 'Lesson content coming soon',
+    body,
+    sectionType: 'other',
+  }
+}
+
+const lessonTheLawOfLove1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000894',
+  slug: 'what-love-looks-like',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007a',
+  title: 'What Love Looks Like',
+  summary: 'God\'s law describes a life of perfect love toward God and others.',
+  durationMinutes: 8,
+  scripture: 'Exodus 20:1 to 17 · Matthew 22:36 to 40 · 1 John 4:8',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheLawOfLove2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000895',
+  slug: 'the-problem-within-us',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007a',
+  title: 'The Problem Within Us',
+  summary:
+    'Humanity is not naturally aligned with God\'s law of love and cannot fulfill it on its own.',
+  durationMinutes: 8,
+  scripture: 'Romans 7:12 to 15 · 1 John 3:4 · Romans 13:10',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheLawOfLove3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000896',
+  slug: 'why-we-need-a-savior',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007a',
+  title: 'Why We Need a Savior',
+  summary: 'Our inability to live in love reveals our need for salvation outside of ourselves.',
+  durationMinutes: 8,
+  scripture: 'Romans 7:24 to 25 · Romans 5:19 · Isaiah 64:6',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheLawOfLove4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000897',
+  slug: 'righteousness-as-a-gift',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007a',
+  title: 'Righteousness as a Gift',
+  summary:
+    'God provides righteousness through Jesus, not as something we earn but as something we receive.',
+  durationMinutes: 8,
+  scripture: 'Romans 3:24 · Romans 5:15 to 17 · Jeremiah 23:6',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheLawOfLove5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000898',
+  slug: 'the-new-covenant',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007a',
+  title: 'The New Covenant',
+  summary: 'God promises to write His law in our hearts and transform us from the inside out.',
+  durationMinutes: 8,
+  scripture: 'Jeremiah 31:31 to 34 · Hebrews 8:7 to 12 · Romans 7:6',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheLawOfLove6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000899',
+  slug: 'the-law-of-liberty',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007a',
+  title: 'The Law of Liberty',
+  summary: 'God\'s law is not restrictive but liberating, leading to true freedom and fulfillment.',
+  durationMinutes: 8,
+  scripture: 'James 1:25 · Psalm 119:32 · Romans 13:10',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheLawOfLove7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000900',
+  slug: 'living-a-life-of-love',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007a',
+  title: 'Living a Life of Love',
+  summary: 'Those who receive God\'s love begin to live it out in real, practical ways.',
+  durationMinutes: 8,
+  scripture: '1 John 4:19 · John 13:34 to 35 · Galatians 5:13 to 14',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theLawOfLoveLongDescription = `This study explores the true nature of God's law as a reflection of His character of love. It reveals that the commandments are not restrictive rules but relational principles that lead to life, freedom, and human flourishing.
+
+The Law of Love shows that obedience is not a means of earning salvation, but the natural result of experiencing God's grace. Through Christ, believers enter a new covenant where God writes His law on the heart, producing love from the inside out.`
+
+const seriesTheLawOfLove: StudySeries = {
+  id: 'e4000001-0000-4000-8000-00000000007a',
+  slug: THE_LAW_OF_LOVE_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Law of Love',
+  subtitle: 'God\'s law reflects His love and leads to freedom, grace, and life through Jesus.',
+  shortDescription:
+    'Understand God\'s law as a revelation of love, not a system of earning salvation.',
+  longDescription: theLawOfLoveLongDescription,
+  description: theLawOfLoveLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 12,
+  foundationOrder: 11,
+  whatYouWillLearn: [
+    'Themes: love, law, commandments, obedience, grace, covenant, righteousness, faith, transformation, freedom.',
+    'See God\'s law as loving relational truth that leads to life, not control for its own sake.',
+    'Understand human need for a Savior and righteousness as God\'s gift through Jesus.',
+    'Explore the new covenant and the law written on the heart, growing from grace.',
+  ],
+  lessons: [
+    lessonTheLawOfLove1,
+    lessonTheLawOfLove2,
+    lessonTheLawOfLove3,
+    lessonTheLawOfLove4,
+    lessonTheLawOfLove5,
+    lessonTheLawOfLove6,
+    lessonTheLawOfLove7,
+  ],
+}
+
+const THE_REST_GOD_GIVES_STUDY_SLUG = 'the-rest-god-gives'
+const THE_REST_GOD_GIVES_OVERVIEW_HREF = `/study-library/${THE_REST_GOD_GIVES_STUDY_SLUG}`
+
+const lessonRestGodGives1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000901',
+  slug: 'a-gift-in-time',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007b',
+  title: 'A Gift in Time',
+  summary:
+    'The Sabbath begins at creation as a sacred space in time where God invites humanity into rest, blessing, and relationship.',
+  durationMinutes: 8,
+  scripture: 'Genesis 2:1-3 · Mark 2:27-28 · Exodus 20:8-11',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonRestGodGives2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000902',
+  slug: 'rest-before-work',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007b',
+  title: 'Rest Before Work',
+  summary:
+    'Human beings entered life after God’s work of creation was finished, showing that life begins by receiving before producing.',
+  durationMinutes: 8,
+  scripture: 'Genesis 1:26-31 · Genesis 2:1-3 · Psalm 100:3',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonRestGodGives3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000903',
+  slug: 'remember-the-creator',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007b',
+  title: 'Remember the Creator',
+  summary:
+    'The Sabbath reminds us that God is Creator and that our lives depend on His power, provision, and care.',
+  durationMinutes: 8,
+  scripture: 'Exodus 20:8-11 · Psalm 95:6-7 · Revelation 14:6-7',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonRestGodGives4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000904',
+  slug: 'remember-the-redeemer',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007b',
+  title: 'Remember the Redeemer',
+  summary:
+    'The Sabbath also points to redemption, reminding us that salvation is God’s work and not something we earn.',
+  durationMinutes: 8,
+  scripture: 'Deuteronomy 5:12-15 · Ephesians 2:8-10 · Psalm 51:10-12',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonRestGodGives5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000905',
+  slug: 'it-is-finished',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007b',
+  title: 'It Is Finished',
+  summary:
+    'Jesus completed the work of salvation, and the Sabbath points us to rest in His finished work.',
+  durationMinutes: 8,
+  scripture: 'John 17:4 · John 19:30 · Luke 23:54-56',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonRestGodGives6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000906',
+  slug: 'the-sabbath-and-the-new-covenant',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007b',
+  title: 'The Sabbath and the New Covenant',
+  summary:
+    'The Sabbath belongs within the new covenant life where obedience flows from grace, love, and a renewed heart.',
+  durationMinutes: 8,
+  scripture: 'Isaiah 56:1-7 · Jeremiah 31:31-34 · Hebrews 8:7-12 · Acts 13:42-44',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonRestGodGives7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000907',
+  slug: 'rest-for-your-soul',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007b',
+  title: 'Rest for Your Soul',
+  summary:
+    'Jesus invites the weary to receive deep soul rest, and the Sabbath becomes a weekly reminder of that grace.',
+  durationMinutes: 9,
+  scripture: 'Matthew 11:28-30 · Mark 2:27-28 · Hebrews 4:9-10',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theRestGodGivesLongDescription = `The Rest God Gives explores the Sabbath as a weekly reminder of creation, redemption, grace, and restored relationship with God.
+
+This study shows that Sabbath rest is not about earning God’s favor. It is a sign that we receive life and salvation as gifts from Him. From Genesis to the life of Jesus and the New Testament church, Scripture presents the Sabbath as a sacred space in time where humanity is invited to rest in God’s completed work.
+
+The Sabbath teaches us to stop striving, remember our Creator, trust our Redeemer, and receive the deeper rest Christ gives to the soul.`
+
+const seriesTheRestGodGives: StudySeries = {
+  id: 'e4000001-0000-4000-8000-00000000007b',
+  slug: THE_REST_GOD_GIVES_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Rest God Gives',
+  subtitle: 'Sabbath rest as a weekly sign of creation, redemption, and grace in Christ.',
+  shortDescription:
+    'Explore the gift of Sabbath rest and what it reveals about trust in God.',
+  longDescription: theRestGodGivesLongDescription,
+  description: theRestGodGivesLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 13,
+  foundationOrder: 12,
+  whatYouWillLearn: [
+    'Themes: Sabbath, rest, creation, redemption, grace, salvation, covenant, Jesus, worship, commandments, freedom, faith.',
+    'See the Sabbath as God’s gift in time, rooted in creation and fulfilled in Christ.',
+    'Understand rest before work: life begins by receiving God’s completed work.',
+    'Follow Scripture from Creator and Redeemer to soul rest in Jesus.',
+  ],
+  lessons: [
+    lessonRestGodGives1,
+    lessonRestGodGives2,
+    lessonRestGodGives3,
+    lessonRestGodGives4,
+    lessonRestGodGives5,
+    lessonRestGodGives6,
+    lessonRestGodGives7,
+  ],
+}
+
+const THE_LIFE_THAT_GIVES_STUDY_SLUG = 'the-life-that-gives'
+const THE_LIFE_THAT_GIVES_OVERVIEW_HREF = `/study-library/${THE_LIFE_THAT_GIVES_STUDY_SLUG}`
+
+const lessonLifeThatGives1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000908',
+  slug: 'god-gives-first',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007c',
+  title: 'God Gives First',
+  summary:
+    'All true generosity begins with God, the Great Giver, who gives life, every good gift, and ultimately His Son.',
+  durationMinutes: 8,
+  scripture: 'James 1:17 · John 3:16 · Romans 8:32',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonLifeThatGives2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000909',
+  slug: 'the-circle-of-blessing',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007c',
+  title: 'The Circle of Blessing',
+  summary:
+    'God\'s love moves outward in giving, creating a circle of blessing where receiving leads to giving.',
+  durationMinutes: 8,
+  scripture: 'Luke 6:38 · Philippians 2:1-6 · 1 John 4:19',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonLifeThatGives3: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000090a',
+  slug: 'from-taking-to-giving',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007c',
+  title: 'From Taking to Giving',
+  summary:
+    'Sin turns the heart inward, but Jesus redeems us from self-centered living into other-centered love.',
+  durationMinutes: 8,
+  scripture: 'Titus 2:14 · Galatians 1:3-5 · 2 Timothy 3:1-5',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonLifeThatGives4: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000090b',
+  slug: 'everything-belongs-to-god',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007c',
+  title: 'Everything Belongs to God',
+  summary:
+    'Stewardship begins with recognizing that all material blessings belong to God and are entrusted to us.',
+  durationMinutes: 8,
+  scripture: 'Psalm 24:1 · Haggai 2:8 · Deuteronomy 8:18 · 1 Chronicles 29:14',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonLifeThatGives5: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000090c',
+  slug: 'returning-the-tithe',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007c',
+  title: 'Returning the Tithe',
+  summary:
+    'Tithe is an act of faith that acknowledges God as the source of all increase and supports His work.',
+  durationMinutes: 8,
+  scripture: 'Genesis 28:22 · Leviticus 27:30 · Numbers 18:21 · Malachi 3:8-10',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonLifeThatGives6: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000090d',
+  slug: 'offerings-from-the-heart',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007c',
+  title: 'Offerings From the Heart',
+  summary:
+    'Beyond tithe, God invites cheerful, willing generosity that flows from love, gratitude, and trust.',
+  durationMinutes: 8,
+  scripture: 'Deuteronomy 16:17 · 2 Corinthians 9:6-10 · Matthew 6:19-21',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonLifeThatGives7: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000090e',
+  slug: 'giving-as-love-in-action',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007c',
+  title: 'Giving as Love in Action',
+  summary:
+    'Tithes, offerings, service, and generosity become practical ways to reflect God\'s heart to the world.',
+  durationMinutes: 9,
+  scripture: 'Matthew 23:23 · Luke 11:42 · Acts 20:35 · 1 John 3:16-18',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const DESIGNED_TO_THRIVE_STUDY_SLUG = 'designed-to-thrive'
+const DESIGNED_TO_THRIVE_OVERVIEW_HREF = `/study-library/${DESIGNED_TO_THRIVE_STUDY_SLUG}`
+
+const designedToThriveShell = (lessonId: string, sectionId: string, extra?: Parameters<typeof foundationLessonShellSection>[3]) =>
+  foundationLessonShellSection(lessonId, sectionId, DESIGNED_TO_THRIVE_OVERVIEW_HREF, {
+    placeholderText: FOUNDATION_SHELL_PLACEHOLDER_LEGACY,
+    ...extra,
+  })
+
+const lessonDesignedToThrive1: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000090f',
+  slug: 'choices-have-consequences',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007d',
+  title: 'Choices Have Consequences',
+  summary:
+    'God designed life with cause and effect, meaning our choices shape real outcomes in our bodies, minds, relationships, and spiritual lives.',
+  durationMinutes: 8,
+  scripture: 'Proverbs 26:2 · Galatians 6:7 · Proverbs 8:34-36',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonDesignedToThrive2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000910',
+  slug: 'wisdom-for-whole-life',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007d',
+  title: 'Wisdom for Whole Life',
+  summary:
+    'Biblical wisdom helps us understand the principles of life and make choices that lead to blessing, health, and well-being.',
+  durationMinutes: 8,
+  scripture: 'Proverbs 3:5-8 · Proverbs 4:20-23 · James 1:5',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonDesignedToThrive3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000911',
+  slug: 'saved-means-made-whole',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007d',
+  title: 'Saved Means Made Whole',
+  summary:
+    'The Bible\'s picture of salvation includes healing, restoration, freedom, and wholeness in the present life.',
+  durationMinutes: 8,
+  scripture: 'John 10:10 · 3 John 1:2 · Romans 12:1-2',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonDesignedToThrive4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000912',
+  slug: 'your-body-matters-to-god',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007d',
+  title: 'Your Body Matters to God',
+  summary:
+    'God cares about the body because it belongs to Him and is meant to glorify Him.',
+  durationMinutes: 8,
+  scripture: '1 Corinthians 6:19-20 · 1 Corinthians 10:31 · Romans 12:1',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonDesignedToThrive5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000913',
+  slug: 'the-original-design-for-food',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007d',
+  title: 'The Original Design for Food',
+  summary:
+    'Scripture points back to God\'s original food design and invites us to consider eating in ways that support life and health.',
+  durationMinutes: 8,
+  scripture: 'Genesis 1:29 · Daniel 1:8-16 · Proverbs 23:20-21',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonDesignedToThrive6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000914',
+  slug: 'clear-mind-clean-life',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007d',
+  title: 'Clear Mind, Clean Life',
+  summary:
+    'God calls us to temperance and clear-minded living, avoiding what damages the body, clouds judgment, and harms others.',
+  durationMinutes: 8,
+  scripture: 'Proverbs 20:1 · Proverbs 23:29-35 · 1 Corinthians 6:9-11',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonDesignedToThrive7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000915',
+  slug: 'jesus-the-healer',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007d',
+  title: 'Jesus the Healer',
+  summary:
+    'Jesus came as the healer of hearts and bodies, revealing that God cares about our spiritual and physical restoration.',
+  durationMinutes: 9,
+  scripture: 'Isaiah 53:5 · Matthew 1:21 · Acts 10:38 · John 10:10',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const designedToThriveLongDescription = `Designed to Thrive explores the biblical view of health as part of God's loving design for human flourishing.
+
+Because God is love, He cares about the whole person: body, mind, heart, and spirit. This study introduces the principle of cause and effect, the meaning of biblical wisdom, and the way daily choices shape well-being.
+
+Through Scripture, students will see that salvation is not only about future hope, but also about God's desire to restore, heal, and make us whole. This study also explores the original diet, temperance, health stewardship, and the healing ministry of Jesus.
+
+Designed to Thrive helps beginners understand that health is not about perfection, pride, or legalism. It is about responding to God's love by caring for the life He has entrusted to us.`
+
+const BURIED_AND_RAISED_STUDY_SLUG = 'buried-and-raised'
+
+const lessonBuriedAndRaised1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000916',
+  slug: 'loved-into-new-life',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007e',
+  title: 'Loved Into New Life',
+  summary:
+    'God does not erase who we are. He loves us, draws us, and begins transforming us into the people He created us to become.',
+  durationMinutes: 8,
+  scripture: 'Jeremiah 31:3 · Luke 15:20 · John 17:23 · 1 John 3:16',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuriedAndRaised2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000917',
+  slug: 'born-again',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007e',
+  title: 'Born Again',
+  summary:
+    'Jesus teaches that salvation includes a deep rebirth of the heart, mind, motives, and will.',
+  durationMinutes: 8,
+  scripture: 'John 3:1-17 · John 3:16-17 · 2 Corinthians 5:17',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuriedAndRaised3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000918',
+  slug: 'love-not-condemnation',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007e',
+  title: 'Love, Not Condemnation',
+  summary:
+    'God motivates transformation through love, not manipulation, fear, or condemnation.',
+  durationMinutes: 8,
+  scripture: 'John 3:16-17 · Romans 2:4 · 1 John 4:16-19',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuriedAndRaised4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000919',
+  slug: 'water-and-spirit',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007e',
+  title: 'Water and Spirit',
+  summary:
+    'Jesus connects new birth with water and the Spirit, pointing to baptism and the transforming work of the Holy Spirit.',
+  durationMinutes: 8,
+  scripture: 'John 3:5 · Matthew 3:13-17 · Acts 2:38',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuriedAndRaised5: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000091a',
+  slug: 'buried-with-christ',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007e',
+  title: 'Buried With Christ',
+  summary:
+    'Baptism identifies us with the death, burial, and resurrection of Jesus, declaring that the old life is dead and new life has begun.',
+  durationMinutes: 8,
+  scripture: 'Romans 6:1-11 · Colossians 2:12 · Galatians 2:20',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuriedAndRaised6: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000091b',
+  slug: 'in-the-name-of-god',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007e',
+  title: 'In the Name of God',
+  summary:
+    'To be baptized in the name of the Father, Son, and Holy Spirit is to identify with God\'s character and enter a life shaped by His love.',
+  durationMinutes: 8,
+  scripture: 'Matthew 28:19-20 · John 17:26 · 1 John 4:8',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuriedAndRaised7: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000091c',
+  slug: 'a-public-yes-to-jesus',
+  studySeriesId: 'e4000001-0000-4000-8000-00000000007e',
+  title: 'A Public Yes to Jesus',
+  summary:
+    'Baptism is a public, personal decision to belong to Jesus, follow Him, and grow as His disciple.',
+  durationMinutes: 9,
+  scripture: 'Acts 8:35-38 · Acts 22:16 · Matthew 28:19-20 · Romans 6:4',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const buriedAndRaisedLongDescription = `Buried and Raised explores the meaning of baptism as a personal response to God's love and saving work in Jesus Christ.
+
+This study shows that God does not force transformation. He draws us with everlasting love, invites us into new birth, and calls us to identify with Christ through baptism by immersion. Baptism symbolizes the death of the old life, burial with Christ, and resurrection into a new life shaped by the Holy Spirit.
+
+Students will discover what it means to be born again, to repent, to receive the Holy Spirit, to be baptized in the name of the Father, Son, and Holy Spirit, and to begin a life of growing discipleship with Jesus.`
+
+const seriesBuriedAndRaised: StudySeries = {
+  id: 'e4000001-0000-4000-8000-00000000007e',
+  slug: BURIED_AND_RAISED_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'Buried and Raised',
+  subtitle: 'Baptism as a loving response to salvation and union with Christ in death, burial, and resurrection.',
+  shortDescription:
+    'Understand baptism as a public sign of death to sin and new life in Christ.',
+  longDescription: buriedAndRaisedLongDescription,
+  description: buriedAndRaisedLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 16,
+  foundationOrder: 15,
+  whatYouWillLearn: [
+    'Themes: baptism, immersion, born again, repentance, Holy Spirit, new life, Jesus, resurrection, discipleship, surrender, identity, transformation.',
+    'See how God draws people into new life through love, not coercion.',
+    'Understand baptism by immersion as union with Christ in death, burial, and resurrection.',
+    'Follow Scripture from new birth to public commitment and growing discipleship with Jesus.',
+  ],
+  lessons: [
+    lessonBuriedAndRaised1,
+    lessonBuriedAndRaised2,
+    lessonBuriedAndRaised3,
+    lessonBuriedAndRaised4,
+    lessonBuriedAndRaised5,
+    lessonBuriedAndRaised6,
+    lessonBuriedAndRaised7,
+  ],
+}
+
+const seriesDesignedToThrive: StudySeries = {
+  id: 'e4000001-0000-4000-8000-00000000007d',
+  slug: DESIGNED_TO_THRIVE_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'Designed to Thrive',
+  subtitle: 'Health, wisdom, and wholeness as part of God\'s loving design for life.',
+  shortDescription:
+    'Discover how God\'s design touches the whole life, including body, mind, and spirit.',
+  longDescription: designedToThriveLongDescription,
+  description: designedToThriveLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 15,
+  foundationOrder: 14,
+  whatYouWillLearn: [
+    'Themes: health, wholeness, body, mind, wisdom, choices, healing, lifestyle, diet, temperance, stewardship, Jesus, abundant life.',
+    'See how choices have consequences and how biblical wisdom guides whole-life well-being.',
+    'Understand salvation as restoration and stewardship of body, mind, heart, and spirit.',
+    'Follow Scripture from God\'s design for life to Jesus as healer and hope.',
+  ],
+  lessons: [
+    lessonDesignedToThrive1,
+    lessonDesignedToThrive2,
+    lessonDesignedToThrive3,
+    lessonDesignedToThrive4,
+    lessonDesignedToThrive5,
+    lessonDesignedToThrive6,
+    lessonDesignedToThrive7,
+  ],
+}
+
+const theLifeThatGivesLongDescription = `The Life That Gives explores the biblical principle of generosity as a reflection of God's own heart.
+
+God is the Great Giver. Every good gift comes from Him, and the greatest gift is Jesus Christ. In response to His grace, believers are invited into a life of giving, stewardship, tithe, offerings, service, and practical love.
+
+This study shows that Christian giving is not about religious pressure or self-righteous performance. It is a grace-shaped response to the God who gave first. Through tithes, offerings, generosity, and service, believers participate in God's circle of blessing for the advancement of the gospel and the relief of human need.`
+
+const seriesTheLifeThatGives: StudySeries = {
+  id: 'e4000001-0000-4000-8000-00000000007c',
+  slug: THE_LIFE_THAT_GIVES_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Life That Gives',
+  subtitle: 'Generosity as a grace-shaped response to the God who gives first.',
+  shortDescription:
+    'Learn how stewardship, service, and generosity flow from God\'s love.',
+  longDescription: theLifeThatGivesLongDescription,
+  description: theLifeThatGivesLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 14,
+  foundationOrder: 13,
+  whatYouWillLearn: [
+    'Themes: giving, generosity, stewardship, tithe, offerings, love, grace, money, faith, kingdom, service, gratitude, mission.',
+    'See that all true generosity begins with God, the Great Giver.',
+    'Understand stewardship, tithe, offerings, and practical love as responses to grace.',
+    'Follow Scripture from God\'s giving heart to generosity that blesses others and glorifies God.',
+  ],
+  lessons: [
+    lessonLifeThatGives1,
+    lessonLifeThatGives2,
+    lessonLifeThatGives3,
+    lessonLifeThatGives4,
+    lessonLifeThatGives5,
+    lessonLifeThatGives6,
+    lessonLifeThatGives7,
+  ],
+}
+
 const whatHappensLongDescription = `Death raises one of life's deepest questions: what happens when we die?
 
 This study explores the Bible's teaching on the first death, the unconscious sleep of the dead, the resurrection, and the second death. It also shows why Scripture warns against attempts to communicate with the dead and why our hope is not found in fear, speculation, or superstition, but in Jesus.
@@ -2417,7 +3179,7 @@ const seriesWhatHappensWhenWeDie: StudySeries = {
   subtitle:
     'Scripture on death, sleep, resurrection, judgment, and the hope Jesus gives over sin, guilt, and fear.',
   shortDescription:
-    'The Bible gives a clear and hopeful answer about death, resurrection, judgment, and the victory Jesus gives over sin and guilt.',
+    'Study what Scripture teaches about death, sleep, resurrection, and hope.',
   longDescription: whatHappensLongDescription,
   description: whatHappensLongDescription,
   level: 'Beginner',
@@ -2459,7 +3221,7 @@ const seriesWarInHeaven: StudySeries = {
   title: 'War in Heaven',
   subtitle: 'Conflict between love and selfishness: where evil began and how Scripture points to hope in Christ.',
   shortDescription:
-    'The Bible reveals that our world is caught in a conflict between love and selfishness, truth and deception. This study explores where evil came from, why suffering exists, and how Jesus confronts darkness with truth and self-giving love.',
+    'See how Scripture explains the origin of evil and the conflict behind human history.',
   longDescription: warInHeavenLongDescription,
   description: warInHeavenLongDescription,
   level: 'Beginner',
@@ -2552,6 +3314,11 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesWhatHappensWhenWeDie,
   seriesWhenDeathDied,
   seriesMadeNewInChrist,
+  seriesTheLawOfLove,
+  seriesTheRestGodGives,
+  seriesTheLifeThatGives,
+  seriesDesignedToThrive,
+  seriesBuriedAndRaised,
   seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,
