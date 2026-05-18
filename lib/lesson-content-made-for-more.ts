@@ -268,14 +268,17 @@ for in Him we live and move and have our being.`,
 That means human identity begins with Him.`,
       },
       {
-        type: 'scriptureChain',
+        type: 'scriptureThread',
         title: 'Made for More',
+        question: 'What does Scripture say human beings were created to be?',
         references: [
           { reference: 'Psalm 8:3 to 5' },
           { reference: 'Genesis 1:1' },
           { reference: 'Genesis 1:26' },
           { reference: 'Acts 17:26 to 28' },
         ],
+        takeaway:
+          'Humanity was created by God with dignity and purpose, made to seek Him and find life in relationship with the Creator.',
       },
       {
         type: 'paragraph',

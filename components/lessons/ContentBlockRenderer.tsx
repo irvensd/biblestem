@@ -2,6 +2,7 @@ import { LessonTextRenderer } from '@/components/lessons/LessonTextRenderer'
 import { ReflectionNotes } from '@/components/lessons/ReflectionNotes'
 import { ScriptureBlock } from '@/components/lessons/ScriptureBlock'
 import { ScriptureChain } from '@/components/lessons/ScriptureChain'
+import { ScriptureThread } from '@/components/lessons/ScriptureThread'
 import { StudyInsightCard } from '@/components/lessons/StudyInsightCard'
 import { StudyVisualBlock } from '@/components/lessons/StudyVisualBlock'
 import { TeachingPointsBlock } from '@/components/lessons/TeachingPointsBlock'
@@ -12,6 +13,14 @@ import { CreationRestPattern } from '@/components/study/CreationRestPattern'
 import { GivingCirclePattern } from '@/components/study/GivingCirclePattern'
 import { WholePersonHealthPattern } from '@/components/study/WholePersonHealthPattern'
 import { BaptismMeaningPattern } from '@/components/study/BaptismMeaningPattern'
+import { ChurchCommunityPattern } from '@/components/study/ChurchCommunityPattern'
+import { KingdomContrastPattern } from '@/components/study/KingdomContrastPattern'
+import { Revelation12Pattern } from '@/components/study/Revelation12Pattern'
+import { RemnantWitnessPattern } from '@/components/study/RemnantWitnessPattern'
+import { ProphecyTimeline2300 } from '@/components/study/ProphecyTimeline2300'
+import { SanctuaryDiagram } from '@/components/study/SanctuaryDiagram'
+import { DayOfAtonementFlow } from '@/components/study/DayOfAtonementFlow'
+import { SweetBitterPattern } from '@/components/study/SweetBitterPattern'
 import { DeathResurrectionFlow } from '@/components/study/DeathResurrectionFlow'
 import { SanctuaryJourneyMap } from '@/components/study/SanctuaryJourneyMap'
 import { Button } from '@/components/ui/Button'
@@ -97,6 +106,19 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
         return <WordInsightCard insight={block.insight} />
       }
       return null
+    case 'scriptureThread':
+      return (
+        <div className="min-w-0 max-w-full overflow-x-hidden">
+          <ScriptureThread
+            title={block.title}
+            question={block.question}
+            references={block.references ?? []}
+            takeaway={block.takeaway}
+            relatedHref={block.relatedHref}
+            relatedLabel={block.relatedLabel}
+          />
+        </div>
+      )
     case 'scriptureChain':
       if ('verses' in block && Array.isArray(block.verses)) {
         return <ScriptureChain title={block.title} verses={block.verses} />
@@ -180,6 +202,80 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
     case 'baptismMeaningPattern':
       return (
         <BaptismMeaningPattern
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'churchCommunityPattern':
+      return (
+        <ChurchCommunityPattern
+          pillars={'pillars' in block ? block.pillars : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'kingdomContrastPattern':
+      return (
+        <KingdomContrastPattern
+          pillars={'pillars' in block ? block.pillars : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'revelation12Pattern':
+      return (
+        <Revelation12Pattern
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'remnantWitnessPattern':
+      return (
+        <RemnantWitnessPattern
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'prophecyTimeline2300':
+      return (
+        <ProphecyTimeline2300 title={block.title} subtitle={block.subtitle} caption={block.caption} />
+      )
+    case 'sanctuaryDiagram':
+      return (
+        <SanctuaryDiagram
+          areas={'areas' in block ? block.areas : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'dayOfAtonementFlow':
+      return (
+        <DayOfAtonementFlow
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'sweetBitterPattern':
+      return (
+        <SweetBitterPattern
           stages={'stages' in block ? block.stages : undefined}
           highlightedIndices={block.highlightedIndices}
           title={block.title}

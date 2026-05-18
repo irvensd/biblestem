@@ -1,7 +1,7 @@
 import type { StudySeries } from '@/lib/types/product'
 import { FOUNDATION_STUDY_TEASER_BY_SLUG } from '@/lib/foundation-study-teasers'
 
-const GENERIC_SUMMARY = 'Guided study with lessons built on Scripture.'
+const GENERIC_SUMMARY = 'Open the study overview and lessons.'
 
 /**
  * Short line for cards and path rows: prefer catalog `shortDescription`, then known

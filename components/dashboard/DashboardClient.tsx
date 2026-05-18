@@ -3,31 +3,27 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
-import { ContinueStudyCard } from '@/components/dashboard/ContinueStudyCard'
-import { CurrentPathCard } from '@/components/dashboard/CurrentPathCard'
 import { DashboardHeader } from '@/components/dashboard/DashboardHeader'
 import { DashboardStatsRow } from '@/components/dashboard/DashboardStatsRow'
-import { NotesPreview } from '@/components/dashboard/NotesPreview'
+import { ExploreNext } from '@/components/dashboard/ExploreNext'
+import { FoundationsProgressCard } from '@/components/dashboard/FoundationsProgressCard'
 import { QuickActions } from '@/components/dashboard/QuickActions'
-import { RecommendedStudies } from '@/components/dashboard/RecommendedStudies'
-import { TodaysFocusCard } from '@/components/dashboard/TodaysFocusCard'
+import { TodaysStudyCard } from '@/components/dashboard/TodaysStudyCard'
 import { CatalogSourceNotice } from '@/components/site/CatalogSourceNotice'
 import { buildDashboardBundle, type DashboardBundle } from '@/lib/dashboard-compute'
 import { getDashboardRecommendations } from '@/lib/dashboard-recommendations'
 import { dashboardDisplayName } from '@/lib/dashboard-mock-data'
 import { shouldShowCatalogFallbackNotice, type LoadedCatalog } from '@/lib/catalog/load-catalog'
-import { persistTouchDashboardActivity } from '@/lib/dashboard-progress-sync'
-import type { StudyPath, StudySeries } from '@/lib/types/product'
+import { hasMeaningfulProgress } from '@/lib/dashboard-progress-metrics'
+import type { StudyPath } from '@/lib/types/product'
 import { useDashboardProgress } from '@/hooks/useDashboardProgress'
-import { useDashboardRecentNotes } from '@/hooks/useDashboardRecentNotes'
 
 interface DashboardClientProps {
   catalog: LoadedCatalog
   studyPaths?: StudyPath[]
 }
 
-export function DashboardClient({ catalog, studyPaths: pathsProp }: DashboardClientProps) {
-  const paths = pathsProp ?? catalog.paths
+export function DashboardClient({ catalog }: DashboardClientProps) {
   const router = useRouter()
   const { user, isReady } = useDemoAuth()
   const { progress, ready: progressReady } = useDashboardProgress(user?.id)
@@ -38,22 +34,15 @@ export function DashboardClient({ catalog, studyPaths: pathsProp }: DashboardCli
     }
   }, [isReady, user, router])
 
-  const recentNotes = useDashboardRecentNotes(catalog, user?.id)
-
   const bundle: DashboardBundle = useMemo(
     () => buildDashboardBundle(catalog, progress),
     [catalog, progress],
   )
 
-  const recommended: StudySeries[] = useMemo(
+  const exploreStudies = useMemo(
     () => getDashboardRecommendations(catalog, progress, bundle.activeStudy),
     [catalog, progress, bundle.activeStudy],
   )
-
-  useEffect(() => {
-    if (!isReady || !user) return
-    void persistTouchDashboardActivity(user.id)
-  }, [isReady, user])
 
   if (!isReady) {
     return (
@@ -91,37 +80,44 @@ export function DashboardClient({ catalog, studyPaths: pathsProp }: DashboardCli
 
   const name = dashboardDisplayName(user.email, user.firstName)
   const resumeHref =
-    bundle.activeStudy != null
-      ? bundle.activeStudy.continueHref
-      : '/study-library/god-is-love/lesson/the-logic-of-love?step=0'
+    bundle.activeStudy?.continueHref ??
+    (hasMeaningfulProgress(progress) ? '/study-library' : '/study-library/god-is-love/lesson/the-logic-of-love?step=0')
+
+  const showExploreNoSuggestions =
+    exploreStudies.length === 0 && hasMeaningfulProgress(progress) && bundle.activeStudy != null
+
   return (
     <>
-      <section className="border-b border-zinc-200/80 bg-stone-50 pb-10 pt-14 md:pb-12 md:pt-16">
+      <section className="border-b border-zinc-200/80 bg-stone-50 pb-6 pt-14 md:pb-8 md:pt-16">
         <div className="container-shell">
           <DashboardHeader userName={name} />
-          <div className="mt-8 max-w-4xl">
+          <div className="mt-6 max-w-4xl">
             <DashboardStatsRow progress={bundle.progress} />
           </div>
           {shouldShowCatalogFallbackNotice(catalog) ? (
-            <div className="mt-4 max-w-xl">
+            <div className="mt-3 max-w-xl">
               <CatalogSourceNotice source={catalog.source} />
             </div>
           ) : null}
         </div>
       </section>
 
-      <div className="section-space border-b border-transparent">
+      <div className="pb-14 pt-6 md:pb-16 md:pt-8">
         <div className="container-shell">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start lg:gap-12 xl:gap-14">
-            <div className="flex flex-col gap-10">
-              <ContinueStudyCard active={bundle.activeStudy} allLessonsComplete={bundle.allLessonsComplete} />
-              <RecommendedStudies studies={recommended} paths={paths} />
-              <NotesPreview notes={recentNotes} />
+          <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:gap-8 xl:gap-10">
+            <div className="flex min-w-0 flex-col gap-6">
+              <TodaysStudyCard active={bundle.activeStudy} allLessonsComplete={bundle.allLessonsComplete} />
+              <div className="lg:hidden">
+                <FoundationsProgressCard progress={bundle.foundationsProgress} />
+              </div>
+              <ExploreNext studies={exploreStudies} showNoSuggestionsEmpty={showExploreNoSuggestions} />
+              <div className="lg:hidden">
+                <QuickActions resumeHref={resumeHref} />
+              </div>
             </div>
 
-            <aside className="flex flex-col gap-8 lg:sticky lg:top-24">
-              <TodaysFocusCard focus={bundle.todayFocus} />
-              <CurrentPathCard current={bundle.currentPath} />
+            <aside className="hidden flex-col gap-5 lg:sticky lg:top-24 lg:flex">
+              <FoundationsProgressCard progress={bundle.foundationsProgress} />
               <QuickActions resumeHref={resumeHref} />
             </aside>
           </div>

@@ -20,6 +20,12 @@ import { theRestGodGivesSeriesLessonLibrary } from '@/lib/lesson-content-the-res
 import { theLifeThatGivesSeriesLessonLibrary } from '@/lib/lesson-content-the-life-that-gives'
 import { designedToThriveSeriesLessonLibrary } from '@/lib/lesson-content-designed-to-thrive'
 import { buriedAndRaisedSeriesLessonLibrary } from '@/lib/lesson-content-buried-and-raised'
+import { builtToBelongSeriesLessonLibrary } from '@/lib/lesson-content-built-to-belong'
+import { powerUnderLoveSeriesLessonLibrary } from '@/lib/lesson-content-power-under-love'
+import { faithfulInTheWildernessSeriesLessonLibrary } from '@/lib/lesson-content-faithful-in-the-wilderness'
+import { theFaithfulWitnessSeriesLessonLibrary } from '@/lib/lesson-content-the-faithful-witness'
+import { theDayOfAtonementSeriesLessonLibrary } from '@/lib/lesson-content-the-day-of-atonement'
+import { enrichLessonLibrary } from '@/lib/enrich-lesson-scripture-threads'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
 
@@ -157,7 +163,7 @@ export function wordStudyToInsight(ws: NonNullable<LessonReaderContent['wordStud
   }
 }
 
-const library: Record<string, LessonReaderContent> = {
+const libraryRaw: Record<string, LessonReaderContent> = {
   'a-book-unlike-any-other': {
     openingThought: `The Bible is one of the most read books in the world.
 
@@ -5627,6 +5633,11 @@ Amen.`,
   ...theLifeThatGivesSeriesLessonLibrary,
   ...designedToThriveSeriesLessonLibrary,
   ...buriedAndRaisedSeriesLessonLibrary,
+  ...builtToBelongSeriesLessonLibrary,
+  ...powerUnderLoveSeriesLessonLibrary,
+  ...faithfulInTheWildernessSeriesLessonLibrary,
+  ...theFaithfulWitnessSeriesLessonLibrary,
+  ...theDayOfAtonementSeriesLessonLibrary,
   ...originOfEvilSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {
@@ -5643,6 +5654,12 @@ Amen.`,
     lifeApplication: 'Choose one response you can practice in the next seven days.',
     prayer: 'Lord, give me a quiet mind, a humble heart, and a willing spirit as I respond to your Word.',
   },
+}
+
+const { _fallback: libraryFallback, ...libraryLessons } = libraryRaw
+const library: Record<string, LessonReaderContent> = {
+  ...enrichLessonLibrary(libraryLessons),
+  _fallback: libraryFallback,
 }
 
 /**

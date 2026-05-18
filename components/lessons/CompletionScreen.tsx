@@ -2,10 +2,12 @@ import Link from 'next/link'
 import { CopyMisunderstoodSummaryButton } from '@/components/lessons/CopyMisunderstoodSummaryButton'
 import { READER_FOCUS_RING } from '@/components/lessons/lesson-reader-focus'
 import { ScriptureChain } from '@/components/lessons/ScriptureChain'
+import { ScriptureThread } from '@/components/lessons/ScriptureThread'
 import { Button } from '@/components/ui/Button'
 import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/report-issue-href'
 import type { SeriesCompleteScreenCopy } from '@/lib/lesson-content'
 import type { LessonScriptureChainRecap } from '@/lib/lesson-scripture-chains'
+import type { LessonScriptureThreadRecap } from '@/lib/scripture-thread-types'
 import { buildMisunderstoodPassageCopyText, type MisunderstoodPassage } from '@/lib/misunderstood-passages'
 import { formatLessonDuration } from '@/lib/product-queries'
 import type { WordInsightCompletionLine } from '@/lib/word-insights-completion'
@@ -30,7 +32,9 @@ interface CompletionScreenProps {
   studyProgressPercent?: number
   reviewLessonHref: string
   backToSeriesHref: string
-  /** Up to 3 recap chains from this lesson’s reader content (see `extractScriptureChainsFromLessonContent`). */
+  /** Primary Scripture Thread for this lesson (completion recap). */
+  scriptureThread?: LessonScriptureThreadRecap | null
+  /** Additional legacy chains (shown only when no primary thread). */
   scriptureChains?: LessonScriptureChainRecap[]
   /** Word-study recap when the lesson includes insights (see `extractWordInsightsForCompletion`). */
   wordInsightLines?: WordInsightCompletionLine[]
@@ -51,6 +55,7 @@ export function CompletionScreen({
   studyProgressPercent,
   reviewLessonHref,
   backToSeriesHref,
+  scriptureThread,
   scriptureChains,
   wordInsightLines,
   misunderstoodPassage,
@@ -118,9 +123,13 @@ export function CompletionScreen({
         </div>
       </div>
 
-      {scriptureChains?.length ? (
+      {scriptureThread ? (
+        <section className="min-w-0 max-w-full overflow-hidden md:px-1">
+          <ScriptureThread {...scriptureThread} completionMode />
+        </section>
+      ) : scriptureChains?.length ? (
         <section className="rounded-xl border border-zinc-200/90 bg-white px-5 py-6 ring-1 ring-zinc-950/[0.03] md:px-8 md:py-7">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">SCRIPTURE CHAINS</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">SCRIPTURE THREAD</p>
           <h3 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900">Connections from this lesson</h3>
           <div className="mt-5 flex flex-col gap-4">
             {scriptureChains.map((chain) => (

@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 const file = resolve(process.cwd(), 'lib/lesson-content.ts')
 const src = readFileSync(file, 'utf8')
 
-const start = src.indexOf('const library: Record<string, LessonReaderContent> = {')
+const start = src.indexOf('const libraryRaw: Record<string, LessonReaderContent> = {')
 const end = src.indexOf('  _fallback:')
 
 if (start < 0 || end < 0 || end <= start) {

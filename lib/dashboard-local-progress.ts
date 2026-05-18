@@ -15,8 +15,10 @@ export type LocalDashboardProgress = {
   /** `${seriesSlug}::${lessonSlug}` for completed lessons */
   completedKeys: string[]
   lastLesson: LastLessonState | null
-  /** Local calendar days (YYYY-MM-DD) with study activity */
+  /** Calendar days (YYYY-MM-DD) with meaningful study activity (lessons, reflections, quizzes). */
   activityDays: string[]
+  /** Accumulated active study time in the lesson reader (seconds). */
+  studyTimeSeconds?: number
 }
 
 export const DASHBOARD_PROGRESS_STORAGE_KEY = 'biblestem-dashboard-progress'
@@ -28,7 +30,7 @@ export function lessonKey(seriesSlug: string, lessonSlug: string): string {
 }
 
 export function emptyLocalProgress(): LocalDashboardProgress {
-  return { v: 1, completedKeys: [], lastLesson: null, activityDays: [] }
+  return { v: 1, completedKeys: [], lastLesson: null, activityDays: [], studyTimeSeconds: 0 }
 }
 
 function defaultProgress(): LocalDashboardProgress {
@@ -54,6 +56,8 @@ export function readLocalProgress(): LocalDashboardProgress {
           ? p.lastLesson
           : null,
       activityDays: Array.isArray(p.activityDays) ? p.activityDays : [],
+      studyTimeSeconds:
+        typeof p.studyTimeSeconds === 'number' && p.studyTimeSeconds >= 0 ? p.studyTimeSeconds : 0,
     }
   } catch {
     return defaultProgress()
@@ -79,6 +83,7 @@ export function replaceLocalDashboardProgress(p: LocalDashboardProgress): void {
     completedKeys: [...p.completedKeys],
     lastLesson: p.lastLesson ? { ...p.lastLesson } : null,
     activityDays: [...p.activityDays],
+    studyTimeSeconds: p.studyTimeSeconds ?? 0,
   })
 }
 
@@ -93,6 +98,7 @@ export function replaceLocalDashboardProgressSilent(p: LocalDashboardProgress): 
         completedKeys: [...p.completedKeys],
         lastLesson: p.lastLesson ? { ...p.lastLesson } : null,
         activityDays: [...p.activityDays],
+        studyTimeSeconds: p.studyTimeSeconds ?? 0,
       }),
     )
   } catch {
@@ -108,11 +114,27 @@ function todayLocalDate(): string {
   return `${y}-${m}-${day}`
 }
 
-function recordActivityDay(p: LocalDashboardProgress): void {
+/** Meaningful study actions only (not dashboard or library visits). */
+export function recordMeaningfulStudyActivity(p?: LocalDashboardProgress): LocalDashboardProgress {
+  const progress = p ?? readLocalProgress()
   const t = todayLocalDate()
-  if (!p.activityDays.includes(t)) {
-    p.activityDays = [...p.activityDays, t].sort()
+  if (!progress.activityDays.includes(t)) {
+    progress.activityDays = [...progress.activityDays, t].sort()
   }
+  return progress
+}
+
+function recordActivityDay(p: LocalDashboardProgress): void {
+  recordMeaningfulStudyActivity(p)
+}
+
+/** Add seconds spent in the lesson reader (not overview pages). */
+export function recordStudySessionSeconds(seconds: number): void {
+  if (seconds <= 0 || typeof window === 'undefined') return
+  const p = readLocalProgress()
+  const next = (p.studyTimeSeconds ?? 0) + Math.min(seconds, 8 * 60 * 60)
+  p.studyTimeSeconds = next
+  writeLocalProgress(p)
 }
 
 /** Call when the user finishes the last step of a lesson (completion screen). */
@@ -157,10 +179,14 @@ export function saveLessonProgress(
   writeLocalProgress(p)
 }
 
-/** Optional: call when dashboard loads so streak can count “showed up”. */
+/** Dashboard visits do not count toward streak or study time. */
 export function touchDashboardActivity(): void {
+  /* intentional no-op */
+}
+
+export function persistMeaningfulStudyActivity(): void {
   const p = readLocalProgress()
-  recordActivityDay(p)
+  recordMeaningfulStudyActivity(p)
   writeLocalProgress(p)
 }
 

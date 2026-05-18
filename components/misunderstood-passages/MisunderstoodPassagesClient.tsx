@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { inputClassName } from '@/components/ui/form-styles'
+import { ScriptureThread } from '@/components/lessons/ScriptureThread'
 import { type MisunderstoodPassage } from '@/lib/misunderstood-passages'
 
 function passageMatchesQuery(p: MisunderstoodPassage, q: string): boolean {
@@ -43,7 +44,7 @@ export function MisunderstoodPassagesClient({ passages }: { passages: Misunderst
         {filtered.map((p) => (
           <li
             key={p.id}
-            className="flex flex-col rounded-xl border border-zinc-200/90 bg-white p-5 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-6"
+            className="flex min-w-0 flex-col rounded-xl border border-zinc-200/90 bg-white p-5 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-6"
           >
             <div className="mb-3 h-1 w-10 shrink-0 rounded-full bg-blue-800/55" aria-hidden />
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">{p.reference}</p>
@@ -70,6 +71,12 @@ export function MisunderstoodPassagesClient({ passages }: { passages: Misunderst
                 </span>
               ))}
             </div>
+
+            {p.scriptureThread ? (
+              <div className="mt-5 min-w-0 w-full overflow-hidden">
+                <ScriptureThread {...p.scriptureThread} embedded />
+              </div>
+            ) : null}
 
             <div className="mt-5 pt-1">
               <Button

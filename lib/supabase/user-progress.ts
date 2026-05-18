@@ -123,8 +123,12 @@ export async function markLessonCompleteRemote(
   )
 }
 
-export async function touchDashboardActivityRemote(supabase: SupabaseClient, userId: string): Promise<void> {
-  await recordActivityDayRemote(supabase, userId)
+/** Dashboard visits do not count as meaningful study activity. */
+export async function touchDashboardActivityRemote(
+  _supabase: SupabaseClient,
+  _userId: string,
+): Promise<void> {
+  /* intentional no-op */
 }
 
 /** Wipe all per-lesson progress and activity days for a single user (settings → reset). */

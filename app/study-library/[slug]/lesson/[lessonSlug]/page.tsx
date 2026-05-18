@@ -3,6 +3,7 @@ import { LessonContentPending } from '@/components/lessons/LessonContentPending'
 import { LessonReader } from '@/components/lessons/LessonReader'
 import { CatalogSourceNotice } from '@/components/site/CatalogSourceNotice'
 import { getLessonReaderContent, hasBundledLessonReaderContent } from '@/lib/lesson-content'
+import { hydrateLessonScriptureThreadVerseText } from '@/lib/scripture-thread-verse-hydration'
 import {
   findLessonInCatalogFromCatalog,
   loadCatalog,
@@ -47,7 +48,9 @@ export default async function LessonReaderPage({
     )
   }
 
-  const content = lesson.readerContent ?? getLessonReaderContent(lessonSlug)
+  const content = hydrateLessonScriptureThreadVerseText(
+    lesson.readerContent ?? getLessonReaderContent(lessonSlug),
+  )
 
   return (
     <>

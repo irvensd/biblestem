@@ -19,4 +19,14 @@ export const FOUNDATION_STUDY_TEASER_BY_SLUG: Readonly<Record<string, string>> =
   'the-life-that-gives': 'Learn how stewardship, service, and generosity flow from God\'s love.',
   'designed-to-thrive': 'Discover how God\'s design touches the whole life, including body, mind, and spirit.',
   'buried-and-raised': 'Understand baptism as a public sign of death to sin and new life in Christ.',
+  'built-to-belong':
+    'God is building a restored community where His love is experienced, practiced, proclaimed, and shared with the world.',
+  'power-under-love':
+    'Jesus builds His kingdom on humble, self-giving love, while false religion replaces love with control, self-exaltation, and coercive power.',
+  'faithful-in-the-wilderness':
+    'God has always preserved a faithful people to reveal His character, proclaim His truth, and carry the gospel through history.',
+  'the-faithful-witness':
+    'God\'s end-time people preserve His commandments, point to Jesus, and witness to His character with humility and love.',
+  'the-day-of-atonement':
+    'Jesus is our heavenly High Priest, ministering for us in the final phase of redemption and bringing full resolution to the sin problem.',
 }

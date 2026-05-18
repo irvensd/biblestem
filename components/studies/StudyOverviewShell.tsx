@@ -24,11 +24,11 @@ import {
   primaryCtaHref,
   primaryCtaLabel,
 } from '@/lib/studies/progress'
-import { extractScriptureChainsFromStudy } from '@/lib/lesson-scripture-chains'
+import { extractScriptureThreadsFromStudy } from '@/lib/lesson-scripture-threads'
 import type { CatalogSource } from '@/lib/catalog/load-catalog'
 import type { StudyOverviewStatic } from '@/lib/studies/types'
 import type { StudyPath, StudySeries, StudySeriesWithPath } from '@/lib/types/product'
-import { ScriptureChain } from '@/components/lessons/ScriptureChain'
+import { ScriptureThread } from '@/components/lessons/ScriptureThread'
 import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/report-issue-href'
 
 interface StudyOverviewShellProps {
@@ -108,9 +108,9 @@ export function StudyOverviewShell({
     [overview.lessons, overview.seriesSlug, progress],
   )
 
-  const studyScriptureChains = useMemo(() => {
+  const studyScriptureThreads = useMemo(() => {
     if (!studySeries?.lessons?.length) return []
-    return extractScriptureChainsFromStudy(studySeries)
+    return extractScriptureThreadsFromStudy(studySeries)
   }, [studySeries])
 
   const primaryAction = useMemo(
@@ -211,23 +211,23 @@ export function StudyOverviewShell({
                 </div>
               </div>
 
-              {studySeries && studyScriptureChains.length > 0 ? (
-                <div className="rounded-xl border border-zinc-200/90 bg-stone-50/80 p-6 ring-1 ring-zinc-950/[0.03] md:p-8">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">SCRIPTURE CHAINS</p>
+              {studySeries && studyScriptureThreads.length > 0 ? (
+                <div className="min-w-0 rounded-xl border border-zinc-200/90 bg-stone-50/80 p-4 ring-1 ring-zinc-950/[0.03] sm:p-6 md:p-8">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">SCRIPTURE THREAD</p>
                   <h3 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900">Connections you studied</h3>
-                  {studyScriptureChains.length > 5 ? (
+                  {studyScriptureThreads.length > 5 ? (
                     <p className="mt-3 text-sm leading-relaxed text-zinc-600">
-                      You studied {studyScriptureChains.length} Scripture chains in this study.
+                      You studied {studyScriptureThreads.length} Scripture threads in this study.
                     </p>
                   ) : null}
-                  <div className="mt-5 flex flex-col gap-4">
-                    {studyScriptureChains.slice(0, 5).map((chain) => (
-                      <ScriptureChain
-                        key={chain.id}
-                        title={chain.title}
-                        takeaway={chain.takeaway}
-                        verses={chain.verses}
-                        references={chain.references}
+                  <div className="mt-5 flex min-w-0 flex-col gap-4">
+                    {studyScriptureThreads.slice(0, 5).map((thread) => (
+                      <ScriptureThread
+                        key={thread.id}
+                        title={thread.title}
+                        question={thread.question}
+                        references={thread.references}
+                        takeaway={thread.takeaway}
                       />
                     ))}
                   </div>

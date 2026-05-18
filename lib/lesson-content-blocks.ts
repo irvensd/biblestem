@@ -3,6 +3,13 @@ import type { CreationRestPatternStageData } from '@/lib/creation-rest-pattern-s
 import type { GivingCirclePatternStageData } from '@/lib/giving-circle-pattern-stages'
 import type { WholePersonHealthAreaData } from '@/lib/whole-person-health-pattern-stages'
 import type { BaptismMeaningPatternStageData } from '@/lib/baptism-meaning-pattern-stages'
+import type { ChurchCommunityPatternPillarData } from '@/lib/church-community-pattern-stages'
+import type { KingdomContrastPatternPillarData } from '@/lib/kingdom-contrast-pattern-stages'
+import type { Revelation12PatternStageData } from '@/lib/revelation-12-pattern-stages'
+import type { RemnantWitnessPatternStageData } from '@/lib/remnant-witness-pattern-stages'
+import type { SweetBitterPatternStageData } from '@/lib/sweet-bitter-pattern-stages'
+import type { DayOfAtonementFlowStageData } from '@/lib/day-of-atonement-flow-stages'
+import type { SanctuaryDiagramAreaData } from '@/lib/sanctuary-diagram-stages'
 import type { DeathResurrectionStageData } from '@/lib/death-resurrection-flow-stages'
 import type { SanctuaryJourneyStageData } from '@/lib/sanctuary-journey-stages'
 import type { ProphecyTimelineItem } from '@/lib/prophecy-timeline-types'
@@ -120,6 +127,15 @@ export type LessonContentBlock =
       variant?: StudyInsightVariant
     }
   | { type: 'wordInsight'; study?: StudyToolWordInsightFields; insight?: WordInsight }
+  | {
+      type: 'scriptureThread'
+      title: string
+      question?: string
+      references: { reference: string; verseText?: string; shortNote?: string }[]
+      takeaway?: string
+      relatedHref?: string
+      relatedLabel?: string
+    }
   | { type: 'scriptureChain'; title?: string; verses: ScriptureChainVerse[] }
   | { type: 'scriptureChain'; title?: string; references: { reference: string }[] }
   | { type: 'reflection'; prompt: string }
@@ -189,6 +205,72 @@ export type LessonContentBlock =
       subtitle?: string
       caption?: string
       stages?: BaptismMeaningPatternStageData[]
+    }
+  | {
+      type: 'churchCommunityPattern'
+      /** 0-based indices into the rendered pillar list (`pillars` when set, otherwise the canonical order). */
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      pillars?: ChurchCommunityPatternPillarData[]
+    }
+  | {
+      type: 'kingdomContrastPattern'
+      /** 0-based indices into the rendered pillar list (`pillars` when set, otherwise the canonical order). */
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      pillars?: KingdomContrastPatternPillarData[]
+    }
+  | {
+      type: 'revelation12Pattern'
+      /** 0-based indices into the rendered stage list (`stages` when set, otherwise the canonical order). */
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: Revelation12PatternStageData[]
+    }
+  | {
+      type: 'remnantWitnessPattern'
+      /** 0-based indices into the rendered stage list (`stages` when set, otherwise the canonical order). */
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: RemnantWitnessPatternStageData[]
+    }
+  | {
+      type: 'prophecyTimeline2300'
+      title?: string
+      subtitle?: string
+      caption?: string
+    }
+  | {
+      type: 'sanctuaryDiagram'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      areas?: SanctuaryDiagramAreaData[]
+    }
+  | {
+      type: 'dayOfAtonementFlow'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: DayOfAtonementFlowStageData[]
+    }
+  | {
+      type: 'sweetBitterPattern'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: SweetBitterPatternStageData[]
     }
   | { type: 'studyCta'; label: string; href: string }
   | StudyVisualLessonBlock

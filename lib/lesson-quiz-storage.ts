@@ -1,3 +1,5 @@
+import { persistMeaningfulStudyActivity } from '@/lib/dashboard-local-progress'
+
 const STORAGE_PREFIX = 'biblestem-lesson-quiz'
 
 export type StoredLessonQuizAttempt = {
@@ -22,6 +24,9 @@ export function saveLessonQuizResultLocal(
     window.localStorage.setItem(storageKey(studySlug, lessonSlug), JSON.stringify(payload))
   } catch {
     // ignore quota / private mode
+  }
+  if (payload.passed) {
+    persistMeaningfulStudyActivity()
   }
 }
 

@@ -76,7 +76,7 @@ export default async function FoundationsPathPage() {
                 Study Library
               </Link>
               <Link
-                href="/study-library?path=foundations"
+                href="/study-library/foundations"
                 className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-sm font-medium text-zinc-900 hover:bg-zinc-50"
               >
                 Foundations in Study Library

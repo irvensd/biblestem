@@ -73,6 +73,18 @@ export type ProgressTotals = {
   streakDays: number
 }
 
+/** Foundations journey progress for the dashboard. */
+export type FoundationsProgressInfo = {
+  completedCount: number
+  totalCount: number
+  /** Current recommended study in guided order, or null when none. */
+  recommendedStudyTitle: string | null
+  /** Next study after the current recommendation, when available. */
+  nextStudyTitle: string | null
+  progressPercent: number
+  allComplete: boolean
+}
+
 export type GreetingPeriod = 'night' | 'morning' | 'afternoon' | 'evening'
 
 /** Local time: late night (before 5am or after 9:59pm) vs morning/afternoon/evening. */

@@ -9,7 +9,6 @@ import {
   readLocalProgress,
   replaceLocalDashboardProgress,
   saveLessonProgress,
-  touchDashboardActivity,
   type LocalDashboardProgress,
 } from '@/lib/dashboard-local-progress'
 import { getSupabaseBrowserClient } from '@/lib/supabase/client'
@@ -17,7 +16,6 @@ import {
   fetchProgressState,
   markLessonCompleteRemote,
   mergeLocalProgressIntoRemote,
-  touchDashboardActivityRemote,
   upsertLessonProgressRemote,
 } from '@/lib/supabase/user-progress'
 
@@ -35,6 +33,7 @@ export function mergeProgressSnapshots(
 ): LocalDashboardProgress {
   const completedKeys = [...new Set([...a.completedKeys, ...b.completedKeys])]
   const activityDays = [...new Set([...a.activityDays, ...b.activityDays])].sort()
+  const studyTimeSeconds = Math.max(a.studyTimeSeconds ?? 0, b.studyTimeSeconds ?? 0)
   let lastLesson = a.lastLesson
   if (b.lastLesson) {
     if (!lastLesson) lastLesson = b.lastLesson
@@ -44,7 +43,7 @@ export function mergeProgressSnapshots(
       if (tb >= ta) lastLesson = b.lastLesson
     }
   }
-  return { v: 1, completedKeys, lastLesson, activityDays }
+  return { v: 1, completedKeys, lastLesson, activityDays, studyTimeSeconds }
 }
 
 /** Pull remote progress into localStorage so overview and other local readers match Supabase. */
@@ -139,17 +138,7 @@ export function persistMarkLessonComplete(
   return Promise.resolve()
 }
 
-export function persistTouchDashboardActivity(userId: string | undefined): Promise<void> {
-  const supabase = getSupabaseBrowserClient()
-  if (userId && supabase) {
-    return touchDashboardActivityRemote(supabase, userId)
-      .catch(() => {
-        /* Supabase optional for streak */
-      })
-      .finally(() => {
-        touchDashboardActivity()
-      })
-  }
-  touchDashboardActivity()
+/** Dashboard visits do not affect streak or study metrics. */
+export function persistTouchDashboardActivity(_userId: string | undefined): Promise<void> {
   return Promise.resolve()
 }

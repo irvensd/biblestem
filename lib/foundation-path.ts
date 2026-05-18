@@ -21,6 +21,11 @@ export const FOUNDATION_GUIDED_SLUG_ORDER = [
   'the-life-that-gives',
   'designed-to-thrive',
   'buried-and-raised',
+  'built-to-belong',
+  'power-under-love',
+  'faithful-in-the-wilderness',
+  'the-faithful-witness',
+  'the-day-of-atonement',
   'the-bible-gods-living-word',
   'origin-of-evil',
 ] as const
@@ -128,7 +133,8 @@ export function isStudyFullyComplete(series: StudySeries, p: LocalDashboardProgr
 }
 
 export function isStudyStarted(series: StudySeries, p: LocalDashboardProgress): boolean {
-  return series.lessons.some((l) => p.completedKeys.includes(lessonKey(series.slug, l.slug)))
+  if (series.lessons.some((l) => p.completedKeys.includes(lessonKey(series.slug, l.slug)))) return true
+  return p.lastLesson?.seriesSlug === series.slug
 }
 
 export function firstIncompleteLesson(series: StudySeries, p: LocalDashboardProgress): Lesson | null {
@@ -187,7 +193,17 @@ export const FOUNDATIONS_JOURNEY_CHAPTERS: readonly {
   {
     chapterLabel: 'Chapter 5',
     title: 'New Life in Christ',
-    slugs: ['designed-to-thrive', 'buried-and-raised'],
+    slugs: ['designed-to-thrive', 'buried-and-raised', 'built-to-belong'],
+  },
+  {
+    chapterLabel: 'Chapter 6',
+    title: 'Truth, Love, and the Kingdom',
+    slugs: ['power-under-love', 'faithful-in-the-wilderness', 'the-faithful-witness'],
+  },
+  {
+    chapterLabel: 'Chapter 7',
+    title: 'Christ Our High Priest',
+    slugs: ['the-day-of-atonement'],
   },
 ]
 

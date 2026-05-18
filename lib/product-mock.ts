@@ -19,6 +19,7 @@ import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import {
   foundationLessonShellSection,
   FOUNDATION_SHELL_PLACEHOLDER_LEGACY,
+  PLACEHOLDER_BODY,
 } from '@/lib/foundation-lesson-shell'
 
 const demoUserId = '00000000-0000-4000-8000-000000000001'
@@ -3057,6 +3058,855 @@ This study shows that God does not force transformation. He draws us with everla
 
 Students will discover what it means to be born again, to repent, to receive the Holy Spirit, to be baptized in the name of the Father, Son, and Holy Spirit, and to begin a life of growing discipleship with Jesus.`
 
+const BUILT_TO_BELONG_STUDY_SLUG = 'built-to-belong'
+const BUILT_TO_BELONG_OVERVIEW_HREF = `/study-library/${BUILT_TO_BELONG_STUDY_SLUG}`
+const SERIES_ID_BUILT_TO_BELONG = 'e4000001-0000-4000-8000-00000000007f'
+
+const BUILT_TO_BELONG_SECTION_IDS = {
+  lesson1: 'eab2bf01-0000-41b7-9191-d300091d0101',
+  lesson2: 'eab2bf01-0000-41b7-9192-d300091e0102',
+  lesson3: 'eab2bf01-0000-41b7-9193-d300091f0103',
+  lesson4: 'eab2bf01-0000-41b7-9194-d30009200104',
+  lesson5: 'eab2bf01-0000-41b7-9195-d30009210105',
+  lesson6: 'eab2bf01-0000-41b7-9196-d30009220106',
+  lesson7: 'eab2bf01-0000-41b7-9197-d30009230107',
+} as const
+
+const builtToBelongLessonShellSection = (
+  sectionId: string,
+  lessonId: string,
+  extra?: Parameters<typeof foundationLessonShellSection>[3],
+) =>
+  foundationLessonShellSection(lessonId, sectionId, BUILT_TO_BELONG_OVERVIEW_HREF, {
+    placeholderText: FOUNDATION_SHELL_PLACEHOLDER_LEGACY,
+    ...extra,
+  })
+
+const lessonBuiltToBelong1: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000091d',
+  slug: 'born-into-a-family',
+  studySeriesId: SERIES_ID_BUILT_TO_BELONG,
+  title: 'Born Into a Family',
+  summary:
+    'Just as physical birth brings us into a family, spiritual rebirth brings us into the family of God for growth, healing, and belonging.',
+  durationMinutes: 8,
+  scripture: '1 John 1:1-4 · John 13:34-35 · Ephesians 2:19-22',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuiltToBelong2: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000091e',
+  slug: 'the-fellowship-of-love',
+  studySeriesId: SERIES_ID_BUILT_TO_BELONG,
+  title: 'The Fellowship of Love',
+  summary:
+    'The church is a community of shared life with God and one another, where believers grow through love, truth, prayer, and connection.',
+  durationMinutes: 8,
+  scripture: '1 John 1:3-4 · Acts 2:40-47 · Hebrews 10:24-25',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuiltToBelong3: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000091f',
+  slug: 'a-community-being-healed',
+  studySeriesId: SERIES_ID_BUILT_TO_BELONG,
+  title: 'A Community Being Healed',
+  summary:
+    'The church is not a museum for perfect people, but a fellowship where broken people are being restored by Jesus.',
+  durationMinutes: 8,
+  scripture: 'Acts 2:47 · Galatians 6:1-2 · James 5:16',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuiltToBelong4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000920',
+  slug: 'called-to-proclaim-his-praise',
+  studySeriesId: SERIES_ID_BUILT_TO_BELONG,
+  title: 'Called to Proclaim His Praise',
+  summary:
+    'The church exists to proclaim the beauty of God\'s character and the good news of His love revealed in Jesus.',
+  durationMinutes: 8,
+  scripture: '1 Peter 2:9 · 2 Corinthians 4:4-6 · Matthew 28:19-20',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuiltToBelong5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000921',
+  slug: 'truth-spoken-in-love',
+  studySeriesId: SERIES_ID_BUILT_TO_BELONG,
+  title: 'Truth Spoken in Love',
+  summary:
+    'God calls His people to grow in maturity by speaking truth with humility, patience, unity, and love.',
+  durationMinutes: 8,
+  scripture: 'Ephesians 4:1-16 · Colossians 3:12-14 · John 17:20-23',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuiltToBelong6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000922',
+  slug: 'gifts-for-ministry',
+  studySeriesId: SERIES_ID_BUILT_TO_BELONG,
+  title: 'Gifts for Ministry',
+  summary:
+    'Every believer receives grace and spiritual gifts so the whole church can serve, grow, and bless others.',
+  durationMinutes: 8,
+  scripture: 'Ephesians 4:7-12 · 1 Corinthians 12:4-7 · Romans 12:4-8',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonBuiltToBelong7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000923',
+  slug: 'love-that-serves-the-world',
+  studySeriesId: SERIES_ID_BUILT_TO_BELONG,
+  title: 'Love That Serves the World',
+  summary:
+    'The church reveals God\'s love by serving practical needs, pursuing justice, showing mercy, and blessing the world.',
+  durationMinutes: 10,
+  scripture: 'Isaiah 58:6-11 · Matthew 22:37-39 · Luke 10:30-37 · Matthew 7:12',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const builtToBelongLongDescription = `Built to Belong explores the biblical meaning and purpose of the church.
+
+God did not save people into isolation. He calls believers into a spiritual family where fellowship, healing, discipleship, truth, service, and mission can grow. The church is meant to be a living community that reflects the self-giving love of God to its members and to the world.
+
+This study shows that the church exists for more than attendance, programs, or religious activity. It is God\'s appointed community for restoring relationships, proclaiming His character, serving practical needs, and helping believers grow into the likeness of Christ.
+
+Built to Belong helps beginners see the church as a healing community where love is received, practiced, and revealed.`
+
+const seriesBuiltToBelong: StudySeries = {
+  id: SERIES_ID_BUILT_TO_BELONG,
+  slug: BUILT_TO_BELONG_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'Built to Belong',
+  subtitle: 'The church as God\'s community for fellowship, healing, proclamation, and service.',
+  shortDescription:
+    'God is building a restored community where His love is experienced, practiced, proclaimed, and shared with the world.',
+  longDescription: builtToBelongLongDescription,
+  description: builtToBelongLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 55–70 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 17,
+  foundationOrder: 16,
+  whatYouWillLearn: [
+    'Themes: church, fellowship, belonging, discipleship, service, unity, spiritual gifts, love, mission, healing.',
+    'See how Scripture pictures the church as a spiritual family, not isolation.',
+    'Understand fellowship, healing, gospel proclamation, truth in love, gifts, and service to the world.',
+    'Grow in beginner-friendly biblical hope for living community rooted in Jesus.',
+  ],
+  lessons: [
+    lessonBuiltToBelong1,
+    lessonBuiltToBelong2,
+    lessonBuiltToBelong3,
+    lessonBuiltToBelong4,
+    lessonBuiltToBelong5,
+    lessonBuiltToBelong6,
+    lessonBuiltToBelong7,
+  ],
+}
+
+const POWER_UNDER_LOVE_STUDY_SLUG = 'power-under-love'
+const POWER_UNDER_LOVE_OVERVIEW_HREF = `/study-library/${POWER_UNDER_LOVE_STUDY_SLUG}`
+const SERIES_ID_POWER_UNDER_LOVE = 'e4000001-0000-4000-8000-000000000080'
+
+const POWER_UNDER_LOVE_SECTION_IDS = {
+  lesson1: 'eab2bf01-0000-41b7-9201-d30009240101',
+  lesson2: 'eab2bf01-0000-41b7-9202-d30009240202',
+  lesson3: 'eab2bf01-0000-41b7-9203-d30009240303',
+  lesson4: 'eab2bf01-0000-41b7-9204-d30009240404',
+  lesson5: 'eab2bf01-0000-41b7-9205-d30009240505',
+  lesson6: 'eab2bf01-0000-41b7-9206-d30009240606',
+  lesson7: 'eab2bf01-0000-41b7-9207-d30009240707',
+} as const
+
+const powerUnderLoveLessonShellSection = (
+  sectionId: string,
+  lessonId: string,
+  extra?: Parameters<typeof foundationLessonShellSection>[3],
+) =>
+  foundationLessonShellSection(lessonId, sectionId, POWER_UNDER_LOVE_OVERVIEW_HREF, {
+    placeholderText: FOUNDATION_SHELL_PLACEHOLDER_LEGACY,
+    ...extra,
+  })
+
+const lessonPowerUnderLove1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000924',
+  slug: 'the-upside-down-kingdom',
+  studySeriesId: SERIES_ID_POWER_UNDER_LOVE,
+  title: 'The Upside-Down Kingdom',
+  summary:
+    'Jesus reveals a kingdom where greatness is measured by humility, service, and self-giving love instead of domination and control.',
+  durationMinutes: 9,
+  scripture: 'Luke 22:24-30 · Matthew 11:29 · John 13:1-17',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonPowerUnderLove2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000925',
+  slug: 'power-over-or-power-under',
+  studySeriesId: SERIES_ID_POWER_UNDER_LOVE,
+  title: 'Power Over or Power Under',
+  summary:
+    'The world uses authority to rule over others, but Jesus uses power to serve, heal, and lay down His life.',
+  durationMinutes: 9,
+  scripture: 'Luke 12:37 · John 13:1-17 · Luke 6:27-38 · 1 Peter 2:21-24',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonPowerUnderLove3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000926',
+  slug: 'the-falling-away',
+  studySeriesId: SERIES_ID_POWER_UNDER_LOVE,
+  title: 'The Falling Away',
+  summary:
+    'Scripture foretold an apostasy that would set up a counterfeit religious system while claiming to represent God.',
+  durationMinutes: 9,
+  scripture: '2 Thessalonians 2:3-7 · Acts 20:28-31 · 1 Timothy 4:1',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonPowerUnderLove4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000927',
+  slug: 'the-little-horn',
+  studySeriesId: SERIES_ID_POWER_UNDER_LOVE,
+  title: 'The Little Horn',
+  summary:
+    'Daniel\'s prophecy reveals a religious-political power that would rise from Rome and oppose God\'s truth.',
+  durationMinutes: 9,
+  scripture: 'Daniel 7:2-8 · Daniel 7:17, 23-25 · Revelation 17:15',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonPowerUnderLove5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000928',
+  slug: 'when-religion-misrepresents-god',
+  studySeriesId: SERIES_ID_POWER_UNDER_LOVE,
+  title: 'When Religion Misrepresents God',
+  summary:
+    'The apostasy is marked by self-exaltation, coercion, persecution, and attempts to change God\'s law.',
+  durationMinutes: 9,
+  scripture: 'Daniel 7:25 · 2 Thessalonians 2:4 · Matthew 15:3-9',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonPowerUnderLove6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000929',
+  slug: 'truth-without-arrogance',
+  studySeriesId: SERIES_ID_POWER_UNDER_LOVE,
+  title: 'Truth Without Arrogance',
+  summary:
+    'God\'s people must identify false systems without hatred, pride, or condemnation toward the people trapped within them.',
+  durationMinutes: 9,
+  scripture: '1 Corinthians 8:1 · Ephesians 4:15 · 2 Timothy 2:24-26',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonPowerUnderLove7: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000092a',
+  slug: 'holding-truth-with-love',
+  studySeriesId: SERIES_ID_POWER_UNDER_LOVE,
+  title: 'Holding Truth With Love',
+  summary:
+    'God\'s love moves Him to tell the truth, and His love in us moves us to hold truth with humility, compassion, and faithfulness.',
+  durationMinutes: 10,
+  scripture: 'John 8:31-32 · 1 John 4:7-8 · Revelation 14:6-12',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const powerUnderLoveLongDescription = `Power Under Love explores the biblical contrast between Christ's kingdom and counterfeit religion.
+
+Jesus founded His church on self-giving, non-coercive love. His kingdom operates by humility, service, and sacrifice. But Scripture foretold a great apostasy that would distort God's character, exalt human authority, and replace Christlike love with religious control.
+
+This study introduces beginners to the biblical teaching of apostasy through Jesus' upside-down kingdom, Paul's warning of a falling away, and Daniel's prophecy of the little horn. Students will learn how prophecy exposes systems that misrepresent God while still calling believers to hold truth with humility, love, and compassion for all people.
+
+Power Under Love helps students see that God tells the truth because He loves people, and His people must hold prophetic truth with the same spirit of love.`
+
+const seriesPowerUnderLove: StudySeries = {
+  id: SERIES_ID_POWER_UNDER_LOVE,
+  slug: POWER_UNDER_LOVE_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'Power Under Love',
+  subtitle: 'Christ\'s kingdom of humble love contrasted with counterfeit religion and coercive power.',
+  shortDescription:
+    'Jesus builds His kingdom on humble, self-giving love, while false religion replaces love with control, self-exaltation, and coercive power.',
+  longDescription: powerUnderLoveLongDescription,
+  description: powerUnderLoveLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 60–75 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 18,
+  foundationOrder: 17,
+  whatYouWillLearn: [
+    'Themes: apostasy, prophecy, Daniel 7, kingdom of God, humility, self-giving love, truth, deception, law, Sabbath, Jesus.',
+    'See Jesus\' upside-down kingdom of humility and service contrasted with worldly power.',
+    'Understand apostasy, the little horn, and how prophecy exposes systems that misrepresent God.',
+    'Hold prophetic truth with humility, compassion, and Christlike love for all people.',
+  ],
+  lessons: [
+    lessonPowerUnderLove1,
+    lessonPowerUnderLove2,
+    lessonPowerUnderLove3,
+    lessonPowerUnderLove4,
+    lessonPowerUnderLove5,
+    lessonPowerUnderLove6,
+    lessonPowerUnderLove7,
+  ],
+}
+
+const FAITHFUL_IN_THE_WILDERNESS_STUDY_SLUG = 'faithful-in-the-wilderness'
+const FAITHFUL_IN_THE_WILDERNESS_OVERVIEW_HREF = `/study-library/${FAITHFUL_IN_THE_WILDERNESS_STUDY_SLUG}`
+const SERIES_ID_FAITHFUL_IN_THE_WILDERNESS = 'e4000001-0000-4000-8000-000000000081'
+
+const FAITHFUL_IN_THE_WILDERNESS_SECTION_IDS = {
+  lesson1: 'eab2bf01-0000-41b7-9208-d30009250101',
+  lesson2: 'eab2bf01-0000-41b7-9209-d30009250202',
+  lesson3: 'eab2bf01-0000-41b7-920a-d30009250303',
+  lesson4: 'eab2bf01-0000-41b7-920b-d30009250404',
+  lesson5: 'eab2bf01-0000-41b7-920c-d30009250505',
+  lesson6: 'eab2bf01-0000-41b7-920d-d30009250606',
+  lesson7: 'eab2bf01-0000-41b7-920e-d30009250707',
+} as const
+
+const faithfulInTheWildernessLessonShellSection = (
+  sectionId: string,
+  lessonId: string,
+  extra?: Parameters<typeof foundationLessonShellSection>[3],
+) =>
+  foundationLessonShellSection(lessonId, sectionId, FAITHFUL_IN_THE_WILDERNESS_OVERVIEW_HREF, {
+    placeholderText: FOUNDATION_SHELL_PLACEHOLDER_LEGACY,
+    ...extra,
+  })
+
+const lessonFaithfulInTheWilderness1: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000092b',
+  slug: 'the-woman-in-the-wilderness',
+  studySeriesId: SERIES_ID_FAITHFUL_IN_THE_WILDERNESS,
+  title: 'The Woman in the Wilderness',
+  summary:
+    'Revelation 12 introduces a symbolic woman who represents God\'s faithful people, clothed with the light of Christ and opposed by the dragon.',
+  durationMinutes: 9,
+  scripture: 'Revelation 12:1-6 · Jeremiah 6:2 · Ephesians 5:22-27 · Malachi 4:2 · John 8:12',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonFaithfulInTheWilderness2: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000092c',
+  slug: 'the-dragon-and-the-child',
+  studySeriesId: SERIES_ID_FAITHFUL_IN_THE_WILDERNESS,
+  title: 'The Dragon and the Child',
+  summary:
+    'The dragon seeks to destroy Christ, but Jesus fulfills His mission, defeats Satan, and is caught up to God\'s throne.',
+  durationMinutes: 9,
+  scripture: 'Revelation 12:3-5 · Genesis 3:15 · Matthew 2:13-16 · John 12:31-32 · Colossians 2:15',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonFaithfulInTheWilderness3: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000092d',
+  slug: 'preserved-through-the-dark-years',
+  studySeriesId: SERIES_ID_FAITHFUL_IN_THE_WILDERNESS,
+  title: 'Preserved Through the Dark Years',
+  summary:
+    'During the wilderness period, God preserved His faithful people and nourished the truth of the gospel through persecution.',
+  durationMinutes: 9,
+  scripture: 'Revelation 12:6 · Revelation 12:13-16 · Ezekiel 4:6 · Daniel 7:25',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonFaithfulInTheWilderness4: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000092e',
+  slug: 'the-war-behind-history',
+  studySeriesId: SERIES_ID_FAITHFUL_IN_THE_WILDERNESS,
+  title: 'The War Behind History',
+  summary:
+    'Revelation 12 connects the original war in heaven with Christ\'s victory at the cross and Satan\'s continued opposition to God\'s people.',
+  durationMinutes: 9,
+  scripture: 'Revelation 12:7-12 · John 12:31-32 · Colossians 2:15 · 1 Peter 5:8-9',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonFaithfulInTheWilderness5: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000092f',
+  slug: 'the-remnant-of-her-seed',
+  studySeriesId: SERIES_ID_FAITHFUL_IN_THE_WILDERNESS,
+  title: 'The Remnant of Her Seed',
+  summary:
+    'Revelation identifies the remnant as those who keep the commandments of God and have the testimony of Jesus Christ.',
+  durationMinutes: 9,
+  scripture: 'Revelation 12:17 · Revelation 14:12 · Isaiah 10:20-22 · Jeremiah 23:3',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonFaithfulInTheWilderness6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000930',
+  slug: 'truth-recovered-for-the-world',
+  studySeriesId: SERIES_ID_FAITHFUL_IN_THE_WILDERNESS,
+  title: 'Truth Recovered for the World',
+  summary:
+    'After centuries of persecution and confusion, God raised up a movement to recover biblical truth and proclaim the gospel with clarity.',
+  durationMinutes: 9,
+  scripture: 'Revelation 12:17 · Revelation 14:6-12 · Daniel 8:14 · John 17:17',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonFaithfulInTheWilderness7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000931',
+  slug: 'faithful-until-the-end',
+  studySeriesId: SERIES_ID_FAITHFUL_IN_THE_WILDERNESS,
+  title: 'Faithful Until the End',
+  summary:
+    'God\'s final people endure by trusting Jesus, keeping His commandments, and holding fast to His faithful promise.',
+  durationMinutes: 9,
+  scripture: 'Revelation 14:12 · Revelation 12:17 · Matthew 24:13 · Hebrews 10:23',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const faithfulInTheWildernessLongDescription = `Faithful in the Wilderness explores Revelation 12 and the prophetic story of God's faithful church through history.
+
+This study shows that God has always had a people in the world to preserve and proclaim the truth of His character, even during seasons of darkness, persecution, and religious confusion. Revelation 12 presents a symbolic picture of the woman, the dragon, the wilderness, the 1260-year period, and the remnant of her seed.
+
+Students will learn how Scripture identifies the faithful church as a community centered on Jesus, preserved by God, committed to His commandments, and carrying the testimony of Jesus. This study also emphasizes that remnant truth must never create arrogance. God's people are called to speak the truth in love and take the gospel to the world with humility, clarity, and compassion.`
+
+const seriesFaithfulInTheWilderness: StudySeries = {
+  id: SERIES_ID_FAITHFUL_IN_THE_WILDERNESS,
+  slug: FAITHFUL_IN_THE_WILDERNESS_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'Faithful in the Wilderness',
+  subtitle: 'Revelation 12 and God\'s faithful remnant preserved through history to proclaim truth in love.',
+  shortDescription:
+    'God has always preserved a faithful people to reveal His character, proclaim His truth, and carry the gospel through history.',
+  longDescription: faithfulInTheWildernessLongDescription,
+  description: faithfulInTheWildernessLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 60–75 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 19,
+  foundationOrder: 18,
+  whatYouWillLearn: [
+    'Themes: Revelation 12, remnant, wilderness, prophecy, persecution, commandments of God, testimony of Jesus, gospel, mission.',
+    'See Revelation 12\'s symbolic picture of God\'s faithful people, Christ\'s victory, and Satan\'s opposition.',
+    'Understand how God preserved truth through the wilderness period and identifies the remnant.',
+    'Hold remnant mission with humility, love, and global gospel proclamation.',
+  ],
+  lessons: [
+    lessonFaithfulInTheWilderness1,
+    lessonFaithfulInTheWilderness2,
+    lessonFaithfulInTheWilderness3,
+    lessonFaithfulInTheWilderness4,
+    lessonFaithfulInTheWilderness5,
+    lessonFaithfulInTheWilderness6,
+    lessonFaithfulInTheWilderness7,
+  ],
+}
+
+const THE_FAITHFUL_WITNESS_STUDY_SLUG = 'the-faithful-witness'
+const THE_FAITHFUL_WITNESS_OVERVIEW_HREF = `/study-library/${THE_FAITHFUL_WITNESS_STUDY_SLUG}`
+const SERIES_ID_THE_FAITHFUL_WITNESS = 'e4000001-0000-4000-8000-000000000082'
+
+const THE_FAITHFUL_WITNESS_SECTION_IDS = {
+  lesson1: 'eab2bf01-0000-41b7-920f-d30009250801',
+  lesson2: 'eab2bf01-0000-41b7-9210-d30009250902',
+  lesson3: 'eab2bf01-0000-41b7-9211-d30009251003',
+  lesson4: 'eab2bf01-0000-41b7-9212-d30009251104',
+  lesson5: 'eab2bf01-0000-41b7-9213-d30009251205',
+  lesson6: 'eab2bf01-0000-41b7-9214-d30009251306',
+  lesson7: 'eab2bf01-0000-41b7-9215-d30009251407',
+} as const
+
+const theFaithfulWitnessLessonShellSection = (
+  sectionId: string,
+  lessonId: string,
+  extra?: Parameters<typeof foundationLessonShellSection>[3],
+) =>
+  foundationLessonShellSection(lessonId, sectionId, THE_FAITHFUL_WITNESS_OVERVIEW_HREF, {
+    placeholderText: FOUNDATION_SHELL_PLACEHOLDER_LEGACY,
+    ...extra,
+  })
+
+const lessonTheFaithfulWitness1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000932',
+  slug: 'guardians-of-the-law',
+  studySeriesId: SERIES_ID_THE_FAITHFUL_WITNESS,
+  title: 'Guardians of the Law',
+  summary:
+    'The remnant is identified as a people who keep, guard, and preserve the commandments of God in a world that has attacked His law.',
+  durationMinutes: 9,
+  scripture: 'Revelation 12:17 · Revelation 14:12 · 2 Thessalonians 2:7-8 · John 14:15 · Romans 13:10',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFaithfulWitness2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000933',
+  slug: 'law-and-gospel-together',
+  studySeriesId: SERIES_ID_THE_FAITHFUL_WITNESS,
+  title: 'Law and Gospel Together',
+  summary:
+    'God\'s end-time people hold together the harmony of grace and obedience, showing that love fulfills the law.',
+  durationMinutes: 9,
+  scripture: 'Revelation 14:12 · Romans 3:31 · Ephesians 2:8-10 · Galatians 5:6 · 1 John 5:3',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFaithfulWitness3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000934',
+  slug: 'the-testimony-of-jesus',
+  studySeriesId: SERIES_ID_THE_FAITHFUL_WITNESS,
+  title: 'The Testimony of Jesus',
+  summary:
+    'The remnant bears witness to Jesus as the true revelation of the Father\'s character and love.',
+  durationMinutes: 9,
+  scripture: 'Revelation 12:17 · John 1:18 · John 14:9 · John 16:27 · Revelation 3:14',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFaithfulWitness4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000935',
+  slug: 'the-spirit-of-prophecy',
+  studySeriesId: SERIES_ID_THE_FAITHFUL_WITNESS,
+  title: 'The Spirit of Prophecy',
+  summary:
+    'Revelation identifies the testimony of Jesus as the Spirit of prophecy, showing God\'s continued guidance through inspired witness.',
+  durationMinutes: 9,
+  scripture: 'Revelation 19:10 · 2 Peter 1:21 · Numbers 12:6 · Joel 2:28-29 · 1 Thessalonians 5:19-21',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFaithfulWitness5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000936',
+  slug: 'christ-at-the-center',
+  studySeriesId: SERIES_ID_THE_FAITHFUL_WITNESS,
+  title: 'Christ at the Center',
+  summary:
+    'Every truth entrusted to God\'s people must be centered in Christ and His self-sacrificing love.',
+  durationMinutes: 9,
+  scripture: 'John 5:39 · 1 Corinthians 2:2 · 2 Corinthians 4:6 · Colossians 1:15-20 · Hebrews 1:1-3',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFaithfulWitness6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000937',
+  slug: 'obedience-without-force',
+  studySeriesId: SERIES_ID_THE_FAITHFUL_WITNESS,
+  title: 'Obedience Without Force',
+  summary:
+    'The remnant reveals the harmony of faith, love, and obedience as the natural fruit of God\'s saving grace.',
+  durationMinutes: 9,
+  scripture: 'John 14:15 · 1 John 4:19 · Romans 13:10 · Philippians 2:13 · Hebrews 8:10',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFaithfulWitness7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000938',
+  slug: 'truth-with-humility',
+  studySeriesId: SERIES_ID_THE_FAITHFUL_WITNESS,
+  title: 'Truth With Humility',
+  summary:
+    'God calls His people to hold remnant truth without arrogance, speaking the truth in love and pointing the world to Jesus.',
+  durationMinutes: 9,
+  scripture: 'Ephesians 4:15 · 1 Corinthians 8:1 · 1 Peter 3:15 · Revelation 14:6-12 · Matthew 24:14',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theFaithfulWitnessLongDescription = `The Faithful Witness explores the biblical identity and mission of God's remnant people.
+
+Building on Revelation 12, this study looks more deeply at the two identifying marks of the remnant: they keep the commandments of God and have the testimony of Jesus Christ. Students will see how the remnant preserves God's law without legalism, points to Jesus as the true revelation of the Father, and holds together the gospel and obedience, faith and works, love and truth.
+
+This study also introduces the testimony of Jesus as the Spirit of prophecy and shows how God restores truth in the final phase of history to reveal His character to the world. The remnant is not presented as an elite group, but as a mission-driven people called to guard truth, reflect Jesus, and speak with humility, kindness, and love.`
+
+const seriesTheFaithfulWitness: StudySeries = {
+  id: SERIES_ID_THE_FAITHFUL_WITNESS,
+  slug: THE_FAITHFUL_WITNESS_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Faithful Witness',
+  subtitle: 'The remnant identity and mission of God\'s people in the final message to the world.',
+  shortDescription:
+    'God\'s end-time people preserve His commandments, point to Jesus, and witness to His character with humility and love.',
+  longDescription: theFaithfulWitnessLongDescription,
+  description: theFaithfulWitnessLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 60–75 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 20,
+  foundationOrder: 19,
+  whatYouWillLearn: [
+    'Themes: remnant, Revelation 12, Revelation 14, commandments of God, testimony of Jesus, faith of Jesus, law and gospel, Spirit of prophecy, mission, truth, love, obedience.',
+    'See how the remnant keeps God\'s commandments and holds the testimony of Jesus without legalism or arrogance.',
+    'Understand the harmony of grace and obedience, gospel and law, faith and love.',
+    'Carry remnant truth with humility, clarity, and Christ-centered mission to the world.',
+  ],
+  lessons: [
+    lessonTheFaithfulWitness1,
+    lessonTheFaithfulWitness2,
+    lessonTheFaithfulWitness3,
+    lessonTheFaithfulWitness4,
+    lessonTheFaithfulWitness5,
+    lessonTheFaithfulWitness6,
+    lessonTheFaithfulWitness7,
+  ],
+}
+
+const THE_DAY_OF_ATONEMENT_STUDY_SLUG = 'the-day-of-atonement'
+const THE_DAY_OF_ATONEMENT_OVERVIEW_HREF = `/study-library/${THE_DAY_OF_ATONEMENT_STUDY_SLUG}`
+const SERIES_ID_THE_DAY_OF_ATONEMENT = 'e4000001-0000-4000-8000-000000000083'
+
+const THE_DAY_OF_ATONEMENT_SECTION_IDS = {
+  lesson1: 'eab2bf01-0000-41b7-9216-d30009251508',
+  lesson2: 'eab2bf01-0000-41b7-9217-d30009251609',
+  lesson3: 'eab2bf01-0000-41b7-9218-d30009251710',
+  lesson4: 'eab2bf01-0000-41b7-9219-d30009251811',
+  lesson5: 'eab2bf01-0000-41b7-921a-d30009251912',
+  lesson6: 'eab2bf01-0000-41b7-921b-d30009252013',
+  lesson7: 'eab2bf01-0000-41b7-921c-d30009252114',
+} as const
+
+const theDayOfAtonementLessonShellSection = (
+  sectionId: string,
+  lessonId: string,
+  extra?: Parameters<typeof foundationLessonShellSection>[3],
+) =>
+  foundationLessonShellSection(lessonId, sectionId, THE_DAY_OF_ATONEMENT_OVERVIEW_HREF, {
+    placeholderText: PLACEHOLDER_BODY,
+    ...extra,
+  })
+
+const lessonTheDayOfAtonement1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000939',
+  slug: 'sealed-and-opened',
+  studySeriesId: SERIES_ID_THE_DAY_OF_ATONEMENT,
+  title: 'Sealed and Opened',
+  summary:
+    'Daniel\'s sealed prophecy is opened in Revelation 10, showing that God would bring understanding to the 2300-day prophecy in the end-time period.',
+  durationMinutes: 12,
+  scripture: 'Daniel 8:14 · Daniel 8:26 · Daniel 12:4-10 · Revelation 10:1-11',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheDayOfAtonement2: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000093a',
+  slug: 'the-2300-days',
+  studySeriesId: SERIES_ID_THE_DAY_OF_ATONEMENT,
+  title: 'The 2300 Days',
+  summary:
+    'The 2300-day prophecy points from the command to restore Jerusalem to the beginning of the final phase of Christ\'s heavenly ministry.',
+  durationMinutes: 12,
+  scripture: 'Daniel 8:14 · Daniel 9:24-27 · Ezra 7:11-12 · Ezekiel 4:6 · Numbers 14:34',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheDayOfAtonement3: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000093b',
+  slug: 'sweet-in-the-mouth-bitter-in-the-belly',
+  studySeriesId: SERIES_ID_THE_DAY_OF_ATONEMENT,
+  title: 'Sweet in the Mouth, Bitter in the Belly',
+  summary:
+    'Revelation 10 foretells the bittersweet experience of believers who expected Christ\'s return but later discovered a deeper sanctuary truth.',
+  durationMinutes: 12,
+  scripture: 'Revelation 10:8-11 · Habakkuk 2:2-3 · Hebrews 10:35-39',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheDayOfAtonement4: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000093c',
+  slug: 'the-heavenly-sanctuary',
+  studySeriesId: SERIES_ID_THE_DAY_OF_ATONEMENT,
+  title: 'The Heavenly Sanctuary',
+  summary:
+    'The earthly sanctuary was a symbolic outline of the plan of salvation and pointed to the true sanctuary in heaven where Jesus ministers.',
+  durationMinutes: 12,
+  scripture: 'Hebrews 8:1-5 · Psalm 102:19 · Exodus 25:8-9 · Hebrews 9:11-12',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheDayOfAtonement5: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000093d',
+  slug: 'jesus-our-high-priest',
+  studySeriesId: SERIES_ID_THE_DAY_OF_ATONEMENT,
+  title: 'Jesus Our High Priest',
+  summary:
+    'Jesus ministers for humanity as our sympathetic High Priest, Mediator, and source of mercy, grace, cleansing, and confidence before God.',
+  durationMinutes: 12,
+  scripture: 'Hebrews 4:14-16 · Hebrews 7:25-28 · Hebrews 9:12-14 · 1 Timothy 2:5 · 1 John 2:1',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheDayOfAtonement6: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000093e',
+  slug: 'the-final-cleansing',
+  studySeriesId: SERIES_ID_THE_DAY_OF_ATONEMENT,
+  title: 'The Final Cleansing',
+  summary:
+    'The Day of Atonement points to God\'s final work of cleansing, judgment, and full resolution of the sin problem through Christ.',
+  durationMinutes: 12,
+  scripture: 'Leviticus 16:29-34 · Daniel 8:14 · Hebrews 9:23-28 · 1 John 1:9 · Revelation 14:6-7',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheDayOfAtonement7: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000093f',
+  slug: 'boldness-in-the-judgment',
+  studySeriesId: SERIES_ID_THE_DAY_OF_ATONEMENT,
+  title: 'Boldness in the Judgment',
+  summary:
+    'Because Jesus is our High Priest and Mediator, believers can face the judgment with confidence, assurance, and love.',
+  durationMinutes: 12,
+  scripture: '1 John 4:16-18 · Hebrews 6:18-20 · Hebrews 10:19-23 · Romans 8:31-34',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theDayOfAtonementLongDescription = `The Day of Atonement explores Daniel 8:14, Revelation 10, and the sanctuary message as a Christ-centered explanation of what Jesus is doing now as our heavenly High Priest.
+
+This study explains the sealed and opened prophecies of Daniel, the 2300-day prophecy, the bittersweet experience of the early Advent believers, and the discovery that the sanctuary to be cleansed was not the earth, but the heavenly sanctuary where Jesus ministers for humanity. Students will learn how the ancient sanctuary pointed forward to the life, death, resurrection, mediation, and final priestly work of Christ.
+
+The study presents the Day of Atonement not as fear-based judgment, but as the final phase of God's plan to resolve the sin problem through Jesus. It emphasizes assurance, cleansing, mediation, confidence before God, and the beauty of Christ's ongoing ministry.`
+
+const seriesTheDayOfAtonement: StudySeries = {
+  id: SERIES_ID_THE_DAY_OF_ATONEMENT,
+  slug: THE_DAY_OF_ATONEMENT_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Day of Atonement',
+  subtitle: 'Jesus as our heavenly High Priest in the final phase of redemption history.',
+  shortDescription:
+    'Jesus is our heavenly High Priest, ministering for us in the final phase of redemption history and bringing full resolution to the sin problem.',
+  longDescription: theDayOfAtonementLongDescription,
+  description: theDayOfAtonementLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 70–85 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 21,
+  foundationOrder: 20,
+  whatYouWillLearn: [
+    'Themes: Day of Atonement, sanctuary, Daniel 8:14, Revelation 10, 2300 days, Jesus our High Priest, judgment, atonement, heavenly sanctuary, mediation, cleansing of the sanctuary.',
+    'Understand how Daniel\'s sealed prophecy was opened and how the 2300-day prophecy points to Christ\'s heavenly ministry.',
+    'See the earthly sanctuary as a model of salvation and Jesus as Mediator, Advocate, and source of assurance.',
+    'Face the judgment with confidence in Christ, not fear-based religion.',
+  ],
+  lessons: [
+    lessonTheDayOfAtonement1,
+    lessonTheDayOfAtonement2,
+    lessonTheDayOfAtonement3,
+    lessonTheDayOfAtonement4,
+    lessonTheDayOfAtonement5,
+    lessonTheDayOfAtonement6,
+    lessonTheDayOfAtonement7,
+  ],
+}
+
 const seriesBuriedAndRaised: StudySeries = {
   id: 'e4000001-0000-4000-8000-00000000007e',
   slug: BURIED_AND_RAISED_STUDY_SLUG,
@@ -3319,6 +4169,11 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesTheLifeThatGives,
   seriesDesignedToThrive,
   seriesBuriedAndRaised,
+  seriesBuiltToBelong,
+  seriesPowerUnderLove,
+  seriesFaithfulInTheWilderness,
+  seriesTheFaithfulWitness,
+  seriesTheDayOfAtonement,
   seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,

@@ -19,7 +19,7 @@ export function DashboardStatsRow({ progress }: DashboardStatsRowProps) {
   return (
     <div>
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Your progress</p>
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5 md:gap-4">
+      <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-5 md:gap-3">
         {cells.map((c) => (
           <div
             key={c.label}

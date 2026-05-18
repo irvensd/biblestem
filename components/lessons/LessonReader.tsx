@@ -14,12 +14,13 @@ import { LessonStepRenderer } from '@/components/lessons/LessonStepRenderer'
 import { buildLessonSteps, buildLessonStepsFromSections } from '@/lib/lesson-steps'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import { persistMarkLessonComplete, persistSaveLessonProgress } from '@/lib/dashboard-progress-sync'
-import { readLocalProgress } from '@/lib/dashboard-local-progress'
+import { readLocalProgress, recordStudySessionSeconds } from '@/lib/dashboard-local-progress'
 import { countWordInsightsInContent } from '@/lib/lesson-insight-count'
 import { lessonNoteStorageKey, countLocalLessonNotes } from '@/lib/lesson-notes'
 import { getNextLessonInSeries } from '@/lib/product-queries'
 import { computeSeriesProgressPercent } from '@/lib/studies/progress'
 import { extractScriptureChainsFromLessonContent } from '@/lib/lesson-scripture-chains'
+import { extractPrimaryScriptureThreadForCompletion } from '@/lib/lesson-scripture-threads'
 import { findMisunderstoodPassage } from '@/lib/misunderstood-passages'
 import { extractWordInsightsForCompletion } from '@/lib/word-insights-completion'
 import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/report-issue-href'
@@ -156,14 +157,29 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
   }, [complete, index, total, study.slug, lesson.slug, userId])
 
   useEffect(() => {
+    const openedAt = Date.now()
+    return () => {
+      const elapsed = Math.floor((Date.now() - openedAt) / 1000)
+      if (elapsed >= 15) {
+        recordStudySessionSeconds(elapsed)
+      }
+    }
+  }, [study.slug, lesson.slug])
+
+  useEffect(() => {
     if (!complete) return
     void persistMarkLessonComplete(study.slug, lesson.slug, total, userId)
   }, [complete, study.slug, lesson.slug, total, userId])
 
-  const scriptureChainsForLesson = useMemo(
-    () => extractScriptureChainsFromLessonContent(content, lesson.sections).slice(0, 3),
+  const scriptureThreadForLesson = useMemo(
+    () => extractPrimaryScriptureThreadForCompletion(content, lesson.sections),
     [content, lesson.sections],
   )
+
+  const scriptureChainsForLesson = useMemo(() => {
+    if (scriptureThreadForLesson) return []
+    return extractScriptureChainsFromLessonContent(content, lesson.sections).slice(0, 3)
+  }, [content, lesson.sections, scriptureThreadForLesson])
 
   const misunderstoodPassage = useMemo(
     () => findMisunderstoodPassage(study.slug, lesson.slug),
@@ -233,6 +249,7 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
             studyProgressPercent={seriesProgressPercent}
             reviewLessonHref={reviewHref}
             backToSeriesHref={backHref}
+            scriptureThread={scriptureThreadForLesson ?? undefined}
             scriptureChains={scriptureChainsForLesson.length > 0 ? scriptureChainsForLesson : undefined}
             wordInsightLines={wordInsightLines.length > 0 ? wordInsightLines : undefined}
             misunderstoodPassage={misunderstoodPassage}

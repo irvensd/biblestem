@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useState } from 'react'
 import { LessonTextRenderer } from '@/components/lessons/LessonTextRenderer'
 import { READER_FOCUS_RING } from '@/components/lessons/lesson-reader-focus'
 import { inputClassName } from '@/components/ui/form-styles'
+import { persistMeaningfulStudyActivity } from '@/lib/dashboard-local-progress'
 import type { NoteSaveTarget } from '@/lib/lesson-notes'
 import { fetchLessonNoteRemote, upsertLessonNoteRemote } from '@/lib/supabase/lesson-notes'
 
@@ -130,6 +131,9 @@ export function ReflectionNotes({
       localStorage.setItem(storageKey, value)
     } catch {
       /* ignore */
+    }
+    if (value.trim().length > 0) {
+      persistMeaningfulStudyActivity()
     }
     if (userId) {
       const ok = await upsertLessonNoteRemote(userId, studySlug, lessonSlug, stepNumber, value)

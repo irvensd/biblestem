@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getPathNameForSeries } from '@/lib/product-queries'
+import { getStudyCategoryLabel } from '@/lib/study-tracks'
 import { effectiveStudySeriesMinutes, formatStudyTotalDurationLabel } from '@/lib/studies/derive-overview'
 import { getStudyLibrarySummaryLine } from '@/lib/study-summary-line'
 import type { StudyPath, StudySeries } from '@/lib/types/product'
@@ -23,7 +24,8 @@ export function StudyCard({
   stepTotal,
   progressionState,
 }: StudyCardProps) {
-  const pathName = getPathNameForSeries(study, paths)
+  const trackLabel = getPathNameForSeries(study, paths)
+  const categoryLabel = getStudyCategoryLabel(study, paths)
   const durationLabel = formatStudyTotalDurationLabel(effectiveStudySeriesMinutes(study))
   const cardTeaser = getStudyLibrarySummaryLine(study)
   const compact = variant === 'compact'
@@ -43,7 +45,7 @@ export function StudyCard({
       }`}
     >
       <div className="mb-3 h-1 w-10 rounded-full bg-blue-800/60" />
-      <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">{pathName}</p>
+      <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">{trackLabel}</p>
       <h3 className={`mt-2 font-semibold tracking-tight text-zinc-900 ${compact ? 'text-base' : 'text-lg'}`}>{study.title}</h3>
       <p className={`mt-2 text-sm leading-relaxed text-zinc-600 ${compact ? 'line-clamp-1' : 'line-clamp-3'}`}>{cardTeaser}</p>
       {stepNumber != null && stepTotal != null ? (
@@ -57,7 +59,7 @@ export function StudyCard({
       <div className={`flex flex-wrap gap-x-5 gap-y-1 text-xs text-zinc-500 ${compact ? 'mt-3' : 'mt-5'}`}>
         <span>{study.lessonsCount} lessons</span>
         <span>{durationLabel}</span>
-        <span>{study.level}</span>
+        {categoryLabel ? <span>{categoryLabel}</span> : null}
       </div>
       <Link
         href={`/study-library/${study.slug}`}

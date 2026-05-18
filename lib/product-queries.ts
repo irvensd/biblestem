@@ -3,6 +3,7 @@ import {
   studySeriesCatalog,
 } from '@/lib/product-mock'
 import { compareFoundationLibraryRecommendedOrder, orderFoundationStudies } from '@/lib/foundation-path'
+import { getPublicTrackLabelForSeries } from '@/lib/study-tracks'
 import type { Lesson, LessonCompletionState, StudyPath, StudySeries, StudySeriesWithPath } from '@/lib/types/product'
 
 export function formatLessonDuration(minutes: number): string {
@@ -62,9 +63,8 @@ export function seriesCountForPathSlug(pathSlug: string): number {
   return getSeriesForPathSlug(pathSlug).length
 }
 
-export function getPathNameForSeries(series: StudySeries, pathsOverride?: StudyPath[]): string {
-  const paths = pathsOverride ?? studyPaths
-  return paths.find((p) => p.id === series.studyPathId)?.name ?? 'Path'
+export function getPathNameForSeries(series: StudySeries, _pathsOverride?: StudyPath[]): string {
+  return getPublicTrackLabelForSeries(series)
 }
 
 export function findLessonInCatalog(
