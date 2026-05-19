@@ -1,19 +1,25 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { useEffect, useLayoutEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useLayoutEffect, useMemo } from 'react'
 import { SignInForm } from '@/app/sign-in/SignInForm'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
+import { safeNextPath } from '@/lib/auth/safe-next-path'
 
 export default function SignInPageClient() {
   const { user, isReady } = useDemoAuth()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const afterSignInHref = useMemo(
+    () => safeNextPath(searchParams.get('next')) ?? '/dashboard',
+    [searchParams],
+  )
 
   useLayoutEffect(() => {
     if (isReady && user) {
-      router.replace('/dashboard')
+      router.replace(afterSignInHref)
     }
-  }, [isReady, user, router])
+  }, [isReady, user, router, afterSignInHref])
 
   useEffect(() => {
     if (isReady && !user) {

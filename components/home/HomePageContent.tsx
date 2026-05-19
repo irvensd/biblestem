@@ -77,12 +77,12 @@ const features = [
     ),
   },
   {
-    title: 'Track your learning',
-    body: 'Resume where you left off and keep progress visible at a glance.',
+    title: 'Scripture Threads',
+    body: 'See how Bible passages connect so truth is understood in context.',
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-        <path d="M3 3v18h18" />
-        <path d="M7 16l4-4 4 4 5-7" />
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
       </svg>
     ),
   },
@@ -90,7 +90,7 @@ const features = [
 
 function HeroProductVisual() {
   return (
-    <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
+    <div className="relative mx-auto min-w-0 w-full max-w-lg lg:max-w-none">
       <div
         className="pointer-events-none absolute -right-4 top-1/2 hidden h-48 w-48 -translate-y-1/2 rounded-full bg-blue-800/[0.04] blur-3xl md:block"
         aria-hidden
@@ -124,7 +124,7 @@ function HeroProductVisual() {
           <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm ring-1 ring-zinc-950/5">
             <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-400">Word study</p>
             <p className="mt-2 text-sm font-semibold text-zinc-900">λόγος · logos</p>
-            <p className="mt-1 text-xs leading-5 text-zinc-600">Speech, message, divine expression—embodied in Christ.</p>
+            <p className="mt-1 text-xs leading-5 text-zinc-600">Speech, message, divine expression, embodied in Christ.</p>
             <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-zinc-500">
               <span className="rounded border border-zinc-200 px-1.5 py-0.5">Strong&apos;s G3056</span>
               <span className="rounded border border-zinc-200 px-1.5 py-0.5">Lemma</span>
@@ -153,10 +153,10 @@ interface HomePageContentProps {
 export function HomePageContent({ catalog }: HomePageContentProps) {
   return (
     <>
-      <section className="border-b border-zinc-200/80 bg-stone-50 pb-20 pt-20 md:pb-24 md:pt-24 lg:pb-28 lg:pt-28">
+      <section className="border-b border-zinc-200/80 bg-stone-50 pb-16 pt-16 md:pb-20 md:pt-20 lg:pb-24 lg:pt-24">
         <div className="container-shell">
-          <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 xl:gap-20">
-            <div>
+          <div className="grid min-w-0 items-center gap-10 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14 xl:gap-16">
+            <div className="min-w-0">
               <div className="flex items-center gap-3">
                 <span className="text-[13px] font-semibold tracking-[0.22em] text-zinc-500 uppercase">BibleStem</span>
                 <span className="hidden h-px flex-1 max-w-[4rem] bg-zinc-200 sm:block" aria-hidden />
@@ -170,11 +170,13 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
               </h1>
 
               <p className="mt-6 max-w-md text-base leading-[1.65] text-zinc-700 md:text-[17px]">
-                Structured studies with Hebrew and Greek insights, guided paths, and room for reflection—always free.
+                Structured studies with Hebrew and Greek insights, guided paths, and room for reflection. Always free.
               </p>
 
-              <div className="mt-9 flex flex-wrap gap-3">
-                <Button href="/get-started">Get started free</Button>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button href="/paths/foundations" className="w-full sm:w-auto">
+                  Start Foundations Path
+                </Button>
                 <HomeExploreStudiesButton />
               </div>
               <p className="mt-5 text-sm font-medium text-zinc-600">100% free. Donation-supported.</p>
@@ -207,16 +209,16 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
         </div>
       </section>
 
-      <section className="section-space border-b border-transparent">
+      <section className="border-b border-zinc-200/80 bg-white py-12 md:py-16">
         <div className="container-shell">
           <SectionHeading
             eyebrow="Why BibleStem"
             title="Built for careful readers"
-            description="Tools and structure that respect the text—so study stays focused, calm, and clear."
+            description="Tools and structure that respect the text, so study stays focused, calm, and clear."
             showRule
           />
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 sm:gap-5">
             {features.map((feature) => (
               <div
                 key={feature.title}
@@ -235,7 +237,7 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
 
       <HomeCatalogSections catalog={catalog} />
 
-      <section className="section-space bg-white">
+      <section className="border-b border-zinc-200/80 bg-white py-10 md:py-12">
         <div className="container-shell">
           <SupportCard
             title="Always free, supported by generosity."
@@ -244,11 +246,18 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
             ctaHref="/donate"
             ctaLabel="Support the ministry"
             variant="muted"
+            size="compact"
           />
         </div>
       </section>
 
-      <CTASection title="Start studying Scripture with clarity." primaryHref="/get-started" primaryLabel="Get started" />
+      <CTASection
+        title="Start studying Scripture with clarity."
+        primaryHref="/paths/foundations"
+        primaryLabel="Start Foundations Path"
+        secondaryHref="/study-library"
+        secondaryLabel="Browse Study Library"
+      />
     </>
   )
 }

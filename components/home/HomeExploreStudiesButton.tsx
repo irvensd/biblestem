@@ -1,21 +1,20 @@
-'use client'
-
 import { Button } from '@/components/ui/Button'
-import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import type { ReactNode } from 'react'
 
 type Props = {
   variant?: 'primary' | 'secondary' | 'ghost'
   children?: ReactNode
+  className?: string
 }
 
-/** Links to Study Library when signed in; otherwise sign-in. */
-export function HomeExploreStudiesButton({ variant = 'secondary', children = 'Explore studies' }: Props) {
-  const { user, isReady } = useDemoAuth()
-  const href = isReady && user ? '/study-library' : '/sign-in'
-
+/** Secondary hero CTA — always opens the public study library. */
+export function HomeExploreStudiesButton({
+  variant = 'secondary',
+  children = 'Browse studies',
+  className = '',
+}: Props) {
   return (
-    <Button href={href} variant={variant}>
+    <Button href="/study-library" variant={variant} className={`w-full sm:w-auto ${className}`}>
       {children}
     </Button>
   )

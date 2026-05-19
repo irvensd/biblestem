@@ -22,6 +22,7 @@ type SupportCardProps = {
   secondaryLabel?: string
   secondaryAction?: ReactNode
   variant?: 'default' | 'muted'
+  size?: 'default' | 'compact'
   ctaVariant?: 'primary' | 'secondary'
   className?: string
 } & (
@@ -38,14 +39,16 @@ export function SupportCard(props: SupportCardProps) {
     secondaryLabel,
     secondaryAction,
     variant = 'default',
+    size = 'default',
     ctaVariant = 'secondary',
     className = '',
   } = props
 
+  const padding = size === 'compact' ? 'p-5 md:p-6' : 'p-8 md:p-10'
   const surface =
     variant === 'muted'
-      ? 'rounded-xl border border-zinc-200/90 bg-stone-50/50 p-8 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-10'
-      : 'rounded-xl border border-zinc-200/90 bg-white p-8 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-10'
+      ? `rounded-xl border border-zinc-200/90 bg-stone-50/50 shadow-sm ring-1 ring-zinc-950/[0.03] ${padding}`
+      : `rounded-xl border border-zinc-200/90 bg-white shadow-sm ring-1 ring-zinc-950/[0.03] ${padding}`
 
   // TODO: When wiring payments, set LIVE_DONATION_URL in lib/support-donation.ts and use primaryCta: 'link'.
   const primary =
@@ -60,9 +63,15 @@ export function SupportCard(props: SupportCardProps) {
   return (
     <div className={`${surface} ${className}`}>
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">{eyebrow}</p>
-      <h2 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 md:text-3xl">{title}</h2>
-      <div className="mt-4 max-w-2xl leading-relaxed text-zinc-600">{description}</div>
-      <div className="mt-8 flex flex-wrap gap-3">
+      <h2
+        className={`mt-3 font-semibold tracking-tight text-zinc-900 ${size === 'compact' ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'}`}
+      >
+        {title}
+      </h2>
+      <div className={`max-w-2xl leading-relaxed text-zinc-600 ${size === 'compact' ? 'mt-3 text-sm' : 'mt-4'}`}>
+        {description}
+      </div>
+      <div className={`flex flex-wrap gap-3 ${size === 'compact' ? 'mt-5' : 'mt-8'}`}>
         {primary}
         {secondaryAction
           ? secondaryAction
