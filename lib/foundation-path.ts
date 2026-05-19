@@ -26,6 +26,9 @@ export const FOUNDATION_GUIDED_SLUG_ORDER = [
   'faithful-in-the-wilderness',
   'the-faithful-witness',
   'the-day-of-atonement',
+  'the-first-angels-message',
+  'the-second-angels-message',
+  'the-third-angels-message',
   'the-bible-gods-living-word',
   'origin-of-evil',
 ] as const
@@ -203,7 +206,12 @@ export const FOUNDATIONS_JOURNEY_CHAPTERS: readonly {
   {
     chapterLabel: 'Chapter 7',
     title: 'Christ Our High Priest',
-    slugs: ['the-day-of-atonement'],
+    slugs: [
+      'the-day-of-atonement',
+      'the-first-angels-message',
+      'the-second-angels-message',
+      'the-third-angels-message',
+    ],
   },
 ]
 

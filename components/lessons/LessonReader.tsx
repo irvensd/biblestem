@@ -11,6 +11,7 @@ import { LessonQuizStep } from '@/components/lessons/LessonQuizStep'
 import { LessonLayout } from '@/components/lessons/LessonLayout'
 import { LessonSidebar } from '@/components/lessons/LessonSidebar'
 import { LessonStepRenderer } from '@/components/lessons/LessonStepRenderer'
+import { isFoundationLessonShellSections } from '@/lib/foundation-lesson-shell'
 import { buildLessonSteps, buildLessonStepsFromSections } from '@/lib/lesson-steps'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import { persistMarkLessonComplete, persistSaveLessonProgress } from '@/lib/dashboard-progress-sync'
@@ -44,7 +45,9 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
   const pathname = usePathname()
 
   const steps = useMemo(() => {
-    if (lesson.sections.length > 0) {
+    const hasAuthoredSections =
+      lesson.sections.length > 0 && !isFoundationLessonShellSections(lesson.sections)
+    if (hasAuthoredSections) {
       return buildLessonStepsFromSections(lesson.sections, lesson.scripture)
     }
     return buildLessonSteps(content)

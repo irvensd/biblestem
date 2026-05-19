@@ -21,6 +21,22 @@ import { ProphecyTimeline2300 } from '@/components/study/ProphecyTimeline2300'
 import { SanctuaryDiagram } from '@/components/study/SanctuaryDiagram'
 import { DayOfAtonementFlow } from '@/components/study/DayOfAtonementFlow'
 import { SweetBitterPattern } from '@/components/study/SweetBitterPattern'
+import { FirstAngelsMessageBreakdown } from '@/components/study/FirstAngelsMessageBreakdown'
+import { EverlastingGospelFlow } from '@/components/study/EverlastingGospelFlow'
+import { FearGloryJudgmentCreatorMap } from '@/components/study/FearGloryJudgmentCreatorMap'
+import { CreatorWorshipSabbathBridge } from '@/components/study/CreatorWorshipSabbathBridge'
+import { SecondAngelsMessageBreakdown } from '@/components/study/SecondAngelsMessageBreakdown'
+import { AncientBabylonPattern } from '@/components/study/AncientBabylonPattern'
+import { ChristVsBabylonContrast } from '@/components/study/ChristVsBabylonContrast'
+import { EndTimeBabylonIdentifiers } from '@/components/study/EndTimeBabylonIdentifiers'
+import { ComeOutCallFlow } from '@/components/study/ComeOutCallFlow'
+import { ThirdAngelsMessageBreakdown } from '@/components/study/ThirdAngelsMessageBreakdown'
+import { TrueWorshipVsCoercion } from '@/components/study/TrueWorshipVsCoercion'
+import { BeastPowerIdentifiers } from '@/components/study/BeastPowerIdentifiers'
+import { ImageOfBeastFormation } from '@/components/study/ImageOfBeastFormation'
+import { MarkVsSealComparison } from '@/components/study/MarkVsSealComparison'
+import { SealElementsSabbath } from '@/components/study/SealElementsSabbath'
+import { PatienceSaintsTriad } from '@/components/study/PatienceSaintsTriad'
 import { DeathResurrectionFlow } from '@/components/study/DeathResurrectionFlow'
 import { SanctuaryJourneyMap } from '@/components/study/SanctuaryJourneyMap'
 import { Button } from '@/components/ui/Button'
@@ -277,6 +293,192 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
       return (
         <SweetBitterPattern
           stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'firstAngelsMessageBreakdown':
+      return (
+        <FirstAngelsMessageBreakdown
+          sections={'sections' in block ? block.sections : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'everlastingGospelFlow':
+      return (
+        <EverlastingGospelFlow
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'fearGloryJudgmentCreatorMap':
+      return (
+        <FearGloryJudgmentCreatorMap
+          responses={'responses' in block ? block.responses : undefined}
+          centerLabel={'centerLabel' in block ? block.centerLabel : undefined}
+          centerDescription={'centerDescription' in block ? block.centerDescription : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'creatorWorshipSabbathBridge':
+      return (
+        <CreatorWorshipSabbathBridge
+          bridgePoints={'bridgePoints' in block ? block.bridgePoints : undefined}
+          revelationReference={'revelationReference' in block ? block.revelationReference : undefined}
+          revelationQuote={'revelationQuote' in block ? block.revelationQuote : undefined}
+          exodusReference={'exodusReference' in block ? block.exodusReference : undefined}
+          exodusQuote={'exodusQuote' in block ? block.exodusQuote : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'secondAngelsMessageBreakdown':
+      return (
+        <SecondAngelsMessageBreakdown
+          sections={'sections' in block ? block.sections : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'ancientBabylonPattern':
+      return (
+        <AncientBabylonPattern
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'christVsBabylonContrast':
+      return (
+        <ChristVsBabylonContrast
+          christSteps={'christSteps' in block ? block.christSteps : undefined}
+          babylonSteps={'babylonSteps' in block ? block.babylonSteps : undefined}
+          christColumnTitle={'christColumnTitle' in block ? block.christColumnTitle : undefined}
+          babylonColumnTitle={'babylonColumnTitle' in block ? block.babylonColumnTitle : undefined}
+          christScriptureRef={'christScriptureRef' in block ? block.christScriptureRef : undefined}
+          babylonScriptureRef={'babylonScriptureRef' in block ? block.babylonScriptureRef : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'endTimeBabylonIdentifiers':
+      return (
+        <EndTimeBabylonIdentifiers
+          identifiers={'identifiers' in block ? block.identifiers : undefined}
+          note={'note' in block ? block.note : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'comeOutCallFlow':
+      return (
+        <ComeOutCallFlow
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'thirdAngelsMessageBreakdown':
+      return (
+        <ThirdAngelsMessageBreakdown
+          sections={'sections' in block ? block.sections : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'trueWorshipVsCoercion':
+      return (
+        <TrueWorshipVsCoercion
+          trueWorshipSteps={'trueWorshipSteps' in block ? block.trueWorshipSteps : undefined}
+          coercedSteps={'coercedSteps' in block ? block.coercedSteps : undefined}
+          trueWorshipColumnTitle={'trueWorshipColumnTitle' in block ? block.trueWorshipColumnTitle : undefined}
+          coercedColumnTitle={'coercedColumnTitle' in block ? block.coercedColumnTitle : undefined}
+          trueWorshipScriptureRef={'trueWorshipScriptureRef' in block ? block.trueWorshipScriptureRef : undefined}
+          coercedScriptureRef={'coercedScriptureRef' in block ? block.coercedScriptureRef : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'beastPowerIdentifiers':
+      return (
+        <BeastPowerIdentifiers
+          identifiers={'identifiers' in block ? block.identifiers : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'imageOfBeastFormation':
+      return (
+        <ImageOfBeastFormation
+          stages={'stages' in block ? block.stages : undefined}
+          note={'note' in block ? block.note : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'markVsSealComparison':
+      return (
+        <MarkVsSealComparison
+          sealItems={'sealItems' in block ? block.sealItems : undefined}
+          markItems={'markItems' in block ? block.markItems : undefined}
+          sealColumnTitle={'sealColumnTitle' in block ? block.sealColumnTitle : undefined}
+          markColumnTitle={'markColumnTitle' in block ? block.markColumnTitle : undefined}
+          sealScriptureRef={'sealScriptureRef' in block ? block.sealScriptureRef : undefined}
+          markScriptureRef={'markScriptureRef' in block ? block.markScriptureRef : undefined}
+          note={'note' in block ? block.note : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'sealElementsSabbath':
+      return (
+        <SealElementsSabbath
+          elements={'elements' in block ? block.elements : undefined}
+          sourceReference={'sourceReference' in block ? block.sourceReference : undefined}
+          explanation={'explanation' in block ? block.explanation : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'patienceSaintsTriad':
+      return (
+        <PatienceSaintsTriad
+          elements={'elements' in block ? block.elements : undefined}
           highlightedIndices={block.highlightedIndices}
           title={block.title}
           subtitle={block.subtitle}

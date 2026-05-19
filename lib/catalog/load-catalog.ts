@@ -1,4 +1,5 @@
 import { cache } from 'react'
+import { FOUNDATION_GUIDED_SLUG_ORDER } from '@/lib/foundation-path'
 import { studyPaths, studySeriesCatalog } from '@/lib/product-mock'
 import { isSupabaseConfigured } from '@/lib/supabase/client'
 import { fetchCatalogFromSupabase } from '@/lib/supabase/fetch-catalog'
@@ -18,15 +19,57 @@ export function shouldShowCatalogFallbackNotice(catalog: LoadedCatalog): boolean
   return isSupabaseConfigured() && catalog.source === 'mock'
 }
 
+function cloneStudySeries(s: StudySeries): StudySeries {
+  return {
+    ...s,
+    lessons: s.lessons.map((l) => ({ ...l, sections: l.sections.map((x) => ({ ...x })) })),
+  }
+}
+
 function mockCatalog(): LoadedCatalog {
   return {
     source: 'mock',
     paths: [...studyPaths].sort((a, b) => a.sortOrder - b.sortOrder),
-    allSeries: studySeriesCatalog.map((s) => ({
-      ...s,
-      lessons: s.lessons.map((l) => ({ ...l, sections: l.sections.map((x) => ({ ...x })) })),
-    })),
+    allSeries: studySeriesCatalog.map((s) => cloneStudySeries(s)),
   }
+}
+
+/** Only supplement real Foundations journey studies, not legacy mock placeholders. */
+function isMockCatalogSupplementCandidate(series: StudySeries): boolean {
+  if (typeof series.foundationOrder === 'number') return true
+  return (FOUNDATION_GUIDED_SLUG_ORDER as readonly string[]).includes(series.slug)
+}
+
+/**
+ * When Supabase is configured but new studies exist only in the bundled mock catalog
+ * (or remote rows have no lesson rows yet), merge mock entries so browse pages stay complete.
+ */
+function supplementRemoteCatalogWithMock(remote: LoadedCatalog): LoadedCatalog {
+  const mock = mockCatalog()
+  const bySlug = new Map(remote.allSeries.map((s) => [s.slug, s]))
+
+  for (const mockSeries of mock.allSeries) {
+    if (!isMockCatalogSupplementCandidate(mockSeries)) continue
+    const existing = bySlug.get(mockSeries.slug)
+    if (!existing) {
+      bySlug.set(mockSeries.slug, cloneStudySeries(mockSeries))
+      continue
+    }
+    const remoteLessons = existing.lessons?.length ?? 0
+    const mockLessons = mockSeries.lessons.length
+    if (remoteLessons === 0 && mockLessons > 0) {
+      const merged = cloneStudySeries(mockSeries)
+      bySlug.set(mockSeries.slug, {
+        ...merged,
+        id: existing.id,
+        studyPathId: existing.studyPathId,
+        lessons: merged.lessons.map((l) => ({ ...l, studySeriesId: existing.id })),
+      })
+    }
+  }
+
+  const allSeries = [...bySlug.values()].sort((a, b) => a.sortOrder - b.sortOrder)
+  return { ...remote, allSeries }
 }
 
 /** Reuse a successful Supabase response for this long without refetching (per server instance). */
@@ -80,13 +123,13 @@ export const loadCatalog = cache(async (): Promise<LoadedCatalog> => {
     isSupabaseCatalog(catalogMemoryCache.value) &&
     now - catalogMemoryCache.fetchedAt < CATALOG_FRESH_TTL_MS
   ) {
-    return catalogMemoryCache.value
+    return supplementRemoteCatalogWithMock(catalogMemoryCache.value)
   }
 
   try {
     const remote = await fetchCatalogWithRetries()
     if (remote && remote.paths.length > 0 && remote.allSeries.length > 0) {
-      const loaded: LoadedCatalog = { source: 'supabase', ...remote }
+      const loaded = supplementRemoteCatalogWithMock({ source: 'supabase', ...remote })
       catalogMemoryCache = { value: loaded, fetchedAt: now }
       return loaded
     }
@@ -106,7 +149,7 @@ export const loadCatalog = cache(async (): Promise<LoadedCatalog> => {
     console.warn(
       `[catalog] Serving stale Supabase catalog snapshot (age ${Math.round((now - catalogMemoryCache.fetchedAt) / 1000)}s) after fetch failure`,
     )
-    return catalogMemoryCache.value
+    return supplementRemoteCatalogWithMock(catalogMemoryCache.value)
   }
 
   return mockCatalog()

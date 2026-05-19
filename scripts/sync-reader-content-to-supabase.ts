@@ -96,6 +96,13 @@ async function main() {
       console.warn(`⚠ ${slug}: no row in public.lessons — run supabase/seed.sql (or catalog migration) so this slug exists.`)
       continue
     }
+    const lessonId = data[0]!.id as string
+    const { error: sectionErr } = await supabase.from('lesson_sections').delete().eq('lesson_id', lessonId)
+    if (sectionErr) {
+      console.error(`✗ ${slug} (lesson_sections):`, sectionErr.message)
+      process.exitCode = 1
+      continue
+    }
     console.log(`✓ ${slug} → ${data[0]!.title}`)
   }
 

@@ -517,6 +517,75 @@ insert into public.study_series (
   id, study_path_id, slug, title, description, short_description, long_description,
   level, duration_summary, lessons_count, featured, collection_label, sort_order
 ) values (
+  'e4000001-0000-4000-8000-000000000084',
+  'b1000001-0000-4000-8000-000000000001',
+  'the-first-angels-message',
+  'The First Angel''s Message',
+  'The First Angel''s Message explores Revelation 14:6-7 as God''s end-time gospel proclamation to every person on earth.' || E'\n\n' ||
+  'This study breaks the first angel''s message into five major parts: the everlasting gospel, fear God, give glory to Him, the hour of His judgment has come, and worship Him who made heaven and earth.' || E'\n\n' ||
+  'The study shows that the everlasting gospel reveals God''s righteous character, that fearing God means standing in awe of His goodness, that giving Him glory means reflecting and proclaiming His character, that the judgment is good news for those who trust Christ, and that worshiping the Creator points directly to the Sabbath and the rest we have in Jesus.',
+  'The first angel''s message calls the world to receive the everlasting gospel, stand in awe of God, give Him glory, recognize the judgment hour, and worship the Creator.',
+  'The First Angel''s Message explores Revelation 14:6-7 as God''s end-time gospel proclamation to every person on earth.' || E'\n\n' ||
+  'This study breaks the first angel''s message into five major parts: the everlasting gospel, fear God, give glory to Him, the hour of His judgment has come, and worship Him who made heaven and earth.' || E'\n\n' ||
+  'The study shows that the everlasting gospel reveals God''s righteous character, that fearing God means standing in awe of His goodness, that giving Him glory means reflecting and proclaiming His character, that the judgment is good news for those who trust Christ, and that worshiping the Creator points directly to the Sabbath and the rest we have in Jesus.',
+  'Beginner',
+  'Approx. 70–85 min total',
+  7,
+  false,
+  'Foundational Studies',
+  22
+);
+
+insert into public.study_series (
+  id, study_path_id, slug, title, description, short_description, long_description,
+  level, duration_summary, lessons_count, featured, collection_label, sort_order
+) values (
+  'e4000001-0000-4000-8000-000000000085',
+  'b1000001-0000-4000-8000-000000000001',
+  'the-second-angels-message',
+  'The Second Angel''s Message',
+  'The Second Angel''s Message explores Revelation 14:8 and the Bible''s unfolding picture of Babylon as a symbol of religious confusion, self-exaltation, coercion, false worship, and opposition to God''s character.' || E'\n\n' ||
+  'This study begins with ancient Babylon, from Babel to Nebuchadnezzar and Belshazzar, showing how Babylon represents human systems that attempt to save themselves, exalt themselves, and control others. It then moves to end-time Babylon in Revelation 17 and 18, showing how false religion misrepresents God while claiming to represent Him.' || E'\n\n' ||
+  'Students will learn that the fall of Babylon is not merely about identifying a system "out there," but about rejecting every Babylonian principle in the human heart: pride, self-justification, coercion, religious control, and distorted pictures of God. The second angel''s message calls people out of confusion and into the beautiful light of God''s self-giving, non-coercive love revealed in Jesus.',
+  'The second angel''s message exposes Babylon''s confusion and calls God''s people out of false religion into the light of God''s self-giving love revealed in Christ.',
+  'The Second Angel''s Message explores Revelation 14:8 and the Bible''s unfolding picture of Babylon as a symbol of religious confusion, self-exaltation, coercion, false worship, and opposition to God''s character.' || E'\n\n' ||
+  'This study begins with ancient Babylon, from Babel to Nebuchadnezzar and Belshazzar, showing how Babylon represents human systems that attempt to save themselves, exalt themselves, and control others. It then moves to end-time Babylon in Revelation 17 and 18, showing how false religion misrepresents God while claiming to represent Him.' || E'\n\n' ||
+  'Students will learn that the fall of Babylon is not merely about identifying a system "out there," but about rejecting every Babylonian principle in the human heart: pride, self-justification, coercion, religious control, and distorted pictures of God. The second angel''s message calls people out of confusion and into the beautiful light of God''s self-giving, non-coercive love revealed in Jesus.',
+  'Beginner',
+  'Approx. 75–90 min total',
+  7,
+  false,
+  'Foundational Studies',
+  23
+);
+
+insert into public.study_series (
+  id, study_path_id, slug, title, description, short_description, long_description,
+  level, duration_summary, lessons_count, featured, collection_label, sort_order
+) values (
+  'e4000001-0000-4000-8000-000000000086',
+  'b1000001-0000-4000-8000-000000000001',
+  'the-third-angels-message',
+  'The Third Angel''s Message',
+  'The Third Angel''s Message explores Revelation 14:9-12 as God''s urgent warning against false worship, coercion, and the mark of the beast.' || E'\n\n' ||
+  'This study presents the third angel''s message through the lens of God''s non-coercive love. Students will see that true worship cannot be forced, because love is the only valid motive for worship. The study explains the beast, the image of the beast, the mark of the beast, the seal of God, the Sabbath as God''s sign, and the faithful resistance of those who keep the commandments of God and the faith of Jesus.' || E'\n\n' ||
+  'The study avoids fear-based sensationalism and instead focuses on the central issue: worship, freedom, allegiance, and the character of God. It shows that any religious or political system that uses civil power to force worship does not represent the God revealed in Jesus Christ. The final call is not panic, but faithful love.',
+  'The third angel''s message warns against coerced worship and calls God''s people to remain faithful to Jesus, His commandments, and the liberty of love.',
+  'The Third Angel''s Message explores Revelation 14:9-12 as God''s urgent warning against false worship, coercion, and the mark of the beast.' || E'\n\n' ||
+  'This study presents the third angel''s message through the lens of God''s non-coercive love. Students will see that true worship cannot be forced, because love is the only valid motive for worship. The study explains the beast, the image of the beast, the mark of the beast, the seal of God, the Sabbath as God''s sign, and the faithful resistance of those who keep the commandments of God and the faith of Jesus.' || E'\n\n' ||
+  'The study avoids fear-based sensationalism and instead focuses on the central issue: worship, freedom, allegiance, and the character of God. It shows that any religious or political system that uses civil power to force worship does not represent the God revealed in Jesus Christ. The final call is not panic, but faithful love.',
+  'Beginner',
+  'Approx. 80–95 min total',
+  7,
+  false,
+  'Foundational Studies',
+  24
+);
+
+insert into public.study_series (
+  id, study_path_id, slug, title, description, short_description, long_description,
+  level, duration_summary, lessons_count, featured, collection_label, sort_order
+) values (
   'e4000001-0000-4000-8000-000000000020',
   'b1000001-0000-4000-8000-000000000002',
   'three-angels-messages',
@@ -2577,6 +2646,237 @@ insert into public.lessons (
     'Because Jesus is our High Priest and Mediator, believers can face the judgment with confidence, assurance, and love.',
     12,
     '1 John 4:16-18 · Hebrews 6:18-20 · Hebrews 10:19-23 · Romans 8:31-34',
+    7,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000940',
+    'e4000001-0000-4000-8000-000000000084',
+    'to-every-person-on-earth',
+    'To Every Person on Earth',
+    'Revelation 14 introduces God''s final worldwide message, carried by His people to every nation, kindred, tongue, and people.',
+    12,
+    'Revelation 14:6-7 · Matthew 24:14 · Revelation 14:14-20 · Mark 16:15 · Acts 1:8',
+    1,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000941',
+    'e4000001-0000-4000-8000-000000000084',
+    'the-everlasting-gospel',
+    'The Everlasting Gospel',
+    'The first angel''s message begins with the everlasting gospel, the good news of God''s faithful love revealed in Jesus.',
+    12,
+    'Revelation 14:6 · Jeremiah 31:3 · Romans 1:16-17 · Romans 3:20-31 · 1 Corinthians 15:1-4',
+    2,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000942',
+    'e4000001-0000-4000-8000-000000000084',
+    'fear-god',
+    'Fear God',
+    'To fear God in the light of the gospel means to stand in awe of His mercy, goodness, holiness, and faithful love.',
+    12,
+    'Revelation 14:7 · Psalm 130:4 · Psalm 33:8 · 1 John 4:16-19 · Ecclesiastes 12:13',
+    3,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000943',
+    'e4000001-0000-4000-8000-000000000084',
+    'give-glory-to-him',
+    'Give Glory to Him',
+    'Giving glory to God means magnifying His character in our words, worship, choices, and witness.',
+    12,
+    'Revelation 14:7 · Exodus 33:18-19 · Matthew 5:16 · 1 Corinthians 10:31 · 2 Corinthians 4:6',
+    4,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000944',
+    'e4000001-0000-4000-8000-000000000084',
+    'the-hour-of-his-judgment',
+    'The Hour of His Judgment',
+    'The first angel announces the judgment hour as good news because God''s judgment is just, loving, and made in favor of His people.',
+    12,
+    'Revelation 14:7 · Daniel 7:9-14 · Daniel 7:21-22 · Acts 17:31 · 1 John 4:17-18',
+    5,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000945',
+    'e4000001-0000-4000-8000-000000000084',
+    'worship-the-creator',
+    'Worship the Creator',
+    'The first angel calls the world back to Creator worship, echoing the Sabbath commandment and the rest found in Christ.',
+    12,
+    'Revelation 14:7 · Exodus 20:8-11 · Genesis 2:1-3 · Colossians 1:16-17 · Mark 2:27-28',
+    6,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000946',
+    'e4000001-0000-4000-8000-000000000084',
+    'the-gospel-that-changes-everything',
+    'The Gospel That Changes Everything',
+    'The first angel''s message is a complete paradigm shift, calling us to receive God''s faithful love and share the good news with the world.',
+    12,
+    'Revelation 14:6-7 · 2 Corinthians 3:18 · 2 Corinthians 4:3-6 · Romans 12:1-2 · Matthew 5:14-16',
+    7,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000947',
+    'e4000001-0000-4000-8000-000000000085',
+    'babylon-is-fallen',
+    'Babylon Is Fallen',
+    'The second angel announces the fall of Babylon, a symbol of religious confusion that misrepresents God and intoxicates the nations.',
+    11,
+    'Revelation 14:8 · Revelation 18:1-5 · Genesis 11:1-9 · Jeremiah 51:6-9 · 2 Corinthians 4:3-6',
+    1,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000948',
+    'e4000001-0000-4000-8000-000000000085',
+    'the-spirit-of-ancient-babylon',
+    'The Spirit of Ancient Babylon',
+    'Ancient Babylon reveals the core principles of rebellion, self-exaltation, confusion, forced worship, and human systems of salvation.',
+    11,
+    'Genesis 10:8-10 · Genesis 11:1-9 · Daniel 3:1-6 · Daniel 4:30 · Daniel 5:22-28',
+    2,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000949',
+    'e4000001-0000-4000-8000-000000000085',
+    'the-way-of-self-exaltation',
+    'The Way of Self-Exaltation',
+    'Babylon follows the upward path of self-exaltation, while Jesus reveals the downward path of humility and self-giving love.',
+    11,
+    'Isaiah 14:12-15 · Philippians 2:5-11 · Matthew 23:11-12 · Luke 14:11 · James 4:6-10',
+    3,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-00000000094a',
+    'e4000001-0000-4000-8000-000000000085',
+    'end-time-babylon',
+    'End-Time Babylon',
+    'Revelation 17 identifies end-time Babylon as a global religious-political system that claims to represent God while opposing His character.',
+    11,
+    'Revelation 17:1-6 · Revelation 17:15 · Revelation 17:18 · John 10:33 · Mark 2:7',
+    4,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-00000000094b',
+    'e4000001-0000-4000-8000-000000000085',
+    'confusion-about-god',
+    'Confusion About God',
+    'Babylon''s worst damage is not merely political or historical, but theological: it fills the world with dark confusion about God''s character.',
+    11,
+    'Revelation 18:1-3 · 2 Corinthians 4:3-6 · John 14:9 · Matthew 11:28-30 · Romans 8:15',
+    5,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-00000000094c',
+    'e4000001-0000-4000-8000-000000000085',
+    'come-out-of-her-my-people',
+    'Come Out of Her, My People',
+    'God calls His people out of Babylon, not because He hates the people inside it, but because He loves them and wants them free.',
+    11,
+    'Revelation 18:4-5 · Hosea 2:23 · John 10:16 · 2 Corinthians 6:14-18 · John 8:31-36',
+    6,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-00000000094d',
+    'e4000001-0000-4000-8000-000000000085',
+    'babylon-out-of-me',
+    'Babylon Out of Me',
+    'The second angel''s message calls us not only to leave false systems, but to let God remove pride, control, and self-exaltation from our hearts.',
+    11,
+    'Revelation 18:7 · Romans 8:7 · Philippians 2:5-11 · Galatians 5:13-15 · John 13:34-35',
+    7,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-00000000094e',
+    'e4000001-0000-4000-8000-000000000086',
+    'true-worship-cannot-be-forced',
+    'True Worship Cannot Be Forced',
+    'The third angel''s message warns against coerced worship because true worship can only be awakened by love.',
+    12,
+    'Revelation 14:9-12 · 1 John 4:8 · 1 John 4:19 · 2 Corinthians 3:17 · John 4:23-24',
+    1,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-00000000094f',
+    'e4000001-0000-4000-8000-000000000086',
+    'the-beast-and-his-authority',
+    'The Beast and His Authority',
+    'Revelation 13 identifies the beast as a power that rises from the nations, receives authority from the dragon, blasphemes God, and persecutes the saints.',
+    12,
+    'Revelation 13:1-10 · Daniel 7:17, 23 · Revelation 17:15 · Revelation 12:9 · Daniel 7:21-25',
+    2,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000950',
+    'e4000001-0000-4000-8000-000000000086',
+    'the-image-of-the-beast',
+    'The Image of the Beast',
+    'The image of the beast forms when civil power is used to enforce religious authority and compel worship.',
+    12,
+    'Revelation 13:11-15 · Revelation 14:9 · Daniel 3:1-6 · Matthew 13:24-30 · John 18:36',
+    3,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000951',
+    'e4000001-0000-4000-8000-000000000086',
+    'the-mark-of-the-beast',
+    'The Mark of the Beast',
+    'The mark of the beast is connected to worship, allegiance, civil enforcement, and human authority placed against God''s authority.',
+    12,
+    'Revelation 13:16-17 · Revelation 14:9-10 · Exodus 20:8-11 · Ezekiel 20:12, 20 · Romans 6:16',
+    4,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000952',
+    'e4000001-0000-4000-8000-000000000086',
+    'the-seal-of-god',
+    'The Seal of God',
+    'The seal of God points to God''s authority, His law written in the heart, and the Sabbath as a sign of creation, redemption, and sanctification.',
+    12,
+    'Revelation 7:1-3 · Deuteronomy 6:4-9 · Ezekiel 20:12, 20 · Ephesians 1:13-14 · Exodus 20:8-11',
+    5,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000953',
+    'e4000001-0000-4000-8000-000000000086',
+    'the-patience-of-the-saints',
+    'The Patience of the Saints',
+    'God''s end-time people endure by the faith of Jesus, keeping God''s commandments through love rather than fear.',
+    12,
+    'Revelation 14:12 · Galatians 5:5-6 · John 14:15 · Hebrews 10:35-39 · James 5:7-11',
+    6,
+    null
+  ),
+  (
+    'd3000007-0000-4000-8000-000000000954',
+    'e4000001-0000-4000-8000-000000000086',
+    'liberty-love-and-final-worship',
+    'Liberty, Love, and Final Worship',
+    'The final crisis reveals whether our worship is motivated by coercion, fear, and human authority, or by love, freedom, and loyalty to Jesus.',
+    12,
+    'Revelation 14:9-12 · 2 Corinthians 3:17 · John 8:36 · 1 John 4:18-19 · John 13:34-35',
     7,
     null
   );

@@ -29,4 +29,10 @@ export const FOUNDATION_STUDY_TEASER_BY_SLUG: Readonly<Record<string, string>> =
     'God\'s end-time people preserve His commandments, point to Jesus, and witness to His character with humility and love.',
   'the-day-of-atonement':
     'Jesus is our heavenly High Priest, ministering for us in the final phase of redemption and bringing full resolution to the sin problem.',
+  'the-first-angels-message':
+    'The first angel\'s message calls the world to receive the everlasting gospel, stand in awe of God, give Him glory, recognize the judgment hour, and worship the Creator.',
+  'the-second-angels-message':
+    'The second angel\'s message exposes Babylon\'s confusion and calls God\'s people out of false religion into the light of God\'s self-giving love revealed in Christ.',
+  'the-third-angels-message':
+    'The third angel\'s message warns against coerced worship and calls God\'s people to remain faithful to Jesus, His commandments, and the liberty of love.',
 }

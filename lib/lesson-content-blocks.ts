@@ -10,6 +10,22 @@ import type { RemnantWitnessPatternStageData } from '@/lib/remnant-witness-patte
 import type { SweetBitterPatternStageData } from '@/lib/sweet-bitter-pattern-stages'
 import type { DayOfAtonementFlowStageData } from '@/lib/day-of-atonement-flow-stages'
 import type { SanctuaryDiagramAreaData } from '@/lib/sanctuary-diagram-stages'
+import type { FirstAngelsMessageBreakdownSectionData } from '@/lib/first-angels-message-breakdown-stages'
+import type { EverlastingGospelFlowStageData } from '@/lib/everlasting-gospel-flow-stages'
+import type { FearGloryJudgmentCreatorResponseData } from '@/lib/fear-glory-judgment-creator-map-stages'
+import type { CreatorWorshipSabbathBridgePointData } from '@/lib/creator-worship-sabbath-bridge-stages'
+import type { SecondAngelsMessageBreakdownSectionData } from '@/lib/second-angels-message-breakdown-stages'
+import type { AncientBabylonPatternStageData } from '@/lib/ancient-babylon-pattern-stages'
+import type { ChristVsBabylonContrastStepData } from '@/lib/christ-vs-babylon-contrast-stages'
+import type { EndTimeBabylonIdentifierData } from '@/lib/end-time-babylon-identifiers-stages'
+import type { ComeOutCallFlowStageData } from '@/lib/come-out-call-flow-stages'
+import type { ThirdAngelsMessageBreakdownSectionData } from '@/lib/third-angels-message-breakdown-stages'
+import type { TrueWorshipVsCoercionStepData } from '@/lib/true-worship-vs-coercion-stages'
+import type { BeastPowerIdentifierData } from '@/lib/beast-power-identifiers-stages'
+import type { ImageOfBeastFormationStageData } from '@/lib/image-of-beast-formation-stages'
+import type { MarkVsSealComparisonItemData } from '@/lib/mark-vs-seal-comparison-stages'
+import type { SealElementsSabbathElementData } from '@/lib/seal-elements-sabbath-stages'
+import type { PatienceSaintsTriadElementData } from '@/lib/patience-saints-triad-stages'
 import type { DeathResurrectionStageData } from '@/lib/death-resurrection-flow-stages'
 import type { SanctuaryJourneyStageData } from '@/lib/sanctuary-journey-stages'
 import type { ProphecyTimelineItem } from '@/lib/prophecy-timeline-types'
@@ -271,6 +287,160 @@ export type LessonContentBlock =
       subtitle?: string
       caption?: string
       stages?: SweetBitterPatternStageData[]
+    }
+  | {
+      type: 'firstAngelsMessageBreakdown'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      sections?: FirstAngelsMessageBreakdownSectionData[]
+    }
+  | {
+      type: 'everlastingGospelFlow'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: EverlastingGospelFlowStageData[]
+    }
+  | {
+      type: 'fearGloryJudgmentCreatorMap'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      centerLabel?: string
+      centerDescription?: string
+      responses?: FearGloryJudgmentCreatorResponseData[]
+    }
+  | {
+      type: 'creatorWorshipSabbathBridge'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      revelationReference?: string
+      revelationQuote?: string
+      exodusReference?: string
+      exodusQuote?: string
+      bridgePoints?: CreatorWorshipSabbathBridgePointData[]
+    }
+  | {
+      type: 'secondAngelsMessageBreakdown'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      sections?: SecondAngelsMessageBreakdownSectionData[]
+    }
+  | {
+      type: 'ancientBabylonPattern'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: AncientBabylonPatternStageData[]
+    }
+  | {
+      type: 'christVsBabylonContrast'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      christSteps?: ChristVsBabylonContrastStepData[]
+      babylonSteps?: ChristVsBabylonContrastStepData[]
+      christColumnTitle?: string
+      babylonColumnTitle?: string
+      christScriptureRef?: string
+      babylonScriptureRef?: string
+    }
+  | {
+      type: 'endTimeBabylonIdentifiers'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      note?: string
+      identifiers?: EndTimeBabylonIdentifierData[]
+    }
+  | {
+      type: 'comeOutCallFlow'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: ComeOutCallFlowStageData[]
+    }
+  | {
+      type: 'thirdAngelsMessageBreakdown'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      sections?: ThirdAngelsMessageBreakdownSectionData[]
+    }
+  | {
+      type: 'trueWorshipVsCoercion'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      trueWorshipSteps?: TrueWorshipVsCoercionStepData[]
+      coercedSteps?: TrueWorshipVsCoercionStepData[]
+      trueWorshipColumnTitle?: string
+      coercedColumnTitle?: string
+      trueWorshipScriptureRef?: string
+      coercedScriptureRef?: string
+    }
+  | {
+      type: 'beastPowerIdentifiers'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      identifiers?: BeastPowerIdentifierData[]
+    }
+  | {
+      type: 'imageOfBeastFormation'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      note?: string
+      stages?: ImageOfBeastFormationStageData[]
+    }
+  | {
+      type: 'markVsSealComparison'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      note?: string
+      sealItems?: MarkVsSealComparisonItemData[]
+      markItems?: MarkVsSealComparisonItemData[]
+      sealColumnTitle?: string
+      markColumnTitle?: string
+      sealScriptureRef?: string
+      markScriptureRef?: string
+    }
+  | {
+      type: 'sealElementsSabbath'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      sourceReference?: string
+      elements?: SealElementsSabbathElementData[]
+      explanation?: string
+    }
+  | {
+      type: 'patienceSaintsTriad'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      elements?: PatienceSaintsTriadElementData[]
     }
   | { type: 'studyCta'; label: string; href: string }
   | StudyVisualLessonBlock

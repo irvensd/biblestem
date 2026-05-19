@@ -1042,70 +1042,6 @@ const seriesKnowingChristInScripture: StudySeries = {
   lessons: [lessonKC1, lessonKC2, lessonKC3],
 }
 
-const lessonFaith1: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000211',
-  slug: 'when-faith-feels-quiet',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000040',
-  title: 'When Faith Feels Quiet',
-  summary: 'Honest faith on ordinary days, without performance or noise.',
-  durationMinutes: 9,
-  scripture: 'Psalm 23 · Matthew 11:28 to 30',
-  sortOrder: 1,
-  progressState: 'not_started',
-  sections: [],
-}
-
-const lessonFaith2: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000212',
-  slug: 'words-that-heal-at-home',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000040',
-  title: 'Words That Heal at Home',
-  summary: 'Small shifts in speech that honor Christ in close relationships.',
-  durationMinutes: 9,
-  scripture: 'Proverbs 15:1 · Ephesians 4:29',
-  sortOrder: 2,
-  progressState: 'not_started',
-  sections: [],
-}
-
-const lessonFaith3: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000213',
-  slug: 'generosity-without-drama',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000040',
-  title: 'Generosity Without Drama',
-  summary: 'Simple generosity as a response to grace, not a bid for approval.',
-  durationMinutes: 9,
-  scripture: '2 Corinthians 9:7 · 1 Timothy 6:18',
-  sortOrder: 3,
-  progressState: 'not_started',
-  sections: [],
-}
-
-const seriesFaithThatShowsUp: StudySeries = {
-  id: 'e4000001-0000-4000-8000-000000000040',
-  slug: 'faith-that-shows-up',
-  studyPathId: 'b1000001-0000-4000-8000-000000000001',
-  title: 'Faith That Shows Up',
-  subtitle: 'Letting Scripture reshape habits, words, and money.',
-  shortDescription:
-    'A practical series for believers who want faith to be credible in real rooms: calm trust, kind speech, and open hands.',
-  description:
-    'A practical series for believers who want faith to be credible in real rooms: calm trust, kind speech, and open hands.',
-  level: 'Beginner',
-  durationSummary: '27 min total',
-  lessonsCount: 3,
-  featured: false,
-  collectionLabel: 'Foundational Studies',
-  sortOrder: 2,
-  whatYouWillLearn: [
-    'Name the difference between quiet trust and spiritual performance.',
-    'Apply a few Proverbs-shaped habits in family conversation.',
-    'Let generosity grow from gratitude rather than guilt.',
-    'Keep application small, repeatable, and grounded in prayer.',
-  ],
-  lessons: [lessonFaith1, lessonFaith2, lessonFaith3],
-}
-
 const lessonTgwk1: Lesson = {
   id: 'd3000007-0000-4000-8000-000000000701',
   slug: 'why-names-matter',
@@ -3907,6 +3843,534 @@ const seriesTheDayOfAtonement: StudySeries = {
   ],
 }
 
+const THE_FIRST_ANGELS_MESSAGE_STUDY_SLUG = 'the-first-angels-message'
+const THE_FIRST_ANGELS_MESSAGE_OVERVIEW_HREF = `/study-library/${THE_FIRST_ANGELS_MESSAGE_STUDY_SLUG}`
+const SERIES_ID_THE_FIRST_ANGELS_MESSAGE = 'e4000001-0000-4000-8000-000000000084'
+
+const THE_FIRST_ANGELS_MESSAGE_SECTION_IDS = {
+  lesson1: 'eab2bf01-0000-41b7-921d-d30009252215',
+  lesson2: 'eab2bf01-0000-41b7-921e-d30009252316',
+  lesson3: 'eab2bf01-0000-41b7-921f-d30009252417',
+  lesson4: 'eab2bf01-0000-41b7-9220-d30009252518',
+  lesson5: 'eab2bf01-0000-41b7-9221-d30009252619',
+  lesson6: 'eab2bf01-0000-41b7-9222-d30009252720',
+  lesson7: 'eab2bf01-0000-41b7-9223-d30009252821',
+} as const
+
+const theFirstAngelsMessageLessonShellSection = (
+  sectionId: string,
+  lessonId: string,
+  extra?: Parameters<typeof foundationLessonShellSection>[3],
+) =>
+  foundationLessonShellSection(lessonId, sectionId, THE_FIRST_ANGELS_MESSAGE_OVERVIEW_HREF, {
+    placeholderText: PLACEHOLDER_BODY,
+    ...extra,
+  })
+
+const lessonTheFirstAngelsMessage1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000940',
+  slug: 'to-every-person-on-earth',
+  studySeriesId: SERIES_ID_THE_FIRST_ANGELS_MESSAGE,
+  title: 'To Every Person on Earth',
+  summary:
+    'Revelation 14 introduces God\'s final worldwide message, carried by His people to every nation, kindred, tongue, and people.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:6-7 · Matthew 24:14 · Revelation 14:14-20 · Mark 16:15 · Acts 1:8',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFirstAngelsMessage2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000941',
+  slug: 'the-everlasting-gospel',
+  studySeriesId: SERIES_ID_THE_FIRST_ANGELS_MESSAGE,
+  title: 'The Everlasting Gospel',
+  summary:
+    'The first angel\'s message begins with the everlasting gospel, the good news of God\'s faithful love revealed in Jesus.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:6 · Jeremiah 31:3 · Romans 1:16-17 · Romans 3:20-31 · 1 Corinthians 15:1-4',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFirstAngelsMessage3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000942',
+  slug: 'fear-god',
+  studySeriesId: SERIES_ID_THE_FIRST_ANGELS_MESSAGE,
+  title: 'Fear God',
+  summary:
+    'To fear God in the light of the gospel means to stand in awe of His mercy, goodness, holiness, and faithful love.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:7 · Psalm 130:4 · Psalm 33:8 · 1 John 4:16-19 · Ecclesiastes 12:13',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFirstAngelsMessage4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000943',
+  slug: 'give-glory-to-him',
+  studySeriesId: SERIES_ID_THE_FIRST_ANGELS_MESSAGE,
+  title: 'Give Glory to Him',
+  summary:
+    'Giving glory to God means magnifying His character in our words, worship, choices, and witness.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:7 · Exodus 33:18-19 · Matthew 5:16 · 1 Corinthians 10:31 · 2 Corinthians 4:6',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFirstAngelsMessage5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000944',
+  slug: 'the-hour-of-his-judgment',
+  studySeriesId: SERIES_ID_THE_FIRST_ANGELS_MESSAGE,
+  title: 'The Hour of His Judgment',
+  summary:
+    'The first angel announces the judgment hour as good news because God\'s judgment is just, loving, and made in favor of His people.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:7 · Daniel 7:9-14 · Daniel 7:21-22 · Acts 17:31 · 1 John 4:17-18',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFirstAngelsMessage6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000945',
+  slug: 'worship-the-creator',
+  studySeriesId: SERIES_ID_THE_FIRST_ANGELS_MESSAGE,
+  title: 'Worship the Creator',
+  summary:
+    'The first angel calls the world back to Creator worship, echoing the Sabbath commandment and the rest found in Christ.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:7 · Exodus 20:8-11 · Genesis 2:1-3 · Colossians 1:16-17 · Mark 2:27-28',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheFirstAngelsMessage7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000946',
+  slug: 'the-gospel-that-changes-everything',
+  studySeriesId: SERIES_ID_THE_FIRST_ANGELS_MESSAGE,
+  title: 'The Gospel That Changes Everything',
+  summary:
+    'The first angel\'s message is a complete paradigm shift, calling us to receive God\'s faithful love and share the good news with the world.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:6-7 · 2 Corinthians 3:18 · 2 Corinthians 4:3-6 · Romans 12:1-2 · Matthew 5:14-16',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theFirstAngelsMessageLongDescription = `The First Angel's Message explores Revelation 14:6-7 as God's end-time gospel proclamation to every person on earth.
+
+This study breaks the first angel's message into five major parts: the everlasting gospel, fear God, give glory to Him, the hour of His judgment has come, and worship Him who made heaven and earth. Students will see that this message is not fear-based religion, but good news rooted in the faithful love of God revealed in Jesus Christ.
+
+The study shows that the everlasting gospel reveals God's righteous character, that fearing God means standing in awe of His goodness, that giving Him glory means reflecting and proclaiming His character, that the judgment is good news for those who trust Christ, and that worshiping the Creator points directly to the Sabbath and the rest we have in Jesus.`
+
+const seriesTheFirstAngelsMessage: StudySeries = {
+  id: SERIES_ID_THE_FIRST_ANGELS_MESSAGE,
+  slug: THE_FIRST_ANGELS_MESSAGE_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The First Angel\'s Message',
+  subtitle: 'God\'s end-time gospel call to every nation through Revelation 14:6-7.',
+  shortDescription:
+    'The first angel\'s message calls the world to receive the everlasting gospel, stand in awe of God, give Him glory, recognize the judgment hour, and worship the Creator.',
+  longDescription: theFirstAngelsMessageLongDescription,
+  description: theFirstAngelsMessageLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 70–85 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 22,
+  foundationOrder: 21,
+  whatYouWillLearn: [
+    'Themes: first angel\'s message, Revelation 14, everlasting gospel, fear God, give glory to God, judgment, worship the Creator, Sabbath, gospel, righteousness of God, end-time message, three angels\' messages, Jesus, character of God, Creator worship.',
+    'See Revelation 14:6-7 as good news rooted in God\'s faithful love revealed in Jesus.',
+    'Understand fear, glory, judgment, and Creator worship as gospel-shaped responses, not fear-based religion.',
+    'Connect Creator worship to the Sabbath and the rest found in Christ with humility and clarity.',
+  ],
+  lessons: [
+    lessonTheFirstAngelsMessage1,
+    lessonTheFirstAngelsMessage2,
+    lessonTheFirstAngelsMessage3,
+    lessonTheFirstAngelsMessage4,
+    lessonTheFirstAngelsMessage5,
+    lessonTheFirstAngelsMessage6,
+    lessonTheFirstAngelsMessage7,
+  ],
+}
+
+const THE_SECOND_ANGELS_MESSAGE_STUDY_SLUG = 'the-second-angels-message'
+const THE_SECOND_ANGELS_MESSAGE_OVERVIEW_HREF = `/study-library/${THE_SECOND_ANGELS_MESSAGE_STUDY_SLUG}`
+const SERIES_ID_THE_SECOND_ANGELS_MESSAGE = 'e4000001-0000-4000-8000-000000000085'
+
+const THE_SECOND_ANGELS_MESSAGE_SECTION_IDS = {
+  lesson1: 'eab2bf01-0000-41b7-9224-d30009252922',
+  lesson2: 'eab2bf01-0000-41b7-9225-d30009253023',
+  lesson3: 'eab2bf01-0000-41b7-9226-d30009253124',
+  lesson4: 'eab2bf01-0000-41b7-9227-d30009253225',
+  lesson5: 'eab2bf01-0000-41b7-9228-d30009253326',
+  lesson6: 'eab2bf01-0000-41b7-9229-d30009253427',
+  lesson7: 'eab2bf01-0000-41b7-922a-d30009253528',
+} as const
+
+const theSecondAngelsMessageLessonShellSection = (
+  sectionId: string,
+  lessonId: string,
+  extra?: Parameters<typeof foundationLessonShellSection>[3],
+) =>
+  foundationLessonShellSection(lessonId, sectionId, THE_SECOND_ANGELS_MESSAGE_OVERVIEW_HREF, {
+    placeholderText: PLACEHOLDER_BODY,
+    ...extra,
+  })
+
+const lessonTheSecondAngelsMessage1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000947',
+  slug: 'babylon-is-fallen',
+  studySeriesId: SERIES_ID_THE_SECOND_ANGELS_MESSAGE,
+  title: 'Babylon Is Fallen',
+  summary:
+    'The second angel announces the fall of Babylon, a symbol of religious confusion that misrepresents God and intoxicates the nations.',
+  durationMinutes: 11,
+  scripture:
+    'Revelation 14:8 · Revelation 18:1-5 · Genesis 11:1-9 · Jeremiah 51:6-9 · 2 Corinthians 4:3-6',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheSecondAngelsMessage2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000948',
+  slug: 'the-spirit-of-ancient-babylon',
+  studySeriesId: SERIES_ID_THE_SECOND_ANGELS_MESSAGE,
+  title: 'The Spirit of Ancient Babylon',
+  summary:
+    'Ancient Babylon reveals the core principles of rebellion, self-exaltation, confusion, forced worship, and human systems of salvation.',
+  durationMinutes: 11,
+  scripture:
+    'Genesis 10:8-10 · Genesis 11:1-9 · Daniel 3:1-6 · Daniel 4:30 · Daniel 5:22-28',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheSecondAngelsMessage3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000949',
+  slug: 'the-way-of-self-exaltation',
+  studySeriesId: SERIES_ID_THE_SECOND_ANGELS_MESSAGE,
+  title: 'The Way of Self-Exaltation',
+  summary:
+    'Babylon follows the upward path of self-exaltation, while Jesus reveals the downward path of humility and self-giving love.',
+  durationMinutes: 11,
+  scripture:
+    'Isaiah 14:12-15 · Philippians 2:5-11 · Matthew 23:11-12 · Luke 14:11 · James 4:6-10',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheSecondAngelsMessage4: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000094a',
+  slug: 'end-time-babylon',
+  studySeriesId: SERIES_ID_THE_SECOND_ANGELS_MESSAGE,
+  title: 'End-Time Babylon',
+  summary:
+    'Revelation 17 identifies end-time Babylon as a global religious-political system that claims to represent God while opposing His character.',
+  durationMinutes: 11,
+  scripture:
+    'Revelation 17:1-6 · Revelation 17:15 · Revelation 17:18 · John 10:33 · Mark 2:7',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheSecondAngelsMessage5: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000094b',
+  slug: 'confusion-about-god',
+  studySeriesId: SERIES_ID_THE_SECOND_ANGELS_MESSAGE,
+  title: 'Confusion About God',
+  summary:
+    'Babylon\'s worst damage is not merely political or historical, but theological: it fills the world with dark confusion about God\'s character.',
+  durationMinutes: 11,
+  scripture:
+    'Revelation 18:1-3 · 2 Corinthians 4:3-6 · John 14:9 · Matthew 11:28-30 · Romans 8:15',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheSecondAngelsMessage6: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000094c',
+  slug: 'come-out-of-her-my-people',
+  studySeriesId: SERIES_ID_THE_SECOND_ANGELS_MESSAGE,
+  title: 'Come Out of Her, My People',
+  summary:
+    'God calls His people out of Babylon, not because He hates the people inside it, but because He loves them and wants them free.',
+  durationMinutes: 11,
+  scripture:
+    'Revelation 18:4-5 · Hosea 2:23 · John 10:16 · 2 Corinthians 6:14-18 · John 8:31-36',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheSecondAngelsMessage7: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000094d',
+  slug: 'babylon-out-of-me',
+  studySeriesId: SERIES_ID_THE_SECOND_ANGELS_MESSAGE,
+  title: 'Babylon Out of Me',
+  summary:
+    'The second angel\'s message calls us not only to leave false systems, but to let God remove pride, control, and self-exaltation from our hearts.',
+  durationMinutes: 11,
+  scripture:
+    'Revelation 18:7 · Romans 8:7 · Philippians 2:5-11 · Galatians 5:13-15 · John 13:34-35',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theSecondAngelsMessageLongDescription = `The Second Angel's Message explores Revelation 14:8 and the Bible's unfolding picture of Babylon as a symbol of religious confusion, self-exaltation, coercion, false worship, and opposition to God's character.
+
+This study begins with ancient Babylon, from Babel to Nebuchadnezzar and Belshazzar, showing how Babylon represents human systems that attempt to save themselves, exalt themselves, and control others. It then moves to end-time Babylon in Revelation 17 and 18, showing how false religion misrepresents God while claiming to represent Him.
+
+Students will learn that the fall of Babylon is not merely about identifying a system "out there," but about rejecting every Babylonian principle in the human heart: pride, self-justification, coercion, religious control, and distorted pictures of God. The second angel's message calls people out of confusion and into the beautiful light of God's self-giving, non-coercive love revealed in Jesus.`
+
+const seriesTheSecondAngelsMessage: StudySeries = {
+  id: SERIES_ID_THE_SECOND_ANGELS_MESSAGE,
+  slug: THE_SECOND_ANGELS_MESSAGE_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Second Angel\'s Message',
+  subtitle: 'God calls His people out of Babylon\'s confusion into the light of Christ.',
+  shortDescription:
+    'The second angel\'s message exposes Babylon\'s confusion and calls God\'s people out of false religion into the light of God\'s self-giving love revealed in Christ.',
+  longDescription: theSecondAngelsMessageLongDescription,
+  description: theSecondAngelsMessageLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 75–90 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 23,
+  foundationOrder: 22,
+  whatYouWillLearn: [
+    'Themes: second angel\'s message, Revelation 14, Babylon, fallen Babylon, confusion, false worship, self-exaltation, coercion, Revelation 17, Revelation 18, come out of her my people, character of God, gospel, end-time message, three angels\' messages, religious confusion, liberty of conscience.',
+    'See Babylon as a symbol of religious confusion and self-exaltation, not as an excuse to hate people.',
+    'Understand ancient and end-time Babylon through Scripture principles, history, and Christ-centered contrast.',
+    'Let God remove pride and control from the heart while calling others into His non-coercive love.',
+  ],
+  lessons: [
+    lessonTheSecondAngelsMessage1,
+    lessonTheSecondAngelsMessage2,
+    lessonTheSecondAngelsMessage3,
+    lessonTheSecondAngelsMessage4,
+    lessonTheSecondAngelsMessage5,
+    lessonTheSecondAngelsMessage6,
+    lessonTheSecondAngelsMessage7,
+  ],
+}
+
+const THE_THIRD_ANGELS_MESSAGE_STUDY_SLUG = 'the-third-angels-message'
+const THE_THIRD_ANGELS_MESSAGE_OVERVIEW_HREF = `/study-library/${THE_THIRD_ANGELS_MESSAGE_STUDY_SLUG}`
+const SERIES_ID_THE_THIRD_ANGELS_MESSAGE = 'e4000001-0000-4000-8000-000000000086'
+
+const THE_THIRD_ANGELS_MESSAGE_SECTION_IDS = {
+  lesson1: 'eab2bf01-0000-41b7-922b-d30009253629',
+  lesson2: 'eab2bf01-0000-41b7-922c-d30009253730',
+  lesson3: 'eab2bf01-0000-41b7-922d-d30009253831',
+  lesson4: 'eab2bf01-0000-41b7-922e-d30009253932',
+  lesson5: 'eab2bf01-0000-41b7-922f-d30009254033',
+  lesson6: 'eab2bf01-0000-41b7-9230-d30009254134',
+  lesson7: 'eab2bf01-0000-41b7-9231-d30009254235',
+} as const
+
+const theThirdAngelsMessageLessonShellSection = (
+  sectionId: string,
+  lessonId: string,
+  extra?: Parameters<typeof foundationLessonShellSection>[3],
+) =>
+  foundationLessonShellSection(lessonId, sectionId, THE_THIRD_ANGELS_MESSAGE_OVERVIEW_HREF, {
+    placeholderText: PLACEHOLDER_BODY,
+    ...extra,
+  })
+
+const lessonTheThirdAngelsMessage1: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000094e',
+  slug: 'true-worship-cannot-be-forced',
+  studySeriesId: SERIES_ID_THE_THIRD_ANGELS_MESSAGE,
+  title: 'True Worship Cannot Be Forced',
+  summary:
+    'The third angel\'s message warns against coerced worship because true worship can only be awakened by love.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:9-12 · 1 John 4:8 · 1 John 4:19 · 2 Corinthians 3:17 · John 4:23-24',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheThirdAngelsMessage2: Lesson = {
+  id: 'd3000007-0000-4000-8000-00000000094f',
+  slug: 'the-beast-and-his-authority',
+  studySeriesId: SERIES_ID_THE_THIRD_ANGELS_MESSAGE,
+  title: 'The Beast and His Authority',
+  summary:
+    'Revelation 13 identifies the beast as a power that rises from the nations, receives authority from the dragon, blasphemes God, and persecutes the saints.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 13:1-10 · Daniel 7:17, 23 · Revelation 17:15 · Revelation 12:9 · Daniel 7:21-25',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheThirdAngelsMessage3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000950',
+  slug: 'the-image-of-the-beast',
+  studySeriesId: SERIES_ID_THE_THIRD_ANGELS_MESSAGE,
+  title: 'The Image of the Beast',
+  summary:
+    'The image of the beast forms when civil power is used to enforce religious authority and compel worship.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 13:11-15 · Revelation 14:9 · Daniel 3:1-6 · Matthew 13:24-30 · John 18:36',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheThirdAngelsMessage4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000951',
+  slug: 'the-mark-of-the-beast',
+  studySeriesId: SERIES_ID_THE_THIRD_ANGELS_MESSAGE,
+  title: 'The Mark of the Beast',
+  summary:
+    'The mark of the beast is connected to worship, allegiance, civil enforcement, and human authority placed against God\'s authority.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 13:16-17 · Revelation 14:9-10 · Exodus 20:8-11 · Ezekiel 20:12, 20 · Romans 6:16',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheThirdAngelsMessage5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000952',
+  slug: 'the-seal-of-god',
+  studySeriesId: SERIES_ID_THE_THIRD_ANGELS_MESSAGE,
+  title: 'The Seal of God',
+  summary:
+    'The seal of God points to God\'s authority, His law written in the heart, and the Sabbath as a sign of creation, redemption, and sanctification.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 7:1-3 · Deuteronomy 6:4-9 · Ezekiel 20:12, 20 · Ephesians 1:13-14 · Exodus 20:8-11',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheThirdAngelsMessage6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000953',
+  slug: 'the-patience-of-the-saints',
+  studySeriesId: SERIES_ID_THE_THIRD_ANGELS_MESSAGE,
+  title: 'The Patience of the Saints',
+  summary:
+    'God\'s end-time people endure by the faith of Jesus, keeping God\'s commandments through love rather than fear.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:12 · Galatians 5:5-6 · John 14:15 · Hebrews 10:35-39 · James 5:7-11',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheThirdAngelsMessage7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000954',
+  slug: 'liberty-love-and-final-worship',
+  studySeriesId: SERIES_ID_THE_THIRD_ANGELS_MESSAGE,
+  title: 'Liberty, Love, and Final Worship',
+  summary:
+    'The final crisis reveals whether our worship is motivated by coercion, fear, and human authority, or by love, freedom, and loyalty to Jesus.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 14:9-12 · 2 Corinthians 3:17 · John 8:36 · 1 John 4:18-19 · John 13:34-35',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theThirdAngelsMessageLongDescription = `The Third Angel's Message explores Revelation 14:9-12 as God's urgent warning against false worship, coercion, and the mark of the beast.
+
+This study presents the third angel's message through the lens of God's non-coercive love. Students will see that true worship cannot be forced, because love is the only valid motive for worship. The study explains the beast, the image of the beast, the mark of the beast, the seal of God, the Sabbath as God's sign, and the faithful resistance of those who keep the commandments of God and the faith of Jesus.
+
+The study avoids fear-based sensationalism and instead focuses on the central issue: worship, freedom, allegiance, and the character of God. It shows that any religious or political system that uses civil power to force worship does not represent the God revealed in Jesus Christ. The final call is not panic, but faithful love.`
+
+const seriesTheThirdAngelsMessage: StudySeries = {
+  id: SERIES_ID_THE_THIRD_ANGELS_MESSAGE,
+  slug: THE_THIRD_ANGELS_MESSAGE_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Third Angel\'s Message',
+  subtitle: 'God\'s warning against coerced worship and call to faithful love in Christ.',
+  shortDescription:
+    'The third angel\'s message warns against coerced worship and calls God\'s people to remain faithful to Jesus, His commandments, and the liberty of love.',
+  longDescription: theThirdAngelsMessageLongDescription,
+  description: theThirdAngelsMessageLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 80–95 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 24,
+  foundationOrder: 23,
+  whatYouWillLearn: [
+    'Themes: third angel\'s message, Revelation 14, beast, image of the beast, mark of the beast, seal of God, Sabbath, Sunday law, worship, religious liberty, liberty of conscience, coercion, commandments of God, faith of Jesus, non-coercive love, end-time message, three angels\' messages, Revelation 13.',
+    'See Revelation 14:9-12 as a warning rooted in God\'s love, not fear-based sensationalism.',
+    'Understand worship, allegiance, and liberty of conscience through Christ-centered Scripture study.',
+    'Keep the commandments of God and the faith of Jesus through love-motivated obedience.',
+  ],
+  lessons: [
+    lessonTheThirdAngelsMessage1,
+    lessonTheThirdAngelsMessage2,
+    lessonTheThirdAngelsMessage3,
+    lessonTheThirdAngelsMessage4,
+    lessonTheThirdAngelsMessage5,
+    lessonTheThirdAngelsMessage6,
+    lessonTheThirdAngelsMessage7,
+  ],
+}
+
 const seriesBuriedAndRaised: StudySeries = {
   id: 'e4000001-0000-4000-8000-00000000007e',
   slug: BURIED_AND_RAISED_STUDY_SLUG,
@@ -4174,11 +4638,13 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesFaithfulInTheWilderness,
   seriesTheFaithfulWitness,
   seriesTheDayOfAtonement,
+  seriesTheFirstAngelsMessage,
+  seriesTheSecondAngelsMessage,
+  seriesTheThirdAngelsMessage,
   seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,
   seriesKnowingChristInScripture,
-  seriesFaithThatShowsUp,
 ]
 
 export const wordStudyCatalog: WordStudy[] = wordStudies

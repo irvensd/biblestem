@@ -44,6 +44,54 @@ export function buildFoundationLessonShellSectionBody(options: {
   includeSweetBitterPattern?: boolean
   sweetBitterHighlightIndices?: number[]
   sweetBitterCaption?: string
+  includeFirstAngelsMessageBreakdown?: boolean
+  firstAngelsMessageBreakdownHighlightIndices?: number[]
+  firstAngelsMessageBreakdownCaption?: string
+  includeEverlastingGospelFlow?: boolean
+  everlastingGospelFlowHighlightIndices?: number[]
+  everlastingGospelFlowCaption?: string
+  includeFearGloryJudgmentCreatorMap?: boolean
+  fearGloryJudgmentCreatorMapHighlightIndices?: number[]
+  fearGloryJudgmentCreatorMapCaption?: string
+  includeCreatorWorshipSabbathBridge?: boolean
+  creatorWorshipSabbathBridgeHighlightIndices?: number[]
+  creatorWorshipSabbathBridgeCaption?: string
+  includeSecondAngelsMessageBreakdown?: boolean
+  secondAngelsMessageBreakdownHighlightIndices?: number[]
+  secondAngelsMessageBreakdownCaption?: string
+  includeAncientBabylonPattern?: boolean
+  ancientBabylonPatternHighlightIndices?: number[]
+  ancientBabylonPatternCaption?: string
+  includeChristVsBabylonContrast?: boolean
+  christVsBabylonContrastHighlightIndices?: number[]
+  christVsBabylonContrastCaption?: string
+  includeEndTimeBabylonIdentifiers?: boolean
+  endTimeBabylonIdentifiersHighlightIndices?: number[]
+  endTimeBabylonIdentifiersCaption?: string
+  includeComeOutCallFlow?: boolean
+  comeOutCallFlowHighlightIndices?: number[]
+  comeOutCallFlowCaption?: string
+  includeThirdAngelsMessageBreakdown?: boolean
+  thirdAngelsMessageBreakdownHighlightIndices?: number[]
+  thirdAngelsMessageBreakdownCaption?: string
+  includeTrueWorshipVsCoercion?: boolean
+  trueWorshipVsCoercionHighlightIndices?: number[]
+  trueWorshipVsCoercionCaption?: string
+  includeBeastPowerIdentifiers?: boolean
+  beastPowerIdentifiersHighlightIndices?: number[]
+  beastPowerIdentifiersCaption?: string
+  includeImageOfBeastFormation?: boolean
+  imageOfBeastFormationHighlightIndices?: number[]
+  imageOfBeastFormationCaption?: string
+  includeMarkVsSealComparison?: boolean
+  markVsSealComparisonHighlightIndices?: number[]
+  markVsSealComparisonCaption?: string
+  includeSealElementsSabbath?: boolean
+  sealElementsSabbathHighlightIndices?: number[]
+  sealElementsSabbathCaption?: string
+  includePatienceSaintsTriad?: boolean
+  patienceSaintsTriadHighlightIndices?: number[]
+  patienceSaintsTriadCaption?: string
 }): string {
   const blocks: LessonContentBlock[] = [
     { type: 'paragraph', text: options.placeholderText ?? PLACEHOLDER_BODY },
@@ -166,6 +214,180 @@ export function buildFoundationLessonShellSectionBody(options: {
     })
   }
 
+  if (options.includeFirstAngelsMessageBreakdown) {
+    blocks.push({
+      type: 'firstAngelsMessageBreakdown',
+      ...(options.firstAngelsMessageBreakdownHighlightIndices?.length
+        ? { highlightedIndices: options.firstAngelsMessageBreakdownHighlightIndices }
+        : {}),
+      ...(options.firstAngelsMessageBreakdownCaption
+        ? { caption: options.firstAngelsMessageBreakdownCaption }
+        : {}),
+    })
+  }
+
+  if (options.includeEverlastingGospelFlow) {
+    blocks.push({
+      type: 'everlastingGospelFlow',
+      ...(options.everlastingGospelFlowHighlightIndices?.length
+        ? { highlightedIndices: options.everlastingGospelFlowHighlightIndices }
+        : {}),
+      ...(options.everlastingGospelFlowCaption ? { caption: options.everlastingGospelFlowCaption } : {}),
+    })
+  }
+
+  if (options.includeFearGloryJudgmentCreatorMap) {
+    blocks.push({
+      type: 'fearGloryJudgmentCreatorMap',
+      ...(options.fearGloryJudgmentCreatorMapHighlightIndices?.length
+        ? { highlightedIndices: options.fearGloryJudgmentCreatorMapHighlightIndices }
+        : {}),
+      ...(options.fearGloryJudgmentCreatorMapCaption
+        ? { caption: options.fearGloryJudgmentCreatorMapCaption }
+        : {}),
+    })
+  }
+
+  if (options.includeCreatorWorshipSabbathBridge) {
+    blocks.push({
+      type: 'creatorWorshipSabbathBridge',
+      ...(options.creatorWorshipSabbathBridgeHighlightIndices?.length
+        ? { highlightedIndices: options.creatorWorshipSabbathBridgeHighlightIndices }
+        : {}),
+      ...(options.creatorWorshipSabbathBridgeCaption
+        ? { caption: options.creatorWorshipSabbathBridgeCaption }
+        : {}),
+    })
+  }
+
+  if (options.includeSecondAngelsMessageBreakdown) {
+    blocks.push({
+      type: 'secondAngelsMessageBreakdown',
+      ...(options.secondAngelsMessageBreakdownHighlightIndices?.length
+        ? { highlightedIndices: options.secondAngelsMessageBreakdownHighlightIndices }
+        : {}),
+      ...(options.secondAngelsMessageBreakdownCaption
+        ? { caption: options.secondAngelsMessageBreakdownCaption }
+        : {}),
+    })
+  }
+
+  if (options.includeAncientBabylonPattern) {
+    blocks.push({
+      type: 'ancientBabylonPattern',
+      ...(options.ancientBabylonPatternHighlightIndices?.length
+        ? { highlightedIndices: options.ancientBabylonPatternHighlightIndices }
+        : {}),
+      ...(options.ancientBabylonPatternCaption ? { caption: options.ancientBabylonPatternCaption } : {}),
+    })
+  }
+
+  if (options.includeChristVsBabylonContrast) {
+    blocks.push({
+      type: 'christVsBabylonContrast',
+      ...(options.christVsBabylonContrastHighlightIndices?.length
+        ? { highlightedIndices: options.christVsBabylonContrastHighlightIndices }
+        : {}),
+      ...(options.christVsBabylonContrastCaption
+        ? { caption: options.christVsBabylonContrastCaption }
+        : {}),
+    })
+  }
+
+  if (options.includeEndTimeBabylonIdentifiers) {
+    blocks.push({
+      type: 'endTimeBabylonIdentifiers',
+      ...(options.endTimeBabylonIdentifiersHighlightIndices?.length
+        ? { highlightedIndices: options.endTimeBabylonIdentifiersHighlightIndices }
+        : {}),
+      ...(options.endTimeBabylonIdentifiersCaption
+        ? { caption: options.endTimeBabylonIdentifiersCaption }
+        : {}),
+    })
+  }
+
+  if (options.includeComeOutCallFlow) {
+    blocks.push({
+      type: 'comeOutCallFlow',
+      ...(options.comeOutCallFlowHighlightIndices?.length
+        ? { highlightedIndices: options.comeOutCallFlowHighlightIndices }
+        : {}),
+      ...(options.comeOutCallFlowCaption ? { caption: options.comeOutCallFlowCaption } : {}),
+    })
+  }
+
+  if (options.includeThirdAngelsMessageBreakdown) {
+    blocks.push({
+      type: 'thirdAngelsMessageBreakdown',
+      ...(options.thirdAngelsMessageBreakdownHighlightIndices?.length
+        ? { highlightedIndices: options.thirdAngelsMessageBreakdownHighlightIndices }
+        : {}),
+      ...(options.thirdAngelsMessageBreakdownCaption
+        ? { caption: options.thirdAngelsMessageBreakdownCaption }
+        : {}),
+    })
+  }
+
+  if (options.includeTrueWorshipVsCoercion) {
+    blocks.push({
+      type: 'trueWorshipVsCoercion',
+      ...(options.trueWorshipVsCoercionHighlightIndices?.length
+        ? { highlightedIndices: options.trueWorshipVsCoercionHighlightIndices }
+        : {}),
+      ...(options.trueWorshipVsCoercionCaption ? { caption: options.trueWorshipVsCoercionCaption } : {}),
+    })
+  }
+
+  if (options.includeBeastPowerIdentifiers) {
+    blocks.push({
+      type: 'beastPowerIdentifiers',
+      ...(options.beastPowerIdentifiersHighlightIndices?.length
+        ? { highlightedIndices: options.beastPowerIdentifiersHighlightIndices }
+        : {}),
+      ...(options.beastPowerIdentifiersCaption ? { caption: options.beastPowerIdentifiersCaption } : {}),
+    })
+  }
+
+  if (options.includeImageOfBeastFormation) {
+    blocks.push({
+      type: 'imageOfBeastFormation',
+      ...(options.imageOfBeastFormationHighlightIndices?.length
+        ? { highlightedIndices: options.imageOfBeastFormationHighlightIndices }
+        : {}),
+      ...(options.imageOfBeastFormationCaption ? { caption: options.imageOfBeastFormationCaption } : {}),
+    })
+  }
+
+  if (options.includeMarkVsSealComparison) {
+    blocks.push({
+      type: 'markVsSealComparison',
+      ...(options.markVsSealComparisonHighlightIndices?.length
+        ? { highlightedIndices: options.markVsSealComparisonHighlightIndices }
+        : {}),
+      ...(options.markVsSealComparisonCaption ? { caption: options.markVsSealComparisonCaption } : {}),
+    })
+  }
+
+  if (options.includeSealElementsSabbath) {
+    blocks.push({
+      type: 'sealElementsSabbath',
+      ...(options.sealElementsSabbathHighlightIndices?.length
+        ? { highlightedIndices: options.sealElementsSabbathHighlightIndices }
+        : {}),
+      ...(options.sealElementsSabbathCaption ? { caption: options.sealElementsSabbathCaption } : {}),
+    })
+  }
+
+  if (options.includePatienceSaintsTriad) {
+    blocks.push({
+      type: 'patienceSaintsTriad',
+      ...(options.patienceSaintsTriadHighlightIndices?.length
+        ? { highlightedIndices: options.patienceSaintsTriadHighlightIndices }
+        : {}),
+      ...(options.patienceSaintsTriadCaption ? { caption: options.patienceSaintsTriadCaption } : {}),
+    })
+  }
+
   blocks.push({ type: 'studyCta', label: 'Back to study overview', href: options.overviewHref })
 
   return JSON.stringify({ blocks })
@@ -212,6 +434,54 @@ export function foundationLessonShellSection(
     includeSweetBitterPattern?: boolean
     sweetBitterHighlightIndices?: number[]
     sweetBitterCaption?: string
+    includeFirstAngelsMessageBreakdown?: boolean
+    firstAngelsMessageBreakdownHighlightIndices?: number[]
+    firstAngelsMessageBreakdownCaption?: string
+    includeEverlastingGospelFlow?: boolean
+    everlastingGospelFlowHighlightIndices?: number[]
+    everlastingGospelFlowCaption?: string
+    includeFearGloryJudgmentCreatorMap?: boolean
+    fearGloryJudgmentCreatorMapHighlightIndices?: number[]
+    fearGloryJudgmentCreatorMapCaption?: string
+    includeCreatorWorshipSabbathBridge?: boolean
+    creatorWorshipSabbathBridgeHighlightIndices?: number[]
+    creatorWorshipSabbathBridgeCaption?: string
+    includeSecondAngelsMessageBreakdown?: boolean
+    secondAngelsMessageBreakdownHighlightIndices?: number[]
+    secondAngelsMessageBreakdownCaption?: string
+    includeAncientBabylonPattern?: boolean
+    ancientBabylonPatternHighlightIndices?: number[]
+    ancientBabylonPatternCaption?: string
+    includeChristVsBabylonContrast?: boolean
+    christVsBabylonContrastHighlightIndices?: number[]
+    christVsBabylonContrastCaption?: string
+    includeEndTimeBabylonIdentifiers?: boolean
+    endTimeBabylonIdentifiersHighlightIndices?: number[]
+    endTimeBabylonIdentifiersCaption?: string
+    includeComeOutCallFlow?: boolean
+    comeOutCallFlowHighlightIndices?: number[]
+    comeOutCallFlowCaption?: string
+    includeThirdAngelsMessageBreakdown?: boolean
+    thirdAngelsMessageBreakdownHighlightIndices?: number[]
+    thirdAngelsMessageBreakdownCaption?: string
+    includeTrueWorshipVsCoercion?: boolean
+    trueWorshipVsCoercionHighlightIndices?: number[]
+    trueWorshipVsCoercionCaption?: string
+    includeBeastPowerIdentifiers?: boolean
+    beastPowerIdentifiersHighlightIndices?: number[]
+    beastPowerIdentifiersCaption?: string
+    includeImageOfBeastFormation?: boolean
+    imageOfBeastFormationHighlightIndices?: number[]
+    imageOfBeastFormationCaption?: string
+    includeMarkVsSealComparison?: boolean
+    markVsSealComparisonHighlightIndices?: number[]
+    markVsSealComparisonCaption?: string
+    includeSealElementsSabbath?: boolean
+    sealElementsSabbathHighlightIndices?: number[]
+    sealElementsSabbathCaption?: string
+    includePatienceSaintsTriad?: boolean
+    patienceSaintsTriadHighlightIndices?: number[]
+    patienceSaintsTriadCaption?: string
   },
 ): LessonSection {
   return {
@@ -257,7 +527,61 @@ export function foundationLessonShellSection(
       includeSweetBitterPattern: options?.includeSweetBitterPattern,
       sweetBitterHighlightIndices: options?.sweetBitterHighlightIndices,
       sweetBitterCaption: options?.sweetBitterCaption,
+      includeFirstAngelsMessageBreakdown: options?.includeFirstAngelsMessageBreakdown,
+      firstAngelsMessageBreakdownHighlightIndices: options?.firstAngelsMessageBreakdownHighlightIndices,
+      firstAngelsMessageBreakdownCaption: options?.firstAngelsMessageBreakdownCaption,
+      includeEverlastingGospelFlow: options?.includeEverlastingGospelFlow,
+      everlastingGospelFlowHighlightIndices: options?.everlastingGospelFlowHighlightIndices,
+      everlastingGospelFlowCaption: options?.everlastingGospelFlowCaption,
+      includeFearGloryJudgmentCreatorMap: options?.includeFearGloryJudgmentCreatorMap,
+      fearGloryJudgmentCreatorMapHighlightIndices: options?.fearGloryJudgmentCreatorMapHighlightIndices,
+      fearGloryJudgmentCreatorMapCaption: options?.fearGloryJudgmentCreatorMapCaption,
+      includeCreatorWorshipSabbathBridge: options?.includeCreatorWorshipSabbathBridge,
+      creatorWorshipSabbathBridgeHighlightIndices: options?.creatorWorshipSabbathBridgeHighlightIndices,
+      creatorWorshipSabbathBridgeCaption: options?.creatorWorshipSabbathBridgeCaption,
+      includeSecondAngelsMessageBreakdown: options?.includeSecondAngelsMessageBreakdown,
+      secondAngelsMessageBreakdownHighlightIndices: options?.secondAngelsMessageBreakdownHighlightIndices,
+      secondAngelsMessageBreakdownCaption: options?.secondAngelsMessageBreakdownCaption,
+      includeAncientBabylonPattern: options?.includeAncientBabylonPattern,
+      ancientBabylonPatternHighlightIndices: options?.ancientBabylonPatternHighlightIndices,
+      ancientBabylonPatternCaption: options?.ancientBabylonPatternCaption,
+      includeChristVsBabylonContrast: options?.includeChristVsBabylonContrast,
+      christVsBabylonContrastHighlightIndices: options?.christVsBabylonContrastHighlightIndices,
+      christVsBabylonContrastCaption: options?.christVsBabylonContrastCaption,
+      includeEndTimeBabylonIdentifiers: options?.includeEndTimeBabylonIdentifiers,
+      endTimeBabylonIdentifiersHighlightIndices: options?.endTimeBabylonIdentifiersHighlightIndices,
+      endTimeBabylonIdentifiersCaption: options?.endTimeBabylonIdentifiersCaption,
+      includeComeOutCallFlow: options?.includeComeOutCallFlow,
+      comeOutCallFlowHighlightIndices: options?.comeOutCallFlowHighlightIndices,
+      comeOutCallFlowCaption: options?.comeOutCallFlowCaption,
+      includeThirdAngelsMessageBreakdown: options?.includeThirdAngelsMessageBreakdown,
+      thirdAngelsMessageBreakdownHighlightIndices: options?.thirdAngelsMessageBreakdownHighlightIndices,
+      thirdAngelsMessageBreakdownCaption: options?.thirdAngelsMessageBreakdownCaption,
+      includeTrueWorshipVsCoercion: options?.includeTrueWorshipVsCoercion,
+      trueWorshipVsCoercionHighlightIndices: options?.trueWorshipVsCoercionHighlightIndices,
+      trueWorshipVsCoercionCaption: options?.trueWorshipVsCoercionCaption,
+      includeBeastPowerIdentifiers: options?.includeBeastPowerIdentifiers,
+      beastPowerIdentifiersHighlightIndices: options?.beastPowerIdentifiersHighlightIndices,
+      beastPowerIdentifiersCaption: options?.beastPowerIdentifiersCaption,
+      includeImageOfBeastFormation: options?.includeImageOfBeastFormation,
+      imageOfBeastFormationHighlightIndices: options?.imageOfBeastFormationHighlightIndices,
+      imageOfBeastFormationCaption: options?.imageOfBeastFormationCaption,
+      includeMarkVsSealComparison: options?.includeMarkVsSealComparison,
+      markVsSealComparisonHighlightIndices: options?.markVsSealComparisonHighlightIndices,
+      markVsSealComparisonCaption: options?.markVsSealComparisonCaption,
+      includeSealElementsSabbath: options?.includeSealElementsSabbath,
+      sealElementsSabbathHighlightIndices: options?.sealElementsSabbathHighlightIndices,
+      sealElementsSabbathCaption: options?.sealElementsSabbathCaption,
+      includePatienceSaintsTriad: options?.includePatienceSaintsTriad,
+      patienceSaintsTriadHighlightIndices: options?.patienceSaintsTriadHighlightIndices,
+      patienceSaintsTriadCaption: options?.patienceSaintsTriadCaption,
     }),
     sectionType: 'other',
   }
+}
+
+/** True when catalog sections are the seeded foundation shell, not authored reader steps. */
+export function isFoundationLessonShellSections(sections: LessonSection[]): boolean {
+  if (sections.length === 0) return false
+  return sections.every((section) => section.heading === 'Lesson content coming soon')
 }
