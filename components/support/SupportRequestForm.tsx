@@ -32,8 +32,14 @@ const standaloneShellClass =
 
 export function SupportRequestForm({
   variant = 'standalone',
+  onSubmitted,
+  onDismiss,
 }: {
   variant?: SupportRequestFormVariant
+  /** UI hook after a successful submit (does not change submission logic). */
+  onSubmitted?: () => void
+  /** When set, embedded success state shows a Done control that calls this. */
+  onDismiss?: () => void
 }) {
   const searchParams = useSearchParams()
   const { user, isReady } = useDemoAuth()
@@ -117,6 +123,7 @@ export function SupportRequestForm({
         const result = await submitSupportRequest(payload)
         if (result.ok) {
           setSuccess(true)
+          onSubmitted?.()
         } else {
           setErrorMsg(result.message)
         }
@@ -126,7 +133,7 @@ export function SupportRequestForm({
         setLoading(false)
       }
     },
-    [email, issueType, lessonSlug, message, name, pageUrl, stepNumber, studySlug],
+    [email, issueType, lessonSlug, message, name, onSubmitted, pageUrl, stepNumber, studySlug],
   )
 
   const followUpHint =
@@ -140,6 +147,13 @@ export function SupportRequestForm({
         <div className="mb-3 h-1 w-10 rounded-full bg-blue-800/50" aria-hidden />
         <p className="text-base font-medium text-zinc-900">Thanks. Your report was received.</p>
         <p className="mt-2 text-sm leading-relaxed text-zinc-600">{followUpHint}</p>
+        {variant === 'embedded' && onDismiss ? (
+          <div className="mt-4">
+            <Button type="button" variant="secondary" onClick={onDismiss}>
+              Done
+            </Button>
+          </div>
+        ) : null}
       </>
     )
     if (variant === 'standalone') {
@@ -153,7 +167,7 @@ export function SupportRequestForm({
   }
 
   const formEl = (
-      <form onSubmit={onSubmit} noValidate className="space-y-5">
+      <form onSubmit={onSubmit} noValidate className="min-w-0 space-y-5">
         {errorMsg ? (
           <div
             className="rounded-lg border border-red-200/90 bg-red-50/90 px-3 py-2.5 text-sm text-red-900"
@@ -163,8 +177,8 @@ export function SupportRequestForm({
           </div>
         ) : null}
 
-        <div className="grid gap-5 sm:grid-cols-2">
-        <div>
+        <div className="grid min-w-0 gap-5 sm:grid-cols-2">
+        <div className="min-w-0">
           <label htmlFor="support-name" className="block text-sm font-medium text-zinc-800">
             Name <span className="font-normal text-zinc-500">(optional)</span>
           </label>
@@ -236,7 +250,7 @@ export function SupportRequestForm({
         <p className="mt-1 text-xs text-zinc-500">Filled automatically from your browser.</p>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-3">
+      <div className="grid min-w-0 gap-5 sm:grid-cols-3">
         <div>
           <label htmlFor="support-study-slug" className="block text-sm font-medium text-zinc-800">
             Study slug <span className="font-normal text-zinc-500">(optional)</span>

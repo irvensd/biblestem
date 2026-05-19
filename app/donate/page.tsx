@@ -1,58 +1,77 @@
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
-import { HomeExploreStudiesButton } from '@/components/home/HomeExploreStudiesButton'
 import { PageIntro } from '@/components/site/PageIntro'
-import { ComingSoonDonationControl, SupportCard } from '@/components/SupportCard'
+import { SupportCard } from '@/components/SupportCard'
+import { supportReportHref } from '@/lib/support/report-issue-href'
 
 export const metadata: Metadata = {
-  title: 'Donate · BibleStem',
+  title: 'Support BibleStem · BibleStem',
   description:
-    'BibleStem is free and donation-supported. Learn how giving helps keep studies accessible and funds future work.',
+    'BibleStem is free and donation-supported. Learn how you can support careful Bible study while online giving is being prepared.',
 }
+
+const SECTION_GAP = 'mt-10 border-t border-zinc-200 pt-10 md:mt-11 md:pt-11'
+
+const supportNowCards = [
+  {
+    title: 'Study and share',
+    body: 'Use the studies, send them to someone who needs them, and help more people discover careful Bible study.',
+    ctaLabel: 'Browse Study Library',
+    href: '/study-library' as const,
+  },
+  {
+    title: 'Report issues',
+    body: 'If you notice a typo, broken link, unclear lesson, or content issue, let us know so BibleStem can improve.',
+    ctaLabel: 'Report an issue',
+    href: supportReportHref({ type: 'bug' }),
+  },
+  {
+    title: 'Pray for the work',
+    body: 'Pray that BibleStem stays faithful to Scripture, useful for learners, and accessible to people who want to study deeply.',
+    href: null,
+  },
+] as const
 
 const impactCards = [
   {
     title: 'Keep BibleStem free',
-    description: 'BibleStem remains open and accessible without paywalls or locked content.',
+    description: 'The core study experience remains open without paywalls or locked content.',
   },
   {
     title: 'Develop new studies',
-    description: 'Support helps fund new structured study series, lesson writing, and design improvements.',
+    description: 'Support helps fund lesson writing, review, design, and future study series.',
   },
   {
-    title: 'Sustain thoughtful tools',
-    description: 'Notes, language insights, reading tools, and product improvements are developed with care.',
+    title: 'Improve study tools',
+    description: 'Notes, Scripture Threads, word insights, quizzes, and reading tools can continue improving.',
   },
   {
     title: 'Build the wider vision',
-    description: 'Support helps lay the groundwork for BibleStem Studies, Threads, and Studios.',
+    description: 'Support helps prepare future BibleStem projects, resources, and creative work.',
   },
 ] as const
 
 const faq = [
   {
-    q: 'Why donations?',
-    a: 'Donations help keep BibleStem free for everyone, support ongoing development, and make new study series possible.',
-  },
-  {
-    q: 'Is BibleStem free?',
-    a: 'Yes. The full study experience is free to use. Donations are optional and support the ministry behind the platform.',
-  },
-  {
-    q: 'What does support fund?',
-    a: 'Support helps fund study writing, design, development, language tools, and future BibleStem projects.',
-  },
-  {
     q: 'Are donations required?',
     a: 'No. BibleStem is free to use whether or not someone gives.',
   },
   {
+    q: 'Is BibleStem free?',
+    a: 'Yes. The full study experience is free. Donations will be optional once giving is available.',
+  },
+  {
+    q: 'What will support fund?',
+    a: 'Support will help fund study writing, design, development, hosting, language tools, and future BibleStem resources.',
+  },
+  {
     q: 'Is BibleStem a ministry or a business?',
-    a: 'BibleStem is ministry-driven. We are building thoughtful tools, resources, and products around Bible learning while keeping the core study platform free.',
+    a: 'BibleStem is ministry-driven. The goal is to keep the core study platform free while building thoughtful tools, resources, and projects around Bible learning.',
   },
 ] as const
 
-function SectionEyebrow({ children, id }: { children: ReactNode; id?: string }) {
+function SectionLabel({ children, id }: { children: ReactNode; id?: string }) {
   return (
     <p id={id} className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
       {children}
@@ -60,72 +79,115 @@ function SectionEyebrow({ children, id }: { children: ReactNode; id?: string }) 
   )
 }
 
+function CompactCard({
+  title,
+  body,
+  ctaLabel,
+  href,
+}: {
+  title: string
+  body: string
+  ctaLabel?: string
+  href?: string | null
+}) {
+  return (
+    <div className="flex h-full min-w-0 flex-col rounded-xl border border-zinc-200/90 bg-white p-5 shadow-sm ring-1 ring-zinc-950/[0.03]">
+      <div className="mb-2.5 h-1 w-10 rounded-full bg-blue-800/50" />
+      <h3 className="text-base font-semibold tracking-tight text-zinc-900">{title}</h3>
+      <p className="mt-1.5 flex-1 text-sm leading-relaxed text-zinc-600">{body}</p>
+      {ctaLabel && href ? (
+        <Link
+          href={href}
+          className="mt-4 inline-flex min-h-[44px] items-center text-sm font-medium text-blue-800 hover:text-blue-900"
+        >
+          {ctaLabel}
+        </Link>
+      ) : null}
+    </div>
+  )
+}
+
 export default function DonatePage() {
   return (
     <>
-      <section className="border-b border-zinc-200/80 bg-stone-50 pb-14 pt-16 md:pb-16 md:pt-20">
+      <section className="border-b border-zinc-200/80 bg-stone-50 pb-6 pt-14 md:pb-8 md:pt-16">
         <div className="container-shell">
           <PageIntro
-            eyebrow="Ministry"
-            title="Always free, supported by generosity."
-            description="BibleStem is sustained by people who believe serious Bible study should remain accessible to everyone—free to use, thoughtfully built, and supported by voluntary generosity."
+            eyebrow="Support"
+            title="Help keep deep Bible study free."
+            description="BibleStem is built to make structured, Scripture-first study accessible to everyone. Giving options are coming soon, but you can still support the work by studying, sharing, and helping improve the platform."
           />
         </div>
       </section>
 
-      <div className="section-space">
+      <div className="overflow-x-hidden pt-8 pb-10 md:pt-10 md:pb-12">
         <div className="container-shell">
           <div className="mx-auto max-w-3xl">
             <SupportCard
-              eyebrow="Give"
-              title="Support coming soon"
-              description="BibleStem is free and donation-supported. Giving options will be available soon."
-              primaryCta="comingSoon"
-              secondaryAction={<HomeExploreStudiesButton variant="secondary" />}
-              variant="default"
+              eyebrow="Giving status"
+              title="Online giving is coming soon."
+              description="Secure donation options are not active yet. BibleStem remains free to use while giving support is being prepared."
+              primaryCta="link"
+              ctaHref="/study-library"
+              ctaLabel="Start studying"
+              secondaryHref="/paths/foundations"
+              secondaryLabel="Open Foundations Path"
               ctaVariant="primary"
             />
 
-            <section className="mt-16 border-t border-zinc-200 pt-14 md:mt-20 md:pt-16">
-              <SectionEyebrow>Impact</SectionEyebrow>
-              <h2 className="mt-5 text-3xl font-semibold tracking-tight text-zinc-900 md:text-[2rem] md:leading-tight">
-                What your support makes possible
+            <p className="mt-4 text-sm leading-relaxed text-zinc-500">
+              When giving becomes available, this page will be updated with secure donation options.
+            </p>
+
+            <section className={SECTION_GAP}>
+              <SectionLabel>Support now</SectionLabel>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 md:text-[1.65rem] md:leading-tight">
+                Ways to support BibleStem today
               </h2>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-600">
-                Support helps keep BibleStem accessible while funding careful development and future work.
+              <div className="mt-7 grid min-w-0 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {supportNowCards.map((card) => (
+                  <CompactCard
+                    key={card.title}
+                    title={card.title}
+                    body={card.body}
+                    ctaLabel={'ctaLabel' in card ? card.ctaLabel : undefined}
+                    href={card.href}
+                  />
+                ))}
+              </div>
+            </section>
+
+            <section className={SECTION_GAP}>
+              <SectionLabel>Impact</SectionLabel>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 md:text-[1.65rem] md:leading-tight">
+                What support makes possible
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-zinc-600">
+                Support helps BibleStem stay accessible while funding careful content, better tools, and future
+                resources.
               </p>
 
-              <div className="mt-10 grid gap-5 sm:grid-cols-2">
+              <div className="mt-7 grid min-w-0 gap-4 sm:grid-cols-2">
                 {impactCards.map((card) => (
                   <div
                     key={card.title}
-                    className="rounded-xl border border-zinc-200/90 bg-white p-6 shadow-sm ring-1 ring-zinc-950/[0.03] transition-shadow duration-200 hover:shadow-md"
+                    className="rounded-xl border border-zinc-200/90 bg-white p-5 shadow-sm ring-1 ring-zinc-950/[0.03]"
                   >
-                    <div className="mb-3 h-1 w-10 rounded-full bg-blue-800/50" />
-                    <h3 className="text-lg font-semibold tracking-tight text-zinc-900">{card.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-zinc-600">{card.description}</p>
+                    <div className="mb-2.5 h-1 w-10 rounded-full bg-blue-800/50" />
+                    <h3 className="text-base font-semibold tracking-tight text-zinc-900">{card.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{card.description}</p>
                   </div>
                 ))}
               </div>
             </section>
 
-            <section className="mt-16 border-t border-zinc-200 pt-14 md:mt-20 md:pt-16">
-              <SectionEyebrow>Access</SectionEyebrow>
-              <h2 className="mt-5 text-3xl font-semibold tracking-tight text-zinc-900 md:text-[2rem] md:leading-tight">
-                Why BibleStem stays free
-              </h2>
-              <p className="mt-5 text-base leading-[1.75] text-zinc-700">
-                We believe deep Bible study should not be limited by cost. BibleStem is built as a donation-supported ministry so the platform can remain accessible while still being developed with care.
-              </p>
-            </section>
-
-            <section className="mt-16 border-t border-zinc-200 pt-14 md:mt-20 md:pt-16" aria-labelledby="donate-faq-label">
-              <SectionEyebrow id="donate-faq-label">Questions</SectionEyebrow>
-              <dl className="mt-8 space-y-0">
+            <section className={`${SECTION_GAP} pb-2`} aria-labelledby="donate-faq-label">
+              <SectionLabel id="donate-faq-label">Questions</SectionLabel>
+              <dl className="mt-7 space-y-0">
                 {faq.map((item, index) => (
                   <div
                     key={item.q}
-                    className={`border-t border-zinc-200/90 py-8 first:border-t-0 first:pt-0 ${index === faq.length - 1 ? 'pb-0' : ''}`}
+                    className={`border-t border-zinc-200/90 py-6 first:border-t-0 first:pt-0 ${index === faq.length - 1 ? 'pb-0' : ''}`}
                   >
                     <dt className="text-base font-semibold text-zinc-900">{item.q}</dt>
                     <dd className="mt-2 text-base leading-relaxed text-zinc-600">{item.a}</dd>
@@ -134,21 +196,6 @@ export default function DonatePage() {
               </dl>
             </section>
           </div>
-
-          <section className="mx-auto mt-16 max-w-3xl border-t border-zinc-200 pt-14 text-center md:mt-20 md:pt-16">
-            <div className="mx-auto h-px w-16 bg-zinc-200" aria-hidden />
-            <h2 className="mt-8 text-2xl font-semibold tracking-tight text-zinc-900 md:text-3xl md:leading-tight">
-              Help keep Bible study accessible.
-            </h2>
-            <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-zinc-600">
-              The full study experience stays free. Secure online giving is not set up yet. You can explore studies
-              anytime. Donations are optional and will be available when we add a payment provider.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <ComingSoonDonationControl />
-              <HomeExploreStudiesButton variant="secondary">Return to study library</HomeExploreStudiesButton>
-            </div>
-          </section>
         </div>
       </div>
     </>

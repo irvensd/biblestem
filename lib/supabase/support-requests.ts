@@ -102,7 +102,10 @@ export async function submitSupportRequest(input: SubmitSupportRequestInput): Pr
   if (error) {
     console.error('[support_requests]', error.message, error.code, error.details)
     const missingTable =
-      error.code === '42P01' || /relation.*does not exist/i.test(error.message ?? '')
+      error.code === '42P01' ||
+      error.code === 'PGRST205' ||
+      /relation.*does not exist/i.test(error.message ?? '') ||
+      /could not find the table/i.test(error.message ?? '')
     if (missingTable) {
       return {
         ok: false,

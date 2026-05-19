@@ -9,16 +9,17 @@ export async function updateProfileDisplayName(
   const trimmed = displayName.trim()
   if (!trimmed) return { ok: false, message: 'Enter a name first.' }
 
-  const { error } = await supabase
+  const updated_at = new Date().toISOString()
+  const { data: existing, error: readError } = await supabase
     .from('profiles')
-    .upsert(
-      {
-        id: userId,
-        display_name: trimmed,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'id' },
-    )
+    .select('id')
+    .eq('id', userId)
+    .maybeSingle()
+  if (readError) return { ok: false, message: readError.message }
+
+  const { error } = existing
+    ? await supabase.from('profiles').update({ display_name: trimmed, updated_at }).eq('id', userId)
+    : await supabase.from('profiles').insert({ id: userId, display_name: trimmed, updated_at })
 
   if (error) return { ok: false, message: error.message }
   return { ok: true }

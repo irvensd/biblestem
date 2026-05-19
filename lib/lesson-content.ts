@@ -28,6 +28,8 @@ import { theDayOfAtonementSeriesLessonLibrary } from '@/lib/lesson-content-the-d
 import { theFirstAngelsMessageSeriesLessonLibrary } from '@/lib/lesson-content-the-first-angels-message'
 import { theSecondAngelsMessageSeriesLessonLibrary } from '@/lib/lesson-content-the-second-angels-message'
 import { theThirdAngelsMessageSeriesLessonLibrary } from '@/lib/lesson-content-the-third-angels-message'
+import { theSecondComingSeriesLessonLibrary } from '@/lib/lesson-content-the-second-coming'
+import { theMillenniumSeriesLessonLibrary } from '@/lib/lesson-content-the-millennium'
 import { enrichLessonLibrary } from '@/lib/enrich-lesson-scripture-threads'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
@@ -5644,6 +5646,8 @@ Amen.`,
   ...theFirstAngelsMessageSeriesLessonLibrary,
   ...theSecondAngelsMessageSeriesLessonLibrary,
   ...theThirdAngelsMessageSeriesLessonLibrary,
+  ...theSecondComingSeriesLessonLibrary,
+  ...theMillenniumSeriesLessonLibrary,
   ...originOfEvilSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {

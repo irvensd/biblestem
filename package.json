@@ -19,6 +19,7 @@
     "format": "prettier --write .",
     "sync:supabase:reader": "tsx scripts/sync-reader-content-to-supabase.ts",
     "seed:supabase:faithful-in-the-wilderness": "tsx scripts/seed-faithful-in-the-wilderness-catalog.ts",
+    "seed:supabase:the-millennium": "tsx scripts/seed-the-millennium-catalog.ts",
     "seed:supabase:the-faithful-witness": "tsx scripts/seed-the-faithful-witness-catalog.ts",
     "seed:supabase:the-day-of-atonement": "tsx scripts/seed-the-day-of-atonement-catalog.ts",
     "seed:supabase:the-first-angels-message": "tsx scripts/seed-the-first-angels-message-catalog.ts",

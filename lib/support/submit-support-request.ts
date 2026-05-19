@@ -22,8 +22,6 @@ export type SubmitSupportRequestResult =
   | { ok: true }
   | { ok: false; message: string }
 
-export type { SupportBrowserInfo }
-
 function parseStepNumber(raw: string | null | undefined): number | null {
   const s = raw?.trim()
   if (!s) return null

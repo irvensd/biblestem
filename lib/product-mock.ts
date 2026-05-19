@@ -4371,6 +4371,163 @@ const seriesTheThirdAngelsMessage: StudySeries = {
   ],
 }
 
+const THE_MILLENNIUM_STUDY_SLUG = 'the-millennium'
+const THE_MILLENNIUM_OVERVIEW_HREF = `/study-library/${THE_MILLENNIUM_STUDY_SLUG}`
+const SERIES_ID_THE_MILLENNIUM = 'e4000001-0000-4000-8000-000000000087'
+
+const lessonTheMillennium1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000960',
+  slug: 'why-the-millennium',
+  studySeriesId: SERIES_ID_THE_MILLENNIUM,
+  title: 'Why the Millennium?',
+  summary:
+    'God provides the Millennium so the redeemed can see the full record of His justice and trust that He did everything love could do.',
+  durationMinutes: 12,
+  scripture: 'Revelation 20:4 · 1 Corinthians 6:2-3 · Deuteronomy 32:4 · Isaiah 5:3-4 · Revelation 15:3',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheMillennium2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000961',
+  slug: 'the-order-of-events',
+  studySeriesId: SERIES_ID_THE_MILLENNIUM,
+  title: 'The Order of Events',
+  summary:
+    'The Bible gives a clear sequence of events before, during, and after the 1000 years.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 19:11-21 · Revelation 20:1-6 · Revelation 20:7-15 · Revelation 21:1-5 · 1 Thessalonians 4:13-18',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheMillennium3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000962',
+  slug: 'satan-in-chains',
+  studySeriesId: SERIES_ID_THE_MILLENNIUM,
+  title: 'Satan in Chains',
+  summary:
+    'Satan is bound during the Millennium because he has no one left to deceive on the desolate earth.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 20:1-3 · Isaiah 14:12-17 · Jeremiah 4:23-26 · Leviticus 16:20-22 · Revelation 12:9',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheMillennium4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000963',
+  slug: 'the-redeemed-review-the-records',
+  studySeriesId: SERIES_ID_THE_MILLENNIUM,
+  title: 'The Redeemed Review the Records',
+  summary:
+    'God invites the redeemed into the judgment process so every question about His justice can be answered.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 20:4 · 1 Corinthians 6:2-3 · Daniel 7:9-10 · Psalm 89:14 · Revelation 15:3-4',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheMillennium5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000964',
+  slug: 'the-second-resurrection',
+  studySeriesId: SERIES_ID_THE_MILLENNIUM,
+  title: 'The Second Resurrection',
+  summary:
+    'After the Millennium, the wicked are raised, Satan is released, and the final rebellion exposes that evil has not changed.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 20:5-9 · John 5:28-29 · Isaiah 14:15-17 · Revelation 20:7-8 · Romans 14:11',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheMillennium6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000965',
+  slug: 'the-final-end-of-evil',
+  studySeriesId: SERIES_ID_THE_MILLENNIUM,
+  title: 'The Final End of Evil',
+  summary:
+    'God brings sin, Satan, death, and rebellion to a final end in perfect justice and transparent love.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 20:9-15 · Malachi 4:1-3 · Ezekiel 28:18-19 · 2 Peter 3:10-13 · Nahum 1:9',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheMillennium7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000966',
+  slug: 'god-makes-all-things-new',
+  studySeriesId: SERIES_ID_THE_MILLENNIUM,
+  title: 'God Makes All Things New',
+  summary:
+    'After evil is ended forever, God creates the new earth where righteousness, love, and freedom will never be threatened again.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 21:1-5 · Revelation 22:1-5 · Isaiah 65:17 · 2 Peter 3:13 · Revelation 15:3-4',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theMillenniumLongDescription = `The Millennium explores Revelation 20 and the Bible's teaching about the 1000-year period following the Second Coming of Jesus.
+
+This study shows that God brings evil to an end with complete transparency. During the Millennium, the redeemed are brought into a judgment process where God opens the records of human history and allows His people to see for themselves that His judgments are just. Satan is bound by circumstances on a desolate earth, the wicked remain dead until the second resurrection, and the redeemed reign with Christ in heaven.
+
+The study traces the order of events before, during, and after the Millennium, showing how the final judgment vindicates God's character, exposes Satan's responsibility for evil, answers the questions of the redeemed, and prepares the universe for the final destruction of sin and the creation of the new earth.
+
+The focus is not fear. The focus is God's justice, transparency, and love.`
+
+const seriesTheMillennium: StudySeries = {
+  id: SERIES_ID_THE_MILLENNIUM,
+  slug: THE_MILLENNIUM_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The Millennium',
+  subtitle: 'God\'s transparent justice during the thousand years between the resurrections.',
+  shortDescription:
+    'The Millennium reveals God\'s transparent justice as the redeemed review His judgments and see that His ways are righteous, loving, and true.',
+  longDescription: theMillenniumLongDescription,
+  description: theMillenniumLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 80–95 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 26,
+  foundationOrder: 25,
+  whatYouWillLearn: [
+    'Themes: millennium, thousand years, Revelation 20, judgment, Satan bound, bottomless pit, second coming, resurrection, New Jerusalem, lake of fire, final judgment, great controversy, transparency, justice of God, saints judge the world, God\'s character, end of evil, new earth.',
+    'See why God provides the Millennium so the redeemed can trust His justice.',
+    'Follow the order of events before, during, and after the thousand years.',
+    'Understand Satan bound by circumstances, transparent judgment, and the final end of evil.',
+  ],
+  lessons: [
+    lessonTheMillennium1,
+    lessonTheMillennium2,
+    lessonTheMillennium3,
+    lessonTheMillennium4,
+    lessonTheMillennium5,
+    lessonTheMillennium6,
+    lessonTheMillennium7,
+  ],
+}
+
 const seriesBuriedAndRaised: StudySeries = {
   id: 'e4000001-0000-4000-8000-00000000007e',
   slug: BURIED_AND_RAISED_STUDY_SLUG,
@@ -4641,6 +4798,7 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesTheFirstAngelsMessage,
   seriesTheSecondAngelsMessage,
   seriesTheThirdAngelsMessage,
+  seriesTheMillennium,
   seriesOriginOfEvil,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,

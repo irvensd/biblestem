@@ -29,6 +29,8 @@ export const FOUNDATION_GUIDED_SLUG_ORDER = [
   'the-first-angels-message',
   'the-second-angels-message',
   'the-third-angels-message',
+  'the-second-coming',
+  'the-millennium',
   'the-bible-gods-living-word',
   'origin-of-evil',
 ] as const
@@ -212,6 +214,11 @@ export const FOUNDATIONS_JOURNEY_CHAPTERS: readonly {
       'the-second-angels-message',
       'the-third-angels-message',
     ],
+  },
+  {
+    chapterLabel: 'Chapter 8',
+    title: 'Christ Returns and Reigns',
+    slugs: ['the-second-coming', 'the-millennium'],
   },
 ]
 

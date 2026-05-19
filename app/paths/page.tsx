@@ -10,8 +10,8 @@ export default async function PathsHubPage() {
   const visibleCards = getVisibleStudyTrackHubCards(catalog)
 
   return (
-    <>
-      <section className="border-b border-zinc-200/80 bg-stone-50 pb-14 pt-16 md:pb-16 md:pt-20">
+    <div className="flex flex-col overflow-x-hidden min-h-[calc(100dvh-4rem)] md:min-h-0">
+      <section className="border-b border-zinc-200/80 bg-stone-50 pb-6 pt-14 md:pb-8 md:pt-16">
         <div className="container-shell">
           <PageIntro
             eyebrow="STUDY TRACKS"
@@ -26,8 +26,8 @@ export default async function PathsHubPage() {
         </div>
       </section>
 
-      <div className="section-space">
-        <div className="container-shell">
+      <div className="pt-6 pb-8 md:pt-8 md:pb-10">
+        <div className="container-shell min-w-0">
           {visibleCards.length === 0 ? (
             <div className="mx-auto max-w-lg rounded-xl border border-zinc-200/90 bg-white px-6 py-12 text-center shadow-sm ring-1 ring-zinc-950/[0.03]">
               <p className="text-sm font-medium text-zinc-900">No studies available yet</p>
@@ -42,14 +42,26 @@ export default async function PathsHubPage() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {visibleCards.map((card) => (
-                <PathHubCard key={card.track.level} card={card} />
-              ))}
-            </div>
+            <>
+              <div className="grid min-w-0 grid-cols-1 items-stretch gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+                {visibleCards.map((card) => (
+                  <PathHubCard key={card.track.level} card={card} />
+                ))}
+              </div>
+              <p className="mt-6 text-center text-sm leading-relaxed text-zinc-600">
+                Not sure where to begin?{' '}
+                <Link
+                  href="/paths/foundations"
+                  className="font-medium text-blue-800 underline-offset-2 hover:text-blue-900 hover:underline"
+                >
+                  Start with Foundations
+                </Link>
+                .
+              </p>
+            </>
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }

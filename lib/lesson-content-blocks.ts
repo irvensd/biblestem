@@ -27,6 +27,17 @@ import type { MarkVsSealComparisonItemData } from '@/lib/mark-vs-seal-comparison
 import type { SealElementsSabbathElementData } from '@/lib/seal-elements-sabbath-stages'
 import type { PatienceSaintsTriadElementData } from '@/lib/patience-saints-triad-stages'
 import type { DeathResurrectionStageData } from '@/lib/death-resurrection-flow-stages'
+import type { ReadinessHeartCheckCardData } from '@/lib/readiness-heart-check-stages'
+import type { SecondComingStudyRecapSectionData } from '@/lib/second-coming-study-recap-stages'
+import type { SecondComingLoveStoryStageData } from '@/lib/second-coming-love-story-stages'
+import type { ResurrectionHopeFlowStageData } from '@/lib/resurrection-hope-flow-stages'
+import type { MillenniumEventChartColumnData } from '@/lib/millennium-event-chart-stages'
+import type { MillenniumPurposeFlowStageData } from '@/lib/millennium-purpose-flow-stages'
+import type { SatanBoundExplainerCardData } from '@/lib/satan-bound-explainer-stages'
+import type { TransparentJudgmentPanelData } from '@/lib/transparent-judgment-panel-stages'
+import type { TwoResurrectionsComparisonColumnData } from '@/lib/two-resurrections-comparison-stages'
+import type { EndOfEvilFlowStageData } from '@/lib/end-of-evil-flow-stages'
+import type { MillenniumStudyRecapSectionData } from '@/lib/millennium-study-recap-stages'
 import type { SanctuaryJourneyStageData } from '@/lib/sanctuary-journey-stages'
 import type { ProphecyTimelineItem } from '@/lib/prophecy-timeline-types'
 
@@ -441,6 +452,101 @@ export type LessonContentBlock =
       subtitle?: string
       caption?: string
       elements?: PatienceSaintsTriadElementData[]
+    }
+  | {
+      type: 'readinessHeartCheck'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      reflectionPrompt?: string
+      cards?: ReadinessHeartCheckCardData[]
+    }
+  | {
+      type: 'secondComingStudyRecap'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      sections?: SecondComingStudyRecapSectionData[]
+    }
+  | {
+      type: 'secondComingLoveStory'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: SecondComingLoveStoryStageData[]
+    }
+  | {
+      type: 'resurrectionHopeFlow'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: ResurrectionHopeFlowStageData[]
+    }
+  | {
+      type: 'millenniumEventChart'
+      title?: string
+      subtitle?: string
+      caption?: string
+      before?: MillenniumEventChartColumnData
+      during?: MillenniumEventChartColumnData
+      after?: MillenniumEventChartColumnData
+    }
+  | {
+      type: 'millenniumPurposeFlow'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      scriptureAnchors?: readonly string[]
+      stages?: MillenniumPurposeFlowStageData[]
+    }
+  | {
+      type: 'satanBoundExplainer'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      scriptureAnchors?: readonly string[]
+      cards?: SatanBoundExplainerCardData[]
+    }
+  | {
+      type: 'transparentJudgmentPanel'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      scriptureAnchors?: readonly string[]
+      panels?: TransparentJudgmentPanelData[]
+    }
+  | {
+      type: 'twoResurrectionsComparison'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      firstColumn?: TwoResurrectionsComparisonColumnData
+      secondColumn?: TwoResurrectionsComparisonColumnData
+    }
+  | {
+      type: 'endOfEvilFlow'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      scriptureAnchors?: readonly string[]
+      stages?: EndOfEvilFlowStageData[]
+    }
+  | {
+      type: 'millenniumStudyRecap'
+      highlightedIndices?: number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      sections?: MillenniumStudyRecapSectionData[]
     }
   | { type: 'studyCta'; label: string; href: string }
   | StudyVisualLessonBlock

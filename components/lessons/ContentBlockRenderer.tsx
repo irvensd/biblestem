@@ -37,6 +37,17 @@ import { ImageOfBeastFormation } from '@/components/study/ImageOfBeastFormation'
 import { MarkVsSealComparison } from '@/components/study/MarkVsSealComparison'
 import { SealElementsSabbath } from '@/components/study/SealElementsSabbath'
 import { PatienceSaintsTriad } from '@/components/study/PatienceSaintsTriad'
+import { ReadinessHeartCheck } from '@/components/study/ReadinessHeartCheck'
+import { SecondComingStudyRecap } from '@/components/study/SecondComingStudyRecap'
+import { SecondComingLoveStory } from '@/components/study/SecondComingLoveStory'
+import { ResurrectionHopeFlow } from '@/components/study/ResurrectionHopeFlow'
+import { MillenniumEventChart } from '@/components/study/MillenniumEventChart'
+import { MillenniumPurposeFlow } from '@/components/study/MillenniumPurposeFlow'
+import { SatanBoundExplainer } from '@/components/study/SatanBoundExplainer'
+import { TransparentJudgmentPanel } from '@/components/study/TransparentJudgmentPanel'
+import { TwoResurrectionsComparison } from '@/components/study/TwoResurrectionsComparison'
+import { EndOfEvilFlow } from '@/components/study/EndOfEvilFlow'
+import { MillenniumStudyRecap } from '@/components/study/MillenniumStudyRecap'
 import { DeathResurrectionFlow } from '@/components/study/DeathResurrectionFlow'
 import { SanctuaryJourneyMap } from '@/components/study/SanctuaryJourneyMap'
 import { Button } from '@/components/ui/Button'
@@ -479,6 +490,123 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
       return (
         <PatienceSaintsTriad
           elements={'elements' in block ? block.elements : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'readinessHeartCheck':
+      return (
+        <ReadinessHeartCheck
+          cards={'cards' in block ? block.cards : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+          reflectionPrompt={'reflectionPrompt' in block ? block.reflectionPrompt : undefined}
+        />
+      )
+    case 'secondComingStudyRecap':
+      return (
+        <SecondComingStudyRecap
+          sections={'sections' in block ? block.sections : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'secondComingLoveStory':
+      return (
+        <SecondComingLoveStory
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'resurrectionHopeFlow':
+      return (
+        <ResurrectionHopeFlow
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'millenniumEventChart':
+      return (
+        <MillenniumEventChart
+          before={'before' in block ? block.before : undefined}
+          during={'during' in block ? block.during : undefined}
+          after={'after' in block ? block.after : undefined}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'millenniumPurposeFlow':
+      return (
+        <MillenniumPurposeFlow
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+          scriptureAnchors={'scriptureAnchors' in block ? block.scriptureAnchors : undefined}
+        />
+      )
+    case 'satanBoundExplainer':
+      return (
+        <SatanBoundExplainer
+          cards={'cards' in block ? block.cards : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+          scriptureAnchors={'scriptureAnchors' in block ? block.scriptureAnchors : undefined}
+        />
+      )
+    case 'transparentJudgmentPanel':
+      return (
+        <TransparentJudgmentPanel
+          panels={'panels' in block ? block.panels : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+          scriptureAnchors={'scriptureAnchors' in block ? block.scriptureAnchors : undefined}
+        />
+      )
+    case 'twoResurrectionsComparison':
+      return (
+        <TwoResurrectionsComparison
+          firstColumn={'firstColumn' in block ? block.firstColumn : undefined}
+          secondColumn={'secondColumn' in block ? block.secondColumn : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'endOfEvilFlow':
+      return (
+        <EndOfEvilFlow
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+          scriptureAnchors={'scriptureAnchors' in block ? block.scriptureAnchors : undefined}
+        />
+      )
+    case 'millenniumStudyRecap':
+      return (
+        <MillenniumStudyRecap
+          sections={'sections' in block ? block.sections : undefined}
           highlightedIndices={block.highlightedIndices}
           title={block.title}
           subtitle={block.subtitle}

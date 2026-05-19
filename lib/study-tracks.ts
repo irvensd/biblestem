@@ -17,7 +17,7 @@ export const STUDY_TRACKS = [
     browseHref: '/study-library/foundations',
     browseCta: 'Browse Foundation Studies',
     pathHref: '/paths/foundations',
-    pathCta: 'View Foundations Path',
+    pathCta: 'Start Foundations Path',
     hubDescription:
       'Start here with beginner studies that build a clear foundation for deeper Bible study.',
     summaryCardTitle: 'Foundations Path',
@@ -78,6 +78,17 @@ export type StudyTrackHubCard = {
   track: StudyTrackDefinition
   routeHref: string
   ctaLabel: string
+  studyCount: number
+  /** Shown on the Foundations hub card only. */
+  recommendedStart?: boolean
+}
+
+export function formatStudyCountLabel(count: number): string {
+  return count === 1 ? '1 study' : `${count} studies`
+}
+
+export function formatTrackStudyMeta(count: number, level: StudyLevel): string {
+  return `${formatStudyCountLabel(count)} · ${level}`
 }
 
 /** Query value when a browse page was opened from `/paths`. */
@@ -134,14 +145,22 @@ export function getBrowseStudiesForTrack(catalog: LoadedCatalog, track: StudyTra
 export function getVisibleStudyTrackHubCards(catalog: LoadedCatalog): StudyTrackHubCard[] {
   const cards: StudyTrackHubCard[] = []
   for (const track of STUDY_TRACKS) {
-    if (getBrowseStudiesForTrack(catalog, track).length === 0) continue
+    const studyCount = getBrowseStudiesForTrack(catalog, track).length
+    if (studyCount === 0) continue
     if (track.level === 'Beginner') {
-      cards.push({ track, routeHref: track.pathHref, ctaLabel: track.pathCta })
+      cards.push({
+        track,
+        routeHref: track.pathHref,
+        ctaLabel: track.pathCta,
+        studyCount,
+        recommendedStart: true,
+      })
     } else {
       cards.push({
         track,
         routeHref: appendBrowseFromPaths(track.browseHref),
         ctaLabel: track.browseCta,
+        studyCount,
       })
     }
   }

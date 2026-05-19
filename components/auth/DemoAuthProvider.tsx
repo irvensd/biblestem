@@ -7,6 +7,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
@@ -110,6 +111,8 @@ async function mapSessionToUser(session: Session): Promise<DemoUser> {
 export function DemoAuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<DemoUser | null>(null)
   const [isReady, setIsReady] = useState(false)
+  /** Prevents auth listener + protected pages from reacting mid sign-out navigation. */
+  const logoutInProgressRef = useRef(false)
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -146,6 +149,7 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (logoutInProgressRef.current) return
       void applySession(session)
     })
 
@@ -213,6 +217,18 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
     const supabase = getSupabaseBrowserClient()
     const navigateTo = options?.navigateTo
 
+    if (typeof window !== 'undefined' && navigateTo) {
+      logoutInProgressRef.current = true
+      clearSupabaseBrowserAuthStorage()
+      safeStorageRemove(STORAGE_KEY)
+      resetSupabaseBrowserClient()
+      if (supabase) {
+        void supabase.auth.signOut({ scope: 'local' }).catch(() => undefined)
+      }
+      window.location.assign(navigateTo)
+      return
+    }
+
     if (supabase) {
       // Network stalls or revoked-session edge cases must not block logout UX.
       const signOutDeadline = new Promise<void>((resolve) => {
@@ -231,13 +247,6 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
     clearSupabaseBrowserAuthStorage()
     safeStorageRemove(STORAGE_KEY)
     resetSupabaseBrowserClient()
-
-    // Full-page navigation resets client state; skip setUser(null) so protected layouts never
-    // flash “Redirecting…” between auth clearing and unload.
-    if (typeof window !== 'undefined' && navigateTo) {
-      window.location.assign(navigateTo)
-      return
-    }
     setUser(null)
   }, [])
 
@@ -258,14 +267,25 @@ export function DemoAuthProvider({ children }: { children: ReactNode }) {
 
       const supabase = getSupabaseBrowserClient()
       if (!supabase) return { ok: false, message: 'Could not connect to authentication.' }
-      const { error } = await supabase.from('profiles').upsert(
-        {
-          id: current.id,
-          display_name: trimmed,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: 'id' },
-      )
+
+      const updated_at = new Date().toISOString()
+      const { data: existing, error: readError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', current.id)
+        .maybeSingle()
+      if (readError) return { ok: false, message: readError.message }
+
+      const { error } = existing
+        ? await supabase
+            .from('profiles')
+            .update({ display_name: trimmed, updated_at })
+            .eq('id', current.id)
+        : await supabase.from('profiles').insert({
+            id: current.id,
+            display_name: trimmed,
+            updated_at,
+          })
       if (error) return { ok: false, message: error.message }
       setUser({ ...current, firstName: trimmed })
       saveProfile(current.email, trimmed)
