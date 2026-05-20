@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { LessonContentPending } from '@/components/lessons/LessonContentPending'
 import { LessonReader } from '@/components/lessons/LessonReader'
 import { CatalogSourceNotice } from '@/components/site/CatalogSourceNotice'
-import { getLessonReaderContent, hasBundledLessonReaderContent } from '@/lib/lesson-content'
+import { hasBundledLessonReaderContent, resolveLessonReaderContent } from '@/lib/lesson-content'
 import { hydrateLessonScriptureThreadVerseText } from '@/lib/scripture-thread-verse-hydration'
 import {
   findLessonInCatalogFromCatalog,
@@ -49,7 +49,7 @@ export default async function LessonReaderPage({
   }
 
   const content = hydrateLessonScriptureThreadVerseText(
-    lesson.readerContent ?? getLessonReaderContent(lessonSlug),
+    resolveLessonReaderContent(lessonSlug, lesson.readerContent),
   )
 
   return (

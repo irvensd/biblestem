@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { LessonTextRenderer } from '@/components/lessons/LessonTextRenderer'
 import { ReflectionNotes } from '@/components/lessons/ReflectionNotes'
 import { ScriptureBlock } from '@/components/lessons/ScriptureBlock'
@@ -48,6 +49,25 @@ import { TransparentJudgmentPanel } from '@/components/study/TransparentJudgment
 import { TwoResurrectionsComparison } from '@/components/study/TwoResurrectionsComparison'
 import { EndOfEvilFlow } from '@/components/study/EndOfEvilFlow'
 import { MillenniumStudyRecap } from '@/components/study/MillenniumStudyRecap'
+import { EndOfEvilCoreContrast } from '@/components/study/EndOfEvilCoreContrast'
+import { WagesOfSinFlow } from '@/components/study/WagesOfSinFlow'
+import { ConditionalImmortalityPanel } from '@/components/study/ConditionalImmortalityPanel'
+import { ForeverLanguageExplainer } from '@/components/study/ForeverLanguageExplainer'
+import { SecondDeathExplainer } from '@/components/study/SecondDeathExplainer'
+import { GodsHeartInJudgment } from '@/components/study/GodsHeartInJudgment'
+import { EndOfEvilStudyRecap } from '@/components/study/EndOfEvilStudyRecap'
+import { NewEarthRelationalHope } from '@/components/study/NewEarthRelationalHope'
+import { EdenToEdenTimeline } from '@/components/study/EdenToEdenTimeline'
+import { GodWithUsTempleCube } from '@/components/study/GodWithUsTempleCube'
+import { RestoredBodyHope } from '@/components/study/RestoredBodyHope'
+import { NoMoreCurseRestoration } from '@/components/study/NoMoreCurseRestoration'
+import { PleasuresForevermoreMap } from '@/components/study/PleasuresForevermoreMap'
+import { WorldLoveRestoresRecap } from '@/components/study/WorldLoveRestoresRecap'
+import { HeavenToRebellionTimeline } from '@/components/study/HeavenToRebellionTimeline'
+import { WorshipDirectionDiagram } from '@/components/study/WorshipDirectionDiagram'
+import { DeceptionPatternBuilder } from '@/components/study/DeceptionPatternBuilder'
+import { SatansMethodsMatrix } from '@/components/study/SatansMethodsMatrix'
+import { GreatControversyResolutionTimeline } from '@/components/study/GreatControversyResolutionTimeline'
 import { DeathResurrectionFlow } from '@/components/study/DeathResurrectionFlow'
 import { SanctuaryJourneyMap } from '@/components/study/SanctuaryJourneyMap'
 import { Button } from '@/components/ui/Button'
@@ -66,6 +86,22 @@ export type ContentBlockRendererProps = {
   blocks: LessonContentBlock[]
   className?: string
   reflectionContext?: ReflectionNotesContext
+}
+
+function DeeperSubtleCallout({
+  children,
+  className = '',
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <div
+      className={`min-w-0 max-w-full rounded-xl border border-zinc-200/80 bg-zinc-50/70 px-4 py-3.5 text-sm leading-relaxed text-zinc-700 ring-1 ring-zinc-950/[0.02] ${className}`}
+    >
+      {children}
+    </div>
+  )
 }
 
 /** Global structured block renderer (CMS / JSON sections + scripture supplements). */
@@ -154,13 +190,52 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
         return <ScriptureChain title={block.title} references={block.references} />
       }
       return null
+    case 'coreClaim':
+    case 'godsCharacter':
+      return (
+        <DeeperSubtleCallout>
+          <p className="text-[1.0625rem] leading-relaxed text-zinc-800 md:text-[1.08rem]">{block.text}</p>
+        </DeeperSubtleCallout>
+      )
+    case 'deeperHelperLine':
+      return <p className="text-sm font-medium text-zinc-600">{block.text}</p>
+    case 'deeperTrailSummary':
+      return (
+        <DeeperSubtleCallout>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">{block.title}</p>
+          <p className="mt-2 text-sm leading-relaxed text-zinc-700">{block.text}</p>
+        </DeeperSubtleCallout>
+      )
+    case 'deeperPracticeCallout':
+      return (
+        <DeeperSubtleCallout className="border-indigo-200/60 bg-indigo-50/30">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-indigo-900/70">{block.title}</p>
+          <div className="mt-3">
+            <LessonTextRenderer text={block.text} />
+          </div>
+        </DeeperSubtleCallout>
+      )
+    case 'sectionIntro':
+      return (
+        <header className="mb-3 max-w-full">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">{block.eyebrow}</p>
+          {block.subtitle ? (
+            <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.subtitle}</p>
+          ) : null}
+        </header>
+      )
     case 'reflection':
       if (reflectionContext) {
         return (
           <ReflectionNotes
             storageKey={reflectionContext.storageKey}
             prompt={block.prompt}
-            introLine="Take a moment. Don't rush this."
+            introLine={
+              block.placeholder
+                ? undefined
+                : "Take a moment. Don't rush this."
+            }
+            placeholder={block.placeholder}
             studySlug={reflectionContext.studySlug}
             lessonSlug={reflectionContext.lessonSlug}
             stepNumber={reflectionContext.stepNumber}
@@ -607,6 +682,213 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
       return (
         <MillenniumStudyRecap
           sections={'sections' in block ? block.sections : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'endOfEvilCoreContrast':
+      return (
+        <EndOfEvilCoreContrast
+          eternalTormentColumn={'eternalTormentColumn' in block ? block.eternalTormentColumn : undefined}
+          biblicalColumn={'biblicalColumn' in block ? block.biblicalColumn : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+          scriptureAnchors={'scriptureAnchors' in block ? block.scriptureAnchors : undefined}
+        />
+      )
+    case 'wagesOfSinFlow':
+      return (
+        <WagesOfSinFlow
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+          scriptureAnchors={'scriptureAnchors' in block ? block.scriptureAnchors : undefined}
+        />
+      )
+    case 'conditionalImmortalityPanel':
+      return (
+        <ConditionalImmortalityPanel
+          panels={'panels' in block ? block.panels : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'foreverLanguageExplainer':
+      return (
+        <ForeverLanguageExplainer
+          cards={'cards' in block ? block.cards : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+          note={'note' in block ? block.note : undefined}
+        />
+      )
+    case 'secondDeathExplainer':
+      return (
+        <SecondDeathExplainer
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+          scriptureAnchors={'scriptureAnchors' in block ? block.scriptureAnchors : undefined}
+        />
+      )
+    case 'godsHeartInJudgment':
+      return (
+        <GodsHeartInJudgment
+          panels={'panels' in block ? block.panels : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'endOfEvilStudyRecap':
+      return (
+        <EndOfEvilStudyRecap
+          sections={'sections' in block ? block.sections : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'newEarthRelationalHope':
+      return (
+        <NewEarthRelationalHope
+          cards={'cards' in block ? block.cards : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'edenToEdenTimeline':
+      return (
+        <EdenToEdenTimeline
+          steps={'steps' in block ? block.steps : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'godWithUsTempleCube':
+      return (
+        <GodWithUsTempleCube
+          panels={'panels' in block ? block.panels : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'restoredBodyHope':
+      return (
+        <RestoredBodyHope
+          stages={'stages' in block ? block.stages : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'noMoreCurseRestoration':
+      return (
+        <NoMoreCurseRestoration
+          cards={'cards' in block ? block.cards : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'pleasuresForevermoreMap':
+      return (
+        <PleasuresForevermoreMap
+          joyAreas={'joyAreas' in block ? block.joyAreas : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'worldLoveRestoresRecap':
+      return (
+        <WorldLoveRestoresRecap
+          sections={'sections' in block ? block.sections : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'heavenToRebellionTimeline':
+      return (
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <HeavenToRebellionTimeline
+            stages={'stages' in block ? block.stages : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
+      )
+    case 'worshipDirectionDiagram':
+      return (
+        <WorshipDirectionDiagram
+          pillars={'pillars' in block ? block.pillars : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'deceptionPatternBuilder':
+      return (
+        <DeceptionPatternBuilder
+          steps={'steps' in block ? block.steps : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'satansMethodsMatrix':
+      return (
+        <SatansMethodsMatrix
+          rows={'rows' in block ? block.rows : undefined}
+          highlightedIndices={block.highlightedIndices}
+          title={block.title}
+          subtitle={block.subtitle}
+          caption={block.caption}
+        />
+      )
+    case 'greatControversyResolutionTimeline':
+      return (
+        <GreatControversyResolutionTimeline
+          steps={'steps' in block ? block.steps : undefined}
           highlightedIndices={block.highlightedIndices}
           title={block.title}
           subtitle={block.subtitle}

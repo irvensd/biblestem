@@ -17,7 +17,7 @@ export default async function StudyLibraryPage(_props: StudyLibraryPageProps) {
           <PageIntro
             eyebrow="Library"
             title="Study Library"
-            description="Your full catalog of study series. Search and filter, then open a study to work through its lessons."
+            description="Browse BibleStem studies by track, search by topic, or continue through a guided path."
           />
           {showCatalogFallback ? (
             <div className="mt-4 max-w-xl">

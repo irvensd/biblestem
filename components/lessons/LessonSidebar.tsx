@@ -1,6 +1,11 @@
 'use client'
 
 import { READER_FOCUS_RING } from '@/components/lessons/lesson-reader-focus'
+import {
+  DEEPER_SIDEBAR_MAP_LABEL,
+  FOUNDATION_SIDEBAR_MAP_LABEL,
+  lessonProgressLabel,
+} from '@/lib/deeper-lesson-workflow'
 import type { LessonStep } from '@/lib/lesson-steps'
 
 function stepLabel(step: LessonStep, index: number): string {
@@ -16,6 +21,9 @@ export interface LessonSidebarProps {
   notesCount: number
   estimatedMinutes: number
   studyTitle: string
+  /** Deeper Studies workflow (Part / Study flow / key tension). */
+  deeperWorkflow?: boolean
+  keyTension?: string
   onGoToNextStep?: () => void
 }
 
@@ -28,12 +36,15 @@ export function LessonSidebar({
   notesCount,
   estimatedMinutes,
   studyTitle,
+  deeperWorkflow = false,
+  keyTension,
   onGoToNextStep,
 }: LessonSidebarProps) {
   const total = steps.length
   const done = Math.min(currentIndex, total - 1)
   const pct = total > 0 ? Math.round(((done + 1) / total) * 100) : 0
   const next = currentIndex < total - 1 ? steps[currentIndex + 1] : null
+  const mapLabel = deeperWorkflow ? DEEPER_SIDEBAR_MAP_LABEL : FOUNDATION_SIDEBAR_MAP_LABEL
 
   return (
     <div className="space-y-6">
@@ -41,13 +52,20 @@ export function LessonSidebar({
         <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-400">This lesson</p>
         <p className="mt-2 text-sm font-semibold leading-snug text-zinc-900">{lessonTitle}</p>
         <p className="mt-4 text-xs text-zinc-500">
-          Step {currentIndex + 1} of {total} · {pct}% through
+          {lessonProgressLabel(currentIndex, total, deeperWorkflow, { pct })}
         </p>
         <div className="mt-4 h-px w-full bg-zinc-200/50" />
       </div>
 
+      {deeperWorkflow && keyTension?.trim() ? (
+        <div className="rounded-xl border border-zinc-200/80 bg-zinc-50/60 px-3.5 py-3 ring-1 ring-zinc-950/[0.02]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">The tension</p>
+          <p className="mt-2 text-xs leading-relaxed text-zinc-700">{keyTension.trim()}</p>
+        </div>
+      ) : null}
+
       <div>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">Lesson map</p>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">{mapLabel}</p>
         <ol className="mt-3 space-y-2">
           {steps.map((s, i) => {
             const label = stepLabel(s, i)

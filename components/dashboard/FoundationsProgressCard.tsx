@@ -10,7 +10,7 @@ export function FoundationsProgressCard({ progress }: FoundationsProgressCardPro
 
   return (
     <section className="rounded-xl border border-zinc-200/90 bg-white p-4 shadow-sm ring-1 ring-zinc-950/[0.03]">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Foundations progress</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Foundations Progress</p>
 
       {totalCount === 0 ? (
         <p className="mt-3 text-sm text-zinc-600">No Foundation studies in the catalog yet.</p>
@@ -24,14 +24,14 @@ export function FoundationsProgressCard({ progress }: FoundationsProgressCardPro
 
           <div className="mt-3 space-y-2 text-sm">
             <div>
-              <p className="text-xs font-medium text-zinc-500">Recommended</p>
+              <p className="text-xs font-medium text-zinc-500">Next in Foundations</p>
               <p className="mt-0.5 font-medium leading-snug break-words text-zinc-900">
                 {recommendedStudyTitle ?? '—'}
               </p>
             </div>
             {nextStudyTitle ? (
               <div>
-                <p className="text-xs font-medium text-zinc-500">Next</p>
+                <p className="text-xs font-medium text-zinc-500">After that</p>
                 <p className="mt-0.5 leading-snug break-words text-zinc-800">{nextStudyTitle}</p>
               </div>
             ) : null}

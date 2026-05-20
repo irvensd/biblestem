@@ -7,6 +7,12 @@ import {
 } from '@/lib/lesson-content'
 import type { LessonQuizPayload } from '@/lib/lesson-quiz-types'
 import type { LessonSection, LessonSectionType } from '@/lib/types/product'
+import {
+  DEEPER_QUIZ_TITLE,
+  DEEPER_STEP_TITLES,
+  DEEPER_TENSION_STEP_TITLE,
+  isDeeperStudyWorkflow,
+} from '@/lib/deeper-lesson-workflow'
 
 export type LessonStepType =
   | 'opening_thought'
@@ -38,6 +44,8 @@ export type LessonStep =
       structuredBlocks?: LessonContentBlock[]
     }
   | { type: 'opening_thought'; title: string; body: string }
+  | { type: 'core_claim'; title: string; body: string }
+  | { type: 'gods_character'; title: string; body: string }
   | {
       type: 'scripture'
       title: string
@@ -55,6 +63,11 @@ export type LessonStep =
       scriptureChain?: { reference: string }[]
       /** Study tools / structured blocks below scripture UI on this step. */
       supplementBlocks?: LessonContentBlock[]
+      /** Deeper Studies: line above Scripture Thread. */
+      trailHelper?: string
+      /** Deeper Studies: summary after thread blocks. */
+      trailSummaryTitle?: string
+      trailSummary?: string
     }
   | {
       type: 'teaching_points'
@@ -71,8 +84,14 @@ export type LessonStep =
       variant?: StudyInsightVariant
       appendBlocks?: LessonContentBlock[]
     }
-  | { type: 'reflect_journal'; title: string; prompt: string }
-  | { type: 'life_application'; title: string; body: string }
+  | { type: 'reflect_journal'; title: string; prompt: string; reflectPlaceholder?: string }
+  | {
+      type: 'life_application'
+      title: string
+      body: string
+      practiceCalloutTitle?: string
+      deeperPracticeCallout?: boolean
+    }
   | { type: 'prayer'; title: string; body: string }
   | {
       type: 'quiz_review'
@@ -139,16 +158,25 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
   const steps: LessonStep[] = []
   const insightPlacement = content.studyInsight?.placement ?? 'after_teaching'
   const si = content.studyInsight
+  const deeper = isDeeperStudyWorkflow(content)
 
   steps.push({
     type: 'opening_thought',
-    title: SECTION_TITLES.opening_thought,
+    title: content.openingThoughtStepTitle ?? SECTION_TITLES.opening_thought,
     body: content.openingThought,
   })
 
+  if (deeper && content.coreClaim?.trim()) {
+    steps.push({
+      type: 'core_claim',
+      title: content.tensionStepTitle ?? DEEPER_TENSION_STEP_TITLE,
+      body: content.coreClaim.trim(),
+    })
+  }
+
   steps.push({
     type: 'scripture',
-    title: SECTION_TITLES.scripture,
+    title: content.scriptureStepTitle ?? SECTION_TITLES.scripture,
     reference: content.scriptureRef,
     quote: content.scriptureQuote,
     secondaryReference: content.scriptureSecondaryRef,
@@ -160,6 +188,9 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
     insights: scriptureInsightsFromContent(content),
     scriptureChain: content.scriptureChain,
     supplementBlocks: content.scriptureSupplementBlocks,
+    trailHelper: deeper ? content.scriptureTrailHelper : undefined,
+    trailSummaryTitle: deeper ? content.scriptureTrailSummaryTitle : undefined,
+    trailSummary: deeper ? content.scriptureTrailSummary : undefined,
   })
 
   if (si && insightPlacement === 'after_scripture') {
@@ -174,7 +205,7 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
 
   steps.push({
     type: 'teaching_points',
-    title: SECTION_TITLES.teaching_points,
+    title: content.teachingPointsStepTitle ?? SECTION_TITLES.teaching_points,
     points: content.teachingPoints,
     teachingInsights: content.teachingWordInsights ?? [],
     appendBlocks: content.afterTeachingBlocks,
@@ -211,19 +242,35 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
     steps.push(wsStep)
   }
 
+  if (deeper && content.godsCharacter?.trim()) {
+    steps.push({
+      type: 'gods_character',
+      title: content.godsCharacterStepTitle ?? DEEPER_STEP_TITLES.godsCharacter,
+      body: content.godsCharacter.trim(),
+    })
+  }
+
+  const practiceBody =
+    deeper && content.prayer.trim()
+      ? `${content.lifeApplication.trim()}\n\n${content.prayer.trim()}`
+      : content.lifeApplication
+
   steps.push({
     type: 'reflect_journal',
-    title: SECTION_TITLES.reflect_journal,
+    title: content.reflectStepTitle ?? SECTION_TITLES.reflect_journal,
     prompt: content.reflectPrompt,
+    reflectPlaceholder: deeper ? content.reflectPlaceholder : undefined,
   })
 
   steps.push({
     type: 'life_application',
     title: content.lifeApplicationStepTitle ?? SECTION_TITLES.life_application,
-    body: content.lifeApplication,
+    body: practiceBody,
+    practiceCalloutTitle: deeper ? content.practiceCalloutTitle : undefined,
+    deeperPracticeCallout: deeper && Boolean(content.practiceCalloutTitle?.trim()),
   })
 
-  if (content.prayer.trim()) {
+  if (content.prayer.trim() && !deeper) {
     steps.push({
       type: 'prayer',
       title: SECTION_TITLES.prayer,
@@ -236,7 +283,7 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
     steps.push({
       type: 'quiz_review',
       eyebrow: endQuiz.eyebrow ?? 'CHECK YOUR UNDERSTANDING',
-      title: endQuiz.title ?? 'Quick Review',
+      title: endQuiz.title ?? (deeper ? DEEPER_QUIZ_TITLE : 'Quick Review'),
       description: endQuiz.description ?? 'Check your understanding before moving on.',
       quiz: endQuiz,
     })

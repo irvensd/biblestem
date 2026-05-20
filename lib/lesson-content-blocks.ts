@@ -38,6 +38,25 @@ import type { TransparentJudgmentPanelData } from '@/lib/transparent-judgment-pa
 import type { TwoResurrectionsComparisonColumnData } from '@/lib/two-resurrections-comparison-stages'
 import type { EndOfEvilFlowStageData } from '@/lib/end-of-evil-flow-stages'
 import type { MillenniumStudyRecapSectionData } from '@/lib/millennium-study-recap-stages'
+import type { EndOfEvilCoreContrastColumnData } from '@/lib/end-of-evil-core-contrast-stages'
+import type { WagesOfSinFlowStageData } from '@/lib/wages-of-sin-flow-stages'
+import type { ConditionalImmortalityPanelData } from '@/lib/conditional-immortality-panel-stages'
+import type { ForeverLanguageCardData } from '@/lib/forever-language-explainer-stages'
+import type { SecondDeathExplainerStageData } from '@/lib/second-death-explainer-stages'
+import type { GodsHeartInJudgmentPanelData } from '@/lib/gods-heart-in-judgment-stages'
+import type { EndOfEvilStudyRecapSectionData } from '@/lib/end-of-evil-study-recap-stages'
+import type { NewEarthRelationalHopeCardData } from '@/lib/new-earth-relational-hope-stages'
+import type { EdenToEdenTimelineStepData } from '@/lib/eden-to-eden-timeline-stages'
+import type { GodWithUsTempleCubePanelData } from '@/lib/god-with-us-temple-cube-stages'
+import type { RestoredBodyHopeStageData } from '@/lib/restored-body-hope-stages'
+import type { NoMoreCurseRestorationCardData } from '@/lib/no-more-curse-restoration-stages'
+import type { PleasuresForevermoreJoyAreaData } from '@/lib/pleasures-forevermore-map-stages'
+import type { WorldLoveRestoresRecapSectionData } from '@/lib/world-love-restores-recap-stages'
+import type { HeavenToRebellionTimelineStageData } from '@/lib/heaven-to-rebellion-timeline-stages'
+import type { WorshipDirectionDiagramPillarData } from '@/lib/worship-direction-diagram-stages'
+import type { DeceptionPatternBuilderStepData } from '@/lib/deception-pattern-builder-stages'
+import type { SatansMethodsMatrixRowData } from '@/lib/satans-methods-matrix-stages'
+import type { GreatControversyResolutionTimelineStepData } from '@/lib/great-controversy-resolution-timeline-stages'
 import type { SanctuaryJourneyStageData } from '@/lib/sanctuary-journey-stages'
 import type { ProphecyTimelineItem } from '@/lib/prophecy-timeline-types'
 
@@ -165,7 +184,7 @@ export type LessonContentBlock =
     }
   | { type: 'scriptureChain'; title?: string; verses: ScriptureChainVerse[] }
   | { type: 'scriptureChain'; title?: string; references: { reference: string }[] }
-  | { type: 'reflection'; prompt: string }
+  | { type: 'reflection'; prompt: string; placeholder?: string }
   | { type: 'lifeApplication'; text: string }
   | { type: 'prayer'; text: string }
   | {
@@ -547,6 +566,173 @@ export type LessonContentBlock =
       subtitle?: string
       caption?: string
       sections?: MillenniumStudyRecapSectionData[]
+    }
+  | {
+      type: 'endOfEvilCoreContrast'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      scriptureAnchors?: readonly string[]
+      eternalTormentColumn?: EndOfEvilCoreContrastColumnData
+      biblicalColumn?: EndOfEvilCoreContrastColumnData
+    }
+  | {
+      type: 'wagesOfSinFlow'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      scriptureAnchors?: readonly string[]
+      stages?: readonly WagesOfSinFlowStageData[]
+    }
+  | {
+      type: 'conditionalImmortalityPanel'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      panels?: readonly ConditionalImmortalityPanelData[]
+    }
+  | {
+      type: 'foreverLanguageExplainer'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      note?: string
+      cards?: readonly ForeverLanguageCardData[]
+    }
+  | {
+      type: 'secondDeathExplainer'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      scriptureAnchors?: readonly string[]
+      stages?: readonly SecondDeathExplainerStageData[]
+    }
+  | {
+      type: 'godsHeartInJudgment'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      panels?: readonly GodsHeartInJudgmentPanelData[]
+    }
+  | {
+      type: 'endOfEvilStudyRecap'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      sections?: readonly EndOfEvilStudyRecapSectionData[]
+    }
+  | {
+      type: 'newEarthRelationalHope'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      cards?: readonly NewEarthRelationalHopeCardData[]
+    }
+  | {
+      type: 'edenToEdenTimeline'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      steps?: readonly EdenToEdenTimelineStepData[]
+    }
+  | {
+      type: 'godWithUsTempleCube'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      panels?: readonly GodWithUsTempleCubePanelData[]
+    }
+  | {
+      type: 'restoredBodyHope'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: readonly RestoredBodyHopeStageData[]
+    }
+  | {
+      type: 'noMoreCurseRestoration'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      cards?: readonly NoMoreCurseRestorationCardData[]
+    }
+  | {
+      type: 'pleasuresForevermoreMap'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      joyAreas?: readonly PleasuresForevermoreJoyAreaData[]
+    }
+  | {
+      type: 'worldLoveRestoresRecap'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      sections?: readonly WorldLoveRestoresRecapSectionData[]
+    }
+  | {
+      type: 'heavenToRebellionTimeline'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: readonly HeavenToRebellionTimelineStageData[]
+      /** Optional label above the visual (e.g. “Trace the Fall”). */
+      sectionEyebrow?: string
+      /** Optional subtitle under the section eyebrow. */
+      sectionSubtitle?: string
+    }
+  | { type: 'coreClaim'; text: string }
+  | { type: 'godsCharacter'; text: string }
+  | { type: 'deeperHelperLine'; text: string }
+  | { type: 'deeperTrailSummary'; title?: string; text: string }
+  | { type: 'deeperPracticeCallout'; title: string; text: string }
+  | { type: 'sectionIntro'; eyebrow: string; subtitle?: string }
+  | {
+      type: 'worshipDirectionDiagram'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      pillars?: readonly WorshipDirectionDiagramPillarData[]
+    }
+  | {
+      type: 'deceptionPatternBuilder'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      steps?: readonly DeceptionPatternBuilderStepData[]
+    }
+  | {
+      type: 'satansMethodsMatrix'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      rows?: readonly SatansMethodsMatrixRowData[]
+    }
+  | {
+      type: 'greatControversyResolutionTimeline'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      steps?: readonly GreatControversyResolutionTimelineStepData[]
     }
   | { type: 'studyCta'; label: string; href: string }
   | StudyVisualLessonBlock

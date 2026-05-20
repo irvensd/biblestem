@@ -1,5 +1,9 @@
 import { cache } from 'react'
 import { FOUNDATION_GUIDED_SLUG_ORDER } from '@/lib/foundation-path'
+import { WHEN_HEAVEN_BROKE_STUDY_SLUG } from '@/lib/deeper-lesson-shell'
+
+/** Deprecated catalog slugs replaced in mock (hide from Supabase when still present remotely). */
+const DEPRECATED_STUDY_SLUGS = new Set(['origin-of-evil'])
 import { studyPaths, studySeriesCatalog } from '@/lib/product-mock'
 import { isSupabaseConfigured } from '@/lib/supabase/client'
 import { fetchCatalogFromSupabase } from '@/lib/supabase/fetch-catalog'
@@ -37,6 +41,7 @@ function mockCatalog(): LoadedCatalog {
 /** Only supplement real Foundations journey studies, not legacy mock placeholders. */
 function isMockCatalogSupplementCandidate(series: StudySeries): boolean {
   if (typeof series.foundationOrder === 'number') return true
+  if (series.slug === WHEN_HEAVEN_BROKE_STUDY_SLUG) return true
   return (FOUNDATION_GUIDED_SLUG_ORDER as readonly string[]).includes(series.slug)
 }
 
@@ -46,7 +51,9 @@ function isMockCatalogSupplementCandidate(series: StudySeries): boolean {
  */
 function supplementRemoteCatalogWithMock(remote: LoadedCatalog): LoadedCatalog {
   const mock = mockCatalog()
-  const bySlug = new Map(remote.allSeries.map((s) => [s.slug, s]))
+  const bySlug = new Map(
+    remote.allSeries.filter((s) => !DEPRECATED_STUDY_SLUGS.has(s.slug)).map((s) => [s.slug, s]),
+  )
 
   for (const mockSeries of mock.allSeries) {
     if (!isMockCatalogSupplementCandidate(mockSeries)) continue

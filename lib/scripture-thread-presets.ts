@@ -188,57 +188,6 @@ export const SCRIPTURE_THREAD_PRESETS: Record<string, ScriptureThreadPreset> = {
       'Deceptive spirits work through signs and false claims. God forbids seeking truth from the dead because only His Word is safe ground.',
   },
 
-  // —— Origin of Evil ——
-  'did-god-create-the-devil': {
-    title: 'God Did Not Create Evil',
-    question: 'Where did evil begin according to Scripture?',
-    references: ['1 John 3:8', 'Ezekiel 28:15', 'Revelation 12:9', 'John 1:1 to 3'],
-    takeaway:
-      'God created a perfect being who chose pride and rebellion. Evil is real, but God did not create it; Christ came to destroy the devil\'s works.',
-  },
-  'lucifer-before-the-fall': {
-    title: 'Lucifer Before the Fall',
-    question: 'What was Lucifer like before iniquity was found in him?',
-    references: ['Ezekiel 28:12 to 15', 'Isaiah 14:12 to 14', 'Job 38:4 to 7', 'Revelation 12:9'],
-    takeaway:
-      'Lucifer was created perfect, beautiful, and wise. Sin began with self-exaltation, not with God creating evil.',
-  },
-  'the-birth-of-pride': {
-    title: 'The Birth of Pride',
-    question: 'How did pride lead to rebellion?',
-    references: ['Isaiah 14:13 to 14', 'Ezekiel 28:17', 'Proverbs 16:18', 'James 4:6'],
-    takeaway:
-      'Pride desired God\'s place and corrupted a perfect being. The same danger remains wherever self replaces trust in God.',
-  },
-  'war-in-heaven': {
-    title: 'War in Heaven',
-    question: 'What happened when rebellion reached heaven?',
-    references: ['Revelation 12:7 to 9', 'Luke 10:18', 'John 12:31', 'Revelation 12:11'],
-    takeaway:
-      'Michael and his angels cast Satan out. Heaven did not compromise with sin; Christ\'s victory is the hope of those who overcome.',
-  },
-  'the-first-lie-on-earth': {
-    title: 'The First Lie on Earth',
-    question: 'What lie did the serpent speak in Eden?',
-    references: ['Genesis 3:1 to 5', 'Genesis 2:17', 'Romans 6:23', 'John 8:44'],
-    takeaway:
-      'God said disobedience brings death. Satan said, "You will not surely die," attacking trust in God\'s word.',
-  },
-  'how-satan-deceives-today': {
-    title: 'Deception Today',
-    question: 'How does Satan deceive the world now?',
-    references: ['Revelation 12:9', '2 Corinthians 11:14', 'Ephesians 6:11 to 12', '1 Peter 5:8'],
-    takeaway:
-      'Satan deceives the whole world and disguises himself as an angel of light. Scripture calls believers to truth, vigilance, and Christ\'s victory.',
-  },
-  'how-god-ends-sin-forever': {
-    title: 'Sin Ended Forever',
-    question: 'How will God end sin and suffering?',
-    references: ['Revelation 20:10 to 14', 'Revelation 21:1 to 4', 'Romans 16:20', 'Nahum 1:9'],
-    takeaway:
-      'God will destroy sin, Satan, and death. The Bible ends with a new heaven and earth where righteousness dwells and evil does not return.',
-  },
-
   // —— God Is Love (lessons without threads) ——
   'the-logic-of-love': {
     title: 'Love Speaks',
@@ -479,5 +428,81 @@ export const SCRIPTURE_THREAD_PRESETS: Record<string, ScriptureThreadPreset> = {
     references: ['Revelation 18:4', '2 Corinthians 6:17', 'Isaiah 52:11', 'Revelation 14:8'],
     takeaway:
       'God calls believers out of false religion and compromise so they may worship Him in spirit and truth.',
+  },
+  // —— When Heaven Broke: The Origin of Evil and the Character of God ——
+  'the-mystery-that-began-in-heaven': {
+    title: 'Evil Did Not Begin With God\u2019s Design',
+    question: 'If God is good, where did evil come from?',
+    references: [
+      { reference: 'Genesis 1:31', shortNote: 'God\u2019s creation began good. Evil was not part of the original design.' },
+      {
+        reference: 'Ezekiel 28:14 to 15',
+        shortNote:
+          'Lucifer was created, not eternal. He was once perfect, honored, and close to God\u2019s throne.',
+      },
+      { reference: 'Isaiah 14:12', shortNote: 'Lucifer\u2019s fall was from light into rebellion.' },
+      { reference: 'Luke 10:18', shortNote: 'Jesus confirms Satan\u2019s fall was real.' },
+      { reference: 'James 1:13', shortNote: 'God is not the source of evil and does not tempt His creation into sin.' },
+      { reference: '1 John 1:5', shortNote: 'There is no darkness in God\u2019s character.' },
+    ],
+    takeaway:
+      'God did not create the devil. He created Lucifer perfect. Iniquity was found in a free being who turned from worship to self-exaltation.',
+  },
+  'the-rise-of-self': {
+    title: 'The Rise of Self',
+    question: 'How did pride turn worship away from God?',
+    references: [
+      'Isaiah 14:12 to 14',
+      'Ezekiel 28:17',
+      'Proverbs 16:18',
+      'Matthew 4:8 to 10',
+      'Romans 1:21 to 25',
+    ],
+    takeaway:
+      'Self-exaltation shifts worship from the Creator toward self and control over others.',
+  },
+  'the-lie-in-the-garden': {
+    title: 'The Lie in Eden',
+    question: 'How did Satan deceive Adam and Eve?',
+    references: [
+      'Genesis 2:16 to 17',
+      'Genesis 3:1 to 6',
+      'John 8:44',
+      '2 Corinthians 11:3',
+      'Romans 5:12',
+      '1 John 3:8',
+    ],
+    takeaway:
+      'Satan questions God\'s word, denies His warning, and misrepresents His character so sin enters the world.',
+  },
+  'the-war-behind-the-world': {
+    title: 'War Behind History',
+    question: 'What is the great controversy, and what are Satan\'s methods?',
+    references: [
+      'Revelation 12:7 to 12',
+      'Job 1:6 to 11',
+      'Matthew 4:5 to 7',
+      'John 10:10',
+      '2 Thessalonians 2:9 to 10',
+      'Revelation 13:13 to 14',
+    ],
+    takeaway:
+      'Behind human history is a cosmic conflict. Satan deceives, accuses, misuses Scripture, and works false signs.',
+  },
+  'the-end-of-evil-and-the-face-of-the-father': {
+    title: 'The End of Evil',
+    question: 'How does Christ reveal the Father and end sin forever?',
+    references: [
+      'John 14:8 to 9',
+      'John 3:16 to 17',
+      'Romans 5:8',
+      'Hebrews 2:14',
+      'Colossians 2:15',
+      'Revelation 20:10',
+      'Revelation 21:1 to 5',
+      'Nahum 1:9',
+    ],
+    takeaway:
+      'God\'s patience answers rebellion through the cross. Sin and the deceiver are destroyed; God makes all things new.',
   },
 }

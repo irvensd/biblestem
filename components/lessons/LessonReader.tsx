@@ -18,6 +18,7 @@ import { persistMarkLessonComplete, persistSaveLessonProgress } from '@/lib/dash
 import { readLocalProgress, recordStudySessionSeconds } from '@/lib/dashboard-local-progress'
 import { countWordInsightsInContent } from '@/lib/lesson-insight-count'
 import { lessonNoteStorageKey, countLocalLessonNotes } from '@/lib/lesson-notes'
+import { isDeeperStudyWorkflow, lessonProgressLabel } from '@/lib/deeper-lesson-workflow'
 import { getNextLessonInSeries } from '@/lib/product-queries'
 import { computeSeriesProgressPercent } from '@/lib/studies/progress'
 import { extractScriptureChainsFromLessonContent } from '@/lib/lesson-scripture-chains'
@@ -53,6 +54,7 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
     return buildLessonSteps(content)
   }, [lesson.sections, lesson.scripture, content])
   const total = steps.length
+  const deeperWorkflow = useMemo(() => isDeeperStudyWorkflow(content), [content])
   const startIndex = useMemo(
     () => (total > 0 ? Math.min(Math.max(0, initialStepIndex), total - 1) : 0),
     [total, initialStepIndex],
@@ -210,13 +212,20 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
         notesCount={notesCount}
         estimatedMinutes={lesson.durationMinutes}
         studyTitle={study.title}
+        deeperWorkflow={deeperWorkflow}
+        keyTension={content.keyTension}
         onGoToNextStep={index < total - 1 ? () => setLessonStepIndex((i) => i + 1) : undefined}
       />
     ) : null
 
   const mobileMap =
     !complete && total > 1 ? (
-      <LessonMobileMap steps={steps} currentIndex={index} onSelectStep={(i) => setLessonStepIndex(i)} />
+      <LessonMobileMap
+        steps={steps}
+        currentIndex={index}
+        deeperWorkflow={deeperWorkflow}
+        onSelectStep={(i) => setLessonStepIndex(i)}
+      />
     ) : null
 
   return (
@@ -224,6 +233,7 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
       progress={progress}
       stepIndex={complete ? undefined : index}
       totalSteps={complete ? undefined : total}
+      deeperWorkflow={deeperWorkflow}
       sideRail={sideRail}
       mobileLessonMap={mobileMap}
     >
@@ -232,7 +242,7 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
         seriesTitle={study.title}
         lessonTitle={lesson.title}
         stepLabel={
-          complete ? '' : `Step ${index + 1} of ${total} · ${stepThroughPct}% through`
+          complete ? '' : lessonProgressLabel(index, total, deeperWorkflow, { pct: stepThroughPct })
         }
         showCompleteLabel={complete}
       />
@@ -282,6 +292,10 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
           </div>
         )}
       </main>
+
+      {deeperWorkflow && sideRail && !complete ? (
+        <div className="mt-10 border-t border-zinc-200/70 pt-8 lg:hidden">{sideRail}</div>
+      ) : null}
 
       {!complete ? (
         <div className="border-t border-zinc-200/70 bg-stone-50/50 px-4 py-3 text-center">

@@ -19,6 +19,7 @@ export interface ReflectionNotesProps {
   storageKey: string
   prompt: string
   introLine?: string
+  placeholder?: string
   quickResponses?: readonly string[]
   studySlug: string
   lessonSlug: string
@@ -45,6 +46,7 @@ export function ReflectionNotes({
   storageKey,
   prompt,
   introLine,
+  placeholder = 'Write freely. Your note is private to this browser unless you are signed in and save to your account.',
   quickResponses = DEFAULT_REFLECTION_CHIPS,
   studySlug,
   lessonSlug,
@@ -188,7 +190,7 @@ export function ReflectionNotes({
           rows={5}
           value={value}
           onChange={(e) => handleChange(e.target.value)}
-          placeholder="Write freely. Your note is private to this browser unless you are signed in and save to your account."
+          placeholder={placeholder}
           className={`${inputClassName} min-h-[8rem] resize-y`}
         />
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">

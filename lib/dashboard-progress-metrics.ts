@@ -193,23 +193,25 @@ function nextIncompleteInList(
   return null
 }
 
-function nextIncompleteInSameTrack(
-  catalog: LoadedCatalog,
-  activeSeries: StudySeries,
+/** First incomplete study after `slug` in list order; falls back to first incomplete in list. */
+function nextIncompleteAfterSlugInList(
+  list: StudySeries[],
+  slug: string,
   p: LocalDashboardProgress,
   taken: Set<string>,
 ): StudySeries | null {
-  const track = getTrackLevel(activeSeries)
-  if (track === 'Beginner') {
-    return nextIncompleteInList(getOrderedFoundationPathStudies(catalog), p, taken)
+  let seenSlug = false
+  for (const s of list) {
+    if (!seenSlug) {
+      if (s.slug === slug) seenSlug = true
+      continue
+    }
+    if (!isSeriesEligibleForExplore(s)) continue
+    if (taken.has(s.slug)) continue
+    if (isStudyFullyComplete(s, p)) continue
+    return s
   }
-  if (track === 'Intermediate') {
-    return nextIncompleteInList(getIntermediateBrowseStudies(catalog.allSeries), p, taken)
-  }
-  if (track === 'Advanced') {
-    return nextIncompleteInList(getAdvancedBrowseStudies(catalog.allSeries), p, taken)
-  }
-  return null
+  return nextIncompleteInList(list, p, taken)
 }
 
 function isOnFoundationsPath(catalog: LoadedCatalog, series: StudySeries | undefined): boolean {
@@ -218,7 +220,8 @@ function isOnFoundationsPath(catalog: LoadedCatalog, series: StudySeries | undef
 }
 
 /**
- * Up to 2 explore recommendations; never the active study or completed studies (unless catalog exhausted).
+ * Up to 2 explore recommendations. Never duplicates Today's Study, "Next in Foundations",
+ * completed studies (unless the catalog has nothing else), or the same study twice.
  */
 export function getExploreNextRecommendations(
   catalog: LoadedCatalog,
@@ -227,7 +230,12 @@ export function getExploreNextRecommendations(
 ): StudySeries[] {
   const out: StudySeries[] = []
   const taken = new Set<string>()
+
   if (activeStudySlug) taken.add(activeStudySlug)
+
+  const orderedFoundations = getOrderedFoundationPathStudies(catalog)
+  const foundationsPathNext = currentFoundationStudy(orderedFoundations, p)
+  if (foundationsPathNext) taken.add(foundationsPathNext.slug)
 
   function tryAdd(s: StudySeries | null | undefined, allowComplete = false): void {
     if (out.length >= 2 || !s) return
@@ -242,48 +250,56 @@ export function getExploreNextRecommendations(
     ? publishedCatalogSeries(catalog).find((s) => s.slug === activeStudySlug)
     : undefined
 
+  // 1. Next incomplete study in the same track after the active study.
   if (activeSeries) {
-    const sameTrack = nextIncompleteInSameTrack(catalog, activeSeries, p, taken)
-    if (sameTrack && sameTrack.slug !== activeSeries.slug) tryAdd(sameTrack)
-
-    if (isOnFoundationsPath(catalog, activeSeries)) {
-      const ordered = getOrderedFoundationPathStudies(catalog)
-      const upNext = nextIncompleteFoundationStudyAfterCurrent(ordered, p)
-      if (upNext) tryAdd(upNext)
-      if (out.length < 2) {
-        const deeper = nextIncompleteInList(getIntermediateBrowseStudies(catalog.allSeries), p, taken)
-        if (deeper) tryAdd(deeper)
-        else {
-          const adv = nextIncompleteInList(getAdvancedBrowseStudies(catalog.allSeries), p, taken)
-          tryAdd(adv)
-        }
-      }
-    } else if (activeSeries.level === 'Advanced') {
-      const adv = nextIncompleteInList(getAdvancedBrowseStudies(catalog.allSeries), p, taken)
-      if (adv && adv.slug !== activeSeries.slug) tryAdd(adv)
-      const ordered = getOrderedFoundationPathStudies(catalog)
-      const foundation = currentFoundationStudy(ordered, p)
-      if (foundation) tryAdd(foundation)
+    const track = getTrackLevel(activeSeries)
+    if (track === 'Beginner' && isOnFoundationsPath(catalog, activeSeries)) {
+      tryAdd(nextIncompleteAfterSlugInList(orderedFoundations, activeSeries.slug, p, taken))
+    } else if (track === 'Intermediate') {
+      tryAdd(
+        nextIncompleteAfterSlugInList(
+          getIntermediateBrowseStudies(catalog.allSeries),
+          activeSeries.slug,
+          p,
+          taken,
+        ),
+      )
+    } else if (track === 'Advanced') {
+      tryAdd(
+        nextIncompleteAfterSlugInList(
+          getAdvancedBrowseStudies(catalog.allSeries),
+          activeSeries.slug,
+          p,
+          taken,
+        ),
+      )
     }
   }
 
+  // 2. Study after the guided Foundations recommendation ("After that" in the sidebar).
   if (out.length < 2) {
-    const foundation = nextIncompleteInList(getOrderedFoundationPathStudies(catalog), p, taken)
-    tryAdd(foundation)
+    tryAdd(nextIncompleteFoundationStudyAfterCurrent(orderedFoundations, p))
+  }
+
+  // 3. Another incomplete Foundation study when the path is not finished.
+  if (out.length < 2) {
+    tryAdd(nextIncompleteInList(orderedFoundations, p, taken))
+  }
+
+  // 4. Deeper, then Advanced.
+  if (out.length < 2) {
+    tryAdd(nextIncompleteInList(getIntermediateBrowseStudies(catalog.allSeries), p, taken))
   }
   if (out.length < 2) {
-    const deeper = nextIncompleteInList(getIntermediateBrowseStudies(catalog.allSeries), p, taken)
-    tryAdd(deeper)
+    tryAdd(nextIncompleteInList(getAdvancedBrowseStudies(catalog.allSeries), p, taken))
   }
-  if (out.length < 2) {
-    const adv = nextIncompleteInList(getAdvancedBrowseStudies(catalog.allSeries), p, taken)
-    tryAdd(adv)
-  }
+
+  // 5. Completed studies only when nothing incomplete remains.
   if (out.length < 2) {
     const published = [...publishedCatalogSeries(catalog)].sort((a, b) => a.sortOrder - b.sortOrder)
     for (const s of published) {
       if (out.length >= 2) break
-      tryAdd(s)
+      tryAdd(s, true)
     }
   }
 

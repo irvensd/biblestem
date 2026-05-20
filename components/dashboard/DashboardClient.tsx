@@ -84,7 +84,7 @@ export function DashboardClient({ catalog }: DashboardClientProps) {
     (hasMeaningfulProgress(progress) ? '/study-library' : '/study-library/god-is-love/lesson/the-logic-of-love?step=0')
 
   const showExploreNoSuggestions =
-    exploreStudies.length === 0 && hasMeaningfulProgress(progress) && bundle.activeStudy != null
+    exploreStudies.length === 0 && hasMeaningfulProgress(progress)
 
   return (
     <>

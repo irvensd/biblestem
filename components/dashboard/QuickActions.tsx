@@ -7,7 +7,7 @@ interface QuickActionsProps {
 const links: { label: string; href: string }[] = [
   { label: 'Resume study', href: '' },
   { label: 'Browse library', href: '/study-library' },
-  { label: 'Open Foundations Path', href: '/paths/foundations' },
+  { label: 'Foundations Path', href: '/paths/foundations' },
   { label: 'Settings', href: '/settings' },
 ]
 

@@ -8,7 +8,6 @@ import { godIsLoveSeriesLessonLibrary } from '@/lib/lesson-content-god-is-love'
 import { madeForMoreSeriesLessonLibrary } from '@/lib/lesson-content-made-for-more'
 import { warInHeavenSeriesLessonLibrary } from '@/lib/lesson-content-war-in-heaven'
 import { theGodWhoWantsToBeKnownSeriesLessonLibrary } from '@/lib/lesson-content-the-god-who-wants-to-be-known'
-import { originOfEvilSeriesLessonLibrary } from '@/lib/lesson-content-origin-of-evil'
 import { fallOfHumanitySeriesLessonLibrary } from '@/lib/lesson-content-fall-of-humanity'
 import { thePromiseKeptSeriesLessonLibrary } from '@/lib/lesson-content-the-promise-kept'
 import { theWayBackToGodSeriesLessonLibrary } from '@/lib/lesson-content-the-way-back-to-god'
@@ -30,6 +29,9 @@ import { theSecondAngelsMessageSeriesLessonLibrary } from '@/lib/lesson-content-
 import { theThirdAngelsMessageSeriesLessonLibrary } from '@/lib/lesson-content-the-third-angels-message'
 import { theSecondComingSeriesLessonLibrary } from '@/lib/lesson-content-the-second-coming'
 import { theMillenniumSeriesLessonLibrary } from '@/lib/lesson-content-the-millennium'
+import { theEndOfEvilSeriesLessonLibrary } from '@/lib/lesson-content-the-end-of-evil'
+import { theWorldLoveRestoresSeriesLessonLibrary } from '@/lib/lesson-content-the-world-love-restores'
+import { whenHeavenBrokeOriginOfEvilSeriesLessonLibrary } from '@/lib/lesson-content-when-heaven-broke-origin-of-evil'
 import { enrichLessonLibrary } from '@/lib/enrich-lesson-scripture-threads'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
@@ -122,6 +124,33 @@ export interface LessonReaderContent {
   wordStudyStepIntro?: string
   /** Overrides default “Life Application” step heading. */
   lifeApplicationStepTitle?: string
+  /** Overrides default “Opening Thought” step heading (e.g. Deeper Studies “The Objection”). */
+  openingThoughtStepTitle?: string
+  /** Overrides default “Scripture” step heading (e.g. Deeper Studies “Scripture Trail”). */
+  scriptureStepTitle?: string
+  /** Overrides default “Teaching Points” step heading (e.g. Deeper Studies “The Answer”). */
+  teachingPointsStepTitle?: string
+  /** Overrides default “Reflect” step heading (e.g. Deeper Studies “Heart Check”). */
+  reflectStepTitle?: string
+  /** Deeper Studies: tension card after The Objection (before Scripture Trail). */
+  coreClaim?: string
+  /** Overrides default “The Tension” step heading. */
+  tensionStepTitle?: string
+  /** Deeper Studies: what the answer reveals about God (after The Answer). */
+  godsCharacter?: string
+  /** Overrides default “God's Character” step heading. */
+  godsCharacterStepTitle?: string
+  /** Deeper Studies sidebar: compact tension line under lesson title. */
+  keyTension?: string
+  /** Deeper Studies: helper above Scripture Thread on the Scripture Trail step. */
+  scriptureTrailHelper?: string
+  /** Deeper Studies: summary after Scripture Thread (defaults to “What this trail shows:”). */
+  scriptureTrailSummaryTitle?: string
+  scriptureTrailSummary?: string
+  /** Deeper Studies: Heart Check textarea placeholder. */
+  reflectPlaceholder?: string
+  /** Deeper Studies: Practice callout title (e.g. “Practice for 24 hours”). */
+  practiceCalloutTitle?: string
   /** When false, skip the dedicated Word study screen (still use `wordStudy` for scripture highlight if no `scriptureWordInsights`). */
   wordStudyFullStep?: boolean
   /** Tappable words in the primary scripture quote (all occurrences of each `surface`). */
@@ -5648,7 +5677,9 @@ Amen.`,
   ...theThirdAngelsMessageSeriesLessonLibrary,
   ...theSecondComingSeriesLessonLibrary,
   ...theMillenniumSeriesLessonLibrary,
-  ...originOfEvilSeriesLessonLibrary,
+  ...theEndOfEvilSeriesLessonLibrary,
+  ...theWorldLoveRestoresSeriesLessonLibrary,
+  ...whenHeavenBrokeOriginOfEvilSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {
     openingThought: 'Approach this passage slowly. Let the text set the terms before you draw conclusions.',
@@ -5981,6 +6012,44 @@ export function parseLessonReaderContent(raw: unknown): LessonReaderContent | nu
   if (typeof r.lifeApplicationStepTitle === 'string' && r.lifeApplicationStepTitle.trim()) {
     out.lifeApplicationStepTitle = r.lifeApplicationStepTitle.trim()
   }
+  if (typeof r.openingThoughtStepTitle === 'string' && r.openingThoughtStepTitle.trim()) {
+    out.openingThoughtStepTitle = r.openingThoughtStepTitle.trim()
+  }
+  if (typeof r.scriptureStepTitle === 'string' && r.scriptureStepTitle.trim()) {
+    out.scriptureStepTitle = r.scriptureStepTitle.trim()
+  }
+  if (typeof r.teachingPointsStepTitle === 'string' && r.teachingPointsStepTitle.trim()) {
+    out.teachingPointsStepTitle = r.teachingPointsStepTitle.trim()
+  }
+  if (typeof r.reflectStepTitle === 'string' && r.reflectStepTitle.trim()) {
+    out.reflectStepTitle = r.reflectStepTitle.trim()
+  }
+  if (typeof r.coreClaim === 'string' && r.coreClaim.trim()) out.coreClaim = r.coreClaim.trim()
+  if (typeof r.tensionStepTitle === 'string' && r.tensionStepTitle.trim()) {
+    out.tensionStepTitle = r.tensionStepTitle.trim()
+  }
+  if (typeof r.godsCharacter === 'string' && r.godsCharacter.trim()) {
+    out.godsCharacter = r.godsCharacter.trim()
+  }
+  if (typeof r.godsCharacterStepTitle === 'string' && r.godsCharacterStepTitle.trim()) {
+    out.godsCharacterStepTitle = r.godsCharacterStepTitle.trim()
+  }
+  if (typeof r.keyTension === 'string' && r.keyTension.trim()) out.keyTension = r.keyTension.trim()
+  if (typeof r.scriptureTrailHelper === 'string' && r.scriptureTrailHelper.trim()) {
+    out.scriptureTrailHelper = r.scriptureTrailHelper.trim()
+  }
+  if (typeof r.scriptureTrailSummaryTitle === 'string' && r.scriptureTrailSummaryTitle.trim()) {
+    out.scriptureTrailSummaryTitle = r.scriptureTrailSummaryTitle.trim()
+  }
+  if (typeof r.scriptureTrailSummary === 'string' && r.scriptureTrailSummary.trim()) {
+    out.scriptureTrailSummary = r.scriptureTrailSummary.trim()
+  }
+  if (typeof r.reflectPlaceholder === 'string' && r.reflectPlaceholder.trim()) {
+    out.reflectPlaceholder = r.reflectPlaceholder.trim()
+  }
+  if (typeof r.practiceCalloutTitle === 'string' && r.practiceCalloutTitle.trim()) {
+    out.practiceCalloutTitle = r.practiceCalloutTitle.trim()
+  }
   const parsedQuiz = parseLessonQuiz(r.lessonQuiz)
   if (parsedQuiz) out.lessonQuiz = parsedQuiz
   return out
@@ -5988,6 +6057,56 @@ export function parseLessonReaderContent(raw: unknown): LessonReaderContent | nu
 
 export function getLessonReaderContent(lessonSlug: string): LessonReaderContent {
   return library[lessonSlug] ?? library._fallback
+}
+
+/** Deeper-only fields that may be missing from older Supabase `reader_content` rows. */
+const DEEPER_READER_FIELD_KEYS = [
+  'openingThoughtStepTitle',
+  'scriptureStepTitle',
+  'teachingPointsStepTitle',
+  'reflectStepTitle',
+  'lifeApplicationStepTitle',
+  'coreClaim',
+  'tensionStepTitle',
+  'godsCharacter',
+  'godsCharacterStepTitle',
+  'keyTension',
+  'scriptureTrailHelper',
+  'scriptureTrailSummaryTitle',
+  'scriptureTrailSummary',
+  'reflectPlaceholder',
+  'practiceCalloutTitle',
+] as const satisfies readonly (keyof LessonReaderContent)[]
+
+/**
+ * Prefer catalog `reader_content` when present, but backfill Deeper workflow fields
+ * from the bundled library so stale DB JSON does not drop Core Claim and related UI.
+ */
+export function resolveLessonReaderContent(
+  lessonSlug: string,
+  catalogContent?: LessonReaderContent,
+): LessonReaderContent {
+  const bundled = getLessonReaderContent(lessonSlug)
+  if (!hasBundledLessonReaderContent(lessonSlug)) {
+    return catalogContent ?? bundled
+  }
+  if (!catalogContent) return bundled
+
+  const out: LessonReaderContent = { ...catalogContent }
+  for (const key of DEEPER_READER_FIELD_KEYS) {
+    const current = out[key]
+    const missing =
+      current === undefined ||
+      current === null ||
+      (typeof current === 'string' && !current.trim())
+    if (missing) {
+      const fallback = bundled[key]
+      if (fallback !== undefined && fallback !== null) {
+        ;(out as unknown as Record<string, unknown>)[key] = fallback
+      }
+    }
+  }
+  return out
 }
 
 /** True when authored reader JSON exists in the local library for this slug (not the generic `_fallback`). */

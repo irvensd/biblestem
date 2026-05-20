@@ -11,7 +11,7 @@ interface StudyLibrarySidebarProps {
 
 export function StudyLibrarySidebar({ paths, allSeries }: StudyLibrarySidebarProps) {
   return (
-    <aside aria-label="Study Library sidebar" className="flex min-w-0 flex-col gap-6 lg:gap-8">
+    <aside aria-label="Study Library sidebar" className="flex min-w-0 flex-col gap-4 lg:gap-5">
       <section className="rounded-xl border border-zinc-200/90 bg-white p-4 shadow-sm ring-1 ring-zinc-950/[0.03] sm:p-5">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">Featured collection</p>
         <h2 className="mt-2 text-base font-semibold tracking-tight text-zinc-900">Misunderstood Passages</h2>
@@ -26,8 +26,8 @@ export function StudyLibrarySidebar({ paths, allSeries }: StudyLibrarySidebarPro
       </section>
 
       <section className="rounded-xl border border-zinc-200/90 bg-white p-4 shadow-sm ring-1 ring-zinc-950/[0.03] sm:p-5">
-        <h2 className="text-sm font-semibold tracking-tight text-zinc-900">Browse by level</h2>
-        <p className="mt-1 text-xs leading-relaxed text-zinc-500">Jump to studies by depth.</p>
+        <h2 className="text-sm font-semibold tracking-tight text-zinc-900">Study tracks</h2>
+        <p className="mt-1 text-xs leading-relaxed text-zinc-500">Jump to a study track.</p>
         <ul className="mt-4 space-y-1">
           {STUDY_TRACKS.map((track) => (
             <li key={track.level}>

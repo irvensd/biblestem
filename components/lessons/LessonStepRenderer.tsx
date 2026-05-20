@@ -26,6 +26,9 @@ function sectionShellClass(step: LessonStep): string {
   switch (step.type) {
     case 'opening_thought':
       return 'pb-8 pt-10 md:pt-12'
+    case 'core_claim':
+    case 'gods_character':
+      return 'pb-6 pt-2 md:pb-8'
     case 'scripture':
       return 'pb-10 pt-10 md:pb-12 md:pt-14'
     case 'teaching_points':

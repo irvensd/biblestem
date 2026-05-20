@@ -41,6 +41,10 @@ function lessonStepToBlocks(step: LessonStep): LessonContentBlock[] {
     }
     case 'opening_thought':
       return [{ type: 'paragraph', text: step.body }]
+    case 'core_claim':
+      return [{ type: 'coreClaim', text: step.body }]
+    case 'gods_character':
+      return [{ type: 'godsCharacter', text: step.body }]
     case 'scripture': {
       const blocks: LessonContentBlock[] = [
         {
@@ -59,8 +63,18 @@ function lessonStepToBlocks(step: LessonStep): LessonContentBlock[] {
           afterSecondaryEmphasisPhrases: step.afterSecondaryEmphasisPhrases,
         },
       ]
+      if (step.trailHelper?.trim()) {
+        blocks.push({ type: 'deeperHelperLine', text: step.trailHelper.trim() })
+      }
       if (step.supplementBlocks?.length) {
         blocks.push(...step.supplementBlocks)
+      }
+      if (step.trailSummary?.trim()) {
+        blocks.push({
+          type: 'deeperTrailSummary',
+          title: step.trailSummaryTitle?.trim() || 'What this trail shows:',
+          text: step.trailSummary.trim(),
+        })
       }
       return blocks
     }
@@ -98,8 +112,23 @@ function lessonStepToBlocks(step: LessonStep): LessonContentBlock[] {
       return blocks
     }
     case 'reflect_journal':
-      return [{ type: 'reflection', prompt: step.prompt }]
+      return [
+        {
+          type: 'reflection',
+          prompt: step.prompt,
+          placeholder: step.reflectPlaceholder,
+        },
+      ]
     case 'life_application':
+      if (step.deeperPracticeCallout && step.practiceCalloutTitle?.trim()) {
+        return [
+          {
+            type: 'deeperPracticeCallout',
+            title: step.practiceCalloutTitle.trim(),
+            text: step.body,
+          },
+        ]
+      }
       return [{ type: 'lifeApplication', text: step.body }]
     case 'prayer':
       return [{ type: 'prayer', text: step.body }]

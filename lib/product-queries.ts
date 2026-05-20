@@ -187,7 +187,7 @@ export function groupSeriesByCollection(seriesList: StudySeries[]): Map<string, 
 /** Study Library shelf headings — ordered display; each shelf matches `StudySeries.level` so Beginner/Intermediate/Advanced are never mixed. */
 export const STUDY_LIBRARY_SECTION_ORDER = [
   'Foundational Studies',
-  'Intermediate Studies',
+  'Deeper Studies',
   'Advanced Studies',
   'Other',
 ] as const
@@ -196,7 +196,7 @@ export type StudyLibrarySectionKey = (typeof STUDY_LIBRARY_SECTION_ORDER)[number
 
 /**
  * Groups series into library shelves by difficulty level (not `collectionLabel`).
- * Beginner → Foundational Studies; Intermediate → Intermediate Studies; Advanced → Advanced Studies.
+ * Beginner → Foundational Studies; Intermediate → Deeper Studies; Advanced → Advanced Studies.
  */
 export function groupStudiesByLevelOrSection(seriesList: StudySeries[]): Map<string, StudySeries[]> {
   const map = new Map<string, StudySeries[]>()
@@ -206,7 +206,7 @@ export function groupStudiesByLevelOrSection(seriesList: StudySeries[]): Map<str
   for (const s of seriesList) {
     let key: StudyLibrarySectionKey
     if (s.level === 'Beginner') key = 'Foundational Studies'
-    else if (s.level === 'Intermediate') key = 'Intermediate Studies'
+    else if (s.level === 'Intermediate') key = 'Deeper Studies'
     else if (s.level === 'Advanced') key = 'Advanced Studies'
     else key = 'Other'
     map.get(key)!.push(s)

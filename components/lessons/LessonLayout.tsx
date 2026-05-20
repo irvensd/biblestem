@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { ProgressBar } from '@/components/lessons/ProgressBar'
+import { lessonProgressAriaLabel } from '@/lib/deeper-lesson-workflow'
 
 interface LessonLayoutProps {
   /** 0–1 */
@@ -7,6 +8,8 @@ interface LessonLayoutProps {
   /** Current step index (0-based); shows subtle dots when both set. */
   stepIndex?: number
   totalSteps?: number
+  /** Deeper Studies use “Part” in progress aria labels. */
+  deeperWorkflow?: boolean
   children: ReactNode
   /** Sticky desktop rail (large screens only). */
   sideRail?: ReactNode
@@ -18,6 +21,7 @@ export function LessonLayout({
   progress,
   stepIndex,
   totalSteps,
+  deeperWorkflow = false,
   children,
   sideRail,
   mobileLessonMap,
@@ -33,7 +37,11 @@ export function LessonLayout({
           <div
             className="flex justify-center gap-1.5 px-4 pb-3.5 pt-2"
             role="status"
-            aria-label={`Step ${stepIndex + 1} of ${totalSteps}`}
+            aria-label={
+              typeof stepIndex === 'number' && typeof totalSteps === 'number'
+                ? lessonProgressAriaLabel(stepIndex, totalSteps, deeperWorkflow)
+                : undefined
+            }
           >
             {Array.from({ length: totalSteps }, (_, i) => (
               <span

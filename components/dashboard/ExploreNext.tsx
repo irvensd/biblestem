@@ -41,7 +41,7 @@ export function ExploreNext({ studies, showNoSuggestionsEmpty }: ExploreNextProp
     <section id="dashboard-explore-next" className="scroll-mt-24">
       <div className="mb-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Explore next</p>
-        <h2 className="mt-1 text-base font-semibold tracking-tight text-zinc-900">Studies to try</h2>
+        <h2 className="mt-1 text-base font-semibold tracking-tight text-zinc-900">Suggested next studies</h2>
       </div>
       {list.length === 0 ? (
         <div className="rounded-xl border border-dashed border-zinc-200/90 bg-stone-50/50 px-4 py-6 text-center">

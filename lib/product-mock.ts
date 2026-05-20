@@ -70,104 +70,6 @@ const wordStudies: WordStudy[] = [
   },
 ]
 
-const lessonOrigin1: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000601',
-  slug: 'did-god-create-the-devil',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
-  title: 'Did God Create the Devil?',
-  summary:
-    'Learn how the Bible explains Satan’s origin and why God is not the author of evil.',
-  durationMinutes: 10,
-  scripture: '1 John 3:8 · Revelation 12:9 · Ezekiel 28:15',
-  sortOrder: 1,
-  progressState: 'not_started',
-  sections: [],
-}
-
-const lessonOrigin2: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000602',
-  slug: 'lucifer-before-the-fall',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
-  title: 'Lucifer Before the Fall',
-  summary:
-    'Study Lucifer’s original beauty, wisdom, position, and purpose before sin was found in him.',
-  durationMinutes: 10,
-  scripture: 'Isaiah 14:12 · Luke 10:18 · Ezekiel 28:12 to 15',
-  sortOrder: 2,
-  progressState: 'not_started',
-  sections: [],
-}
-
-const lessonOrigin3: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000603',
-  slug: 'the-birth-of-pride',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
-  title: 'The Birth of Pride',
-  summary:
-    'See how pride, jealousy, and self-exaltation turned Lucifer’s heart against God.',
-  durationMinutes: 10,
-  scripture: 'Ezekiel 28:17 · Isaiah 14:13 to 14 · Matthew 4:8 to 10',
-  sortOrder: 3,
-  progressState: 'not_started',
-  sections: [],
-}
-
-const lessonOrigin4: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000604',
-  slug: 'war-in-heaven',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
-  title: 'War in Heaven',
-  summary:
-    'Understand why Lucifer was cast out and how rebellion spread among the angels.',
-  durationMinutes: 11,
-  scripture: 'Revelation 12:7 to 9 · Revelation 12:4 · John 8:44',
-  sortOrder: 4,
-  progressState: 'not_started',
-  sections: [],
-}
-
-const lessonOrigin5: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000605',
-  slug: 'the-first-lie-on-earth',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
-  title: 'The First Lie on Earth',
-  summary:
-    'Study how Satan deceived Eve and introduced sin, suffering, and death to humanity.',
-  durationMinutes: 11,
-  scripture: 'Genesis 2:16 to 17 · Genesis 3:1 · Genesis 3:4 to 5 · Genesis 3:22 to 24',
-  sortOrder: 5,
-  progressState: 'not_started',
-  sections: [],
-}
-
-const lessonOrigin6: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000606',
-  slug: 'how-satan-deceives-today',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
-  title: 'How Satan Deceives Today',
-  summary:
-    'Learn Satan’s methods of deception and how Scripture protects believers from counterfeit light.',
-  durationMinutes: 11,
-  scripture: '2 Corinthians 11:14 to 15 · Matthew 4:5 to 7 · Revelation 16:13 to 14 · 1 Peter 5:8',
-  sortOrder: 6,
-  progressState: 'not_started',
-  sections: [],
-}
-
-const lessonOrigin7: Lesson = {
-  id: 'd3000007-0000-4000-8000-000000000607',
-  slug: 'how-god-ends-sin-forever',
-  studySeriesId: 'e4000001-0000-4000-8000-000000000060',
-  title: 'How God Ends Sin Forever',
-  summary:
-    'See how God will end sin, vindicate His character, and restore creation through Christ.',
-  durationMinutes: 11,
-  scripture: 'Revelation 20:10 · Matthew 25:41 · Ezekiel 28:18 to 19 · Philippians 2:10 to 11 · Nahum 1:9',
-  sortOrder: 7,
-  progressState: 'not_started',
-  sections: [],
-}
-
 const lessonGodLove1: Lesson = {
   id: 'd3000007-0000-4000-8000-000000000611',
   slug: 'the-logic-of-love',
@@ -299,42 +201,6 @@ const seriesGodIsLove: StudySeries = {
     lessonGodLove5,
     lessonGodLove6,
     lessonGodLove7,
-  ],
-}
-
-const originOfEvilLongDescription = `This BibleStem study explains where evil came from, who Satan is, how Lucifer fell, why God allowed sin to unfold, how deception works, and how Christ will finally end evil forever. The study is Scripture-first, practical, and focused on God’s character.`
-
-const seriesOriginOfEvil: StudySeries = {
-  id: 'e4000001-0000-4000-8000-000000000060',
-  slug: 'origin-of-evil',
-  studyPathId: 'b1000001-0000-4000-8000-000000000001',
-  title: 'The Origin of Evil',
-  subtitle: 'God created Lucifer perfect, but Lucifer chose pride, rebellion, and deception.',
-  shortDescription:
-    'A clear Bible study on Lucifer, Satan, sin, deception, free will, and God’s character.',
-  longDescription: originOfEvilLongDescription,
-  description: originOfEvilLongDescription,
-  level: 'Intermediate',
-  durationSummary: '80 min total',
-  lessonsCount: 7,
-  featured: false,
-  collectionLabel: 'Growth Studies',
-  sortOrder: 2,
-  whatYouWillLearn: [
-    'Help users understand that God did not create the devil. God created Lucifer perfect, but Lucifer chose pride, rebellion, and deception.',
-    'Trace Satan’s origin and methods using Scripture rather than speculation.',
-    'See how pride and self-exaltation corrupt trusted roles.',
-    'Recognize deception’s patterns from Eden to today.',
-    'Anchor hope in Christ’s final defeat of evil and God’s restored creation.',
-  ],
-  lessons: [
-    lessonOrigin1,
-    lessonOrigin2,
-    lessonOrigin3,
-    lessonOrigin4,
-    lessonOrigin5,
-    lessonOrigin6,
-    lessonOrigin7,
   ],
 }
 
@@ -4528,6 +4394,438 @@ const seriesTheMillennium: StudySeries = {
   ],
 }
 
+const THE_END_OF_EVIL_STUDY_SLUG = 'the-end-of-evil'
+const SERIES_ID_THE_END_OF_EVIL = 'e4000001-0000-4000-8000-000000000088'
+
+const lessonTheEndOfEvil1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000970',
+  slug: 'god-is-love-in-final-judgment',
+  studySeriesId: SERIES_ID_THE_END_OF_EVIL,
+  title: 'God Is Love in Final Judgment',
+  summary:
+    'Final judgment must be understood through the character of God revealed in Jesus.',
+  durationMinutes: 13,
+  scripture: '1 John 4:8 · Ezekiel 33:11 · John 3:16 · Romans 6:23 · Revelation 21:4',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheEndOfEvil2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000971',
+  slug: 'the-incompatibility-of-justice-and-torture',
+  studySeriesId: SERIES_ID_THE_END_OF_EVIL,
+  title: 'The Incompatibility of Justice and Torture',
+  summary:
+    'Eternal torture contradicts both biblical justice and the loving character of God.',
+  durationMinutes: 13,
+  scripture:
+    'Jeremiah 19:5 · Ezekiel 33:11 · Luke 9:54-56 · Romans 13:10 · 1 John 4:18',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheEndOfEvil3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000972',
+  slug: 'what-the-bible-says-about-the-wicked',
+  studySeriesId: SERIES_ID_THE_END_OF_EVIL,
+  title: 'What the Bible Says About the Wicked',
+  summary:
+    'Scripture teaches that the wicked perish, die, are consumed, and are reduced to ashes.',
+  durationMinutes: 13,
+  scripture:
+    'John 3:16 · Romans 6:23 · James 1:15 · Psalm 37:20 · Malachi 4:1-3 · Obadiah 16',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheEndOfEvil4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000973',
+  slug: 'immortality-is-a-gift',
+  studySeriesId: SERIES_ID_THE_END_OF_EVIL,
+  title: 'Immortality Is a Gift',
+  summary:
+    'The Bible teaches that immortality belongs to God and is given to the redeemed, not possessed naturally by every soul.',
+  durationMinutes: 13,
+  scripture:
+    'Genesis 3:1-5 · 1 Timothy 6:16 · 1 Corinthians 15:51-54 · Romans 2:7 · 2 Timothy 1:10',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheEndOfEvil5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000974',
+  slug: 'forever-eternal-and-unquenchable-fire',
+  studySeriesId: SERIES_ID_THE_END_OF_EVIL,
+  title: 'Forever, Eternal, and Unquenchable Fire',
+  summary:
+    'The Bible uses words like forever and eternal to describe complete results, not endless conscious torment.',
+  durationMinutes: 13,
+  scripture:
+    'Jonah 2:6 · 1 Samuel 1:22, 28 · Exodus 21:6 · Jude 7 · 2 Peter 2:6 · Matthew 3:12',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheEndOfEvil6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000975',
+  slug: 'the-second-death',
+  studySeriesId: SERIES_ID_THE_END_OF_EVIL,
+  title: 'The Second Death',
+  summary:
+    'The lake of fire is the second death, the final and irreversible destruction of sin, Satan, and rebellion.',
+  durationMinutes: 13,
+  scripture:
+    'Revelation 20:9-15 · Ezekiel 28:18-19 · Malachi 4:1-3 · Matthew 10:28 · Nahum 1:9',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheEndOfEvil7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000976',
+  slug: 'no-more-death',
+  studySeriesId: SERIES_ID_THE_END_OF_EVIL,
+  title: 'No More Death',
+  summary:
+    'God ends evil completely so the new earth can be free from death, sorrow, crying, pain, and fear forever.',
+  durationMinutes: 13,
+  scripture:
+    'Revelation 21:1-5 · Revelation 22:1-5 · 2 Peter 3:13 · Ezekiel 33:11 · Revelation 15:3-4',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theEndOfEvilLongDescription = `The End of Evil explores the Bible's teaching on the final destruction of sin and the lost.
+
+This study addresses one of the most misunderstood doctrines in Christianity: hell. Many people have been taught that God will torture the lost forever, but Scripture presents a different picture. The Bible teaches that the wages of sin is death, that the wicked will perish, that Satan will be brought to ashes, and that God will make a new heaven and a new earth where there is no more death, sorrow, crying, or pain.
+
+This study contrasts eternal torment with the biblical teaching of final destruction, showing that God's justice and mercy are perfectly united. Evil is not preserved forever. It is brought to a complete end. God does not delight in the death of the wicked, but He will finally remove everything that destroys love, freedom, and life.
+
+The focus is not fear. The focus is the character of God: just, merciful, truthful, and love.`
+
+const seriesTheEndOfEvil: StudySeries = {
+  id: SERIES_ID_THE_END_OF_EVIL,
+  slug: THE_END_OF_EVIL_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The End of Evil',
+  subtitle: 'God brings sin, death, and rebellion to a complete end in final judgment.',
+  shortDescription:
+    'The End of Evil reveals that God is love even in final judgment, bringing sin, Satan, death, and rebellion to a complete end rather than preserving evil forever.',
+  longDescription: theEndOfEvilLongDescription,
+  description: theEndOfEvilLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 80–95 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 27,
+  foundationOrder: 26,
+  whatYouWillLearn: [
+    'Themes: end of evil, hell, final judgment, second death, lake of fire, eternal destruction, God is love, conditional immortality, wicked destroyed, death destroyed, Revelation 20, Malachi 4, character of God, justice and mercy.',
+    'See final judgment through the character of God revealed in Jesus.',
+    'Understand that the wicked perish and evil is brought to a complete end.',
+    'Learn that immortality is a gift given through Christ, not a natural possession.',
+    'Read forever, eternal, and unquenchable fire language in its biblical context.',
+  ],
+  lessons: [
+    lessonTheEndOfEvil1,
+    lessonTheEndOfEvil2,
+    lessonTheEndOfEvil3,
+    lessonTheEndOfEvil4,
+    lessonTheEndOfEvil5,
+    lessonTheEndOfEvil6,
+    lessonTheEndOfEvil7,
+  ],
+}
+
+const THE_WORLD_LOVE_RESTORES_STUDY_SLUG = 'the-world-love-restores'
+const SERIES_ID_THE_WORLD_LOVE_RESTORES = 'e4000001-0000-4000-8000-000000000089'
+
+const lessonTheWorldLoveRestores1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000977',
+  slug: 'more-than-a-place',
+  studySeriesId: SERIES_ID_THE_WORLD_LOVE_RESTORES,
+  title: 'More Than a Place',
+  summary:
+    'The New Earth is not merely a location of luxury, but eternal friendship with God and His redeemed people.',
+  durationMinutes: 13,
+  scripture: 'Psalm 16:11 · John 14:1-6 · John 16:27 · Revelation 21:3 · Revelation 22:4',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheWorldLoveRestores2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000978',
+  slug: 'eden-restored',
+  studySeriesId: SERIES_ID_THE_WORLD_LOVE_RESTORES,
+  title: 'Eden Restored',
+  summary: 'The Bible begins in Eden and ends with creation restored to God\u2019s original purpose.',
+  durationMinutes: 13,
+  scripture:
+    'Genesis 1:26-31 · Genesis 2:8-15 · Revelation 21:1-5 · Revelation 22:1-3 · Isaiah 11:6-9',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheWorldLoveRestores3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000979',
+  slug: 'god-with-us',
+  studySeriesId: SERIES_ID_THE_WORLD_LOVE_RESTORES,
+  title: 'God With Us',
+  summary:
+    'The deepest promise of the New Earth is that God will dwell face-to-face with His people forever.',
+  durationMinutes: 13,
+  scripture:
+    'Revelation 21:3 · Revelation 21:22-23 · Revelation 22:4 · Exodus 25:22 · 1 Kings 6:20',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheWorldLoveRestores4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000980',
+  slug: 'bodies-made-whole',
+  studySeriesId: SERIES_ID_THE_WORLD_LOVE_RESTORES,
+  title: 'Bodies Made Whole',
+  summary:
+    'God\u2019s future includes the redemption of our physical bodies and the healing of creation itself.',
+  durationMinutes: 13,
+  scripture:
+    'Romans 8:18-23 · Philippians 3:20-21 · Luke 24:36-43 · John 20:24-29 · 1 Corinthians 15:51-54',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheWorldLoveRestores5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000981',
+  slug: 'no-more-curse',
+  studySeriesId: SERIES_ID_THE_WORLD_LOVE_RESTORES,
+  title: 'No More Curse',
+  summary: 'Everything sin damaged will be removed, reversed, healed, and restored.',
+  durationMinutes: 13,
+  scripture:
+    'Revelation 21:4 · Revelation 22:3 · Genesis 3:17-19 · Isaiah 65:17-25 · Nahum 1:9',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheWorldLoveRestores6: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000982',
+  slug: 'pleasures-forevermore',
+  studySeriesId: SERIES_ID_THE_WORLD_LOVE_RESTORES,
+  title: 'Pleasures Forevermore',
+  summary:
+    'God is the source of holy pleasure, joy, beauty, friendship, creation, and eternal fulfillment.',
+  durationMinutes: 13,
+  scripture:
+    'Psalm 16:11 · Psalm 36:7-9 · Isaiah 35:1-10 · Revelation 22:1-5 · 1 Corinthians 2:9',
+  sortOrder: 6,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonTheWorldLoveRestores7: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000983',
+  slug: 'life-face-to-face',
+  studySeriesId: SERIES_ID_THE_WORLD_LOVE_RESTORES,
+  title: 'Life Face to Face',
+  summary:
+    'The redeemed will live forever in the direct presence of God, seeing His face and enjoying eternal friendship with Him.',
+  durationMinutes: 13,
+  scripture:
+    'Revelation 22:3-5 · Revelation 21:1-7 · John 17:24 · 1 Corinthians 13:12 · Psalm 16:11',
+  sortOrder: 7,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const theWorldLoveRestoresLongDescription = `The World Love Restores explores the Bible\u2019s vision of the New Earth and the eternal future God has planned for His people.
+
+This study shows that salvation is not merely about escaping death or going somewhere far away. God\u2019s final purpose is restored intimacy with His people in a renewed creation. The Bible begins in Eden and ends with Eden restored. The New Jerusalem descends. The curse is removed. Creation is healed. Our bodies are redeemed. God dwells with humanity. His people see His face.
+
+The study emphasizes that eternal life is deeply relational. Heaven is not mainly about mansions, luxury, or material reward. It is about life with God, restored relationships, meaningful work, embodied joy, beauty, creation, worship, and love forever expanding in a world free from everything contrary to God\u2019s character.
+
+The focus is not fantasy. The focus is God\u2019s original dream restored through Jesus.`
+
+const seriesTheWorldLoveRestores: StudySeries = {
+  id: SERIES_ID_THE_WORLD_LOVE_RESTORES,
+  slug: THE_WORLD_LOVE_RESTORES_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'The World Love Restores',
+  subtitle: 'God\u2019s final purpose is a renewed creation filled with eternal friendship and face-to-face fellowship with Him.',
+  shortDescription:
+    'The World Love Restores reveals God\u2019s final purpose: a renewed creation filled with eternal friendship, restored bodies, unbroken joy, and face-to-face fellowship with Him forever.',
+  longDescription: theWorldLoveRestoresLongDescription,
+  description: theWorldLoveRestoresLongDescription,
+  level: 'Beginner',
+  durationSummary: 'Approx. 80\u201395 min total',
+  lessonsCount: 7,
+  featured: false,
+  collectionLabel: 'Foundational Studies',
+  sortOrder: 28,
+  foundationOrder: 27,
+  whatYouWillLearn: [
+    'Themes: new earth, eternal life, Eden restored, God with us, resurrection body, no more curse, pleasures forevermore, face to face with God, New Jerusalem, creation restored, Revelation 21, Revelation 22, Psalm 16.',
+    'See that the New Earth is primarily about restored relationship with God, not luxury.',
+    'Follow the Bible from Eden lost to Eden restored through Jesus.',
+    'Understand embodied resurrection, the removal of the curse, and holy joy in God\u2019s presence.',
+    'Discover the promise of eternal friendship and seeing God\u2019s face forever.',
+  ],
+  lessons: [
+    lessonTheWorldLoveRestores1,
+    lessonTheWorldLoveRestores2,
+    lessonTheWorldLoveRestores3,
+    lessonTheWorldLoveRestores4,
+    lessonTheWorldLoveRestores5,
+    lessonTheWorldLoveRestores6,
+    lessonTheWorldLoveRestores7,
+  ],
+}
+
+const WHEN_HEAVEN_BROKE_STUDY_SLUG = 'when-heaven-broke-origin-of-evil'
+const SERIES_ID_WHEN_HEAVEN_BROKE = 'e4000001-0000-4000-8000-000000000090'
+
+const lessonWhenHeavenBroke1: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000984',
+  slug: 'the-mystery-that-began-in-heaven',
+  studySeriesId: SERIES_ID_WHEN_HEAVEN_BROKE,
+  title: 'The Mystery That Began in Heaven',
+  summary:
+    'This lesson introduces the central question of where evil came from and shows that Lucifer was created perfect before rebellion began.',
+  durationMinutes: 12,
+  scripture: 'Ezekiel 28:14 to 15 · Genesis 1:31 · Isaiah 14:12 · James 1:13 to 17 · 1 John 1:5',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhenHeavenBroke2: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000985',
+  slug: 'the-rise-of-self',
+  studySeriesId: SERIES_ID_WHEN_HEAVEN_BROKE,
+  title: 'The Rise of Self',
+  summary:
+    'This lesson investigates Lucifer\u2019s pride, jealousy, self-exaltation, and the shift from worshiping God to seeking honor for himself.',
+  durationMinutes: 12,
+  scripture:
+    'Isaiah 14:13 to 14 · Ezekiel 28:17 · Proverbs 16:18 · Matthew 4:8 to 10 · Romans 1:21 to 25',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: true,
+}
+
+const lessonWhenHeavenBroke3: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000986',
+  slug: 'the-lie-in-the-garden',
+  studySeriesId: SERIES_ID_WHEN_HEAVEN_BROKE,
+  title: 'The Lie in the Garden',
+  summary:
+    'This lesson shows how Satan deceived Adam and Eve by questioning God\u2019s word, denying God\u2019s warning, and misrepresenting God\u2019s character.',
+  durationMinutes: 12,
+  scripture:
+    'Genesis 2:16 to 17 · Genesis 3:1 to 6 · John 8:44 · 2 Corinthians 11:3 · Romans 5:12 · 1 John 3:8',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: true,
+}
+
+const lessonWhenHeavenBroke4: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000987',
+  slug: 'the-war-behind-the-world',
+  studySeriesId: SERIES_ID_WHEN_HEAVEN_BROKE,
+  title: 'The War Behind the World',
+  summary:
+    'This lesson explores the great controversy behind human history and identifies Satan\u2019s methods of deception, accusation, persecution, false miracles, and misusing Scripture.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 12:7 to 12 · Job 1:6 to 11 · Matthew 4:5 to 7 · John 10:10 · 2 Thessalonians 2:9 to 10 · Revelation 13:13 to 14',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: true,
+}
+
+const lessonWhenHeavenBroke5: Lesson = {
+  id: 'd3000007-0000-4000-8000-000000000988',
+  slug: 'the-end-of-evil-and-the-face-of-the-father',
+  studySeriesId: SERIES_ID_WHEN_HEAVEN_BROKE,
+  title: 'The End of Evil and the Face of the Father',
+  summary:
+    'This lesson explains why God did not destroy Lucifer immediately, how Jesus revealed the Father\u2019s character, and how sin will finally be destroyed forever.',
+  durationMinutes: 12,
+  scripture:
+    'John 14:8 to 9 · John 3:16 to 17 · Romans 5:8 · Hebrews 2:14 · Colossians 2:15 · Revelation 20:10 · Revelation 21:1 to 5 · Nahum 1:9',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: true,
+}
+
+const whenHeavenBrokeLongDescription = `Explore hard questions people raise about God, and trace the answers through Scripture.
+
+When Heaven Broke: The Origin of Evil and the Character of God is a Scripture-first investigation into the origin of evil, Lucifer\u2019s fall, Satan\u2019s deception, the great controversy, the final end of sin, and the loving character of God revealed through Jesus Christ.
+
+This Deeper Studies series helps learners understand that God did not create evil, trace how sin began through Lucifer\u2019s rebellion, recognize Satan\u2019s methods, and trust Christ\u2019s final victory over sin.`
+
+const seriesWhenHeavenBroke: StudySeries = {
+  id: SERIES_ID_WHEN_HEAVEN_BROKE,
+  slug: WHEN_HEAVEN_BROKE_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'When Heaven Broke: The Origin of Evil and the Character of God',
+  subtitle: 'Hard questions about evil and God, traced through Scripture to His character in Christ.',
+  shortDescription:
+    'Hard questions. Clear Scripture. Trace evil\u2019s origin, Satan\u2019s deception, and the loving character of God in Christ.',
+  longDescription: whenHeavenBrokeLongDescription,
+  description: whenHeavenBrokeLongDescription,
+  level: 'Intermediate',
+  durationSummary: 'Approx. 60 min total',
+  lessonsCount: 5,
+  featured: false,
+  collectionLabel: 'Growth Studies',
+  sortOrder: 3,
+  whatYouWillLearn: [
+    'Understand that God did not create evil and trace how sin began through Lucifer\u2019s rebellion.',
+    'See how pride and self-exaltation turned worship away from God.',
+    'Recognize Satan\u2019s deception in Eden and his methods behind human history.',
+    'Follow the great controversy from heaven to the cross and final judgment.',
+    'Trust Christ\u2019s victory and the Father\u2019s love as sin is destroyed forever.',
+  ],
+  lessons: [
+    lessonWhenHeavenBroke1,
+    lessonWhenHeavenBroke2,
+    lessonWhenHeavenBroke3,
+    lessonWhenHeavenBroke4,
+    lessonWhenHeavenBroke5,
+  ],
+}
+
 const seriesBuriedAndRaised: StudySeries = {
   id: 'e4000001-0000-4000-8000-00000000007e',
   slug: BURIED_AND_RAISED_STUDY_SLUG,
@@ -4799,7 +5097,9 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesTheSecondAngelsMessage,
   seriesTheThirdAngelsMessage,
   seriesTheMillennium,
-  seriesOriginOfEvil,
+  seriesTheEndOfEvil,
+  seriesTheWorldLoveRestores,
+  seriesWhenHeavenBroke,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,
   seriesKnowingChristInScripture,

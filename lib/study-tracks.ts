@@ -1,4 +1,5 @@
 import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
+import { DEEPER_STUDIES_DESCRIPTION, DEEPER_STUDIES_TAGLINE } from '@/lib/deeper-lesson-workflow'
 import {
   getAdvancedBrowseStudies,
   getFoundationBrowseStudies,
@@ -13,16 +14,17 @@ export const STUDY_TRACKS = [
     publicLabel: 'Foundations',
     sectionTitle: 'Foundations',
     sectionDescription:
-      'Start here if you are new to BibleStem or want to build a clear foundation for deeper study.',
+      'Start here if you are new to BibleStem or want a clear foundation for deeper study.',
     browseHref: '/study-library/foundations',
-    browseCta: 'Browse Foundation Studies',
+    browseCta: 'Browse Foundations',
     pathHref: '/paths/foundations',
     pathCta: 'Start Foundations Path',
     hubDescription:
       'Start here with beginner studies that build a clear foundation for deeper Bible study.',
-    summaryCardTitle: 'Foundations Path',
-    summaryDescription: 'Follow the beginner studies in a clear guided order.',
-    summaryHelper: 'The path keeps these studies in the recommended order.',
+    summaryCardTitle: 'Foundations',
+    summaryDescription:
+      'Follow the guided beginner path or browse all Foundation studies.',
+    pathOpenCta: 'Open Foundations Path',
     browsePageTitle: 'Foundations',
     browsePageDescription:
       'Browse all beginner Foundation studies, or follow the guided path in the recommended order.',
@@ -32,21 +34,17 @@ export const STUDY_TRACKS = [
     level: 'Intermediate' as const,
     publicLabel: 'Deeper Studies',
     sectionTitle: 'Deeper Studies',
-    sectionDescription:
-      'Build on the basics with studies that go further in application, biblical narrative, and spiritual growth.',
+    sectionDescription: DEEPER_STUDIES_DESCRIPTION,
     browseHref: '/study-library/intermediate',
     browseCta: 'Browse Deeper Studies',
-    hubDescription:
-      'Build on the basics with studies that go further in application, biblical narrative, and spiritual growth.',
+    hubDescription: DEEPER_STUDIES_DESCRIPTION,
     summaryCardTitle: 'Deeper Studies',
-    summaryDescription:
-      'Go deeper with studies that build on the foundations and strengthen biblical understanding.',
-    browseFeatureTitle: 'Build on the basics',
+    summaryDescription: DEEPER_STUDIES_DESCRIPTION,
+    browseFeatureTitle: 'Hard questions, Scripture-first answers',
     browseFeatureText:
-      'Browse studies that help you go further in application, narrative, and biblical skill.',
+      'Focused deep dives on honest objections about God, suffering, judgment, and faith, with reflective application.',
     browsePageTitle: 'Deeper Studies',
-    browsePageDescription:
-      'Browse studies that build on the foundations and strengthen biblical understanding.',
+    browsePageDescription: DEEPER_STUDIES_DESCRIPTION,
     emptyMessage: 'No deeper studies available yet.',
   },
   {
@@ -54,14 +52,14 @@ export const STUDY_TRACKS = [
     publicLabel: 'Advanced Studies',
     sectionTitle: 'Advanced Studies',
     sectionDescription:
-      'Go deeper into prophecy, doctrine, and passages that require careful Scripture-to-Scripture study.',
+      'Go deeper into prophecy, doctrine, and Scripture-to-Scripture study.',
     browseHref: '/study-library/advanced',
     browseCta: 'Browse Advanced Studies',
     hubDescription:
       'Explore deeper studies in prophecy, doctrine, theology, and carefully connected Bible passages.',
     summaryCardTitle: 'Advanced Studies',
     summaryDescription:
-      'Explore deeper studies in prophecy, doctrine, theology, and carefully connected Bible passages.',
+      'Explore deeper studies in prophecy, doctrine, and Scripture-to-Scripture learning.',
     browseFeatureTitle: 'Go deeper carefully',
     browseFeatureText:
       'Browse studies that connect Scripture with Scripture through deeper prophecy, doctrine, and theology.',
@@ -88,7 +86,9 @@ export function formatStudyCountLabel(count: number): string {
 }
 
 export function formatTrackStudyMeta(count: number, level: StudyLevel): string {
-  return `${formatStudyCountLabel(count)} · ${level}`
+  const track = getStudyTrackForLevel(level)
+  const label = track?.publicLabel ?? level
+  return `${formatStudyCountLabel(count)} · ${label}`
 }
 
 /** Query value when a browse page was opened from `/paths`. */

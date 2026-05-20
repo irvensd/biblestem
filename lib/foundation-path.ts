@@ -31,8 +31,9 @@ export const FOUNDATION_GUIDED_SLUG_ORDER = [
   'the-third-angels-message',
   'the-second-coming',
   'the-millennium',
+  'the-end-of-evil',
+  'the-world-love-restores',
   'the-bible-gods-living-word',
-  'origin-of-evil',
 ] as const
 
 function sortedLessons(series: StudySeries): Lesson[] {
@@ -218,7 +219,12 @@ export const FOUNDATIONS_JOURNEY_CHAPTERS: readonly {
   {
     chapterLabel: 'Chapter 8',
     title: 'Christ Returns and Reigns',
-    slugs: ['the-second-coming', 'the-millennium'],
+    slugs: ['the-second-coming', 'the-millennium', 'the-end-of-evil'],
+  },
+  {
+    chapterLabel: 'Chapter 9',
+    title: 'The World Love Restores',
+    slugs: ['the-world-love-restores'],
   },
 ]
 
