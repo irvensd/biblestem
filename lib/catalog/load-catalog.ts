@@ -1,6 +1,6 @@
 import { cache } from 'react'
 import { FOUNDATION_GUIDED_SLUG_ORDER } from '@/lib/foundation-path'
-import { WHEN_HEAVEN_BROKE_STUDY_SLUG } from '@/lib/deeper-lesson-shell'
+import { DEEPER_MOCK_FIRST_SERIES_SLUGS } from '@/lib/deeper-lesson-shell'
 
 /** Deprecated catalog slugs replaced in mock (hide from Supabase when still present remotely). */
 const DEPRECATED_STUDY_SLUGS = new Set(['origin-of-evil'])
@@ -41,7 +41,7 @@ function mockCatalog(): LoadedCatalog {
 /** Only supplement real Foundations journey studies, not legacy mock placeholders. */
 function isMockCatalogSupplementCandidate(series: StudySeries): boolean {
   if (typeof series.foundationOrder === 'number') return true
-  if (series.slug === WHEN_HEAVEN_BROKE_STUDY_SLUG) return true
+  if (DEEPER_MOCK_FIRST_SERIES_SLUGS.has(series.slug)) return true
   return (FOUNDATION_GUIDED_SLUG_ORDER as readonly string[]).includes(series.slug)
 }
 
@@ -64,6 +64,19 @@ function supplementRemoteCatalogWithMock(remote: LoadedCatalog): LoadedCatalog {
     }
     const remoteLessons = existing.lessons?.length ?? 0
     const mockLessons = mockSeries.lessons.length
+    if (DEEPER_MOCK_FIRST_SERIES_SLUGS.has(mockSeries.slug)) {
+      const merged = cloneStudySeries(mockSeries)
+      bySlug.set(mockSeries.slug, {
+        ...merged,
+        id: existing.id,
+        studyPathId: existing.studyPathId,
+        lessons:
+          remoteLessons > 0
+            ? existing.lessons.map((l) => ({ ...l, studySeriesId: existing.id }))
+            : merged.lessons.map((l) => ({ ...l, studySeriesId: existing.id })),
+      })
+      continue
+    }
     if (remoteLessons === 0 && mockLessons > 0) {
       const merged = cloneStudySeries(mockSeries)
       bySlug.set(mockSeries.slug, {

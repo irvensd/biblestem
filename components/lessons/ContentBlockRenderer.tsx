@@ -65,8 +65,14 @@ import { PleasuresForevermoreMap } from '@/components/study/PleasuresForevermore
 import { WorldLoveRestoresRecap } from '@/components/study/WorldLoveRestoresRecap'
 import { HeavenToRebellionTimeline } from '@/components/study/HeavenToRebellionTimeline'
 import { WorshipDirectionDiagram } from '@/components/study/WorshipDirectionDiagram'
+import { WorshipShift } from '@/components/study/WorshipShift'
 import { DeceptionPatternBuilder } from '@/components/study/DeceptionPatternBuilder'
 import { SatansMethodsMatrix } from '@/components/study/SatansMethodsMatrix'
+import { BeforeAndAfterEden } from '@/components/study/BeforeAndAfterEden'
+import { JesusInSufferingPlaces } from '@/components/study/JesusInSufferingPlaces'
+import { FromGroaningToGlory } from '@/components/study/FromGroaningToGlory'
+import { RefinersFire } from '@/components/study/RefinersFire'
+import { WhyDelayIsNotIndifference } from '@/components/study/WhyDelayIsNotIndifference'
 import { GreatControversyResolutionTimeline } from '@/components/study/GreatControversyResolutionTimeline'
 import { DeathResurrectionFlow } from '@/components/study/DeathResurrectionFlow'
 import { SanctuaryJourneyMap } from '@/components/study/SanctuaryJourneyMap'
@@ -865,35 +871,221 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
           caption={block.caption}
         />
       )
+    case 'worshipShift':
+      return (
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <WorshipShift
+            panels={'panels' in block ? block.panels : undefined}
+            scenarios={'scenarios' in block ? block.scenarios : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
+      )
     case 'deceptionPatternBuilder':
       return (
-        <DeceptionPatternBuilder
-          steps={'steps' in block ? block.steps : undefined}
-          highlightedIndices={block.highlightedIndices}
-          title={block.title}
-          subtitle={block.subtitle}
-          caption={block.caption}
-        />
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <DeceptionPatternBuilder
+            steps={'steps' in block ? block.steps : undefined}
+            scenarios={'scenarios' in block ? block.scenarios : undefined}
+            canonicalOrder={'canonicalOrder' in block ? block.canonicalOrder : undefined}
+            completionSummary={'completionSummary' in block ? block.completionSummary : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
       )
     case 'satansMethodsMatrix':
       return (
-        <SatansMethodsMatrix
-          rows={'rows' in block ? block.rows : undefined}
-          highlightedIndices={block.highlightedIndices}
-          title={block.title}
-          subtitle={block.subtitle}
-          caption={block.caption}
-        />
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <SatansMethodsMatrix
+            rows={'rows' in block ? block.rows : undefined}
+            scenarios={'scenarios' in block ? block.scenarios : undefined}
+            completionSummary={'completionSummary' in block ? block.completionSummary : undefined}
+            matchScriptures={'matchScriptures' in block ? block.matchScriptures : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
+      )
+    case 'fromGroaningToGlory':
+      return (
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <FromGroaningToGlory
+            stages={'stages' in block ? block.stages : undefined}
+            reflectionQuestions={'reflectionQuestions' in block ? block.reflectionQuestions : undefined}
+            completionSummary={'completionSummary' in block ? block.completionSummary : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
+      )
+    case 'refinersFire':
+      return (
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <RefinersFire
+            stages={'stages' in block ? block.stages : undefined}
+            reflectionQuestions={'reflectionQuestions' in block ? block.reflectionQuestions : undefined}
+            completionSummary={'completionSummary' in block ? block.completionSummary : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
+      )
+    case 'jesusInSufferingPlaces':
+      return (
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <JesusInSufferingPlaces
+            cards={'cards' in block ? block.cards : undefined}
+            reflectionQuestions={'reflectionQuestions' in block ? block.reflectionQuestions : undefined}
+            completionSummary={'completionSummary' in block ? block.completionSummary : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
+      )
+    case 'whyDelayIsNotIndifference':
+      return (
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <WhyDelayIsNotIndifference
+            steps={'steps' in block ? block.steps : undefined}
+            reflectionQuestions={'reflectionQuestions' in block ? block.reflectionQuestions : undefined}
+            completionSummary={'completionSummary' in block ? block.completionSummary : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
+      )
+    case 'beforeAndAfterEden':
+      return (
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <BeforeAndAfterEden
+            pairs={'pairs' in block ? block.pairs : undefined}
+            completionSummary={'completionSummary' in block ? block.completionSummary : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
       )
     case 'greatControversyResolutionTimeline':
       return (
-        <GreatControversyResolutionTimeline
-          steps={'steps' in block ? block.steps : undefined}
-          highlightedIndices={block.highlightedIndices}
-          title={block.title}
-          subtitle={block.subtitle}
-          caption={block.caption}
-        />
+        <div className="min-w-0 max-w-full space-y-3">
+          {'sectionEyebrow' in block && block.sectionEyebrow ? (
+            <header>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                {block.sectionEyebrow}
+              </p>
+              {'sectionSubtitle' in block && block.sectionSubtitle ? (
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{block.sectionSubtitle}</p>
+              ) : null}
+            </header>
+          ) : null}
+          <GreatControversyResolutionTimeline
+            steps={'steps' in block ? block.steps : undefined}
+            reflectionCards={'reflectionCards' in block ? block.reflectionCards : undefined}
+            completionSummary={'completionSummary' in block ? block.completionSummary : undefined}
+            highlightedIndices={block.highlightedIndices}
+            title={block.title}
+            subtitle={block.subtitle}
+            caption={block.caption}
+          />
+        </div>
       )
     case 'studyCta':
       return (

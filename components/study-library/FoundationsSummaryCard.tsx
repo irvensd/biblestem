@@ -1,12 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/Button'
+import { useLocalDashboardProgress } from '@/hooks/useLocalDashboardProgress'
 import {
   completedFoundationStudyCount,
   currentFoundationStudy,
 } from '@/lib/foundation-path'
-import { readLocalProgress, type LocalDashboardProgress } from '@/lib/dashboard-local-progress'
 import {
   SUMMARY_CARD_ACTIONS_CLASS,
   SUMMARY_CARD_RECOMMENDED_NEXT_CLASS,
@@ -23,20 +22,7 @@ interface FoundationsSummaryCardProps {
 
 /** Foundations track summary for Study Library (browse lives on /study-library/foundations). */
 export function FoundationsSummaryCard({ orderedList }: FoundationsSummaryCardProps) {
-  const [progress, setProgress] = useState<LocalDashboardProgress>(() => readLocalProgress())
-
-  useEffect(() => {
-    function refresh() {
-      setProgress(readLocalProgress())
-    }
-    refresh()
-    window.addEventListener('storage', refresh)
-    window.addEventListener('biblestem-progress', refresh)
-    return () => {
-      window.removeEventListener('storage', refresh)
-      window.removeEventListener('biblestem-progress', refresh)
-    }
-  }, [])
+  const progress = useLocalDashboardProgress()
 
   const completed = completedFoundationStudyCount(orderedList, progress)
   const total = orderedList.length

@@ -10,12 +10,15 @@ export const FOUNDATION_SIDEBAR_MAP_LABEL = 'Lesson map'
 export const DEEPER_QUIZ_TITLE = 'Review the Evidence'
 
 /** Short tagline for cards and compact UI. */
-export const DEEPER_STUDIES_TAGLINE =
-  'Hard questions. Clear Scripture. A closer look at the character of God.'
+export const DEEPER_STUDIES_TAGLINE = 'Honest questions. Scripture-first answers.'
 
-/** Primary Deeper Studies browse and hub description. */
+/** Primary Hard Questions browse and hub description. */
 export const DEEPER_STUDIES_DESCRIPTION =
-  'Explore hard questions people raise about God, and trace the answers through Scripture.'
+  'Explore difficult questions people raise about God, and trace the answers through Scripture.'
+
+/** Study Library summary card (Hard Questions track). */
+export const HARD_QUESTIONS_SUMMARY_DESCRIPTION =
+  'Explore difficult questions about God through Scripture.'
 
 /** Apologetic lesson flow (eight parts). */
 export const DEEPER_STEP_TITLES = {

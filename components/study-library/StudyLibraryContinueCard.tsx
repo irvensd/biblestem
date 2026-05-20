@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
+import { useLocalDashboardProgress } from '@/hooks/useLocalDashboardProgress'
 import { computeActiveStudy } from '@/lib/dashboard-compute'
-import { readLocalProgress, type LocalDashboardProgress } from '@/lib/dashboard-local-progress'
 import { hasMeaningfulProgress } from '@/lib/dashboard-progress-metrics'
 import type { StudyPath, StudySeries } from '@/lib/types/product'
 
@@ -15,20 +15,7 @@ interface StudyLibraryContinueCardProps {
 
 /** Continue studying or a compact start prompt for the Study Library sidebar. */
 export function StudyLibraryContinueCard({ allSeries, paths }: StudyLibraryContinueCardProps) {
-  const [progress, setProgress] = useState<LocalDashboardProgress>(() => readLocalProgress())
-
-  useEffect(() => {
-    function refresh() {
-      setProgress(readLocalProgress())
-    }
-    refresh()
-    window.addEventListener('storage', refresh)
-    window.addEventListener('biblestem-progress', refresh)
-    return () => {
-      window.removeEventListener('storage', refresh)
-      window.removeEventListener('biblestem-progress', refresh)
-    }
-  }, [])
+  const progress = useLocalDashboardProgress()
 
   const catalog = useMemo(() => ({ source: 'mock' as const, paths, allSeries }), [paths, allSeries])
 

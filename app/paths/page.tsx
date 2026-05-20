@@ -16,7 +16,7 @@ export default async function PathsHubPage() {
           <PageIntro
             eyebrow="STUDY TRACKS"
             title="Choose your study track."
-            description="Start with Foundations, take Deeper Studies on hard questions about God answered through Scripture, or explore Advanced Scripture-to-Scripture lessons."
+            description="Start with Foundations, explore Hard Questions about God answered through Scripture, or go deeper with Advanced Scripture-to-Scripture lessons."
           />
           {shouldShowCatalogFallbackNotice(catalog) ? (
             <div className="mt-4 max-w-xl">

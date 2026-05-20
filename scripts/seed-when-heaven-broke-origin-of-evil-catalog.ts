@@ -1,5 +1,5 @@
 /**
- * Inserts When Heaven Broke (study + 5 lessons) into Supabase when missing.
+ * Inserts Did God Create Evil? (study + 5 lessons) into Supabase when missing.
  *
  * Requires `.env.local`: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  *
@@ -23,19 +23,19 @@ const PATH_ID = 'b1000001-0000-4000-8000-000000000001'
 
 const s = {
   slug: 'when-heaven-broke-origin-of-evil',
-  title: 'When Heaven Broke: The Origin of Evil and the Character of God',
+  title: 'Did God Create Evil?',
   description: `Explore hard questions people raise about God, and trace the answers through Scripture.
 
-When Heaven Broke: The Origin of Evil and the Character of God is a Scripture-first investigation into the origin of evil, Lucifer\u2019s fall, Satan\u2019s deception, the great controversy, the final end of sin, and the loving character of God revealed through Jesus Christ.
+This Deeper Studies series investigates whether God created evil, tracing Lucifer\u2019s fall, Satan\u2019s deception, the great controversy, the final end of sin, and the loving character of God revealed through Jesus Christ.
 
 This Deeper Studies series helps learners understand that God did not create evil, trace how sin began through Lucifer\u2019s rebellion, recognize Satan\u2019s methods, and trust Christ\u2019s final victory over sin.`,
   shortDescription:
-    'A Scripture-first investigation into the origin of evil, Satan\u2019s deception, the great controversy, and the loving character of God revealed through Jesus Christ.',
+    'A Scripture-first study on Lucifer\u2019s fall, the origin of sin, and the character of God.',
   level: 'Intermediate' as const,
   durationSummary: 'Approx. 60 min total',
   lessonsCount: 5,
   featured: false,
-  collectionLabel: 'Growth Studies',
+  collectionLabel: 'Hard Questions',
   sortOrder: 3,
   lessons: [
     {
@@ -54,10 +54,10 @@ This Deeper Studies series helps learners understand that God did not create evi
       slug: 'the-rise-of-self',
       title: 'The Rise of Self',
       summary:
-        'This lesson investigates Lucifer\u2019s pride, jealousy, self-exaltation, and the shift from worshiping God to seeking honor for himself.',
+        'This lesson traces how pride began in a perfect being, how self-exaltation turned worship inward, and what that reveals about God and Satan.',
       durationMinutes: 12,
       scripture:
-        'Isaiah 14:13 to 14 \u00b7 Ezekiel 28:17 \u00b7 Proverbs 16:18 \u00b7 Matthew 4:8 to 10 \u00b7 Romans 1:21 to 25',
+        'Isaiah 14:13 to 14 \u00b7 Ezekiel 28:17 \u00b7 Proverbs 16:18 \u00b7 Matthew 4:8 to 10 \u00b7 Romans 1:21 to 25 \u00b7 Revelation 14:6 to 7',
       sortOrder: 2,
     },
     {
@@ -68,7 +68,7 @@ This Deeper Studies series helps learners understand that God did not create evi
         'This lesson shows how Satan deceived Adam and Eve by questioning God\u2019s word, denying God\u2019s warning, and misrepresenting God\u2019s character.',
       durationMinutes: 12,
       scripture:
-        'Genesis 2:16 to 17 \u00b7 Genesis 3:1 to 6 \u00b7 John 8:44 \u00b7 2 Corinthians 11:3 \u00b7 Romans 5:12 \u00b7 1 John 3:8',
+        'Genesis 2:16 to 17 \u00b7 Genesis 3:1 \u00b7 Genesis 3:4 to 5 \u00b7 John 8:44 \u00b7 2 Corinthians 11:3 \u00b7 Romans 5:12',
       sortOrder: 3,
     },
     {
@@ -79,7 +79,7 @@ This Deeper Studies series helps learners understand that God did not create evi
         'This lesson explores the great controversy behind human history and identifies Satan\u2019s methods of deception, accusation, persecution, false miracles, and misusing Scripture.',
       durationMinutes: 12,
       scripture:
-        'Revelation 12:7 to 12 \u00b7 Job 1:6 to 11 \u00b7 Matthew 4:5 to 7 \u00b7 John 10:10 \u00b7 2 Thessalonians 2:9 to 10 \u00b7 Revelation 13:13 to 14',
+        'Revelation 12:7 to 10 \u00b7 Job 1:9 to 11 \u00b7 Matthew 4:5 to 7 \u00b7 John 10:10 \u00b7 2 Thessalonians 2:9 to 10 \u00b7 Revelation 12:17',
       sortOrder: 4,
     },
     {
@@ -90,7 +90,7 @@ This Deeper Studies series helps learners understand that God did not create evi
         'This lesson explains why God did not destroy Lucifer immediately, how Jesus revealed the Father\u2019s character, and how sin will finally be destroyed forever.',
       durationMinutes: 12,
       scripture:
-        'John 14:8 to 9 \u00b7 John 3:16 to 17 \u00b7 Romans 5:8 \u00b7 Hebrews 2:14 \u00b7 Colossians 2:15 \u00b7 Revelation 20:10 \u00b7 Revelation 21:1 to 5 \u00b7 Nahum 1:9',
+        'John 14:8 to 9 \u00b7 John 3:16 to 17 \u00b7 Romans 5:8 \u00b7 Hebrews 2:14 \u00b7 Colossians 2:15 \u00b7 Romans 14:11 \u00b7 Revelation 20:10 \u00b7 Revelation 21:1 to 5 \u00b7 Nahum 1:9',
       sortOrder: 5,
     },
   ],
@@ -115,7 +115,20 @@ async function main() {
     .maybeSingle()
 
   if (existing?.id) {
-    console.log(`Study "${s.slug}" already exists (${existing.id}). Skipping insert.`)
+    const { error: updateErr } = await supabase
+      .from('study_series')
+      .update({
+        title: s.title,
+        description: s.description,
+        short_description: s.shortDescription,
+        long_description: s.description,
+      })
+      .eq('id', SERIES_ID)
+    if (updateErr) {
+      console.error('study_series update:', updateErr.message)
+      process.exit(1)
+    }
+    console.log(`Study "${s.slug}" already exists (${existing.id}). Updated title and descriptions.`)
     console.log('Run npm run sync:supabase:reader to push reader content.')
     return
   }

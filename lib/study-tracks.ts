@@ -1,5 +1,5 @@
 import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
-import { DEEPER_STUDIES_DESCRIPTION, DEEPER_STUDIES_TAGLINE } from '@/lib/deeper-lesson-workflow'
+import { DEEPER_STUDIES_DESCRIPTION, HARD_QUESTIONS_SUMMARY_DESCRIPTION } from '@/lib/deeper-lesson-workflow'
 import {
   getAdvancedBrowseStudies,
   getFoundationBrowseStudies,
@@ -32,20 +32,20 @@ export const STUDY_TRACKS = [
   },
   {
     level: 'Intermediate' as const,
-    publicLabel: 'Deeper Studies',
-    sectionTitle: 'Deeper Studies',
+    publicLabel: 'Hard Questions',
+    sectionTitle: 'Hard Questions',
     sectionDescription: DEEPER_STUDIES_DESCRIPTION,
-    browseHref: '/study-library/intermediate',
-    browseCta: 'Browse Deeper Studies',
+    browseHref: '/study-library/hard-questions',
+    browseCta: 'Browse Hard Questions',
     hubDescription: DEEPER_STUDIES_DESCRIPTION,
-    summaryCardTitle: 'Deeper Studies',
-    summaryDescription: DEEPER_STUDIES_DESCRIPTION,
-    browseFeatureTitle: 'Hard questions, Scripture-first answers',
+    summaryCardTitle: 'Hard Questions',
+    summaryDescription: HARD_QUESTIONS_SUMMARY_DESCRIPTION,
+    browseFeatureTitle: 'Honest questions. Scripture-first answers.',
     browseFeatureText:
-      'Focused deep dives on honest objections about God, suffering, judgment, and faith, with reflective application.',
-    browsePageTitle: 'Deeper Studies',
+      'Focused studies on God\u2019s character, suffering, judgment, evil, faith, and trust.',
+    browsePageTitle: 'Hard Questions',
     browsePageDescription: DEEPER_STUDIES_DESCRIPTION,
-    emptyMessage: 'No deeper studies available yet.',
+    emptyMessage: 'No Hard Questions studies available yet.',
   },
   {
     level: 'Advanced' as const,

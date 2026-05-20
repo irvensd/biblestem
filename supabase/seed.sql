@@ -43,15 +43,19 @@ insert into public.study_series (
   'e4000001-0000-4000-8000-000000000090',
   'b1000001-0000-4000-8000-000000000001',
   'when-heaven-broke-origin-of-evil',
-  'When Heaven Broke: The Origin of Evil and the Character of God',
-  'When Heaven Broke: The Origin of Evil and the Character of God is a Scripture-first investigation into the origin of evil, Lucifer''s fall, Satan''s deception, the great controversy, the final end of sin, and the loving character of God revealed through Jesus Christ.',
-  'A Scripture-first investigation into the origin of evil, Satan''s deception, the great controversy, and the loving character of God revealed through Jesus Christ.',
-  'When Heaven Broke: The Origin of Evil and the Character of God is a Scripture-first investigation into the origin of evil, Lucifer''s fall, Satan''s deception, the great controversy, the final end of sin, and the loving character of God revealed through Jesus Christ.',
+  'Did God Create Evil?',
+  'Explore hard questions people raise about God, and trace the answers through Scripture.' || E'\n\n' ||
+  'This Deeper Studies series investigates whether God created evil, tracing Lucifer''s fall, Satan''s deception, the great controversy, the final end of sin, and the loving character of God revealed through Jesus Christ.' || E'\n\n' ||
+  'This Deeper Studies series helps learners understand that God did not create evil, trace how sin began through Lucifer''s rebellion, recognize Satan''s methods, and trust Christ''s final victory over sin.',
+  'A Scripture-first study on Lucifer''s fall, the origin of sin, and the character of God.',
+  'Explore hard questions people raise about God, and trace the answers through Scripture.' || E'\n\n' ||
+  'This Deeper Studies series investigates whether God created evil, tracing Lucifer''s fall, Satan''s deception, the great controversy, the final end of sin, and the loving character of God revealed through Jesus Christ.' || E'\n\n' ||
+  'This Deeper Studies series helps learners understand that God did not create evil, trace how sin began through Lucifer''s rebellion, recognize Satan''s methods, and trust Christ''s final victory over sin.',
   'Intermediate',
   'Approx. 60 min total',
   5,
   false,
-  'Growth Studies',
+  'Hard Questions',
   3
 );
 

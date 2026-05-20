@@ -54,9 +54,24 @@ import type { PleasuresForevermoreJoyAreaData } from '@/lib/pleasures-forevermor
 import type { WorldLoveRestoresRecapSectionData } from '@/lib/world-love-restores-recap-stages'
 import type { HeavenToRebellionTimelineStageData } from '@/lib/heaven-to-rebellion-timeline-stages'
 import type { WorshipDirectionDiagramPillarData } from '@/lib/worship-direction-diagram-stages'
-import type { DeceptionPatternBuilderStepData } from '@/lib/deception-pattern-builder-stages'
-import type { SatansMethodsMatrixRowData } from '@/lib/satans-methods-matrix-stages'
-import type { GreatControversyResolutionTimelineStepData } from '@/lib/great-controversy-resolution-timeline-stages'
+import type { WorshipShiftPanelData, WorshipShiftScenarioData } from '@/lib/worship-shift-stages'
+import type {
+  DeceptionPatternBuilderStepData,
+  DeceptionPatternScenarioData,
+} from '@/lib/deception-pattern-builder-stages'
+import type {
+  SatansMethodsMatrixRowData,
+  SatansMethodsMatrixScenarioData,
+} from '@/lib/satans-methods-matrix-stages'
+import type { BeforeAndAfterEdenPairData } from '@/lib/before-and-after-eden-stages'
+import type { JesusInSufferingPlacesCardData } from '@/lib/jesus-in-suffering-places-stages'
+import type { FromGroaningToGloryStageData } from '@/lib/from-groaning-to-glory-stages'
+import type { RefinersFireStageData } from '@/lib/refiners-fire-stages'
+import type { WhyDelayIsNotIndifferenceStageData } from '@/lib/why-delay-is-not-indifference-stages'
+import type {
+  GreatControversyReflectionCardData,
+  GreatControversyResolutionTimelineStepData,
+} from '@/lib/great-controversy-resolution-timeline-stages'
 import type { SanctuaryJourneyStageData } from '@/lib/sanctuary-journey-stages'
 import type { ProphecyTimelineItem } from '@/lib/prophecy-timeline-types'
 
@@ -711,12 +726,28 @@ export type LessonContentBlock =
       pillars?: readonly WorshipDirectionDiagramPillarData[]
     }
   | {
+      type: 'worshipShift'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      panels?: readonly WorshipShiftPanelData[]
+      scenarios?: readonly WorshipShiftScenarioData[]
+      sectionEyebrow?: string
+      sectionSubtitle?: string
+    }
+  | {
       type: 'deceptionPatternBuilder'
       highlightedIndices?: readonly number[]
       title?: string
       subtitle?: string
       caption?: string
       steps?: readonly DeceptionPatternBuilderStepData[]
+      scenarios?: readonly DeceptionPatternScenarioData[]
+      canonicalOrder?: readonly string[]
+      completionSummary?: string
+      sectionEyebrow?: string
+      sectionSubtitle?: string
     }
   | {
       type: 'satansMethodsMatrix'
@@ -725,6 +756,70 @@ export type LessonContentBlock =
       subtitle?: string
       caption?: string
       rows?: readonly SatansMethodsMatrixRowData[]
+      scenarios?: readonly SatansMethodsMatrixScenarioData[]
+      completionSummary?: string
+      matchScriptures?: boolean
+      sectionEyebrow?: string
+      sectionSubtitle?: string
+    }
+  | {
+      type: 'fromGroaningToGlory'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: readonly FromGroaningToGloryStageData[]
+      reflectionQuestions?: readonly string[]
+      completionSummary?: string
+      sectionEyebrow?: string
+      sectionSubtitle?: string
+    }
+  | {
+      type: 'refinersFire'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      stages?: readonly RefinersFireStageData[]
+      reflectionQuestions?: readonly string[]
+      completionSummary?: string
+      sectionEyebrow?: string
+      sectionSubtitle?: string
+    }
+  | {
+      type: 'jesusInSufferingPlaces'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      cards?: readonly JesusInSufferingPlacesCardData[]
+      reflectionQuestions?: readonly string[]
+      completionSummary?: string
+      sectionEyebrow?: string
+      sectionSubtitle?: string
+    }
+  | {
+      type: 'whyDelayIsNotIndifference'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      steps?: readonly WhyDelayIsNotIndifferenceStageData[]
+      reflectionQuestions?: readonly string[]
+      completionSummary?: string
+      sectionEyebrow?: string
+      sectionSubtitle?: string
+    }
+  | {
+      type: 'beforeAndAfterEden'
+      highlightedIndices?: readonly number[]
+      title?: string
+      subtitle?: string
+      caption?: string
+      pairs?: readonly BeforeAndAfterEdenPairData[]
+      completionSummary?: string
+      sectionEyebrow?: string
+      sectionSubtitle?: string
     }
   | {
       type: 'greatControversyResolutionTimeline'
@@ -733,6 +828,10 @@ export type LessonContentBlock =
       subtitle?: string
       caption?: string
       steps?: readonly GreatControversyResolutionTimelineStepData[]
+      reflectionCards?: readonly GreatControversyReflectionCardData[]
+      completionSummary?: string
+      sectionEyebrow?: string
+      sectionSubtitle?: string
     }
   | { type: 'studyCta'; label: string; href: string }
   | StudyVisualLessonBlock

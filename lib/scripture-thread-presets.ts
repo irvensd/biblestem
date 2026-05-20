@@ -429,7 +429,7 @@ export const SCRIPTURE_THREAD_PRESETS: Record<string, ScriptureThreadPreset> = {
     takeaway:
       'God calls believers out of false religion and compromise so they may worship Him in spirit and truth.',
   },
-  // —— When Heaven Broke: The Origin of Evil and the Character of God ——
+  // —— Did God Create Evil? ——
   'the-mystery-that-began-in-heaven': {
     title: 'Evil Did Not Begin With God\u2019s Design',
     question: 'If God is good, where did evil come from?',
@@ -504,5 +504,88 @@ export const SCRIPTURE_THREAD_PRESETS: Record<string, ScriptureThreadPreset> = {
     ],
     takeaway:
       'God\'s patience answers rebellion through the cross. Sin and the deceiver are destroyed; God makes all things new.',
+  },
+  // —— Why Does God Allow Suffering? ——
+  'the-question-we-cannot-ignore': {
+    title: 'Suffering Was Not God\u2019s Original Design',
+    question: 'If God is good, why is there so much suffering?',
+    references: [
+      'Genesis 1:31',
+      'Genesis 3:6 to 7',
+      'Genesis 3:16 to 19',
+      'Romans 5:12',
+      'James 1:13',
+      'James 1:17',
+      '1 John 3:4',
+      'Romans 6:23',
+      '1 John 1:5',
+    ],
+    takeaway:
+      'God created good. Sin brought death. God is light, gives good gifts, and is not the author of evil.',
+  },
+  'why-god-did-not-end-it-immediately': {
+    title: 'God\u2019s Delay Is Not Indifference',
+    question: 'If God has the power to stop evil, why does He let it continue?',
+    references: [
+      'Revelation 12:7 to 9',
+      'Ezekiel 28:17',
+      'Isaiah 14:13 to 14',
+      'Matthew 13:24 to 30',
+      'Matthew 13:36 to 43',
+      '1 Corinthians 4:9',
+      '1 John 4:8',
+      '1 John 4:18',
+      'Nahum 1:9',
+    ],
+    takeaway:
+      'God\u2019s patience exposes evil and reveals His love so affliction will never rise again.',
+  },
+  'the-god-who-entered-pain': {
+    title: 'Christ Came Near to Human Suffering',
+    question: 'If God cares, why does He seem distant when people suffer?',
+    references: [
+      'Isaiah 53:3',
+      'Isaiah 53:4 to 5',
+      'John 11:35',
+      'Matthew 27:46',
+      'Romans 5:8',
+      'Hebrews 2:14 to 18',
+      'Hebrews 4:15 to 16',
+      'John 14:9',
+    ],
+    takeaway:
+      'In Jesus, God came near to suffering, bore grief, and revealed the Father\u2019s compassionate heart.',
+  },
+  'the-furnace-that-refines': {
+    title: 'God Can Refine What Suffering Reveals',
+    question: 'Why would a loving God allow His people to go through trials?',
+    references: [
+      '1 Peter 1:6 to 7',
+      'James 1:2 to 4',
+      'Romans 5:3 to 5',
+      'Hebrews 12:5 to 11',
+      'Malachi 3:2 to 3',
+      'Job 23:10',
+      '2 Corinthians 12:7 to 10',
+      'Psalm 139:23 to 24',
+    ],
+    takeaway:
+      'God can refine faith through trials without being the author of evil or delighting in pain.',
+  },
+  'until-there-is-no-more-pain': {
+    title: 'From Groaning to Glory',
+    question: 'Will suffering ever actually end?',
+    references: [
+      'Romans 8:22 to 23',
+      'John 11:11 to 14',
+      '1 Thessalonians 4:13 to 18',
+      '1 Corinthians 15:51 to 55',
+      '2 Corinthians 1:3 to 4',
+      'Matthew 25:35 to 40',
+      'Revelation 20:10',
+      'Revelation 21:1 to 5',
+    ],
+    takeaway:
+      'Suffering is real, but it is not final. God will end pain, raise His people, judge evil, and make all things new.',
   },
 }

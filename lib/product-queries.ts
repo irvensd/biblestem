@@ -168,7 +168,7 @@ export function filterSeriesForLibrary(
 }
 
 /** Legacy: buckets by `collectionLabel` only (can mix levels under one shelf). Prefer `groupStudiesByLevelOrSection`. */
-const LIBRARY_COLLECTION_BUCKETS = ['Foundational Studies', 'Growth Studies', 'Advanced Studies'] as const
+const LIBRARY_COLLECTION_BUCKETS = ['Foundational Studies', 'Hard Questions', 'Advanced Studies'] as const
 
 export function groupSeriesByCollection(seriesList: StudySeries[]): Map<string, StudySeries[]> {
   const map = new Map<string, StudySeries[]>()
@@ -178,7 +178,8 @@ export function groupSeriesByCollection(seriesList: StudySeries[]): Map<string, 
   map.set('Other', [])
   for (const s of seriesList) {
     const raw = s.collectionLabel?.trim() || 'Other'
-    const key = (LIBRARY_COLLECTION_BUCKETS as readonly string[]).includes(raw) ? raw : 'Other'
+    const normalized = raw === 'Growth Studies' ? 'Hard Questions' : raw
+    const key = (LIBRARY_COLLECTION_BUCKETS as readonly string[]).includes(normalized) ? normalized : 'Other'
     map.get(key)!.push(s)
   }
   return map
@@ -187,7 +188,7 @@ export function groupSeriesByCollection(seriesList: StudySeries[]): Map<string, 
 /** Study Library shelf headings — ordered display; each shelf matches `StudySeries.level` so Beginner/Intermediate/Advanced are never mixed. */
 export const STUDY_LIBRARY_SECTION_ORDER = [
   'Foundational Studies',
-  'Deeper Studies',
+  'Hard Questions',
   'Advanced Studies',
   'Other',
 ] as const
@@ -196,7 +197,7 @@ export type StudyLibrarySectionKey = (typeof STUDY_LIBRARY_SECTION_ORDER)[number
 
 /**
  * Groups series into library shelves by difficulty level (not `collectionLabel`).
- * Beginner → Foundational Studies; Intermediate → Deeper Studies; Advanced → Advanced Studies.
+ * Beginner → Foundational Studies; Intermediate → Hard Questions; Advanced → Advanced Studies.
  */
 export function groupStudiesByLevelOrSection(seriesList: StudySeries[]): Map<string, StudySeries[]> {
   const map = new Map<string, StudySeries[]>()
@@ -206,7 +207,7 @@ export function groupStudiesByLevelOrSection(seriesList: StudySeries[]): Map<str
   for (const s of seriesList) {
     let key: StudyLibrarySectionKey
     if (s.level === 'Beginner') key = 'Foundational Studies'
-    else if (s.level === 'Intermediate') key = 'Deeper Studies'
+    else if (s.level === 'Intermediate') key = 'Hard Questions'
     else if (s.level === 'Advanced') key = 'Advanced Studies'
     else key = 'Other'
     map.get(key)!.push(s)

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useSyncExternalStore } from 'react'
+import { useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { CatalogSourceNotice } from '@/components/site/CatalogSourceNotice'
 import { Button } from '@/components/ui/Button'
@@ -10,12 +10,9 @@ import { LessonList } from '@/components/studies/LessonList'
 import { RelatedStudies } from '@/components/studies/RelatedStudies'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import { hydrateLocalProgressFromSupabase } from '@/lib/dashboard-progress-sync'
-import {
-  DASHBOARD_PROGRESS_STORAGE_KEY,
-  emptyLocalProgress,
-  lessonKey,
-  readLocalProgress,
-} from '@/lib/dashboard-local-progress'
+import { useLocalDashboardProgress } from '@/hooks/useLocalDashboardProgress'
+import { lessonKey } from '@/lib/dashboard-local-progress'
+import type { LocalDashboardProgress } from '@/lib/dashboard-local-progress'
 import {
   allLessonsCompleted,
   computeSeriesProgressPercent,
@@ -41,37 +38,9 @@ interface StudyOverviewShellProps {
   catalogSource: CatalogSource
 }
 
-let progressSnapshotCache: ReturnType<typeof readLocalProgress> = emptyLocalProgress()
-let progressSnapshotJson = ''
-
-/** Stable snapshot for `useSyncExternalStore` (referential equality when storage unchanged). */
-function getProgressSnapshot(): ReturnType<typeof readLocalProgress> {
-  const next = readLocalProgress()
-  const j = JSON.stringify(next)
-  if (j !== progressSnapshotJson) {
-    progressSnapshotJson = j
-    progressSnapshotCache = next
-  }
-  return progressSnapshotCache
-}
-
-function subscribeProgress(onStoreChange: () => void): () => void {
-  const onStorage = (e: StorageEvent) => {
-    if (e.key === DASHBOARD_PROGRESS_STORAGE_KEY || e.key === null) onStoreChange()
-  }
-  const onCustom = () => onStoreChange()
-  if (typeof window === 'undefined') return () => {}
-  window.addEventListener('storage', onStorage)
-  window.addEventListener('biblestem-progress', onCustom)
-  return () => {
-    window.removeEventListener('storage', onStorage)
-    window.removeEventListener('biblestem-progress', onCustom)
-  }
-}
-
 function currentLessonTitleFromProgress(
   overview: StudyOverviewStatic,
-  p: ReturnType<typeof readLocalProgress>,
+  p: LocalDashboardProgress,
 ): string | null {
   if (allLessonsCompleted(overview.seriesSlug, overview.lessons, p)) return null
   const last = p.lastLesson
@@ -91,7 +60,7 @@ export function StudyOverviewShell({
   catalogSource,
 }: StudyOverviewShellProps) {
   const { user, isReady } = useDemoAuth()
-  const progress = useSyncExternalStore(subscribeProgress, getProgressSnapshot, emptyLocalProgress)
+  const progress = useLocalDashboardProgress()
 
   useEffect(() => {
     if (!user?.id) return

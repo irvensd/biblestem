@@ -1,14 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import {
   SUMMARY_CARD_ACTIONS_CLASS,
   SUMMARY_CARD_RECOMMENDED_NEXT_CLASS,
   SUMMARY_CARD_ROW_CLASS,
 } from '@/components/study-library/summary-card-shared'
+import { useLocalDashboardProgress } from '@/hooks/useLocalDashboardProgress'
 import { completedStudyCount, recommendedNextLabel } from '@/lib/study-library-levels'
-import { readLocalProgress, type LocalDashboardProgress } from '@/lib/dashboard-local-progress'
 import type { StudySeries } from '@/lib/types/product'
 
 interface LevelStudiesSummaryCardProps {
@@ -31,20 +30,7 @@ export function LevelStudiesSummaryCard({
   browseLabel,
   emptyMessage,
 }: LevelStudiesSummaryCardProps) {
-  const [progress, setProgress] = useState<LocalDashboardProgress>(() => readLocalProgress())
-
-  useEffect(() => {
-    function refresh() {
-      setProgress(readLocalProgress())
-    }
-    refresh()
-    window.addEventListener('storage', refresh)
-    window.addEventListener('biblestem-progress', refresh)
-    return () => {
-      window.removeEventListener('storage', refresh)
-      window.removeEventListener('biblestem-progress', refresh)
-    }
-  }, [])
+  const progress = useLocalDashboardProgress()
 
   const total = studies.length
   const completed = completedStudyCount(studies, progress)

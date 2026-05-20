@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/Button'
+import { getPublicTrackLabelForLevel } from '@/lib/study-tracks'
 import type { StudyLevel } from '@/lib/types/product'
 import { StudySummaryCard } from '@/components/studies/StudySummaryCard'
 import { studyPathPageHref } from '@/lib/path-routes'
@@ -39,6 +40,8 @@ export function StudyOverviewHero({
   seriesComplete,
   progressAccountHint,
 }: StudyOverviewHeroProps) {
+  const trackLabel = getPublicTrackLabelForLevel(level)
+
   return (
     <section className="border-b border-zinc-200/80 bg-stone-50 pb-12 pt-10 md:pb-16 md:pt-14">
       <div className="container-shell max-w-5xl">
@@ -46,7 +49,7 @@ export function StudyOverviewHero({
           <div>
             <div className="flex flex-wrap gap-2">
               <span className="inline-flex items-center rounded-full border border-zinc-200/90 bg-white px-3 py-1 text-xs font-medium text-zinc-700">
-                {level}
+                {trackLabel}
               </span>
               <Link
                 href={studyPathPageHref(pathSlug)}

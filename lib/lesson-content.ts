@@ -32,6 +32,7 @@ import { theMillenniumSeriesLessonLibrary } from '@/lib/lesson-content-the-mille
 import { theEndOfEvilSeriesLessonLibrary } from '@/lib/lesson-content-the-end-of-evil'
 import { theWorldLoveRestoresSeriesLessonLibrary } from '@/lib/lesson-content-the-world-love-restores'
 import { whenHeavenBrokeOriginOfEvilSeriesLessonLibrary } from '@/lib/lesson-content-when-heaven-broke-origin-of-evil'
+import { whyDoesGodAllowSufferingSeriesLessonLibrary } from '@/lib/lesson-content-why-does-god-allow-suffering'
 import { enrichLessonLibrary } from '@/lib/enrich-lesson-scripture-threads'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonQuizPayload, LessonQuizQuestion } from '@/lib/lesson-quiz-types'
@@ -5680,6 +5681,7 @@ Amen.`,
   ...theEndOfEvilSeriesLessonLibrary,
   ...theWorldLoveRestoresSeriesLessonLibrary,
   ...whenHeavenBrokeOriginOfEvilSeriesLessonLibrary,
+  ...whyDoesGodAllowSufferingSeriesLessonLibrary,
   ...deathHopeSeriesLessonLibrary,
   _fallback: {
     openingThought: 'Approach this passage slowly. Let the text set the terms before you draw conclusions.',

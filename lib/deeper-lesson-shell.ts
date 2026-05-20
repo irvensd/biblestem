@@ -6,6 +6,15 @@ import { DEEPER_STEP_TITLES } from '@/lib/deeper-lesson-workflow'
 export const WHEN_HEAVEN_BROKE_STUDY_SLUG = 'when-heaven-broke-origin-of-evil'
 export const WHEN_HEAVEN_BROKE_OVERVIEW_HREF = `/study-library/${WHEN_HEAVEN_BROKE_STUDY_SLUG}`
 
+export const WHY_DOES_GOD_ALLOW_SUFFERING_STUDY_SLUG = 'why-does-god-allow-suffering'
+export const WHY_DOES_GOD_ALLOW_SUFFERING_OVERVIEW_HREF = `/study-library/${WHY_DOES_GOD_ALLOW_SUFFERING_STUDY_SLUG}`
+
+/** Deeper Studies that ship first in the bundled mock catalog (merge with Supabase when remote is sparse). */
+export const DEEPER_MOCK_FIRST_SERIES_SLUGS: ReadonlySet<string> = new Set([
+  WHEN_HEAVEN_BROKE_STUDY_SLUG,
+  WHY_DOES_GOD_ALLOW_SUFFERING_STUDY_SLUG,
+])
+
 /** Placeholder reader payload for a Deeper Studies lesson shell (eight-part apologetic flow). */
 export function buildDeeperShellLesson(options: {
   primaryScripture: string

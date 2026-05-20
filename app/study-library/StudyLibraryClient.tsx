@@ -13,7 +13,6 @@ import {
   getIntermediateBrowseStudies,
 } from '@/lib/study-library-levels'
 import { filterSeriesForLibrary } from '@/lib/product-queries'
-import { DEEPER_STUDIES_TAGLINE } from '@/lib/deeper-lesson-workflow'
 import { STUDY_TRACKS } from '@/lib/study-tracks'
 import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
 import type { StudyPath, StudySeries } from '@/lib/types/product'
@@ -162,7 +161,7 @@ export function StudyLibraryClient({ paths, allSeries }: StudyLibraryClientProps
       return
     }
     if (next === 'Intermediate') {
-      router.push('/study-library/intermediate')
+      router.push('/study-library/hard-questions')
       return
     }
     if (next === 'Advanced') {
@@ -252,7 +251,6 @@ export function StudyLibraryClient({ paths, allSeries }: StudyLibraryClientProps
                   <LevelStudiesSummaryCard
                     title={deeperTrack.summaryCardTitle}
                     description={deeperTrack.summaryDescription}
-                    helperCopy={DEEPER_STUDIES_TAGLINE}
                     studies={intermediateCatalog}
                     browseHref={deeperTrack.browseHref}
                     browseLabel={deeperTrack.browseCta}

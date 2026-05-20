@@ -14,8 +14,9 @@ import { LessonStepRenderer } from '@/components/lessons/LessonStepRenderer'
 import { isFoundationLessonShellSections } from '@/lib/foundation-lesson-shell'
 import { buildLessonSteps, buildLessonStepsFromSections } from '@/lib/lesson-steps'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
+import { useLocalDashboardProgress } from '@/hooks/useLocalDashboardProgress'
 import { persistMarkLessonComplete, persistSaveLessonProgress } from '@/lib/dashboard-progress-sync'
-import { readLocalProgress, recordStudySessionSeconds } from '@/lib/dashboard-local-progress'
+import { recordStudySessionSeconds } from '@/lib/dashboard-local-progress'
 import { countWordInsightsInContent } from '@/lib/lesson-insight-count'
 import { lessonNoteStorageKey, countLocalLessonNotes } from '@/lib/lesson-notes'
 import { isDeeperStudyWorkflow, lessonProgressLabel } from '@/lib/deeper-lesson-workflow'
@@ -61,8 +62,8 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
   )
   const [index, setIndex] = useState(startIndex)
   const [complete, setComplete] = useState(false)
-  const [progressTick, setProgressTick] = useState(0)
   const [notesTick, setNotesTick] = useState(0)
+  const localProgress = useLocalDashboardProgress()
   const [quizRequiredPassed, setQuizRequiredPassed] = useState(false)
 
   const setLessonStepIndex = useCallback((next: number | ((prev: number) => number)) => {
@@ -97,18 +98,10 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
     [study.lessons],
   )
 
-  const seriesProgressPercent = useMemo(() => {
-    if (typeof window === 'undefined') return 0
-    void progressTick
-    void complete
-    return computeSeriesProgressPercent(study.slug, lessonRows, readLocalProgress())
-  }, [study.slug, lessonRows, progressTick, complete])
-
-  useEffect(() => {
-    const onProg = () => setProgressTick((t) => t + 1)
-    window.addEventListener('biblestem-progress', onProg)
-    return () => window.removeEventListener('biblestem-progress', onProg)
-  }, [])
+  const seriesProgressPercent = useMemo(
+    () => computeSeriesProgressPercent(study.slug, lessonRows, localProgress),
+    [study.slug, lessonRows, localProgress],
+  )
 
   useEffect(() => {
     const onNote = () => setNotesTick((t) => t + 1)

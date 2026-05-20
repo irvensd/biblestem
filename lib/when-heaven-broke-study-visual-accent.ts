@@ -1,4 +1,4 @@
-/** Indigo accent for When Heaven Broke study visuals (great controversy, no horror imagery). */
+/** Indigo accent for Did God Create Evil? study visuals (great controversy, no horror imagery). */
 export const WHEN_HEAVEN_BROKE_STUDY_ACCENT = {
   emphArticle:
     'border-indigo-800/35 bg-indigo-50/50 ring-2 ring-indigo-800/15 ring-offset-2 ring-offset-stone-50 dark:border-indigo-700/40 dark:bg-indigo-950/30 dark:ring-indigo-700/20 dark:ring-offset-zinc-950',

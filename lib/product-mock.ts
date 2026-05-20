@@ -897,7 +897,7 @@ const seriesKnowingChristInScripture: StudySeries = {
   durationSummary: '30 min total',
   lessonsCount: 3,
   featured: false,
-  collectionLabel: 'Growth Studies',
+  collectionLabel: 'Hard Questions',
   sortOrder: 1,
   whatYouWillLearn: [
     'Trace how Scripture’s storyline develops from promise to fulfillment.',
@@ -4730,14 +4730,14 @@ const lessonWhenHeavenBroke2: Lesson = {
   studySeriesId: SERIES_ID_WHEN_HEAVEN_BROKE,
   title: 'The Rise of Self',
   summary:
-    'This lesson investigates Lucifer\u2019s pride, jealousy, self-exaltation, and the shift from worshiping God to seeking honor for himself.',
+    'This lesson traces how pride began in a perfect being, how self-exaltation turned worship inward, and what that reveals about God and Satan.',
   durationMinutes: 12,
   scripture:
-    'Isaiah 14:13 to 14 · Ezekiel 28:17 · Proverbs 16:18 · Matthew 4:8 to 10 · Romans 1:21 to 25',
+    'Isaiah 14:13 to 14 · Ezekiel 28:17 · Proverbs 16:18 · Matthew 4:8 to 10 · Romans 1:21 to 25 · Revelation 14:6 to 7',
   sortOrder: 2,
   progressState: 'not_started',
   sections: [],
-  contentPending: true,
+  contentPending: false,
 }
 
 const lessonWhenHeavenBroke3: Lesson = {
@@ -4749,11 +4749,11 @@ const lessonWhenHeavenBroke3: Lesson = {
     'This lesson shows how Satan deceived Adam and Eve by questioning God\u2019s word, denying God\u2019s warning, and misrepresenting God\u2019s character.',
   durationMinutes: 12,
   scripture:
-    'Genesis 2:16 to 17 · Genesis 3:1 to 6 · John 8:44 · 2 Corinthians 11:3 · Romans 5:12 · 1 John 3:8',
+    'Genesis 2:16 to 17 · Genesis 3:1 · Genesis 3:4 to 5 · John 8:44 · 2 Corinthians 11:3 · Romans 5:12',
   sortOrder: 3,
   progressState: 'not_started',
   sections: [],
-  contentPending: true,
+  contentPending: false,
 }
 
 const lessonWhenHeavenBroke4: Lesson = {
@@ -4765,11 +4765,11 @@ const lessonWhenHeavenBroke4: Lesson = {
     'This lesson explores the great controversy behind human history and identifies Satan\u2019s methods of deception, accusation, persecution, false miracles, and misusing Scripture.',
   durationMinutes: 12,
   scripture:
-    'Revelation 12:7 to 12 · Job 1:6 to 11 · Matthew 4:5 to 7 · John 10:10 · 2 Thessalonians 2:9 to 10 · Revelation 13:13 to 14',
+    'Revelation 12:7 to 10 · Job 1:9 to 11 · Matthew 4:5 to 7 · John 10:10 · 2 Thessalonians 2:9 to 10 · Revelation 12:17',
   sortOrder: 4,
   progressState: 'not_started',
   sections: [],
-  contentPending: true,
+  contentPending: false,
 }
 
 const lessonWhenHeavenBroke5: Lesson = {
@@ -4781,34 +4781,155 @@ const lessonWhenHeavenBroke5: Lesson = {
     'This lesson explains why God did not destroy Lucifer immediately, how Jesus revealed the Father\u2019s character, and how sin will finally be destroyed forever.',
   durationMinutes: 12,
   scripture:
-    'John 14:8 to 9 · John 3:16 to 17 · Romans 5:8 · Hebrews 2:14 · Colossians 2:15 · Revelation 20:10 · Revelation 21:1 to 5 · Nahum 1:9',
+    'John 14:8 to 9 · John 3:16 to 17 · Romans 5:8 · Hebrews 2:14 · Colossians 2:15 · Romans 14:11 · Revelation 20:10 · Revelation 21:1 to 5 · Nahum 1:9',
   sortOrder: 5,
   progressState: 'not_started',
   sections: [],
-  contentPending: true,
+  contentPending: false,
 }
 
 const whenHeavenBrokeLongDescription = `Explore hard questions people raise about God, and trace the answers through Scripture.
 
-When Heaven Broke: The Origin of Evil and the Character of God is a Scripture-first investigation into the origin of evil, Lucifer\u2019s fall, Satan\u2019s deception, the great controversy, the final end of sin, and the loving character of God revealed through Jesus Christ.
+This Deeper Studies series investigates whether God created evil, tracing Lucifer\u2019s fall, Satan\u2019s deception, the great controversy, the final end of sin, and the loving character of God revealed through Jesus Christ.
 
 This Deeper Studies series helps learners understand that God did not create evil, trace how sin began through Lucifer\u2019s rebellion, recognize Satan\u2019s methods, and trust Christ\u2019s final victory over sin.`
+
+const WHY_DOES_GOD_ALLOW_SUFFERING_STUDY_SLUG = 'why-does-god-allow-suffering'
+const SERIES_ID_WHY_DOES_GOD_ALLOW_SUFFERING = 'e4000001-0000-4000-8000-000000000091'
+
+const lessonWhySuffering1: Lesson = {
+  id: 'd3000008-0000-4000-8000-000000000989',
+  slug: 'the-question-we-cannot-ignore',
+  studySeriesId: SERIES_ID_WHY_DOES_GOD_ALLOW_SUFFERING,
+  title: 'The Question We Cannot Ignore',
+  summary:
+    'This lesson opens the study by naming the weight of suffering and tracing pain, death, and sorrow to the entrance of sin, not to God\u2019s original design.',
+  durationMinutes: 12,
+  scripture:
+    'Genesis 1:31 \u00b7 Genesis 3:6 to 7 \u00b7 Genesis 3:16 to 19 \u00b7 Romans 5:12 \u00b7 James 1:13 \u00b7 James 1:17 \u00b7 1 John 3:4 \u00b7 Romans 6:23 \u00b7 1 John 1:5',
+  sortOrder: 1,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhySuffering2: Lesson = {
+  id: 'd3000008-0000-4000-8000-00000000098a',
+  slug: 'why-god-did-not-end-it-immediately',
+  studySeriesId: SERIES_ID_WHY_DOES_GOD_ALLOW_SUFFERING,
+  title: 'Why God Did Not End It Immediately',
+  summary:
+    'This lesson explains why God did not destroy Satan immediately and why the universe needed to see the true nature of sin and the justice of God\u2019s character.',
+  durationMinutes: 12,
+  scripture:
+    'Revelation 12:7 to 9 \u00b7 Ezekiel 28:17 \u00b7 Isaiah 14:13 to 14 \u00b7 Matthew 13:24 to 30 \u00b7 Matthew 13:36 to 43 \u00b7 1 Corinthians 4:9 \u00b7 1 John 4:8 \u00b7 1 John 4:18 \u00b7 Nahum 1:9',
+  sortOrder: 2,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhySuffering3: Lesson = {
+  id: 'd3000008-0000-4000-8000-00000000098b',
+  slug: 'the-god-who-entered-pain',
+  studySeriesId: SERIES_ID_WHY_DOES_GOD_ALLOW_SUFFERING,
+  title: 'The God Who Entered Pain',
+  summary:
+    'This lesson centers on Christ. God\u2019s answer to suffering is incarnation. Jesus entered sorrow, bore grief, and revealed that the Father is not distant from our pain.',
+  durationMinutes: 12,
+  scripture:
+    'Isaiah 53:3 to 5 \u00b7 John 11:35 \u00b7 Matthew 27:46 \u00b7 Romans 5:8 \u00b7 Hebrews 2:14 to 18 \u00b7 Hebrews 4:15 to 16 \u00b7 John 14:9 \u00b7 Matthew 4:23 to 24',
+  sortOrder: 3,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhySuffering4: Lesson = {
+  id: 'd3000008-0000-4000-8000-00000000098c',
+  slug: 'the-furnace-that-refines',
+  studySeriesId: SERIES_ID_WHY_DOES_GOD_ALLOW_SUFFERING,
+  title: 'The Furnace That Refines',
+  summary:
+    'This lesson explains that God can use trials to refine faith and deepen dependence without being the author of evil.',
+  durationMinutes: 12,
+  scripture:
+    '1 Peter 1:6 to 7 \u00b7 James 1:2 to 4 \u00b7 Romans 5:3 to 5 \u00b7 Hebrews 12:5 to 11 \u00b7 Malachi 3:2 to 3 \u00b7 Job 23:10 \u00b7 2 Corinthians 12:7 to 10 \u00b7 Psalm 139:23 to 24',
+  sortOrder: 4,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const lessonWhySuffering5: Lesson = {
+  id: 'd3000008-0000-4000-8000-00000000098d',
+  slug: 'until-there-is-no-more-pain',
+  studySeriesId: SERIES_ID_WHY_DOES_GOD_ALLOW_SUFFERING,
+  title: 'Until There Is No More Pain',
+  summary:
+    'This final lesson closes with hope. Suffering is not eternal. Believers minister to the hurting now while waiting for the day when God removes death, sorrow, crying, and pain forever.',
+  durationMinutes: 12,
+  scripture:
+    'Romans 8:22 to 23 \u00b7 John 11:11 to 14 \u00b7 1 Thessalonians 4:13 to 18 \u00b7 1 Corinthians 15:51 to 55 \u00b7 2 Corinthians 1:3 to 4 \u00b7 Matthew 25:35 to 40 \u00b7 Revelation 20:10 \u00b7 Revelation 21:1 to 5',
+  sortOrder: 5,
+  progressState: 'not_started',
+  sections: [],
+  contentPending: false,
+}
+
+const whyDoesGodAllowSufferingLongDescription = `Suffering is one of the deepest questions people bring to faith. This study traces the biblical answer through the origin of sin, the great controversy between Christ and Satan, the cross, God\u2019s refining work in trials, Christ\u2019s sympathy with human grief, the believer\u2019s call to compassion, and the final promise that pain will end forever.
+
+Students will see that God is not the author of suffering. Sin brought pain, death, and brokenness into the world. Yet God does not stand far away from human sorrow. In Jesus, He entered suffering, bore sin\u2019s weight, wept with the grieving, healed the afflicted, and promised a future where death, sorrow, crying, and pain will be no more.`
+
+const seriesWhyDoesGodAllowSuffering: StudySeries = {
+  id: SERIES_ID_WHY_DOES_GOD_ALLOW_SUFFERING,
+  slug: WHY_DOES_GOD_ALLOW_SUFFERING_STUDY_SLUG,
+  studyPathId: 'b1000001-0000-4000-8000-000000000001',
+  title: 'Why Does God Allow Suffering?',
+  subtitle:
+    'A Scripture-first study on sin, sorrow, the cross, refining trials, and the end of pain.',
+  shortDescription:
+    'A Scripture-first study on sin, sorrow, the cross, refining trials, and the end of pain.',
+  longDescription: whyDoesGodAllowSufferingLongDescription,
+  description: whyDoesGodAllowSufferingLongDescription,
+  level: 'Intermediate',
+  durationSummary: 'Approx. 60 min total',
+  lessonsCount: 5,
+  featured: false,
+  collectionLabel: 'Hard Questions',
+  sortOrder: 4,
+  whatYouWillLearn: [
+    'Understand that suffering exists because of sin, not because God is cruel.',
+    'See why God allowed evil to unfold and how Jesus entered human suffering.',
+    'Learn how trials can refine faith without making God the author of evil.',
+    'Discover how believers are called to minister to the hurting.',
+    'Trust Scripture\u2019s promise that pain will end forever.',
+  ],
+  lessons: [
+    lessonWhySuffering1,
+    lessonWhySuffering2,
+    lessonWhySuffering3,
+    lessonWhySuffering4,
+    lessonWhySuffering5,
+  ],
+}
 
 const seriesWhenHeavenBroke: StudySeries = {
   id: SERIES_ID_WHEN_HEAVEN_BROKE,
   slug: WHEN_HEAVEN_BROKE_STUDY_SLUG,
   studyPathId: 'b1000001-0000-4000-8000-000000000001',
-  title: 'When Heaven Broke: The Origin of Evil and the Character of God',
-  subtitle: 'Hard questions about evil and God, traced through Scripture to His character in Christ.',
+  title: 'Did God Create Evil?',
+  subtitle:
+    'A Scripture-first study on Lucifer\u2019s fall, the origin of sin, and the character of God.',
   shortDescription:
-    'Hard questions. Clear Scripture. Trace evil\u2019s origin, Satan\u2019s deception, and the loving character of God in Christ.',
+    'A Scripture-first study on Lucifer\u2019s fall, the origin of sin, and the character of God.',
   longDescription: whenHeavenBrokeLongDescription,
   description: whenHeavenBrokeLongDescription,
   level: 'Intermediate',
   durationSummary: 'Approx. 60 min total',
   lessonsCount: 5,
   featured: false,
-  collectionLabel: 'Growth Studies',
+  collectionLabel: 'Hard Questions',
   sortOrder: 3,
   whatYouWillLearn: [
     'Understand that God did not create evil and trace how sin began through Lucifer\u2019s rebellion.',
@@ -5100,6 +5221,7 @@ export const studySeriesCatalog: StudySeries[] = [
   seriesTheEndOfEvil,
   seriesTheWorldLoveRestores,
   seriesWhenHeavenBroke,
+  seriesWhyDoesGodAllowSuffering,
   seriesThreeAngelsMessages,
   seriesDeathResurrectionHopeOfLife,
   seriesKnowingChristInScripture,

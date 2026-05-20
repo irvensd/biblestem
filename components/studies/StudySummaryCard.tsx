@@ -1,3 +1,4 @@
+import { getPublicTrackLabelForLevel } from '@/lib/study-tracks'
 import type { StudyLevel } from '@/lib/types/product'
 import { StudyProgressBar } from '@/components/studies/StudyProgressBar'
 
@@ -28,6 +29,8 @@ export function StudySummaryCard({
   currentLessonTitle,
   seriesComplete,
 }: StudySummaryCardProps) {
+  const trackLabel = getPublicTrackLabelForLevel(level)
+
   return (
     <aside className="rounded-xl border border-zinc-200/90 bg-white p-6 shadow-sm ring-1 ring-zinc-950/[0.03] md:p-7">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400">At a glance</p>
@@ -42,7 +45,7 @@ export function StudySummaryCard({
         </div>
         <div className="flex justify-between gap-4 border-b border-zinc-100 pb-4">
           <dt className="text-zinc-500">Level</dt>
-          <dd className="font-medium text-zinc-900">{level}</dd>
+          <dd className="font-medium text-zinc-900">{trackLabel}</dd>
         </div>
         <div className="flex justify-between gap-4 border-b border-zinc-100 pb-4">
           <dt className="text-zinc-500">Path</dt>
