@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/Button'
 import { PageIntro } from '@/components/site/PageIntro'
+import { BIBLESTEM_THREADS_URL } from '@/lib/site-external-links'
 
 const SECTION_GAP = 'mt-10 border-t border-zinc-200 pt-10 md:mt-11 md:pt-11'
 
@@ -50,9 +51,10 @@ const ecosystem = [
   {
     title: 'BibleStem Threads',
     description:
-      'A faith-inspired clothing brand being developed to support free Bible study and carry Scripture-centered messages into everyday life.',
-    status: 'Coming soon' as const,
-    href: null,
+      'Premium Scripture-inspired apparel that helps fund free Bible studies and carries faith-centered messages into everyday life.',
+    status: 'Live' as const,
+    href: BIBLESTEM_THREADS_URL,
+    external: true,
   },
   {
     title: 'BibleStem Studios',
@@ -137,8 +139,8 @@ export default function AboutPage() {
                 The BibleStem ecosystem
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-600">
-                BibleStem begins with free Bible studies and will grow into a wider ecosystem of Scripture-centered
-                tools, resources, and creative projects.
+                BibleStem begins with free Bible studies and grows through Scripture-centered resources, creative
+                projects, and apparel that helps keep studies free for everyone.
               </p>
             </div>
 
@@ -160,12 +162,25 @@ export default function AboutPage() {
                 )
 
                 if (item.href) {
+                  const cardClass =
+                    'block rounded-xl border border-zinc-200/90 bg-white p-5 shadow-sm ring-1 ring-zinc-950/[0.03] transition-all duration-200 hover:border-zinc-300 hover:shadow-md'
+
+                  if ('external' in item && item.external) {
+                    return (
+                      <a
+                        key={item.title}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cardClass}
+                      >
+                        {inner}
+                      </a>
+                    )
+                  }
+
                   return (
-                    <Link
-                      key={item.title}
-                      href={item.href}
-                      className="block rounded-xl border border-zinc-200/90 bg-white p-5 shadow-sm ring-1 ring-zinc-950/[0.03] transition-all duration-200 hover:border-zinc-300 hover:shadow-md"
-                    >
+                    <Link key={item.title} href={item.href} className={cardClass}>
                       {inner}
                     </Link>
                   )

@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { SiteFooterProductLinks } from '@/components/site/SiteFooterProductLinks'
+import { BIBLESTEM_THREADS_URL } from '@/lib/site-external-links'
 import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/report-issue-href'
 
 const ministryLinks = [
   { href: '/about', label: 'About' },
+  { href: BIBLESTEM_THREADS_URL, label: 'BibleStem Threads', external: true },
   { href: '/donate', label: 'Donate' },
 ]
 
@@ -47,9 +49,20 @@ export function SiteFooter() {
           <ul className="mt-3 space-y-2">
             {ministryLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-sm text-zinc-600 hover:text-zinc-900">
-                  {link.label}
-                </Link>
+                {'external' in link && link.external ? (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-zinc-600 hover:text-zinc-900"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link href={link.href} className="text-sm text-zinc-600 hover:text-zinc-900">
+                    {link.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

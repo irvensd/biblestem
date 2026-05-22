@@ -33,7 +33,34 @@ export function SiteHeaderNav() {
 
       <nav className="hidden min-w-0 items-center gap-1 lg:gap-1.5 xl:gap-2 md:flex" aria-label="Primary">
         {links.map((link) => {
-          const active = isSiteNavActive(pathname, link.href)
+          const active = !link.external && isSiteNavActive(pathname, link.href)
+          const linkClass =
+            link.emphasis === 'cta'
+              ? `shrink-0 rounded-full border px-3.5 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50 ${
+                  active
+                    ? 'border-blue-900 bg-blue-900 text-white shadow-sm hover:bg-blue-950'
+                    : 'border-blue-800/40 bg-blue-800/[0.07] text-blue-950 hover:border-blue-800/55 hover:bg-blue-800/12'
+                }`
+              : `shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50 ${
+                  active
+                    ? 'bg-zinc-200/80 text-zinc-950 shadow-sm'
+                    : 'text-zinc-700 hover:bg-zinc-100/90 hover:text-zinc-950'
+                }`
+
+          if (link.external) {
+            return (
+              <a
+                key={`${link.href}-${link.label}`}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="BibleStem Threads apparel shop"
+                className={linkClass}
+              >
+                {link.label}
+              </a>
+            )
+          }
 
           if (link.emphasis === 'cta') {
             return (
@@ -42,11 +69,7 @@ export function SiteHeaderNav() {
                 href={link.href}
                 prefetch
                 aria-current={active ? 'page' : undefined}
-                className={`shrink-0 rounded-full border px-3.5 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50 ${
-                  active
-                    ? 'border-blue-900 bg-blue-900 text-white shadow-sm hover:bg-blue-950'
-                    : 'border-blue-800/40 bg-blue-800/[0.07] text-blue-950 hover:border-blue-800/55 hover:bg-blue-800/12'
-                }`}
+                className={linkClass}
               >
                 {link.label}
               </Link>
@@ -59,11 +82,7 @@ export function SiteHeaderNav() {
               href={link.href}
               prefetch
               aria-current={active ? 'page' : undefined}
-              className={`shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50 ${
-                active
-                  ? 'bg-zinc-200/80 text-zinc-950 shadow-sm'
-                  : 'text-zinc-700 hover:bg-zinc-100/90 hover:text-zinc-950'
-              }`}
+              className={linkClass}
             >
               {link.label}
             </Link>

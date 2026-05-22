@@ -4,6 +4,7 @@ import { HomeCatalogSections } from '@/components/home/HomeCatalogSections'
 import { HomeClosingCtaSection } from '@/components/home/HomeClosingCtaSection'
 import { HomeExploreStudiesButton } from '@/components/home/HomeExploreStudiesButton'
 import { HomeFoundationsPathButton } from '@/components/home/HomeFoundationsPathButton'
+import { HomeThreadsMissionSection } from '@/components/home/HomeThreadsMissionSection'
 import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
 
 const trustItems = [
@@ -177,7 +178,9 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
                 <HomeFoundationsPathButton />
                 <HomeExploreStudiesButton>Preview studies</HomeExploreStudiesButton>
               </div>
-              <p className="mt-5 text-sm font-medium text-zinc-600">100% free. Donation-supported.</p>
+              <p className="mt-5 text-sm font-medium text-zinc-600">
+                100% free. Supported by generosity and BibleStem Threads.
+              </p>
             </div>
 
             <HeroProductVisual />
@@ -233,13 +236,15 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
         </div>
       </section>
 
+      <HomeThreadsMissionSection />
+
       <HomeCatalogSections catalog={catalog} />
 
       <section className="border-b border-zinc-200/80 bg-white py-10 md:py-12">
         <div className="container-shell">
           <SupportCard
             title="Always free, supported by generosity."
-            description="BibleStem is donation-supported so serious Bible study remains accessible to everyone."
+            description="BibleStem stays free through donations and BibleStem Threads apparel that helps fund the study platform."
             primaryCta="link"
             ctaHref="/donate"
             ctaLabel="Support the ministry"

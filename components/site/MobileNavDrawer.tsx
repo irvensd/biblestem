@@ -110,9 +110,25 @@ export function MobileNavDrawer() {
               >
                 <nav aria-label="Primary mobile" className="flex flex-col gap-1">
                   {drawerLinks.map((link) => {
-                    const active = isSiteNavActive(pathname, link.href)
+                    const active = !link.external && isSiteNavActive(pathname, link.href)
                     const base =
                       'block min-h-[44px] rounded-xl px-4 py-3 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50'
+
+                    if (link.external) {
+                      return (
+                        <a
+                          key={`${link.href}-${link.label}`}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="BibleStem Threads apparel shop"
+                          onClick={() => setOpen(false)}
+                          className={`${base} text-zinc-800 hover:bg-zinc-100`}
+                        >
+                          {link.label}
+                        </a>
+                      )
+                    }
 
                     if (link.emphasis === 'cta') {
                       return (

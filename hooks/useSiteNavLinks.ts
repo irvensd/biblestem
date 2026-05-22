@@ -1,12 +1,15 @@
 'use client'
 
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
+import { BIBLESTEM_THREADS_URL } from '@/lib/site-external-links'
 
 export interface SiteNavLink {
   href: string
   label: string
   /** Highlights supportive CTAs (e.g. Donate) in the header row. */
   emphasis?: 'cta'
+  /** Opens in a new tab (e.g. BibleStem Threads shop). */
+  external?: boolean
 }
 
 /** Match exact route or nested paths under `href` (except `/`, which must match exactly). */
@@ -29,6 +32,7 @@ export function useSiteNavLinks(): { logoHref: string; links: SiteNavLink[] } {
         ]
       : []),
     { href: '/about', label: 'About' },
+    { href: BIBLESTEM_THREADS_URL, label: 'Threads', external: true },
     { href: '/donate', label: 'Donate', emphasis: 'cta' },
   ]
 
