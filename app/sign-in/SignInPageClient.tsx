@@ -4,14 +4,14 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useLayoutEffect, useMemo } from 'react'
 import { SignInForm } from '@/app/sign-in/SignInForm'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
-import { safeNextPath } from '@/lib/auth/safe-next-path'
+import { readAuthRedirectParam } from '@/lib/auth/auth-redirect'
 
 export default function SignInPageClient() {
   const { user, isReady } = useDemoAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
   const afterSignInHref = useMemo(
-    () => safeNextPath(searchParams.get('next')) ?? '/dashboard',
+    () => readAuthRedirectParam(searchParams) ?? '/dashboard',
     [searchParams],
   )
 

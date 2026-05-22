@@ -14,6 +14,7 @@ import { buildDashboardBundle, type DashboardBundle } from '@/lib/dashboard-comp
 import { getDashboardRecommendations } from '@/lib/dashboard-recommendations'
 import { dashboardDisplayName } from '@/lib/dashboard-mock-data'
 import { shouldShowCatalogFallbackNotice, type LoadedCatalog } from '@/lib/catalog/load-catalog'
+import { signInRedirectUrl } from '@/lib/auth/auth-redirect'
 import { hasMeaningfulProgress } from '@/lib/dashboard-progress-metrics'
 import type { StudyPath } from '@/lib/types/product'
 import { useDashboardProgress } from '@/hooks/useDashboardProgress'
@@ -30,7 +31,7 @@ export function DashboardClient({ catalog }: DashboardClientProps) {
 
   useEffect(() => {
     if (isReady && !user) {
-      router.replace('/')
+      router.replace(signInRedirectUrl('/dashboard'))
     }
   }, [isReady, user, router])
 

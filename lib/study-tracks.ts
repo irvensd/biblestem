@@ -29,6 +29,9 @@ export const STUDY_TRACKS = [
     browsePageDescription:
       'Browse all beginner Foundation studies, or follow the guided path in the recommended order.',
     emptyMessage: 'No foundation studies available yet.',
+    previewHref: '/studies/foundations',
+    previewCta: 'Preview Foundations',
+    previewMetaLabel: 'Beginner',
   },
   {
     level: 'Intermediate' as const,
@@ -46,6 +49,9 @@ export const STUDY_TRACKS = [
     browsePageTitle: 'Hard Questions',
     browsePageDescription: DEEPER_STUDIES_DESCRIPTION,
     emptyMessage: 'No Hard Questions studies available yet.',
+    previewHref: '/studies/hard-questions',
+    previewCta: 'Preview Hard Questions',
+    previewMetaLabel: 'Scripture-first answers',
   },
   {
     level: 'Advanced' as const,
@@ -67,6 +73,9 @@ export const STUDY_TRACKS = [
     browsePageDescription:
       'Browse studies that connect Scripture with Scripture through deeper prophecy, doctrine, and theology.',
     emptyMessage: 'No advanced studies available yet.',
+    previewHref: '/studies/advanced',
+    previewCta: 'Preview Advanced',
+    previewMetaLabel: 'Advanced',
   },
 ] as const
 
@@ -83,6 +92,10 @@ export type StudyTrackHubCard = {
 
 export function formatStudyCountLabel(count: number): string {
   return count === 1 ? '1 study' : `${count} studies`
+}
+
+export function formatPreviewTrackMeta(count: number, metaLabel: string): string {
+  return `${formatStudyCountLabel(count)} · ${metaLabel}`
 }
 
 export function formatTrackStudyMeta(count: number, level: StudyLevel): string {

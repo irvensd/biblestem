@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import { RequireAuth } from '@/components/auth/RequireAuth'
 
 export const metadata: Metadata = {
   title: 'Settings · BibleStem',
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function SettingsLayout({ children }: { children: ReactNode }) {
-  return children
+  return <RequireAuth>{children}</RequireAuth>
 }

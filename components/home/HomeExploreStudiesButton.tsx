@@ -7,14 +7,14 @@ type Props = {
   className?: string
 }
 
-/** Secondary hero CTA — always opens the public study library. */
+/** Secondary hero CTA — opens the public studies preview. */
 export function HomeExploreStudiesButton({
   variant = 'secondary',
-  children = 'Browse studies',
+  children = 'Preview studies',
   className = '',
 }: Props) {
   return (
-    <Button href="/study-library" variant={variant} className={`w-full sm:w-auto ${className}`}>
+    <Button href="/studies" variant={variant} className={`w-full sm:w-auto ${className}`}>
       {children}
     </Button>
   )

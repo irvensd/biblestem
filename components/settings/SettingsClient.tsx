@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import {
   Suspense,
   useCallback,
@@ -24,6 +24,7 @@ import {
 } from '@/lib/dashboard-local-progress'
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client'
 import { clearAllProgressRemote } from '@/lib/supabase/user-progress'
+import { signInRedirectUrl } from '@/lib/auth/auth-redirect'
 import { REPORT_ISSUE_LINK_CLASSNAME } from '@/lib/support/report-issue-href'
 
 type Banner =
@@ -33,6 +34,7 @@ type Banner =
 
 export function SettingsClient() {
   const router = useRouter()
+  const pathname = usePathname()
   const { user, isReady, logout, updateFirstName } = useDemoAuth()
   const [supportOpenNonce, setSupportOpenNonce] = useState(0)
 
@@ -48,8 +50,8 @@ export function SettingsClient() {
   )
 
   useEffect(() => {
-    if (isReady && !user) router.replace('/sign-in')
-  }, [isReady, user, router])
+    if (isReady && !user) router.replace(signInRedirectUrl(pathname))
+  }, [isReady, user, router, pathname])
 
   useEffect(() => {
     if (typeof window === 'undefined') return

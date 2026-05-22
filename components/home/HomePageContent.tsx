@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/Button'
-import { CTASection } from '@/components/CTASection'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { SupportCard } from '@/components/SupportCard'
 import { HomeCatalogSections } from '@/components/home/HomeCatalogSections'
+import { HomeClosingCtaSection } from '@/components/home/HomeClosingCtaSection'
 import { HomeExploreStudiesButton } from '@/components/home/HomeExploreStudiesButton'
+import { HomeFoundationsPathButton } from '@/components/home/HomeFoundationsPathButton'
 import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
 
 const trustItems = [
@@ -174,10 +174,8 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Button href="/paths/foundations" className="w-full sm:w-auto">
-                  Start Foundations Path
-                </Button>
-                <HomeExploreStudiesButton />
+                <HomeFoundationsPathButton />
+                <HomeExploreStudiesButton>Preview studies</HomeExploreStudiesButton>
               </div>
               <p className="mt-5 text-sm font-medium text-zinc-600">100% free. Donation-supported.</p>
             </div>
@@ -251,13 +249,7 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
         </div>
       </section>
 
-      <CTASection
-        title="Start studying Scripture with clarity."
-        primaryHref="/paths/foundations"
-        primaryLabel="Start Foundations Path"
-        secondaryHref="/study-library"
-        secondaryLabel="Browse Study Library"
-      />
+      <HomeClosingCtaSection />
     </>
   )
 }

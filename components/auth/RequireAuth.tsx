@@ -3,11 +3,11 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, type ReactNode } from 'react'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
+import { signInRedirectUrl } from '@/lib/auth/auth-redirect'
 import { safeNextPath } from '@/lib/auth/safe-next-path'
 
 /**
- * Gates study content (series pages, lessons, guided paths). Catalog browse routes stay public.
- * Sends signed-out users to sign-in with a return URL.
+ * Gates authenticated app routes. Public preview pages stay open while signed out.
  */
 export function RequireAuth({ children }: { children: ReactNode }) {
   const { user, isReady } = useDemoAuth()
@@ -17,7 +17,7 @@ export function RequireAuth({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isReady || user) return
     const next = safeNextPath(pathname) ?? '/dashboard'
-    router.replace(`/sign-in?next=${encodeURIComponent(next)}`)
+    router.replace(signInRedirectUrl(next))
   }, [isReady, user, router, pathname])
 
   if (!isReady) {

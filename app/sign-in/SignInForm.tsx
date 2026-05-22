@@ -1,13 +1,16 @@
 'use client'
 
 import Link from 'next/link'
-import { type FormEvent, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { type FormEvent, useMemo, useState } from 'react'
 import { AUTH_REQUIRES_SUPABASE_MESSAGE, useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import { Button } from '@/components/ui/Button'
 import { inputClassName } from '@/components/ui/form-styles'
+import { readAuthRedirectParam, signUpRedirectUrl } from '@/lib/auth/auth-redirect'
 import { isSupabaseConfigured } from '@/lib/supabase/client'
 
 export function SignInForm() {
+  const searchParams = useSearchParams()
   const { isReady, login } = useDemoAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -15,6 +18,10 @@ export function SignInForm() {
   const [pending, setPending] = useState(false)
 
   const supabaseConfigured = isSupabaseConfigured()
+  const signUpHref = useMemo(() => {
+    const redirect = readAuthRedirectParam(searchParams)
+    return redirect ? signUpRedirectUrl(redirect) : '/sign-up'
+  }, [searchParams])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -97,7 +104,7 @@ export function SignInForm() {
       </form>
       <p className="mt-6 text-center text-sm text-zinc-600">
         New to BibleStem?{' '}
-        <Link href="/get-started" className="font-medium text-blue-800 hover:text-blue-900">
+        <Link href={signUpHref} className="font-medium text-blue-800 hover:text-blue-900">
           Get started
         </Link>
       </p>
