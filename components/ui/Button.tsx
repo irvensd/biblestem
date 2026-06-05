@@ -32,6 +32,13 @@ export function Button({
   const classes = `inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-medium transition-colors ${styles[variant]} ${disabled ? 'pointer-events-none opacity-60' : ''} ${className}`
 
   if (href) {
+    if (href.startsWith('mailto:') || href.startsWith('tel:')) {
+      return (
+        <a href={href} className={classes} aria-disabled={disabled} onClick={onClick}>
+          {children}
+        </a>
+      )
+    }
     return (
       <Link href={href} className={classes} aria-disabled={disabled} onClick={onClick}>
         {children}

@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
+import { supportReportHref } from '@/lib/support/report-issue-href'
 
 export default function GlobalError({
   error,
@@ -28,7 +29,7 @@ export default function GlobalError({
           <Button type="button" variant="primary" onClick={() => reset()}>
             Try again
           </Button>
-          <Button href="/settings?type=bug" variant="secondary">
+          <Button href={supportReportHref({ type: 'bug' })} variant="secondary">
             Report issue
           </Button>
         </div>

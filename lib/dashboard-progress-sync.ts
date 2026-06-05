@@ -7,12 +7,14 @@ import {
   DASHBOARD_PROGRESS_STORAGE_KEY,
   markLessonComplete,
   readLocalProgress,
+  recordStudySessionSeconds,
   replaceLocalDashboardProgress,
   saveLessonProgress,
   type LocalDashboardProgress,
 } from '@/lib/dashboard-local-progress'
 import { getSupabaseBrowserClient } from '@/lib/supabase/client'
 import {
+  addStudyTimeSecondsRemote,
   fetchProgressState,
   markLessonCompleteRemote,
   mergeLocalProgressIntoRemote,
@@ -141,4 +143,16 @@ export function persistMarkLessonComplete(
 /** Dashboard visits do not affect streak or study metrics. */
 export function persistTouchDashboardActivity(_userId: string | undefined): Promise<void> {
   return Promise.resolve()
+}
+
+/** Persist active lesson-reader seconds locally and to Supabase when signed in. */
+export function persistStudySessionSeconds(seconds: number, userId: string | undefined): void {
+  if (seconds < 15) return
+  recordStudySessionSeconds(seconds)
+  const supabase = getSupabaseBrowserClient()
+  if (userId && supabase) {
+    void addStudyTimeSecondsRemote(supabase, userId, seconds).catch(() => {
+      /* network / missing migration */
+    })
+  }
 }

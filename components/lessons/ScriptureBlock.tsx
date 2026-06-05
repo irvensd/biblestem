@@ -1,15 +1,16 @@
 'use client'
 
-import { useCallback, useState, type ReactNode } from 'react'
+import { useCallback, useMemo, useState, type ReactNode } from 'react'
 import { LessonTextRenderer } from '@/components/lessons/LessonTextRenderer'
 import { READER_FOCUS_RING } from '@/components/lessons/lesson-reader-focus'
 import { ScriptureChain } from '@/components/lessons/ScriptureChain'
 import { WordStudyPopover } from '@/components/lessons/WordStudyPopover'
 import type { WordInsight } from '@/lib/lesson-content'
-
-function escapeRegExp(s: string) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
+import {
+  buildWordInsightSplitRegex,
+  matchWordInsightPart,
+  wordInsightsInQuote,
+} from '@/lib/word-insight-highlight'
 
 interface ScriptureBlockProps {
   reference: string
@@ -29,22 +30,16 @@ interface ScriptureBlockProps {
   afterSecondaryEmphasisPhrases?: string[]
 }
 
-function matchInsightForPart(part: string, insights: WordInsight[]): WordInsight | undefined {
-  return insights.find((w) => w.surface.toLowerCase() === part.toLowerCase())
-}
-
 function renderQuoteWithInsights(quote: string, insights: WordInsight[]) {
-  if (!insights.length) {
+  const re = buildWordInsightSplitRegex(insights)
+  if (!re) {
     return <>{quote}</>
   }
-  const sorted = [...insights].sort((a, b) => b.surface.length - a.surface.length)
-  const pattern = sorted.map((s) => escapeRegExp(s.surface)).join('|')
-  const re = new RegExp(`(${pattern})`, 'gi')
   const parts = quote.split(re)
   return (
     <>
       {parts.map((part, i) => {
-        const insight = matchInsightForPart(part, insights)
+        const insight = matchWordInsightPart(part, insights)
         if (insight) {
           return <WordStudyPopover key={`${i}-${part}`} surface={part} study={insight} />
         }
@@ -85,6 +80,7 @@ export function ScriptureBlock({
   afterSecondaryEmphasisPhrases,
 }: ScriptureBlockProps) {
   const [copied, setCopied] = useState(false)
+  const quoteInsights = useMemo(() => wordInsightsInQuote(quote, insights), [quote, insights])
 
   const copyText = [reference.trim(), quote.trim()].filter(Boolean).join('\n\n')
   const handleCopy = useCallback(async () => {
@@ -112,9 +108,13 @@ export function ScriptureBlock({
       </>
     ) : null
 
-  const hint = insights.length > 0 ? (
-    <p className="mt-10 text-xs text-zinc-500">Tap a highlighted word for a brief Greek/Hebrew note.</p>
-  ) : null
+  const hint =
+    quoteInsights.length > 0 ? (
+      <p className="mt-10 text-xs text-zinc-500">
+        Tap a <span className="font-medium text-blue-900 underline decoration-blue-300/80">highlighted</span>{' '}
+        word for a brief Greek/Hebrew note.
+      </p>
+    ) : null
 
   return (
     <>
@@ -132,7 +132,7 @@ export function ScriptureBlock({
       </div>
       <ScriptureQuoteShell>
         <blockquote className="mt-6 font-scripture text-[1.1875rem] leading-[1.92] text-zinc-900 sm:text-[1.25rem] sm:leading-[1.95]">
-          {renderQuoteWithInsights(quote, insights)}
+          {renderQuoteWithInsights(quote, quoteInsights)}
         </blockquote>
       </ScriptureQuoteShell>
       {chain?.length ? <ScriptureChain references={chain} /> : null}

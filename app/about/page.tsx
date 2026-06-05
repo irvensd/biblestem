@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/Button'
+import { ContactEmailLink } from '@/components/site/ContactEmailLink'
 import { PageIntro } from '@/components/site/PageIntro'
 import { BIBLESTEM_THREADS_URL } from '@/lib/site-external-links'
-
 const SECTION_GAP = 'mt-10 border-t border-zinc-200 pt-10 md:mt-11 md:pt-11'
 
 const howItHelps = [
@@ -208,6 +208,32 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
+
+          <section className={SECTION_GAP}>
+            <div className="mx-auto max-w-3xl">
+              <SectionLabel>Contact</SectionLabel>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 md:text-[1.65rem] md:leading-tight">
+                Reach us by email
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-zinc-600">
+                BibleStem communicates with clients by email only. Questions, feedback, and issue reports go to{' '}
+                <ContactEmailLink
+                  showAddress
+                  subject="BibleStem inquiry"
+                  className="font-medium text-blue-800 underline decoration-blue-800/30 underline-offset-[3px] hover:text-blue-900"
+                />
+                .
+              </p>
+              <p className="mt-4 text-sm text-zinc-500">
+                We do not offer phone, chat, or social support channels.
+              </p>
+              <div className="mt-6">
+                <Button href="/contact" variant="secondary" className="min-h-[44px]">
+                  Contact page
+                </Button>
+              </div>
+            </div>
+          </section>
 
           <section className={`${SECTION_GAP} pb-2 text-center`}>
             <div className="mx-auto h-px w-16 bg-zinc-200" aria-hidden />

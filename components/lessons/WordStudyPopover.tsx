@@ -32,7 +32,7 @@ export function WordStudyPopover({ surface, study }: WordStudyPopoverProps) {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
-        className={`rounded-sm bg-blue-50/80 px-0.5 font-medium text-blue-900 underline decoration-blue-300/70 decoration-1 underline-offset-[3px] transition-colors hover:bg-blue-100/80 ${READER_FOCUS_RING}`}
+        className={`rounded-sm bg-blue-100/90 px-1 font-semibold text-blue-950 underline decoration-blue-600/80 decoration-2 underline-offset-[3px] ring-1 ring-blue-200/70 transition-colors hover:bg-blue-200/80 ${READER_FOCUS_RING}`}
       >
         {surface}
       </button>

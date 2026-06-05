@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ContactEmailLink } from '@/components/site/ContactEmailLink'
 import { Button } from '@/components/ui/Button'
 
 export const metadata: Metadata = {
@@ -12,7 +13,13 @@ export default function NotFound() {
         <div className="mb-5 h-1 w-10 rounded-full bg-blue-800/50" aria-hidden />
         <h1 className="text-xl font-semibold tracking-tight text-zinc-900">Page not found</h1>
         <p className="mt-3 text-sm leading-relaxed text-zinc-600">
-          This page may have moved or does not exist.
+          This page may have moved or does not exist. Need help? Email{' '}
+          <ContactEmailLink
+            showAddress
+            subject="BibleStem inquiry"
+            className="font-medium text-blue-800 underline decoration-blue-800/30 underline-offset-[3px] hover:text-blue-900"
+          />
+          .
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <Button href="/study-library" variant="primary">

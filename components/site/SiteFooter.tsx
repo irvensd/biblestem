@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { ContactEmailLink } from '@/components/site/ContactEmailLink'
 import { SiteFooterProductLinks } from '@/components/site/SiteFooterProductLinks'
 import { BIBLESTEM_THREADS_URL } from '@/lib/site-external-links'
 import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/report-issue-href'
-
 const ministryLinks = [
   { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
   { href: BIBLESTEM_THREADS_URL, label: 'BibleStem Threads', external: true },
   { href: '/donate', label: 'Donate' },
 ]
@@ -41,6 +42,18 @@ export function SiteFooter() {
               <Link href={supportReportHref({ type: 'bug' })} className={REPORT_ISSUE_LINK_CLASSNAME}>
                 Report an issue
               </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="text-sm text-zinc-600 hover:text-zinc-900">
+                Contact us
+              </Link>
+            </li>
+            <li>
+              <ContactEmailLink
+                showAddress
+                subject="BibleStem inquiry"
+                className="text-sm text-zinc-600 hover:text-zinc-900"
+              />
             </li>
           </ul>
         </div>

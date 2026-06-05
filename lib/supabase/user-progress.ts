@@ -11,7 +11,11 @@ type ProgressRow = {
   updated_at: string
 }
 
-function rowsToLocal(rows: ProgressRow[], activityOn: string[]): LocalDashboardProgress {
+function rowsToLocal(
+  rows: ProgressRow[],
+  activityOn: string[],
+  studyTimeSeconds = 0,
+): LocalDashboardProgress {
   const completedKeys = rows.filter((r) => r.completed).map((r) => lessonKey(r.series_slug, r.lesson_slug))
 
   let lastLesson: LastLessonState | null = null
@@ -35,19 +39,26 @@ function rowsToLocal(rows: ProgressRow[], activityOn: string[]): LocalDashboardP
   }
 
   const activityDays = [...new Set(activityOn)].sort()
-  return { v: 1, completedKeys: [...new Set(completedKeys)], lastLesson, activityDays }
+  return {
+    v: 1,
+    completedKeys: [...new Set(completedKeys)],
+    lastLesson,
+    activityDays,
+    studyTimeSeconds: studyTimeSeconds > 0 ? studyTimeSeconds : 0,
+  }
 }
 
 export async function fetchProgressState(
   supabase: SupabaseClient,
   userId: string,
 ): Promise<LocalDashboardProgress> {
-  const [progRes, dayRes] = await Promise.all([
+  const [progRes, dayRes, profileRes] = await Promise.all([
     supabase
       .from('user_study_progress')
       .select('series_slug, lesson_slug, completed, current_step_index, total_steps, updated_at')
       .eq('user_id', userId),
     supabase.from('user_activity_days').select('activity_on').eq('user_id', userId),
+    supabase.from('profiles').select('study_time_seconds').eq('id', userId).maybeSingle(),
   ])
 
   const rows = (progRes.data ?? []) as ProgressRow[]
@@ -55,7 +66,50 @@ export async function fetchProgressState(
   const activityOn = days.map((d) =>
     typeof d.activity_on === 'string' ? d.activity_on.slice(0, 10) : String(d.activity_on).slice(0, 10),
   )
-  return rowsToLocal(rows, activityOn)
+  const rawStudyTime = profileRes.data?.study_time_seconds
+  const studyTimeSeconds =
+    typeof rawStudyTime === 'number' && rawStudyTime > 0
+      ? rawStudyTime
+      : typeof rawStudyTime === 'string'
+        ? Number.parseInt(rawStudyTime, 10) || 0
+        : 0
+  return rowsToLocal(rows, activityOn, studyTimeSeconds)
+}
+
+const MAX_STUDY_SESSION_SECONDS = 8 * 60 * 60
+
+/** Add lesson-reader seconds to the user profile (synced across devices). */
+export async function addStudyTimeSecondsRemote(
+  supabase: SupabaseClient,
+  userId: string,
+  seconds: number,
+): Promise<void> {
+  const delta = Math.min(Math.max(0, Math.floor(seconds)), MAX_STUDY_SESSION_SECONDS)
+  if (delta < 15) return
+  await supabase.rpc('increment_profile_study_time', {
+    p_user_id: userId,
+    p_seconds: delta,
+  })
+}
+
+/** Set profile study time to the higher of remote and local (one-time migration / reconcile). */
+export async function reconcileStudyTimeRemote(
+  supabase: SupabaseClient,
+  userId: string,
+  localSeconds: number,
+): Promise<void> {
+  const local = Math.max(0, Math.floor(localSeconds))
+  if (local <= 0) return
+
+  const { data } = await supabase.from('profiles').select('study_time_seconds').eq('id', userId).maybeSingle()
+  const remote =
+    typeof data?.study_time_seconds === 'number'
+      ? data.study_time_seconds
+      : Number.parseInt(String(data?.study_time_seconds ?? 0), 10) || 0
+
+  if (local <= remote) return
+
+  await supabase.from('profiles').update({ study_time_seconds: local, updated_at: new Date().toISOString() }).eq('id', userId)
 }
 
 /** Same calendar day as `dashboard-local-progress` (local timezone). */
@@ -136,12 +190,14 @@ export async function clearAllProgressRemote(
   supabase: SupabaseClient,
   userId: string,
 ): Promise<{ ok: true } | { ok: false; message: string }> {
-  const [progRes, dayRes] = await Promise.all([
+  const [progRes, dayRes, profileRes] = await Promise.all([
     supabase.from('user_study_progress').delete().eq('user_id', userId),
     supabase.from('user_activity_days').delete().eq('user_id', userId),
+    supabase.from('profiles').update({ study_time_seconds: 0, updated_at: new Date().toISOString() }).eq('id', userId),
   ])
   if (progRes.error) return { ok: false, message: progRes.error.message }
   if (dayRes.error) return { ok: false, message: dayRes.error.message }
+  if (profileRes.error) return { ok: false, message: profileRes.error.message }
   return { ok: true }
 }
 
@@ -151,8 +207,13 @@ export async function mergeLocalProgressIntoRemote(
   local: LocalDashboardProgress,
 ): Promise<void> {
   const empty =
-    local.completedKeys.length === 0 && !local.lastLesson && local.activityDays.length === 0
+    local.completedKeys.length === 0 &&
+    !local.lastLesson &&
+    local.activityDays.length === 0 &&
+    (local.studyTimeSeconds ?? 0) <= 0
   if (empty) return
+
+  await reconcileStudyTimeRemote(supabase, userId, local.studyTimeSeconds ?? 0)
 
   for (const day of local.activityDays) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) continue

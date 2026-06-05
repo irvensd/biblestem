@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from 'react'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
+import { ContactEmailLink } from '@/components/site/ContactEmailLink'
 import { SupportFormSkeleton } from '@/components/support/SupportFormSkeleton'
 import { SupportRequestForm } from '@/components/support/SupportRequestForm'
 import { Button } from '@/components/ui/Button'
@@ -25,6 +26,7 @@ import {
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client'
 import { clearAllProgressRemote } from '@/lib/supabase/user-progress'
 import { signInRedirectUrl } from '@/lib/auth/auth-redirect'
+import { BIBLESTEM_CONTACT_EMAIL } from '@/lib/site-contact'
 import { REPORT_ISSUE_LINK_CLASSNAME } from '@/lib/support/report-issue-href'
 
 type Banner =
@@ -104,6 +106,7 @@ export function SettingsClient() {
         <Suspense fallback={<SupportSectionSkeleton />}>
           <SupportSection openNonce={supportOpenNonce} />
         </Suspense>
+        <ContactSection />
       </div>
 
       <footer className="mt-8 border-t border-zinc-200/80 pt-6 text-xs text-zinc-500">
@@ -149,7 +152,8 @@ const SETTINGS_SECTIONS = [
   { id: 'settings-profile', label: 'Profile' },
   { id: 'settings-security', label: 'Security' },
   { id: 'settings-progress', label: 'Progress Data' },
-  { id: 'settings-support', label: 'Support' },
+  { id: 'settings-support', label: 'Report an issue' },
+  { id: 'settings-contact', label: 'Contact' },
 ] as const
 
 function scrollToSettingsSection(id: string) {
@@ -240,7 +244,7 @@ function SupportSection({ openNonce }: { openNonce: number }) {
     'Report bugs, broken links, quiz issues, login problems, or content concerns.'
 
   return (
-    <Card id="settings-support" title="Technical support" description={open ? undefined : collapsedDescription}>
+    <Card id="settings-support" title="Report an issue" description={open ? undefined : collapsedDescription}>
       {!open ? (
         <Button type="button" variant="secondary" onClick={() => setOpen(true)}>
           Open support form
@@ -251,16 +255,38 @@ function SupportSection({ openNonce }: { openNonce: number }) {
             {collapsedDescription} Your browser details are included to help reproduce issues.
           </p>
           <Suspense fallback={<SupportFormSkeleton embedded />}>
-            <SupportRequestForm
-              variant="embedded"
-              onDismiss={() => setOpen(false)}
-            />
+            <SupportRequestForm variant="embedded" onDismiss={() => setOpen(false)} />
           </Suspense>
           <Button type="button" variant="ghost" className="!px-0" onClick={() => setOpen(false)}>
             Close form
           </Button>
         </div>
       )}
+    </Card>
+  )
+}
+
+function ContactSection() {
+  return (
+    <Card
+      id="settings-contact"
+      title="Contact"
+      description="General questions and ministry inquiries."
+    >
+      <p className="text-sm leading-relaxed text-zinc-600">
+        For general questions outside the support form, email{' '}
+        <ContactEmailLink
+          showAddress
+          subject="BibleStem inquiry"
+          className="font-medium text-blue-800 underline decoration-blue-800/30 underline-offset-[3px] hover:text-blue-900"
+        />
+        . We do not offer phone, chat, or social support.
+      </p>
+      <div className="mt-5">
+        <Button href="/contact" variant="ghost" className="!px-0">
+          Contact page
+        </Button>
+      </div>
     </Card>
   )
 }
@@ -356,7 +382,7 @@ function ProfileSection({
             className={`${inputClassName} cursor-default border-zinc-200 bg-stone-50/90 text-zinc-600 selection:bg-transparent`}
           />
           <p className="text-xs text-zinc-500">
-            Email changes are not available yet. Use Technical support below if you need help with your account.
+            Email changes are not available yet. Use Report an issue below or email {BIBLESTEM_CONTACT_EMAIL} for help.
           </p>
         </div>
 

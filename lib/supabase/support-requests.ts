@@ -110,7 +110,7 @@ export async function submitSupportRequest(input: SubmitSupportRequestInput): Pr
       return {
         ok: false,
         message:
-          'Saving reports is not connected yet (database table missing). Apply migrations or contact the site administrator. Your report was not saved.',
+          'Saving reports is not connected yet (database table missing). Email hello@biblestem.io or try again later. Your report was not saved.',
       }
     }
     return { ok: false, message: 'Something went wrong. Please try again.' }

@@ -104,16 +104,30 @@ export function resolveActiveLesson(
   return null
 }
 
-/** Consecutive calendar days with meaningful study activity ending today. */
+function localDateString(offsetDaysFromToday: number): string {
+  const anchor = new Date()
+  const d = new Date(anchor.getFullYear(), anchor.getMonth(), anchor.getDate() - offsetDaysFromToday)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+/**
+ * Consecutive calendar days with meaningful study activity.
+ * If the user has not studied yet today but did yesterday, count from yesterday so the
+ * streak does not flash 0 until the day ends (matches common habit-app expectations).
+ */
 export function streakFromMeaningfulActivityDays(days: string[]): number {
   if (days.length === 0) return 0
   const set = new Set(days)
-  const today = new Date()
+
+  let startOffset = 0
+  if (!set.has(localDateString(0))) {
+    if (set.has(localDateString(1))) startOffset = 1
+    else return 0
+  }
+
   let streak = 0
-  for (let i = 0; i < 366; i++) {
-    const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() - i)
-    const s = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-    if (set.has(s)) streak++
+  for (let i = startOffset; i < 366; i++) {
+    if (set.has(localDateString(i))) streak++
     else break
   }
   return streak

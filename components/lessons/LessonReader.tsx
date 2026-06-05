@@ -16,7 +16,7 @@ import { buildLessonSteps, buildLessonStepsFromSections } from '@/lib/lesson-ste
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import { useLocalDashboardProgress } from '@/hooks/useLocalDashboardProgress'
 import { persistMarkLessonComplete, persistSaveLessonProgress } from '@/lib/dashboard-progress-sync'
-import { recordStudySessionSeconds } from '@/lib/dashboard-local-progress'
+import { persistStudySessionSeconds } from '@/lib/dashboard-progress-sync'
 import { countWordInsightsInContent } from '@/lib/lesson-insight-count'
 import { lessonNoteStorageKey, countLocalLessonNotes } from '@/lib/lesson-notes'
 import { isDeeperStudyWorkflow, lessonProgressLabel } from '@/lib/deeper-lesson-workflow'
@@ -155,14 +155,30 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
   }, [complete, index, total, study.slug, lesson.slug, userId])
 
   useEffect(() => {
-    const openedAt = Date.now()
-    return () => {
-      const elapsed = Math.floor((Date.now() - openedAt) / 1000)
-      if (elapsed >= 15) {
-        recordStudySessionSeconds(elapsed)
+    if (complete) return undefined
+
+    let visibleSince = Date.now()
+    let accumulatedVisibleMs = 0
+
+    function onVisibilityChange() {
+      if (document.visibilityState === 'hidden') {
+        accumulatedVisibleMs += Date.now() - visibleSince
+      } else {
+        visibleSince = Date.now()
       }
     }
-  }, [study.slug, lesson.slug])
+
+    document.addEventListener('visibilitychange', onVisibilityChange)
+
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+      if (document.visibilityState === 'visible') {
+        accumulatedVisibleMs += Date.now() - visibleSince
+      }
+      const elapsed = Math.min(Math.floor(accumulatedVisibleMs / 1000), 90 * 60)
+      persistStudySessionSeconds(elapsed, userId)
+    }
+  }, [study.slug, lesson.slug, index, complete, userId])
 
   useEffect(() => {
     if (!complete) return
