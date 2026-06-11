@@ -25,9 +25,13 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Extensions (e.g. Storylane) may add classes to <html> before hydration.
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${lora.variable} font-sans antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${lora.variable} font-sans antialiased`}
+        suppressHydrationWarning
+      >
         <DemoAuthProvider>
           <SiteHeader />
           <main>{children}</main>

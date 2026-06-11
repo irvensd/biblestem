@@ -58,7 +58,7 @@ export function SettingsClient() {
   useEffect(() => {
     if (typeof window === 'undefined') return
     if (window.location.hash !== '#settings-support') return
-    setSupportOpenNonce((n) => n + 1)
+    queueMicrotask(() => setSupportOpenNonce((n) => n + 1))
   }, [])
 
   if (!isReady) return <SettingsSkeleton />
@@ -231,13 +231,16 @@ function SupportSection({ openNonce }: { openNonce: number }) {
   const [open, setOpen] = useState(hasPrefill)
 
   useEffect(() => {
-    if (hasPrefill) setOpen(true)
+    if (!hasPrefill) return
+    queueMicrotask(() => setOpen(true))
   }, [hasPrefill])
 
   useEffect(() => {
     if (openNonce === 0) return
-    setOpen(true)
-    requestAnimationFrame(() => scrollToSettingsSection('settings-support'))
+    queueMicrotask(() => {
+      setOpen(true)
+      requestAnimationFrame(() => scrollToSettingsSection('settings-support'))
+    })
   }, [openNonce])
 
   const collapsedDescription =
