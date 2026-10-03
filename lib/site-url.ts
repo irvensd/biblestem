@@ -10,3 +10,8 @@ export function getSiteUrl(): string {
 export function passwordResetRedirectUrl(): string {
   return `${getSiteUrl()}/auth/reset`
 }
+
+/** Where Supabase sends someone after they confirm an email change. */
+export function emailChangeRedirectUrl(): string {
+  return `${getSiteUrl()}/settings`
+}

@@ -1,6 +1,3 @@
-import { getSeriesBySlug } from '@/lib/product-queries'
-import type { StudySeries } from '@/lib/types/product'
-
 /** Shared dashboard UI types and formatting helpers. Progress is computed in `dashboard-compute`. */
 
 /** Recent reflection rows for the dashboard — populated from `lib/reflection-notes-dashboard.ts`. */
@@ -122,8 +119,4 @@ export function formatStudyMinutes(total: number): string {
   const m = total % 60
   if (m === 0) return `${h}h`
   return `${h}h ${m}m`
-}
-
-export function studyBySlug(slug: string): StudySeries | undefined {
-  return getSeriesBySlug(slug)
 }

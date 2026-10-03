@@ -87,16 +87,33 @@ export default function PrivacyPage() {
               <h2 className="text-xl font-semibold tracking-tight text-zinc-900">How long we keep it</h2>
               <p className="mt-3">
                 We keep account, progress, and note data while your account is open. Support messages are kept so we
-                can fix the issue and see patterns in reports. You can ask us to delete your account and associated
-                progress and notes by emailing {BIBLESTEM_CONTACT_EMAIL}.
+                can fix the issue and see patterns in reports. Deleting your account removes the profile, progress, and
+                notes tied to it. Messages you already sent to support stay, without your account attached.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold tracking-tight text-zinc-900">Download or delete your data</h2>
+              <p className="mt-3">
+                Signed in, open{' '}
+                <Link href="/settings#settings-data" className="font-medium text-blue-800 hover:text-blue-900">
+                  Settings → Your data
+                </Link>{' '}
+                to download a copy of your account, progress, and notes, or to delete the account. You can also change
+                the email on your account from Settings. If you cannot sign in, email {BIBLESTEM_CONTACT_EMAIL} and we
+                will export or delete the account for you.
               </p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold tracking-tight text-zinc-900">Your choices</h2>
               <p className="mt-3">
-                You can update your display name in Settings, sign out on this device, and email us to request access
-                or deletion. You can also read the <Link href="/terms" className="font-medium text-blue-800 hover:text-blue-900">Terms of Use</Link>.
+                You can update your display name and email in Settings, download your data, delete your account, and
+                sign out on this device. You can also read the{' '}
+                <Link href="/terms" className="font-medium text-blue-800 hover:text-blue-900">
+                  Terms of Use
+                </Link>
+                .
               </p>
             </section>
           </article>

@@ -64,7 +64,7 @@ export function ScriptureChain({
   completionMode,
 }: ScriptureChainProps) {
   const refs = toThreadRefs(verses, references)
-  if (refs.length < 2) return null
+  if (refs.length < 1) return null
 
   return (
     <ScriptureThread

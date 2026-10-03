@@ -25,6 +25,9 @@ export interface LessonSidebarProps {
   deeperWorkflow?: boolean
   keyTension?: string
   onGoToNextStep?: () => void
+  onSelectStep?: (index: number) => void
+  notesStepIndex?: number | null
+  crossReferenceStepIndex?: number | null
 }
 
 /** Desktop lesson map + metadata rail for the global lesson reader. */
@@ -39,6 +42,9 @@ export function LessonSidebar({
   deeperWorkflow = false,
   keyTension,
   onGoToNextStep,
+  onSelectStep,
+  notesStepIndex = null,
+  crossReferenceStepIndex = null,
 }: LessonSidebarProps) {
   const total = steps.length
   const done = Math.min(currentIndex, total - 1)
@@ -64,6 +70,30 @@ export function LessonSidebar({
         </div>
       ) : null}
 
+      {onSelectStep && (notesStepIndex != null || crossReferenceStepIndex != null) ? (
+        <div className="flex flex-col gap-2">
+          {notesStepIndex != null ? (
+            <button
+              type="button"
+              onClick={() => onSelectStep(notesStepIndex)}
+              className={`rounded-lg border border-zinc-200/90 bg-white px-3 py-2 text-left text-xs font-medium text-zinc-800 hover:bg-zinc-50 ${READER_FOCUS_RING}`}
+            >
+              Notes
+              {notesCount > 0 ? <span className="ml-1 font-normal text-zinc-500">({notesCount})</span> : null}
+            </button>
+          ) : null}
+          {crossReferenceStepIndex != null ? (
+            <button
+              type="button"
+              onClick={() => onSelectStep(crossReferenceStepIndex)}
+              className={`rounded-lg border border-zinc-200/90 bg-white px-3 py-2 text-left text-xs font-medium text-zinc-800 hover:bg-zinc-50 ${READER_FOCUS_RING}`}
+            >
+              Cross-references
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+
       <div>
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">{mapLabel}</p>
         <ol className="mt-3 space-y-2">
@@ -71,31 +101,47 @@ export function LessonSidebar({
             const label = stepLabel(s, i)
             const isCurrent = i === currentIndex
             const isComplete = i < currentIndex
+            const marker = (
+              <span
+                className={`mt-0.5 flex shrink-0 items-center justify-center rounded-full border text-[9px] font-semibold leading-none ${
+                  isCurrent
+                    ? 'h-[18px] min-w-[18px] border-blue-800 bg-blue-800 text-white'
+                    : isComplete
+                      ? 'h-4 min-w-4 border-zinc-200/90 bg-zinc-50 text-zinc-500'
+                      : 'h-4 min-w-4 border-zinc-200 bg-white text-zinc-400'
+                }`}
+                aria-hidden
+              >
+                {isComplete ? '✓' : String(i + 1)}
+              </span>
+            )
+            const text = (
+              <span
+                className={`leading-snug ${
+                  isCurrent ? 'font-semibold text-zinc-950' : 'font-normal text-zinc-500'
+                }`}
+              >
+                {label}
+              </span>
+            )
             return (
-              <li key={i} className="flex gap-2 text-xs">
-                <span
-                  className={`mt-0.5 flex shrink-0 items-center justify-center rounded-full border text-[9px] font-semibold leading-none ${
-                    isCurrent
-                      ? 'h-[18px] min-w-[18px] border-blue-800 bg-blue-800 text-white'
-                      : isComplete
-                        ? 'h-4 min-w-4 border-zinc-200/90 bg-zinc-50 text-zinc-500'
-                        : 'h-4 min-w-4 border-zinc-200 bg-white text-zinc-400'
-                  }`}
-                  aria-hidden
-                >
-                  {isComplete ? '✓' : String(i + 1)}
-                </span>
-                <span
-                  className={`leading-snug ${
-                    isCurrent
-                      ? 'font-semibold text-zinc-950'
-                      : isComplete
-                        ? 'font-normal text-zinc-500'
-                        : 'font-normal text-zinc-500'
-                  }`}
-                >
-                  {label}
-                </span>
+              <li key={i} className="text-xs">
+                {onSelectStep ? (
+                  <button
+                    type="button"
+                    onClick={() => onSelectStep(i)}
+                    aria-current={isCurrent ? 'step' : undefined}
+                    className={`flex w-full gap-2 rounded-md px-1 py-0.5 text-left hover:bg-zinc-50 ${READER_FOCUS_RING}`}
+                  >
+                    {marker}
+                    {text}
+                  </button>
+                ) : (
+                  <div className="flex gap-2">
+                    {marker}
+                    {text}
+                  </div>
+                )}
               </li>
             )
           })}
@@ -114,7 +160,7 @@ export function LessonSidebar({
             <span className="text-zinc-400">Word insights:</span> {wordInsightCount}
           </p>
         ) : null}
-        {notesCount > 0 ? (
+        {notesCount > 0 && notesStepIndex == null ? (
           <p>
             <span className="text-zinc-400">Notes:</span> {notesCount}
           </p>

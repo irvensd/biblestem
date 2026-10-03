@@ -27,6 +27,8 @@ import {
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client'
 import { clearAllProgressRemote } from '@/lib/supabase/user-progress'
 import { signInRedirectUrl } from '@/lib/auth/auth-redirect'
+import { clearLocalAccountData, downloadAccountExport } from '@/lib/account/export-account-data'
+import { emailChangeRedirectUrl } from '@/lib/site-url'
 import { BIBLESTEM_CONTACT_EMAIL } from '@/lib/site-contact'
 import { REPORT_ISSUE_LINK_CLASSNAME } from '@/lib/support/report-issue-href'
 
@@ -77,7 +79,7 @@ export function SettingsClient() {
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Account</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-900 md:text-4xl">Settings</h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
-          Update how we greet you, manage security, reset progress, or send a support report.
+          Update how we greet you, change your email, download or delete your data, or send a support report.
         </p>
         <p className="mt-3">
           <button
@@ -104,6 +106,14 @@ export function SettingsClient() {
           }}
         />
         <ProgressDataSection userId={user.id} />
+        <AccountDataSection
+          userId={user.id}
+          email={user.email}
+          firstName={user.firstName}
+          onDeleted={async () => {
+            await logout({ navigateTo: '/' })
+          }}
+        />
         <Suspense fallback={<SupportSectionSkeleton />}>
           <SupportSection openNonce={supportOpenNonce} />
         </Suspense>
@@ -153,6 +163,7 @@ const SETTINGS_SECTIONS = [
   { id: 'settings-profile', label: 'Profile' },
   { id: 'settings-security', label: 'Security' },
   { id: 'settings-progress', label: 'Progress Data' },
+  { id: 'settings-data', label: 'Your data' },
   { id: 'settings-support', label: 'Report an issue' },
   { id: 'settings-contact', label: 'Contact' },
 ] as const
@@ -328,12 +339,19 @@ function ProfileSection({
   updateFirstName: (name: string) => Promise<{ ok: true } | { ok: false; message: string }>
 }) {
   const [name, setName] = useState(firstName ?? '')
+  const [nextEmail, setNextEmail] = useState(email)
   const [pending, setPending] = useState(false)
+  const [emailPending, setEmailPending] = useState(false)
   const [banner, setBanner] = useState<Banner>(null)
+  const supabaseConfigured = isSupabaseConfigured()
 
   useEffect(() => {
     setName(firstName ?? '')
   }, [firstName])
+
+  useEffect(() => {
+    setNextEmail(email)
+  }, [email])
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
@@ -353,6 +371,42 @@ function ProfileSection({
 
   const savedName = (firstName ?? '').trim()
   const nameChanged = name.trim() !== savedName
+  const emailChanged = nextEmail.trim().toLowerCase() !== email.trim().toLowerCase()
+
+  async function onChangeEmail() {
+    setBanner(null)
+    const trimmed = nextEmail.trim().toLowerCase()
+    if (!trimmed || !trimmed.includes('@')) {
+      setBanner({ kind: 'error', text: 'Enter a valid email address.' })
+      return
+    }
+    if (!supabaseConfigured) {
+      setBanner({ kind: 'error', text: 'Email changes require Supabase on this deployment.' })
+      return
+    }
+    const supabase = getSupabaseBrowserClient()
+    if (!supabase) {
+      setBanner({ kind: 'error', text: 'Could not reach authentication.' })
+      return
+    }
+    setEmailPending(true)
+    try {
+      const { error } = await supabase.auth.updateUser(
+        { email: trimmed },
+        { emailRedirectTo: emailChangeRedirectUrl() },
+      )
+      if (error) {
+        setBanner({ kind: 'error', text: error.message })
+        return
+      }
+      setBanner({
+        kind: 'success',
+        text: 'Check your inbox to confirm the new email. It changes after you open that link.',
+      })
+    } finally {
+      setEmailPending(false)
+    }
+  }
 
   return (
     <Card id="settings-profile" title="Profile" description="This is how BibleStem greets you across the app.">
@@ -383,16 +437,24 @@ function ProfileSection({
           </label>
           <input
             id="settings-email"
+            name="email"
             type="email"
-            value={email}
-            readOnly
-            aria-readonly="true"
-            tabIndex={-1}
-            className={`${inputClassName} cursor-default border-zinc-200 bg-stone-50/90 text-zinc-600 selection:bg-transparent`}
+            autoComplete="email"
+            value={nextEmail}
+            onChange={(e) => setNextEmail(e.target.value)}
+            className={inputClassName}
+            disabled={emailPending}
           />
           <p className="text-xs text-zinc-500">
-            Email changes are not available yet. Use Report an issue below or email {BIBLESTEM_CONTACT_EMAIL} for help.
+            We email a confirmation link before the address on your account changes.
           </p>
+          {emailChanged ? (
+            <div className="pt-1">
+              <Button type="button" disabled={emailPending} onClick={() => void onChangeEmail()}>
+                {emailPending ? 'Sending…' : 'Update email'}
+              </Button>
+            </div>
+          ) : null}
         </div>
 
         <div className="flex items-center justify-end gap-3 pt-1">
@@ -752,6 +814,127 @@ function ProgressDataSection({ userId }: { userId?: string }) {
             onClick={() => openResetConfirm('all')}
           >
             {pendingAll ? 'Resetting…' : 'Reset all progress'}
+          </Button>
+        </div>
+      </div>
+    </Card>
+  )
+}
+
+function AccountDataSection({
+  userId,
+  email,
+  firstName,
+  onDeleted,
+}: {
+  userId?: string
+  email: string
+  firstName?: string
+  onDeleted: () => Promise<void>
+}) {
+  const [exportPending, setExportPending] = useState(false)
+  const [deletePending, setDeletePending] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false)
+  const [banner, setBanner] = useState<Banner>(null)
+
+  async function onExport() {
+    setBanner(null)
+    if (!userId) {
+      setBanner({ kind: 'error', text: 'Could not reach your account.' })
+      return
+    }
+    setExportPending(true)
+    try {
+      const result = await downloadAccountExport({ id: userId, email, firstName })
+      if (!result.ok) {
+        setBanner({ kind: 'error', text: result.message })
+        return
+      }
+      setBanner({ kind: 'success', text: 'Your data file has downloaded.' })
+    } finally {
+      setExportPending(false)
+    }
+  }
+
+  async function onDelete() {
+    setBanner(null)
+    if (!userId) {
+      setBanner({ kind: 'error', text: 'Could not reach your account.' })
+      return
+    }
+    const supabase = getSupabaseBrowserClient()
+    if (!supabase) {
+      setBanner({ kind: 'error', text: 'Could not reach your account.' })
+      return
+    }
+    setDeletePending(true)
+    try {
+      const { error } = await supabase.rpc('delete_own_account')
+      if (error) {
+        setBanner({
+          kind: 'error',
+          text: error.message.includes('delete_own_account')
+            ? `Account deletion is not available until the latest database update is applied. Email ${BIBLESTEM_CONTACT_EMAIL} and we will delete it.`
+            : error.message,
+        })
+        return
+      }
+      clearLocalAccountData()
+      setConfirmOpen(false)
+      await onDeleted()
+    } finally {
+      setDeletePending(false)
+    }
+  }
+
+  return (
+    <Card
+      id="settings-data"
+      title="Your data"
+      description="Download a copy of your account, progress, and notes, or delete the account."
+    >
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Delete your account?"
+        description="This permanently deletes your sign-in, display name, lesson progress, and notes. Support messages you already sent stay, without your account attached. This cannot be undone."
+        confirmLabel="Delete account"
+        variant="destructive"
+        pending={deletePending}
+        onCancel={() => {
+          if (!deletePending) setConfirmOpen(false)
+        }}
+        onConfirm={() => void onDelete()}
+      />
+      <div className="space-y-4">
+        <BannerNote banner={banner} />
+        <div className="rounded-xl border border-zinc-200/80 bg-stone-50/70 p-4">
+          <p className="text-sm font-medium text-zinc-900">Download your data</p>
+          <p className="mt-1 text-xs leading-relaxed text-zinc-600">
+            Saves a JSON file with your profile, study progress, notes, and anything stored in this browser.
+          </p>
+          <Button
+            type="button"
+            variant="secondary"
+            className="mt-4 w-full sm:w-auto"
+            disabled={exportPending}
+            onClick={() => void onExport()}
+          >
+            {exportPending ? 'Preparing…' : 'Download my data'}
+          </Button>
+        </div>
+        <div className="rounded-xl border border-red-200/70 bg-red-50/30 p-4 sm:p-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-red-800/90">Delete account</p>
+          <p className="mt-2 text-sm leading-relaxed text-red-900/90">
+            Removes your BibleStem account and the study data tied to it.
+          </p>
+          <Button
+            variant="secondary"
+            type="button"
+            className="mt-4 w-full !border-red-300 !text-red-900 hover:!bg-red-100 sm:w-auto"
+            disabled={deletePending}
+            onClick={() => setConfirmOpen(true)}
+          >
+            Delete account
           </Button>
         </div>
       </div>

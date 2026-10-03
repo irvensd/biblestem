@@ -1,10 +1,6 @@
-import {
-  studyPaths,
-  studySeriesCatalog,
-} from '@/lib/product-mock'
 import { compareFoundationLibraryRecommendedOrder, orderFoundationStudies } from '@/lib/foundation-path'
 import { getPublicTrackLabelForSeries } from '@/lib/study-tracks'
-import type { Lesson, LessonCompletionState, StudyPath, StudySeries, StudySeriesWithPath } from '@/lib/types/product'
+import type { Lesson, LessonCompletionState, StudyPath, StudySeries } from '@/lib/types/product'
 
 export function formatLessonDuration(minutes: number): string {
   if (minutes < 60) return `${minutes} min`
@@ -20,62 +16,8 @@ export function lessonProgressLabel(state: LessonCompletionState | undefined): s
   return 'Not started'
 }
 
-export function getStudyPaths(): StudyPath[] {
-  return [...studyPaths].sort((a, b) => a.sortOrder - b.sortOrder)
-}
-
-export function getStudyPathBySlug(slug: string): StudyPath | undefined {
-  return studyPaths.find((p) => p.slug === slug)
-}
-
-export function getStudyPathById(id: string): StudyPath | undefined {
-  return studyPaths.find((p) => p.id === id)
-}
-
-export function getAllSeries(): StudySeries[] {
-  return studySeriesCatalog.map((s) => ({
-    ...s,
-    lessons: s.lessons.map((l) => ({ ...l })),
-  }))
-}
-
-export function getSeriesBySlug(slug: string): StudySeries | undefined {
-  return studySeriesCatalog.find((s) => s.slug === slug)
-}
-
-export function getSeriesWithPathBySlug(slug: string): StudySeriesWithPath | undefined {
-  const series = getSeriesBySlug(slug)
-  if (!series) return undefined
-  const path = getStudyPathById(series.studyPathId)
-  if (!path) return undefined
-  return { ...series, studyPath: path }
-}
-
-export function getSeriesForPathSlug(pathSlug: string): StudySeries[] {
-  const path = getStudyPathBySlug(pathSlug)
-  if (!path) return []
-  return studySeriesCatalog
-    .filter((s) => s.studyPathId === path.id)
-    .sort((a, b) => a.sortOrder - b.sortOrder)
-}
-
-export function seriesCountForPathSlug(pathSlug: string): number {
-  return getSeriesForPathSlug(pathSlug).length
-}
-
 export function getPathNameForSeries(series: StudySeries, _pathsOverride?: StudyPath[]): string {
   return getPublicTrackLabelForSeries(series)
-}
-
-export function findLessonInCatalog(
-  seriesSlug: string,
-  lessonSlug: string,
-): { series: StudySeries; lesson: Lesson } | undefined {
-  const series = getSeriesBySlug(seriesSlug)
-  if (!series) return undefined
-  const lesson = series.lessons.find((l) => l.slug === lessonSlug)
-  if (!lesson) return undefined
-  return { series, lesson }
 }
 
 export function getNextLessonInSeries(series: StudySeries, lessonSlug: string): Lesson | null {
@@ -97,7 +39,7 @@ export function filterSeriesForLibrary(
   filters: LibraryFilters,
   pathsOverride?: StudyPath[],
 ): StudySeries[] {
-  const paths = pathsOverride ?? studyPaths
+  const paths = pathsOverride ?? []
   let list = [...seriesList]
   const foundationsPathId = paths.find((p) => p.slug === 'foundations')?.id
   const foundationRank = new Map(

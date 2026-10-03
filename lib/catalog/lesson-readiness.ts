@@ -24,7 +24,8 @@ export function isPlaceholderReaderContent(content: {
 export function lessonHasRealContent(lesson: Lesson): boolean {
   if (hasBundledLessonReaderContent(lesson.slug)) {
     const bundled = getLessonReaderContent(lesson.slug)
-    if (!isPlaceholderReaderContent(bundled)) return true
+    // A bundled shell stays hidden even if the database marked the row ready.
+    return !isPlaceholderReaderContent(bundled)
   }
   if (lesson.contentPending) return false
   if (lesson.readerContent && !isPlaceholderReaderContent(lesson.readerContent)) return true

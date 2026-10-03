@@ -7,6 +7,8 @@ import {
   loadCatalog,
   shouldShowCatalogFallbackNotice,
 } from '@/lib/catalog/load-catalog'
+import { isFoundationLessonShellSections } from '@/lib/foundation-lesson-shell'
+import { isPlaceholderReaderContent } from '@/lib/catalog/lesson-readiness'
 import { resolveLessonReaderContent } from '@/lib/lesson-content'
 import { hydrateLessonScriptureThreadVerseText } from '@/lib/scripture-thread-verse-hydration'
 import { fetchAuthorizedLessonBody } from '@/lib/supabase/fetch-lesson-body'
@@ -39,6 +41,9 @@ export default async function LessonReaderPage({
   const content = hydrateLessonScriptureThreadVerseText(
     resolveLessonReaderContent(lessonSlug, body.readerContent),
   )
+  const sections = body.sections.length > 0 ? body.sections : lesson.sections
+  const sectionsAreShell = sections.length === 0 || isFoundationLessonShellSections(sections)
+  if (sectionsAreShell && isPlaceholderReaderContent(content)) notFound()
 
   return (
     <>

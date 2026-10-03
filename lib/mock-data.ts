@@ -1,30 +1,35 @@
 /**
  * Back-compat re-exports — prefer `@/lib/product-queries` + `@/lib/types/product`.
+ * Server-only because it re-exports the full mock catalog.
  */
+
+import 'server-only'
+
+import { seriesCountForPathSlug } from '@/lib/catalog/mock-catalog-queries'
 
 export type { Lesson, StudyLevel, StudySeries } from '@/lib/types/product'
 
-import { seriesCountForPathSlug } from '@/lib/product-queries'
-
 export { studyPaths, studySeriesCatalog } from '@/lib/product-mock'
 export {
-  filterSeriesForLibrary,
   findLessonInCatalog,
-  formatLessonDuration,
   getAllSeries,
-  getPathNameForSeries,
-  getRecommendedSeriesSlugs,
   getSeriesBySlug,
   getSeriesForPathSlug,
-  getNextLessonInSeries,
   getSeriesWithPathBySlug,
   getStudyPathBySlug,
   getStudyPaths,
+  seriesCountForPathSlug,
+} from '@/lib/catalog/mock-catalog-queries'
+export {
+  filterSeriesForLibrary,
+  formatLessonDuration,
+  getPathNameForSeries,
+  getRecommendedSeriesSlugs,
+  getNextLessonInSeries,
   groupSeriesByCollection,
   groupStudiesByLevelOrSection,
   STUDY_LIBRARY_SECTION_ORDER,
   lessonProgressLabel,
-  seriesCountForPathSlug,
 } from '@/lib/product-queries'
 
 /** Stable reference for legacy imports (`import { studies } from '@/lib/mock-data'`). */

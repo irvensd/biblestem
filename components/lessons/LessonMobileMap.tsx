@@ -15,6 +15,8 @@ interface LessonMobileMapProps {
   currentIndex: number
   onSelectStep: (index: number) => void
   deeperWorkflow?: boolean
+  notesStepIndex?: number | null
+  crossReferenceStepIndex?: number | null
 }
 
 export function LessonMobileMap({
@@ -22,6 +24,8 @@ export function LessonMobileMap({
   currentIndex,
   onSelectStep,
   deeperWorkflow = false,
+  notesStepIndex = null,
+  crossReferenceStepIndex = null,
 }: LessonMobileMapProps) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
@@ -66,6 +70,34 @@ export function LessonMobileMap({
           aria-label="Lesson steps"
           className="max-h-[40vh] overflow-y-auto border-t border-zinc-100 px-4 py-3"
         >
+          {notesStepIndex != null || crossReferenceStepIndex != null ? (
+            <div className="mb-3 flex flex-wrap gap-2">
+              {notesStepIndex != null ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onSelectStep(notesStepIndex)
+                    setOpen(false)
+                  }}
+                  className={`rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-800 ${READER_FOCUS_RING}`}
+                >
+                  Notes
+                </button>
+              ) : null}
+              {crossReferenceStepIndex != null ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onSelectStep(crossReferenceStepIndex)
+                    setOpen(false)
+                  }}
+                  className={`rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-800 ${READER_FOCUS_RING}`}
+                >
+                  Cross-references
+                </button>
+              ) : null}
+            </div>
+          ) : null}
           <ol className="space-y-1.5">
             {steps.map((s, i) => {
               const active = i === currentIndex

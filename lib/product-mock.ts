@@ -1,7 +1,10 @@
 /**
  * Mock catalog fallback when Supabase is empty or unavailable.
  * Foundations include God Is Love and related series; prophecy includes Three Angels’ Messages.
+ * Server-only: client imports must not pull lesson text or quiz answers into the browser.
  */
+
+import 'server-only'
 
 import type {
   Highlight,

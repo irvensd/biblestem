@@ -190,10 +190,10 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
       )
     case 'scriptureChain':
       if ('verses' in block && Array.isArray(block.verses)) {
-        return <ScriptureChain title={block.title} verses={block.verses} />
+        return <ScriptureChain title={block.title?.trim() || 'Cross-references'} verses={block.verses} />
       }
       if ('references' in block && Array.isArray(block.references)) {
-        return <ScriptureChain title={block.title} references={block.references} />
+        return <ScriptureChain title={block.title?.trim() || 'Cross-references'} references={block.references} />
       }
       return null
     case 'coreClaim':

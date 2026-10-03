@@ -135,7 +135,7 @@ export function ScriptureBlock({
           {renderQuoteWithInsights(quote, quoteInsights)}
         </blockquote>
       </ScriptureQuoteShell>
-      {chain?.length ? <ScriptureChain references={chain} /> : null}
+      {chain?.length ? <ScriptureChain title="Cross-references" references={chain} /> : null}
       {afterPrimary?.trim() ? (
         <AfterBridge text={afterPrimary} emphasisPhrases={afterPrimaryEmphasisPhrases} />
       ) : null}

@@ -12,7 +12,12 @@ import { LessonLayout } from '@/components/lessons/LessonLayout'
 import { LessonSidebar } from '@/components/lessons/LessonSidebar'
 import { LessonStepRenderer } from '@/components/lessons/LessonStepRenderer'
 import { isFoundationLessonShellSections } from '@/lib/foundation-lesson-shell'
-import { buildLessonSteps, buildLessonStepsFromSections } from '@/lib/lesson-steps'
+import {
+  buildLessonSteps,
+  buildLessonStepsFromSections,
+  findCrossReferenceStepIndex,
+  findNotesStepIndex,
+} from '@/lib/lesson-steps'
 import { useDemoAuth } from '@/components/auth/DemoAuthProvider'
 import { useLocalDashboardProgress } from '@/hooks/useLocalDashboardProgress'
 import { persistMarkLessonComplete, persistSaveLessonProgress } from '@/lib/dashboard-progress-sync'
@@ -55,6 +60,8 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
     return buildLessonSteps(content)
   }, [lesson.sections, lesson.scripture, content])
   const total = steps.length
+  const notesStepIndex = useMemo(() => findNotesStepIndex(steps), [steps])
+  const crossReferenceStepIndex = useMemo(() => findCrossReferenceStepIndex(steps), [steps])
   const deeperWorkflow = useMemo(() => isDeeperStudyWorkflow(content), [content])
   const startIndex = useMemo(
     () => (total > 0 ? Math.min(Math.max(0, initialStepIndex), total - 1) : 0),
@@ -224,6 +231,9 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
         deeperWorkflow={deeperWorkflow}
         keyTension={content.keyTension}
         onGoToNextStep={index < total - 1 ? () => setLessonStepIndex((i) => i + 1) : undefined}
+        onSelectStep={(i) => setLessonStepIndex(i)}
+        notesStepIndex={notesStepIndex}
+        crossReferenceStepIndex={crossReferenceStepIndex}
       />
     ) : null
 
@@ -234,6 +244,8 @@ export function LessonReader({ study, lesson, content, initialStepIndex = 0 }: L
         currentIndex={index}
         deeperWorkflow={deeperWorkflow}
         onSelectStep={(i) => setLessonStepIndex(i)}
+        notesStepIndex={notesStepIndex}
+        crossReferenceStepIndex={crossReferenceStepIndex}
       />
     ) : null
 

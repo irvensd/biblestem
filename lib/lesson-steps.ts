@@ -287,3 +287,41 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
 
   return steps
 }
+
+function blocksHaveCrossReferences(blocks: LessonContentBlock[] | undefined): boolean {
+  return Boolean(
+    blocks?.some(
+      (block) =>
+        block.type === 'scriptureChain' ||
+        block.type === 'scriptureThread' ||
+        block.type === 'scripture',
+    ),
+  )
+}
+
+/** Step where the reader can write a note, or null when this lesson has none. */
+export function findNotesStepIndex(steps: LessonStep[]): number | null {
+  const index = steps.findIndex(
+    (step) =>
+      step.type === 'reflect_journal' ||
+      (step.type === 'db_section' && step.sectionType === 'reflection'),
+  )
+  return index >= 0 ? index : null
+}
+
+/** Step that shows related passages, or null when this lesson has none. */
+export function findCrossReferenceStepIndex(steps: LessonStep[]): number | null {
+  const index = steps.findIndex((step) => {
+    if (step.type === 'scripture') {
+      if ((step.scriptureChain?.length ?? 0) > 0) return true
+      if (step.secondaryReference?.trim()) return true
+      if (blocksHaveCrossReferences(step.supplementBlocks)) return true
+    }
+    if (step.type === 'teaching_points' && blocksHaveCrossReferences(step.appendBlocks)) return true
+    if (step.type === 'study_insight' && blocksHaveCrossReferences(step.appendBlocks)) return true
+    if (step.type === 'db_section' && blocksHaveCrossReferences(step.structuredBlocks)) return true
+    if (step.type === 'db_section' && step.sectionType === 'scripture') return true
+    return false
+  })
+  return index >= 0 ? index : null
+}

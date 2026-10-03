@@ -1,5 +1,6 @@
 import type { LessonStep } from '@/lib/lesson-steps'
 import { ContentBlockRenderer, type ReflectionNotesContext } from '@/components/lessons/ContentBlockRenderer'
+import { ReflectionNotes } from '@/components/lessons/ReflectionNotes'
 import { normalizeLessonStep } from '@/lib/lessons/normalizeLessonStep'
 
 export interface LessonNoteContext {
@@ -72,6 +73,10 @@ export function LessonStepRenderer({
   const hClass = headingClass(step)
   const normalized = normalizeLessonStep(step, noteContext.stepIndex + 1)
 
+  const alreadyShowsNotes =
+    step.type === 'reflect_journal' ||
+    (step.type === 'db_section' && step.sectionType === 'reflection')
+
   const reflectionContext: ReflectionNotesContext = {
     storageKey: reflectionStorageKey,
     studySlug: noteContext.studySlug,
@@ -88,6 +93,21 @@ export function LessonStepRenderer({
       <div className="mt-6 md:mt-7">
         <ContentBlockRenderer blocks={normalized.blocks} reflectionContext={reflectionContext} />
       </div>
+      {alreadyShowsNotes ? null : (
+        <details className="mt-10 border-t border-zinc-200/80 pt-6">
+          <summary className="cursor-pointer text-sm font-medium text-zinc-800">Your notes</summary>
+          <div className="mt-4">
+            <ReflectionNotes
+              storageKey={reflectionStorageKey}
+              prompt="Keep a private note for this step."
+              studySlug={noteContext.studySlug}
+              lessonSlug={noteContext.lessonSlug}
+              stepNumber={noteContext.stepIndex}
+              userId={noteContext.userId}
+            />
+          </div>
+        </details>
+      )}
     </div>
   )
 }
