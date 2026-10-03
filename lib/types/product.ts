@@ -99,6 +99,11 @@ export interface Lesson {
    * UI shows a “coming soon” state instead of generic fallback content.
    */
   contentPending?: boolean
+  /**
+   * Catalog lists set this without downloading `reader_content`.
+   * True means the database has real reader JSON or non-shell section headings.
+   */
+  contentReady?: boolean
 }
 
 /** Structured block inside a lesson (public.lesson_sections). */

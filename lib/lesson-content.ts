@@ -1,3 +1,5 @@
+import 'server-only'
+
 /**
  * Rich lesson copy for the guided reader.
  * Production source of truth: `public.lessons.reader_content` (JSONB) loaded via catalog fetch.
@@ -62,14 +64,7 @@ export type StudyInsightVariant =
   | 'doctrine_clarity'
   | 'christ_connection'
 
-export const STUDY_INSIGHT_VARIANT_LABELS: Record<StudyInsightVariant, string> = {
-  prophecy_lens: 'Prophecy Lens',
-  word_insight: 'Word Insight',
-  historical_context: 'Historical Context',
-  scripture_connection: 'Scripture Connection',
-  doctrine_clarity: 'Doctrine Clarity',
-  christ_connection: 'Christ Connection',
-}
+export { STUDY_INSIGHT_VARIANT_LABELS, wordStudyToInsight } from '@/lib/lesson-reader-shared'
 
 /** Shown when the learner finishes the final lesson in a series (`nextLesson` is null). */
 export interface SeriesCompleteScreenCopy {
@@ -184,18 +179,6 @@ export interface LessonReaderContent {
   seriesCompleteScreen?: SeriesCompleteScreenCopy
   /** Optional quick review after Life Application (and Prayer when present). See `buildLessonSteps`. */
   lessonQuiz?: LessonQuizPayload
-}
-
-export function wordStudyToInsight(ws: NonNullable<LessonReaderContent['wordStudy']>): WordInsight {
-  return {
-    surface: ws.surface,
-    lemma: ws.lemma,
-    transliteration: ws.transliteration,
-    meaning: ws.meaning,
-    strongs: ws.strongs,
-    note: ws.note,
-    ...(ws.reference?.trim() ? { reference: ws.reference.trim() } : {}),
-  }
 }
 
 const libraryRaw: Record<string, LessonReaderContent> = {

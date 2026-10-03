@@ -2,10 +2,8 @@ import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
 import { MisunderstoodPassagesClient } from '@/components/misunderstood-passages/MisunderstoodPassagesClient'
 import { PageIntro } from '@/components/site/PageIntro'
-import {
-  getMisunderstoodPassagesWithThreads,
-  MISUNDERSTOOD_PASSAGES_STUDY_SLUG,
-} from '@/lib/misunderstood-passages'
+import { getMisunderstoodPassagesWithThreads } from '@/lib/misunderstood-passages-server'
+import { MISUNDERSTOOD_PASSAGES_STUDY_SLUG } from '@/lib/misunderstood-passages'
 
 export const metadata: Metadata = {
   title: 'Misunderstood Bible Passages | BibleStem',

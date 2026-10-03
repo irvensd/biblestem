@@ -4,17 +4,32 @@ import './globals.css'
 import { DemoAuthProvider } from '@/components/auth/DemoAuthProvider'
 import { SiteHeader } from '@/components/site/SiteHeader'
 import { SiteFooter } from '@/components/site/SiteFooter'
+import { getSiteUrl } from '@/lib/site-url'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 const lora = Lora({ subsets: ['latin'], variable: '--font-scripture' })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: 'BibleStem',
-  description: 'Deep Bible study made simple.',
+  description: 'Deep Bible study made simple. A free account is required to read lessons.',
   icons: {
     icon: [{ url: '/favicon.png?v=4', type: 'image/png' }],
     shortcut: '/favicon.png?v=4',
     apple: [{ url: '/favicon.png?v=4', type: 'image/png' }],
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'BibleStem',
+    title: 'BibleStem',
+    description: 'Deep Bible study made simple. A free account is required to read lessons.',
+    images: [{ url: '/logo.png', alt: 'BibleStem' }],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'BibleStem',
+    description: 'Deep Bible study made simple. A free account is required to read lessons.',
+    images: ['/logo.png'],
   },
 }
 

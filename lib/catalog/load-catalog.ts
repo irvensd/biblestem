@@ -1,6 +1,21 @@
+import 'server-only'
+
 import { cache } from 'react'
+import type { LoadedCatalog } from '@/lib/catalog/catalog-shared'
+import { publishCatalogSeries } from '@/lib/catalog/lesson-readiness'
 import { FOUNDATION_GUIDED_SLUG_ORDER } from '@/lib/foundation-path'
 import { DEEPER_MOCK_FIRST_SERIES_SLUGS } from '@/lib/deeper-lesson-shell'
+
+export type { CatalogSource, LoadedCatalog } from '@/lib/catalog/catalog-shared'
+export {
+  findLessonInCatalogFromCatalog,
+  getSeriesBySlugFromCatalog,
+  getSeriesForPathSlugFromCatalog,
+  getSeriesWithPathBySlugFromCatalog,
+  getStudyPathBySlugFromCatalog,
+  seriesCountForPathFromCatalog,
+  shouldShowCatalogFallbackNotice,
+} from '@/lib/catalog/catalog-shared'
 
 /** Deprecated catalog slugs replaced in mock (hide from Supabase when still present remotely). */
 const DEPRECATED_STUDY_SLUGS = new Set(['origin-of-evil'])
@@ -8,20 +23,7 @@ import { studyPaths, studySeriesCatalog } from '@/lib/product-mock'
 import { isSupabaseConfigured } from '@/lib/supabase/client'
 import { fetchCatalogFromSupabase } from '@/lib/supabase/fetch-catalog'
 import { TransientCatalogFetchError } from '@/lib/supabase/transient-errors'
-import type { Lesson, StudyPath, StudySeries, StudySeriesWithPath } from '@/lib/types/product'
-
-export type CatalogSource = 'supabase' | 'mock'
-
-export type LoadedCatalog = {
-  source: CatalogSource
-  paths: StudyPath[]
-  allSeries: StudySeries[]
-}
-
-/** True when Supabase is configured but the app is using the bundled mock catalog (offline / outage). */
-export function shouldShowCatalogFallbackNotice(catalog: LoadedCatalog): boolean {
-  return isSupabaseConfigured() && catalog.source === 'mock'
-}
+import type { StudyPath, StudySeries } from '@/lib/types/product'
 
 function cloneStudySeries(s: StudySeries): StudySeries {
   return {
@@ -131,9 +133,14 @@ async function fetchCatalogWithRetries(): Promise<{ paths: StudyPath[]; allSerie
  * on the same Node instance: retries transient Supabase errors, then serves last good snapshot
  * before falling back to mock + notice.
  */
+function finalizeCatalog(catalog: LoadedCatalog): LoadedCatalog {
+  const merged = catalog.source === 'supabase' ? supplementRemoteCatalogWithMock(catalog) : catalog
+  return { ...merged, allSeries: publishCatalogSeries(merged.allSeries) }
+}
+
 export const loadCatalog = cache(async (): Promise<LoadedCatalog> => {
   if (!isSupabaseConfigured()) {
-    return mockCatalog()
+    return finalizeCatalog(mockCatalog())
   }
 
   const now = Date.now()
@@ -143,13 +150,13 @@ export const loadCatalog = cache(async (): Promise<LoadedCatalog> => {
     isSupabaseCatalog(catalogMemoryCache.value) &&
     now - catalogMemoryCache.fetchedAt < CATALOG_FRESH_TTL_MS
   ) {
-    return supplementRemoteCatalogWithMock(catalogMemoryCache.value)
+    return catalogMemoryCache.value
   }
 
   try {
     const remote = await fetchCatalogWithRetries()
     if (remote && remote.paths.length > 0 && remote.allSeries.length > 0) {
-      const loaded = supplementRemoteCatalogWithMock({ source: 'supabase', ...remote })
+      const loaded = finalizeCatalog({ source: 'supabase', ...remote })
       catalogMemoryCache = { value: loaded, fetchedAt: now }
       return loaded
     }
@@ -169,54 +176,8 @@ export const loadCatalog = cache(async (): Promise<LoadedCatalog> => {
     console.warn(
       `[catalog] Serving stale Supabase catalog snapshot (age ${Math.round((now - catalogMemoryCache.fetchedAt) / 1000)}s) after fetch failure`,
     )
-    return supplementRemoteCatalogWithMock(catalogMemoryCache.value)
+    return catalogMemoryCache.value
   }
 
-  return mockCatalog()
+  return finalizeCatalog(mockCatalog())
 })
-
-export function getSeriesBySlugFromCatalog(catalog: LoadedCatalog, slug: string): StudySeries | undefined {
-  return catalog.allSeries.find((s) => s.slug === slug)
-}
-
-export function getStudyPathBySlugFromCatalog(catalog: LoadedCatalog, slug: string): StudyPath | undefined {
-  return catalog.paths.find((p) => p.slug === slug)
-}
-
-export function getSeriesWithPathBySlugFromCatalog(
-  catalog: LoadedCatalog,
-  slug: string,
-): StudySeriesWithPath | undefined {
-  const series = getSeriesBySlugFromCatalog(catalog, slug)
-  if (!series) return undefined
-  const studyPath = catalog.paths.find((p) => p.id === series.studyPathId)
-  if (!studyPath) return undefined
-  return { ...series, studyPath }
-}
-
-export function getSeriesForPathSlugFromCatalog(
-  catalog: LoadedCatalog,
-  pathSlug: string,
-): StudySeries[] {
-  const path = getStudyPathBySlugFromCatalog(catalog, pathSlug)
-  if (!path) return []
-  return catalog.allSeries
-    .filter((s) => s.studyPathId === path.id)
-    .sort((a, b) => a.sortOrder - b.sortOrder)
-}
-
-export function seriesCountForPathFromCatalog(catalog: LoadedCatalog, pathSlug: string): number {
-  return getSeriesForPathSlugFromCatalog(catalog, pathSlug).length
-}
-
-export function findLessonInCatalogFromCatalog(
-  catalog: LoadedCatalog,
-  seriesSlug: string,
-  lessonSlug: string,
-): { series: StudySeries; lesson: Lesson } | undefined {
-  const series = getSeriesBySlugFromCatalog(catalog, seriesSlug)
-  if (!series) return undefined
-  const lesson = series.lessons.find((l) => l.slug === lessonSlug)
-  if (!lesson) return undefined
-  return { series, lesson }
-}

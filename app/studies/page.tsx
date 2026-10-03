@@ -14,7 +14,9 @@ import { STUDY_TRACKS } from '@/lib/study-tracks'
 export const metadata: Metadata = {
   title: 'BibleStem Studies · Preview',
   description:
-    'Explore the study tracks available on BibleStem. Create a free account to save progress, take quizzes, and continue lessons.',
+    'Explore the study tracks available on BibleStem. A free account is required to read lessons. There is no paid tier.',
+  alternates: { canonical: '/studies' },
+  openGraph: { url: '/studies', images: [{ url: '/logo.png', alt: 'BibleStem' }] },
 }
 
 export default async function StudiesPreviewPage() {

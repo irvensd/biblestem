@@ -1,5 +1,6 @@
 import type { LessonContentBlock, StudyToolWordInsightFields } from '@/lib/lesson-content-blocks'
-import { wordStudyToInsight, type LessonReaderContent, type WordInsight } from '@/lib/lesson-content'
+import type { LessonReaderContent, WordInsight } from '@/lib/lesson-content'
+import { wordStudyToInsight } from '@/lib/lesson-reader-shared'
 
 /** Compact recap lines for the lesson completion screen (no learner-authored notes). */
 export interface WordInsightCompletionLine {

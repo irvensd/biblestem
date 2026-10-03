@@ -8,7 +8,9 @@ import { supportReportHref } from '@/lib/support/report-issue-href'
 export const metadata: Metadata = {
   title: 'Support BibleStem · BibleStem',
   description:
-    'BibleStem is free and donation-supported. Learn how you can support careful Bible study while online giving is being prepared.',
+    'A free account is required to read BibleStem lessons. There is no paid tier. Online giving is not available yet.',
+  alternates: { canonical: '/donate' },
+  openGraph: { url: '/donate', images: [{ url: '/logo.png', alt: 'BibleStem' }] },
 }
 
 const SECTION_GAP = 'mt-10 border-t border-zinc-200 pt-10 md:mt-11 md:pt-11'
@@ -36,7 +38,7 @@ const supportNowCards = [
 const impactCards = [
   {
     title: 'Keep BibleStem free',
-    description: 'The core study experience remains open without paywalls or locked content.',
+    description: 'Reading lessons requires a free account. There is no paid tier, and online giving is not available yet.',
   },
   {
     title: 'Develop new studies',
@@ -55,11 +57,11 @@ const impactCards = [
 const faq = [
   {
     q: 'Are donations required?',
-    a: 'No. BibleStem is free to use whether or not someone gives.',
+    a: 'No. Donations are not available yet, and they are not required to study.',
   },
   {
     q: 'Is BibleStem free?',
-    a: 'Yes. The full study experience is free. Donations will be optional once giving is available.',
+    a: 'Creating an account is free, and there is no paid tier. A free account is required to read lessons.',
   },
   {
     q: 'What will support fund?',
@@ -115,7 +117,7 @@ export default function DonatePage() {
           <PageIntro
             eyebrow="Support"
             title="Help keep deep Bible study free."
-            description="BibleStem is built to make structured, Scripture-first study accessible to everyone. Giving options are coming soon, but you can still support the work by studying, sharing, and helping improve the platform."
+            description="A free account is required to read lessons, and there is no paid tier. Giving options are coming soon. You can still support the work by studying, sharing, and helping improve the platform."
           />
         </div>
       </section>
@@ -126,7 +128,7 @@ export default function DonatePage() {
             <SupportCard
               eyebrow="Giving status"
               title="Online giving is coming soon."
-              description="Secure donation options are not active yet. BibleStem remains free to use while giving support is being prepared."
+              description="Secure donation options are not active yet. A free account is required to read lessons, and there is no paid tier."
               primaryCta="link"
               ctaHref="/study-library"
               ctaLabel="Start studying"

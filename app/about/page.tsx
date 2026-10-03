@@ -1,9 +1,18 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/Button'
 import { ContactEmailLink } from '@/components/site/ContactEmailLink'
 import { PageIntro } from '@/components/site/PageIntro'
 import { BIBLESTEM_THREADS_URL } from '@/lib/site-external-links'
+export const metadata: Metadata = {
+  title: 'About · BibleStem',
+  description:
+    'BibleStem is a Scripture-first study platform. A free account is required to read lessons. There is no paid tier.',
+  alternates: { canonical: '/about' },
+  openGraph: { url: '/about', images: [{ url: '/logo.png', alt: 'BibleStem' }] },
+}
+
 const SECTION_GAP = 'mt-10 border-t border-zinc-200 pt-10 md:mt-11 md:pt-11'
 
 const howItHelps = [
@@ -140,7 +149,7 @@ export default function AboutPage() {
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-600">
                 BibleStem begins with free Bible studies and grows through Scripture-centered resources, creative
-                projects, and apparel that helps keep studies free for everyone.
+                projects, and apparel. A free account is required to read lessons, and there is no paid tier.
               </p>
             </div>
 

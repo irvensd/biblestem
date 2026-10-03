@@ -1,11 +1,9 @@
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { SupportCard } from '@/components/SupportCard'
-import { HomeCatalogSections } from '@/components/home/HomeCatalogSections'
 import { HomeClosingCtaSection } from '@/components/home/HomeClosingCtaSection'
 import { HomeExploreStudiesButton } from '@/components/home/HomeExploreStudiesButton'
 import { HomeFoundationsPathButton } from '@/components/home/HomeFoundationsPathButton'
 import { HomeThreadsMissionSection } from '@/components/home/HomeThreadsMissionSection'
-import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
 
 const trustItems = [
   {
@@ -36,7 +34,7 @@ const trustItems = [
     ),
   },
   {
-    label: 'Always free',
+    label: 'Free account',
     icon: (
       <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
         <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8" />
@@ -147,11 +145,7 @@ function HeroProductVisual() {
   )
 }
 
-interface HomePageContentProps {
-  catalog: LoadedCatalog
-}
-
-export function HomePageContent({ catalog }: HomePageContentProps) {
+export function HomePageContent() {
   return (
     <>
       <section className="border-b border-zinc-200/80 bg-stone-50 pb-16 pt-16 md:pb-20 md:pt-20 lg:pb-24 lg:pt-24">
@@ -171,7 +165,7 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
               </h1>
 
               <p className="mt-6 max-w-md text-base leading-[1.65] text-zinc-700 md:text-[17px]">
-                Structured studies with Hebrew and Greek insights, guided paths, and room for reflection. Always free.
+                Structured studies with Hebrew and Greek insights, guided paths, and room for reflection.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -179,7 +173,7 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
                 <HomeExploreStudiesButton>Preview studies</HomeExploreStudiesButton>
               </div>
               <p className="mt-5 text-sm font-medium text-zinc-600">
-                100% free. Supported by generosity and BibleStem Threads.
+                A free account is required to read lessons. There is no paid tier.
               </p>
             </div>
 
@@ -238,13 +232,11 @@ export function HomePageContent({ catalog }: HomePageContentProps) {
 
       <HomeThreadsMissionSection />
 
-      <HomeCatalogSections catalog={catalog} />
-
       <section className="border-b border-zinc-200/80 bg-white py-10 md:py-12">
         <div className="container-shell">
           <SupportCard
-            title="Always free, supported by generosity."
-            description="BibleStem stays free through donations and BibleStem Threads apparel that helps fund the study platform."
+            title="Free to read with an account."
+            description="A free account is required to read lessons. There is no paid tier. Online giving is not available yet. BibleStem Threads is an optional apparel shop."
             primaryCta="link"
             ctaHref="/donate"
             ctaLabel="Support the ministry"

@@ -1,5 +1,6 @@
 import { LessonTextRenderer } from '@/components/lessons/LessonTextRenderer'
-import { STUDY_INSIGHT_VARIANT_LABELS, type StudyInsightVariant } from '@/lib/lesson-content'
+import type { StudyInsightVariant } from '@/lib/lesson-content'
+import { STUDY_INSIGHT_VARIANT_LABELS } from '@/lib/lesson-reader-shared'
 
 interface StudyInsightCardProps {
   title: string

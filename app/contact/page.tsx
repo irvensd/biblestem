@@ -9,6 +9,8 @@ import { supportReportHref } from '@/lib/support/report-issue-href'
 export const metadata: Metadata = {
   title: 'Contact · BibleStem',
   description: `Reach the BibleStem team by email at ${BIBLESTEM_CONTACT_EMAIL}.`,
+  alternates: { canonical: '/contact' },
+  openGraph: { url: '/contact', images: [{ url: '/logo.png', alt: 'BibleStem' }] },
 }
 
 const contactTopics = [
@@ -22,7 +24,7 @@ const contactTopics = [
   },
   {
     title: 'App issues',
-    body: 'Use Report an issue in Settings (or links on lessons) for bugs, typos, and broken content.',
+    body: 'Use Report an issue for bugs, typos, and broken content. You do not need an account.',
   },
   {
     title: 'Partnerships & giving',
@@ -67,8 +69,8 @@ export default function ContactPage() {
                 Found a bug or content problem?{' '}
                 <Link href={supportReportHref({ type: 'bug' })} className="font-medium text-blue-800 hover:text-blue-900">
                   Open the support form
-                </Link>{' '}
-                in Settings (prefills study and lesson context when linked from a lesson).
+                </Link>
+                . You do not need an account. Links from a lesson include the study and lesson name.
               </p>
             </section>
 

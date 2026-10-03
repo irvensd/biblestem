@@ -1,5 +1,5 @@
-import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
-import { getStudyPathBySlugFromCatalog } from '@/lib/catalog/load-catalog'
+import type { LoadedCatalog } from '@/lib/catalog/catalog-shared'
+import { getStudyPathBySlugFromCatalog } from '@/lib/catalog/catalog-shared'
 import type { Lesson, StudySeries } from '@/lib/types/product'
 import { lessonKey } from '@/lib/dashboard-local-progress'
 import type { LocalDashboardProgress } from '@/lib/dashboard-local-progress'

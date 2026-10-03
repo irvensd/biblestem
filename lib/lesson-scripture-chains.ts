@@ -1,5 +1,4 @@
 import type { LessonReaderContent } from '@/lib/lesson-content'
-import { getLessonReaderContent } from '@/lib/lesson-content'
 import type { LessonContentBlock, ScriptureChainVerse } from '@/lib/lesson-content-blocks'
 import type { Lesson, LessonSection } from '@/lib/types/product'
 
@@ -170,16 +169,15 @@ export function extractScriptureChainsFromLessonContent(
 }
 
 /**
- * Aggregates Scripture chains across all lessons in a study, using the same content resolution
- * as the lesson reader: `lesson.readerContent ?? getLessonReaderContent(lesson.slug)`.
+ * Aggregates Scripture chains already attached to `lesson.readerContent`.
  * Chains are deduplicated globally by reference sequence.
  */
 export function extractScriptureChainsFromStudy(study: { lessons: Lesson[] }): LessonScriptureChainRecap[] {
   const sorted = [...study.lessons].sort((a, b) => a.sortOrder - b.sortOrder)
   const raw: LessonScriptureChainRecap[] = []
   for (const lesson of sorted) {
-    const content = lesson.readerContent ?? getLessonReaderContent(lesson.slug)
-    raw.push(...extractScriptureChainsFromLessonContent(content, lesson.sections))
+    if (!lesson.readerContent) continue
+    raw.push(...extractScriptureChainsFromLessonContent(lesson.readerContent, lesson.sections))
   }
   return dedupeChains(raw)
 }

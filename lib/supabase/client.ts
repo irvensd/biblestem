@@ -1,3 +1,4 @@
+import { createBrowserClient } from '@supabase/ssr'
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
 /** True when URL + anon key are set (browser and server). */
@@ -36,8 +37,12 @@ export function resetSupabaseBrowserClient(): void {
  */
 export function getSupabaseBrowserClient(): SupabaseClient | null {
   if (!isSupabaseConfigured()) return null
+  if (typeof window === 'undefined') return null
   if (!browserSingleton) {
-    browserSingleton = createSupabaseBrowserClient()
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim()
+    if (!url || !key) return null
+    browserSingleton = createBrowserClient(url, key)
   }
   return browserSingleton
 }

@@ -98,6 +98,11 @@ export function SignInForm() {
             disabled={pending || !supabaseConfigured}
           />
         </div>
+        <div className="flex justify-end">
+          <Link href="/forgot-password" className="text-sm font-medium text-blue-800 hover:text-blue-900">
+            Forgot password?
+          </Link>
+        </div>
         <Button type="submit" className="w-full" disabled={pending || !supabaseConfigured}>
           {pending ? 'Signing in…' : 'Sign in'}
         </Button>

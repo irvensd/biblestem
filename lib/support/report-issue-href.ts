@@ -1,6 +1,6 @@
 /**
  * Builds `/support` URLs with query params for contextual bug/content/quiz reports.
- * `/support` redirects to `/settings` while preserving params for the support form.
+ * The support form is public. Signed-in visitors can also open it from Settings.
  */
 export function supportReportHref(params: Record<string, string | undefined | null>): string {
   const q = new URLSearchParams()

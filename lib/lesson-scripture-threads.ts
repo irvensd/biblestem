@@ -1,5 +1,4 @@
 import type { LessonReaderContent } from '@/lib/lesson-content'
-import { getLessonReaderContent } from '@/lib/lesson-content'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { Lesson, LessonSection } from '@/lib/types/product'
 import type { LessonScriptureChainRecap } from '@/lib/lesson-scripture-chains'
@@ -195,8 +194,8 @@ export function extractScriptureThreadsFromStudy(study: { lessons: Lesson[] }): 
   const sorted = [...study.lessons].sort((a, b) => a.sortOrder - b.sortOrder)
   const raw: LessonScriptureThreadRecap[] = []
   for (const lesson of sorted) {
-    const content = lesson.readerContent ?? getLessonReaderContent(lesson.slug)
-    raw.push(...extractScriptureThreadsFromLessonContent(content, lesson.sections))
+    if (!lesson.readerContent) continue
+    raw.push(...extractScriptureThreadsFromLessonContent(lesson.readerContent, lesson.sections))
   }
   return dedupeThreads(raw)
 }

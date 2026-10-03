@@ -1,5 +1,3 @@
-import { getLessonReaderContent } from '@/lib/lesson-content'
-import { extractPrimaryScriptureThreadForCompletion } from '@/lib/lesson-scripture-threads'
 import type { LessonScriptureThreadRecap } from '@/lib/scripture-thread-types'
 
 /** Curated Misunderstood Passages — keep in sync with catalog lesson slugs under `studySlug`. */
@@ -110,22 +108,7 @@ export const MISUNDERSTOOD_PASSAGES: MisunderstoodPassage[] = [
 ]
 
 export function findMisunderstoodPassage(studySlug: string, lessonSlug: string): MisunderstoodPassage | undefined {
-  return getMisunderstoodPassagesWithThreads().find(
-    (p) => p.studySlug === studySlug && p.lessonSlug === lessonSlug,
-  )
-}
-
-/** Attach Scripture Thread previews from real lesson reader content. */
-export function getMisunderstoodPassagesWithThreads(): MisunderstoodPassage[] {
-  return MISUNDERSTOOD_PASSAGES.map((p) => {
-    try {
-      const content = getLessonReaderContent(p.lessonSlug)
-      const thread = extractPrimaryScriptureThreadForCompletion(content)
-      return { ...p, scriptureThread: thread }
-    } catch {
-      return { ...p, scriptureThread: null }
-    }
-  })
+  return MISUNDERSTOOD_PASSAGES.find((p) => p.studySlug === studySlug && p.lessonSlug === lessonSlug)
 }
 
 export function buildMisunderstoodPassageCopyText(p: MisunderstoodPassage): string {

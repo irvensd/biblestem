@@ -20,6 +20,7 @@ export function GetStartedPageClient({ title = 'Get started' }: GetStartedPageCl
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
 
@@ -42,6 +43,10 @@ export function GetStartedPageClient({ title = 'Get started' }: GetStartedPageCl
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError(null)
+    if (!acceptedTerms) {
+      setError('Confirm that you are at least 13 and that you agree to the Terms and Privacy Policy.')
+      return
+    }
     setPending(true)
     try {
       const result = await register(email, password, fullName)
@@ -152,7 +157,29 @@ export function GetStartedPageClient({ title = 'Get started' }: GetStartedPageCl
                   disabled={pending || !supabaseConfigured}
                 />
               </div>
-              <Button type="submit" className="w-full" disabled={pending || !supabaseConfigured}>
+              <label className="flex items-start gap-3 text-sm leading-relaxed text-zinc-600">
+                <input
+                  type="checkbox"
+                  name="age-and-terms"
+                  className="mt-1 h-4 w-4 shrink-0 rounded border-zinc-300 text-blue-800 focus:ring-blue-800"
+                  checked={acceptedTerms}
+                  onChange={(e) => setAcceptedTerms(e.target.checked)}
+                  required
+                  disabled={pending || !supabaseConfigured}
+                />
+                <span>
+                  I am at least 13 years old and I agree to the{' '}
+                  <Link href="/terms" className="font-medium text-blue-800 hover:text-blue-900">
+                    Terms
+                  </Link>{' '}
+                  and{' '}
+                  <Link href="/privacy" className="font-medium text-blue-800 hover:text-blue-900">
+                    Privacy Policy
+                  </Link>
+                  .
+                </span>
+              </label>
+              <Button type="submit" className="w-full" disabled={pending || !supabaseConfigured || !acceptedTerms}>
                 {pending ? 'Creating…' : 'Create account'}
               </Button>
             </form>

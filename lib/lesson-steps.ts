@@ -1,10 +1,6 @@
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
-import {
-  type LessonReaderContent,
-  type StudyInsightVariant,
-  type WordInsight,
-  wordStudyToInsight,
-} from '@/lib/lesson-content'
+import type { LessonReaderContent, StudyInsightVariant, WordInsight } from '@/lib/lesson-content'
+import { wordStudyToInsight } from '@/lib/lesson-reader-shared'
 import type { LessonQuizPayload } from '@/lib/lesson-quiz-types'
 import type { LessonSection, LessonSectionType } from '@/lib/types/product'
 import {

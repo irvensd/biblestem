@@ -1,21 +1,24 @@
 import type { Metadata } from 'next'
+import { notFound, redirect } from 'next/navigation'
 import { StudyOverviewShell } from '@/components/studies/StudyOverviewShell'
 import { StudyEmptyState } from '@/components/studies/StudyEmptyState'
-import { StudyNotFound } from '@/components/studies/StudyNotFound'
+import { signInRedirectUrl } from '@/lib/auth/auth-redirect'
 import {
   getSeriesWithPathBySlugFromCatalog,
   loadCatalog,
   shouldShowCatalogFallbackNotice,
 } from '@/lib/catalog/load-catalog'
+import { getServerAuthUser } from '@/lib/supabase/server'
 import { buildStudyOverviewStatic } from '@/lib/studies/derive-overview'
 import { getRelatedStudies } from '@/lib/studies/related'
+import { scriptureThreadsForSeries } from '@/lib/studies/series-scripture-threads'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const catalog = await loadCatalog()
   const data = getSeriesWithPathBySlugFromCatalog(catalog, slug)
   if (!data || data.isPublished === false) {
-    return { title: 'Study not found · BibleStem' }
+    return { title: 'Study not found · BibleStem', robots: { index: false, follow: false } }
   }
   return {
     title: `${data.title} · BibleStem`,
@@ -28,9 +31,10 @@ export default async function StudySeriesOverviewPage({ params }: { params: Prom
   const catalog = await loadCatalog()
   const data = getSeriesWithPathBySlugFromCatalog(catalog, slug)
 
-  if (!data || data.isPublished === false) {
-    return <StudyNotFound />
-  }
+  if (!data || data.isPublished === false) notFound()
+
+  const user = await getServerAuthUser()
+  if (!user) redirect(signInRedirectUrl(`/study-library/${slug}`))
 
   if (data.lessons.length === 0) {
     return <StudyEmptyState studyTitle={data.title} />
@@ -38,11 +42,13 @@ export default async function StudySeriesOverviewPage({ params }: { params: Prom
 
   const overview = buildStudyOverviewStatic(data)
   const relatedStudies = getRelatedStudies(catalog, slug, 3)
+  const scriptureThreads = await scriptureThreadsForSeries(data)
 
   return (
     <StudyOverviewShell
       overview={overview}
       studySeries={data}
+      scriptureThreads={scriptureThreads}
       relatedStudies={relatedStudies}
       studyPaths={catalog.paths}
       showCatalogFallback={shouldShowCatalogFallbackNotice(catalog)}

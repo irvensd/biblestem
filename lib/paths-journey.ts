@@ -1,5 +1,5 @@
-import { getSeriesForPathSlugFromCatalog } from '@/lib/catalog/load-catalog'
-import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
+import { getSeriesForPathSlugFromCatalog } from '@/lib/catalog/catalog-shared'
+import type { LoadedCatalog } from '@/lib/catalog/catalog-shared'
 import type { StudyPath, StudySeries } from '@/lib/types/product'
 
 /** Fixed order for the Learning Paths roadmap (no standalone “State of the Dead” path). */

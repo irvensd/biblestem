@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import {
   Suspense,
@@ -255,7 +256,12 @@ function SupportSection({ openNonce }: { openNonce: number }) {
       ) : (
         <div className="min-w-0 space-y-4">
           <p className="text-sm leading-relaxed text-zinc-600">
-            {collapsedDescription} Your browser details are included to help reproduce issues.
+            {collapsedDescription} Your browser details are included to help reproduce issues. The same form is
+            available without signing in at{' '}
+            <Link href="/support" className="font-medium text-blue-800 hover:text-blue-900">
+              Report an issue
+            </Link>
+            .
           </p>
           <Suspense fallback={<SupportFormSkeleton embedded />}>
             <SupportRequestForm variant="embedded" onDismiss={() => setOpen(false)} />

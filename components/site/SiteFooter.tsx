@@ -9,6 +9,8 @@ const ministryLinks = [
   { href: '/contact', label: 'Contact' },
   { href: BIBLESTEM_THREADS_URL, label: 'BibleStem Threads', external: true },
   { href: '/donate', label: 'Donate' },
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/terms', label: 'Terms' },
 ]
 
 export function SiteFooter() {
@@ -30,7 +32,7 @@ export function SiteFooter() {
             <span className="text-base font-semibold text-zinc-900">BibleStem</span>
           </Link>
           <p className="mt-3 max-w-sm text-sm leading-6 text-zinc-600">
-            Structured studies for deep, Scripture-first learning. Always free and donation-supported.
+            Structured studies for deep, Scripture-first learning. A free account is required to read lessons. There is no paid tier.
           </p>
         </div>
         <div>
@@ -82,8 +84,14 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-zinc-200">
-        <div className="mx-auto max-w-7xl px-6 py-5 text-sm text-zinc-500 md:px-8 lg:px-10">
-          © {new Date().getFullYear()} BibleStem. Deep Bible study made simple.
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-6 py-5 text-sm text-zinc-500 md:px-8 lg:px-10">
+          <span>© {new Date().getFullYear()} BibleStem. Deep Bible study made simple.</span>
+          <Link href="/privacy" className="hover:text-zinc-900">
+            Privacy
+          </Link>
+          <Link href="/terms" className="hover:text-zinc-900">
+            Terms
+          </Link>
         </div>
       </div>
     </footer>

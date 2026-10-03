@@ -1,5 +1,5 @@
-import type { Lesson, LessonSection, LessonSectionType, StudyPath, StudySeries } from '@/lib/types/product'
-import { isDraftShellReaderContent, parseLessonReaderContent } from '@/lib/lesson-content'
+import type { SupabaseClient } from '@supabase/supabase-js'
+import type { Lesson, StudyPath, StudySeries } from '@/lib/types/product'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 import { isTransientNetworkError, TransientCatalogFetchError } from '@/lib/supabase/transient-errors'
 
@@ -45,24 +45,17 @@ type LessonRow = {
   scripture: string
   sort_order: number
   created_at?: string
-  /** Present after migration `003_lessons_reader_content.sql` (or fresh `001` with column). */
-  reader_content?: unknown | null
+  /** From `lesson_catalog.content_ready`. True when reader JSON is real, not a draft shell. */
+  content_ready?: boolean | null
 }
 
-type SectionRow = {
+type SectionHeadingRow = {
   id: string
   lesson_id: string
-  sort_order: number
   heading: string
-  body: string
-  section_type: string
 }
 
-const sectionTypes: LessonSectionType[] = ['scripture', 'teaching', 'reflection', 'word_study', 'other']
-
-function asSectionType(raw: string): LessonSectionType {
-  return (sectionTypes.includes(raw as LessonSectionType) ? raw : 'other') as LessonSectionType
-}
+const SHELL_SECTION_HEADING = 'Lesson content coming soon'
 
 function logSupabaseFetchIssue(scope: string, message: string): void {
   const isFetchFailure = message.toLowerCase().includes('fetch failed')
@@ -91,20 +84,8 @@ function mapPath(row: PathRow): StudyPath {
   }
 }
 
-function mapSection(row: SectionRow): LessonSection {
-  return {
-    id: row.id,
-    lessonId: row.lesson_id,
-    sortOrder: row.sort_order,
-    heading: row.heading,
-    body: row.body,
-    sectionType: asSectionType(row.section_type),
-  }
-}
-
-function mapLesson(row: LessonRow, sections: LessonSection[]): Lesson {
-  const contentPending = isDraftShellReaderContent(row.reader_content)
-  const readerContent = contentPending ? undefined : (parseLessonReaderContent(row.reader_content) ?? undefined)
+function mapLesson(row: LessonRow, hasRealSection: boolean): Lesson {
+  const contentReady = row.content_ready === true || hasRealSection
   return {
     id: row.id,
     slug: row.slug,
@@ -115,9 +96,8 @@ function mapLesson(row: LessonRow, sections: LessonSection[]): Lesson {
     scripture: row.scripture,
     sortOrder: row.sort_order,
     createdAt: row.created_at,
-    sections,
-    readerContent,
-    ...(contentPending ? { contentPending: true as const } : {}),
+    sections: [],
+    ...(contentReady ? { contentReady: true as const } : { contentPending: true as const }),
   }
 }
 
@@ -153,7 +133,35 @@ function mapSeries(row: SeriesRow, lessons: Lesson[]): StudySeries {
   }
 }
 
-/** Load paths, series, lessons, and sections from Supabase (schema `001_initial_schema.sql`). */
+async function fetchLessonRows(supabase: SupabaseClient, seriesIds: string[]): Promise<LessonRow[] | null> {
+  const catalog = await supabase
+    .from('lesson_catalog')
+    .select(
+      'id, study_series_id, slug, title, summary, duration_minutes, scripture, sort_order, created_at, content_ready',
+    )
+    .in('study_series_id', seriesIds)
+    .order('sort_order', { ascending: true })
+
+  if (!catalog.error) return (catalog.data ?? []) as LessonRow[]
+
+  logSupabaseFetchIssue('lesson_catalog', catalog.error.message)
+  throwIfTransient('lesson_catalog', catalog.error)
+
+  const fallback = await supabase
+    .from('lessons')
+    .select('id, study_series_id, slug, title, summary, duration_minutes, scripture, sort_order, created_at')
+    .in('study_series_id', seriesIds)
+    .order('sort_order', { ascending: true })
+
+  if (fallback.error) {
+    logSupabaseFetchIssue('lessons', fallback.error.message)
+    throwIfTransient('lessons', fallback.error)
+    return null
+  }
+  return (fallback.data ?? []) as LessonRow[]
+}
+
+/** Load paths, series, and lesson metadata from Supabase. Reader text is not included. */
 export async function fetchCatalogFromSupabase(): Promise<{
   paths: StudyPath[]
   allSeries: StudySeries[]
@@ -191,48 +199,30 @@ export async function fetchCatalogFromSupabase(): Promise<{
   }
 
   const seriesIds = (seriesRows as SeriesRow[]).map((s) => s.id)
-
-  // Use `*` so databases that have not yet run `003_lessons_reader_content.sql` do not error
-  // (explicit `reader_content` in the select list fails if the column does not exist).
-  const { data: lessonRows, error: lessonErr } = await supabase
-    .from('lessons')
-    .select('*')
-    .in('study_series_id', seriesIds)
-    .order('sort_order', { ascending: true })
-
-  if (lessonErr) {
-    logSupabaseFetchIssue('lessons', lessonErr.message)
-    throwIfTransient('lessons', lessonErr)
-    return null
-  }
-
-  const lessonsTyped = (lessonRows ?? []) as LessonRow[]
+  const lessonsTyped = await fetchLessonRows(supabase, seriesIds)
+  if (!lessonsTyped) return null
   const lessonIds = lessonsTyped.map((l) => l.id)
+  const lessonsWithRealSections = new Set<string>()
 
-  let sectionsByLesson = new Map<string, LessonSection[]>()
   if (lessonIds.length > 0) {
-    const { data: sectionRows, error: secErr } = await supabase
-      .from('lesson_sections')
-      .select('id, lesson_id, sort_order, heading, body, section_type')
+    const { data: headingRows, error: secErr } = await supabase
+      .from('lesson_section_headings')
+      .select('id, lesson_id, heading')
       .in('lesson_id', lessonIds)
-      .order('sort_order', { ascending: true })
 
     if (secErr) {
-      logSupabaseFetchIssue('lesson_sections', secErr.message)
-      throwIfTransient('lesson_sections', secErr)
-    } else if (sectionRows) {
-      for (const row of sectionRows as SectionRow[]) {
-        const list = sectionsByLesson.get(row.lesson_id) ?? []
-        list.push(mapSection(row))
-        sectionsByLesson.set(row.lesson_id, list)
+      logSupabaseFetchIssue('lesson_section_headings', secErr.message)
+      throwIfTransient('lesson_section_headings', secErr)
+    } else if (headingRows) {
+      for (const row of headingRows as SectionHeadingRow[]) {
+        if (row.heading.trim() !== SHELL_SECTION_HEADING) lessonsWithRealSections.add(row.lesson_id)
       }
     }
   }
 
   const lessonsBySeries = new Map<string, Lesson[]>()
   for (const lr of lessonsTyped) {
-    const secs = sectionsByLesson.get(lr.id) ?? []
-    const lesson = mapLesson(lr, secs)
+    const lesson = mapLesson(lr, lessonsWithRealSections.has(lr.id))
     const list = lessonsBySeries.get(lr.study_series_id) ?? []
     list.push(lesson)
     lessonsBySeries.set(lr.study_series_id, list)

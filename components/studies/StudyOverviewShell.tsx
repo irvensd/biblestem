@@ -21,8 +21,8 @@ import {
   primaryCtaHref,
   primaryCtaLabel,
 } from '@/lib/studies/progress'
-import { extractScriptureThreadsFromStudy } from '@/lib/lesson-scripture-threads'
-import type { CatalogSource } from '@/lib/catalog/load-catalog'
+import type { CatalogSource } from '@/lib/catalog/catalog-shared'
+import type { LessonScriptureThreadRecap } from '@/lib/scripture-thread-types'
 import type { StudyOverviewStatic } from '@/lib/studies/types'
 import type { StudyPath, StudySeries, StudySeriesWithPath } from '@/lib/types/product'
 import { ScriptureThread } from '@/components/lessons/ScriptureThread'
@@ -30,8 +30,9 @@ import { REPORT_ISSUE_LINK_CLASSNAME, supportReportHref } from '@/lib/support/re
 
 interface StudyOverviewShellProps {
   overview: StudyOverviewStatic
-  /** Full catalog series (lessons with reader_content / sections) for Scripture chain aggregation when study is complete. */
+  /** Catalog series metadata. Lesson bodies are not included. */
   studySeries?: StudySeriesWithPath
+  scriptureThreads?: LessonScriptureThreadRecap[]
   relatedStudies: StudySeries[]
   studyPaths: StudyPath[]
   showCatalogFallback: boolean
@@ -54,6 +55,7 @@ function currentLessonTitleFromProgress(
 export function StudyOverviewShell({
   overview,
   studySeries,
+  scriptureThreads = [],
   relatedStudies,
   studyPaths,
   showCatalogFallback,
@@ -77,10 +79,7 @@ export function StudyOverviewShell({
     [overview.lessons, overview.seriesSlug, progress],
   )
 
-  const studyScriptureThreads = useMemo(() => {
-    if (!studySeries?.lessons?.length) return []
-    return extractScriptureThreadsFromStudy(studySeries)
-  }, [studySeries])
+  const studyScriptureThreads = scriptureThreads
 
   const primaryAction = useMemo(
     () => getPrimaryAction(overview.seriesSlug, overview.lessons, progress),
