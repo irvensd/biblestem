@@ -1,3 +1,4 @@
+import type { GuidedReflectionPrompts } from '@/lib/guided-reflection'
 import type { StudyInsightVariant, WordInsight } from '@/lib/lesson-content'
 import type { CreationRestPatternStageData } from '@/lib/creation-rest-pattern-stages'
 import type { GivingCirclePatternStageData } from '@/lib/giving-circle-pattern-stages'
@@ -84,10 +85,16 @@ export type StudyToolWordInsightFields = {
   reference: string
   shortExplanation: string
   strongsNumber?: string
+  /** Other passages already named for this word. Omitted when the lesson does not list any. */
+  relatedReferences?: string[]
 }
 
 export type ScriptureChainVerse = {
   reference: string
+  /** Optional heading already authored for this passage. */
+  title?: string
+  /** Filled from scripture already quoted in the lesson when the reference matches. */
+  verseText?: string
   shortNote?: string
 }
 
@@ -198,8 +205,18 @@ export type LessonContentBlock =
       relatedLabel?: string
     }
   | { type: 'scriptureChain'; title?: string; verses: ScriptureChainVerse[] }
-  | { type: 'scriptureChain'; title?: string; references: { reference: string }[] }
-  | { type: 'reflection'; prompt: string; placeholder?: string }
+  | {
+      type: 'scriptureChain'
+      title?: string
+      references: { reference: string; title?: string; verseText?: string; shortNote?: string }[]
+    }
+  | {
+      type: 'reflection'
+      prompt: string
+      placeholder?: string
+      /** Passage-specific Observe, Interpret, and Apply prompts. Ignored unless all three have text. */
+      guidedPrompts?: GuidedReflectionPrompts
+    }
   | { type: 'lifeApplication'; text: string }
   | { type: 'prayer'; text: string }
   | {

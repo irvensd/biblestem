@@ -53,6 +53,8 @@ export interface WordInsight {
   language?: string
   /** Optional context line on the full Word Insight card. */
   reference?: string
+  /** Other passages already named for this word. Omitted when the lesson does not list any. */
+  relatedReferences?: string[]
 }
 
 /** Study Insight card subtype (uppercase label in UI). */
@@ -103,6 +105,8 @@ export interface LessonReaderContent {
     note: string
     /** Shown on the Word Insight card (e.g. key verse). */
     reference?: string
+    /** Other passages already named for this word. */
+    relatedReferences?: string[]
   }
   /**
    * Multiple Word Insight cards on the Word Insight step. When set, this list drives that step
@@ -169,6 +173,16 @@ export interface LessonReaderContent {
   /** Optional structured blocks rendered after the Study Insight card on that step (when `studyInsight` is set). */
   studyInsightBlocks?: LessonContentBlock[]
   reflectPrompt: string
+  /**
+   * Optional passage-specific Observe, Interpret, and Apply prompts.
+   * Used only when all three contain text. Otherwise the reflection step
+   * asks the standard method questions and still keeps the freeform note.
+   */
+  guidedReflection?: {
+    observe: string
+    interpret: string
+    apply: string
+  }
   lifeApplication: string
   prayer: string
   /** Shown on the completion card under “Lesson complete”. */
@@ -5743,7 +5757,17 @@ function parseWordInsight(raw: unknown): WordInsight | null {
   if (typeof o.explanation === 'string') insight.explanation = o.explanation
   if (typeof o.language === 'string') insight.language = o.language
   if (typeof o.reference === 'string') insight.reference = o.reference
+  const related = parseStringList(o.relatedReferences)
+  if (related) insight.relatedReferences = related
   return insight
+}
+
+function parseStringList(raw: unknown): string[] | undefined {
+  if (!Array.isArray(raw)) return undefined
+  const list = raw
+    .filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
+    .map((item) => item.trim())
+  return list.length ? list : undefined
 }
 
 const STUDY_INSIGHT_VARIANTS = new Set<StudyInsightVariant>([
@@ -5904,6 +5928,8 @@ export function parseLessonReaderContent(raw: unknown): LessonReaderContent | nu
     if (typeof w.reference === 'string' && w.reference.trim()) {
       wordStudy.reference = w.reference.trim()
     }
+    const related = parseStringList(w.relatedReferences)
+    if (related) wordStudy.relatedReferences = related
   }
 
   const out: LessonReaderContent = {

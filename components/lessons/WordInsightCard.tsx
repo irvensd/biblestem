@@ -23,7 +23,9 @@ export function WordInsightCard({
   showProductLabel = true,
   className = '',
 }: WordInsightCardProps) {
-  const explanation = insight.explanation?.trim() || insight.note?.trim() || ''
+  const bridge = insight.explanation?.trim() ?? ''
+  const note = insight.note?.trim() ?? ''
+  const explanation = bridge && note && bridge !== note ? `${bridge}\n\n${note}` : bridge || note
   return (
     <WordInsightPanel
       language={inferLanguage(insight)}
@@ -33,6 +35,7 @@ export function WordInsightCard({
       reference={insight.reference?.trim() ?? ''}
       shortExplanation={explanation}
       strongsNumber={insight.strongs?.trim() || undefined}
+      relatedReferences={insight.relatedReferences}
       showLabel={showProductLabel}
       className={className}
     />

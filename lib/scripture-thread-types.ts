@@ -1,7 +1,9 @@
 /** One passage in a Scripture Thread sequence. */
 export type ScriptureThreadReference = {
   reference: string
-  /** Shown in an expandable panel when present. */
+  /** Optional heading already authored for this passage. Omitted when absent. */
+  title?: string
+  /** Shown when the lesson already includes this passage's text. */
   verseText?: string
   shortNote?: string
 }

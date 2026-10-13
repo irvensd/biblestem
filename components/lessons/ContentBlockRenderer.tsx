@@ -247,6 +247,8 @@ function renderBlock(block: LessonContentBlock, reflectionContext?: ReflectionNo
             stepNumber={reflectionContext.stepNumber}
             userId={reflectionContext.userId}
             legacyMigrationKey={reflectionContext.legacyMigrationKey}
+            allowGuided
+            guidedPrompts={block.guidedPrompts}
           />
         )
       }

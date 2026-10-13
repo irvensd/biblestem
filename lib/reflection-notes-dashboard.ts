@@ -7,6 +7,7 @@
 
 import type { LoadedCatalog } from '@/lib/catalog/load-catalog'
 import type { DashboardNote } from '@/lib/dashboard-mock-data'
+import { reflectionNotePlainText } from '@/lib/guided-reflection'
 import { lessonNoteStorageKey } from '@/lib/lesson-notes'
 import { fetchRecentLessonNotesRemote, type RecentLessonNoteRow } from '@/lib/supabase/lesson-notes'
 import type { Lesson, StudySeries } from '@/lib/types/product'
@@ -92,7 +93,7 @@ export function collectLocalReflectionNotes(catalog: LoadedCatalog): ReflectionN
           stepId: String(parsed.stepNumber),
           stepLabel: 'Reflect',
           prompt: '',
-          noteBody: raw,
+          noteBody: reflectionNotePlainText(raw).trim(),
           selectedTags: [],
           createdAt: null,
           updatedAt: null,
@@ -131,7 +132,7 @@ export function collectLocalReflectionNotes(catalog: LoadedCatalog): ReflectionN
           stepId: '0',
           stepLabel: 'Reflect',
           prompt: '',
-          noteBody: raw,
+          noteBody: reflectionNotePlainText(raw).trim(),
           selectedTags: [],
           createdAt: null,
           updatedAt: null,
@@ -189,7 +190,7 @@ function remoteRowsToDisplay(catalog: LoadedCatalog, rows: RecentLessonNoteRow[]
         stepId: String(r.step_number),
         stepLabel: 'Reflect',
         prompt: '',
-        noteBody: r.content.trim(),
+        noteBody: reflectionNotePlainText(r.content).trim(),
         selectedTags: [],
         createdAt: r.created_at,
         updatedAt: r.updated_at,

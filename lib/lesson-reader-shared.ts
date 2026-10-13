@@ -17,6 +17,7 @@ type WordStudyFields = {
   strongs: string
   note: string
   reference?: string
+  relatedReferences?: string[]
 }
 
 export function wordStudyToInsight(ws: WordStudyFields) {
@@ -28,5 +29,6 @@ export function wordStudyToInsight(ws: WordStudyFields) {
     strongs: ws.strongs,
     note: ws.note,
     ...(ws.reference?.trim() ? { reference: ws.reference.trim() } : {}),
+    ...(ws.relatedReferences?.length ? { relatedReferences: ws.relatedReferences } : {}),
   }
 }

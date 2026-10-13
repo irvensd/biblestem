@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import type { ScriptureThreadData, ScriptureThreadReference } from '@/lib/scripture-thread-types'
+import { ScriptureChainExplorer } from '@/components/lessons/ScriptureChainExplorer'
 import { READER_FOCUS_RING } from '@/components/lessons/lesson-reader-focus'
 
 export type { ScriptureThreadReference, ScriptureThreadData }
@@ -137,39 +138,7 @@ export function ScriptureThread({
       </div>
 
       <div className={bodyPad}>
-        {/* Desktop: horizontal flow with connectors */}
-        <div className="hidden min-w-0 md:block">
-          <div className="flex flex-wrap items-stretch gap-x-2 gap-y-2">
-            {list.map((r, i) => (
-              <div key={`${r.reference}-d-${i}`} className="flex min-w-0 max-w-full items-center gap-2">
-                {i > 0 ? (
-                  <span className="shrink-0 text-zinc-300" aria-hidden>
-                    →
-                  </span>
-                ) : null}
-                <span className="inline-flex min-w-0 max-w-full break-words rounded-md border border-zinc-200/90 bg-stone-50/80 px-2.5 py-1.5 text-sm font-medium text-zinc-900 sm:max-w-[14rem]">
-                  {r.reference}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile + expandable verse text */}
-        <ul className="mt-0 flex flex-col gap-2 md:mt-3 md:hidden">
-          {list.map((r, i) => (
-            <ReferenceRow key={`${r.reference}-m-${i}`} item={r} index={i} />
-          ))}
-        </ul>
-
-        {/* Desktop expandable verses when any verse text exists */}
-        {list.some((r) => r.verseText?.trim()) ? (
-          <ul className="mt-4 hidden flex-col gap-2 md:flex">
-            {list.map((r, i) => (
-              <ReferenceRow key={`${r.reference}-v-${i}`} item={r} index={i} />
-            ))}
-          </ul>
-        ) : null}
+        {completionMode ? <CompletionPassageList list={list} /> : <ScriptureChainExplorer references={list} />}
 
         {takeaway?.trim() ? (
           <p className="mt-4 border-l-2 border-blue-800/40 pl-3 text-sm leading-relaxed break-words text-zinc-700">
@@ -187,5 +156,41 @@ export function ScriptureThread({
         ) : null}
       </div>
     </div>
+  )
+}
+
+/** Static recap used on the lesson completion screen. */
+function CompletionPassageList({ list }: { list: ScriptureThreadReference[] }) {
+  return (
+    <>
+      <div className="hidden min-w-0 md:block">
+        <div className="flex flex-wrap items-stretch gap-x-2 gap-y-2">
+          {list.map((r, i) => (
+            <div key={`${r.reference}-d-${i}`} className="flex min-w-0 max-w-full items-center gap-2">
+              {i > 0 ? (
+                <span className="shrink-0 text-zinc-300" aria-hidden>
+                  →
+                </span>
+              ) : null}
+              <span className="inline-flex min-w-0 max-w-full break-words rounded-md border border-zinc-200/90 bg-stone-50/80 px-2.5 py-1.5 text-sm font-medium text-zinc-900 sm:max-w-[14rem]">
+                {r.reference}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <ul className="mt-0 flex flex-col gap-2 md:mt-3 md:hidden">
+        {list.map((r, i) => (
+          <ReferenceRow key={`${r.reference}-m-${i}`} item={r} index={i} />
+        ))}
+      </ul>
+      {list.some((r) => r.verseText?.trim()) ? (
+        <ul className="mt-4 hidden flex-col gap-2 md:flex">
+          {list.map((r, i) => (
+            <ReferenceRow key={`${r.reference}-v-${i}`} item={r} index={i} />
+          ))}
+        </ul>
+      ) : null}
+    </>
   )
 }

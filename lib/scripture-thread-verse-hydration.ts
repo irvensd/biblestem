@@ -62,14 +62,38 @@ function hydrateThreadBlock(
   }
 }
 
+function withMatchedVerse<T extends { reference: string; verseText?: string }>(
+  item: T,
+  quotes: Map<string, string>,
+): T {
+  if (item.verseText?.trim()) return item
+  const verseText = lookupQuote(quotes, item.reference)
+  return verseText ? { ...item, verseText } : item
+}
+
+function hydrateChainBlock(
+  block: Extract<LessonContentBlock, { type: 'scriptureChain' }>,
+  quotes: Map<string, string>,
+): Extract<LessonContentBlock, { type: 'scriptureChain' }> {
+  if ('verses' in block && Array.isArray(block.verses)) {
+    return { ...block, verses: block.verses.map((verse) => withMatchedVerse(verse, quotes)) }
+  }
+  if ('references' in block && Array.isArray(block.references)) {
+    return { ...block, references: block.references.map((item) => withMatchedVerse(item, quotes)) }
+  }
+  return block
+}
+
 function hydrateBlocks(
   blocks: LessonContentBlock[] | undefined,
   quotes: Map<string, string>,
 ): LessonContentBlock[] | undefined {
   if (!blocks?.length) return blocks
-  return blocks.map((block) =>
-    block.type === 'scriptureThread' ? hydrateThreadBlock(block, quotes) : block,
-  )
+  return blocks.map((block) => {
+    if (block.type === 'scriptureThread') return hydrateThreadBlock(block, quotes)
+    if (block.type === 'scriptureChain') return hydrateChainBlock(block, quotes)
+    return block
+  })
 }
 
 /** Fills `verseText` on thread references from scripture already in the lesson (primary, secondary, supplement). */

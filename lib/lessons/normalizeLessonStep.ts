@@ -117,6 +117,7 @@ function lessonStepToBlocks(step: LessonStep): LessonContentBlock[] {
           type: 'reflection',
           prompt: step.prompt,
           placeholder: step.reflectPlaceholder,
+          ...(step.guidedPrompts ? { guidedPrompts: step.guidedPrompts } : {}),
         },
       ]
     case 'life_application':

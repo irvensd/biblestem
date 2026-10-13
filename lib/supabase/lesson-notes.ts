@@ -1,5 +1,8 @@
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase/client'
 
+/** One row per person, study, lesson, and step. A repeat save updates that row. */
+export const USER_NOTES_UPSERT_CONFLICT = 'user_id,study_id,lesson_id,step_number'
+
 export type RecentLessonNoteRow = {
   id: string
   study_id: string
@@ -79,7 +82,7 @@ export async function upsertLessonNoteRemote(
       content,
       updated_at: new Date().toISOString(),
     },
-    { onConflict: 'user_id,study_id,lesson_id,step_number' },
+    { onConflict: USER_NOTES_UPSERT_CONFLICT },
   )
   if (error) {
     if (isMissingTableOrRlsError(error)) return false

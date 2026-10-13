@@ -1,3 +1,4 @@
+import { approvedGuidedPrompts, type GuidedReflectionPrompts } from '@/lib/guided-reflection'
 import type { LessonContentBlock } from '@/lib/lesson-content-blocks'
 import type { LessonReaderContent, StudyInsightVariant, WordInsight } from '@/lib/lesson-content'
 import { wordStudyToInsight } from '@/lib/lesson-reader-shared'
@@ -80,7 +81,13 @@ export type LessonStep =
       variant?: StudyInsightVariant
       appendBlocks?: LessonContentBlock[]
     }
-  | { type: 'reflect_journal'; title: string; prompt: string; reflectPlaceholder?: string }
+  | {
+      type: 'reflect_journal'
+      title: string
+      prompt: string
+      reflectPlaceholder?: string
+      guidedPrompts?: GuidedReflectionPrompts
+    }
   | {
       type: 'life_application'
       title: string
@@ -251,11 +258,13 @@ export function buildLessonSteps(content: LessonReaderContent): LessonStep[] {
       ? `${content.lifeApplication.trim()}\n\n${content.prayer.trim()}`
       : content.lifeApplication
 
+  const guidedPrompts = approvedGuidedPrompts(content.guidedReflection)
   steps.push({
     type: 'reflect_journal',
     title: content.reflectStepTitle ?? SECTION_TITLES.reflect_journal,
     prompt: content.reflectPrompt,
     reflectPlaceholder: deeper ? content.reflectPlaceholder : undefined,
+    ...(guidedPrompts ? { guidedPrompts } : {}),
   })
 
   steps.push({

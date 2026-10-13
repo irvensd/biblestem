@@ -1,4 +1,5 @@
 import { DASHBOARD_PROGRESS_STORAGE_KEY, readLocalProgress } from '@/lib/dashboard-local-progress'
+import { reflectionNotePlainText } from '@/lib/guided-reflection'
 import { getSupabaseBrowserClient } from '@/lib/supabase/client'
 
 const NOTE_PREFIX = 'biblestem-lesson-note:'
@@ -14,7 +15,7 @@ function localNotes(): { key: string; content: string }[] {
       const key = localStorage.key(i)
       if (!key) continue
       if (!key.startsWith(NOTE_PREFIX) && !key.startsWith(LEGACY_NOTE_PREFIX)) continue
-      const content = localStorage.getItem(key) ?? ''
+      const content = reflectionNotePlainText(localStorage.getItem(key) ?? '')
       if (content.trim()) rows.push({ key, content })
     }
   } catch {
@@ -59,7 +60,12 @@ export async function downloadAccountExport(user: {
     profile: profileRes.error ? null : profileRes.data,
     studyProgress: progressRes.error ? [] : (progressRes.data ?? []),
     activityDays: daysRes.error ? [] : (daysRes.data ?? []),
-    notes: notesRes.error ? [] : (notesRes.data ?? []),
+    notes: notesRes.error
+      ? []
+      : (notesRes.data ?? []).map((row) => ({
+          ...row,
+          content: reflectionNotePlainText(typeof row.content === 'string' ? row.content : ''),
+        })),
     supportRequests: supportRes.error ? [] : (supportRes.data ?? []),
     onThisDevice: {
       progress: readLocalProgress(),

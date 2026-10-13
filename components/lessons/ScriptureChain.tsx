@@ -9,7 +9,7 @@ export type { ScriptureChainVerse }
 export interface ScriptureChainProps {
   title?: string
   verses?: ScriptureChainVerse[]
-  references?: { reference: string }[]
+  references?: { reference: string; title?: string; verseText?: string; shortNote?: string }[]
   takeaway?: string
   className?: string
   completionMode?: boolean
@@ -17,22 +17,18 @@ export interface ScriptureChainProps {
 
 function toThreadRefs(
   verses: ScriptureChainVerse[] | undefined,
-  references: { reference: string }[] | undefined,
+  references: ScriptureChainProps['references'],
 ): ScriptureThreadReference[] {
-  if (verses?.length) {
-    return verses
-      .map((v) => ({
-        reference: v.reference.trim(),
-        shortNote: v.shortNote?.trim() || undefined,
-      }))
-      .filter((v) => v.reference.length > 0)
-  }
-  if (references?.length) {
-    return references
-      .map((r) => ({ reference: r.reference.trim() }))
-      .filter((v) => v.reference.length > 0)
-  }
-  return []
+  const source = verses?.length ? verses : references
+  if (!source?.length) return []
+  return source
+    .map((item) => ({
+      reference: item.reference.trim(),
+      title: 'title' in item ? item.title?.trim() || undefined : undefined,
+      verseText: 'verseText' in item ? item.verseText?.trim() || undefined : undefined,
+      shortNote: 'shortNote' in item ? item.shortNote?.trim() || undefined : undefined,
+    }))
+    .filter((item) => item.reference.length > 0)
 }
 
 /** @deprecated Prefer {@link ScriptureThread}. Kept for legacy lesson blocks and imports. */
